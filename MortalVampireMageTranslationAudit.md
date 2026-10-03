@@ -43,18 +43,15 @@ Impressão/PDF/blank fica **fora desta meta**, inclusive a inconsistência de Nu
 
 ## M — Mortal e conteúdo compartilhado
 
-### M01 — Conditions Core: tradução parcial
+### M01 — Conditions Core: apresentação completa e integrada
 
 Arquivos: `public/shared/data/conditions.json` e `conditions-pt.json`.
 
-- As 34 Conditions já possuem nome e descrição PT.
-- Nenhuma das 34 resoluções possui campo PT no arquivo de apresentação.
-- Os 16 textos não vazios de Beat também não possuem campo PT.
-- Apenas 11 das 34 apresentações fornecem categoria; as outras 23 herdam a categoria canônica. O filtro mostra a categoria diretamente, permitindo mistura de idiomas.
-- `Shaken` e `Steadfast` ainda usam a palavra `Condition` em suas descrições PT.
-- `Bonded` usa “Trato com Animais” no efeito, enquanto a apresentação compartilhada de `Animal Ken` usa “Empatia com Animais”: uniformizar sem mudar a regra.
-
-Impacto confirmado: o catálogo e as Conditions selecionadas exibem resolução e Beat diretamente em `app/workspace/condition-manager.tsx`. Mortal combina o catálogo canônico com a apresentação PT em sua ficha e impressão.
+- As 34 Conditions possuem nome, categoria, descrição e resolução PT; os 16 textos canônicos não vazios de Ato também foram traduzidos. Campos de penalidade existentes foram conservados.
+- `Shaken` e `Steadfast` usam **Condição**; `Bonded` agora referencia **Empatia com Animais**, conforme o rótulo atual da Perícia na interface. A forma histórica “Trato com Animais” nos anexos não foi substituída indiscriminadamente em outros contextos.
+- Mortal já compunha a apresentação Core. Mage/Vampire também passaram a aplicá-la ao catálogo usado por suas superfícies Desktop/Mobile. O catálogo canônico e as seleções salvas não mudam ao trocar o idioma.
+- Resumos canônicos existentes que incluem Lucidez/Glamour ou uma referência a Addicted foram localizados sem reconstruir ou corrigir a regra incidentalmente. A referência descritiva usa **Viciado**; não foi criado um novo registro de Condição Core. Impressão não recebeu alterações de componente.
+- Verificação e commit do lote estão no progresso da etapa 1 abaixo.
 
 ### M02 — Tilts compartilhados
 
@@ -544,6 +541,13 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - **75.480 comparações** contra `31e0b83`, com catálogos Core/Changeling/Mage e 120 contextos por linha, preservaram todos os resultados. Os testes adicionais cobrem cláusulas numéricas, identidades e AND/OR, requisitos Homebrew, troca EN/PT sem mutação e getters que falham se o Core acessar mecânicas de linha. Os dois parsers preservam o tratamento narrativo histórico em grupos complexos; requisitos arbitrários não ganham uma interpretação mecânica nova nesta refatoração.
 - A revisão dos vínculos de compras/concessões restantes encontra somente nomes canônicos de entrada editorial, nomes autorais de Specialties e bridges schema-2 estreitos já documentados; as seleções e os estornos de Merits usam definição/instância canônicas. As pendências mecânicas editoriais de fontes/Legacy registradas acima permanecem separadas da localização. As etapas de tradução 1–4 continuam abertas.
 - Verificação: suíte completa **539/539**, testes dirigidos de ownership/requisitos e arquitetura aprovados, **75.480 comparações sem diferenças**, TypeScript, lint, build e `git diff --check` aprovados. Sem smoke de navegador. A prioridade 0 está implementada e verificada; isso não encerra a meta nem as etapas de tradução 1–4.
+
+## Progresso — etapa 1, Conditions Core (2026-10-03)
+
+- Completa a apresentação PT das 34 Conditions Core: resoluções, 16 textos de Ato, categorias e referências terminológicas. Categoria Mental/Social conserva a grafia comum aos dois idiomas; Physical/Supernatural usa Física/Sobrenatural. Nenhum Ato ausente no canônico foi inventado.
+- Mage e Vampire agora compõem o catálogo Core com sua apresentação PT antes de passá-lo aos mesmos gerenciadores usados em Desktop/Mobile. A alternância volta ao canônico EN; IDs, persistência, metadados de fonte, efeitos canônicos e seleções autorais permanecem intactos. Mortal/Changeling/Werewolf já aplicavam a apresentação Core.
+- Manifesto atualizado de 41 para 42 e somente o recurso `core-conditions-pt` de 2 para 3, invalidando sua apresentação em cache. O recurso canônico `core-conditions` permanece em 1.
+- Verificação: **21/21** testes dirigidos de Conditions/Tilts, homônimos e catálogos estáticos; renderização dos 34 detalhes selecionados em EN/PT/EN sem mutação, cobertura dos campos e proteção da composição nas três fichas. Lint, TypeScript, build e `git diff --check` aprovados. Sem smoke de navegador. Tilts compartilhados e as etapas 2–4 continuam pendentes; a meta permanece ativa.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 

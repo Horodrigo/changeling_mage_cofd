@@ -1058,9 +1058,10 @@ export function VampireCharacterPaper({
     ],
     customMerits,
   );
-  const coreConditions = catalogs.get<{ conditions: ConditionDefinition[] }>(
-    "core-reference",
-  ).conditions;
+  const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
+  const coreConditions = coreReference.conditions.map(condition =>
+    locale === "pt-BR" ? { ...condition, ...coreReference.presentation[condition.id] } : condition,
+  );
   const vampireConditions = activeVampireItems(
     catalogs.get<readonly VampireCondition[]>("vampire-conditions"),
     preferences,

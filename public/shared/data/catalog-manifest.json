@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 41,
+  "catalogVersion": 42,
   "catalogs": {
     "werewolf-totem-powers": { "version": 2, "url": "/game-lines/werewolf/data/totem-powers.json" },
     "werewolf-totem-powers-pt": { "version": 2, "url": "/game-lines/werewolf/data/totem-powers-pt.json" },
@@ -56,7 +56,7 @@
     "merits-mage": { "version": 3, "url": "/game-lines/mage/data/merits.json" },
     "merits-mage-supplements": { "version": 2, "url": "/game-lines/mage/data/merits-supplements.json" },
     "core-conditions": { "version": 1, "url": "/shared/data/conditions.json" },
-    "core-conditions-pt": { "version": 2, "url": "/shared/data/conditions-pt.json" },
+    "core-conditions-pt": { "version": 3, "url": "/shared/data/conditions-pt.json" },
     "changeling-conditions": { "version": 2, "url": "/game-lines/changeling/data/conditions.json" },
     "changeling-conditions-pt": { "version": 2, "url": "/game-lines/changeling/data/conditions-pt.json" },
     "changeling-courts": { "version": 1, "url": "/game-lines/changeling/data/courts.json" },

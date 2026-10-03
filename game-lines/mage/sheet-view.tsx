@@ -127,16 +127,15 @@ export function MageCharacterPaper({
     ],
     customMerits,
   );
+  const { locale, t } = useLanguage();
+  const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
+  const coreConditions = coreReference.conditions.map(condition =>
+    locale === "pt-BR" ? { ...condition, ...coreReference.presentation[condition.id] } : condition,
+  );
   const conditionCatalog = [
-    ...catalogs
-      .get<{ conditions: ConditionDefinition[] }>("core-reference")
-      .conditions.filter(
-        (condition) =>
-          condition.sourceCode === "CofD" || condition.sourceCode === "HL",
-      ),
+    ...coreConditions.filter(condition => condition.sourceCode === "CofD" || condition.sourceCode === "HL"),
     ...catalogs.get<readonly ConditionDefinition[]>("mage-reference"),
   ];
-  const { locale, t } = useLanguage();
   const isMobile = useIsMobile();
   const [mobileTab, setMobileTab] = useState({
     characterId: character.id,

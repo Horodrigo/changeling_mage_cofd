@@ -1,169 +1,242 @@
 {
   "amnesia": {
     "name": "Amnésia",
-    "description": "Uma parte importante da memória desapareceu, trazendo dificuldades quando pessoas, inimigos ou obrigações esquecidas retornam."
+    "description": "Uma parte importante da memória desapareceu, trazendo dificuldades quando pessoas, inimigos ou obrigações esquecidas retornam.",
+    "category": "Mental",
+    "resolution": "Recuperar as memórias perdidas e descobrir a verdade; dependendo das circunstâncias, isso pode constituir um Ponto de Ruptura.",
+    "beat": "Um problema esquecido, como um mandado de prisão ou um antigo inimigo, reaparece."
   },
   "broken": {
     "name": "Quebrado",
     "description": "O personagem perdeu a capacidade de enfrentar pressão emocional e recua diante de confrontos.",
-    "penalty": "−2 em testes Sociais e com Perseverança; −5 em Intimidação."
+    "penalty": "−2 em testes Sociais e com Perseverança; −5 em Intimidação.",
+    "category": "Mental",
+    "resolution": "Ganhar ou perder um ponto de Integridade, obter um sucesso excepcional em um Ponto de Ruptura, aumentar a Lucidez máxima ou obter um sucesso excepcional ao resistir a um poder feérico.",
+    "beat": "Recuar diante de um confronto ou falhar em um teste por causa desta Condição."
   },
   "deprived": {
     "name": "Privado",
     "description": "A abstinência de um vício impede o personagem de se concentrar e se controlar.",
-    "penalty": "−1 dado em paradas de Vigor, Perseverança e Compostura."
+    "penalty": "−1 dado em paradas de Vigor, Perseverança e Compostura.",
+    "category": "Mental",
+    "resolution": "Satisfazer o vício; se a Condição surgiu por chegar a Glamour 0, recuperar qualquer quantidade de Glamour."
   },
   "fixated": {
     "name": "Fixado",
     "description": "Um único pensamento ou comando domina a atenção até ser cumprido.",
-    "penalty": "−2 em todas as ações até cumprir o comando ou a cena terminar."
+    "penalty": "−2 em todas as ações até cumprir o comando ou a cena terminar.",
+    "category": "Mental",
+    "resolution": "Cumprir o comando.",
+    "beat": "Agir contra a Virtude do personagem para cumprir a fixação."
   },
   "fugue": {
     "name": "Fuga",
-    "description": "Trauma provoca apagões; situações semelhantes podem entregar o controle do personagem ao Narrador por uma cena."
+    "description": "Trauma provoca apagões; situações semelhantes podem entregar o controle do personagem ao Narrador por uma cena.",
+    "category": "Mental",
+    "resolution": "Ganhar ou perder um ponto de Integridade, obter um sucesso excepcional em um Ponto de Ruptura, aumentar a Lucidez máxima ou obter um sucesso excepcional ao resistir a um poder feérico.",
+    "beat": "Entrar em um estado de fuga conforme descrito na Condição."
   },
   "guilty": {
     "name": "Culpado",
     "description": "Remorso profundo torna o personagem emocionalmente vulnerável.",
-    "penalty": "−2 para defender-se com Perseverança ou Compostura contra Subterfúgio, Empatia ou Intimidação."
+    "penalty": "−2 para defender-se com Perseverança ou Compostura contra Subterfúgio, Empatia ou Intimidação.",
+    "category": "Mental",
+    "resolution": "Confessar o ato cometido e reparar o dano."
   },
   "informed": {
     "name": "Informado",
-    "description": "Pesquisa fornece informação decisiva sobre um assunto; ao resolver, uma falha vira sucesso e um sucesso vira sucesso excepcional."
+    "description": "Pesquisa fornece informação decisiva sobre um assunto; ao resolver, uma falha vira sucesso e um sucesso vira sucesso excepcional.",
+    "category": "Mental",
+    "resolution": "Usar a pesquisa para obter informações em um teste de Perícia relevante."
   },
   "inspired": {
     "name": "Inspirado",
-    "description": "Uma inspiração guia a ação; ao resolver, três sucessos bastam para um sucesso excepcional e o personagem recupera Força de Vontade."
+    "description": "Uma inspiração guia a ação; ao resolver, três sucessos bastam para um sucesso excepcional e o personagem recupera Força de Vontade.",
+    "category": "Mental",
+    "resolution": "Usar a inspiração para elevar o sucesso de uma ação relacionada."
   },
   "lost": {
     "name": "Perdido",
-    "description": "O personagem não sabe onde está nem como alcançar seu destino e precisa se orientar antes de progredir."
+    "description": "O personagem não sabe onde está nem como alcançar seu destino e precisa se orientar antes de progredir.",
+    "category": "Mental",
+    "resolution": "Abandonar o destino ou conseguir encontrar o caminho até ele."
   },
   "madness": {
     "name": "Loucura",
     "description": "Horrores sobrenaturais romperam sua compreensão da realidade; o Narrador pode impor um modificador negativo uma vez por capítulo.",
-    "penalty": "Até −(10 − Lucidez atual) em um teste Mental ou Social, uma vez por capítulo."
+    "penalty": "Até −(10 − Lucidez atual) em um teste Mental ou Social, uma vez por capítulo.",
+    "category": "Mental",
+    "resolution": "Ganhar ou perder um ponto de Integridade, obter um sucesso excepcional em um Ponto de Ruptura, aumentar a Lucidez máxima ou obter um sucesso excepcional ao resistir a um poder feérico.",
+    "beat": "Falhar em um teste por causa desta Condição."
   },
   "oblivious": {
     "name": "Alheio",
     "description": "O personagem está ausente e deixa de perceber o que acontece ao redor.",
-    "penalty": "−2 em testes de Percepção."
+    "penalty": "−2 em testes de Percepção.",
+    "category": "Mental",
+    "resolution": "Ser alertado por um ruído alto ou sofrer um ataque."
   },
   "obsession": {
     "name": "Obsessão",
     "description": "Uma obsessão domina a atenção e favorece apenas ações diretamente relacionadas a ela.",
-    "penalty": "9-novamente ao perseguir a obsessão; perde 10-novamente em ações não relacionadas."
+    "penalty": "9-novamente ao perseguir a obsessão; perde 10-novamente em ações não relacionadas.",
+    "category": "Mental",
+    "resolution": "Abandonar ou eliminar a fixação.",
+    "beat": "Deixar de cumprir uma obrigação por perseguir a obsessão."
   },
   "shaken": {
     "name": "Abalado",
-    "description": "Um medo severo interfere nas ações; o jogador pode optar por falhar numa ação prejudicada pelo medo para resolver a Condition."
+    "description": "Um medo severo interfere nas ações; o jogador pode optar por falhar numa ação prejudicada pelo medo para resolver a Condição.",
+    "category": "Mental",
+    "resolution": "Ceder ao medo e escolher falhar em um teste relevante."
   },
   "spooked": {
     "name": "Assombrado",
-    "description": "O contato com o sobrenatural fascina e assusta até o personagem complicar a situação por causa disso."
+    "description": "O contato com o sobrenatural fascina e assusta até o personagem complicar a situação por causa disso.",
+    "category": "Mental",
+    "resolution": "Deixar que o medo ou a fascinação provoque uma ação que prejudique o grupo ou complique a situação."
   },
   "steadfast": {
     "name": "Resoluto",
-    "description": "A determinação permite resolver a Condition após uma falha para transformar o resultado em um sucesso simples."
+    "description": "A determinação permite resolver a Condição após uma falha para transformar o resultado em um sucesso simples.",
+    "category": "Mental",
+    "resolution": "Deixar que a confiança do personagem faça a ação malsucedida dar certo, aplicando o benefício da Condição."
   },
   "swooned": {
     "name": "Enamorado",
     "description": "A atração por uma pessoa torna o personagem vulnerável à influência e relutante em prejudicá-la.",
-    "penalty": "−2 em ações que prejudiquem a pessoa; ela recebe +2 em testes Sociais contra o personagem."
+    "penalty": "−2 em ações que prejudiquem a pessoa; ela recebe +2 em testes Sociais contra o personagem.",
+    "category": "Mental",
+    "resolution": "Fazer algo pela pessoa amada que coloque o personagem em perigo, ou escolher falhar em um teste para resistir a uma ação Social dessa pessoa."
   },
   "arm-disability": {
     "name": "Deficiência no Braço",
     "category": "Física",
     "description": "Um ou ambos os braços não funcionam sem tratamento ou tecnologia assistiva apropriada.",
-    "penalty": "Um braço: penalidade de mão inábil; ambos: dado de sorte em destreza manual e −3 em outras ações Físicas."
+    "penalty": "Um braço: penalidade de mão inábil; ambos: dado de sorte em destreza manual e −3 em outras ações Físicas.",
+    "resolution": "Receber tratamento médico ou sobrenatural apropriado; uma prótese adequada pode tratar a Condição.",
+    "beat": "A Condição impede uma ação ou causa a falha de um teste penalizado."
   },
   "blind": {
     "name": "Cego",
     "category": "Física",
     "description": "O personagem perdeu a visão e precisa substituir esse sentido ou lidar com a escuridão total.",
-    "penalty": "Dado de sorte em ações que exigem visão; −3 quando outro sentido puder substituí-la."
+    "penalty": "Dado de sorte em ações que exigem visão; −3 quando outro sentido puder substituí-la.",
+    "resolution": "Recuperar a visão.",
+    "beat": "Encontrar uma limitação ou dificuldade causada pela cegueira."
   },
   "chronic-agony": {
     "name": "Agonia Crônica",
     "category": "Física",
     "description": "Dores incapacitantes retornam após estresse ou esforço físico e impõem os efeitos de Atordoado.",
-    "penalty": "Atordoado: perde a próxima ação e a Defesa até voltar a agir."
+    "penalty": "Atordoado: perde a próxima ação e a Defesa até voltar a agir.",
+    "resolution": "Receber tratamento médico ou sobrenatural apropriado; analgésicos específicos podem suprimir um episódio, mas podem causar a Condição Viciado.",
+    "beat": "Falhar em um teste penalizado pela Condição ou ser impedido de agir."
   },
   "chronic-sickness": {
     "name": "Doença Crônica",
     "category": "Física",
     "description": "Doença ou toxina persiste e piora durante esforço e estresse.",
-    "penalty": "−1 em todas as ações, aumentando em −1 a cada dois turnos, até −5."
+    "penalty": "−1 em todas as ações, aumentando em −1 a cada dois turnos, até −5.",
+    "resolution": "Receber tratamento médico ou sobrenatural apropriado, ou deixar a doença passar quando cabível; medicamentos podem tratá-la.",
+    "beat": "Falhar em um teste durante uma crise da doença."
   },
   "deaf": {
     "name": "Surdo",
     "category": "Física",
     "description": "A audição de um ou ambos os ouvidos está severamente comprometida.",
-    "penalty": "Um ouvido: −3 em Percepção; ambos: dado de sorte em Percepção e −2 em combate."
+    "penalty": "Um ouvido: −3 em Percepção; ambos: dado de sorte em Percepção e −2 em combate.",
+    "resolution": "Receber tratamento médico ou sobrenatural apropriado; um aparelho auditivo, implante coclear ou dispositivo semelhante pode ajudar.",
+    "beat": "Falhar em um teste de Percepção por causa da surdez."
   },
   "disabled": {
     "name": "Incapacitado",
     "category": "Física",
     "description": "O personagem não consegue caminhar de modo eficaz sem cadeira de rodas ou outro auxílio.",
-    "penalty": "Deslocamento efetivo 1; cadeira manual usa Força, cadeira elétrica possui Deslocamento 3."
+    "penalty": "Deslocamento efetivo 1; cadeira manual usa Força, cadeira elétrica possui Deslocamento 3.",
+    "resolution": "Curar a deficiência por meios mundanos ou sobrenaturais.",
+    "beat": "A mobilidade limitada atrapalha o personagem ou o faz demorar a reagir."
   },
   "fragile": {
     "name": "Frágil",
     "category": "Física",
-    "description": "Equipamento improvisado ou danificado perde resistência e pode se desfazer durante o uso."
+    "description": "Equipamento improvisado ou danificado perde resistência e pode se desfazer durante o uso.",
+    "resolution": "O equipamento se desfaz. Se a Condição representava um plano, cada jogador envolvido recebe um Ato."
   },
   "leg-disability": {
     "name": "Deficiência na Perna",
     "category": "Física",
     "description": "Uma perna não funciona adequadamente sem tratamento ou prótese apropriada.",
-    "penalty": "Metade do Deslocamento e −2 em ações Físicas relacionadas a movimento."
+    "penalty": "Metade do Deslocamento e −2 em ações Físicas relacionadas a movimento.",
+    "resolution": "Receber tratamento médico ou sobrenatural apropriado; uma prótese adequada pode tratar a Condição.",
+    "beat": "Falhar em um teste Físico penalizado ou sofrer outra desvantagem por causa da Condição."
   },
   "mute": {
     "name": "Mudo",
     "category": "Física",
-    "description": "O personagem não consegue falar e precisa se comunicar por escrita, gestos ou sinais."
+    "description": "O personagem não consegue falar e precisa se comunicar por escrita, gestos ou sinais.",
+    "resolution": "Recuperar a voz do personagem por meios mundanos ou sobrenaturais.",
+    "beat": "Sofrer uma limitação de comunicação que aumente o perigo imediato."
   },
   "volatile": {
     "name": "Volátil",
     "category": "Física",
     "description": "Equipamento ou plano está prestes a falhar de modo catastrófico.",
-    "penalty": "Qualquer falha ao usar o equipamento torna-se falha dramática."
+    "penalty": "Qualquer falha ao usar o equipamento torna-se falha dramática.",
+    "resolution": "Sofrer uma falha dramática ao usar o equipamento. Se a Condição representava um plano, cada jogador envolvido recebe um Ato."
   },
   "bonded": {
     "name": "Vinculado",
     "description": "Um vínculo profundo com um animal fortalece influência, confiança e resistência ao medo.",
-    "penalty": "+2 para influenciar o animal; ele pode usar Trato com Animais do personagem contra medo ou coerção."
+    "penalty": "+2 para influenciar o animal; ele pode usar Empatia com Animais do personagem contra medo ou coerção.",
+    "category": "Social",
+    "resolution": "O animal vinculado morre."
   },
   "connected": {
     "name": "Conectado",
     "description": "O personagem estabeleceu relações úteis dentro de um grupo específico.",
-    "penalty": "+2 em testes relacionados ao grupo; pode resolver para obter um sucesso excepcional automático ao influenciá-lo."
+    "penalty": "+2 em testes relacionados ao grupo; pode resolver para obter um sucesso excepcional automático ao influenciá-lo.",
+    "category": "Social",
+    "resolution": "Perder a filiação ou a posição no grupo especificado.",
+    "beat": "O grupo pede um favor que causa um inconveniente ao personagem."
   },
   "embarrassing-secret": {
     "name": "Segredo Constrangedor",
-    "description": "Um segredo pode provocar ostracismo, chantagem ou consequências legais caso se torne público."
+    "description": "Um segredo pode provocar ostracismo, chantagem ou consequências legais caso se torne público.",
+    "category": "Social",
+    "resolution": "O segredo se torna público, ou o personagem garante que ele nunca poderá ser revelado."
   },
   "leveraged": {
     "name": "Coagido",
-    "description": "Alguém possui influência, chantagem ou vantagem suficiente para exigir um favor sem resistência."
+    "description": "Alguém possui influência, chantagem ou vantagem suficiente para exigir um favor sem resistência.",
+    "category": "Social",
+    "resolution": "Atender ao pedido ou obter uma vantagem equivalente sobre o personagem especificado."
   },
   "notoriety": {
     "name": "Notoriedade",
     "description": "Má fama provoca repulsa e ostracismo entre aqueles que a conhecem.",
-    "penalty": "−2 em testes Sociais com quem conhece a fama; uma Porta adicional em Manobra Social."
+    "penalty": "−2 em testes Sociais com quem conhece a fama; uma Porta adicional em Manobra Social.",
+    "category": "Social",
+    "resolution": "Desmentir a história ou limpar o nome do personagem."
   },
   "reluctant-aggressor": {
     "name": "Agressor Relutante",
     "description": "O personagem foi levado a ferir alguém contra sua vontade e hesita diante da vítima.",
-    "penalty": "−2 em ataques contra a vítima designada."
+    "penalty": "−2 em ataques contra a vítima designada.",
+    "category": "Social",
+    "resolution": "Evitar a vítima e seus associados por um capítulo, ou fazer com que a vítima se torne o agressor contra o personagem ou seus aliados. O desaparecimento da Condição após um capítulo não concede um Ato."
   },
   "surveilled": {
     "name": "Vigiado",
-    "description": "Uma pessoa ou organização acompanha os movimentos do personagem e reúne informações sobre ele."
+    "description": "Uma pessoa ou organização acompanha os movimentos do personagem e reúne informações sobre ele.",
+    "category": "Social",
+    "resolution": "A parada de vigilância do Narrador acumula dez sucessos, ou o personagem expõe ou interrompe ativamente a vigilância."
   },
   "soulless": {
     "name": "Sem Alma",
     "category": "Sobrenatural",
-    "description": "A perda da alma corrói lentamente a vontade, a identidade e a capacidade de resistir à degeneração."
+    "description": "A perda da alma corrói lentamente a vontade, a identidade e a capacidade de resistir à degeneração.",
+    "resolution": "Recuperar uma alma.",
+    "beat": "Perder Integridade ou Lucidez porque o personagem se entregou ao Vício ou à Âncora equivalente."
   }
 }
