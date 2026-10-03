@@ -986,6 +986,40 @@ test("Refunds protect later Merit, Specialty and Primal Urge cap dependencies an
   assert.equal(character.skills.Survival, 4);
 });
 
+test("Werewolf creation, XP upgrades and refunds retain definition IDs independently of stored display names", () => {
+  let character = funded();
+  assert.deepEqual(character.merits.filter(item => item.grantedBy).map(item => item.definitionId).sort(), ["core-2ed:language", "wtf-2ed:totem"]);
+  character = buy(character, purchaseMerit("wtf-2ed:blood-or-bone-affinity", 2, { anchor: "blood" }), advancementCatalogs);
+  const purchased = character.merits.find(item => item.definitionId === "wtf-2ed:blood-or-bone-affinity");
+  assert.ok(purchased.instanceId); assert.equal(purchased.creationDots, 0); assert.equal(purchased.experienceDots, 2);
+  const first = history(character).at(-1);
+  assert.equal(first.purchase.definitionId, purchased.definitionId); assert.equal(first.undo.definitionId, purchased.definitionId);
+  purchased.name = "Afinidade escolhida pelo jogador";
+  const before = structuredClone(character);
+  character = buy(character, purchaseMerit(purchased.definitionId, 5, {}, purchased.instanceId), advancementCatalogs);
+  assert.deepEqual(before.merits.find(item => item.instanceId === purchased.instanceId), purchased);
+  assert.equal(character.merits.filter(item => item.instanceId === purchased.instanceId).length, 1);
+  assert.equal(character.merits.find(item => item.instanceId === purchased.instanceId).name, purchased.name);
+  const latest = history(character).at(-1);
+  character = refund(character, latest.id, advancementCatalogs);
+  assert.equal(character.merits.find(item => item.instanceId === purchased.instanceId).experienceDots, 2);
+  for (const mutate of [
+    sheet => { sheet.merits.find(item => item.instanceId === purchased.instanceId).definitionId = "unavailable:affinity"; },
+    sheet => { sheet.merits.find(item => item.instanceId === purchased.instanceId).definitionId = "homebrew:affinity"; },
+    sheet => { sheet.merits.push(structuredClone(sheet.merits.find(item => item.instanceId === purchased.instanceId))); },
+  ]) {
+    const invalid = structuredClone(character); mutate(invalid);
+    const original = structuredClone(invalid);
+    assert.throws(() => quote(invalid, purchaseMerit(purchased.definitionId, 5, {}, purchased.instanceId), advancementCatalogs), failsWith("meritInstance"));
+    assert.throws(() => refund(invalid, first.id, advancementCatalogs), failsWith("refundMissing"));
+    assert.deepEqual(invalid, original, "Failed identity checks never alter balances, history or choices");
+  }
+  const restored = refund(character, first.id, advancementCatalogs);
+  assert.equal(restored.current_state.experience_available, 100);
+  assert.ok(!restored.merits.some(item => item.instanceId === purchased.instanceId));
+  assert.ok(restored.merits.filter(item => item.grantedBy).every(item => item.definitionId && item.creationDots === 1));
+});
+
 test("Corrupt or missing XP entries cannot mint experience and opaque history remains untouched", () => {
   let character = funded();
   character.current_state.werewolf_experience_history = [null, { custom: "opaque" }, { id: "broken", cost: 99, createdAt: new Date().toISOString(), purchase: { kind: "trait" }, undo: { kind: "trait" } }];

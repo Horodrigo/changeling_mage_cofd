@@ -63,7 +63,8 @@ export function werewolfAdvancementContexts(character: CharacterSheet, catalogs:
   };
 }
 
-export const canAdvanceWerewolfGrant = (merit: CharacterSheet["merits"][number]) => merit.grantedBy === "werewolf:creation-totem";
+export const canAdvanceWerewolfGrant = (merit: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[]) =>
+  merit.grantedBy === "werewolf:creation-totem" && werewolfMeritDefinition(merit, catalog)?.id === "wtf-2ed:totem";
 
 /** WTF2 p. 84; Specialties use CofD p. 77. Locale and the combat form never alter a quote. */
 export function werewolfPurchaseQuote(character: CharacterSheet, purchase: WerewolfPurchase, catalogs: WerewolfAdvancementCatalogs) {
@@ -111,8 +112,9 @@ export function werewolfPurchaseQuote(character: CharacterSheet, purchase: Werew
     const definition = catalogs.merits.find(item => item.id === purchase.definitionId);
     if (!definition) return fail("missingMerit");
     const instance = purchase.instanceId ? character.merits.find(item => item.instanceId === purchase.instanceId) : undefined;
+    if (purchase.instanceId && character.merits.filter(item => item.instanceId === purchase.instanceId).length !== 1) fail("meritInstance");
     if (purchase.instanceId && (!instance || werewolfMeritDefinition(instance, catalogs.merits)?.id !== definition.id)) fail("meritInstance");
-    if (instance?.grantedBy && !canAdvanceWerewolfGrant(instance)) fail("grant");
+    if (instance?.grantedBy && !canAdvanceWerewolfGrant(instance, catalogs.merits)) fail("grant");
     if (!instance && !definition.repeatable && !REPEATABLE_MERITS.has(definition.name) && character.merits.some(item => werewolfMeritDefinition(item, catalogs.merits)?.id === definition.id)) fail("meritInstance");
     if (!natural(purchase.target) || purchase.target <= (instance?.dots ?? 0) || !meritRatingsFor(definition, purchase.target).includes(purchase.target)) fail("meritChoices");
     const { core, own } = werewolfAdvancementContexts(character, catalogs);
@@ -125,7 +127,7 @@ export function werewolfPurchaseQuote(character: CharacterSheet, purchase: Werew
     else {
       let instanceId = `werewolf:quote:${definition.id}`;
       while (candidate.merits.some(item => item.instanceId === instanceId)) instanceId += ":";
-      candidate.merits.push({ instanceId, name: definition.name, sourceId: definition.sourceId, source: definition.source, dots: purchase.target, configuration: choice.configuration });
+      candidate.merits.push({ definitionId: definition.id, instanceId, name: definition.name, sourceId: definition.sourceId, source: definition.source, dots: purchase.target, configuration: choice.configuration });
     }
     if (hasNewDependencies(character, candidate, catalogs)) fail("purchaseDependent");
     cost = (purchase.target - (instance?.dots ?? 0)) * costs.merit;
@@ -175,9 +177,9 @@ export function purchaseWerewolfAdvancement(character: CharacterSheet, purchase:
     let instance = purchase.instanceId ? next.merits.find(item => item.instanceId === purchase.instanceId) : undefined;
     const amount = purchase.target - (instance?.dots ?? 0);
     const previousConfiguration = instance ? normalizeMeritConfiguration(instance.configuration) : undefined;
-    if (instance) { addExperienceMeritDots(instance, amount); instance.configuration = normalizeMeritConfiguration(purchase.configuration); }
+    if (instance) { instance.definitionId = definition.id; addExperienceMeritDots(instance, amount); instance.configuration = normalizeMeritConfiguration(purchase.configuration); }
     else {
-      instance = { name: definition.name, instanceId: createRandomId(), sourceId: definition.sourceId, source: definition.source, dots: purchase.target,
+      instance = { definitionId: definition.id, name: definition.name, instanceId: createRandomId(), sourceId: definition.sourceId, source: definition.source, dots: purchase.target,
         creationDots: 0, experienceDots: purchase.target, configuration: normalizeMeritConfiguration(purchase.configuration) };
       next.merits.push(instance);
     }
@@ -305,7 +307,8 @@ export function refundWerewolfAdvancement(character: CharacterSheet, id: string,
     next.line_data.learned_rites = learned.filter(id => id !== undo.definitionId);
   } else if (undo.kind === "merit") {
     const index = next.merits.findIndex(item => item.instanceId === undo.instanceId);
-    if (index < 0 || next.merits[index].name !== undo.name || werewolfMeritDefinition(next.merits[index], catalogs.merits)?.id !== undo.definitionId
+    if (next.merits.filter(item => item.instanceId === undo.instanceId).length !== 1) fail("refundMissing");
+    if (index < 0 || werewolfMeritDefinition(next.merits[index], catalogs.merits)?.id !== undo.definitionId
       || !natural(undo.dots) || undo.dots < 1 || experienceMeritDots(next.merits[index]) < undo.dots) fail("refundMissing");
     if (removeExperienceMeritDots(next.merits[index], undo.dots) === 0) next.merits.splice(index, 1);
     else if (undo.previousConfiguration && JSON.stringify(normalizeMeritConfiguration(next.merits[index].configuration)) === JSON.stringify(undo.purchasedConfiguration)) {

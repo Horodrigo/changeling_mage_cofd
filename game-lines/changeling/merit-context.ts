@@ -1,6 +1,15 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import { meritContextForSheet, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
+import { meritContextForSheet, meritPrerequisitesMet, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
+
+export function canAdvanceChangelingGrant(merit: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[]) {
+  return merit.grantedBy === "Corte" && resolveMeritDefinition(merit, catalog)?.id === "ctl-2ed:mantle";
+}
+
+export function changelingExperienceMeritEligible(definition: MeritDefinition, context: MeritPrerequisiteContext) {
+  return (definition.id !== "ctl-2ed:mantle" || (context.merits?.some(merit =>
+    resolveMeritDefinition(merit, context.meritCatalog ?? [])?.id === definition.id) ?? false)) && meritPrerequisitesMet(definition, context);
+}
 
 export function changelingMeritContextForSheet(sheet: CharacterSheet, catalog: readonly MeritDefinition[]): MeritPrerequisiteContext {
   const data = sheet.line_data;

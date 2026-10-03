@@ -227,17 +227,6 @@ export function ExperiencePowerPicker({
   );
 }
 
-export function canAdvanceGrantedMerit(
-  line: PersistedGameLineId,
-  merit: CharacterSheet["merits"][number],
-) {
-  return (
-    (line === "CtL" && merit.name === "Mantle" && merit.grantedBy === "Corte") ||
-    (line === "MtA" && merit.name === "Awakened Status" && merit.grantedBy === "Ordem") ||
-    (line === "MtA" && merit.name === "Mystery Cult Initiation" && merit.grantedBy === "Nameless Order")
-  );
-}
-
 export function ExperienceMeritPicker({
   line,
   context,
@@ -247,7 +236,7 @@ export function ExperienceMeritPicker({
   targetDots,
   onSelect,
   isEligible = meritPrerequisitesMet,
-  canAdvanceGrant,
+  canAdvanceGrant = () => false,
   categoryFor = (definition) => definition.category,
 }: {
   line: PersistedGameLineId;
@@ -262,7 +251,6 @@ export function ExperienceMeritPicker({
   categoryFor?: (definition: MeritDefinition) => string;
 }) {
   const { locale, t }=useLanguage();
-  const canAdvance = canAdvanceGrant ?? ((merit: CharacterSheet["merits"][number]) => canAdvanceGrantedMerit(line, merit));
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [showAllMerits, setShowAllMerits] = useState(false);
@@ -331,7 +319,7 @@ export function ExperienceMeritPicker({
                   .filter(
                     ({ owned }) =>
                       meritMatchesDefinition(owned, item, meritCatalog) &&
-                      (!owned.grantedBy || canAdvance(owned)),
+                      (!owned.grantedBy || canAdvanceGrant(owned)),
                   ),
                 repeatable = isRepeatableDefinition(item),
                 ratings = UNBOUNDED_MERITS.has(item.name)
@@ -349,8 +337,7 @@ export function ExperienceMeritPicker({
                 ),
                 intendedDots = allowedRatings.includes(draft.dots) ? draft.dots : allowedRatings[0],
                 prerequisitesMet = isEligible(item,context);
-              if (item.name === "Mantle" && !instances.length) return null;
-              if(!repeatable&&character.merits.some(owned=>meritMatchesDefinition(owned,item,meritCatalog)&&owned.grantedBy&&!canAdvance(owned)))return null;
+              if(!repeatable&&character.merits.some(owned=>meritMatchesDefinition(owned,item,meritCatalog)&&owned.grantedBy&&!canAdvanceGrant(owned)))return null;
               if (
                 !repeatable &&
                 instances.length &&
@@ -377,7 +364,7 @@ export function ExperienceMeritPicker({
                     {presented.levels?.map((level, index) => <p key={`${level.rating}-${index}`}><strong>{"•".repeat(level.rating)} {level.name}:</strong> {level.description}</p>)}
                   </div>
                   <div className="experience-merit-choice">
-                    {repeatable && item.name !== "Mantle" && <label className="merit-instance-toggle"><input type="checkbox" checked={buyingNew} onChange={(event)=>setMeritDrafts(current=>({...current,[item.id]:{...draft,newInstance:event.target.checked,instanceIndex:event.target.checked?-1:(instances[0]?.index??-1),dots:event.target.checked?(ratings[0]??1):(instances[0]?.owned.dots??1)}}))}/><span>{t("ui.newInstance431cdc")}</span></label>}
+                    {repeatable && <label className="merit-instance-toggle"><input type="checkbox" checked={buyingNew} onChange={(event)=>setMeritDrafts(current=>({...current,[item.id]:{...draft,newInstance:event.target.checked,instanceIndex:event.target.checked?-1:(instances[0]?.index??-1),dots:event.target.checked?(ratings[0]??1):(instances[0]?.owned.dots??1)}}))}/><span>{t("ui.newInstance431cdc")}</span></label>}
                     {!buyingNew && instances.length > 1 && <label><span>{t("ui.instance")}</span><select value={activeInstance?.index??instances[0].index} onChange={(event)=>{const instanceIndex=Number(event.target.value), owned=instances.find(entry=>entry.index===instanceIndex)?.owned;setMeritDrafts(current=>({...current,[item.id]:{...draft,newInstance:false,instanceIndex,dots:owned?.dots??1}}));}}>{instances.map(({owned,index})=><option key={index} value={index}>{meritConfigurationTitle(owned.configuration)||`${meritName(item)} ${index+1}`}</option>)}</select></label>}
                     <span className="merit-current-rating"><b>{t("ui.current")}:</b> {buyingNew?0:(activeInstance?.owned.dots??0)}</span>
                     <label><span>{t("ui.intended")}</span><select value={intendedDots??""} disabled={!allowedRatings.length} onChange={(event)=>setMeritDrafts(current=>({...current,[item.id]:{...draft,dots:Number(event.target.value)}}))}>{allowedRatings.map(dot=><option key={dot} value={dot}>{dot}</option>)}</select></label>

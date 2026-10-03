@@ -29,6 +29,7 @@ test("shared Merit context and XP picker do not interpret persisted line mechani
   const picker = (await source("app/workspace/experience-shared.tsx")).split("export function ExperienceMeritPicker")[1];
   assert.doesNotMatch(picker, /meritContextForSheet|line_data/);
   assert.match(picker, /context: MeritPrerequisiteContext/);
+  assert.doesNotMatch(await source("app/workspace/experience-shared.tsx"), /canAdvanceGrantedMerit|Mantle|Awakened Status|Nameless Order|Mystery Cult Initiation/);
   for (const line of ["mortal", "mage", "changeling", "vampire", "werewolf"]) {
     const panel = await source(`game-lines/${line}/experience-panel.tsx`);
     assert.match(panel, /context=\{/);

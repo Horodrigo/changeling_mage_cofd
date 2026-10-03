@@ -9,8 +9,8 @@ import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { normalizeChangelingFrailties, seemingDisplayName } from "@/game-lines/changeling/creation-rules";
-import { meritPrerequisitesMet, meritRatingsFor, type MeritDefinition } from "@/lib/merits";
-import { changelingMeritContextForSheet } from "./merit-context";
+import { meritRatingsFor, type MeritDefinition } from "@/lib/merits";
+import { canAdvanceChangelingGrant, changelingExperienceMeritEligible, changelingMeritContextForSheet } from "./merit-context";
 import type { ContractDefinition } from "./contract-types";
 import { contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "./contract-presentation";
 import { availableForeignClauseCourtIds } from "./contract-clauses";
@@ -501,7 +501,7 @@ export function ExperiencePanel({
     if (purchaseType === "merit") {
       if (!selectedMerit || !nextMeritRating)
         return setFeedback(t("ui.thisMeritHasNoHigherAvailableRating"));
-      if(!meritPrerequisitesMet(selectedMerit,{...meritContext,selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(t("ui.prerequisitesNotMet"));
+      if(!changelingExperienceMeritEligible(selectedMerit,{...meritContext,selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(t("ui.prerequisitesNotMet"));
       const current = ownedMerit?.dots ?? 0;
       const cost = nextMeritRating - current;
       const instanceId = ownedMerit?.instanceId ?? createRandomId();
@@ -761,6 +761,8 @@ export function ExperiencePanel({
                   <ExperienceMeritPicker
                     line="CtL"
                     context={meritContext}
+                    canAdvanceGrant={merit => canAdvanceChangelingGrant(merit, meritCatalog)}
+                    isEligible={changelingExperienceMeritEligible}
                     meritCatalog={meritCatalog}
                     character={character}
                     selectedId={meritId}

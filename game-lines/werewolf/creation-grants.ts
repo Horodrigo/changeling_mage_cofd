@@ -3,16 +3,16 @@ import { SKILLS } from "@/lib/core/character/creation-rules";
 import type { MeritDefinition } from "@/lib/merits";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { createRandomId } from "@/lib/random-id";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 import type { WerewolfMeritChoice } from "./merit-rules";
 import type { WerewolfReferenceCatalog, RenownId } from "./catalogs/reference";
 import type { GiftDefinition } from "./catalogs/gifts";
 import type { RiteDefinition } from "./catalogs/rites";
 import { creationAuspiceSkill, creationGiftSelection, creationTemplateProblems, type WerewolfCreationChoices } from "./creation-rules";
 
-/** Canonical schema-2 name/source resolution only; mechanics dispatch on the resulting ID. */
+/** IDs are authoritative; the shared resolver owns the documented canonical schema-2 bridge. */
 export function werewolfMeritDefinition<T extends Pick<MeritDefinition, "id" | "name" | "sourceId">>(selection: MeritSelection, catalog: readonly T[]) {
-  const matches = catalog.filter(item => item.name === selection.name && (!selection.sourceId || item.sourceId === selection.sourceId));
-  return matches.length === 1 ? matches[0] : undefined;
+  return resolveMeritDefinition(selection, catalog);
 }
 
 export function resolveWerewolfMerits(selections: readonly MeritSelection[], catalog: readonly Pick<MeritDefinition, "id" | "name" | "sourceId">[]): WerewolfMeritChoice[] {
@@ -45,6 +45,7 @@ export function withWerewolfCreationGrants(
     const selection = index >= 0 ? result[index] : undefined;
     const next: MeritSelection = {
       ...selection,
+      definitionId: definition.id,
       instanceId: previous?.instanceId ?? selection?.instanceId ?? createRandomId(),
       name: definition.name, sourceId: definition.sourceId, source: definition.source,
       dots: Math.max(1, selection?.dots ?? 1),

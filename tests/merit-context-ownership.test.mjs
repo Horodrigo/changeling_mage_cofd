@@ -8,13 +8,60 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] } });
 after(() => vite.close());
 const { meritContextForSheet, meritPrerequisitesMet } = await vite.ssrLoadModule("/lib/merits.ts");
-const { mageMeritContextForSheet } = await vite.ssrLoadModule("/game-lines/mage/merits.ts");
-const { changelingMeritContextForSheet } = await vite.ssrLoadModule("/game-lines/changeling/merit-context.ts");
+const { mageMeritContextForSheet, canAdvanceMageGrant } = await vite.ssrLoadModule("/game-lines/mage/merits.ts");
+const { changelingMeritContextForSheet, canAdvanceChangelingGrant, changelingExperienceMeritEligible } = await vite.ssrLoadModule("/game-lines/changeling/merit-context.ts");
+const { canAdvanceWerewolfGrant } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
 const { vampireMeritContextForSheet } = await vite.ssrLoadModule("/game-lines/vampire/merit-eligibility.ts");
 const { mortalMeritContextForSheet } = await vite.ssrLoadModule("/game-lines/mortal/rules.ts");
 const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
 const read = path => JSON.parse(readFileSync(new URL(`../public/${path}`, import.meta.url), "utf8"));
-const catalog = [...read("shared/data/merits.json"), ...read("game-lines/changeling/data/merits.json"), ...read("game-lines/mage/data/merits.json")];
+const catalog = [...read("shared/data/merits.json"), ...read("game-lines/changeling/data/merits.json"), ...read("game-lines/mage/data/merits.json"), ...read("game-lines/werewolf/data/merits.json")];
+
+test("each line owns canonical grant upgrade eligibility; translated, foreign, unavailable and Homebrew identities cannot impersonate a grant", () => {
+  for (const [id, marker, eligible] of [
+    ["ctl-2ed:mantle", "Corte", canAdvanceChangelingGrant],
+    ["mta-2ed:awakened-status", "Ordem", canAdvanceMageGrant],
+    ["core-2ed:mystery-cult-initiation", "Nameless Order", canAdvanceMageGrant],
+    ["wtf-2ed:totem", "werewolf:creation-totem", canAdvanceWerewolfGrant],
+  ]) {
+    const definition = catalog.find(item => item.id === id);
+    const selection = { definitionId: id, instanceId: "grant", name: "Changed presentation", dots: 1, creationDots: 1, experienceDots: 0, sourceId: definition.sourceId, grantedBy: marker, configuration: { notes: "Authored" } };
+    const before = JSON.stringify(selection);
+    assert.equal(eligible(selection, catalog), true, id);
+    assert.equal(eligible({ ...selection, definitionId: undefined, name: definition.name }, catalog), true);
+    for (const change of [
+      { definitionId: "unavailable:id", name: definition.name },
+      { definitionId: "homebrew:id", name: definition.name },
+      { definitionId: undefined, name: "Translated label" },
+      { definitionId: undefined, name: definition.name, sourceId: "foreign" },
+      { grantedBy: "Other grant" }, { grantedBy: undefined },
+    ]) assert.equal(eligible({ ...selection, ...change }, catalog), false, `${id}: ${JSON.stringify(change)}`);
+    const namesake = { ...definition, id: "homebrew:id", sourceId: "homebrew" };
+    assert.equal(eligible({ ...selection, definitionId: namesake.id, name: definition.name }, [...catalog, namesake]), false);
+    assert.equal(eligible({ ...selection, definitionId: undefined, name: definition.name, sourceId: undefined }, [...catalog, namesake]), false);
+    for (const other of [canAdvanceMageGrant, canAdvanceChangelingGrant, canAdvanceWerewolfGrant].filter(item => item !== eligible))
+      assert.equal(other(selection, catalog), false);
+    assert.equal(JSON.stringify(selection), before);
+  }
+  for (const [id, marker] of [["mta-2ed:high-speech", "Ordem"], ["core-2ed:language", "werewolf:first-tongue"]]) {
+    const definition = catalog.find(item => item.id === id);
+    const merit = { definitionId: id, name: definition.name, dots: 1, grantedBy: marker };
+    assert.equal(canAdvanceMageGrant(merit, catalog), false);
+    assert.equal(canAdvanceWerewolfGrant(merit, catalog), false);
+  }
+});
+
+test("only Changeling enforces catalog Mantle as an existing allocation; a Homebrew namesake does not inherit that restriction", () => {
+  const mantle = catalog.find(item => item.id === "ctl-2ed:mantle");
+  const namesake = { ...mantle, id: "homebrew:mantle", sourceId: "homebrew", prerequisites: undefined };
+  const context = { gameLine: "CtL", court: "autumn", merits: [], meritCatalog: [...catalog, namesake] };
+  assert.equal(changelingExperienceMeritEligible(mantle, context), false);
+  assert.equal(changelingExperienceMeritEligible(namesake, context), true);
+  context.merits = [{ definitionId: namesake.id, name: "Mantle", dots: 1, grantedBy: "Corte" }];
+  assert.equal(changelingExperienceMeritEligible(mantle, context), false);
+  context.merits = [{ definitionId: mantle.id, name: "Renamed label", dots: 1, grantedBy: "Corte" }];
+  assert.equal(changelingExperienceMeritEligible(mantle, context), true);
+});
 
 test("neutral Merit context never reads line_data and applies only explicitly supplied Skill bonuses without mutation", () => {
   const sheet = { game_line: "CofD", attributes: { Wits: 2 }, skills: { Occult: 2 }, merits: [], derived: { Tamanho: 6 } };

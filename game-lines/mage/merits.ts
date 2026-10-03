@@ -10,6 +10,12 @@ const EXARCHS = new Set(["Eye", "Father", "General", "Unity", "Chancellor", "Rap
 const PROFANE_FORMS = new Set(["Scepter", "Robe", "Crown", "Throne", "Ring"]);
 const SVIKIRO_TRADITIONS = new Set(["wamasikati", "wedzinza"]);
 
+export function canAdvanceMageGrant(merit: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[]) {
+  const id = resolveMeritDefinition(merit, catalog)?.id;
+  return (merit.grantedBy === "Ordem" && id === "mta-2ed:awakened-status") ||
+    (merit.grantedBy === "Nameless Order" && id === "core-2ed:mystery-cult-initiation");
+}
+
 export function mageMeritContextForSheet(sheet: CharacterSheet, catalog: readonly MeritDefinition[]): MeritPrerequisiteContext {
   const data = sheet.line_data;
   return {

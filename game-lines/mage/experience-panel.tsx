@@ -36,12 +36,12 @@ import { mageExperienceLabel, type MageExperienceEntry } from "./experience-pres
 import { activeSpellCatalog } from "./spell-homebrews";
 import { useSpellHomebrews } from "./use-spell-homebrews";
 import type { MageFactionDefinition } from "./factions";
-import { mageMeritContextForSheet, mageMeritPrerequisitesMet, mageMeritSelectionProblems } from "./merits";
+import { canAdvanceMageGrant, mageMeritContextForSheet, mageMeritPrerequisitesMet, mageMeritSelectionProblems } from "./merits";
 import { useLegacyHomebrews } from "./use-legacy-homebrews";
 
 const objectList=(value:unknown)=>Array.isArray(value)?value as Array<Record<string,unknown>>:[];
 const boundedNumber=(value:unknown,maximum:number,fallback:number)=>Math.max(0,Math.min(maximum,Number.isFinite(Number(value))?Number(value):fallback));
-import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, canAdvanceGrantedMerit, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, ratingPurchaseCost, recalculateCoreDerived, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
+import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, ratingPurchaseCost, recalculateCoreDerived, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
 import { formatSpellRequirements, MageExperienceRules } from "./experience-shared";
 
 type MagePurchaseType = "attribute" | "skill" | "specialty" | "merit" | "arcanum" | "gnosis" | "rote" | "praxis" | "wisdom" | "willpower";
@@ -260,9 +260,9 @@ export function MageExperiencePanel({
   function buy() {
     if(purchase==="merit"){
       if(!selectedMerit||!nextMerit)return setFeedback(t("ui.selectAnAvailableMerit"));
-      if (mageMeritInstance >= 0 && (!ownedMerit || (ownedMerit.grantedBy && !canAdvanceGrantedMerit("MtA", ownedMerit)))) return setFeedback(t("ui.selectAnAvailableMerit"));
+      if (mageMeritInstance >= 0 && (!ownedMerit || (ownedMerit.grantedBy && !canAdvanceMageGrant(ownedMerit, meritCatalog)))) return setFeedback(t("ui.selectAnAvailableMerit"));
       if (mageMeritInstance < 0 && !isRepeatableDefinition(selectedMerit) && character.merits.some(item => meritMatchesDefinition(item, selectedMerit, meritCatalog))) return setFeedback(t("ui.selectAnAvailableMerit"));
-      if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>meritMatchesDefinition(item,selectedMerit,meritCatalog)&&item.grantedBy&&!canAdvanceGrantedMerit("MtA",item)))return setFeedback(t("ui.thisMeritIsAlreadyGranted"));
+      if(!isRepeatableDefinition(selectedMerit)&&character.merits.some(item=>meritMatchesDefinition(item,selectedMerit,meritCatalog)&&item.grantedBy&&!canAdvanceMageGrant(item,meritCatalog)))return setFeedback(t("ui.thisMeritIsAlreadyGranted"));
       const problems=mageMeritSelectionProblems(selectedMerit,{dots:nextMerit,configuration:mageMeritConfiguration},meritContext,factionCatalog,character.line_data.affiliation_id);
       if(problems.length)return setFeedback(problems.map(problem=>meritProblemMessage(problem,selectedMerit,locale,meritCatalog)).join(" "));
     }
@@ -532,6 +532,7 @@ export function MageExperiencePanel({
                   line="MtA"
                   isEligible={mageMeritPrerequisitesMet}
                   context={meritContext}
+                  canAdvanceGrant={merit => canAdvanceMageGrant(merit, meritCatalog)}
                   meritCatalog={meritCatalog}
                   character={character}
                   selectedId={selectedMerit?.id ?? ""}

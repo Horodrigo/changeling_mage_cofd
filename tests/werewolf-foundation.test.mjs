@@ -210,7 +210,7 @@ test("WtF 2e p. 83 grants Totem 1 and Language (First Tongue) outside the ten-do
   assert.equal(creation.length, 3);
   assert.equal(grants.werewolfCreationMeritCost(creation, definitions), 2);
   const saved = grants.mergeWerewolfCreationMerits(existing, creation, definitions);
-  assert.deepEqual(saved.find(item => item.instanceId === "totem-instance"), { ...existing[0], creationDots: 2, experienceDots: 2, dots: 4, configuration: {} });
+  assert.deepEqual(saved.find(item => item.instanceId === "totem-instance"), { ...existing[0], definitionId: "wtf-2ed:totem", creationDots: 2, experienceDots: 2, dots: 4, configuration: {} });
   assert.deepEqual(saved.find(item => item.instanceId === "xp-bite"), existing[2]);
   assert.deepEqual(saved.find(item => item.instanceId === "xp-claws"), existing[3]);
   assert.equal(saved.filter(item => item.configuration?.language === "First Tongue").length, 1);
@@ -220,7 +220,7 @@ test("WtF 2e p. 83 grants Totem 1 and Language (First Tongue) outside the ten-do
   const free = grants.withWerewolfCreationGrants([], [], definitions);
   assert.equal(free.length, 2);
   assert.equal(grants.werewolfCreationMeritCost(free, definitions), 0);
-  assert.ok(free.every(item => item.instanceId && item.dots === 1));
+  assert.ok(free.every(item => item.definitionId && item.instanceId && item.dots === 1));
   assert.equal(grants.werewolfCreationMeritCost([...free, { ...free[0], instanceId: "duplicate" }], definitions), 1, "Duplicate grants do not exempt another dot");
   const restored = grants.mergeWerewolfCreationMerits(existing, [], definitions);
   assert.equal(restored.find(item => item.instanceId === "totem-instance").creationDots, 1);
@@ -237,7 +237,7 @@ test("WtF 2e p. 83 grants Totem 1 and Language (First Tongue) outside the ten-do
     assert.throws(() => grants.werewolfCreationMeritCost([{ ...free[0], dots }], definitions), /Invalid creation Merit dots/);
 });
 
-test("Werewolf Merit identity resolves only unambiguous canonical name/source pairs, not localized names or instance indices", async () => {
+test("Werewolf Merit IDs are authoritative; only ID-less schema-2 selections resolve canonical name/source pairs", async () => {
   const grants = await vite.ssrLoadModule("/game-lines/werewolf/creation-grants.ts");
   const definitions = [...readJson("public/shared/data/merits.json"), ...werewolfMerits];
   const selection = { name: "Living Weapon", sourceId: "wtf-2ed", instanceId: "claws-instance", dots: 4, configuration: { form: "gauru", attack: "claws" } };
@@ -247,6 +247,13 @@ test("Werewolf Merit identity resolves only unambiguous canonical name/source pa
   const clone = { ...definitions.find(item => item.id === "wtf-2ed:living-weapon"), id: "other:living-weapon", sourceId: "other" };
   assert.equal(grants.werewolfMeritDefinition({ ...selection, sourceId: undefined }, [...definitions, clone]), undefined);
   assert.equal(grants.werewolfMeritDefinition(selection, [...definitions, clone]).id, "wtf-2ed:living-weapon");
+  const before = JSON.stringify(selection);
+  for (const label of ["Living Weapon", "Arma Viva", "Authored display"])
+    assert.equal(grants.werewolfMeritDefinition({ ...selection, definitionId: "wtf-2ed:living-weapon", name: label, sourceId: "stored-label" }, [...definitions, clone]).id, "wtf-2ed:living-weapon");
+  for (const id of ["unavailable:weapon", "homebrew:weapon"])
+    assert.equal(grants.werewolfMeritDefinition({ ...selection, definitionId: id }, definitions), undefined);
+  assert.equal(grants.werewolfMeritDefinition({ ...selection, definitionId: clone.id }, [...definitions, clone]).id, clone.id);
+  assert.equal(JSON.stringify(selection), before);
 });
 
 test("WtF 2e pp. 82–83 creation allocations retain exact canonical grants and undo only the recorded free Skill dot on editing", async () => {
