@@ -1,6 +1,6 @@
 # Auditoria de tradução — Mortal, Vampire e Mage
 
-Data inicial: 2026-10-02. Atualização: 2026-10-03. Estado: **meta ativa; prioridade 0 implementada e verificada; etapa 1 em execução; etapas 2–4 pendentes**.
+Data inicial: 2026-10-02. Atualização: 2026-10-03. Estado: **meta ativa; prioridade 0 e etapa 1 implementadas e verificadas; etapa 2 em execução; etapas 3–4 pendentes**.
 
 ## Escopo e método
 
@@ -16,7 +16,7 @@ Um campo canônico em inglês não é, por si só, uma pendência: foram examina
 - [x] **0 — Consolidação documental:** incorporar o histórico editorial dos documentos anteriores neste arquivo, incluindo pendências mecânicas, sem aplicar correções de regras incidentalmente. Remover auditorias concluídas após preservar suas informações. `WerewolfAudit.md` permanece porque contém trabalho adiado e decisões mecânicas ainda necessárias; sua terminologia relevante é consolidada abaixo.
 - [x] **0 — Homônimos:** identificar Conditions/Tilts de linhas diferentes com o mesmo nome e distinguir sua apresentação por qualificador de linha, incluindo EN/PT. Exemplos aprovados: `Charmed(Kindred)` e `Charmed(Awakened)`. Localizar o nome e o qualificador conforme o idioma e o léxico aprovado, mantendo IDs, origem e efeitos distintos. Não acrescentar sufixo indiscriminadamente a itens sem colisão e não fundir registros por nome.
 - [x] **0 — Merits homônimos:** aplicar o qualificador de linha também aos Merits com o mesmo nome **quando seus efeitos mecânicos forem diferentes**. Comparar requisitos, benefícios, níveis, custos, limites e exceções, não apenas a igualdade das descrições. Redação ligeiramente diferente com o mesmo efeito não justifica distinguir a apresentação. Preservar cada identidade de catálogo e instância; sem fusão ou alteração mecânica incidental. Os cinco pares distintos recebem qualificador; Mystery Cult Influence mantém a apresentação sem qualificador e a dúvida sobre a fonte Core, descritas no progresso abaixo.
-- [ ] **1 — Mortals/Core:** completar primeiro Conditions Core e Tilts compartilhados, inclusive resolução, Beat, categorias e referências terminológicas. Não retraduzir os Merits Core já cobertos, exceto uniformizações necessárias.
+- [x] **1 — Mortals/Core:** completar primeiro Conditions Core e Tilts compartilhados, inclusive resolução, Beat, categorias e referências terminológicas. Não retraduzir os Merits Core já cobertos, exceto uniformizações necessárias.
 - [ ] **2 — Interface:** corrigir mensagens, rótulos e textos dinâmicos remanescentes nas superfícies Desktop/Mobile; preservar texto autoral e verificar alternância EN/PT.
 - [ ] **3 — Vampire:** referências, Merits, poderes, Conditions e textos dinâmicos. Conteúdo oficial e Homebrew no mesmo trabalho, preservando a identificação de origem.
 - [ ] **4 — Mage:** Merits, Spells, Orders/Factions/Ministries, Legacies/Attainments, Conditions e integração de apresentação. Conteúdo oficial e Homebrew no mesmo trabalho, preservando a identificação de origem.
@@ -29,8 +29,8 @@ Impressão/PDF/blank fica **fora desta meta**, inclusive a inconsistência de Nu
 | --- | --- | --- |
 | Interface | Common: 672 chaves; Mortal: 34; Vampire: 370; Mage: 388 | Nenhuma chave sem correspondente PT nesses dicionários; há textos dinâmicos e rótulos fora deles, listados abaixo |
 | Merits Core | 202 | Todos têm entrada PT; não precisam de uma nova tradução integral |
-| Conditions Core | 34 | Resolução das 34; textos de Beat das 16 que os possuem; categorias inconsistentes |
-| Tilts compartilhados | 35 | Descrição, efeito, causa e encerramento em inglês; alguns nomes também precisam de revisão |
+| Conditions Core | 34 | Implementado: apresentação PT completa e integração em Mortals/Core, Vampire e Mage |
+| Tilts compartilhados | 35 | Implementado: apresentação PT completa, títulos descritivos e integração no combate |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Textos mecânicos; nomes parcialmente traduzidos ou próprios |
 | Vampire — Merits | 403 | 353 descrições em inglês; 50 descrições PT existentes precisam de revisão dos demais campos |
 | Vampire — poderes | 546 registros, mais 140 entradas de níveis internas | Textos mecânicos em inglês; nomes parcialmente traduzidos |
@@ -57,9 +57,9 @@ Arquivos: `public/shared/data/conditions.json` e `conditions-pt.json`.
 
 Arquivo: `lib/catalog-data/tilts.json`. Consumidor: `app/workspace/combat-page.tsx`.
 
-O canônico dos 35 registros permanece em inglês. Os **27 Core/Hurt Locker** agora possuem `presentationPt` completa e o gerenciador compartilhado aplica essa apresentação ao catálogo, busca e efeitos selecionados em PT. Os **oito restantes** de Changeling/Mage/Dark Eras/Homebrew continuam pendentes.
+Os **35 registros** possuem `presentationPt` completa para descrição, efeito, causa e encerramento. O canônico permanece em inglês; o gerenciador compartilhado aplica a apresentação ao catálogo, busca e efeitos selecionados em PT, retornando aos textos canônicos em EN.
 
-Os títulos de Hurt Locker foram localizados: Bleeding → Sangrando; Burning → Em Chamas; Came Prepared → Chegou Preparado; Pierced Armor → Armadura Perfurada; Pinned → Preso. Nos oito registros restantes, revisar Flesh Too Solid, Nimbus, Poor Light, Shattered Time, Urban Collapse e Riot; Nimbus já é o termo aplicado em Mage e não deve mudar por igualdade com o inglês. Nenhuma apresentação recebe um qualificador sem colisão de nomes.
+Os títulos de Hurt Locker foram localizados: Bleeding → Sangrando; Burning → Em Chamas; Came Prepared → Chegou Preparado; Pierced Armor → Armadura Perfurada; Pinned → Preso. Os demais títulos descritivos foram localizados: Flesh Too Solid → Carne Muito Sólida, conforme o Contract já traduzido; Poor Light → Pouca Luz; Shattered Time → Tempo Fragmentado; Urban Collapse → Desmoronamento Urbano; Riot → Motim. **Nimbus** mantém o termo aplicado em Mage. Bando de Hobgoblins foi uniformizado com o texto de Reunir o Bando. Nenhuma apresentação recebe um qualificador sem colisão de nomes.
 
 ### M03 — O que não precisa de nova tradução integral
 
@@ -553,6 +553,13 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - `tiltPresentation` aplica somente os quatro campos textuais; o gerenciador de combate compartilha a mesma apresentação para catálogo, pesquisa e efeitos selecionados. Nomes canônicos, IDs, categorias, fonte, página e seleções permanecem intactos. Nenhum efeito é calculado ou aplicado automaticamente pela mudança de idioma.
 - Fórmulas, graduações e unidades foram preservadas, inclusive **10 − Vigor + Perseverança**, jardas, polegadas e pés; não foram convertidas ou reinterpretadas. A Fraqueza citada por Zombies! foi localizada no contexto da vulnerabilidade da horda, sem estender esse termo a Bane de Clan/Bloodline ou ao papel de Changeling. Os oito Tilts remanescentes serão o próximo lote; a etapa 1 ainda não está concluída.
 - Verificação: **16/16** testes dirigidos de Tilts, Conditions e homônimos; números canônicos reconciliados por campo, efeitos selecionados renderizados em EN/PT/EN sem mutação, IDs indisponíveis e notas autorais preservados. Comparação de **35/35** registros com `695697e` confirmou que somente os cinco títulos PT autorizados e as 27 apresentações foram adicionados; nenhum outro campo mudou. Lint, TypeScript, build e `git diff --check` aprovados. Sem smoke de navegador; impressão sem alteração de componente.
+
+## Progresso — etapa 1, Tilts restantes e fechamento do conteúdo compartilhado (2026-10-03)
+
+- Os oito registros restantes de Changeling, Mage, Dark Eras e Homebrew receberam apresentação PT completa, no mesmo catálogo compartilhado: Carne Muito Sólida, Nimbus, Pouca Luz, Tempo Fragmentado, Desmoronamento Urbano, Motim, Afogamento e Bando de Hobgoblins. Os **35 Tilts / 140 campos textuais** agora possuem PT.
+- Nimbus conserva o termo atual; Carne Muito Sólida reutiliza a tradução de Dreamsteps. As referências de poderes reutilizam **Armar a Multidão**, **Baú de Davy Jones** e **Reunir o Bando** dos respectivos Contracts. O nome próprio Davy Jones permanece intacto. Manto, Gnose, Alcance, Oniromancia, Choque de Vontades e ação de rotina acompanham o léxico existente.
+- Toda apresentação conserva os números canônicos por campo. A duração, os efeitos e as exceções continuam sendo resumos do catálogo já cadastrado; nenhuma regra foi reconstruída ou ajustada incidentalmente. Os arquivos canônicos usados por parsers e os IDs salvos não mudaram. Dados Homebrew continuam identificados por sua fonte.
+- Verificação: **20/20** testes dirigidos e suíte completa **546/546**, com renderização de efeitos dos 35 registros em EN/PT/EN sem mutação e referências reconciliadas com o catálogo PT de Contracts. A comparação com `9f97490` conservou os 35 registros canônicos, exceto seis títulos PT localizados/uniformizados, e adicionou somente as oito apresentações restantes. Lint, TypeScript, build e `git diff --check` aprovados. Sem smoke de navegador. A etapa 1 está implementada e verificada; as etapas 2–4 permanecem abertas e a meta continua ativa.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 

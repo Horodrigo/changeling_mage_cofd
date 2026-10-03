@@ -40,10 +40,29 @@ test("the 27 Core/Hurt Locker Tilts have complete PT presentation with canonical
   assert.deepEqual(core.filter(item => item.sourceCode === "HL").map(item => catalogDisplayName(item, "pt-BR")), ["Sangrando", "Em Chamas", "Chegou Preparado", "Armadura Perfurada", "Preso"]);
 });
 
+test("all 35 shared Tilts have complete PT text and keep approved titles and power references", () => {
+  for (const item of TILTS) {
+    const pt = tiltPresentation(item, "pt-BR");
+    assert.deepEqual(Object.keys(item.presentationPt).sort(), fields.toSorted());
+    for (const field of fields) {
+      assert.ok(pt[field].trim(), `${item.id}.${field}`);
+      assert.notEqual(pt[field], item[field]);
+      assert.deepEqual(pt[field].match(/\d+/g) ?? [], item[field].match(/\d+/g) ?? [], `${item.id}.${field}: numeric limits`);
+    }
+  }
+  const contracts = JSON.parse(readFileSync(new URL("../public/game-lines/changeling/data/contracts/h-courts-pt.json", import.meta.url), "utf8"));
+  for (const [tiltId, contractId] of [["riot", "h-courts:dragon:weaponize-mob"], ["drowning", "h-courts:tide:davy-jones-locker"], ["hobgoblin-band", "h-courts:traders:raise-the-band"]])
+    assert.ok(tiltPresentation(findTilt(tiltId), "pt-BR").causing.includes(contracts[contractId].name));
+  assert.equal(catalogDisplayName(findTilt("flesh-too-solid"), "pt-BR"), "Carne Muito Sólida");
+  assert.equal(catalogDisplayName(findTilt("nimbus"), "pt-BR"), "Nimbus");
+  assert.match(tiltPresentation(findTilt("nimbus"), "pt-BR").effect, /Alcance do feitiço.*sucessos de Gnose/);
+  assert.doesNotMatch(JSON.stringify(TILTS.map(item => item.presentationPt)), /\b(?:Tilts?|Beats?|Conditions?|Gnosis|Mantle|Reach|Contracts?|Willpower|Clash of Wills|Dream Health)\b/);
+});
+
 test("combat renders selected Core Tilt effects in EN/PT/EN while preserving stored IDs and authored data", async () => {
   const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
   const sheet = blankPrintCharacter("CofD");
-  sheet.line_data.combat_tilts = [...core.map(item => item.id), "unavailable:authored"];
+  sheet.line_data.combat_tilts = [...TILTS.map(item => item.id), "unavailable:authored"];
   sheet.line_data.authored_notes = "My combat notes";
   const before = JSON.stringify({ sheet, TILTS });
   for (const locale of ["en-US", "pt-BR", "en-US"]) {
@@ -54,7 +73,7 @@ test("combat renders selected Core Tilt effects in EN/PT/EN while preserving sto
       const { CombatPage } = await server.ssrLoadModule("/app/workspace/combat-page.tsx");
       const { LanguageProvider } = await server.ssrLoadModule("/lib/i18n.tsx");
       const html = renderToStaticMarkup(createElement(LanguageProvider, null, createElement(CombatPage, { character: sheet, derived: sheet.derived, updateSheet: () => { throw new Error("Render changed the sheet"); } })));
-      for (const item of core) {
+      for (const item of TILTS) {
         assert.ok(html.includes(escape(catalogDisplayName(item, locale))), `${locale}: ${item.id}.name`);
         assert.ok(html.includes(escape(tiltPresentation(item, locale).effect)), `${locale}: ${item.id}.effect`);
       }

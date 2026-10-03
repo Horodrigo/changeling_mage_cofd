@@ -515,7 +515,7 @@
   {
     "id": "flesh-too-solid",
     "name": "Flesh Too Solid",
-    "translatedName": "Flesh Too Solid",
+    "translatedName": "Carne Muito Sólida",
     "category": "Personal",
     "description": "Dream immersion makes physical sensations vivid enough for dream wounds to leave real scars.",
     "effect": "Whenever the character would suffer Dream Health damage, she suffers equivalent physical Health damage instead.",
@@ -523,7 +523,13 @@
     "ending": "Normally ends at the end of the scene.",
     "source": "Changeling the Lost",
     "sourceCode": "CTL 2e",
-    "page": 329
+    "page": 329,
+    "presentationPt": {
+      "description": "A imersão no sonho torna as sensações físicas tão vívidas que os ferimentos oníricos deixam cicatrizes reais.",
+      "effect": "Sempre que o personagem sofreria dano à Vitalidade no sonho, sofre dano equivalente à Vitalidade física em seu lugar.",
+      "causing": "Uma falha dramática em ações de Oniromancia ou Contratos.",
+      "ending": "Normalmente termina ao fim da cena."
+    }
   },
   {
     "id": "nimbus",
@@ -536,12 +542,18 @@
     "ending": "The duration expires, the witness leaves the aura, or another aura wins the applicable Clash of Wills.",
     "source": "Mage the Awakening",
     "sourceCode": "MTA 2e",
-    "page": 89
+    "page": 89,
+    "presentationPt": {
+      "description": "O Nimbus Imediato de um mago impõe sua ressonância única às testemunhas.",
+      "effect": "Se a força do Nimbus igualar ou superar a Perseverança, aplicar os modificadores de Atributos ou alterações nos dados de Perícias definidos pelo mago por um número de turnos igual ao Alcance do feitiço, com mínimo de um; uma manifestação voluntária usa sucessos de Gnose e dura um turno.",
+      "causing": "Um mago conjura um feitiço ou gasta 1 Mana uma vez por cena para manifestar o Nimbus Imediato sem conjurar.",
+      "ending": "A duração acaba, a testemunha deixa a aura ou outra aura vence o Choque de Vontades aplicável."
+    }
   },
   {
     "id": "poor-light",
     "name": "Poor Light",
-    "translatedName": "Poor Light",
+    "translatedName": "Pouca Luz",
     "category": "Environmental",
     "description": "Dim, strobing, or flickering light makes movement difficult to track.",
     "effect": "Visual Perception and ranged combat suffer -2 at short range, -3 at medium range, and -4 at long range.",
@@ -549,12 +561,18 @@
     "ending": "Bring, find, or create a light source.",
     "source": "Mage the Awakening",
     "sourceCode": "MTA 2e",
-    "page": 323
+    "page": 323,
+    "presentationPt": {
+      "description": "Luz fraca, estroboscópica ou oscilante dificulta acompanhar movimentos.",
+      "effect": "Percepção visual e combate à distância sofrem −2 a curta distância, −3 a média distância e −4 a longa distância.",
+      "causing": "Escuridão natural com luz ambiente fraca ou um ambiente visualmente desorientador, como uma boate.",
+      "ending": "Trazer, encontrar ou criar uma fonte de luz."
+    }
   },
   {
     "id": "shattered-time",
     "name": "Shattered Time",
-    "translatedName": "Shattered Time",
+    "translatedName": "Tempo Fragmentado",
     "category": "Environmental",
     "description": "Wounded chronology makes movement, memory, and causality stutter unpredictably.",
     "effect": "Each turn, roll one die to add to Defense, Initiative, Speed, or Perception and another to subtract from one of them. Each rolled 10 causes a minor temporal rewrite; five accumulated 10s cause a major rewrite. Time spells and their Paradox pools both gain +1 and rote action.",
@@ -562,12 +580,18 @@
     "ending": "Leave the affected region or repair its temporal wound through an appropriate supernatural effect.",
     "source": "Dark Eras",
     "sourceCode": "DE",
-    "page": 46
+    "page": 46,
+    "presentationPt": {
+      "description": "Uma cronologia ferida faz movimento, memória e causalidade falharem de modo imprevisível.",
+      "effect": "A cada turno, lançar um dado para somar à Defesa, Iniciativa, Deslocamento ou Percepção e outro para subtrair de um deles. Cada resultado 10 causa uma pequena reescrita temporal; cinco resultados 10 acumulados causam uma grande reescrita. Feitiços de Tempo e suas paradas de Paradoxo recebem +1 e ação de rotina.",
+      "causing": "Entrar em uma região marcada por Tempo bruto e fragmentado.",
+      "ending": "Deixar a região afetada ou reparar sua ferida temporal com um efeito sobrenatural apropriado."
+    }
   },
   {
     "id": "urban-collapse",
     "name": "Urban Collapse",
-    "translatedName": "Urban Collapse",
+    "translatedName": "Desmoronamento Urbano",
     "category": "Environmental",
     "description": "Unstable ground and structures collapse under physical stress.",
     "effect": "Moving over half Speed requires reflexive Dexterity + Athletics at -3 or inflicts 3 bashing and Knocked Down. A dramatic failure causes 5 bashing and entrapment; escaping rubble requires Strength + Stamina at -5.",
@@ -575,12 +599,18 @@
     "ending": "Ends with the scene, but recurs in later action scenes until extensive construction repairs the site.",
     "source": "Dark Eras",
     "sourceCode": "DE",
-    "page": 573
+    "page": 573,
+    "presentationPt": {
+      "description": "Solo e estruturas instáveis desabam sob esforço físico.",
+      "effect": "Mover-se acima de metade do Deslocamento exige Destreza + Esportes reflexivo a −3 ou causa 3 de dano contusivo e Derrubado. Uma falha dramática causa 5 de dano contusivo e deixa o personagem preso; escapar dos escombros exige Força + Vigor a −5.",
+      "causing": "Um sucesso excepcional ou falha dramática durante uma cena de ação física em um local instável, ou um ataque feito com −2 para impor o perigo a um alvo.",
+      "ending": "Termina com a cena, mas volta em cenas de ação posteriores até que obras extensas reparem o local."
+    }
   },
   {
     "id": "riot",
     "name": "Riot",
-    "translatedName": "Riot",
+    "translatedName": "Motim",
     "category": "Environmental",
     "description": "A tense crowd erupts into indiscriminate violence.",
     "effect": "Each turn, reflexively roll Stamina + Athletics; failure inflicts 2 bashing damage. Wider destruction is determined by the Storyteller.",
@@ -588,7 +618,13 @@
     "ending": "Usually cannot be stopped by one character and lasts from hours to weeks depending on the crowd and response.",
     "source": "Dark Eras",
     "sourceCode": "DE",
-    "page": 576
+    "page": 576,
+    "presentationPt": {
+      "description": "Uma multidão tensa explode em violência indiscriminada.",
+      "effect": "A cada turno, testar reflexivamente Vigor + Esportes; uma falha causa 2 de dano contusivo. A destruição mais ampla é determinada pelo Narrador.",
+      "causing": "Acontecimentos da história, um ato perigosamente público em uma situação já tensa, um poder sobrenatural apropriado ou Armar a Multidão.",
+      "ending": "Normalmente um único personagem não consegue interrompê-la, e ela dura de horas a semanas conforme a multidão e a resposta."
+    }
   },
   {
     "id": "drowning",
@@ -601,12 +637,18 @@
     "causing": "Immersion in liquid, inability to surface, restraint underwater, or Davy Jones' Locker.",
     "ending": "Reach air and clear liquid from the lungs.",
     "source": "Book of Courts",
-    "sourceCode": "BoC"
+    "sourceCode": "BoC",
+    "presentationPt": {
+      "description": "O personagem está submerso e ficando sem ar.",
+      "effect": "Sofrer 1 de dano contusivo a cada turno de afogamento.",
+      "causing": "Imersão em líquido, incapacidade de chegar à superfície, imobilização sob a água ou Baú de Davy Jones.",
+      "ending": "Alcançar o ar e remover o líquido dos pulmões."
+    }
   },
   {
     "id": "hobgoblin-band",
     "name": "Hobgoblin Band",
-    "translatedName": "Bando Hobgoblin",
+    "translatedName": "Bando de Hobgoblins",
     "category": "Environmental",
     "page": 146,
     "description": "A conscripted band of hobgoblins fights for the changeling.",
@@ -614,6 +656,12 @@
     "causing": "Raise the Band.",
     "ending": "The band has 5 + Mantle Health, no Defense, and takes at most 1 damage per attack. Each lethal above five reduces damage by one; full lethal or aggravated routes or kills it. Successful mental or social powers contested by Mantle count as lethal attacks.",
     "source": "Book of Courts",
-    "sourceCode": "BoC"
+    "sourceCode": "BoC",
+    "presentationPt": {
+      "description": "Um bando recrutado de hobgoblins luta pelo changeling.",
+      "effect": "A cada turno, o bando causa dano letal igual ao Manto, dividido entre os oponentes; a Defesa não se aplica, mas a armadura sim. Gastar 1 ponto de Força de Vontade aumenta o dano em 2.",
+      "causing": "Reunir o Bando.",
+      "ending": "O bando tem 5 + Manto de Vitalidade, nenhuma Defesa e sofre no máximo 1 de dano por ataque. Cada dano letal além de cinco reduz seu dano em um; preencher a Vitalidade com dano letal ou agravado faz o bando fugir ou o mata. Poderes mentais ou sociais bem-sucedidos disputados pelo Manto contam como ataques letais."
+    }
   }
 ]
