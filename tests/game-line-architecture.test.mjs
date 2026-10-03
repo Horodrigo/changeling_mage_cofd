@@ -192,6 +192,10 @@ test("Changeling-specific selectors belong to its stylesheet, including Homebrew
 
 test("shared presentation patterns use neutral names across game lines", async () => {
   const shared = await source("app/css/globals.css");
+  assert.doesNotMatch(shared, /\.mage-creation-xp-totals/);
+  const mage = await source("game-lines/mage/styles/sheet.css");
+  assert.match(mage, /\.experience-totals\.mage-creation-xp-totals\s*\{\s*grid-template-columns:\s*repeat\(4, 1fr\);/);
+  assert.match(mage, /@media \(max-width: 767px\)\s*\{\s*\.experience-totals\.mage-creation-xp-totals\s*\{\s*grid-template-columns:\s*repeat\(2, 1fr\);/);
   assert.doesNotMatch(shared, /\.(?:contract-|creation-contract-|kith-|custom-kith-|entitlement-|regalia-|court-|trifle-|token-|goblin-debt-|clarity-|stored-glamour)/);
   for (const selector of [".rule-power-card", ".template-choice-current", ".affiliation-page", ".stored-resource-dot"]) {
     assert.ok(shared.includes(selector), `${selector} missing from shared CSS`);
