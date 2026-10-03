@@ -102,7 +102,7 @@ export function synchronizeMageBuilderMeritGrants(sheet: CharacterSheet) {
       ? [...(affiliation?.roteSkills?.length?affiliation.roteSkills:(MTA_ORDERS[order]??[]))]
       : [];
   const factionRoteSkills = sheet.merits
-    .filter((item) => item.name === "Faction Member" && item.dots >= 3)
+    .filter((item) => item.dots >= 3 && resolveMeritDefinition(item, [{ id: "mta-tome:faction-member", name: "Faction Member", sourceId: "mta-tome" }]))
     .map((item) => String(normalizeMeritConfiguration(item.configuration).roteSkill ?? ""))
     .filter(Boolean);
   sheet.line_data.rote_skills = [...new Set([...baseRoteSkills, ...factionRoteSkills])];

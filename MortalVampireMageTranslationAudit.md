@@ -416,6 +416,13 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Verificação final: **483/483 testes** na suíte completa após a migração; `npm run lint`, `npm run build`, `npx tsc --noEmit` e `git diff --check` aprovados. A verificação do manifesto de produção confirmou os fechamentos de imports isolados por linha. Sem smoke de navegador, reservado ao usuário conforme o workflow do projeto.
 - **Prioridade 0 ainda aberta:** o contexto/requisitos específicos em `lib/merits.ts` e demais consumidores de nomes, concessões/integrações de Changeling/Werewolf e comparação dos seis pares de Merits homônimos. Este lote resolve a organização dos arquivos especializados de X03, não toda a dívida mecânica nem a meta de tradução.
 
+## Progresso — prioridade 0, Faction Member
+
+- Mage: o bônus de Rote Skills de Faction Member agora resolve `mta-tome:faction-member`, e não o nome de exibição. Mantém o limiar e a configuração existentes; não reconstrói regras ou concede efeitos novos.
+- IDs explícitos Homebrew/indisponíveis não herdam o bônus. A ponte schema-2 já documentada admite somente nome canônico/origem exatos para seleções sem ID; ela não regrava a identidade existente.
+- Os 29 testes direcionados de identidade/concessões e Merits Mage passaram. O novo teste concilia nome/fonte com o catálogo canônico e cobre renomeação, fonte estrangeira, tradução sem ID, limiar, idempotência e preservação de instância, alocações e histórico/saldos de XP. Lint e TypeScript passaram antes do lote de qualificadores seguinte.
+- O contexto/requisitos especializados e os demais consumidores de nomes continuam pendentes; esta correção não encerra a prioridade 0 nem a meta.
+
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
 Documento anterior consolidado abaixo; suas tarefas de interface foram concluídas. Pendências de catálogo e propostas com status próprio continuam identificadas no texto histórico.

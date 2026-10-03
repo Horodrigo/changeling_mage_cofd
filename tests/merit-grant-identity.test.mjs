@@ -240,6 +240,38 @@ test("Mage's ID-keyed Cult Influence preserves configured grants without Core le
   assert.equal(sheet.merits[1].definitionId, resources.id);
 });
 
+test("Mage Faction Member Rote Skills follow canonical identity without reclassifying purchases or accepting namesakes", () => {
+  const definition = read("game-lines/mage/data/merits-supplements.json").find(item => item.id === "mta-tome:faction-member");
+  assert.equal(definition.name, "Faction Member");
+  assert.equal(definition.sourceId, "mta-tome");
+  const merit = { definitionId: definition.id, name: "Renamed label", sourceId: definition.sourceId, instanceId: "paid-faction", dots: 3, creationDots: 0, experienceDots: 3, configuration: { roteSkill: "Medicine" } };
+  const sheet = { merits: [merit], specializations: [], line_data: { order: "Orderless" }, current_state: { experience_available: 4, experience_spent: 3, experience_history: [{ id: "purchase", undo: { kind: "merit", definitionId: merit.definitionId, instanceId: merit.instanceId } }] } };
+  const state = JSON.stringify(sheet.current_state), allocation = JSON.stringify(merit);
+  mageGrants.synchronizeMageBuilderMeritGrants(sheet);
+  assert.deepEqual(sheet.line_data.rote_skills, ["Medicine"]);
+  assert.equal(JSON.stringify(sheet.merits[0]), allocation);
+  const once = JSON.stringify(sheet);
+  mageGrants.synchronizeMageBuilderMeritGrants(sheet);
+  assert.equal(JSON.stringify(sheet), once);
+  for (const override of [
+    { definitionId: "homebrew:faction", name: definition.name },
+    { definitionId: "unavailable:faction", name: definition.name },
+    { definitionId: undefined, name: definition.name, sourceId: "homebrew:test" },
+    { definitionId: undefined, name: "Membro de Facção" },
+    { dots: 2 },
+  ]) {
+    sheet.merits = [{ ...merit, ...override }];
+    mageGrants.synchronizeMageBuilderMeritGrants(sheet);
+    assert.deepEqual(sheet.line_data.rote_skills, []);
+    assert.deepEqual(sheet.merits, [{ ...merit, ...override }]);
+  }
+  sheet.merits = [{ ...merit, definitionId: undefined, name: definition.name }];
+  mageGrants.synchronizeMageBuilderMeritGrants(sheet);
+  assert.deepEqual(sheet.line_data.rote_skills, ["Medicine"]);
+  assert.equal(sheet.merits[0].definitionId, undefined);
+  assert.equal(JSON.stringify(sheet.current_state), state);
+});
+
 test("Mage creation grants identify official choices by ID, preserve Homebrew namesakes and keep existing XP instances", () => {
   const fake = { ...selection("mta-2ed:awakened-status", undefined), definitionId: "homebrew:status", instanceId: "authored", configuration: { domain: "Authored", name: "Authored" } };
   const paid = selection("mta-2ed:awakened-status", "Ordem", 3, { instanceId: "order-status", creationDots: 1, experienceDots: 2, name: "Changed display", configuration: { domain: "Free Council" } });
