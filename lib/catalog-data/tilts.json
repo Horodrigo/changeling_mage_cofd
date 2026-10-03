@@ -10,7 +10,13 @@
     "causing": "A targeted blow to the arm dealing more than Stamina damage, a damaging hit to the hand, or an appropriate supernatural power.",
     "ending": "Heal the marked damage that caused it; aggravated damage may make the loss permanent.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Um braço sofreu uma torção, luxação, fratura ou outra lesão que o tornou inutilizável.",
+      "effect": "O personagem larga os objetos que segura e não pode usar esse braço. A destreza manual sofre penalidades de mão inábil; com ambos os braços afetados, tarefas manuais usam um dado de chance e outras ações Físicas sofrem −3.",
+      "causing": "Um golpe direcionado ao braço que cause mais dano que o Vigor, um golpe que cause dano à mão ou um poder sobrenatural apropriado.",
+      "ending": "Curar o dano marcado que causou a Complicação; dano agravado pode tornar a perda permanente."
+    }
   },
   {
     "id": "beaten-down",
@@ -23,7 +29,13 @@
     "causing": "Suffer bashing damage exceeding Stamina or any lethal damage.",
     "ending": "Surrender and grant the aggressor what they want, regaining 1 Willpower and taking a Beat but leaving the fight.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "O personagem perdeu a vontade de continuar lutando.",
+      "effect": "Gastar 1 ponto de Força de Vontade para cada ação violenta; correr, Esquivar e usar a Defesa continuam disponíveis.",
+      "causing": "Sofrer dano contusivo superior ao Vigor ou qualquer dano letal.",
+      "ending": "Render-se e conceder ao agressor o que ele quer, recuperando 1 ponto de Força de Vontade e recebendo um Ato, mas deixando a luta."
+    }
   },
   {
     "id": "blinded",
@@ -36,7 +48,13 @@
     "causing": "A targeted attack to the eyes or a temporary blinding attack such as thrown sand.",
     "ending": "Temporary blindness lasts one turn; otherwise heal the marked damage, while aggravated injury may be permanent.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Um ou ambos os olhos estão incapacitados.",
+      "effect": "Um olho afetado impõe −3 em testes de visão e reduz a Defesa à metade; ambos impõem −5 e removem a Defesa.",
+      "causing": "Um ataque direcionado aos olhos ou um ataque que cegue temporariamente, como areia arremessada.",
+      "ending": "A cegueira temporária dura um turno; nos demais casos, curar o dano marcado, embora uma lesão agravada possa ser permanente."
+    }
   },
   {
     "id": "deafened",
@@ -49,7 +67,13 @@
     "causing": "A sufficiently loud noise or targeted attack to the ear.",
     "ending": "Noise fades after 10 - Stamina + Resolve turns; injury ends when its marked damage heals, unless aggravated.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "O personagem não consegue ouvir adequadamente.",
+      "effect": "Um ouvido afetado impõe −3 em Percepção auditiva; ambos reduzem o teste a um dado de chance e impõem −2 em paradas relacionadas a combate.",
+      "causing": "Um ruído suficientemente alto ou um ataque direcionado ao ouvido.",
+      "ending": "O efeito do ruído passa após 10 − Vigor + Perseverança turnos; uma lesão termina quando seu dano marcado é curado, exceto se agravado."
+    }
   },
   {
     "id": "drugged",
@@ -62,7 +86,13 @@
     "causing": "Voluntary consumption or administration through an attack.",
     "ending": "A generic narcotic lasts 10 - Stamina + Resolve hours; medical treatment halves this time.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Substâncias que alteram a mente prejudicam a coordenação e a percepção.",
+      "effect": "Aplicar −2 no Deslocamento e −3 em testes de combate, incluindo Defesa e Percepção, mas ignorar penalidades de ferimentos.",
+      "causing": "Consumo voluntário ou administração por meio de um ataque.",
+      "ending": "Um narcótico genérico dura 10 − Vigor + Perseverança horas; tratamento médico reduz esse tempo à metade."
+    }
   },
   {
     "id": "immobilized",
@@ -75,7 +105,13 @@
     "causing": "The Restrain grapple move, bindings, confinement, or supernatural restraint.",
     "ending": "Break free from the grapple or succeed at Strength + Athletics penalized by the binding's Durability, suffering 1 bashing per attempt.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Amarras, confinamento ou alguém agarrando o personagem impedem o movimento.",
+      "effect": "O personagem não pode se mover, aplicar Defesa ou realizar ações de combate; gastar Força de Vontade pode permitir um ataque limitado contra quem o imobiliza.",
+      "causing": "A manobra de imobilização em um agarrão, amarras, confinamento ou uma restrição sobrenatural.",
+      "ending": "Libertar-se do agarrão ou obter sucesso em Força + Esportes com penalidade igual à Durabilidade das amarras, sofrendo 1 de dano contusivo por tentativa."
+    }
   },
   {
     "id": "insane",
@@ -88,7 +124,13 @@
     "causing": "An appropriate Condition, overwhelming horror, deliberate psychological sabotage, or supernatural influence.",
     "ending": "Usually ends with the scene; contest Resolve + Composure against 10 - Willpower while taking no other action to recover early.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Um ataque de pânico ou surto psicótico sobrepuja a razão.",
+      "effect": "Receber +1 em testes de combate, agir depois de todos, não poder gastar Força de Vontade em combate e sofrer −3 em testes Sociais.",
+      "causing": "Uma Condição apropriada, horror avassalador, sabotagem psicológica deliberada ou influência sobrenatural.",
+      "ending": "Normalmente termina com a cena; disputar Perseverança + Compostura contra 10 − Força de Vontade, sem realizar outra ação, permite recuperar-se antes."
+    }
   },
   {
     "id": "insensate",
@@ -101,7 +143,13 @@
     "causing": "Overwhelming emotion, supernatural influence, or powerful intoxicants.",
     "ending": "Ends at scene end, upon damage, or for one turn by spending Willpower; drug-induced instances become Drugged afterward.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Medo, prazer ou intoxicação deixam o personagem sem reação.",
+      "effect": "O personagem não pode agir, mas pode se mover e aplicar Defesa; sofrer dano encerra a Complicação.",
+      "causing": "Uma emoção avassaladora, influência sobrenatural ou substâncias intoxicantes potentes.",
+      "ending": "Termina ao fim da cena ou ao sofrer dano, ou é interrompido por um turno ao gastar Força de Vontade; quando provocado por drogas, torna-se Drogado depois."
+    }
   },
   {
     "id": "knocked-down",
@@ -114,7 +162,13 @@
     "causing": "A sufficiently damaging weapon or targeted attack to the legs that sacrifices half its damage.",
     "ending": "Stand as an action, or succeed reflexively at Dexterity + Athletics before acting to avoid the Tilt.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "O personagem é derrubado no chão.",
+      "effect": "Perder a ação atual se ainda não a realizou; ataques feitos do chão sofrem −2, embora a Defesa ainda se aplique.",
+      "causing": "Uma arma que cause dano suficiente ou um ataque direcionado às pernas que sacrifique metade do dano.",
+      "ending": "Levantar-se como uma ação, ou obter sucesso reflexivo em Destreza + Esportes antes de agir para evitar a Complicação."
+    }
   },
   {
     "id": "leg-wrack",
@@ -127,7 +181,13 @@
     "causing": "A targeted blow to a leg dealing more than Stamina damage or an appropriate supernatural power.",
     "ending": "Heal the marked damage that caused it; aggravated injury may make the loss permanent.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Uma perna sofreu uma torção, luxação, fratura ou outra lesão que a tornou inutilizável.",
+      "effect": "Uma perna afetada reduz o Deslocamento à metade e impõe −2 em ações Físicas relacionadas a movimento e na Defesa; ambas causam Derrubado, Deslocamento 1 e ações de movimento com dado de chance.",
+      "causing": "Um golpe direcionado à perna que cause mais dano que o Vigor ou um poder sobrenatural apropriado.",
+      "ending": "Curar o dano marcado que causou a Complicação; uma lesão agravada pode tornar a perda permanente."
+    }
   },
   {
     "id": "poisoned",
@@ -140,7 +200,13 @@
     "causing": "Ingestion, environmental exposure, injection, or an attack administering poison.",
     "ending": "Each turn, reflexively roll Stamina + Resolve, at -3 when taking a non-reflexive action, to prevent that turn's damage; medical care may end it.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Uma substância nociva causa dano ao personagem por dentro.",
+      "effect": "Veneno moderado causa 1 de dano contusivo por turno; veneno grave causa 1 de dano letal por turno.",
+      "causing": "Ingestão, exposição ambiental, injeção ou um ataque que administre veneno.",
+      "ending": "A cada turno, testar reflexivamente Vigor + Perseverança, com −3 ao realizar uma ação não reflexiva, para evitar o dano daquele turno; cuidados médicos podem encerrá-lo."
+    }
   },
   {
     "id": "sick",
@@ -153,7 +219,13 @@
     "causing": "Existing disease, deliberate exposure, or supernatural infection.",
     "ending": "After rest becomes possible, penalties fade by one each turn; damage heals normally.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "A doença debilita o personagem durante o combate.",
+      "effect": "Doença moderada começa com −1 em todas as ações e piora a cada dois turnos até −5; doença grave também causa 1 de dano contusivo a cada turno de esforço.",
+      "causing": "Uma doença preexistente, exposição deliberada ou infecção sobrenatural.",
+      "ending": "Quando o descanso se torna possível, as penalidades diminuem em um a cada turno; o dano é curado normalmente."
+    }
   },
   {
     "id": "stunned",
@@ -166,7 +238,13 @@
     "causing": "Take at least Size damage in one hit, suffer a stunning weapon effect, a head strike, or an explosion.",
     "ending": "Normally lasts one turn; spend 1 Willpower reflexively to act at -3 that turn.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "O personagem está atordoado e não consegue pensar com clareza.",
+      "effect": "Perder a próxima ação e reduzir a Defesa à metade até poder agir novamente.",
+      "causing": "Sofrer, em um único golpe, dano pelo menos igual ao Tamanho, um efeito de arma atordoante, um golpe na cabeça ou uma explosão.",
+      "ending": "Normalmente dura um turno; gastar reflexivamente 1 ponto de Força de Vontade permite agir com −3 naquele turno."
+    }
   },
   {
     "id": "blizzard",
@@ -179,7 +257,13 @@
     "causing": "Severe weather or an appropriate supernatural power.",
     "ending": "Escape or wait it out; suitable gear offsets some penalties.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Neve intensa e vento dificultam a visão e o movimento.",
+      "effect": "Percepção visual e ataques à distância sofrem −1 à distância de um braço e mais −1 a cada 10 jardas; cada quatro polegadas de neve impõem −1 em testes Físicos relevantes.",
+      "causing": "Clima severo ou um poder sobrenatural apropriado.",
+      "ending": "Sair da área ou esperar passar; equipamento adequado compensa parte das penalidades."
+    }
   },
   {
     "id": "earthquake",
@@ -192,7 +276,13 @@
     "causing": "A natural event, major underground explosion, or tremendous supernatural power.",
     "ending": "Most end within about ten turns; otherwise leave the affected area or stop the supernatural cause.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Movimentos violentos do solo desestabilizam uma área.",
+      "effect": "Paradas de Destreza e Defesa sofrem de −1 a −5; sofrer de 1 a 3 de dano letal a cada turno, reduzido a contusivo com Vigor + Esportes ou anulado com um sucesso excepcional.",
+      "causing": "Um evento natural, uma grande explosão subterrânea ou um poder sobrenatural tremendo.",
+      "ending": "A maioria termina em cerca de dez turnos; caso contrário, sair da área afetada ou interromper a causa sobrenatural."
+    }
   },
   {
     "id": "extreme-cold",
@@ -205,7 +295,13 @@
     "causing": "Exposure below freezing, immersion in freezing water, confinement, illness, or supernatural cold.",
     "ending": "Reach warmth and obtain medical care when hypothermic.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Temperaturas congelantes causam hipotermia e impedem a recuperação.",
+      "effect": "Dano contusivo não é curado; cura acelerada é reduzida à metade. Acumular −1 por hora; ao chegar a −5, sofrer 1 de dano letal por hora adicional.",
+      "causing": "Exposição a temperaturas abaixo de zero, imersão em água congelante, confinamento, doença ou frio sobrenatural.",
+      "ending": "Chegar a um local aquecido e obter cuidados médicos em caso de hipotermia."
+    }
   },
   {
     "id": "extreme-heat",
@@ -218,7 +314,13 @@
     "causing": "Environmental heat, fever, confinement near a heat source, or supernatural heat.",
     "ending": "Escape the heat and find shade or cooling.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Temperaturas acima de aproximadamente 40°C causam lesões por calor.",
+      "effect": "Dano contusivo não é curado; cura acelerada é reduzida à metade. Acumular −1 por hora; ao chegar a −5, sofrer 1 de dano letal por hora adicional.",
+      "causing": "Calor ambiental, febre, confinamento perto de uma fonte de calor ou calor sobrenatural.",
+      "ending": "Sair do calor e encontrar sombra ou resfriamento."
+    }
   },
   {
     "id": "flooded",
@@ -231,7 +333,13 @@
     "causing": "Heavy rain, snowmelt, broken infrastructure, sabotage, or supernatural flooding.",
     "ending": "Reach high ground or drain the flooded area.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "O nível crescente de um líquido dificulta o movimento e pode submergir personagens.",
+      "effect": "Cada pé de líquido impõe −2 em paradas Físicas; personagens submersos precisam nadar ou prender a respiração.",
+      "causing": "Chuva forte, degelo, infraestrutura danificada, sabotagem ou inundação sobrenatural.",
+      "ending": "Alcançar terreno elevado ou drenar a área inundada."
+    }
   },
   {
     "id": "heavy-rain",
@@ -244,7 +352,13 @@
     "causing": "Severe weather or supernatural control.",
     "ending": "Find shelter, leave the storm, or interrupt its supernatural source.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Chuva torrencial prejudica a visão e a audição.",
+      "effect": "Aplicar −3 em Percepção visual e auditiva; após exposição prolongada, Complicações relacionadas ou dano ambiental podem se aplicar.",
+      "causing": "Clima severo ou controle sobrenatural.",
+      "ending": "Encontrar abrigo, sair da tempestade ou interromper sua fonte sobrenatural."
+    }
   },
   {
     "id": "heavy-winds",
@@ -257,7 +371,13 @@
     "causing": "Severe weather, machinery, explosions, or supernatural control.",
     "ending": "Find cover, leave the wind, or interrupt its source.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Ventos fortes abafam sons e dificultam o movimento.",
+      "effect": "Percepção auditiva sofre −3; a intensidade do vento penaliza ações Físicas relevantes e pode causar dano contusivo ou arremessar objetos.",
+      "causing": "Clima severo, máquinas, explosões ou controle sobrenatural.",
+      "ending": "Encontrar proteção, sair do vento ou interromper sua fonte."
+    }
   },
   {
     "id": "ice",
@@ -270,7 +390,13 @@
     "causing": "Frozen ground, spills, polished surfaces, or supernatural effects.",
     "ending": "Leave or treat the surface; suitable equipment may mitigate it.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Uma superfície escorregadia dificulta manter o equilíbrio.",
+      "effect": "Reduzir o Deslocamento à metade e aplicar −2 em todos os testes Físicos e na Defesa. Mover-se no Deslocamento máximo aumenta a penalidade Física para −4, e uma falha dramática em um teste Físico causa Derrubado. Veículos reduzem a Aceleração à metade e sofrem −5 em Condução.",
+      "causing": "Solo congelado, derramamentos, superfícies polidas ou efeitos sobrenaturais.",
+      "ending": "Sair da superfície ou tratá-la; equipamento adequado pode atenuar o efeito."
+    }
   },
   {
     "id": "zombies",
@@ -283,12 +409,18 @@
     "causing": "A large group of mostly passive monsters, a riot, or a comparable crush of bodies.",
     "ending": "Draw the horde away or exploit a Bane strongly enough to drive it back or disperse it.",
     "source": "Chronicles of Darkness",
-    "sourceCode": "CofD"
+    "sourceCode": "CofD",
+    "presentationPt": {
+      "description": "Uma horda densa de zumbis ou monstros semelhantes, em sua maioria passivos, ocupa a área.",
+      "effect": "Perder a contribuição do Fator de Espécie para o Deslocamento. Mover-se abaixo do Deslocamento máximo de corrida provoca um ataque com a melhor parada da horda; um sucesso excepcional também causa Derrubado. Hordas particularmente apodrecidas podem exigir Vigor + Compostura a cada minuto para evitar Doente moderado.",
+      "causing": "Um grande grupo de monstros em sua maioria passivos, um motim ou uma aglomeração comparável de corpos.",
+      "ending": "Atrair a horda para longe ou explorar uma Fraqueza com intensidade suficiente para fazê-la recuar ou se dispersar."
+    }
   },
   {
     "id": "bleeding",
     "name": "Bleeding",
-    "translatedName": "Bleeding",
+    "translatedName": "Sangrando",
     "category": "Personal",
     "description": "An open wound is bleeding profusely.",
     "effect": "Increase the character's wound penalty by 1 and suffer 1 automatic bashing damage each turn.",
@@ -296,12 +428,18 @@
     "ending": "Spend a turn applying pressure, cloth, or a tourniquet; any accelerated healing also ends it. Undead are immune.",
     "source": "Hurt Locker",
     "sourceCode": "HL",
-    "page": 143
+    "page": 143,
+    "presentationPt": {
+      "description": "Uma ferida aberta sangra intensamente.",
+      "effect": "Aumentar em 1 a penalidade de ferimentos do personagem e sofrer automaticamente 1 de dano contusivo a cada turno.",
+      "causing": "Um ataque com arma de fogo ou lâmina que cause, em um único ataque, mais dano que o Vigor da vítima.",
+      "ending": "Gastar um turno aplicando pressão, tecido ou um torniquete; qualquer cura acelerada também encerra o efeito. Mortos-vivos são imunes."
+    }
   },
   {
     "id": "burning",
     "name": "Burning",
-    "translatedName": "Burning",
+    "translatedName": "Em Chamas",
     "category": "Personal",
     "description": "The character has caught fire.",
     "effect": "Suffer automatic damage each turn equal to 1 + the fire's heat level and also suffer Blinded.",
@@ -309,12 +447,18 @@
     "ending": "Douse the fire; dropping and rolling reduces its heat by one each turn, as does another character spending an instant action to smother it.",
     "source": "Hurt Locker",
     "sourceCode": "HL",
-    "page": 143
+    "page": 143,
+    "presentationPt": {
+      "description": "O personagem pegou fogo.",
+      "effect": "Sofrer dano automático a cada turno igual a 1 + o nível de calor do fogo, além de sofrer Cego.",
+      "causing": "Uma explosão incendiária, lança-chamas ou ser coberto de combustível e incendiado.",
+      "ending": "Apagar o fogo; deitar e rolar reduz seu calor em um a cada turno, assim como outro personagem gastar uma ação instantânea para abafá-lo."
+    }
   },
   {
     "id": "came-prepared",
     "name": "Came Prepared",
-    "translatedName": "Came Prepared",
+    "translatedName": "Chegou Preparado",
     "category": "Personal",
     "description": "Prior study has exposed an opening in a specific opponent's fighting style.",
     "effect": "Resolve one instance to make one attack against that opponent apply only half Defense, rounded down. Only the first instance resolved in a fight grants a Beat.",
@@ -322,12 +466,18 @@
     "ending": "Resolve an instance when making the chosen attack against the studied opponent.",
     "source": "Hurt Locker",
     "sourceCode": "HL",
-    "page": 61
+    "page": 61,
+    "presentationPt": {
+      "description": "O estudo prévio revelou uma abertura no estilo de luta de um oponente específico.",
+      "effect": "Resolver uma instância para fazer um ataque contra esse oponente aplicar apenas metade da Defesa, arredondada para baixo. Somente a primeira instância resolvida em uma luta concede um Ato.",
+      "causing": "Estudar com sucesso o oponente por uma cena com Raciocínio + Investigação disputado por Compostura + a Perícia de Combate do oponente; um sucesso excepcional concede duas instâncias.",
+      "ending": "Resolver uma instância ao realizar o ataque escolhido contra o oponente estudado."
+    }
   },
   {
     "id": "pierced-armor",
     "name": "Pierced Armor",
-    "translatedName": "Pierced Armor",
+    "translatedName": "Armadura Perfurada",
     "category": "Personal",
     "description": "Repeated fire or a devastating strike has damaged the character's armor.",
     "effect": "Halve the armor's effective ratings, rounded down, until it is repaired or readjusted.",
@@ -335,12 +485,18 @@
     "ending": "Spend several turns replacing the armor, or repair it outside combat; supernatural armor may recover or be immune at Storyteller discretion.",
     "source": "Hurt Locker",
     "sourceCode": "HL",
-    "page": 143
+    "page": 143,
+    "presentationPt": {
+      "description": "Tiros repetidos ou um golpe devastador danificaram a armadura do personagem.",
+      "effect": "Reduzir à metade as graduações efetivas da armadura, arredondadas para baixo, até que seja reparada ou reajustada.",
+      "causing": "Sofrer, em um único ataque de uma arma de alto calibre ou instrumento perfurante, mais dano que a graduação geral da armadura.",
+      "ending": "Gastar vários turnos substituindo a armadura ou repará-la fora do combate; armaduras sobrenaturais podem se recuperar ou ser imunes, a critério do Narrador."
+    }
   },
   {
     "id": "pinned",
     "name": "Pinned",
-    "translatedName": "Pinned",
+    "translatedName": "Preso",
     "category": "Personal",
     "description": "An appendage or clothing is pinned to a surface.",
     "effect": "The victim cannot move, halves Defense, and cannot take actions requiring full-body movement such as Athletics.",
@@ -348,7 +504,13 @@
     "ending": "Tear an appendage free with Strength + Stamina at -3 and suffer 1 lethal, use tools with Strength + Crafts at -2 without damage, or spend an action escaping pinned clothing.",
     "source": "Hurt Locker",
     "sourceCode": "HL",
-    "page": 143
+    "page": 143,
+    "presentationPt": {
+      "description": "Um membro ou uma peça de roupa está preso a uma superfície.",
+      "effect": "A vítima não pode se mover, reduz a Defesa à metade e não pode realizar ações que exijam movimento do corpo inteiro, como Esportes.",
+      "causing": "Uma arma perfurante mira um membro com −3 e causa dano pelo menos igual ao Vigor, ou mira uma peça de roupa com −5 e obtém um sucesso.",
+      "ending": "Arrancar um membro preso com Força + Vigor a −3 e sofrer 1 de dano letal, usar ferramentas com Força + Ofícios a −2 sem sofrer dano ou gastar uma ação para escapar de uma peça de roupa presa."
+    }
   },
   {
     "id": "flesh-too-solid",

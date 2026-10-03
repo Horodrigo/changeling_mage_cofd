@@ -57,11 +57,9 @@ Arquivos: `public/shared/data/conditions.json` e `conditions-pt.json`.
 
 Arquivo: `lib/catalog-data/tilts.json`. Consumidor: `app/workspace/combat-page.tsx`.
 
-Os 35 registros mantêm em inglês `description`, `effect`, `causing` e `ending`, exibidos diretamente mesmo em PT. Esta pendência afeta também Vampire e Mage.
+O canônico dos 35 registros permanece em inglês. Os **27 Core/Hurt Locker** agora possuem `presentationPt` completa e o gerenciador compartilhado aplica essa apresentação ao catálogo, busca e efeitos selecionados em PT. Os **oito restantes** de Changeling/Mage/Dark Eras/Homebrew continuam pendentes.
 
-24 registros têm nome PT diferente do inglês. Os 11 restantes merecem decisão editorial, sem presumir que todos devam mudar:
-
-`Bleeding`, `Burning`, `Came Prepared`, `Pierced Armor`, `Pinned`, `Flesh Too Solid`, `Nimbus`, `Poor Light`, `Shattered Time`, `Urban Collapse`, `Riot`.
+Os títulos de Hurt Locker foram localizados: Bleeding → Sangrando; Burning → Em Chamas; Came Prepared → Chegou Preparado; Pierced Armor → Armadura Perfurada; Pinned → Preso. Nos oito registros restantes, revisar Flesh Too Solid, Nimbus, Poor Light, Shattered Time, Urban Collapse e Riot; Nimbus já é o termo aplicado em Mage e não deve mudar por igualdade com o inglês. Nenhuma apresentação recebe um qualificador sem colisão de nomes.
 
 ### M03 — O que não precisa de nova tradução integral
 
@@ -548,6 +546,13 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Mage e Vampire agora compõem o catálogo Core com sua apresentação PT antes de passá-lo aos mesmos gerenciadores usados em Desktop/Mobile. A alternância volta ao canônico EN; IDs, persistência, metadados de fonte, efeitos canônicos e seleções autorais permanecem intactos. Mortal/Changeling/Werewolf já aplicavam a apresentação Core.
 - Manifesto atualizado de 41 para 42 e somente o recurso `core-conditions-pt` de 2 para 3, invalidando sua apresentação em cache. O recurso canônico `core-conditions` permanece em 1.
 - Verificação: **21/21** testes dirigidos de Conditions/Tilts, homônimos e catálogos estáticos; renderização dos 34 detalhes selecionados em EN/PT/EN sem mutação, cobertura dos campos e proteção da composição nas três fichas. Lint, TypeScript, build e `git diff --check` aprovados. Sem smoke de navegador. Tilts compartilhados e as etapas 2–4 continuam pendentes; a meta permanece ativa.
+
+## Progresso — etapa 1, Tilts Core/Hurt Locker (2026-10-03)
+
+- Os 22 Tilts Core e cinco de Hurt Locker possuem apresentação PT completa de descrição, efeito, causa e encerramento, além dos cinco títulos de Hurt Locker antes em inglês. Os textos usam Complicação, Ato, dano contusivo, dado de chance e os Atributos/Perícias do dicionário atual.
+- `tiltPresentation` aplica somente os quatro campos textuais; o gerenciador de combate compartilha a mesma apresentação para catálogo, pesquisa e efeitos selecionados. Nomes canônicos, IDs, categorias, fonte, página e seleções permanecem intactos. Nenhum efeito é calculado ou aplicado automaticamente pela mudança de idioma.
+- Fórmulas, graduações e unidades foram preservadas, inclusive **10 − Vigor + Perseverança**, jardas, polegadas e pés; não foram convertidas ou reinterpretadas. A Fraqueza citada por Zombies! foi localizada no contexto da vulnerabilidade da horda, sem estender esse termo a Bane de Clan/Bloodline ou ao papel de Changeling. Os oito Tilts remanescentes serão o próximo lote; a etapa 1 ainda não está concluída.
+- Verificação: **16/16** testes dirigidos de Tilts, Conditions e homônimos; números canônicos reconciliados por campo, efeitos selecionados renderizados em EN/PT/EN sem mutação, IDs indisponíveis e notas autorais preservados. Comparação de **35/35** registros com `695697e` confirmou que somente os cinco títulos PT autorizados e as 27 apresentações foram adicionados; nenhum outro campo mudou. Lint, TypeScript, build e `git diff --check` aprovados. Sem smoke de navegador; impressão sem alteração de componente.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 

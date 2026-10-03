@@ -10,7 +10,7 @@ import { catalogDisplayName } from "@/lib/localized-catalog";
 import { alphabetical } from "@/lib/option-order";
 import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
 import { VEHICLES, vehiclePresentation } from "@/lib/companions";
-import { TILTS, findTilt } from "@/lib/tilts";
+import { TILTS, tiltPresentation } from "@/lib/tilts";
 import { RuleSelect } from "./rule-select";
 import { CompactValues, SheetHeading, signed, stringList } from "./sheet-primitives";
 import { LoadoutCatalog } from "./loadout-catalog";
@@ -184,13 +184,14 @@ export function CombatPage({
 function TiltManager({selected,onChange}:{selected:string[];onChange:(value:string[])=>void}) {
   const {locale,t}=useLanguage();
   const [search,setSearch]=useState(""), [category,setCategory]=useState("All");
+  const presentedTilts=TILTS.map(tilt=>tiltPresentation(tilt,locale));
   const name=(tilt:(typeof TILTS)[number])=>catalogDisplayName(tilt,locale);
-  const filtered=alphabetical(TILTS,name,locale).filter((tilt)=>(category==="All"||tilt.category===category)&&`${name(tilt)} ${tilt.name} ${tilt.translatedName} ${tilt.description} ${tilt.effect}`.toLocaleLowerCase(locale).includes(search.toLocaleLowerCase(locale)));
+  const filtered=alphabetical(presentedTilts,name,locale).filter((tilt)=>(category==="All"||tilt.category===category)&&`${name(tilt)} ${tilt.name} ${tilt.translatedName} ${tilt.description} ${tilt.effect}`.toLocaleLowerCase(locale).includes(search.toLocaleLowerCase(locale)));
   const categoryLabel=(category:string)=>category === "Personal" ? t("combat.personal") : t("combat.environmental");
   const metadata=(tilt:(typeof TILTS)[number])=>t("combat.tiltMetadata", { category: categoryLabel(tilt.category), source: tilt.sourceCode, page: tilt.page });
   return <div className="tilt-manager">
     <div className="selected-tilts">
-      {selected.map(findTilt).filter((tilt):tilt is NonNullable<typeof tilt>=>Boolean(tilt)).map((tilt)=><article key={tilt.id} className="selected-tilt"><div><strong>{name(tilt)}</strong><small>{metadata(tilt)}</small><p>{tilt.effect}</p></div><Button type="button" size="icon" variant="ghost" onClick={()=>onChange(selected.filter((id)=>id!==tilt.id))} aria-label={t("combat.removeNamed", { name: name(tilt) })}><X /></Button></article>)}
+      {selected.map(id=>presentedTilts.find(tilt=>tilt.id===id)).filter((tilt):tilt is NonNullable<typeof tilt>=>Boolean(tilt)).map((tilt)=><article key={tilt.id} className="selected-tilt"><div><strong>{name(tilt)}</strong><small>{metadata(tilt)}</small><p>{tilt.effect}</p></div><Button type="button" size="icon" variant="ghost" onClick={()=>onChange(selected.filter((id)=>id!==tilt.id))} aria-label={t("combat.removeNamed", { name: name(tilt) })}><X /></Button></article>)}
       {!selected.length&&<em>{t("combat.noTilts")}</em>}
     </div>
     <Dialog><DialogTrigger asChild><Button type="button" size="sm" variant="outline"><Plus />{t("combat.addTilt")}</Button></DialogTrigger><DialogContent className="tilt-dialog"><DialogHeader><DialogTitle>{t("combat.combatTilts")}</DialogTitle><DialogDescription>{t("combat.tiltDescription")}</DialogDescription></DialogHeader>
