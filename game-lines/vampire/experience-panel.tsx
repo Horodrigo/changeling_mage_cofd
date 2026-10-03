@@ -25,7 +25,7 @@ import { vampireMeritContextForSheet, vampireMeritEligible, vampireMeritFilterCa
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
-import { meritMatchesDefinition, resolveMeritDefinition } from "@/lib/merit-identity";
+import { meritMatchesDefinition, meritInstanceIsUnique, resolveMeritDefinition } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { addExperienceMeritDots } from "@/lib/merit-progression";
 import { vampireExperienceLabel, type VampireExperienceEntry } from "./experience-presentation";
@@ -183,7 +183,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const selectedRitualDiscipline = purchase === "discipline" ? powers.ritualDisciplines.find((item) => item.id === chosenOption) : undefined;
   const selectedCoil = purchase === "discipline" ? powers.coils.find((item) => item.id === chosenOption) : undefined;
   const selectedMerit = meritCatalog.find((item) => item.id === chosenOption);
-  const ownedMerit = meritInstance >= 0 && selectedMerit && character.merits[meritInstance] && meritMatchesDefinition(character.merits[meritInstance], selectedMerit, meritCatalog) ? character.merits[meritInstance] : undefined;
+  const ownedMerit = meritInstance >= 0 && selectedMerit && character.merits[meritInstance] && meritMatchesDefinition(character.merits[meritInstance], selectedMerit, meritCatalog) && meritInstanceIsUnique(character.merits[meritInstance], character.merits) ? character.merits[meritInstance] : undefined;
   const nextMeritRating = selectedMerit ? meritDots : undefined;
   const humanityMaximum = Math.max(0, 10 - Number(bloodSorcery.cruac_rating ?? 0));
   const mysteryId = String(ordo.mystery_id ?? "");

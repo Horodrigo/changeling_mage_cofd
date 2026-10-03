@@ -30,7 +30,7 @@ import { createRandomId } from "@/lib/random-id";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
-import { meritMatchesDefinition } from "@/lib/merit-identity";
+import { meritMatchesDefinition, meritInstanceIsUnique } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { mageExperienceLabel, type MageExperienceEntry } from "./experience-presentation";
 import { activeSpellCatalog } from "./spell-homebrews";
@@ -162,7 +162,7 @@ export function MageExperiencePanel({
   const chosenTarget=target||options[0]||"";
   const selectedMerit = merits.find((item) => item.id === target),
     ownedMerit = mageMeritInstance >= 0
-        ? selectedMerit && character.merits[mageMeritInstance] && meritMatchesDefinition(character.merits[mageMeritInstance], selectedMerit, meritCatalog) ? character.merits[mageMeritInstance] : undefined
+        ? selectedMerit && character.merits[mageMeritInstance] && meritMatchesDefinition(character.merits[mageMeritInstance], selectedMerit, meritCatalog) && meritInstanceIsUnique(character.merits[mageMeritInstance], character.merits) ? character.merits[mageMeritInstance] : undefined
         : undefined,
     meritRatings = selectedMerit
       ? meritRatingsFor(selectedMerit,(ownedMerit?.dots??0)+1).filter(

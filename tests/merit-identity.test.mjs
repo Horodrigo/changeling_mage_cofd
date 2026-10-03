@@ -9,7 +9,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false }, optimizeDeps: { noDiscovery: true, include: [] } });
 after(() => vite.close());
-const { resolveMeritDefinition, meritMatchesDefinition } = await vite.ssrLoadModule("/lib/merit-identity.ts");
+const { resolveMeritDefinition, meritMatchesDefinition, meritInstanceIsUnique } = await vite.ssrLoadModule("/lib/merit-identity.ts");
 const { normalizeStoredSheet, validateCurrentCharacter } = await vite.ssrLoadModule("/lib/character-persistence.ts");
 const { creationMerits, mergeCreationMerits } = await vite.ssrLoadModule("/lib/merit-progression.ts");
 const { refundMeritDots } = await vite.ssrLoadModule("/lib/experience-refunds.ts");
@@ -147,6 +147,31 @@ test("missing, ambiguous, mismatched and over-refunded Merit purchases leave the
     assert.deepEqual(sheet, before);
     assert.equal(refund(sheet, { kind: "merit", name: "Resources", dots: 3, instanceId: "owned" }), false);
     assert.deepEqual(sheet, before);
+  }
+});
+
+test("duplicate Merit instance IDs refuse exact purchases/refunds; an old index never disambiguates namesakes", async () => {
+  const sheet = blankPrintCharacter("CofD");
+  sheet.merits = [
+    { definitionId: resources.id, instanceId: "duplicate", name: "Resources", dots: 3, creationDots: 1, experienceDots: 2 },
+    { definitionId: namesake.id, instanceId: "duplicate", name: "Resources", dots: 4, creationDots: 2, experienceDots: 2 },
+  ];
+  const before = structuredClone(sheet);
+  assert.equal(meritInstanceIsUnique(sheet.merits[0], sheet.merits), false);
+  assert.equal(meritInstanceIsUnique({ instanceId: "missing" }, sheet.merits), false);
+  assert.equal(meritInstanceIsUnique({}, sheet.merits), true, "ID-less selected rows receive a fresh ID on purchase");
+  for (const refund of [refundMortalAdvancement, refundMageAdvancement, refundVampireAdvancement]) {
+    assert.equal(refund(sheet, { kind: "merit", definitionId: resources.id, instanceId: "duplicate", name: "Resources", dots: 1, index: 0 }), false);
+    assert.equal(refund(sheet, { kind: "merit", name: "Resources", dots: 1, index: 0 }), false);
+    assert.deepEqual(sheet, before);
+  }
+  sheet.merits[1].instanceId = "unique";
+  assert.equal(meritInstanceIsUnique(sheet.merits[0], sheet.merits), true);
+  assert.equal(refundMortalAdvancement(sheet, { kind: "merit", definitionId: resources.id, instanceId: "duplicate", name: "Renamed", dots: 1 }), true);
+  assert.deepEqual(sheet.merits.map(item => item.experienceDots), [1, 2]);
+  for (const line of ["mortal", "mage", "vampire"]) {
+    const source = await readFile(new URL(`../game-lines/${line}/experience-panel.tsx`, import.meta.url), "utf8");
+    assert.match(source, /meritInstanceIsUnique\(character\.merits\[(?:meritInstance|mageMeritInstance)\], character\.merits\)/, line);
   }
 });
 

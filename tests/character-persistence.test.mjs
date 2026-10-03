@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test,{after} from "node:test";
 import {fileURLToPath} from "node:url";
+import {readFile} from "node:fs/promises";
 import {createServer} from "vite";
 
 const root=fileURLToPath(new URL("..",import.meta.url));
@@ -35,6 +36,42 @@ test("legacy local records stay opaque but retain enough metadata for deletion",
 test("structural persistence normalization assigns stable merit instance IDs",()=>{
   const current=sheet();delete current.merits[0].instanceId;
   assert.match(normalizeStoredSheet(current).merits[0].instanceId,/^legacy-merit-0-allies$/);
+});
+
+test("structural persistence preserves authored Merit labels in every line, even Throne", () => {
+  for (const line of ["CofD", "CtL", "MtA", "VtR", "WtF"]) {
+    const current = sheet(line);
+    current.merits = [{ definitionId: "homebrew:merit:throne", instanceId: "my-throne", name: "Throne", sourceId: "homebrew:core-merits", dots: 3, creationDots: 1, experienceDots: 2, configuration: { notes: "Autoral" } }];
+    const before = structuredClone(current);
+    const normalized = normalizeStoredSheet(current);
+    assert.equal(normalized.merits[0].name, "Throne");
+    assert.deepEqual([normalized.merits[0].definitionId, normalized.merits[0].instanceId, normalized.merits[0].experienceDots, normalized.merits[0].configuration], ["homebrew:merit:throne", "my-throne", 2, { notes: "Autoral" }]);
+    assert.deepEqual(current, before);
+  }
+});
+
+test("Changeling alone recovers the exact ID-less distributed Throne identity without renaming or touching allocations/history", async () => {
+  const current = sheet("CtL");
+  const legacy = { name: "Throne", sourceId: "h-seemings", instanceId: "legacy-throne", dots: 3, creationDots: 1, experienceDots: 2, configuration: { notes: "Autoral" } };
+  current.current_state.experience_history = [{ id: "opaque", description: "Throne", experience: -2 }];
+  current.merits = [legacy, { ...legacy, instanceId: "explicit", definitionId: "unavailable:throne" }, { ...legacy, instanceId: "homebrew", sourceId: "homebrew:changeling-merits" }, { ...legacy, instanceId: "missing-source", sourceId: undefined }];
+  const before = structuredClone(current);
+  const normalized = await normalizeGameLineCharacter(normalizeStoredSheet(current));
+  assert.equal(normalized.merits[0].definitionId, "h-seemings:power-behind-the-throne");
+  const catalog = JSON.parse(await readFile(new URL("../public/game-lines/changeling/data/merits.json", import.meta.url), "utf8"));
+  assert.deepEqual(catalog.filter(item => item.id === normalized.merits[0].definitionId).map(item => [item.name, item.sourceId]), [["Power Behind the Throne", "h-seemings"]]);
+  assert.equal(normalized.merits[0].name, "Throne");
+  assert.deepEqual([normalized.merits[0].creationDots, normalized.merits[0].experienceDots, normalized.merits[0].instanceId], [1, 2, legacy.instanceId]);
+  assert.equal(normalized.merits[1].definitionId, "unavailable:throne");
+  assert.equal(normalized.merits[2].definitionId, undefined);
+  assert.equal(normalized.merits[3].definitionId, undefined);
+  assert.deepEqual(normalized.current_state, current.current_state);
+  assert.deepEqual(current, before);
+  for (const line of ["CofD", "MtA", "VtR"]) {
+    const other = await normalizeGameLineCharacter(normalizeStoredSheet({ ...sheet(line), merits: [legacy] }));
+    assert.equal(other.merits[0].definitionId, undefined, line);
+    assert.equal(other.merits[0].name, "Throne", line);
+  }
 });
 test("creation merits survive save normalization and remain editable",()=>{
   for(const game_line of ["CofD","CtL","MtA","VtR"]){

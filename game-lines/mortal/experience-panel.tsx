@@ -19,7 +19,7 @@ import { meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
-import { meritMatchesDefinition } from "@/lib/merit-identity";
+import { meritMatchesDefinition, meritInstanceIsUnique } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { mortalDerived } from "./creation-rules";
@@ -68,7 +68,7 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
       : [{ value: purchase, label: purchaseLabel(purchase, locale) }];
   const chosen = purchase === "merit" ? target : options.some((item) => item.value === target) ? target : options[0]?.value ?? "";
   const selectedMerit = meritCatalog.find((item) => item.id === chosen);
-  const ownedMerit = meritInstance >= 0 && selectedMerit && character.merits[meritInstance] && meritMatchesDefinition(character.merits[meritInstance], selectedMerit, meritCatalog) ? character.merits[meritInstance] : undefined;
+  const ownedMerit = meritInstance >= 0 && selectedMerit && character.merits[meritInstance] && meritMatchesDefinition(character.merits[meritInstance], selectedMerit, meritCatalog) && meritInstanceIsUnique(character.merits[meritInstance], character.merits) ? character.merits[meritInstance] : undefined;
   const current = purchase === "attribute" ? Number(character.attributes[chosen] ?? 1)
     : purchase === "skill" ? Number(character.skills[chosen] ?? 0)
       : purchase === "integrity" ? Number(character.line_data.integrity ?? 7) : 0;

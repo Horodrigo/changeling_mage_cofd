@@ -32,7 +32,12 @@ export const changelingRules: GameLineRulesModule = {
     const wyrd = numberValue(character.line_data.wyrd) || 1;
     return {
       ...character,
-      merits: recoverChangelingMeritAllocations(character),
+      // Production schema-2 recovery for the former distributed Book of Seemings label.
+      // Only this owning normalization may attach its known ID; never rename authored
+      // labels or replace explicit IDs. Delete when these ID-less rows are unsupported.
+      merits: recoverChangelingMeritAllocations(character).map(item =>
+        !item.definitionId && item.name === "Throne" && item.sourceId === "h-seemings"
+          ? { ...item, definitionId: "h-seemings:power-behind-the-throne" } : item),
       line_data: {
         ...character.line_data,
         frailties: normalizeChangelingFrailties(character.line_data.frailties, wyrd),

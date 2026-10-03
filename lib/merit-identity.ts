@@ -4,6 +4,11 @@ import type { MeritDefinition } from "./merits";
 type MeritIdentity = Pick<MeritSelection, "name" | "definitionId" | "sourceId">;
 export type DefinitionIdentity = Pick<MeritDefinition, "id" | "name" | "sourceId" | "additionalSources">;
 
+/** ID-less schema-2 rows may receive an ID when purchased; explicit IDs must target one row. */
+export function meritInstanceIsUnique(selection: Pick<MeritSelection, "instanceId">, owned: readonly Pick<MeritSelection, "instanceId">[]) {
+  return !selection.instanceId || owned.filter(item => item.instanceId === selection.instanceId).length === 1;
+}
+
 /** New requirement references are IDs. Only unambiguous canonical names bridge old schema-2 Homebrews. */
 export function resolveMeritReference<T extends DefinitionIdentity>(reference: string, catalog: readonly T[]) {
   return catalog.find(item => item.id === reference) ?? (reference.includes(":") ? undefined : resolveMeritDefinition({ name: reference }, catalog));
