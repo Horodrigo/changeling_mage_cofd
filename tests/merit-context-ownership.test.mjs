@@ -8,7 +8,7 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] } });
 after(() => vite.close());
 const { meritContextForSheet, meritPrerequisitesMet, meritSelectionProblems } = await vite.ssrLoadModule("/lib/merits.ts");
-const { mageMeritContextForSheet, canAdvanceMageGrant } = await vite.ssrLoadModule("/game-lines/mage/merits.ts");
+const { mageMeritContextForSheet, canAdvanceMageGrant, mageMeritPrerequisitesMet } = await vite.ssrLoadModule("/game-lines/mage/merits.ts");
 const { changelingMeritContextForSheet, canAdvanceChangelingGrant, changelingExperienceMeritEligible, changelingMeritPrerequisitesMet } = await vite.ssrLoadModule("/game-lines/changeling/merit-context.ts");
 const { canAdvanceWerewolfGrant } = await vite.ssrLoadModule("/game-lines/werewolf/experience-rules.ts");
 const { vampireMeritContextForSheet } = await vite.ssrLoadModule("/game-lines/vampire/merit-eligibility.ts");
@@ -16,6 +16,59 @@ const { mortalMeritContextForSheet } = await vite.ssrLoadModule("/game-lines/mor
 const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
 const read = path => JSON.parse(readFileSync(new URL(`../public/${path}`, import.meta.url), "utf8"));
 const catalog = [...read("shared/data/merits.json"), ...read("game-lines/changeling/data/merits.json"), ...read("game-lines/mage/data/merits.json"), ...read("game-lines/werewolf/data/merits.json")];
+
+test("line parsers compose numeric traits and AND/OR identity clauses without changing saved values", () => {
+  const mage = { gameLine: "MtA", archetypes: ["awakened"], gnosis: 2, arcana: { Death: 2 }, path: "Moros" };
+  const definition = { name: "Authored", prerequisites: "Awakened; Gnosis ••; Death •• or Mind •••; Moros" };
+  const before = structuredClone(mage);
+  assert.equal(mageMeritPrerequisitesMet(definition, mage), true);
+  for (const change of [{ gnosis: 1 }, { arcana: { Death: 1, Mind: 2 } }, { path: "Acanthus" }, { archetypes: [] }])
+    assert.equal(mageMeritPrerequisitesMet(definition, { ...mage, ...change }), false);
+  assert.equal(mageMeritPrerequisitesMet(definition, { ...mage, arcana: { Mind: 3 } }), true);
+  assert.equal(mageMeritPrerequisitesMet({ name: "Narrative", prerequisites: "Non-Awakened or Sleepwalker" }, mage), false);
+  assert.deepEqual(mage, before);
+
+  const changeling = { gameLine: "CtL", archetypes: ["changeling"], wyrd: 3, seeming: "Beast", kith: "Artist", powers: ["Primal Glory"] };
+  const required = { name: "Authored", prerequisites: "Wyrd •••; Contract of Primal Glory" };
+  assert.equal(changelingMeritPrerequisitesMet(required, changeling), true);
+  for (const change of [{ wyrd: 2 }, { powers: [] }])
+    assert.equal(changelingMeritPrerequisitesMet(required, { ...changeling, ...change }), false);
+  assert.equal(changelingMeritPrerequisitesMet({ name: "Authored", prerequisites: "Beast or Wizened; Wyrd •••" }, changeling), true);
+  assert.equal(changelingMeritPrerequisitesMet({ name: "Authored", prerequisites: "Beast or Wizened; Wyrd •••" }, { ...changeling, seeming: "Ogre" }), false);
+  assert.equal(changelingMeritPrerequisitesMet({ name: "Authored", prerequisites: "Artist Kith; Wyrd •••" }, changeling), true);
+  assert.equal(changelingMeritPrerequisitesMet({ name: "Authored", prerequisites: "Artist Kith; Wyrd •••" }, { ...changeling, kith: "Chatelaine" }), false);
+  assert.equal(changelingMeritPrerequisitesMet({ name: "Authored", prerequisites: "Non-changeling; Resolve •••" }, { ...changeling, attributes: { Resolve: 3 } }), false);
+});
+
+test("Homebrew numeric requirements use explicit owning traits and remain identical through EN/PT presentation", async () => {
+  const { normalizeMeritHomebrew } = await vite.ssrLoadModule("/lib/merit-homebrews.ts");
+  const { meritPresentation } = await vite.ssrLoadModule("/lib/merit-presentation.ts");
+  for (const [line, eligible, context, trait, change] of [
+    ["MtA", mageMeritPrerequisitesMet, { gameLine: "MtA", gnosis: 3, arcana: { Death: 2 } }, "Gnosis", { gnosis: 2 }],
+    ["CtL", changelingMeritPrerequisitesMet, { gameLine: "CtL", wyrd: 3 }, "Wyrd", { wyrd: 2 }],
+  ]) {
+    const item = normalizeMeritHomebrew({ id: "homebrew:merit:authored", name: "Authored", line, category: "Mental", ratings: [1], description: "My rules", requirements: { all: [{ trait, minimum: 3 }, { any: [{ trait: "Wits", minimum: 2 }, { trait: "Resolve", minimum: 3 }] }] } });
+    const candidate = { ...context, attributes: { Wits: 2 } };
+    const before = JSON.stringify([item, candidate]);
+    for (const locale of ["en-US", "pt-BR", "en-US"]) {
+      meritPresentation(item, locale, catalog);
+      assert.equal(eligible(item, candidate), true);
+      assert.equal(eligible(item, { ...candidate, ...change }), false);
+      assert.equal(eligible(item, { ...candidate, attributes: {} }), false);
+    }
+    assert.equal(JSON.stringify([item, candidate]), before);
+  }
+  assert.equal(mageMeritPrerequisitesMet({ name: "Authored", requirements: { trait: "Death", minimum: 2 } }, { gameLine: "MtA", arcana: { Death: 2 } }), true);
+  assert.equal(mageMeritPrerequisitesMet({ name: "Authored", requirements: { trait: "Death", minimum: 2 } }, { gameLine: "MtA" }), false);
+});
+
+test("Core reads only explicit neutral numeric traits, never specialized context fields", () => {
+  const context = { gameLine: "CofD", traits: { "Authored Power": 3 } };
+  for (const field of ["line_data", "gnosis", "arcana", "path", "order", "wyrd", "court", "mantle", "seeming", "kith", "powers"])
+    Object.defineProperty(context, field, { get() { throw new Error(`Core read ${field}`); } });
+  assert.equal(meritPrerequisitesMet({ name: "Authored", requirements: { trait: "Authored Power", minimum: 3 }, prerequisites: "Authored Power •••" }, context), true);
+  assert.equal(meritPrerequisitesMet({ name: "Authored", requirements: { trait: "Authored Power", minimum: 4 } }, context), false);
+});
 
 test("Changeling owns Seeming alternatives, Kith metadata and the Lucid Dreamer exception", () => {
   const context = { gameLine: "CtL", archetypes: ["changeling"], seeming: "Beast", kith: "Artist", attributes: { Wits: 3 } };

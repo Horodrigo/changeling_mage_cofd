@@ -17,13 +17,13 @@ import type { MeritSelection } from "@/lib/core/character/character-types";
 import { findMageAffiliation, hasStandardCreationOrderBenefits, mageAffiliationsFor } from "./orders";
 import type { MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { MAGE_MERIT_CONFIGURATIONS, masqueConfigurationDots } from "./merit-configurations";
-import type { MeritDefinition, MeritPrerequisiteContext } from "@/lib/merits";
+import type { MeritDefinition } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { useLanguage } from "@/lib/i18n";
 import { builderText } from "@/app/character-builder-messages";
 import { SelectableCatalogCard } from "@/app/selectable-catalog-card";
 import { renderMageStructuredMeritEditor } from "./merit-configuration-editor";
-import { mageMeritPrerequisitesMet } from "./merits";
+import { mageMeritPrerequisitesMet, type MageMeritContext } from "./merits";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import type { MageFactionDefinition } from "./factions";
 
@@ -38,7 +38,7 @@ export type MageBuilderViewProps = {
   resistanceBonus: string; setResistanceBonus: Setter<string>; nimbus: string; setNimbus: Setter<string>; tool: string; setTool: Setter<string>;
   arcana: Record<string, number>; setArcana: Setter<Record<string, number>>; rotes: Array<SpellSelection | null>; setRotes: Setter<Array<SpellSelection | null>>;
   praxes: Array<SpellSelection | null>; setPraxes: Setter<Array<SpellSelection | null>>; spellCatalog: SpellDefinition[];
-  aspirations: string[]; setAspirations: Setter<string[]>; meritContext: MeritPrerequisiteContext; meritCatalog: MeritDefinition[]; merits: MeritSelection[]; setMerits: Setter<MeritSelection[]>;
+  aspirations: string[]; setAspirations: Setter<string[]>; meritContext: MageMeritContext; meritCatalog: MeritDefinition[]; merits: MeritSelection[]; setMerits: Setter<MeritSelection[]>;
   factionCatalog: MageFactionDefinition[];
   meritSpent: number; meritBudget: number; missing: MissingCheck;
 };

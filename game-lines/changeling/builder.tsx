@@ -27,8 +27,8 @@ import type { KithDefinition } from "@/lib/changeling-kiths";
 import { kithCreationChoice } from "./kith-choices";
 import type { ContractDefinition } from "./contract-types";
 import { contractWithSupplementalBenefits } from "./contract-presentation";
-import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
-import { changelingMeritPrerequisitesMet } from "./merit-context";
+import { meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
+import { changelingMeritPrerequisitesMet, type ChangelingMeritContext } from "./merit-context";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { changelingBuilderPowerProgression } from "./builder-power-progression";
@@ -154,7 +154,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
     return () => window.clearTimeout(timer);
   }, [wyrd, maximumPowerFromMerits]);
 
-  const meritContext: MeritPrerequisiteContext = {
+  const meritContext: ChangelingMeritContext = {
     gameLine: "CtL", archetypes: ["changeling"], attributes: common.attributes, skills: common.skills,
     seeming, kith, wyrd, court,
     mantle: court && !["sem corte", "courtless"].includes(court.toLowerCase()) ? Math.max(1, mergeCreationMerits(initial?.merits, common.merits).find(item => changelingMeritId(item) === "ctl-2ed:mantle" && item.grantedBy === "Corte")?.dots ?? 1) : 0,

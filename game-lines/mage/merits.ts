@@ -1,10 +1,26 @@
-import { meritContextForSheet, meritPrerequisitesMet, meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
+import { meritContextForSheet, meritPrerequisitesMet, meritTextPrerequisitesMet, meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
-import { requirementMet } from "@/lib/merit-requirements";
+import { canonicalTrait, requirementMet } from "@/lib/merit-requirements";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import type { MageFactionDefinition } from "./factions";
 import { findMageFaction, mageFactionAvailable } from "./factions";
 import { findMageAffiliation } from "./orders";
+import { ARCANA, MTA_PATHS } from "./creation-rules";
+
+export type MageMeritContext = MeritPrerequisiteContext & {
+  gnosis?: number; arcana?: Record<string, number>; path?: string; order?: string;
+};
+
+export function mageTextPrerequisitesMet(value: string | undefined, context: MageMeritContext): boolean {
+  return meritTextPrerequisitesMet(value, context, clause => {
+    if (/^non[- ]?(?:Awakened|mage)$/i.test(clause)) return !context.archetypes?.includes("awakened");
+    if (/^(?:Awakened|Mage)$/i.test(clause)) return Boolean(context.archetypes?.includes("awakened"));
+    if (/^Sleepwalker$/i.test(clause)) return false;
+    const name=clause.replace(/\s*(?:•+|\d+\+?).*$/,"").trim();
+    if (Object.keys(MTA_PATHS).some(path => canonicalTrait(path) === canonicalTrait(name))) return canonicalTrait(context.path) === canonicalTrait(name);
+    return undefined;
+  });
+}
 
 const EXARCHS = new Set(["Eye", "Father", "General", "Unity", "Chancellor", "Raptor", "Prophet", "Nemesis", "Ruin"]);
 const PROFANE_FORMS = new Set(["Scepter", "Robe", "Crown", "Throne", "Ring"]);
@@ -21,7 +37,7 @@ export function canAdvanceMageGrant(merit: CharacterSheet["merits"][number], cat
     (merit.grantedBy === "Nameless Order" && id === "core-2ed:mystery-cult-initiation");
 }
 
-export function mageMeritContextForSheet(sheet: CharacterSheet, catalog: readonly MeritDefinition[]): MeritPrerequisiteContext {
+export function mageMeritContextForSheet(sheet: CharacterSheet, catalog: readonly MeritDefinition[]): MageMeritContext {
   const data = sheet.line_data;
   return {
     ...meritContextForSheet(sheet, catalog, ["awakened"], data.merit_granted_skill_bonuses as Record<string, number> | undefined),
@@ -39,8 +55,9 @@ function matchingMerits(context: MeritPrerequisiteContext, ids: readonly string[
   return candidates.filter(item => item.dots >= minimum && ids.includes(resolveMeritDefinition(item, context.meritCatalog ?? [])?.id ?? ""));
 }
 
-export function mageMeritPrerequisitesMet(merit: MeritDefinition, context: MeritPrerequisiteContext) {
-  if (!meritPrerequisitesMet(merit, context)) return false;
+export function mageMeritPrerequisitesMet(merit: MeritDefinition, context: MageMeritContext) {
+  context = { ...context, traits: { ...Object.fromEntries(ARCANA.map(name => [name, 0])), ...context.traits, ...context.arcana, Gnosis: context.gnosis ?? 0, Gnose: context.gnosis ?? 0 } };
+  if (!meritPrerequisitesMet(merit, context, mageTextPrerequisitesMet)) return false;
   if (merit.id !== "mta-2ed:infamous-mentor") return true;
   const id = String(context.configuration?.mentorId ?? "");
   return matchingMerits(context, ["core-2ed:mentor"], context.selectedDots ?? 1, id || undefined).length > 0;
@@ -49,15 +66,12 @@ export function mageMeritPrerequisitesMet(merit: MeritDefinition, context: Merit
 export function mageMeritSelectionProblems(
   merit: MeritDefinition,
   selection: { dots: number; configuration?: Record<string, string | string[]> },
-  context: MeritPrerequisiteContext,
+  context: MageMeritContext,
   factions: readonly MageFactionDefinition[],
   affiliationId?:unknown,
 ) {
-  const problems = meritSelectionProblems(merit, selection, context);
+  const problems = meritSelectionProblems(merit, selection, context, mageMeritPrerequisitesMet);
   const configuration = selection.configuration ?? {};
-  if (merit.id === "mta-2ed:infamous-mentor" && !mageMeritPrerequisitesMet(merit, {...context, selectedDots: selection.dots, configuration}) && !problems.some(item => item.key === "ui.meritPrerequisitesNotMet")) {
-    problems.push({key:"ui.meritPrerequisitesNotMet",params:{prerequisites:merit.prerequisites??merit.name}});
-  }
   const linked = (key: string, ids: readonly string[], minimum = 1) => {
     if (!matchingMerits(context, ids, minimum, String(configuration[key] ?? "")).length) {
       problems.push({key:"ui.meritSelectLinked",params:{minimum},meritIds:ids});

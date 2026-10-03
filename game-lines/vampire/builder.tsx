@@ -244,7 +244,6 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     gameLine: "VtR", archetypes: ["vampire", clanId, String(initial?.line_data.bloodline_id ?? ""), ...covenantIds], attributes: common.attributes,
     mortalMeritsAllowed: zirnitraRating > 0,
     skills: common.skills, merits: mergeCreationMerits(initial?.merits, common.merits), meritCatalog,
-    powers: Object.entries(disciplines).filter(([, value]) => value > 0).map(([name]) => name),
   };
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {

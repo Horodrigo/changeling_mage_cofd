@@ -56,6 +56,15 @@ test("Changeling owns Court/Seeming/Kith Merit access while shared validation ac
   assert.match(await source("game-lines/changeling/merit-context.ts"), /&& changelingMeritPrerequisitesMet\(definition, context\)/);
 });
 
+test("specialized Merit prerequisite types and text interpretation belong to their lines", async () => {
+  for (const path of ["lib/merits.ts", "lib/merit-requirements.ts"]) {
+    const content = await source(path);
+    assert.doesNotMatch(content, /\b(?:Gnosis|Gnose|Wyrd|Fado|Arcana|Acanthus|Moros|Wizened|Beast|Sleepwalker)\b|Contract of|courtAccess|context\.(?:gnosis|arcana|path|order|seeming|kith|court|mantle|wyrd|powers)\b/, path);
+  }
+  assert.match(await source("game-lines/mage/merits.ts"), /mageTextPrerequisitesMet/);
+  assert.match(await source("game-lines/changeling/merit-context.ts"), /changelingTextPrerequisitesMet/);
+});
+
 test("neutral game-line contracts do not know concrete game lines", async () => {
   const files = [
     "lib/game-line-contracts/game-line-registration.ts",

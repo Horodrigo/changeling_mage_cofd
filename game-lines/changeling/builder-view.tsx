@@ -9,7 +9,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Choice } from "@/app/builder/common-controls";
 import { MeritPicker } from "@/app/builder/merit-picker";
-import { changelingMeritPrerequisitesMet } from "./merit-context";
+import { changelingMeritPrerequisitesMet, type ChangelingMeritContext } from "./merit-context";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@/app/builder/common-merit-configurations";
 import { CHANGELING_MERIT_CONFIGURATIONS, isChangelingInlineMeritConfiguration } from "./builder-merit-configurations";
@@ -28,7 +28,7 @@ import { kithCreationChoice } from "./kith-choices";
 import type { ContractDefinition } from "./contract-types";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, type ContractPresentationCatalog } from "./contract-presentation";
 import type { MeritSelection, Specialty } from "@/lib/core/character/character-types";
-import type { MeritDefinition, MeritPrerequisiteContext } from "@/lib/merits";
+import type { MeritDefinition } from "@/lib/merits";
 import { alphabetical } from "@/lib/option-order";
 import { translate, useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
@@ -49,7 +49,7 @@ export type ChangelingBuilderViewProps = {
   favoredAttribute: string; setFavoredAttribute: Setter<string>; secondRegalia: string; setSecondRegalia: Setter<string>;
   needle: string; setNeedle: Setter<string>; thread: string; setThread: Setter<string>; touchstone: string; setTouchstone: Setter<string>;
   wyrd: number; setWyrd: Setter<number>; maximumPowerFromMerits: number; powerAdvancement: number;
-  aspirations: string[]; setAspirations: Setter<string[]>; meritContext: MeritPrerequisiteContext; meritCatalog: MeritDefinition[]; merits: MeritSelection[]; setMerits: Setter<MeritSelection[]>;
+  aspirations: string[]; setAspirations: Setter<string[]>; meritContext: ChangelingMeritContext; meritCatalog: MeritDefinition[]; merits: MeritSelection[]; setMerits: Setter<MeritSelection[]>;
   meritSpent: number; meritBudget: number; court: string; missing: MissingCheck;
   kith: string; setKith: Setter<string>; customKith: boolean; setCustomKith: Setter<boolean>;
   kithChoice: string; setKithChoice: Setter<string>; specialties: Specialty[];

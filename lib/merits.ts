@@ -1,4 +1,4 @@
-import { requirementMet, textRequirementMet, type Requirement, type RequirementContext } from "./merit-requirements";
+import { requirementMet, textRequirementMet, type Requirement, type RequirementContext, type TextRequirementEvaluator } from "./merit-requirements";
 import type { PersistedGameLineId } from "./core/character/game-line-ids";
 import type { MessageKey, TranslationParams } from "./i18n";
 import type { CatalogNameQualifier } from "./localized-catalog";
@@ -31,13 +31,10 @@ export type MeritDefinition = {
   prerequisites?: string;
   page: number;
   levels?: MeritLevel[];
-  courtAccess?: Array<{ court: "Spring" | "Summer" | "Autumn" | "Winter"; mantle: number; courtGoodwill?: number }>;
   additionalSources?: ReadonlyArray<{ sourceId: string; source: string; page: number }>;
-  seeming?: "Beast" | "Darkling" | "Elemental" | "Fairest" | "Ogre" | "Wizened";
   alternativePrerequisites?: string;
   requirements?: Requirement;
   excludes?: string[];
-  kith?: string;
   repeatable?: boolean;
   unbounded?: boolean;
   mortalOnly?: boolean;
@@ -59,12 +56,7 @@ export type MeritPrerequisiteContext = RequirementContext & {
   gameLine: GameLine;
   attributes?: Record<string, number>;
   skills?: Record<string, number>;
-  seeming?: string;
-  wyrd?: number;
   size?: number;
-  powers?: string[];
-  court?: string;
-  mantle?: number;
   merits?: Array<{ definitionId?: string; sourceId?: string; instanceId?: string; name: string; dots: number; configuration?: Record<string,string|string[]> }>;
   selectedDots?: number;
   configuration?: Record<string,string|string[]>;
@@ -73,11 +65,10 @@ export type MeritPrerequisiteContext = RequirementContext & {
   mortalMeritsAllowed?: boolean;
 };
 
-const courtKey=(value:unknown)=>String(value??"").toLowerCase().replace(/^court[- ]/,"").replace(/[- ]court$/,"").replace(/[^a-z]/g,"");
-
 export function meritPrerequisitesMet(
   merit: Pick<MeritDefinition, "name" | "prerequisites"> & Partial<MeritDefinition>,
   context: MeritPrerequisiteContext,
+  parseText = meritTextPrerequisitesMet,
 ) {
   if(merit.line&&merit.line!=="Core"&&merit.line!==context.gameLine) return false;
   if(merit.mortalOnly && context.gameLine !== "CofD" && !context.mortalMeritsAllowed) return false;
@@ -94,34 +85,32 @@ export function meritPrerequisitesMet(
     const definition = resolveMeritDefinition(item, catalog);
     return item.dots>0 && definition && Boolean(merit.id) && forbiddenIds(definition).includes(merit.id!);
   }))return false;
-  if(!merit.descriptivePrerequisites&&!meritTextPrerequisitesMet(merit.prerequisites,context)) return false;
+  if(!merit.descriptivePrerequisites&&!parseText(merit.prerequisites,context)) return false;
   return true;
 }
 
 const dotsIn=(value:string)=>[...value].filter((character)=>character==="•").length;
 const ATTRIBUTE_NAMES=["Intelligence","Wits","Resolve","Strength","Dexterity","Stamina","Presence","Manipulation","Composure"];
 const SKILL_NAMES=["Academics","Computer","Crafts","Investigation","Medicine","Occult","Politics","Science","Athletics","Brawl","Drive","Firearms","Larceny","Stealth","Survival","Weaponry","Animal Ken","Empathy","Expression","Intimidation","Persuasion","Socialize","Streetwise","Subterfuge"];
-const SEEMING_NAMES=["Beast","Darkling","Elemental","Fairest","Ogre","Wizened"];
 function traitValue(name:string,context:MeritPrerequisiteContext){
   const traits={...(context.attributes??{}),...(context.skills??{})};
   return Number(traits[name]??0);
 }
-export function meritTextPrerequisitesMet(value:string|undefined,context:MeritPrerequisiteContext):boolean{
+export function meritTextPrerequisitesMet(value:string|undefined,context:MeritPrerequisiteContext,evaluateClause?:TextRequirementEvaluator):boolean{
   if(!value) return true;
   // Parse ordinary comma-separated trait and Merit clauses independently.
   // Keep the legacy narrative/group helpers below for general-purpose special wording.
-  if(!/one (?:Mental|Physical|Social) Attribute|any Social Skill|Contract of|≤|maximum|or lower/i.test(value))
-    return textRequirementMet(value,context,context.meritCatalog??[]);
+  if(!/one (?:Mental|Physical|Social) Attribute|any Social Skill|≤|maximum|or lower/i.test(value))
+    return textRequirementMet(value,context,context.meritCatalog??[],evaluateClause);
+  return meritGroupedPrerequisitesMet(value,context);
+}
+
+/** Common category/max-rating wording, also composed by line-owned text parsers. */
+export function meritGroupedPrerequisitesMet(value:string,context:MeritPrerequisiteContext):boolean{
   const text=value.replace(/≤/g," maximum ");
-  if(/Non-changeling/i.test(text)&&context.archetypes?.includes("changeling")) return false;
   return text.split(";").every((rawGroup)=>{
     const group=rawGroup.trim();
     if(!group) return true;
-    const currentSeeming=SEEMING_NAMES.find((name)=>courtKey(name)===courtKey(context.seeming));
-    if(currentSeeming&&new RegExp(`\\b${currentSeeming}\\b`).test(group)&&!new RegExp(`\\bor\\b`,"i").test(group)){
-      const rest=group.replace(new RegExp(`\\b${currentSeeming}\\b[,]?`,"i"),"").trim();
-      return rest?meritTextPrerequisitesMet(rest,context):true;
-    }
     if(/Cannot have/i.test(group)){
       const forbidden=group.replace(/Cannot have/i,"").trim();
       return !requirementMet({merit:forbidden},context);
@@ -142,9 +131,6 @@ export function meritTextPrerequisitesMet(value:string|undefined,context:MeritPr
       return category.some((name)=>traitValue(name,context)>=dotsIn(group));
     }
     if(/any Social Skill/i.test(group)) return ["Animal Ken","Empathy","Expression","Intimidation","Persuasion","Socialize","Streetwise","Subterfuge"].some((name)=>traitValue(name,context)>=dotsIn(group));
-    if(/^Contract of /i.test(group)) return (context.powers??[]).some((power)=>courtKey(power)===courtKey(group.replace(/^Contract of /i,"").replace(/[•]+/g,"").trim())||courtKey(power)===courtKey(group.replace(/[•]+/g,"").trim()));
-    const seemingAlternatives=SEEMING_NAMES.filter((name)=>new RegExp(`\\b${name}\\b`,"i").test(group));
-    if(seemingAlternatives.length&&/\bor\b/i.test(group)&&seemingAlternatives.some((name)=>courtKey(name)===courtKey(context.seeming))) return true;
     const traitNames=[...ATTRIBUTE_NAMES,...SKILL_NAMES].filter((name)=>new RegExp(`\\b${name.replace(" ","\\s+")}\\b`,"i").test(group));
     const dotGroups=group.match(/•+/g)??[];
     if(traitNames.length){
@@ -156,7 +142,8 @@ export function meritTextPrerequisitesMet(value:string|undefined,context:MeritPr
         return traitValue(name,context)>=(match?.[1]?.length??threshold);
       });
     }
-    if(/\bWyrd\b/i.test(group)) return Number(context.wyrd??0)>=(dotsIn(group)||Number(group.match(/\d+/)?.[0]??0));
+    const extraTrait=Object.keys(context.traits??{}).find(name=>new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}\\b`,"i").test(group));
+    if(extraTrait) return Number(context.traits?.[extraTrait]??0)>=(dotsIn(group)||Number(group.match(/\d+/)?.[0]??0));
     if(/\bSize\b/i.test(group)) return Number(context.size??5)>=(dotsIn(group)||Number(group.match(/\d+/)?.[0]??0));
     if(requiredMerits.length){
       const threshold=dotsIn(group)||1;
@@ -176,7 +163,7 @@ export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Recor
 
 export type MeritSelectionProblem = { key: MessageKey; params?: TranslationParams; meritIds?: readonly string[] };
 
-export function meritSelectionProblems(merit:MeritDefinition,selection:{dots:number;configuration?:Record<string,string|string[]>},context:MeritPrerequisiteContext,isEligible=meritPrerequisitesMet):MeritSelectionProblem[]{
+export function meritSelectionProblems(merit:MeritDefinition,selection:{dots:number;configuration?:Record<string,string|string[]>},context:MeritPrerequisiteContext,isEligible:(merit:MeritDefinition,context:MeritPrerequisiteContext)=>boolean=meritPrerequisitesMet):MeritSelectionProblem[]{
   const config=selection.configuration??{}, problems:MeritSelectionProblem[]=[];
   if(!isEligible(merit,{...context,selectedDots:selection.dots,configuration:config})) problems.push({key:"ui.meritPrerequisitesNotMet",params:{prerequisites:merit.prerequisites??merit.name}});
   return problems;

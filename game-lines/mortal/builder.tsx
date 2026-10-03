@@ -86,7 +86,6 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
     size: 5,
     merits: mergeCreationMerits(initial?.merits, common.merits),
     meritCatalog,
-    powers: [],
   };
 
   const issues = (() => {

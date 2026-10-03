@@ -90,18 +90,18 @@ test("Mage catalog includes the nine audited supplemental Merits",()=>{
 });
 test("Mage Order Style and Svikiro prerequisites use canonical stored traits",()=>{
  const status=(domain,dots)=>({name:"Awakened Status",dots,configuration:{domain}});
- assert.equal(merits.meritPrerequisitesMet(merit("Egregore"),{...base,merits:[status("Mysterium",1)]}),true);
- assert.equal(merits.meritPrerequisitesMet(merit("Egregore"),{...base,merits:[status("Silver Ladder",5)]}),false);
- assert.equal(merits.meritPrerequisitesMet(merit("Masque (Style)"),{...base,merits:[status("Guardians of the Veil",1)]}),true);
- assert.equal(merits.meritPrerequisitesMet(merit("Masque"),{...base,merits:[{name:"Masque (Style)",dots:1}]}),true);
- assert.equal(merits.meritPrerequisitesMet(merit("Masque"),base),false);
- assert.equal(merits.meritPrerequisitesMet(merit("Prelacy"),{...base,merits:[status("Seers of the Throne",3)]}),true);
- assert.equal(merits.meritPrerequisitesMet(merit("Prelacy"),{...base,merits:[status("Seers of the Throne",2)]}),false);
- assert.equal(merits.meritPrerequisitesMet(merit("Profane Tool"),{...base,merits:[{name:"Prelacy",dots:2}]}),true);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Egregore"),{...base,merits:[status("Mysterium",1)]}),true);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Egregore"),{...base,merits:[status("Silver Ladder",5)]}),false);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Masque (Style)"),{...base,merits:[status("Guardians of the Veil",1)]}),true);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Masque"),{...base,merits:[{name:"Masque (Style)",dots:1}]}),true);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Masque"),base),false);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Prelacy"),{...base,merits:[status("Seers of the Throne",3)]}),true);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Prelacy"),{...base,merits:[status("Seers of the Throne",2)]}),false);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Profane Tool"),{...base,merits:[{name:"Prelacy",dots:2}]}),true);
  const medium={...base,attributes:{Resolve:3,Composure:3}};
- assert.equal(merits.meritPrerequisitesMet(merit("Svikiro"),medium),true);
- assert.equal(merits.meritPrerequisitesMet(merit("Svikiro"),{...medium,attributes:{Resolve:2,Composure:3}}),false);
- assert.equal(merits.meritPrerequisitesMet(merit("Svikiro Nganga"),{...base,merits:[{name:"Svikiro",dots:3}]}),true);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Svikiro"),medium),true);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Svikiro"),{...medium,attributes:{Resolve:2,Composure:3}}),false);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Svikiro Nganga"),{...base,merits:[{name:"Svikiro",dots:3}]}),true);
 });
 test("Mage location merits preserve sources, ratings, and linked locations",()=>{
  const locations=[
@@ -125,20 +125,20 @@ test("Mage location merits preserve sources, ratings, and linked locations",()=>
 });
 test("Shadow Self applies Shadow Name 3 and Mind 1",()=>{
  const shadow=merit("Shadow Self"),context={...base,arcana:{Mind:1},merits:[{name:"Shadow Name",dots:3}]};
- assert.equal(merits.meritPrerequisitesMet(shadow,context),true);
- assert.equal(merits.meritPrerequisitesMet(shadow,{...context,arcana:{Mind:0}}),false);
- assert.equal(merits.meritPrerequisitesMet(shadow,{...context,merits:[{name:"Shadow Name",dots:2}]}),false);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(shadow,context),true);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(shadow,{...context,arcana:{Mind:0}}),false);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(shadow,{...context,merits:[{name:"Shadow Name",dots:2}]}),false);
 });
 test("Mage requirements use Path and specific Status domains",()=>{
- assert.equal(merits.meritPrerequisitesMet(merit("Fire Keeper"),{...base,path:"Obrimos"}),true);
- assert.equal(merits.meritPrerequisitesMet(merit("Fire Keeper"),{...base,path:"Moros"}),false);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Fire Keeper"),{...base,path:"Obrimos"}),true);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Fire Keeper"),{...base,path:"Moros"}),false);
  const adamant=merit("Adamant Hand"),arrow={...base,order:"Adamantine Arrow",skills:{Athletics:3},merits:[{name:"Awakened Status",dots:1,configuration:{domain:"Adamantine Arrow"}}]};
- assert.equal(merits.meritPrerequisitesMet(adamant,arrow),true);
- assert.equal(merits.meritPrerequisitesMet(adamant,{...arrow,merits:[{name:"Awakened Status",dots:1,configuration:{domain:"Silver Ladder"}}]}),false);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(adamant,arrow),true);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(adamant,{...arrow,merits:[{name:"Awakened Status",dots:1,configuration:{domain:"Silver Ladder"}}]}),false);
 });
 test("Occultation and Fame exclude each other in either purchase order",()=>{
- assert.equal(merits.meritPrerequisitesMet(merit("Occultation"),{...base,merits:[{name:"Fame",dots:1}]}),false);
- assert.equal(merits.meritPrerequisitesMet(merit("Fame"),{...base,merits:[{name:"Occultation",dots:1}]}),false);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Occultation"),{...base,merits:[{name:"Fame",dots:1}]}),false);
+ assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Fame"),{...base,merits:[{name:"Occultation",dots:1}]}),false);
 });
 test("Infamous Mentor links a Mentor instance of equal rating",()=>{
  const infamous=merit("Infamous Mentor"),context={...base,merits:[{instanceId:"mentor-a",name:"Mentor",dots:3}]};

@@ -20,7 +20,7 @@ import type { CharacterSheet, MeritSelection } from "@/lib/core/character/charac
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
 import { findMageAffiliation, hasStandardCreationOrderBenefits } from "./orders";
-import { type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
+import { type MeritDefinition } from "@/lib/merits";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { mageBuilderPowerProgression } from "./builder-power-progression";
@@ -34,7 +34,7 @@ import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { activeSpellCatalog } from "./spell-homebrews";
 import { useSpellHomebrews } from "./use-spell-homebrews";
 import type { MageFactionDefinition } from "./factions";
-import { mageMeritSelectionProblems, MAGE_STATUS_REQUIREMENTS } from "./merits";
+import { mageMeritSelectionProblems, MAGE_STATUS_REQUIREMENTS, type MageMeritContext } from "./merits";
 import { NAMELESS_HIGH_SPEECH_BENEFIT, reconcileMageCreationMeritGrants } from "./builder-merit-grants";
 
 function normalizeCustomOrder(value: unknown): CustomOrderDefinition | null {
@@ -189,7 +189,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     return () => window.clearTimeout(timer);
   }, [gnosis, maximumPowerFromMerits]);
 
-  const meritContext: MeritPrerequisiteContext = {
+  const meritContext: MageMeritContext = {
     ...MAGE_STATUS_REQUIREMENTS,
     gameLine: "MtA",
     archetypes: ["awakened"],
@@ -198,7 +198,6 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     gnosis, arcana, path, order,
     merits: mergeCreationMerits(initial?.merits, common.merits),
     meritCatalog,
-    powers: [],
   };
   const pathData = MTA_PATHS[path as keyof typeof MTA_PATHS] ?? MTA_PATHS.Acanthus;
   const issues = (() => {
