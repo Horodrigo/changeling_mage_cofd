@@ -1,5 +1,6 @@
 "use client";
 import { meritProblemMessage } from "@/lib/merit-ui";
+import { meritPresentation } from "@/lib/merit-presentation";
 
 import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
@@ -267,7 +268,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     if (zirnitraMortalMeritCount(meritContext) > zirnitraMortalMeritLimit(zirnitraRating)) add("merits", t("ui.coilOfZirnitra"));
     for (const merit of common.merits) {
       const definition = resolveMeritDefinition(merit, meritCatalog);
-      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${displayName(definition, locale)}: ${meritProblemMessage(message, definition, locale)}`);
+      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`);
       if (merit.name === "Kindred Status" && !String(merit.configuration?.group ?? "").trim()) add("merits", t("ui.kindredStatusRequiresAClanCovenantOrCity"));
     }
     if (clanId === "hollow-mekhet") {

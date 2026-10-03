@@ -1542,6 +1542,7 @@
   {
     "id": "vtr-gttn:friends-in-low-places",
     "name": "Friends in Low Places",
+    "nameQualifier": { "en-US": "Kindred", "pt-BR": "Membro" },
     "ratings": [
       1,
       2,
@@ -2608,6 +2609,7 @@
   {
     "id": "vtr-sotc:noblesse-oblige",
     "name": "Noblesse Oblige",
+    "nameQualifier": { "en-US": "Kindred", "pt-BR": "Membro" },
     "ratings": [
       3
     ],
@@ -4174,6 +4176,7 @@
   {
     "id": "vtr-strange-shades:occultation",
     "name": "Occultation",
+    "nameQualifier": { "en-US": "Kindred", "pt-BR": "Membro" },
     "ratings": [
       1
     ],
@@ -4558,6 +4561,7 @@
   {
     "id": "vtr-acute-senses",
     "name": "Acute Senses",
+    "nameQualifier": { "en-US": "Kindred", "pt-BR": "Membro" },
     "ratings": [
       1
     ],
@@ -5145,6 +5149,7 @@
   {
     "id": "vtr-touchstone",
     "name": "Touchstone",
+    "nameQualifier": { "en-US": "Kindred", "pt-BR": "Membro" },
     "ratings": [
       1,
       2,

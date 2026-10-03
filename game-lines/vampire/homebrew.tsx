@@ -57,7 +57,7 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
   ];
   merits.forEach((item) => {
     const presented = meritPresentation(item, locale);
-    add(item, t("ui.merits"), [...detail(t("ui.ratings"), item.ratings.join(", ")), ...detail(t("ui.prerequisites"), presented.prerequisites), ...detail(t("ui.effect"), presented.description), ...(presented.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.description))]);
+    add({ ...item, name: presented.name, translatedName: presented.name }, t("ui.merits"), [...detail(t("ui.ratings"), item.ratings.join(", ")), ...detail(t("ui.prerequisites"), presented.prerequisites), ...detail(t("ui.effect"), presented.description), ...(presented.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.description))]);
   });
   reference.clans.forEach((item) => add(item, t("ui.clans"), [...detail(t("ui.favoredAttributes"), item.favoredAttributes.join(" / ")), ...detail(t("ui.disciplines"), item.disciplines.join(", ")), ...detail(item.baneName, item.baneSummary)]));
   reference.covenants.forEach((item) => add(item, t("ui.covenants"), [...detail(t("ui.descriptionLabel"), item.description), ...detail(t("ui.advantage"), item.advantage)]));

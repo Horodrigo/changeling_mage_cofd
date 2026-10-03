@@ -34,6 +34,7 @@ import { translate, useLanguage,type Locale } from "@/lib/i18n";
 import { CHANGELING_SHEET_MERIT_CONFIGURATIONS, decodeConfiguredRows, expandedConfigurationLines, findMeritConfiguration, meritConfigurationTitle, normalizeMeritConfiguration, synchronizeMeritGrants, type TokenConfigurationItem } from "./sheet-merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
 import { meritPresentation } from "@/lib/merit-presentation";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { normalizeClarityDamage,normalizeDamage,powerResourceLimits,type ClarityDamageLevel } from "@/lib/resource-rules";
 import { useState } from "react";
 import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
@@ -344,11 +345,8 @@ function SheetField({ label, value }: {
     </div>);
 }
 function meritLabel(item: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[], courtCatalog: readonly CourtDefinition[], locale: Locale = "en-US") {
-    const definition = catalog.find((entry) => entry.name === item.name);
-    const base = locale === "en-US"
-        ? definition?.name ?? item.name
-        : definition?.translatedName ??
-            (item.name === "Hollow" ? "Vão" : item.name), detail = meritConfigurationTitle(item.configuration, locale, courtCatalog);
+    const definition = resolveMeritDefinition(item, catalog);
+    const base = definition ? meritPresentation(definition, locale).name : item.name, detail = meritConfigurationTitle(item.configuration, locale, courtCatalog);
     return detail ? `${base}: ${detail}` : base;
 }
 function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatalog, entitlementCatalog, tokenCatalog, hasAdjacentContent = false }: {
@@ -371,7 +369,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
     const visible = merits.filter((item) => !item.grantedBy && !["Fae Mount", "Fae Pet"].includes(item.name));
     return (<div className="expanded-merit-list">
       {visible.map((item, itemIndex) => {
-            const definition = catalog.find((entry) => entry.name === item.name), style = definition?.levels?.length ? definition : undefined, configured = expandedConfigurationLines(item.name, item.dots, item.configuration, locale, courtCatalog, tokenCatalog, catalog), tokenItems = item.name === "Token" ? decodeConfiguredRows<TokenConfigurationItem>(normalizeMeritConfiguration(item.configuration).items) : [], cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = item.name === "Token"
+            const definition = resolveMeritDefinition(item, catalog), style = definition?.levels?.length ? definition : undefined, configured = expandedConfigurationLines(item.name, item.dots, item.configuration, locale, courtCatalog, tokenCatalog, catalog), tokenItems = item.name === "Token" ? decodeConfiguredRows<TokenConfigurationItem>(normalizeMeritConfiguration(item.configuration).items) : [], cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = item.name === "Token"
                 ? t("ui.tokens")
                 : meritLabel(item, catalog, courtCatalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(item.name) && !["Fae Mount", "Fae Pet", "Entitlement"].includes(item.name)
                 ? <MeritConfigurationEditor compact merit={item} ownedMerits={character.merits} catalog={[...catalog]} definitions={CHANGELING_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => renderChangelingStructuredMeritEditor(props, entitlementCatalog, tokenCatalog)} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
@@ -547,7 +545,7 @@ function MeritSheetList({ merits, catalog, courtCatalog, }: {
     const availableCatalog = catalog, visible = merits.filter((item) => !item.grantedBy || item.grantedBy === "Corte");
     return (<div className="sheet-merits single-column">
       {visible.length ? (visible.map((item, index) => {
-            const definition = availableCatalog.find((entry) => entry.name === item.name);
+            const definition = resolveMeritDefinition(item, availableCatalog);
             const presented = definition && meritPresentation(definition, locale);
             const tooltip = presented
                 ? `${presented.prerequisites ? `${t("ui.prerequisites")}: ${presented.prerequisites}\n` : ""}${presented.description}`

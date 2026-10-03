@@ -2,6 +2,7 @@
   {
     "id": "ctl-2ed:acute-senses",
     "name": "Acute Senses",
+    "nameQualifier": { "en-US": "Lost", "pt-BR": "Perdido" },
     "ratings": [1],
     "line": "CtL",
     "sourceId": "ctl-2ed",
@@ -450,6 +451,7 @@
   {
     "id": "ctl-2ed:noblesse-oblige",
     "name": "Noblesse Oblige",
+    "nameQualifier": { "en-US": "Lost", "pt-BR": "Perdido" },
     "ratings": [1, 2, 3],
     "line": "CtL",
     "sourceId": "ctl-2ed",
@@ -555,6 +557,7 @@
   {
     "id": "ctl-2ed:touchstone",
     "name": "Touchstone",
+    "nameQualifier": { "en-US": "Lost", "pt-BR": "Perdido" },
     "ratings": [1, 2, 3, 4, 5],
     "line": "CtL",
     "sourceId": "ctl-2ed",
@@ -680,6 +683,7 @@
   {
     "id": "h-courts:friends-in-low-places",
     "name": "Friends in Low Places",
+    "nameQualifier": { "en-US": "Lost", "pt-BR": "Perdido" },
     "ratings": [1, 2, 3],
     "line": "CtL",
     "sourceId": "h-courts",

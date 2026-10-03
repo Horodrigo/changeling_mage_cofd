@@ -598,6 +598,7 @@
   {
     "id": "mta-2ed:occultation",
     "name": "Occultation",
+    "nameQualifier": { "en-US": "Awakened", "pt-BR": "Desperto" },
     "ratings": [1, 2, 3],
     "line": "MtA",
     "sourceId": "mta-2ed",

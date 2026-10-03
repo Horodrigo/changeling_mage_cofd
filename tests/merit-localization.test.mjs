@@ -68,8 +68,8 @@ test("switching Merit locale changes presentation, never eligibility or canonica
   const before = structuredClone(changeling);
   const catalog = withMeritPresentation(changeling, changelingPt);
   const acute = catalog.find((item) => item.id === "ctl-2ed:acute-senses");
-  assert.equal(meritPresentation(acute, "pt-BR").name, "Sentidos Aguçados");
-  assert.equal(meritPresentation(acute, "en-US").name, "Acute Senses");
+  assert.equal(meritPresentation(acute, "pt-BR").name, "Sentidos Aguçados(Perdido)");
+  assert.equal(meritPresentation(acute, "en-US").name, "Acute Senses(Lost)");
   assert.equal(meritPresentation(acute, "en-US").description, acute.descriptionEn);
   assert.equal(acute.prerequisites, "Wits or Composure •••");
   assert.equal(meritPrerequisitesMet(acute, { gameLine: "CtL", attributes: { Wits: 3 } }), true);

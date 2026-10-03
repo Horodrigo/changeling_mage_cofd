@@ -66,7 +66,7 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
     });
   }
   for (const item of catalogs.get<MeritDefinition[]>("changeling-merits")) add({
-    id: item.id, sourceId: item.sourceId, source: item.source, kind: t("ui.merits"), name: locale === "pt-BR" ? item.translatedName : item.name,
+    id: item.id, sourceId: item.sourceId, source: item.source, kind: t("ui.merits"), name: meritPresentation(item, locale).name,
     details: [
       ...detail(t("ui.prerequisites"), meritPresentation(item, locale).prerequisites),
       ...detail(t("ui.alternativePrerequisites"), meritPresentation(item, locale).alternativePrerequisites),

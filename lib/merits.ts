@@ -1,6 +1,7 @@
 import { canonicalTrait, requirementMet, textRequirementMet, type Requirement, type RequirementContext } from "./merit-requirements";
 import type { PersistedGameLineId } from "./core/character/game-line-ids";
 import type { MessageKey, TranslationParams } from "./i18n";
+import type { CatalogNameQualifier } from "./localized-catalog";
 
 export type GameLine = PersistedGameLineId;
 export type MeritLevel = { rating: number; name: string; description: string };
@@ -15,6 +16,7 @@ export type MeritPresentationCatalog = Readonly<Record<string, MeritPresentation
 export type MeritDefinition = {
   id: string;
   name: string;
+  nameQualifier?: CatalogNameQualifier;
   ratings: number[];
   line: "Core" | GameLine;
   sourceId: string;

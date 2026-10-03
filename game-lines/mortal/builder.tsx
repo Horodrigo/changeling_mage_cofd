@@ -1,5 +1,6 @@
 "use client";
 import { meritProblemMessage } from "@/lib/merit-ui";
+import { meritPresentation } from "@/lib/merit-presentation";
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -102,7 +103,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
     for (const merit of common.merits) {
       const definition = resolveMeritDefinition(merit, meritCatalog);
       if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext))
-        add(3, "merits", `${locale === "pt-BR" ? definition.translatedName || definition.name : definition.name}: ${meritProblemMessage(message, definition, locale)}`);
+        add(3, "merits", `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`);
     }
     return result;
   })();

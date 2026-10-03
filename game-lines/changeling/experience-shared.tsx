@@ -3,6 +3,7 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { ContractDefinition } from "./contract-types";
 import type { MeritDefinition } from "@/lib/merits";
+import { meritPresentation } from "@/lib/merit-presentation";
 import { systemTerm } from "@/lib/system-terms";
 import { translate, useLanguage, type Locale } from "@/lib/i18n";
 import { changelingContractExperienceCost } from "@/lib/changeling-regalia";
@@ -38,7 +39,7 @@ export function purchasePreview(input: {
   if (purchaseType === "skill") return { label: `${systemTerm(input.skill,locale)} ${input.targetRating}`, cost: 2 * (input.targetRating - Number(character.skills[input.skill] ?? 0)) };
   if (purchaseType === "merit") return {
     label: input.nextMeritRating
-      ? `${locale === "en-US" ? input.selectedMerit?.name : input.selectedMerit?.translatedName} ${input.nextMeritRating}`
+      ? `${input.selectedMerit ? meritPresentation(input.selectedMerit, locale).name : translate(locale, "ui.merit")} ${input.nextMeritRating}`
       : translate(locale, "ui.noAdditionalRating"),
     cost: input.nextMeritRating ? input.nextMeritRating - (input.ownedMerit?.dots ?? 0) : 0,
   };
