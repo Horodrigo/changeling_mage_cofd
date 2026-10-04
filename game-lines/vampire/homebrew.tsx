@@ -12,8 +12,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { GameLineHomebrewModule, GameLineHomebrewProps } from "@/lib/game-line-contracts/game-line-ui";
 import { homebrewContentActive, isHomebrewSource, saveHomebrewPreferences, setHomebrewEnabled } from "@/lib/homebrew";
 import { useLanguage } from "@/lib/i18n";
+import { systemTerm } from "@/lib/system-terms";
 import type { MeritDefinition } from "@/lib/merits";
 import { meritPresentation } from "@/lib/merit-presentation";
+import { vampireDisciplineDisplayName } from "./creation-rules";
 import { BloodlineHomebrewEditor } from "./bloodline-homebrew-editor";
 import { BLOODLINE_HOMEBREW_SOURCE_ID, saveBloodlineHomebrews } from "./bloodline-homebrews";
 import type { VampireBloodlineDefinition, VampireCondition, VampireMechanics, VampirePowers, VampireReference } from "./catalog-types";
@@ -53,22 +55,25 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
     ...detail(t("ui.contestedBy"), item.contestedBy), ...detail(t("ui.resistedBy"), item.resistedBy), ...detail(t("ui.sacrament"), item.sacrament),
     ...detail(t("ui.condition"), item.condition), ...detail(t("ui.effect"), item.effect),
     ...detail(t("ui.procedure"), item.procedure), ...detail(t("ui.outcome"), item.outcome),
-    ...Object.entries(item.rollResults ?? {}).flatMap(([label, text]) => detail(label, text)),
+    ...([
+      ["dramaticFailure", t("ui.dramaticFailure")], ["failure", t("ui.failure")],
+      ["success", t("ui.success")], ["exceptionalSuccess", t("ui.exceptionalSuccess")],
+    ] as const).flatMap(([key, label]) => detail(label, item.rollResults?.[key])),
   ];
   merits.forEach((item) => {
     const presented = meritPresentation(item, locale);
     add({ ...item, name: presented.name, translatedName: presented.name }, t("ui.merits"), [...detail(t("ui.ratings"), item.ratings.join(", ")), ...detail(t("ui.prerequisites"), presented.prerequisites), ...detail(t("ui.effect"), presented.description), ...(presented.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.description))]);
   });
-  reference.clans.forEach((item) => add(item, t("ui.clans"), [...detail(t("ui.favoredAttributes"), item.favoredAttributes.join(" / ")), ...detail(t("ui.disciplines"), item.disciplines.join(", ")), ...detail(item.baneName, item.baneSummary)]));
+  reference.clans.forEach((item) => add(item, t("ui.clans"), [...detail(t("ui.favoredAttributes"), item.favoredAttributes.map(name => systemTerm(name, locale)).join(" / ")), ...detail(t("ui.disciplines"), item.disciplines.map(name => vampireDisciplineDisplayName(name, powers.disciplines, locale)).join(", ")), ...detail(item.baneName, item.baneSummary)]));
   reference.covenants.forEach((item) => add(item, t("ui.covenants"), [...detail(t("ui.descriptionLabel"), item.description), ...detail(t("ui.advantage"), item.advantage)]));
-  reference.bloodlines.forEach((item) => add(item, t("ui.bloodlines"), [...detail(t("ui.summary"), item.summary), ...detail(t("ui.parentClan"), item.parentClan), ...detail(t("ui.prerequisites"), item.requirements), ...detail(t("ui.favoredAttributes"), item.favoredAttributes.join(" / ")), ...detail(t("ui.disciplines"), item.disciplines.join(", ")), ...detail(item.giftName ?? "", item.giftSummary), ...detail(item.baneName, item.baneSummary)]));
+  reference.bloodlines.forEach((item) => add(item, t("ui.bloodlines"), [...detail(t("ui.summary"), item.summary), ...detail(t("ui.parentClan"), item.parentClan), ...detail(t("ui.prerequisites"), item.requirements), ...detail(t("ui.favoredAttributes"), item.favoredAttributes.map(name => systemTerm(name, locale)).join(" / ")), ...detail(t("ui.disciplines"), item.disciplines.map(name => vampireDisciplineDisplayName(name, powers.disciplines, locale)).join(", ")), ...detail(item.giftName ?? "", item.giftSummary), ...detail(item.baneName, item.baneSummary)]));
   powers.disciplines.forEach((item) => add(item, item.id === "lithopedia" ? bloodSorcery : disciplines, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.bloodline"), item.bloodlineId), ...(item.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.summary))]));
   powers.ritualDisciplines.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.statusRequirement), ...mechanics(item)]));
   powers.devotions.forEach((item) => { const placement = item.category ? nestedDevotions[item.category] : undefined; add(item, placement?.kind ?? item.category ?? t("ui.devotions"), [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], placement?.parentId); });
   powers.lashes.forEach((item) => add(item, disciplines, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], "blood-tether"));
   powers.cruacRites.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)]));
   powers.thebanMiracles.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)]));
-  powers.gildedInvocations.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.discipline"), "Gilded Cage"), ...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)], "gilded-cage"));
+  powers.gildedInvocations.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.discipline"), t("ui.gildedCage")), ...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)], "gilded-cage"));
   powers.detournements.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)]));
   conditions.forEach((item) => add(item, t("ui.conditions"), [...detail(t("ui.descriptionLabel"), item.description), ...detail(t("ui.penalty"), item.penalty), ...detail(t("ui.persistent"), item.persistent ? t("ui.yes") : ""), ...detail(t("ui.resolution"), item.resolution), ...detail(t("ui.beat"), item.beat)]));
   listed.push({ id: SIMPLIFIED_HOLLOW_ID, sourceId: "h-vtr-strange-shades", source: "Strange Shades: Mekhet", kind: "Errata", name: t("ui.simplifiedHollow"), details: detail(t("ui.effect"), t("ui.simplifiedHollowHomebrewEffect")) });

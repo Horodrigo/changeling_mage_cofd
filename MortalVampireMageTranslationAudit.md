@@ -575,6 +575,13 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Verificação: **45/45** testes dirigidos de i18n, alocação de criação e arquitetura; lint, TypeScript, build e `git diff --check` aprovados. Nenhum consumer dos arquivos removidos permaneceu. Sem smoke de navegador.
 - O levantamento seguinte encontrou captions técnicos em inglês para fontes criadas pelo jogador (Merits/Spells/Legacies), Arcana canônicos em cards de Spells criados e keys de resultados de poderes na página Homebrew Vampire. Esses pontos de apresentação serão corrigidos mantendo as fontes/fields persistidos e todos os textos autorais. A etapa 2 ainda não está concluída.
 
+### Etapa 2 — Fontes Homebrew e metadados de cards localizados (2026-10-03)
+
+- As captions de fontes criadas pelo jogador agora usam os dicionários para Merits, Spells e Legacies. Os nomes técnicos das fontes persistidas permanecem intactos; não há migração de dados.
+- Cards de Spells criados apresentam os Arcana no idioma atual. Homebrew Vampire apresenta Atributos e Disciplinas por seus respectivos mecanismos, evitando confundir Stamina com a Disciplina Vigor; os quatro rótulos de resultados e Gilded Cage também seguem o idioma.
+- O teste SSR percorre EN → PT → EN com conteúdo autoral em inglês, inclusive poderes aninhados, e verifica captions, metadados, resultados, fontes e ausência de mutação dos registros.
+- Verificação: os 28 testes existentes de Homebrew, transferência e i18n passaram; o novo teste EN/PT passou após corrigir sua fixture para incluir o pai de uma invocação aninhada. Lint, build, TypeScript e diff check aprovados. O sandbox bloqueou realpath de dependências React; os testes foram executados com acesso escalado autorizado. Sem smoke de navegador. A etapa 2 continua em execução, incluindo os fallbacks de descrição de Spells e outros textos dinâmicos.
+
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
 Documento anterior consolidado abaixo; suas tarefas de interface foram concluídas. Pendências de catálogo e propostas com status próprio continuam identificadas no texto histórico.
