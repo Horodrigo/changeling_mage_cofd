@@ -1,6 +1,7 @@
 export const mageMessages = {
   "pt-BR": {
     "ui": {
+      "wisdomStates": { "Enlightened": "Iluminado", "Understanding": "Consciente", "Falling": "Caído", "Mad": "Louco" },
       "utilityAttainments": {
         "lesser": {
           "Death": {
@@ -317,8 +318,8 @@ export const mageMessages = {
       "hubrisFollowedVice": "O ato seguiu o Vício do personagem (−1)",
       "hubrisPool": "Parada de Húbris",
       "hubrisNoWillpower": "O patamar do ato define a parada. Não é permitido gastar Força de Vontade neste teste.",
-      "hubrisDramaticFailure": "Perde 1 Sabedoria, recebe Megalomaniacal ou Rampant como Condição Persistente e ganha 1 Ato Arcano.",
-      "hubrisFailure": "Perde 1 Sabedoria, recebe Megalomaniacal ou Rampant e ganha 1 Ato Arcano.",
+      "hubrisDramaticFailure": "Perde 1 Sabedoria, recebe {megalomaniacal} ou {rampant} como Condição Persistente e ganha 1 Ato Arcano.",
+      "hubrisFailure": "Perde 1 Sabedoria, recebe {megalomaniacal} ou {rampant} e ganha 1 Ato Arcano.",
       "hubrisSuccess": "Mantém a Sabedoria e ganha 1 Ato Arcano.",
       "hubrisExceptionalSuccess": "Mantém a Sabedoria e ganha 2 Atos Arcanos.",
       "activateProtectionCorrespondingToAMasteredArcanumOnly": "Ativa uma proteção correspondente a um dos Arcanos dominados; somente uma forma pode permanecer ativa por vez.",
@@ -495,6 +496,7 @@ export const mageMessages = {
   },
   "en-US": {
     "ui": {
+      "wisdomStates": { "Enlightened": "Enlightened", "Understanding": "Understanding", "Falling": "Falling", "Mad": "Mad" },
       "utilityAttainments": {
         "lesser": {
           "Death": {
@@ -811,8 +813,8 @@ export const mageMessages = {
       "hubrisFollowedVice": "The act followed the character's Vice (−1)",
       "hubrisPool": "Hubris pool",
       "hubrisNoWillpower": "The act's tier sets the pool. Willpower cannot be spent on this roll.",
-      "hubrisDramaticFailure": "Lose 1 Wisdom, gain Megalomaniacal or Rampant as a Persistent Condition, and gain 1 Arcane Beat.",
-      "hubrisFailure": "Lose 1 Wisdom, gain Megalomaniacal or Rampant, and gain 1 Arcane Beat.",
+      "hubrisDramaticFailure": "Lose 1 Wisdom, gain {megalomaniacal} or {rampant} as a Persistent Condition, and gain 1 Arcane Beat.",
+      "hubrisFailure": "Lose 1 Wisdom, gain {megalomaniacal} or {rampant}, and gain 1 Arcane Beat.",
       "hubrisSuccess": "Keep Wisdom and gain 1 Arcane Beat.",
       "hubrisExceptionalSuccess": "Keep Wisdom and gain 2 Arcane Beats.",
       "activateProtectionCorrespondingToAMasteredArcanumOnly": "Activate protection corresponding to a mastered Arcanum; only one form may remain active at a time.",

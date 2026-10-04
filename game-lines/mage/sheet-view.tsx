@@ -71,6 +71,7 @@ import {
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage, type Locale } from "@/lib/i18n";
 import { mageMessages } from "@/lib/i18n/messages/mage";
+import { catalogDisplayName } from "@/lib/localized-catalog";
 import { findLegacy, normalizeLegacyState } from "@/game-lines/mage/legacies";
 import { findMageAffiliation } from "@/game-lines/mage/orders";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
@@ -730,6 +731,7 @@ export function MageCharacterPaper({
                     wisdom={Number(data.wisdom ?? 7)}
                     gnosis={gnosis}
                     inuredSpells={inuredSpells}
+                    conditions={conditionCatalog}
                     available={availableInuredSpells}
                     locale={locale}
                     onAdd={addInuredSpell}
@@ -1067,6 +1069,7 @@ export function MageCharacterPaper({
                     wisdom={Number(data.wisdom ?? 7)}
                     gnosis={gnosis}
                     inuredSpells={inuredSpells}
+                    conditions={conditionCatalog}
                     available={availableInuredSpells}
                     locale={locale}
                     onAdd={addInuredSpell}
@@ -1483,6 +1486,7 @@ function MageWisdomSection({
   wisdom,
   gnosis,
   inuredSpells,
+  conditions,
   available,
   locale,
   onAdd,
@@ -1492,6 +1496,7 @@ function MageWisdomSection({
   wisdom: number;
   gnosis: number;
   inuredSpells: Array<Record<string, unknown>>;
+  conditions: readonly ConditionDefinition[];
   available: Array<{
     id: string;
     name: string;
@@ -1510,6 +1515,12 @@ function MageWisdomSection({
 }) {
   const { t } = useLanguage();
   const tiers = availableHubrisTiers(wisdom);
+  const wisdomLabels: Readonly<Record<string, string>> = mageMessages[locale].ui.wisdomStates;
+  const conditionName = (id: string) => {
+    const definition = conditions.find(item => item.id === id);
+    return definition ? catalogDisplayName(definition, locale, undefined, "pt-BR") : id;
+  };
+  const conditionNames = { megalomaniacal: conditionName("megalomaniacal"), rampant: conditionName("rampant") };
   const [open, setOpen] = useState(false),
     [selectedActId, setSelectedActId] = useState(""),
     [result, setResult] = useState<
@@ -1539,9 +1550,9 @@ function MageWisdomSection({
   };
   const outcome =
     result === "dramatic-failure"
-      ? t("ui.hubrisDramaticFailure")
+      ? t("ui.hubrisDramaticFailure", conditionNames)
       : result === "failure"
-        ? t("ui.hubrisFailure")
+        ? t("ui.hubrisFailure", conditionNames)
         : result === "exceptional-success"
           ? t("ui.hubrisExceptionalSuccess")
           : t("ui.hubrisSuccess");
@@ -1563,7 +1574,7 @@ function MageWisdomSection({
       <div className="wisdom-track">
         <DotValue value={wisdom} max={10} singleRow />
         <strong className="wisdom-current">
-          {wisdom} · {wisdomState(wisdom)}
+          {wisdom} · {wisdomLabels[wisdomState(wisdom)]}
         </strong>
       </div>
       <div className="inured-heading-row">
@@ -1698,8 +1709,8 @@ function MageWisdomSection({
                       setCondition(value as typeof condition)
                     }
                     options={[
-                      { value: "megalomaniacal", label: "Megalomaniacal" },
-                      { value: "rampant", label: "Rampant" },
+                      { value: "megalomaniacal", label: conditionNames.megalomaniacal },
+                      { value: "rampant", label: conditionNames.rampant },
                     ]}
                   />
                 </label>

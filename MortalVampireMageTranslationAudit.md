@@ -1,6 +1,6 @@
 # Auditoria de tradução — Mortal, Vampire e Mage
 
-Data inicial: 2026-10-02. Atualização: 2026-10-03. Estado: **meta ativa; prioridade 0 e etapa 1 implementadas e verificadas; etapa 2 em execução; etapas 3–4 pendentes**.
+Data inicial: 2026-10-02. Atualização: 2026-10-03. Estado: **meta ativa; prioridade 0 e etapas 1–2 implementadas e verificadas; etapa 3 em execução; etapa 4 pendente**.
 
 ## Escopo e método
 
@@ -17,7 +17,7 @@ Um campo canônico em inglês não é, por si só, uma pendência: foram examina
 - [x] **0 — Homônimos:** identificar Conditions/Tilts de linhas diferentes com o mesmo nome e distinguir sua apresentação por qualificador de linha, incluindo EN/PT. Exemplos aprovados: `Charmed(Kindred)` e `Charmed(Awakened)`. Localizar o nome e o qualificador conforme o idioma e o léxico aprovado, mantendo IDs, origem e efeitos distintos. Não acrescentar sufixo indiscriminadamente a itens sem colisão e não fundir registros por nome.
 - [x] **0 — Merits homônimos:** aplicar o qualificador de linha também aos Merits com o mesmo nome **quando seus efeitos mecânicos forem diferentes**. Comparar requisitos, benefícios, níveis, custos, limites e exceções, não apenas a igualdade das descrições. Redação ligeiramente diferente com o mesmo efeito não justifica distinguir a apresentação. Preservar cada identidade de catálogo e instância; sem fusão ou alteração mecânica incidental. Os cinco pares distintos recebem qualificador; Mystery Cult Influence mantém a apresentação sem qualificador e a dúvida sobre a fonte Core, descritas no progresso abaixo.
 - [x] **1 — Mortals/Core:** completar primeiro Conditions Core e Tilts compartilhados, inclusive resolução, Beat, categorias e referências terminológicas. Não retraduzir os Merits Core já cobertos, exceto uniformizações necessárias.
-- [ ] **2 — Interface:** corrigir mensagens, rótulos e textos dinâmicos remanescentes nas superfícies Desktop/Mobile; preservar texto autoral e verificar alternância EN/PT.
+- [x] **2 — Interface:** corrigir mensagens, rótulos e textos dinâmicos remanescentes nas superfícies Desktop/Mobile; preservar texto autoral e verificar alternância EN/PT.
 - [ ] **3 — Vampire:** referências, Merits, poderes, Conditions e textos dinâmicos. Conteúdo oficial e Homebrew no mesmo trabalho, preservando a identificação de origem.
 - [ ] **4 — Mage:** Merits, Spells, Orders/Factions/Ministries, Legacies/Attainments, Conditions e integração de apresentação. Conteúdo oficial e Homebrew no mesmo trabalho, preservando a identificação de origem.
 
@@ -190,7 +190,7 @@ Além do catálogo:
 ### G05 — Conditions e interface remanescente
 
 - **24 Conditions** em `public/game-lines/mage/data/conditions.json`: nomes, descrição, resolução e Beat sem apresentação PT.
-- A ficha usa literalmente `Megalomaniacal` e `Rampant` nas opções de resultados de Hubris.
+- **Integração resolvida na etapa 2:** opções e mensagens de Húbris recebem os nomes de `megalomaniacal`/`rampant` do catálogo por ID, no idioma atual. Os nomes e efeitos completos de Conditions continuam na etapa 4.
 - **Resolvido na etapa 2:** abas Mobile Stats/Legacy, fallback do nome da seção e título de página usam os dicionários.
 - A impressão do Familiar mostra os nomes canônicos de Numina diretamente em `game-lines/mage/print-sheet.tsx`, enquanto a página do Companion já possui apresentação localizada para os 18 nomes. É inconsistência de consumo, não um novo catálogo inteiro por traduzir. O termo **Numina permanece Numina**, conforme decisão anterior.
 
@@ -603,6 +603,13 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Fallback de nome e título da página Legacy usam a chave existente. O teste compara todos os checks EN/PT dos 16 Legados e um Legado criado pelo jogador em seis ratings (**102 casos**), preservando os dados recebidos; a integração SSR também verifica Gnose/Tempo em EN → PT → EN.
 - Verificação dirigida **61/61**, lint, TypeScript e diff check aprovados. Build aprovado no estado final. A suíte completa **548/548** passou imediatamente antes deste lote de apresentação; não foi declarada uma nova execução completa após ele. Sem smoke de navegador.
 - Próximo ponto da etapa 2: vincular os nomes de Conditions usados nos resultados e mensagens de Húbris ao catálogo de apresentação, preservando os dois IDs; seus textos completos permanecem na etapa 4. Depois, iniciar as referências Vampire conforme a ordem aprovada. A meta continua ativa.
+
+### Etapa 2 — Encerramento da interface e integração de Húbris (2026-10-03)
+
+- Desktop/Mobile fornecem o catálogo de Conditions à seção de Sabedoria. As opções e mensagens de falha de Húbris resolvem os dois IDs canônicos, aplicando a apresentação/qualificador do catálogo. Não contêm mais cópias fixas dos nomes; a tradução integral desses registros permanece na etapa 4.
+- Estados de Sabedoria agora usam Iluminado/Consciente/Caído/Louco em PT e Enlightened/Understanding/Falling/Mad em EN. Os limites, pools e retornos canônicos de `wisdomState` não mudaram. O discriminador interno Feitiço do picker compartilhado continua canônico; sua legenda já é localizada pelo mecanismo existente.
+- Verificação: 45 testes existentes de i18n/experiência aprovados; novo SSR EN → PT → EN aprovado para os sete valores-limite de Sabedoria e nomes resolvidos de Conditions, incluindo um Homebrew homônimo e preservação do catálogo. Lint, build, TypeScript e diff check aprovados. Sem smoke de navegador.
+- A etapa 2 está implementada e verificada para mecanismos, mensagens e controles de interface. Textos e títulos editoriais vindos dos catálogos Vampire/Mage continuam explicitamente nas etapas 3–4; a integração desses lotes também será verificada em EN/PT. Não se declara a localização integral concluída. Próximo lote: 54 textos de recuperação de Mask/Dirge Vampire.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
