@@ -41,6 +41,8 @@ test("Mage creation/sheet description fallbacks and Legacy controls follow EN/PT
       const legacy = render(LegacyPage, { character, meritCatalog: [], updateSheet: refuseMutation, onDiscard: refuseMutation });
       assert.ok(legacy.includes(translate(locale, "ui.legacyTutelage")), locale);
       assert.ok(legacy.includes(translate(locale, "ui.oneExperience")), locale);
+      assert.ok(legacy.includes(locale === "pt-BR" ? "Gnose 2" : "Gnosis 2"));
+      assert.ok(legacy.includes(locale === "pt-BR" ? "Tempo 2" : "Time 2"));
       assert.equal(translate(locale, "ui.legacySoulStudy"), locale === "pt-BR" ? "Estudo de uma Alma ou Pedra da Alma" : "Soul or Soul Stone Study");
       const utility = mageMessages[locale].ui.utilityAttainments;
       const escape = value => value.replaceAll("&", "&amp;").replaceAll("'", "&#x27;");

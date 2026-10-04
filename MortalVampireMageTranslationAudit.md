@@ -184,14 +184,14 @@ Inventário: `The Eleventh Question`, `Chronologue`, `Engineers of the System`, 
 Além do catálogo:
 
 - **Resolvido na etapa 2:** controles de iniciação/pagamento de `game-lines/mage/legacy-page.tsx` usam o dicionário; Daimonomikon permanece original.
-- `game-lines/mage/legacies.ts` gera rótulos de requisitos em inglês, incluindo nomes de traits e `Qualifying Skill`.
+- **Resolvido na etapa 2:** `game-lines/mage/legacies.ts` recebe o idioma para apresentar Gnose, traits, alternativas de Perícias, Ordens e qualificação; os mesmos checks canônicos determinam elegibilidade. Títulos editoriais de Práxis publicadas acompanham a futura apresentação de Spells; nomes autorais permanecem intactos.
 - As identidades, os valores necessários e as opções mecânicas devem permanecer canônicos; apenas a apresentação precisa ser localizada.
 
 ### G05 — Conditions e interface remanescente
 
 - **24 Conditions** em `public/game-lines/mage/data/conditions.json`: nomes, descrição, resolução e Beat sem apresentação PT.
 - A ficha usa literalmente `Megalomaniacal` e `Rampant` nas opções de resultados de Hubris.
-- **Abas Mobile resolvidas na etapa 2:** Stats/Legacy usam os dicionários. Ainda há um fallback literal Legacy no nome da seção e em seu título de página.
+- **Resolvido na etapa 2:** abas Mobile Stats/Legacy, fallback do nome da seção e título de página usam os dicionários.
 - A impressão do Familiar mostra os nomes canônicos de Numina diretamente em `game-lines/mage/print-sheet.tsx`, enquanto a página do Companion já possui apresentação localizada para os 18 nomes. É inconsistência de consumo, não um novo catálogo inteiro por traduzir. O termo **Numina permanece Numina**, conforme decisão anterior.
 
 Os 20 Lesser/Greater Utility Attainments já possuíam textos bilíngues completos. Sua organização foi uniformizada na etapa 2: os 80 textos agora pertencem ao dicionário Mage, preservando integralmente a redação, os limiares de Arcana e a apresentação Desktop/Mobile. Não entram como tradução integral pendente.
@@ -595,6 +595,14 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Comparação exata dos 80 textos EN/PT antes/depois aprovada; nenhum título, resumo ou efeito foi retraduzido. O teste SSR verifica os dez Arcana nos níveis 0–5 em EN → PT → EN, inclusive ausência de benefícios ainda não desbloqueados e preservação dos valores recebidos.
 - Verificação dirigida **19/19**, lint, build, TypeScript e diff check aprovados. Suíte completa **548/548** aprovada no estado final, incluindo todos os lotes de interface anteriores desta continuação. Sem smoke de navegador.
 - Próximo lote de interface: requisitos dinâmicos de entrada em Legacy (`Gnosis`, traits, alternativas de Perícias e parentagem/Práxis) e fallback de título da seção. As opções e mensagens de Húbris ainda acompanham a tradução de Conditions Mage, conforme G05; a etapa 2 não está declarada concluída.
+
+### Etapa 2 — Requisitos dinâmicos e títulos Legacy (2026-10-03)
+
+- `legacyEntryPrerequisites` aceita o idioma apenas para montar a apresentação: Gnose usa o dicionário Mage; Arcana e Perícias usam termos compartilhados; Ordens usam o helper próprio de Mage. Alternativas, contagens e o caso The Eleventh Question também usam mensagens localizadas. O idioma padrão permanece EN.
+- A página de Legado fornece o idioma atual. IDs, valores necessários, checks, métodos, recibos, saldos e alocações não foram alterados. O nome autoral de Práxis permanece verbatim; a tradução do título de uma Práxis publicada continua vinculada à etapa 4 (Spells), sem inferir outra identidade.
+- Fallback de nome e título da página Legacy usam a chave existente. O teste compara todos os checks EN/PT dos 16 Legados e um Legado criado pelo jogador em seis ratings (**102 casos**), preservando os dados recebidos; a integração SSR também verifica Gnose/Tempo em EN → PT → EN.
+- Verificação dirigida **61/61**, lint, TypeScript e diff check aprovados. Build aprovado no estado final. A suíte completa **548/548** passou imediatamente antes deste lote de apresentação; não foi declarada uma nova execução completa após ele. Sem smoke de navegador.
+- Próximo ponto da etapa 2: vincular os nomes de Conditions usados nos resultados e mensagens de Húbris ao catálogo de apresentação, preservando os dois IDs; seus textos completos permanecem na etapa 4. Depois, iniciar as referências Vampire conforme a ordem aprovada. A meta continua ativa.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 

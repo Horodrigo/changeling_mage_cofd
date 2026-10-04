@@ -1,3 +1,7 @@
+import type { Locale } from "@/lib/i18n";
+import { mageMessages } from "@/lib/i18n/messages/mage";
+import { systemTerm } from "@/lib/system-terms";
+import { mageOrderLabel } from "./creation-rules";
 import legacyCatalog from "@/game-lines/mage/catalog-data/legacies.json";
 import supplementCatalog from "@/game-lines/mage/catalog-data/legacies-supplement.json";
 import { freezeCatalogData } from "@/lib/catalog/catalog-service";
@@ -82,11 +86,11 @@ function legacyRequirementsMet(character:LegacyCharacter,requirements:LegacyRequ
   return true;
 }
 
-function requirementItems(character:LegacyCharacter,requirements:LegacyRequirements|undefined){
+function requirementItems(character:LegacyCharacter,requirements:LegacyRequirements|undefined,locale:Locale){
   if(!requirements)return [];
   const arcana=(character.line_data.arcana??{}) as Record<string,number>;
-  const items=[...Object.entries(requirements.arcana??{}).map(([name,rating])=>({label:`${name} ${rating}`,met:legacyArcanumRating(arcana,name)>=rating})),...Object.entries(requirements.skills??{}).map(([name,rating])=>({label:`${name} ${rating}`,met:legacySkillRating(character.skills,name)>=rating}))];
-  if(requirements.anySkills){const {names,rating,count=1}=requirements.anySkills;items.push({label:`${count>1?`${count} of `:""}${names.join(" /  ")} ${rating}`,met:names.filter(name=>legacySkillRating(character.skills,name)>=rating).length>=count});}
+  const items=[...Object.entries(requirements.arcana??{}).map(([name,rating])=>({label:`${systemTerm(name,locale)} ${rating}`,met:legacyArcanumRating(arcana,name)>=rating})),...Object.entries(requirements.skills??{}).map(([name,rating])=>({label:`${systemTerm(name,locale)} ${rating}`,met:legacySkillRating(character.skills,name)>=rating}))];
+  if(requirements.anySkills){const {names,rating,count=1}=requirements.anySkills;items.push({label:`${count>1?mageMessages[locale].ui.legacyAnySkillsPrefix.replace("{count}",String(count)):""}${names.map(name=>systemTerm(name,locale)).join(" /  ")} ${rating}`,met:names.filter(name=>legacySkillRating(character.skills,name)>=rating).length>=count});}
   return items;
 }
 
@@ -107,20 +111,20 @@ export function eleventhQuestionPrerequisites(character:LegacyCharacter){
   return {gnosis:gnosis>=2,time,investigation,qualifying,parentage,praxis,met:gnosis>=2&&time&&investigation&&qualifying&&(parentage||praxis)};
 }
 
-export function legacyEntryPrerequisites(character:LegacyCharacter,definition:LegacyDefinition,catalog:readonly DefinitionIdentity[]=[]){
+export function legacyEntryPrerequisites(character:LegacyCharacter,definition:LegacyDefinition,catalog:readonly DefinitionIdentity[]=[],locale:Locale="en-US"){
   if(definition.id==="the-eleventh-question"){
     const result=eleventhQuestionPrerequisites(character);
-    return {...result,items:[{label:"Gnosis 2",met:result.gnosis},{label:"Time 2",met:result.time},{label:"Investigation 2",met:result.investigation},{label:"Qualifying Skill 2",met:result.qualifying},{label:"Moros, Guardian/Mysterium, or Perfect Timing Praxis",met:result.parentage||result.praxis}]};
+    return {...result,items:[{label:`${mageMessages[locale].ui.gnosis} 2`,met:result.gnosis},{label:`${systemTerm("Time",locale)} 2`,met:result.time},{label:`${systemTerm("Investigation",locale)} 2`,met:result.investigation},{label:`${mageMessages[locale].ui.legacyQualifyingSkill} 2`,met:result.qualifying},{label:mageMessages[locale].ui.legacyEleventhParentage,met:result.parentage||result.praxis}]};
   }
   const data=character.line_data,gnosis=Number(data.gnosis??1);
   if(definition.homebrew&&definition.founderCharacterId===character.id){
     const gnosisMet=gnosis>=3,rulingMet=legacyArcanumRating((data.arcana??{}) as Record<string,number>,definition.rulingArcanum)>=2;
-    return {gnosis:gnosisMet,parentage:true,praxis:false,met:gnosisMet&&rulingMet,items:[{label:"Gnosis 3",met:gnosisMet},{label:`${definition.rulingArcanum} 2`,met:rulingMet}]};
+    return {gnosis:gnosisMet,parentage:true,praxis:false,met:gnosisMet&&rulingMet,items:[{label:`${mageMessages[locale].ui.gnosis} 3`,met:gnosisMet},{label:`${systemTerm(definition.rulingArcanum,locale)} 2`,met:rulingMet}]};
   }
   const parentage=definition.parentage.paths.includes(String(data.path))||definition.parentage.orders.includes(String(data.order));
   const praxis=[...(Array.isArray(data.praxes)?data.praxes:[]),...(Array.isArray(data.learned_praxes)?data.learned_praxes:[])].some(item=>item&&typeof item==="object"&&String((item as Record<string,unknown>).originalName??(item as Record<string,unknown>).name)===definition.entryPraxis);
   const gnosisMet=gnosis>=2,mechanical=legacyRequirementsMet(character,definition.entryRequirements,catalog);
-  return {gnosis:gnosisMet,parentage,praxis,met:gnosisMet&&mechanical&&(parentage||praxis),items:[{label:"Gnosis 2",met:gnosisMet},...requirementItems(character,definition.entryRequirements),{label:[...definition.parentage.paths,...definition.parentage.orders,definition.entryPraxis&&`${definition.entryPraxis} Praxis`].filter(Boolean).join(", "),met:parentage||praxis}]};
+  return {gnosis:gnosisMet,parentage,praxis,met:gnosisMet&&mechanical&&(parentage||praxis),items:[{label:`${mageMessages[locale].ui.gnosis} 2`,met:gnosisMet},...requirementItems(character,definition.entryRequirements,locale),{label:[...definition.parentage.paths,...definition.parentage.orders.map(name=>mageOrderLabel(name,locale)),definition.entryPraxis&&mageMessages[locale].ui.legacyPraxisAlternative.replace("{spell}",definition.entryPraxis)].filter(Boolean).join(", "),met:parentage||praxis}]};
 }
 
 export function legacyAttainmentPrerequisites(character:LegacyCharacter,definition:LegacyDefinition,rank:number,catalog:readonly DefinitionIdentity[]=[]){

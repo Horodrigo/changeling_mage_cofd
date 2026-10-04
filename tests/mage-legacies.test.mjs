@@ -45,6 +45,24 @@ const meritCatalog = (await Promise.all([
   "public/shared/data/merits.json", "public/game-lines/mage/data/merits.json", "public/game-lines/mage/data/merits-supplements.json",
 ].map(path => readFile(new URL(`../${path}`, import.meta.url), "utf8").then(JSON.parse)))).flat();
 
+test("Legacy entry checks localize trait/Skill alternatives while keeping eligibility and authored choices invariant", () => {
+  const custom = { ...CHRONOLOGUE, id: "homebrew:legacy:localization", name: "Authored Legacy", homebrew: true, founderCharacterId: "founder", parentage: { paths: [], orders: ["Guardians of the Veil"] }, entryPraxis: "Authored Praxis", entryRequirements: { arcana: { Time: 2 }, skills: { Investigation: 2 }, anySkills: { names: ["Academics", "Occult"], count: 2, rating: 2 } } };
+  for (const definition of [...LEGACIES, custom]) for (let rating = 0; rating <= 5; rating++) {
+    const character = { id: rating === 3 ? "founder" : "student", ...mage({ gnosis: rating, order: "Guardians of the Veil", arcana: Object.fromEntries(["Death", "Fate", "Forces", "Life", "Matter", "Mind", "Prime", "Space", "Spirit", "Time"].map(name => [name, rating])) }), skills: { Investigation: rating, Academics: rating, Occult: rating }, merits: [] };
+    const before = JSON.stringify({ character, definition });
+    const en = legacyEntryPrerequisites(character, definition, meritCatalog, "en-US"), pt = legacyEntryPrerequisites(character, definition, meritCatalog, "pt-BR");
+    assert.deepEqual({ ...pt, items: pt.items.map(item => item.met) }, { ...en, items: en.items.map(item => item.met) }, definition.id);
+    assert.match(pt.items[0].label, /^Gnose [23]$/);
+    assert.match(en.items[0].label, /^Gnosis [23]$/);
+    assert.equal(JSON.stringify({ character, definition }), before);
+  }
+  const student = { id: "student", ...mage(), merits: [] };
+  const labels = legacyEntryPrerequisites(student, custom, meritCatalog, "pt-BR").items.map(item => item.label);
+  assert.deepEqual(labels, ["Gnose 2", "Tempo 2", "Investigação 2", "2 de Erudição /  Ocultismo 2", "Guardiões do Véu, Práxis Authored Praxis"]);
+  assert.ok(legacyEntryPrerequisites(student, ELEVENTH_QUESTION, meritCatalog, "pt-BR").items.some(item => item.label === "Perícia qualificada 2"));
+  assert.equal(legacyEntryPrerequisites(student, custom, meritCatalog, "en-US").items.at(-1).label, "Guardians of the Veil, Authored Praxis Praxis");
+});
+
 test("Legacy Merit references reconcile with canonical Core/Mage catalog identities", () => {
   for (const legacy of LEGACIES) {
     for (const requirements of [legacy.entryRequirements, ...legacy.attainments.map(item => item.requirements)].filter(Boolean)) {
@@ -402,7 +420,7 @@ test("Legacy UI stores semantic identities and deltas, not translated descriptio
   assert.match(source, /kind:"legacyInitiation",definitionId:definition\.id/);
   assert.match(source, /kind:"legacyAttainment",definitionId:definition\.id,rank:attainment\.rank/);
   assert.match(source, /undo:structuredClone\(finalUndo\)/);
-  assert.match(source, /legacyEntryPrerequisites\(character,definition,meritCatalog\)/);
+  assert.match(source, /legacyEntryPrerequisites\(character,definition,meritCatalog,locale\)/);
   assert.match(source, /legacyAttainmentPrerequisites\(character,definition,attainment.rank,meritCatalog\)/);
   const sheetSource = await readFile(new URL("../game-lines/mage/sheet-view.tsx", import.meta.url), "utf8");
   assert.equal((sheetSource.match(/<LegacyPage\s+meritCatalog=\{meritCatalog\}/g) ?? []).length, 3);

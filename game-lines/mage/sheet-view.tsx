@@ -345,7 +345,7 @@ export function MageCharacterPaper({
   );
   const hasLegacyAccess = gnosis >= 2 || Boolean(legacyState?.joined);
   const legacyDisplay = legacyState?.joined
-    ? (legacyDefinition?.name ?? "Legacy")
+    ? (legacyDefinition?.name ?? t("ui.legacy"))
     : hasLegacyAccess
       ? t("ui.join")
       : "";
@@ -1171,7 +1171,7 @@ export function MageCharacterPaper({
             {hasLegacyAccess && (
               <TabsContent
                 value="legacy"
-                data-page-title="Legacy"
+                data-page-title={t("ui.legacy")}
                 className="ctl-sheet-page powers-page"
               >
                 <LegacyPage

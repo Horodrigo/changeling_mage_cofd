@@ -22,7 +22,7 @@ import type { MageExperienceEntry } from "./experience-presentation";
 type MageXpEntry = MageExperienceEntry;
 
 export function LegacyPage({character,meritCatalog,updateSheet,onDiscard,onJoined}:{character:CharacterSheet;meritCatalog:readonly MeritDefinition[];updateSheet:(sheet:CharacterSheet)=>void;onDiscard:()=>void;onJoined?:()=>void}){
- const { t }=useLanguage(),state=normalizeLegacyState(character.line_data.legacy_state),custom=useLegacyHomebrews(),preferences=useHomebrewPreferences(),definition=findLegacy(state.definitionId,custom),checks=definition?legacyEntryPrerequisites(character,definition,meritCatalog):undefined,founding=Boolean(definition?.homebrew&&definition.founderCharacterId===character.id);
+ const { locale,t }=useLanguage(),state=normalizeLegacyState(character.line_data.legacy_state),custom=useLegacyHomebrews(),preferences=useHomebrewPreferences(),definition=findLegacy(state.definitionId,custom),checks=definition?legacyEntryPrerequisites(character,definition,meritCatalog,locale):undefined,founding=Boolean(definition?.homebrew&&definition.founderCharacterId===character.id);
  const [method,setMethod]=useState<"tutelage"|"daimonomikon"|"soul-study"|"founding">(()=>founding?"founding":"tutelage"),[pool,setPool]=useState<"regular"|"arcane">("regular"),[training,setTraining]=useState<"tutor"|"self">("tutor"),[feedback,setFeedback]=useState(""),[discardOpen,setDiscardOpen]=useState(false),[editorOpen,setEditorOpen]=useState(false);
  const regular=Number(character.current_state.mage_experience_available??0),arcane=Number(character.current_state.arcane_experience_available??0);
  const history=Array.isArray(character.current_state.mage_experience_history)?character.current_state.mage_experience_history as MageXpEntry[]:[];
