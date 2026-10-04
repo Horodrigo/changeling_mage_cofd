@@ -23,7 +23,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
-| Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); caption Star-Crossed em consulta |
+| Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
 | V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 96 apresentações completas por ID (48 oficiais, 48 Homebrew), três níveis; 307 registros restantes, incluindo revisão de 15 descrições PT preexistentes |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
@@ -36,7 +36,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 
 ### Vampire — detalhes de execução
 
-Catálogos em `public/game-lines/vampire/data/`. Bloodlines possuem uma visão de leitura própria usada na página, prévia de ingresso, Maldição da ficha e Homebrew. Ingresso, concessão e remoção continuam recebendo definições canônicas. Todos os 56 registros possuem os campos PT aplicáveis; resta a preferência da caption Star-Crossed.
+Catálogos em `public/game-lines/vampire/data/`. Bloodlines possuem uma visão de leitura própria usada na página, prévia de ingresso, Maldição da ficha e Homebrew. Ingresso, concessão e remoção continuam recebendo definições canônicas. Todos os 56 registros possuem os campos PT aplicáveis; Desventurados é a apresentação aprovada de Star-Crossed.
 
 Méritos: `merits-vampire-pt` em `merits-pt.json` é carregado junto do catálogo canônico pelo grupo próprio de Vampire, usando o mecanismo de apresentação existente. Criação, XP, ficha e Homebrew recebem o mesmo snapshot. A ficha expandida apresenta requisitos, descrição e níveis adquiridos; nenhuma alocação é criada por essa exibição. Revisar os demais requisitos Brawl/Composure e referências antigas Kindred/Covenant nas traduções parciais; não deduzir elegibilidade por títulos.
 
@@ -90,6 +90,7 @@ Decisões atuais prevalecem sobre propostas antigas. As traduções já concluí
 - Primal Urge → **Instinto Primitivo**; Lunacy → **Lunagem**; Wolf-Blooded → **Parente**.
 - Nas entidades efêmeras de todas as linhas: Ban → **Proibição**; Bane → **Fraqueza**. Não aplicar automaticamente ao Bane de Clan/Bloodline ou ao papel homônimo de Changeling. A grafia “Poribição” foi corrigida pelo usuário.
 - Mystery Cult Initiation → **Iniciação em Culto dos Mistérios**, uniformização escolhida explicitamente pelo usuário em **2026-10-04** para catálogo, referências e interface. Substitui a forma singular anterior desse Mérito nos anexos; não altera sua identidade, concessões ou níveis.
+- Melee e Weaponry designam a mesma Perícia, por decisão explícita de **2026-10-04**: apresentar o rótulo da ficha, **Weaponry** em EN e **Armas Brancas** em PT, quando esses termos designarem a Perícia. Não criar outro ID de Perícia.
 - Numina permanece **Numina**. Nomes de Perícias seguem o dicionário atual, incluindo **Empatia com Animais**; não usar propostas antigas para substituir rótulos vigentes.
 - Escolhas explícitas de 2026-10-04: oddments → **esquisitices**; Dread Power → **Poder Terrível**; Fighting Finesse → **Destreza em Combate**; Shiv → **Estilete**; Fast-Talking → **Engabelar**; Mastermind → **Topo da Pirâmide**. Mastermind nomeia o quinto nível dos registros de culto e não concede o Mérito Mentor por si só.
 
@@ -130,41 +131,45 @@ Os cinco pares com efeitos distintos já aprovados recebem qualificadores de lin
 - Bloodlines: Cavaleiros sem Terra traduz Hedge Knights no contexto medieval de Bron; Purezas traduz Purities. Electrum, Udjat, Namus-Ur, Lobos de Sangre, Morrigans, Mystikos, Spiritus Sancti, Sublunario, Családtag, Lithopedia, Strix e draugr preservados.
 - Numina do Familiar já apresentada: Fascínio, Rajada, Enlouquecer, Drenar, Aura Emocional, Decadência Entrópica, Incendiário, Alucinação, Implantar Missão, Chave Canhota, Mascarilha Mortal, Desbravador, Regenerar, Buscar, Velocidade, Sinal, Inabalável e Telecinese. Propostas posteriores à confirmação histórica, já aplicadas; não equivalem à aprovação de nomes homônimos em outras linhas.
 
-## Dúvidas abertas
+## Decisões respondidas pelo usuário — 2026-10-04
 
-| Data | Dúvida | Estado |
+Estes pontos **já receberam resposta**. As mudanças abaixo ainda precisam de aplicação e gates próprios, salvo os estados explícitos de concluído ou de conservação. Não representam perguntas abertas nem uma nova revisão de PDFs. As correções mecânicas solicitadas pelo usuário são trabalho adicional autorizado; a tradução isolada continua preservando as demais regras.
+
+| Registro / fonte | Decisão recebida | Aplicação / verificação |
 | --- | --- | --- |
-| 2026-10-04 | Star-Crossed: título idiomático de destino adverso | Em consulta: Desventurados / Marcados por um Destino Adverso. Caption canônica preservada enquanto se aguarda preferência. |
+| Star-Crossed | **Desventurados**. | Aplicado à Bloodline e à categoria Vampire; gates EN/PT aprovados. IDs e inglês canônico preservados. |
+| Mystery Cult Influence | Fonte: **Mage: The Awakening p. 103**. | Fonte respondida. Reconciliar a referência Core p. 51 e os metadados sem trocar IDs, reclassificar compras ou romper bridges schema-2. O registro Mage já indica p. 103. |
+| Nighthawks — Nameless and Accursed p. 29 | **Prime 2 e Larceny 3**. | Conferir e aplicar ambos os requisitos nos campos pertinentes de Legacy/Attainment, com validação Desktop/Mobile. |
+| Tyrian Archons — Nameless and Accursed p. 35 | **OK** para o comportamento auditado de Profane Tool (Scepters). | Conservar o requisito estruturado atual; nenhuma correção de configuração solicitada. |
+| Vardyvle / Penumbrae | **False Memory(ies) é a mesma Condition**, VtR p. 303. | Uniformizar a apresentação/referência à Condition canônica de Vampire sem criar outro ID ou fundir Conditions de outras linhas. |
+| Area of Expertise — Core p. 44 | **Resolve 2**. | Requisito já coincide com o catálogo. Não acrescentar requisito de Especialização por inferência. |
+| Armed Defense — Core pp. 60–61 | **OK** para os resumos auditados. | Conservar os resumos atuais; limites omitidos não se tornam tarefa de reconstrução. |
+| Advanced Library — Mage p. 105 | **Safe Place igual ou maior** que Advanced Library. | Confirmar a comparação na elegibilidade e explicitar o sentido em EN/PT; o requisito textual atual usa ≤ Safe Place. |
+| Citywalker — Core p. 236 | **Sono remove a restrição para novas tentativas**. | Corrigir resumos EN/PT: não exigir oito horas de sono antes de cada teste. Preservar demais resultados e limites. |
+| Cheap Shot / Choke Hold — Core p. 61 | **Adicionar −2 cumulativo nos resumos**. | Aplicação pendente conforme a resposta recebida; conferir a atribuição e o contexto da penalidade ao editar cada resumo. A resposta não resolve automaticamente os outros limites de Choke Hold. |
+| Fighting Finesse | **Apenas verificar a existência de alguma Especialização em Brawl ou Weaponry**; Melee equivale a Weaponry. | Implementar a verificação nas superfícies pertinentes, respeitando os IDs de Perícias existentes; conservar os demais requisitos cadastrados. |
+| Interdisciplinary Specialty | **Selecionar uma Especialização já cadastrada na ficha; removê-la ou alterá-la remove o Mérito junto**. | Implementar seleção e vínculo, remoção sincronizada e preservação coerente de compras/XP/estornos; usar identidade canônica de Mérito e instância. |
+| Iron Will — Core p. 51 | **Resolve 3**. | Alterar requisito canônico e apresentação PT; validar criação, XP e dependências. |
+| Resources / Mentor / Status | **Chapter = Session**. | Conservar sessão nos resumos; não reabrir a divergência terminológica. |
+| Professional Training — Core p. 46 | **Selecionar as duas primeiras Asset Skills ao comprar o Mérito**, mesmo que o benefício só faça diferença no segundo ponto. | Conferir configuração no primeiro ponto, concessões e reedição; corrigir resumos que adiem a escolha ao segundo nível. Não antecipar o benefício de 9-novamente. |
+| Like a Book / Breaking Point (estilo) | **OK** para os resumos auditados. | Conservar os resumos atuais; nenhuma reconstrução de limites solicitada. |
+| Hedgespun Item | **Adicionar as desvantagens do livro**. | Consultar a fonte aplicável e completar EN/PT; preservar IDs, configurações e textos autorais. |
+| Bless Amulet — Hurt Locker pp. 72–73 | **Usar o livro**: dia por sucesso; semana com dois pontos; permanente com três. | Corrigir resumos canônicos/PT e verificar limites na fonte antes dos gates. |
+| Ground Fighter — Hurt Locker p. 54 | **Usar o livro**: Brawl 3. | Corrigir requisito canônico/PT e validar elegibilidade/dependências. |
+| Vaulting Defense — Hurt Locker p. 52 | **Melee = Weaponry; usar o termo da ficha**. | Resumo EN usa Weaponry e PT usa Armas Brancas; ID, pontuação e efeito preservados. Gates aprovados. |
+| Object Fetishism — Hurt Locker p. 42 | **Chapter = Session**. | Conservar sessão no resumo; divergência terminológica encerrada. |
 
-## Divergências mecânicas ainda registradas
+## Pontos ainda sem resposta ou auditoria concluída
 
-Pendências de uma auditoria de regras separada. **Não corrigir por tradução.** As referências abaixo foram inspecionadas em lotes anteriores; este documento registra os achados, sem alegar nova revisão de PDFs.
+A lista abaixo exclui as decisões respondidas acima. As referências foram registradas em lotes anteriores, sem alegar nova revisão de PDFs. Não corrigir por tradução ou por inferência.
 
-| Registro / fonte | Divergência ou limite ainda relevante |
+| Registro / fonte | Trabalho ainda não respondido |
 | --- | --- |
-| Mystery Cult Influence — Core p. 51 | As pp. 51–53 apresentam Initiation, sem esse Mérito separado. Origem exata requer auditoria; ID, fonte cadastrada e benefícios preservados. Core/Mage conservam a apresentação sem qualificador pelo efeito equivalente cadastrado. |
-| Nighthawks — Nameless and Accursed p. 29 | Catálogo inclui Prime 2 no segundo Attainment; lista impressa de pré-requisitos cita Larceny 3. |
-| Tyrian Archons — Nameless and Accursed p. 35 | Profane Tool (Scepters) aparece no texto; requisito estruturado verifica Mérito/ponto, sem a restrição de configuração. |
 | Swarm Form — Vampire p. 114 | Referência cadastrada Shape of the Beast (Forma da Fera) não consta do catálogo atual de Metamorfose. Não substituir por Beast's Skin ou mudar o requisito sem verificar a fonte. |
-| Vardyvle / Penumbrae | Referências canônicas False Memory (singular) / False Memories (plural) preservadas; não inferir IDs ou fundir efeitos. |
-| Area of Expertise — Core p. 44 | Especialização exigida no livro, ausente no requisito cadastrado Resolve 2. |
-| Armed Defense — Core pp. 60–61 | Resumos omitem limites de Weak Spot, sucessos extras/declaração de Aggressive Defense e detalhes de Dodge/Press the Advantage. |
-| Advanced Library — Mage p. 105 | Livro exige Local Seguro de pontuação igual; catálogo usa ≤ Safe Place. |
-| Citywalker — Core p. 236 | Catálogo coloca oito horas de sono antes de cada teste; livro usa sono para remover restrição de novas tentativas após falha. |
-| Cheap Shot / Choke Hold — Core p. 61 | Resumos omitem −2 cumulativo na cena / limiar maior que duas vezes Vigor e duração 6 − Vigor minutos. |
-| Fighting Finesse / Interdisciplinary Specialty | Especializações apropriadas exigidas nos livros não constam nos requisitos resumidos. |
-| Iron Will — Core p. 51 | Resolve 4 no catálogo, Resolve 3 no livro. |
-| Resources / Mentor / Status | Catálogo usa sessão; livro usa capítulo. |
-| Professional Training — Core p. 46 | Continuing Education coloca escolha de Perícias de Ativo no segundo nível; livro coloca ao adquirir o Mérito. |
-| Like a Book / Breaking Point (estilo) | Resumos omitem arredondamento para baixo de metade de Briga / proporção de Estrutura sacrificada. |
-| Glamour Fasting / Market Sense | Catálogo usa sessão; livro usa capítulo. |
-| Hedgespun Item | Resumo não contém as desvantagens do livro. |
-| Bless Amulet — Hurt Locker pp. 72–73 | Livro: dia por sucesso, semana com dois pontos, permanente com três; catálogo: dia com dois, semana com três. |
-| Ground Fighter — Hurt Locker p. 54 | Brawl 2 no catálogo, Brawl 3 no livro. |
+| Choke Hold — Core p. 61 | Além da resposta sobre −2 cumulativo, permanecem sem decisão os limites omitidos: limiar maior que duas vezes Vigor e duração 6 − Vigor minutos. |
+| Glamour Fasting / Market Sense | Catálogo usa sessão; livro usa capítulo. A equivalência aprovada para os Méritos nomeados acima não foi estendida automaticamente a estes registros. |
 | Punch Drunk — Hurt Locker p. 43 | Catálogo registra seis pontos de Willpower sem explicitar o mínimo do livro. |
-| Object Fetishism — Hurt Locker p. 42 | Catálogo usa sessão; livro usa capítulo. |
 | Curse Effigy | Parada letal sem agrupar a resistência: Intelligence + Medicine − Stamina + Supernatural Tolerance. Agrupamento/elegibilidade requerem auditoria. |
-| Vaulting Defense — Hurt Locker p. 52 | Melee não é uma Perícia Core; PT Combate Corpo a Corpo preserva o texto, sem convertê-lo mecanicamente em Weaponry. |
 | Mounted Combat — Hurt Locker p. 51 | Animal Ken 3 no catálogo, Animal Ken 2 no livro. |
 | Bowmanship / Falconry e demais resumos Hurt Locker | Limiares, durações, modificadores e desvantagens ausentes não foram reconstruídos. |
 | Book of Courts — Get the Manager, Can't Spook a Spooker, GTFO, Shivers, Snow Cover | Manto é repetido após alternativa de Boa Vontade; não presumir dispensa nem substituir acesso por limiares de Contratos de Corte. |
@@ -178,7 +183,8 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 ## Verificação atual
 
 - **96/403** Méritos Vampire com apresentação completa por ID, 48 oficiais e 48 Homebrew; três níveis localizados. O quarto lote revisa 12 registros do livro básico e acrescenta 12 Homebrew de False Gods, sem reconstruir campos ausentes. Touchstone permanece no original; Pack Alpha usa Alfa da Matilha.
-- Catálogo canônico de 403 registros e as 24 apresentações anteriores preservados integralmente. Manifesto `catalogVersion` 52; recurso `merits-vampire-pt` versão 2. Nomes, IDs, regras, alocações, XP e textos autorais não são reescritos.
+- Catálogo canônico de 403 Méritos preservado integralmente. Manifesto `catalogVersion` 55; recursos `merits-vampire-pt` versão 4 e `vampire-bloodlines` versão 12; recursos Core de Méritos incrementados para o rótulo Weaponry/Armas Brancas. Nomes, IDs, regras, alocações, XP e textos autorais não são reescritos.
 - Gates do quarto lote aprovados: 6/6 testes de integração EN → PT → EN e identidade de Méritos, 34/34 de catálogos/arquitetura, lint, TypeScript e build. O catálogo canônico de 403 Méritos e as 72 apresentações dos lotes anteriores permanecem intactos. A suíte completa fica para o gate final da meta.
-- Referências Vampire já verificadas: 56 Bloodlines com PT; caption Star-Crossed segue em consulta. Demais Méritos, poderes, Conditions/presets Vampire e etapa Mage permanecem pendentes.
+- Referências Vampire já verificadas: 56 Bloodlines com PT; Star-Crossed apresentado como Desventurados. Demais Méritos, poderes, Conditions/presets Vampire e etapa Mage permanecem pendentes.
+- Decisões do usuário separadas das pendências sem resposta; Desventurados e Weaponry/Armas Brancas verificados: 16/16 testes dirigidos EN/PT, 34/34 de catálogos/arquitetura, lint, TypeScript e build aprovados.
 - Sem smoke de navegador. Nova suíte completa de encerramento deverá ser executada após concluir o escopo; gates proporcionais por lote.

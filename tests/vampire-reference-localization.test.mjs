@@ -89,6 +89,7 @@ test("all 56 localized official/Homebrew Bloodlines have complete Portuguese ref
   assert.ok(bloodlines.find(item => item.id === "vardyvle").presentationPt.nicknames.includes("Tiresias"));
   assert.equal(bloodlines.find(item => item.id === "icelus").presentationPt.parentClan, "Mekhet ou Ventrue");
   assert.equal(bloodlines.find(item => item.id === "children-of-judas").translatedName, "Filhos de Judas");
+  assert.equal(bloodlines.find(item => item.id === "star-crossed").translatedName, "Desventurados");
   for (const properName of ["Moretti", "Rózsa", "Syska"]) assert.ok(bloodlines.find(item => item.id === "erzsebet").presentationPt.nicknames.includes(properName));
   const coreConditions = read("public/shared/data/conditions-pt.json");
   assert.ok(bloodlines.find(item => item.id === "moda-mortale").presentationPt.baneSummary.includes(coreConditions.broken.name));

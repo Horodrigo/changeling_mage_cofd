@@ -44,7 +44,7 @@ export const vampireMessages = {
       "Restricted": "Restritos",
       "Rotgrafen": "Rotgrafen",
       "Social Style": "Estilos Sociais",
-      "Star-Crossed": "Star-Crossed",
+      "Star-Crossed": "Desventurados",
       "Style": "Estilos",
       "Tradition": "Tradições",
       "Typhos": "Typhos",
