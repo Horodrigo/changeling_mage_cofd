@@ -31,7 +31,7 @@ Impressão/PDF/blank fica **fora desta meta**, inclusive a inconsistência de Nu
 | Merits Core | 202 | Todos têm entrada PT; não precisam de uma nova tradução integral |
 | Conditions Core | 34 | Implementado: apresentação PT completa e integração em Mortals/Core, Vampire e Mage |
 | Tilts compartilhados | 35 | Implementado: apresentação PT completa, títulos descritivos e integração no combate |
-| Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors implementados; Bloodlines pendentes |
+| Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors implementados; Bloodlines 12/56 implementadas |
 | Vampire — Merits | 403 | 353 descrições em inglês; 50 descrições PT existentes precisam de revisão dos demais campos |
 | Vampire — poderes | 546 registros, mais 140 entradas de níveis internas | Textos mecânicos em inglês; nomes parcialmente traduzidos |
 | Vampire — Conditions | 66 | Sem apresentação PT dedicada |
@@ -95,9 +95,9 @@ Os **54 textos de recuperação de Willpower** — dois por definição — poss
 
 Arquivo: `public/game-lines/vampire/data/bloodlines.json`.
 
-**56 registros: 14 não marcados como Homebrew e 42 marcados como Homebrew.** Os campos textuais presentes de resumo, apelidos, requisitos, Gift e Bane continuam em inglês. Os nomes das Bloodlines são iguais nos dois idiomas; nomes próprios devem ser avaliados individualmente, não renomeados em bloco.
+**56 registros: 14 não marcados como Homebrew e 42 marcados como Homebrew.** O primeiro lote cobre **12 registros** (10 oficiais e dois Homebrew), com apresentação PT de resumo, apelidos, afiliação, Clan de origem e Gift/Maldição quando presentes; **44 continuam pendentes**. Títulos descritivos são localizados individualmente, conservando nomes próprios e nomes canônicos.
 
-A página de Bloodline apresenta esses campos diretamente. A tradução deve preservar Clan, disciplinas, pré-requisitos e identidades canônicas.
+Página, prévia de ingresso, Maldição na ficha Desktop/Mobile e Homebrew recebem a visão própria de Vampire. Ingresso, concessões, remoção e seus estornos continuam usando a definição canônica; a apresentação não muda Clan, Disciplinas, pré-requisitos, escolhas ou identidades.
 
 ### V04 — Merits
 
@@ -644,6 +644,16 @@ Preservar o contexto e registrar aqui novas dúvidas quando surgirem.
 - Manifesto: catalogVersion **44 → 45**, `vampire-covenants` **5 → 6**, `merits-core-pt` **6 → 7**; IDs/URLs e demais versões preservados.
 - Verificação EN → PT → EN das 23 Coalizões e dos dois registros Homebrew, texto autoral homônimo, snapshots congelados e alinhamento do título Core/interface: **50/50 testes dirigidos** aprovados. Após o build, integridade dos catálogos e arquitetura **34/34** aprovadas. Lint, build, TypeScript e diff check aprovados. Sem smoke de navegador e sem mudanças em componentes de impressão.
 - Bloodlines, Merits, poderes, Conditions e presets de Cultos das Sombras Vampire continuam pendentes; Mage permanece como etapa 4. A meta continua ativa.
+
+### Etapa 3 — Bloodlines, primeiro lote (2026-10-04)
+
+- **12/56 apresentações implementadas:** Ankou, Icelus, Jharana, Lidérc, Nosoi, The Parliamentarians, Penumbrae, Scions of the First City, Vardyvle, Vilseduire; e os dois Homebrew Children of Judas/Duchagne. Todos os campos textuais aplicáveis têm metadata PT, incluindo resumos, apelidos, Clan de origem, afiliações e Gifts/Maldições. Os 56 registros canônicos, fontes, IDs, Atributos, Disciplinas e condições de acesso permanecem intactos.
+- Os três títulos descritivos passam a **Os Parlamentares**, **Descendentes da Primeira Cidade** e **Filhos de Judas**. Nomes próprios, inclusive Judas, Clotho e o apelido Tiresias, são preservados. Clotho's Skein aparece como **Meada de Clotho**, para reutilização no catálogo de poderes. Referências de Condições usam o Core Obsessão/Privado e os títulos Vampire Bestial, Competitivo, Lascivo, Dependente, Mesmerizado e Falsas Memórias; estes últimos devem acompanhar o futuro catálogo exclusivo.
+- `vampireBloodlinePresentation` aplica somente texto de leitura. A página e a prévia de ingresso compartilham a apresentação; o seletor, a ordenação e o título/confirmação de saída usam a caption no idioma atual, sem mudar IDs. A Maldição exibida na primeira página Desktop/Mobile e a lista Homebrew também usam essa visão. Textos autorais sem metadata e nomes próprios homônimos permanecem intactos.
+- A tradução conserva números, bônus, limites, arredondamentos, alternativas e durações. O separador de milhares de 10,000 foi apresentado como **10.000**, mantendo o valor. Observação editorial, sem correção incidental: Vardyvle cita **False Memory** no singular, enquanto Penumbrae cita **False Memories**; os textos canônicos foram preservados, e essa diferença de referência não foi usada para inventar IDs ou fundir efeitos.
+- Manifesto: catalogVersion **45 → 46**, `vampire-bloodlines` **6 → 7**, com IDs/URLs inalterados. O teste de versões esperadas do inventário foi atualizado junto do recurso; nenhuma contagem ou conteúdo de outra fonte mudou.
+- Verificação dirigida EN → PT → EN, Homebrew, identidade/XP e ingresso/remoção de Bloodlines: **46/46 testes** aprovados. Lint, build e TypeScript aprovados. A comparação com o commit anterior confirmou igualdade integral dos 56 registros canônicos ao retirar metadata PT/restaurar captions; a checagem final de catálogos/arquitetura **34/34** e diff check foram aprovados. Sem smoke de navegador e sem mudanças em componentes de impressão.
+- **44 Bloodlines pendentes**, além de Merits, poderes, Conditions e presets Vampire; a etapa 4 Mage permanece pendente. A meta continua ativa.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 

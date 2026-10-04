@@ -73,6 +73,24 @@ test("all 23 Vampire Covenants localize descriptions and advantages while retain
   assert.ok(read("public/shared/data/catalog-manifest.json").catalogs["vampire-covenants"].version >= 6);
 });
 
+test("the first 12 official/Homebrew Bloodlines have complete Portuguese reference fields without changing numeric limits", () => {
+  const bloodlines = data["vampire-bloodlines"].filter(item => item.presentationPt);
+  assert.equal(bloodlines.length, 12);
+  for (const definition of bloodlines) {
+    const fields = ["parentClan", "nicknames", "summary", "baneName", "baneSummary", ...["requirements", "giftName", "giftSummary"].filter(key => definition[key])];
+    assert.deepEqual(Object.keys(definition.presentationPt).sort(), fields.sort(), definition.id);
+    assert.equal(definition.presentationPt.nicknames.length, definition.nicknames.length, definition.id);
+    for (const key of fields.filter(key => key !== "nicknames")) {
+      assert.ok(definition.presentationPt[key].trim(), `${definition.id}.${key}`);
+      assert.deepEqual(definition.presentationPt[key].match(/\d+/g) ?? [], definition[key].match(/\d+/g) ?? [], `${definition.id}.${key}`);
+    }
+  }
+  assert.equal(bloodlines.filter(item => item.sourceId.startsWith("h-vtr-")).length, 2);
+  assert.ok(bloodlines.find(item => item.id === "vardyvle").presentationPt.nicknames.includes("Tiresias"));
+  assert.equal(bloodlines.find(item => item.id === "icelus").presentationPt.parentClan, "Mekhet ou Ventrue");
+  assert.equal(bloodlines.find(item => item.id === "children-of-judas").translatedName, "Filhos de Judas");
+});
+
 test("Vampire references render Anchors, Clan Banes and Covenant text in EN/PT/EN without mutating choices", async () => {
   const selection = { mask_id: "rebel", dirge_id: "visionary", notes: "Authored English stays." };
   const before = JSON.stringify({ data, selection });
@@ -89,7 +107,7 @@ test("Vampire references render Anchors, Clan Banes and Covenant text in EN/PT/E
       const requested = [];
       const reference = freezeCatalogData(await vampireReferenceCatalogGroup.load({ getCatalog: async id => { requested.push(id); return data[id]; } }));
       assert.deepEqual(requested.sort(), groups.map(group => `vampire-${group}`).sort());
-      const { vampireAnchorPresentation, vampireClanPresentation, vampireCovenantPresentation } = await vite.ssrLoadModule("/game-lines/vampire/reference-presentation.ts");
+      const { vampireAnchorPresentation, vampireBloodlinePresentation, vampireClanPresentation, vampireCovenantPresentation } = await vite.ssrLoadModule("/game-lines/vampire/reference-presentation.ts");
       const { AnchorChoice, CovenantSelector } = await vite.ssrLoadModule("/game-lines/vampire/builder.tsx");
       const { BaneEditor } = await vite.ssrLoadModule("/game-lines/vampire/sheet-view.tsx");
       const { SheetField } = await vite.ssrLoadModule("/app/workspace/character-paper-shell.tsx");
@@ -159,6 +177,31 @@ test("Vampire references render Anchors, Clan Banes and Covenant text in EN/PT/E
         assert.ok(homebrewHtml.includes(escape(presented.advantage)), `${locale}: ${id} Homebrew advantage`);
         assert.ok(homebrewHtml.includes(escape(definition.source)));
       }
+      const { BloodlinePage } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");
+      const bloodlineCharacter = { line_data: {}, current_state: {} };
+      for (const definition of reference.bloodlines.filter(item => item.presentationPt)) {
+        const presented = vampireBloodlinePresentation(definition, locale);
+        assert.equal(presented.id, definition.id);
+        assert.equal(presented.name, definition.name);
+        assert.equal(presented.disciplines, definition.disciplines);
+        assert.equal(presented.parentClanIds, definition.parentClanIds);
+        if (locale === "en-US") assert.equal(presented, definition);
+        const saved = { ...bloodlineCharacter, line_data: { bloodline_id: definition.id, bloodline_favored_attribute: definition.favoredAttributes[0], notes: "Authored notes remain." } };
+        const savedBefore = JSON.stringify(saved);
+        const html = render(BloodlinePage, { character: saved, updateSheet: refuseMutation, bloodlines: reference.bloodlines, powers: emptyPowers, onRemoved: refuseMutation });
+        assert.ok(html.includes(`<h2>${escape(locale === "pt-BR" ? definition.translatedName : definition.name)}</h2>`), `${locale}: ${definition.id} name`);
+        for (const key of ["summary", "parentClan", "baneName", "baneSummary", ...["requirements", "giftName", "giftSummary"].filter(key => definition[key])]) {
+          assert.ok(html.includes(escape(presented[key])), `${locale}: ${definition.id}.${key}`);
+        }
+        for (const nickname of presented.nicknames) assert.ok(html.includes(escape(nickname)), `${locale}: ${definition.id} ${nickname}`);
+        assert.equal(JSON.stringify(saved), savedBefore);
+        assert.equal(Object.isFrozen(definition.presentationPt.nicknames), true);
+        if (definition.sourceId.startsWith("h-vtr-")) for (const key of ["summary", "giftName", "giftSummary", "baneName", "baneSummary"]) assert.ok(homebrewHtml.includes(escape(presented[key])), `${locale}: ${definition.id} Homebrew ${key}`);
+      }
+      const customBloodline = { ...reference.bloodlines[0], id: "homebrew:bloodline:test", name: "Ankou", translatedName: "Ankou", summary: "Authored Bloodline text stays.", nicknames: ["Authored nickname"], baneName: "Authored Bane", baneSummary: "Authored Bloodline Bane stays.", presentationPt: undefined };
+      assert.equal(vampireBloodlinePresentation(customBloodline, locale), customBloodline);
+      const customBloodlineHtml = render(BloodlinePage, { character: { line_data: { bloodline_id: customBloodline.id }, current_state: {} }, updateSheet: refuseMutation, bloodlines: [customBloodline], powers: emptyPowers, onRemoved: refuseMutation });
+      for (const key of ["summary", "baneName", "baneSummary"]) assert.ok(customBloodlineHtml.includes(customBloodline[key]));
       assert.equal(JSON.stringify({ data, selection }), before);
     } finally { await vite.close(); }
   }
@@ -167,4 +210,5 @@ test("Vampire references render Anchors, Clan Banes and Covenant text in EN/PT/E
   assert.match(sheet, /tooltip=\{dirge && vampireAnchorPresentation\(dirge, locale\)\.allWillpower\}/);
   assert.match(sheet, /clanBaneName=\{presentedClan\?\.baneName/);
   assert.match(sheet, /clanBaneSummary=\{presentedClan\?\.baneSummary/);
+  assert.match(sheet, /name: presentedBloodline\.baneName, summary: presentedBloodline\.baneSummary/);
 });

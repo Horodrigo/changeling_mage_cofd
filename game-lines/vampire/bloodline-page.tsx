@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { homebrewContentActive, saveHomebrewPreferences, setHomebrewEnabled } from "@/lib/homebrew";
 import { useLanguage } from "@/lib/i18n";
+import { catalogDisplayName } from "@/lib/localized-catalog";
 import { alphabetical } from "@/lib/option-order";
 import { systemTerm } from "@/lib/system-terms";
 import { BloodlineHomebrewEditor } from "./bloodline-homebrew-editor";
@@ -16,6 +17,7 @@ import { BLOODLINE_HOMEBREW_SOURCE_ID, saveBloodlineHomebrews } from "./bloodlin
 import type { VampireBloodlineDefinition, VampirePowers, VampireReference } from "./catalog-types";
 import { leaveBloodTetherPack, stringArray, synchronizeAutomaticBloodlineDevotions, vampireBloodlineAvailable, vampireBloodlineFavoredAttributes, vampireDisciplineDisplayName } from "./creation-rules";
 import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
+import { vampireBloodlinePresentation } from "./reference-presentation";
 
 function replaceFavoredAttributes(character: CharacterSheet, previous: readonly string[], replacement: readonly string[]) {
   const next = structuredClone(character), attributes = { ...next.attributes };
@@ -59,7 +61,7 @@ export function BloodlineJoinDialog({ open, onOpenChange, onJoined, character, u
   const { locale, t } = useLanguage();
   const preferences = useHomebrewPreferences(), custom = useBloodlineHomebrews();
   const bloodlines = [...reference.bloodlines, ...custom.filter((item) => !reference.bloodlines.some((official) => official.id === item.id))];
-  const available = alphabetical(bloodlines.filter((item) => homebrewContentActive(preferences, item.id, item.sourceId) && vampireBloodlineAvailable(item, character, reference)), (item) => item.name, locale);
+  const available = alphabetical(bloodlines.filter((item) => homebrewContentActive(preferences, item.id, item.sourceId) && vampireBloodlineAvailable(item, character, reference)), (item) => catalogDisplayName(item, locale, undefined, "pt-BR"), locale);
   const [previewId, setPreviewId] = useState("");
   const [favoredAttribute, setFavoredAttribute] = useState("");
   const [editorOpen, setEditorOpen] = useState(false);
@@ -82,7 +84,7 @@ export function BloodlineJoinDialog({ open, onOpenChange, onJoined, character, u
   return <>
     <Dialog open={open} onOpenChange={onOpenChange}><DialogContent className="homebrew-dialog vampire-bloodline-join-dialog vtr-dialog">
       <DialogHeader><DialogTitle>{t("ui.joinBloodlineTitle")}</DialogTitle><DialogDescription>{t("ui.joinBloodlineDescription")}</DialogDescription></DialogHeader>
-      <label className="affiliation-select">{t("ui.bloodlineToBrowse")}<Select value={preview?.id} onValueChange={choose}><SelectTrigger><SelectValue placeholder={t("ui.chooseBloodline")} /></SelectTrigger><SelectContent><SelectItem value="__create__">{t("ui.createHomebrewBloodline")}</SelectItem>{available.map((item) => <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>)}</SelectContent></Select></label>
+      <label className="affiliation-select">{t("ui.bloodlineToBrowse")}<Select value={preview?.id} onValueChange={choose}><SelectTrigger><SelectValue placeholder={t("ui.chooseBloodline")} /></SelectTrigger><SelectContent><SelectItem value="__create__">{t("ui.createHomebrewBloodline")}</SelectItem>{available.map((item) => <SelectItem key={item.id} value={item.id}>{catalogDisplayName(item, locale, undefined, "pt-BR")}</SelectItem>)}</SelectContent></Select></label>
       <JoiningNote />
       {preview && <label>{t("ui.bloodlineFavoredAttribute")}<Select value={favoredAttribute || undefined} onValueChange={setFavoredAttribute}><SelectTrigger><SelectValue placeholder={t("ui.chooseAttribute")} /></SelectTrigger><SelectContent>{favoredAttributes.map((name) => <SelectItem key={name} value={name}>{systemTerm(name, locale)}</SelectItem>)}</SelectContent></Select></label>}
       {preview && <BloodlineDetails definition={preview} powers={powers} />}
@@ -95,12 +97,13 @@ export function BloodlineJoinDialog({ open, onOpenChange, onJoined, character, u
 export function BloodlinePage({ character, updateSheet, bloodlines, powers, onRemoved }: {
   character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; bloodlines: readonly VampireBloodlineDefinition[]; powers: VampirePowers; onRemoved: () => void;
 }) {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
   const currentId = String(character.line_data.bloodline_id ?? ""), current = bloodlines.find((item) => item.id === currentId);
   const remove = () => { updateSheet(removeVampireBloodline(character, current, powers)); onRemoved(); };
   if (!current) return <div className="affiliation-page bloodline-page"><header className="affiliation-title"><div><h2>{currentId || t("ui.noBloodline")}</h2><p>{t("ui.bloodlineDefinitionUnavailable")}</p></div>{currentId && <ConfirmAction trigger={<Button type="button" size="sm" className="builder-add-action" variant="destructive">{t("ui.leaveBloodline")}</Button>} title={t("ui.leaveBloodlineTitle")} description={t("ui.removeBloodlineDescription")} action={t("ui.leave") } onConfirm={remove} />}</header></div>;
+  const currentName = catalogDisplayName(current, locale, undefined, "pt-BR");
   return <div className="affiliation-page bloodline-page">
-    <header className="affiliation-title"><div><h2>{current.name}</h2><p>{current.source}{current.page ? ` · p. ${current.page}` : ""}</p></div><ConfirmAction trigger={<Button type="button" size="sm" className="builder-add-action" variant="destructive">{t("ui.leaveBloodline")}</Button>} title={t("ui.leaveNamedBloodline", { name: current.name })} description={t("ui.leaveBloodlineConsequences")} action={t("ui.leaveBloodline")} onConfirm={remove} /></header>
+    <header className="affiliation-title"><div><h2>{currentName}</h2><p>{current.source}{current.page ? ` · p. ${current.page}` : ""}</p></div><ConfirmAction trigger={<Button type="button" size="sm" className="builder-add-action" variant="destructive">{t("ui.leaveBloodline")}</Button>} title={t("ui.leaveNamedBloodline", { name: currentName })} description={t("ui.leaveBloodlineConsequences")} action={t("ui.leaveBloodline")} onConfirm={remove} /></header>
     <BloodlineDetails definition={current} powers={powers} />
   </div>;
 }
@@ -112,5 +115,6 @@ function JoiningNote() {
 
 function BloodlineDetails({ definition, powers }: { definition: VampireBloodlineDefinition; powers: VampirePowers }) {
   const { locale, t } = useLanguage();
-  return <div className="bloodline-details"><div className="affiliation-overview bloodline-overview"><section><h3>{t("ui.overview")}</h3><p>{definition.summary}</p></section><section><h3>{t("ui.lineage")}</h3><p><strong>{t("ui.parentClan")}:</strong> {definition.parentClan}</p>{definition.requirements && <p><strong>{t("ui.affiliation")}:</strong> {definition.requirements}</p>}{definition.nicknames.length > 0 && <p><strong>{t("ui.nicknames")}:</strong> {definition.nicknames.join(", ")}</p>}</section></div><section><h3>{t("ui.bloodlineAdvantages")}</h3><p><strong>{t("ui.favoredAttributes")}:</strong> {definition.favoredAttributes.map((item) => systemTerm(item, locale)).join(" / ")}</p><div className="bloodline-discipline-list">{definition.disciplines.map((name) => <span key={name}>{vampireDisciplineDisplayName(name, powers.disciplines, locale)}{name === definition.exclusiveDiscipline ? ` · ${t("ui.exclusive")}` : ""}</span>)}</div><small>{t("ui.bloodlineDisciplineReference")}</small></section>{definition.giftName && <section><h3>{definition.giftName}</h3><p>{definition.giftSummary}</p></section>}<section className="bloodline-bane-card"><h3>{definition.baneName}</h3><p>{definition.baneSummary}</p><small>{t("ui.bloodlineBaneActive")}</small></section></div>;
+  const presented = vampireBloodlinePresentation(definition, locale);
+  return <div className="bloodline-details"><div className="affiliation-overview bloodline-overview"><section><h3>{t("ui.overview")}</h3><p>{presented.summary}</p></section><section><h3>{t("ui.lineage")}</h3><p><strong>{t("ui.parentClan")}:</strong> {presented.parentClan}</p>{presented.requirements && <p><strong>{t("ui.affiliation")}:</strong> {presented.requirements}</p>}{presented.nicknames.length > 0 && <p><strong>{t("ui.nicknames")}:</strong> {presented.nicknames.join(", ")}</p>}</section></div><section><h3>{t("ui.bloodlineAdvantages")}</h3><p><strong>{t("ui.favoredAttributes")}:</strong> {presented.favoredAttributes.map((item) => systemTerm(item, locale)).join(" / ")}</p><div className="bloodline-discipline-list">{presented.disciplines.map((name) => <span key={name}>{vampireDisciplineDisplayName(name, powers.disciplines, locale)}{name === presented.exclusiveDiscipline ? ` · ${t("ui.exclusive")}` : ""}</span>)}</div><small>{t("ui.bloodlineDisciplineReference")}</small></section>{presented.giftName && <section><h3>{presented.giftName}</h3><p>{presented.giftSummary}</p></section>}<section className="bloodline-bane-card"><h3>{presented.baneName}</h3><p>{presented.baneSummary}</p><small>{t("ui.bloodlineBaneActive")}</small></section></div>;
 }

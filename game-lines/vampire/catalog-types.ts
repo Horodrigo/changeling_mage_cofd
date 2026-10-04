@@ -67,6 +67,7 @@ export type VampireBloodlineDefinition = {
   baneName: string;
   baneSummary: string;
   sourceId: string;
+  presentationPt?: Partial<Pick<VampireBloodlineDefinition, "parentClan" | "requirements" | "nicknames" | "summary" | "giftName" | "giftSummary" | "baneName" | "baneSummary">>;
   source: string;
   page: number;
   homebrew?: boolean;

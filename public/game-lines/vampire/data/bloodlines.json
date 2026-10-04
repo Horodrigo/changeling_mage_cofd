@@ -27,7 +27,18 @@
     "page": 12,
     "parentClanIds": [
       "mekhet"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Vigias de horrores ocultos que se afastam da vida humana comum enquanto protegem contra ameaças percebidas por poucos Membros.",
+      "baneName": "A Maldição do Distanciamento",
+      "baneSummary": "Sempre que um Ankou recuperaria Força de Vontade ao manter a Máscara, faça um teste de Humanidade. Em uma falha, nenhuma Força de Vontade é recuperada.",
+      "nicknames": [
+        "Guardiões",
+        "Ceifeiros",
+        "Portadores da Morte"
+      ],
+      "parentClan": "Mekhet"
+    }
   },
   {
     "id": "icelus",
@@ -57,7 +68,17 @@
     "parentClanIds": [
       "mekhet",
       "ventrue"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Auditores metódicos da sociedade dos Membros cujo distanciamento hipnótico torna as falhas de consciência perigosamente exploráveis.",
+      "baneName": "A Maldição Hipnótica",
+      "baneSummary": "Além da Maldição do Clã de origem, um teste fracassado de Distanciamento que cause Bestial, Competitivo ou Lascivo também causa Mesmerizado. Resolver essa Condição não concede a resistência habitual de +3 contra Dominação.",
+      "nicknames": [
+        "Auditores",
+        "A Fundação"
+      ],
+      "parentClan": "Mekhet ou Ventrue"
+    }
   },
   {
     "id": "jharana",
@@ -87,7 +108,17 @@
     "page": 20,
     "parentClanIds": [
       "daeva"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Vampiros sintonizados com transmissões e presságios do Deus-Máquina que podem examinar e reconfigurar sinais vivos.",
+      "baneName": "A Maldição do Presságio",
+      "baneSummary": "Quando um Jharana se alimenta da mesma pessoa mais de uma vez em um capítulo, faça um teste de Humanidade. Uma falha causa uma Obsessão Persistente ligada a essa pessoa e aos sinais que a cercam.",
+      "nicknames": [
+        "Reparadores",
+        "Maquinistas"
+      ],
+      "parentClan": "Daeva"
+    }
   },
   {
     "id": "liderc",
@@ -115,7 +146,16 @@
     "page": 24,
     "parentClanIds": [
       "daeva"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Predadores emocionais que cultivam círculos intensos de amantes e dependentes, alimentando-se tanto de devoção quanto de sangue.",
+      "baneName": "A Maldição da Devoção",
+      "baneSummary": "Enquanto estiver Dependente, todos os Touchstones vinculados fornecem apenas +1 dado no total aos testes de Distanciamento. Defender o sujeito restaura no máximo 1 de Força de Vontade, e um sujeito que era um Touchstone é perdido imediatamente quando a relação se rompe.",
+      "nicknames": [
+        "Os Amados"
+      ],
+      "parentClan": "Daeva"
+    }
   },
   {
     "id": "nosoi",
@@ -143,12 +183,21 @@
     "page": 29,
     "parentClanIds": [
       "gangrel"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Gangrel portadores da peste cujo Sangue se adapta a uma doença escolhida e pune a alimentação que a evita.",
+      "baneName": "A Maldição Calamitosa",
+      "baneSummary": "Escolha uma doença transmitida pelo sangue. A cada noite, a Vitae obtida de sangue não infectado por essa doença não pode elevar a Vitae do Nosoi acima de sua Humanidade.",
+      "nicknames": [
+        "Médicos da Peste"
+      ],
+      "parentClan": "Gangrel"
+    }
   },
   {
     "id": "parliamentarians",
     "name": "The Parliamentarians",
-    "translatedName": "The Parliamentarians",
+    "translatedName": "Os Parlamentares",
     "parentClan": "Any",
     "requirements": "Carthian Movement",
     "nicknames": [
@@ -174,7 +223,17 @@
     "covenantIds": [
       "carthian-movement"
     ],
-    "minimumCovenantStatus": 1
+    "minimumCovenantStatus": 1,
+    "presentationPt": {
+      "summary": "Arquitetos Carthianos de sistemas pessoais rígidos que buscam segurança e influência por meio de um Réquiem meticulosamente ordenado.",
+      "baneName": "A Maldição da Ordem",
+      "baneSummary": "Quando a ordem pessoal do Parlamentar é perturbada, os pontos de Humanidade limitam todas as paradas de dados Sociais.",
+      "nicknames": [
+        "Inflexíveis"
+      ],
+      "requirements": "Movimento Carthiano",
+      "parentClan": "Qualquer"
+    }
   },
   {
     "id": "penumbrae",
@@ -207,12 +266,24 @@
     "covenantIds": [
       "circle-of-the-crone"
     ],
-    "minimumCovenantStatus": 1
+    "minimumCovenantStatus": 1,
+    "presentationPt": {
+      "summary": "Videntes da Anciã que leem a verdade por meio de torpor e sonhos, trocando memórias confiáveis por revelações ocultas.",
+      "baneName": "A Maldição Sonolenta",
+      "baneSummary": "Determine a duração do torpor usando Humanidade menos os pontos de Crúac. Despertar antes do tempo custa Vitae adicional igual a Crúac, e despertar do torpor ou da Meada de Clotho causa Falsas Memórias até o próximo sono diurno.",
+      "nicknames": [
+        "Videntes",
+        "Buscadores",
+        "Adormecidos"
+      ],
+      "requirements": "Círculo da Anciã",
+      "parentClan": "Qualquer"
+    }
   },
   {
     "id": "scions-of-the-first-city",
     "name": "Scions of the First City",
-    "translatedName": "Scions of the First City",
+    "translatedName": "Descendentes da Primeira Cidade",
     "parentClan": "Any",
     "requirements": "Invictus",
     "nicknames": [
@@ -239,7 +310,18 @@
     "covenantIds": [
       "invictus"
     ],
-    "minimumCovenantStatus": 1
+    "minimumCovenantStatus": 1,
+    "presentationPt": {
+      "summary": "Urbanistas do Invictus que afirmam descender da primeira grande cidade e obtêm força da vida metropolitana densa.",
+      "baneName": "A Maldição da Mãe",
+      "baneSummary": "Fora de uma metrópole, ou em um povoado com menos de 10.000 pessoas, os pontos de Humanidade limitam todas as paradas de dados.",
+      "nicknames": [
+        "Arautos",
+        "Descendentes"
+      ],
+      "requirements": "Invictus",
+      "parentClan": "Qualquer"
+    }
   },
   {
     "id": "vardyvle",
@@ -271,7 +353,20 @@
     "page": 45,
     "parentClanIds": [
       "ventrue"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Ladrões de identidade cobiçosos que perseguem vidas que invejam e se remodelam em torno de memórias roubadas.",
+      "baneName": "A Maldição Cobiçosa",
+      "baneSummary": "Ao se alimentar de um humano que inveja, faça um teste de Humanidade. Uma falha concede uma das memórias da vítima e Falsa Memória por uma semana; uma falha dramática também causa dependência do sangue da vítima.",
+      "nicknames": [
+        "Sósias",
+        "Ladrões de Aparência",
+        "Perseguidores",
+        "Ladrões de Pele",
+        "Tiresias"
+      ],
+      "parentClan": "Ventrue"
+    }
   },
   {
     "id": "vilseduire",
@@ -302,7 +397,18 @@
     "parentClanIds": [
       "daeva",
       "nosferatu"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Tentadores que eliminam a contenção e incentivam o excesso enquanto sua própria ligação com a Humanidade se desgasta.",
+      "baneName": "A Maldição Ablativa",
+      "baneSummary": "Um Vilseduire pode ter no máximo um Touchstone vinculado e trata todos os Pontos de Ruptura como se sua Humanidade normal fosse reduzida à metade, arredondada para baixo.",
+      "nicknames": [
+        "Tentadores",
+        "Facilitadores",
+        "Demônios"
+      ],
+      "parentClan": "Daeva ou Nosferatu"
+    }
   },
   {
     "id": "morbus",
@@ -422,7 +528,7 @@
   {
     "id": "children-of-judas",
     "name": "Children of Judas",
-    "translatedName": "Children of Judas",
+    "translatedName": "Filhos de Judas",
     "parentClan": "Daeva",
     "nicknames": [
       "The Hanged",
@@ -449,7 +555,19 @@
     "giftSummary": "The first time the vampire feeds from a vessel, she receives an involuntary vision of a tragic event from that person's past.",
     "parentClanIds": [
       "daeva"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Daeva viciados em pesar que provam o pior remorso de uma vítima e usam a culpa enterrada como arma.",
+      "giftName": "Um Gosto de Pesar",
+      "giftSummary": "Na primeira vez que o vampiro se alimenta de uma vítima, recebe uma visão involuntária de um evento trágico do passado dessa pessoa.",
+      "baneName": "A Maldição Dolorosa",
+      "baneSummary": "Após passar mais noites do que sua Humanidade sem se alimentar de alguém que esteja sentindo pesar, remorso ou arrependimento, faça um teste de Perseverança + Compostura ao despertar, com uma penalidade cumulativa por cada noite de atraso. Uma falha causa Privado até que o vampiro se alimente de uma vítima adequadamente pesarosa.",
+      "nicknames": [
+        "Os Enforcados",
+        "Reis do Suicídio"
+      ],
+      "parentClan": "Daeva"
+    }
   },
   {
     "id": "duchagne",
@@ -481,7 +599,19 @@
     "giftSummary": "Once per night, feeding from a victim experiencing extreme sensation can refresh one spent Willpower; causing additional harm imposes -1 on the resulting detachment roll.",
     "parentClanIds": [
       "daeva"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Sensualistas insensíveis que precisam de sensações extremas para fazer a alimentação parecer viva.",
+      "giftName": "O Tempero da Vida",
+      "giftSummary": "Uma vez por noite, alimentar-se de uma vítima que esteja experimentando uma sensação extrema pode restaurar um ponto gasto de Força de Vontade; causar dano adicional impõe -1 ao teste de Distanciamento resultante.",
+      "baneName": "A Maldição Sibarítica",
+      "baneSummary": "A menos que a alimentação envolva uma sensação física intensa, como dor, prazer ou temperatura extrema, gaste Força de Vontade ou aplique a Maldição do Clã Daeva mesmo na primeira alimentação dessa vítima.",
+      "nicknames": [
+        "Decadentes",
+        "Bacantes"
+      ],
+      "parentClan": "Daeva"
+    }
   },
   {
     "id": "erzsebet",
