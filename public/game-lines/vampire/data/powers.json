@@ -86,7 +86,7 @@
         {
           "rating": 1,
           "name": "Swift Flows the Blood",
-          "translatedName": "Swift Flows the Blood",
+          "translatedName": "Flui Veloz o Sangue",
           "summary": "Spend additional Vitae on healing this turn.",
           "cost": "1 Vitae",
           "dicePool": "Intelligence + Medicine + Crochan",
@@ -96,12 +96,24 @@
             "exceptionalSuccess": "Additional successes increase the available healing Vitae normally.",
             "failure": "Gain no additional capacity; the power may be tried again on a later turn.",
             "dramaticFailure": "For the scene, each turn in which the vampire spends Vitae to heal requires one additional Vitae to rouse the sluggish blood."
+          },
+          "presentationPt": {
+            "summary": "Gastar Vitae adicional para curar neste turno.",
+            "cost": "1 Vitae",
+            "dicePool": "Inteligência + Medicina + Crochan",
+            "action": "Instantânea",
+            "rollResults": {
+              "success": "Para cada sucesso, gastar uma Vitae além do limite por turno da Potência de Sangue neste turno, apenas para curar ferimentos.",
+              "exceptionalSuccess": "Sucessos adicionais aumentam normalmente a Vitae disponível para cura.",
+              "failure": "Nenhuma capacidade adicional é obtida; o poder pode ser tentado novamente em um turno posterior.",
+              "dramaticFailure": "Durante a cena, cada turno em que o vampiro gasta Vitae para curar exige uma Vitae adicional para despertar o sangue lento."
+            }
           }
         },
         {
           "rating": 2,
           "name": "Blooding the Hunter",
-          "translatedName": "Blooding the Hunter",
+          "translatedName": "Ungir o Caçador",
           "summary": "Sample a quarry's blood to gain a tracking bonus for the night.",
           "cost": "1 Vitae",
           "dicePool": "Wits + Survival + Crochan",
@@ -112,41 +124,80 @@
             "exceptionalSuccess": "Also use Crochan dots in a Clash of Wills to pierce the quarry's supernatural concealment for the night.",
             "failure": "The blood reveals nothing.",
             "dramaticFailure": "The blood reveals nothing, and the vampire cannot benefit from A Taste of Blood or Blooding the Hunter for the scene."
+          },
+          "presentationPt": {
+            "summary": "Provar o sangue de uma presa para receber um bônus de rastreamento durante a noite.",
+            "cost": "1 Vitae",
+            "dicePool": "Raciocínio + Sobrevivência + Crochan",
+            "action": "Instantânea",
+            "duration": "Noite",
+            "rollResults": {
+              "success": "Receber os sucessos, até o máximo de cinco, como dados de bônus em Raciocínio + Compostura para rastrear e em ações de Investigação, Esportes, Sobrevivência e Manha usadas para perseguir a presa cujo sangue foi provado.",
+              "exceptionalSuccess": "Também usar os pontos em Crochan em um Confronto de Vontades para penetrar a ocultação sobrenatural da presa durante a noite.",
+              "failure": "O sangue nada revela.",
+              "dramaticFailure": "O sangue nada revela, e o vampiro não pode receber os benefícios de Um Gosto de Sangue ou Ungir o Caçador durante a cena."
+            }
           }
         },
         {
           "rating": 3,
           "name": "Sealing the Covenant",
-          "translatedName": "Sealing the Covenant",
+          "translatedName": "Selar o Pacto",
           "summary": "Swear a shared blood oath and take its focus as an added Touchstone.",
           "cost": "1 Willpower + 1 Vitae per participant",
           "dicePool": "None",
           "action": "Instant",
           "duration": "Permanent until abandoned or destroyed",
-          "effect": "Willing participants swear loyalty and gain an additional Humanity 4 Touchstone chosen by the Bron, such as a liege, society, sacred place, or relic. The officiating Bron may witness without swearing. A vampire may have only one such Touchstone, and the Bron bane does not detach it. Losing it is a Humanity 3 breaking point; its destruction is Humanity 1. Abandoning the oath removes it and gives Languid."
+          "effect": "Willing participants swear loyalty and gain an additional Humanity 4 Touchstone chosen by the Bron, such as a liege, society, sacred place, or relic. The officiating Bron may witness without swearing. A vampire may have only one such Touchstone, and the Bron bane does not detach it. Losing it is a Humanity 3 breaking point; its destruction is Humanity 1. Abandoning the oath removes it and gives Languid.",
+          "presentationPt": {
+            "summary": "Fazer um juramento de sangue compartilhado e adotar seu foco como um Touchstone adicional.",
+            "cost": "1 Força de Vontade + 1 Vitae por participante",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "duration": "Permanente até ser abandonado ou destruído",
+            "effect": "Participantes voluntários juram lealdade e recebem um Touchstone adicional em Humanidade 4 escolhido pelo Bron, como um senhor, uma sociedade, um lugar sagrado ou uma relíquia. O Bron que conduz o rito pode testemunhar sem jurar. Um vampiro só pode ter um Touchstone desse tipo, e a Maldição dos Bron não rompe esse vínculo. Perdê-lo é um Ponto de Ruptura em Humanidade 3; sua destruição, em Humanidade 1. Abandonar o juramento remove o Touchstone e impõe Lânguido."
+          }
         },
         {
           "rating": 4,
           "name": "Blood of My Blood",
-          "translatedName": "Blood of My Blood",
+          "translatedName": "Sangue do Meu Sangue",
           "summary": "Spend Vitae to heal a touched subject immediately.",
           "cost": "Variable Vitae; 1 Willpower for aggravated Kindred wounds",
           "dicePool": "None",
           "action": "Instant",
-          "effect": "Touch an open wound and spend Vitae to heal a willing Kindred as though healing oneself: one Vitae heals two bashing or one lethal; one aggravated wound costs five Vitae and one Willpower. Expenditure speed follows the Bron's limit and may be accelerated by Swift Flows the Blood. Mortals may also have permanent injuries restored for two Vitae for a small scar or missing eye up to six for a limb. This never creates a blood bond."
+          "effect": "Touch an open wound and spend Vitae to heal a willing Kindred as though healing oneself: one Vitae heals two bashing or one lethal; one aggravated wound costs five Vitae and one Willpower. Expenditure speed follows the Bron's limit and may be accelerated by Swift Flows the Blood. Mortals may also have permanent injuries restored for two Vitae for a small scar or missing eye up to six for a limb. This never creates a blood bond.",
+          "presentationPt": {
+            "summary": "Gastar Vitae para curar imediatamente um alvo tocado.",
+            "cost": "Vitae variável; 1 Força de Vontade para ferimentos agravados de Membros",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "effect": "Tocar uma ferida aberta e gastar Vitae para curar um Membro voluntário como se curasse a si mesmo: uma Vitae cura dois pontos de dano contundente ou um letal; um ferimento agravado custa cinco Vitae e um ponto de Força de Vontade. A velocidade do gasto segue o limite do Bron e pode ser acelerada por Flui Veloz o Sangue. Ferimentos permanentes de mortais também podem ser restaurados por duas Vitae para uma pequena cicatriz ou um olho perdido até seis para um membro. Isso nunca cria um Laço de Sangue."
+          }
         },
         {
           "rating": 5,
           "name": "Conquering the Challenge of the Axe",
-          "translatedName": "Conquering the Challenge of the Axe",
+          "translatedName": "Vencer o Desafio do Machado",
           "summary": "Suffer no damage while honoring an oath not to move or act aggressively.",
           "cost": "2 Vitae + 1 Willpower",
           "dicePool": "None",
           "action": "Instant",
           "duration": "Scene",
-          "effect": "After shouting an ultimatum, the Bron is immune to all damage, including sunlight. The protection ends if she attacks, grapples, feeds from an unwilling target, uses a targeted hostile Discipline, lashes out with the Beast, or frenzies. She may still obstruct enemies, tend wounds, and use indirect powers at the Storyteller's discretion."
+          "effect": "After shouting an ultimatum, the Bron is immune to all damage, including sunlight. The protection ends if she attacks, grapples, feeds from an unwilling target, uses a targeted hostile Discipline, lashes out with the Beast, or frenzies. She may still obstruct enemies, tend wounds, and use indirect powers at the Storyteller's discretion.",
+          "presentationPt": {
+            "summary": "Não sofrer dano enquanto cumpre um juramento de não se mover nem agir agressivamente.",
+            "cost": "2 Vitae + 1 Força de Vontade",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "duration": "Cena",
+            "effect": "Após gritar um ultimato, o Bron fica imune a todo dano, incluindo luz solar. A proteção termina se ele atacar, agarrar, alimentar-se de um alvo contra sua vontade, usar uma Disciplina hostil direcionada, incitar a Fera ou entrar em frenesi. Ele ainda pode obstruir inimigos, tratar ferimentos e usar poderes indiretos, a critério do Narrador."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "A Disciplina dos Bron de sangue, juramentos e resistência indomável."
+      }
     },
     {
       "id": "cachexy",
@@ -1286,7 +1337,15 @@
       "dicePool": "None",
       "action": "None for persistent effects; Reflexive for active effects",
       "duration": "Permanent for persistent effects; one turn for active effects",
-      "effect": "Persistent: add Celerity to Defense and Dodge; even firearms that deny Defense suffer a penalty equal to Celerity when the vampire can react. Active: each Vitae buys one distinct effect for the turn — jump to the head of Initiative, interrupt another character with a brief action, or multiply Speed by Celerity + 1. No active option may be used more than once per turn."
+      "effect": "Persistent: add Celerity to Defense and Dodge; even firearms that deny Defense suffer a penalty equal to Celerity when the vampire can react. Active: each Vitae buys one distinct effect for the turn — jump to the head of Initiative, interrupt another character with a brief action, or multiply Speed by Celerity + 1. No active option may be used more than once per turn.",
+      "presentationPt": {
+        "summary": "Velocidade sobrenatural persistente e impulsos reflexivos alimentados por Vitae.",
+        "effect": "Persistente: some Celeridade à Defesa e à Esquiva; até armas de fogo que negam Defesa sofrem uma penalidade igual à Celeridade quando o vampiro pode reagir. Ativo: cada Vitae concede um efeito distinto no turno — passar para o primeiro lugar na Iniciativa, interromper outro personagem com uma ação breve ou multiplicar o Deslocamento por Celeridade + 1. Nenhuma opção ativa pode ser usada mais de uma vez por turno.",
+        "cost": "Nenhum ou 1 Vitae por efeito ativo",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma para efeitos persistentes; Reflexiva para efeitos ativos",
+        "duration": "Permanente para efeitos persistentes; um turno para efeitos ativos"
+      }
     },
     {
       "id": "dominate",
@@ -1704,7 +1763,15 @@
       "dicePool": "None",
       "action": "None for persistent effects; Reflexive for active effects",
       "duration": "Permanent for persistent effects; one turn for active effects",
-      "effect": "Persistent: add Resilience to Stamina and downgrade one aggravated damage per Resilience dot to lethal from most sources, including fire and acquired banes but not sunlight. Active: each Vitae buys one distinct effect for the turn — reduce non-bane damage by Resilience + 1, or reduce fire/acquired-bane damage by Resilience. Sunlight is never reduced by Resilience."
+      "effect": "Persistent: add Resilience to Stamina and downgrade one aggravated damage per Resilience dot to lethal from most sources, including fire and acquired banes but not sunlight. Active: each Vitae buys one distinct effect for the turn — reduce non-bane damage by Resilience + 1, or reduce fire/acquired-bane damage by Resilience. Sunlight is never reduced by Resilience.",
+      "presentationPt": {
+        "summary": "Resistência sobrenatural persistente com redução ativa de dano.",
+        "effect": "Persistente: some Resiliência ao Vigor e reduza a letal um ponto de dano agravado por ponto de Resiliência vindo da maioria das fontes, incluindo fogo e Maldições adquiridas, mas não luz solar. Ativo: cada Vitae concede um efeito distinto no turno — reduzir dano que não venha de Maldições em Resiliência + 1 ou reduzir dano de fogo ou de Maldições adquiridas em Resiliência. Resiliência nunca reduz dano de luz solar.",
+        "cost": "Nenhum ou 1 Vitae por efeito ativo",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma para efeitos persistentes; Reflexiva para efeitos ativos",
+        "duration": "Permanente para efeitos persistentes; um turno para efeitos ativos"
+      }
     },
     {
       "id": "vigor",
@@ -1719,7 +1786,15 @@
       "dicePool": "None",
       "action": "None for persistent effects; Reflexive for active effects",
       "duration": "Permanent for persistent effects; one turn for active effects",
-      "effect": "Persistent: add Vigor to Strength and multiply jump distance by Vigor + 1. Active: each Vitae buys one distinct effect for the turn — add Vigor as weapon bonus to Athletics/Brawl/Weaponry attacks, or lift and hurl otherwise unwieldy objects using the Discipline's improvised-weapon rules."
+      "effect": "Persistent: add Vigor to Strength and multiply jump distance by Vigor + 1. Active: each Vitae buys one distinct effect for the turn — add Vigor as weapon bonus to Athletics/Brawl/Weaponry attacks, or lift and hurl otherwise unwieldy objects using the Discipline's improvised-weapon rules.",
+      "presentationPt": {
+        "summary": "Força sobrenatural persistente com impulsos ativos de poder destrutivo.",
+        "effect": "Persistente: some Ímpeto à Força e multiplique a distância dos saltos por Ímpeto + 1. Ativo: cada Vitae concede um efeito distinto no turno — somar Ímpeto como bônus de arma a ataques de Esportes, Briga ou Armas Brancas, ou erguer e arremessar objetos que normalmente seriam difíceis de manejar, usando as regras de armas improvisadas da Disciplina.",
+        "cost": "Nenhum ou 1 Vitae por efeito ativo",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma para efeitos persistentes; Reflexiva para efeitos ativos",
+        "duration": "Permanente para efeitos persistentes; um turno para efeitos ativos"
+      }
     },
     {
       "id": "spiritus-sancti",
