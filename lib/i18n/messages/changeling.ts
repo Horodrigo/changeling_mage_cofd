@@ -31,7 +31,7 @@ export const changelingMessages = {
           },
           "luxuryGoods": {
             "name": "Artigos de Luxo",
-            "description": "Uma vez por capítulo, role os pontos de Vão para produzir um item temporário mundano ou tecido na Sebe, com Disponibilidade ou graduação não superior ao número de sucessos."
+            "description": "Uma vez por sessão, role os pontos de Vão para produzir um item temporário mundano ou tecido na Sebe, com Disponibilidade ou graduação não superior ao número de sucessos."
           },
           "shadowGarden": {
             "name": "Jardim de Sombras",
@@ -89,11 +89,11 @@ export const changelingMessages = {
           },
           "illusoryArmory": {
             "name": "Arsenal Ilusório",
-            "description": "Uma vez por capítulo, gaste Glamour para invocar um adereço não importante com bônus de equipamento igual ao dobro do Glamour gasto, até +5; acrescente 1 ponto de Força de Vontade para um adereço importante."
+            "description": "Uma vez por sessão, gaste Glamour para invocar um adereço não importante com bônus de equipamento igual ao dobro do Glamour gasto, até +5; acrescente 1 ponto de Força de Vontade para um adereço importante."
           },
           "permanentArmory": {
             "name": "Arsenal Permanente",
-            "description": "Equipamentos físicos permanecem armazenados em segurança no Bastião. Cada item não mundano exige 1 ponto de Força de Vontade por capítulo, ou o Bastião o absorve."
+            "description": "Equipamentos físicos permanecem armazenados em segurança no Bastião. Cada item não mundano exige 1 ponto de Força de Vontade por sessão, ou o Bastião o absorve."
           },
           "raisedDefenses": {
             "name": "Defesas Reforçadas",
@@ -594,7 +594,7 @@ export const changelingMessages = {
           },
           "luxuryGoods": {
             "name": "Luxury Goods",
-            "description": "Once per chapter, roll Hollow dots to produce one temporary mundane or Hedgespun item with Availability or rating no higher than successes."
+            "description": "Once per session, roll Hollow dots to produce one temporary mundane or Hedgespun item with Availability or rating no higher than successes."
           },
           "shadowGarden": {
             "name": "Shadow Garden",
@@ -652,11 +652,11 @@ export const changelingMessages = {
           },
           "illusoryArmory": {
             "name": "Illusory Armory",
-            "description": "Once per chapter, spend Glamour to summon an unimportant prop with equipment rating twice Glamour spent, maximum +5; add 1 Willpower for an important prop."
+            "description": "Once per session, spend Glamour to summon an unimportant prop with equipment rating twice Glamour spent, maximum +5; add 1 Willpower for an important prop."
           },
           "permanentArmory": {
             "name": "Permanent Armory",
-            "description": "Physical equipment remains safely stored in the Bastion. Each non-mundane item requires 1 Willpower per chapter or the Bastion absorbs it."
+            "description": "Physical equipment remains safely stored in the Bastion. Each non-mundane item requires 1 Willpower per session or the Bastion absorbs it."
           },
           "raisedDefenses": {
             "name": "Raised Defenses",

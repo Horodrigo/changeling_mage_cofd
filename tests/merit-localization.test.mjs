@@ -179,6 +179,31 @@ test("Builder and Experience selected Merit names retain canonical identity and 
 });
 
 
+test("source-backed Mounted Combat and Punch Drunk minimums apply in creation and sheet contexts across locales", async () => {
+  const { meritContextForSheet } = await vite.ssrLoadModule("/lib/merits.ts");
+  const catalog = withMeritPresentation(core, corePt);
+  const mounted = catalog.find(item => item.id === "hurt-locker:mounted-combat");
+  const punch = catalog.find(item => item.id === "hurt-locker:punch-drunk");
+  for (const locale of ["en-US", "pt-BR", "en-US"]) {
+    assert.ok(meritPresentation(mounted, locale).prerequisites.endsWith("••"));
+    for (const gameLine of ["CofD", "VtR", "MtA", "CtL", "WtF"]) {
+      for (const animalKen of [1, 2, 3]) {
+        const sheet = { game_line: gameLine, attributes: { Dexterity: 3 }, skills: { Athletics: 2, "Animal Ken": animalKen }, merits: [] };
+        const creation = { gameLine, ...sheet, meritCatalog: catalog };
+        for (const context of [creation, meritContextForSheet(sheet, catalog)]) assert.equal(meritPrerequisitesMet(mounted, context), animalKen >= 2);
+      }
+      for (const Resolve of [2, 3, 4]) {
+        const sheet = { game_line: gameLine, attributes: { Resolve, Composure: 3 }, skills: {}, merits: [] };
+        const creation = { gameLine, ...sheet, meritCatalog: catalog };
+        for (const context of [creation, meritContextForSheet(sheet, catalog)]) assert.equal(meritPrerequisitesMet(punch, context), Resolve >= 3);
+      }
+    }
+  }
+  assert.equal(meritPrerequisitesMet(punch, { gameLine: "CofD", attributes: { Resolve: 2, Composure: 2 }, traits: { Willpower: 6 } }), true);
+  for (const name of ["Willpower", "willpower"])
+    assert.equal(meritPrerequisitesMet(punch, { gameLine: "CofD", attributes: { Resolve: 4, Composure: 3 }, traits: { [name]: 5 } }), false);
+});
+
 test("approved Core thresholds use Resolve 3 for Iron Will and the visually verified Brawl 2 for Ground Fighter in every locale", () => {
   const catalog = withMeritPresentation(core, corePt);
   const iron = catalog.find(item => item.id === "core-2ed:iron-will");

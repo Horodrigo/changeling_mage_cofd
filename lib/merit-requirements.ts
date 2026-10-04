@@ -23,6 +23,7 @@ export type RequirementContext = {
 };
 export const canonicalTrait = (value: unknown) => String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
 const aliases: Record<string,string> = {
+  willpower:"Willpower",
   intelligence:"Intelligence", wits:"Wits", resolve:"Resolve", strength:"Strength", dexterity:"Dexterity", stamina:"Stamina", presence:"Presence", manipulation:"Manipulation", composure:"Composure",
   academics:"Academics", computer:"Computer", crafts:"Crafts", investigation:"Investigation", medicine:"Medicine", occult:"Occult", politics:"Politics", science:"Science", athletics:"Athletics", brawl:"Brawl", drive:"Drive", firearms:"Firearms", larceny:"Larceny", stealth:"Stealth", survival:"Survival", weaponry:"Weaponry", animalken:"Animal Ken", empathy:"Empathy", expression:"Expression", intimidation:"Intimidation", persuasion:"Persuasion", socialize:"Socialize", streetwise:"Streetwise", subterfuge:"Subterfuge",
 };
@@ -31,6 +32,8 @@ export function requirementTrait(name:string, context:RequirementContext):number
   if(key==="size") return Number(context.size??5);
   const keys=[key,canonicalTrait(aliases[key])];
   const values={...context.attributes,...context.skills,...context.traits};
+  if(key==="willpower"&&!Object.keys(values).some(name=>canonicalTrait(name)===key))
+    return requirementTrait("Resolve",context)+requirementTrait("Composure",context);
   return Math.max(0,...Object.entries(values).filter(([name])=>keys.includes(canonicalTrait(name))).map(([,value])=>Number(value)||0));
 }
 /**

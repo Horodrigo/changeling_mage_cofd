@@ -31,9 +31,9 @@ const sheet = () => ({ id: "xp-test", schema_version: 2, system: "chronicles-of-
   skills: { Academics: 3, Crafts: 3 }, specializations: [], merits: [], line_data: { seeming: "Fairest", court: "courtless", wyrd: 3 }, derived: {},
   current_state: { experience_available: 20, experience_spent: 0, experience_total: 20, experience_history: [], health_damage: ["L"], notes: "Authored" },
   created_at: "2026-10-03", updated_at: "2026-10-03" });
-function buy(current, id, dots, index = -1) {
+function buy(current, id, dots, index = -1, configuration) {
   const before = structuredClone(current);
-  const quote = xp.quoteChangelingMeritPurchase(current, id, dots, index, active);
+  const quote = xp.quoteChangelingMeritPurchase(current, id, dots, index, active, configuration);
   assert.ok(quote);
   assert.deepEqual(current, before);
   const next = structuredClone(current);
@@ -44,6 +44,23 @@ function buy(current, id, dots, index = -1) {
     createdAt: "2026-10-03T12:00:00Z", undo: quote.undo });
   return next;
 }
+
+test("Acquired Taste permits independent configured instances and refunds only the purchased instance", () => {
+  const current = sheet();
+  current.line_data.court = "autumn";
+  current.skills.Occult = 2;
+  current.merits = [{ definitionId: "ctl-2ed:mantle", instanceId: "court", name: "Authored Mantle label", sourceId: "ctl-2ed", dots: 1, creationDots: 1, experienceDots: 0, grantedBy: "Corte" }];
+  const first = buy(current, "h-courts:acquired-taste", 1, -1, { subject: "Authored supernatural kind A" });
+  const second = buy(first, "h-courts:acquired-taste", 1, -1, { subject: "Authored supernatural kind B" });
+  assert.notEqual(second.merits[1].instanceId, second.merits[2].instanceId);
+  const before = structuredClone(second);
+  const refunded = xp.refundChangelingMeritPurchase(second, "receipt-2", active);
+  assert.ok(refunded);
+  assert.deepEqual(refunded.merits, first.merits);
+  assert.equal(refunded.current_state.experience_available, first.current_state.experience_available);
+  assert.deepEqual(refunded.current_state.experience_history, first.current_state.experience_history);
+  assert.deepEqual(second, before);
+});
 
 test("CtL XP quote targets the exact definition and instance, preserving creation dots and authored choices", () => {
   const current = sheet();

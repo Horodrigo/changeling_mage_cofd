@@ -33,7 +33,7 @@
   "ctl-2ed:diviner": {
     "name": "Adivinho",
     "prerequisites": "Compostura •••, Raciocínio •••",
-    "description": "Entra no próprio Bastião pelo Portão de Marfim ou de Chifre e faz ao Narrador uma pergunta de sim ou não, que deve ser respondida corretamente, ou com “talvez” quando nenhuma resposta se aplicar. Perguntas complementares relacionadas são permitidas, com um total de perguntas por capítulo limitado aos pontos neste Mérito."
+    "description": "Entra no próprio Bastião pelo Portão de Marfim ou de Chifre e faz ao Narrador uma pergunta de sim ou não, que deve ser respondida corretamente, ou com “talvez” quando nenhuma resposta se aplicar. Perguntas complementares relacionadas são permitidas, com um total de perguntas por sessão limitado aos pontos neste Mérito."
   },
   "ctl-2ed:dream-warrior": {
     "name": "Guerreiro Onírico",
@@ -77,7 +77,7 @@
   },
   "ctl-2ed:goblin-bounty": {
     "name": "Abundância Goblin",
-    "description": "A cada capítulo, o personagem tem acesso a três Frutas Goblin comuns ou esquisitices por ponto neste Mérito. O Fado ainda limita quantos pode carregar de uma vez; o restante fica guardado em segurança e não exige uma cena especial para ser recuperado."
+    "description": "A cada sessão, o personagem tem acesso a três Frutas Goblin comuns ou esquisitices por ponto neste Mérito. O Fado ainda limita quantos pode carregar de uma vez; o restante fica guardado em segurança e não exige uma cena especial para ser recuperado."
   },
   "ctl-2ed:grounded": {
     "name": "Centrado",
@@ -108,7 +108,7 @@
   "ctl-2ed:manymask": {
     "name": "Múltiplas Mascarilhas",
     "prerequisites": "Fado ••, Manipulação •••",
-    "description": "Gasta 1 Glamour para mudar permanentemente a Mascarilha. A cada capítulo, faz até um número de alterações individuais igual ao Fado na cor dos olhos, cor do cabelo, estrutura facial, tom de pele, cicatrizes, marcas de nascença ou características semelhantes. Com Fado 5 ou mais, cria uma Mascarilha inteiramente nova uma vez por capítulo, inclusive com mudança de sexo, mas a altura e a compleição permanecem fixas."
+    "description": "Gasta 1 Glamour para mudar permanentemente a Mascarilha. A cada sessão, faz até um número de alterações individuais igual ao Fado na cor dos olhos, cor do cabelo, estrutura facial, tom de pele, cicatrizes, marcas de nascença ou características semelhantes. Com Fado 5 ou mais, cria uma Mascarilha inteiramente nova uma vez por sessão, inclusive com mudança de sexo, mas a altura e a compleição permanecem fixas."
   },
   "ctl-2ed:market-sense": {
     "name": "Senso de Mercado",
@@ -348,7 +348,7 @@
   "h-courts:dressed-to-kill": {
     "name": "Vestido para Matar",
     "prerequisites": "Manto da Primavera • ou Boa Vontade da Corte da Primavera ••• ou Manto do Verão •• ou Boa Vontade da Corte do Verão ••••; Socialização ••",
-    "description": "Uma vez por traje a cada capítulo, realiza uma ação instantânea para transformar parte de um traje escolhido pelo personagem em uma arma improvisada com Durabilidade 2."
+    "description": "Uma vez por traje a cada sessão, realiza uma ação instantânea para transformar parte de um traje escolhido pelo personagem em uma arma improvisada com Durabilidade 2."
   },
   "h-courts:florence-nightingale-effect": {
     "name": "Efeito Florence Nightingale",
@@ -358,7 +358,7 @@
   "h-courts:friends-in-low-places": {
     "name": "Amigos da Baixa Sociedade",
     "prerequisites": "Manto da Primavera • ou Boa Vontade da Corte da Primavera •••; Habitué",
-    "description": "Em um grupo específico de pessoas de má reputação, distribui temporariamente os pontos neste Mérito entre Status, Aliados e Contatos. Esses pontos podem se somar aos existentes, mas não podem elevar um Mérito acima de cinco; duram até o fim do capítulo."
+    "description": "Em um grupo específico de pessoas de má reputação, distribui temporariamente os pontos neste Mérito entre Status, Aliados e Contatos. Esses pontos podem se somar aos existentes, mas não podem elevar um Mérito acima de cinco; duram até o fim da sessão."
   },
   "h-courts:spring-loaded": {
     "name": "Primavera a Todo Vapor",
@@ -378,7 +378,7 @@
   "h-courts:look-a-distraction": {
     "name": "Olhe! Uma Distração!",
     "prerequisites": "Manto da Primavera • ou Boa Vontade da Corte da Primavera •••; Presença ou Manipulação •••",
-    "description": "Uma vez por capítulo, após obter sucesso em um teste Social apropriado, permite que um número de aliados até o maior valor entre Presença e Manipulação aplique esses sucessos aos próprios testes de Furtividade ou Subterfúgio. O personagem sofre −3 em Furtividade durante a cena."
+    "description": "Uma vez por sessão, após obter sucesso em um teste Social apropriado, permite que um número de aliados até o maior valor entre Presença e Manipulação aplique esses sucessos aos próprios testes de Furtividade ou Subterfúgio. O personagem sofre −3 em Furtividade durante a cena."
   },
   "h-courts:no-rest-for-the-wicked": {
     "name": "Sem Descanso para os Malvados",
@@ -403,7 +403,7 @@
   "h-courts:beware-of-dog": {
     "name": "Cuidado com o Cão",
     "prerequisites": "Manto do Verão • ou Boa Vontade da Corte do Verão •••; Lacaio •",
-    "description": "Recebe 9-novamente em Intimidação enquanto estiver acompanhado de um Lacaio animal assustador. Uma vez por capítulo, usa o animal para receber +2 na Defesa por um número de turnos igual aos pontos em Lacaio; o animal não recebe nenhum benefício defensivo."
+    "description": "Recebe 9-novamente em Intimidação enquanto estiver acompanhado de um Lacaio animal assustador. Uma vez por sessão, usa o animal para receber +2 na Defesa por um número de turnos igual aos pontos em Lacaio; o animal não recebe nenhum benefício defensivo."
   },
   "h-courts:challenge-accepted": {
     "name": "Desafio Aceito",
@@ -418,7 +418,7 @@
   "h-courts:don-t-tell-me-to-calm-down": {
     "name": "Não Me Mande Ficar Calmo",
     "prerequisites": "Manto do Verão • ou Boa Vontade da Corte do Verão •••; Compostura •• ou menos",
-    "description": "Uma vez por capítulo, declara uma intenção e age imediatamente para realizá-la. Tentativas de dissuadir o personagem sofrem −2 durante o capítulo, incluindo tentativas feitas por aliados."
+    "description": "Uma vez por sessão, declara uma intenção e age imediatamente para realizá-la. Tentativas de dissuadir o personagem sofrem −2 durante a sessão, incluindo tentativas feitas por aliados."
   },
   "h-courts:firebrand": {
     "name": "Incendiário",
@@ -444,13 +444,13 @@
       { "rating": 2, "name": "Agora Estou Furioso", "description": "Após sofrer dano pela primeira vez em uma cena de ação, recebe +1 nos ataques de Briga ou Armas Brancas contra quem o atacou." },
       { "rating": 3, "name": "De Olho no Objetivo", "description": "Adiciona os pontos neste Mérito para resistir a efeitos que desviariam sua concentração do oponente escolhido." },
       { "rating": 4, "name": "Você Só Me Tornou Mais Forte", "description": "Contra um oponente que já derrotou o personagem, adiciona o Manto do Verão à Iniciativa e a um Ataque Total, somando-se ao bônus habitual de +2." },
-      { "rating": 5, "name": "Hora da Revanche", "description": "Após sofrer dano, adiciona o mesmo número de dados ao próximo ataque contra a origem desse dano, até um número de vezes por capítulo igual à Perseverança." }
+      { "rating": 5, "name": "Hora da Revanche", "description": "Após sofrer dano, adiciona o mesmo número de dados ao próximo ataque contra a origem desse dano, até um número de vezes por sessão igual à Perseverança." }
     ]
   },
   "h-courts:quiet-rage": {
     "name": "Raiva Silenciosa",
     "prerequisites": "Manto do Verão • ou Boa Vontade da Corte do Verão •••; Compostura •••",
-    "description": "Uma vez por capítulo, substitui Presença ou Força por Compostura em uma ação de Intimidação; recebe 8-novamente contra pessoas que conheçam a reputação silenciosa do personagem. Isso não pode conceder a qualidade de rotina contra alguém intimidado dessa maneira no último mês."
+    "description": "Uma vez por sessão, substitui Presença ou Força por Compostura em uma ação de Intimidação; recebe 8-novamente contra pessoas que conheçam a reputação silenciosa do personagem. Isso não pode conceder a qualidade de rotina contra alguém intimidado dessa maneira no último mês."
   },
   "h-courts:rageaholic": {
     "name": "Viciado em Raiva",
@@ -517,7 +517,7 @@
     "prerequisites": "Manto do Inverno •• ou Boa Vontade da Corte do Inverno ••••; Sentido de Perigo, Raciocínio ••, Furtividade ••, Manto do Inverno ••",
     "description": "Um Estilo defensivo para antecipar o perigo e escapar antes de ser capturado.",
     "levels": [
-      { "rating": 1, "name": "Paranoia Justificável", "description": "Uma vez por capítulo, aceita Abalado ou Assombrado para dobrar Sentido de Perigo até a próxima vez que o personagem dormir." },
+      { "rating": 1, "name": "Paranoia Justificável", "description": "Uma vez por sessão, aceita Abalado ou Assombrado para dobrar Sentido de Perigo até a próxima vez que o personagem dormir." },
       { "rating": 2, "name": "Conheça as Saídas", "description": "Estuda os arredores como ação instantânea para identificar todas as saídas óbvias e não ocultas, e recebe +3 para localizar saídas escondidas." },
       { "rating": 3, "name": "Corrida Desabalada", "description": "Ao Esquivar para escapar, também se move até o dobro do Deslocamento; enquanto for perseguido em uma Perseguição, sempre possui a Vantagem." },
       { "rating": 4, "name": "Hoje Não, Morte!", "description": "Após fracassar em um teste de surpresa, gasta Força de Vontade para manter a Defesa e agir no primeiro turno, desde que a ação seja usada para escapar do perigo." }
@@ -551,12 +551,12 @@
   "h-seemings:blood-and-bone": {
     "name": "Sangue e Osso",
     "prerequisites": "Fera",
-    "description": "Escolhe duas Perícias, sendo pelo menos uma Física; ambas recebem 9-novamente. Recebe +2 para sentir empatia ou se relacionar com o animal refletido pelo Semblante Feérico. Fortalecer a Mascarilha custa um ponto de Força de Vontade na primeira vez de cada capítulo."
+    "description": "Escolhe duas Perícias, sendo pelo menos uma Física; ambas recebem 9-novamente. Recebe +2 para sentir empatia ou se relacionar com o animal refletido pelo Semblante Feérico. Fortalecer a Mascarilha custa um ponto de Força de Vontade na primeira vez de cada sessão."
   },
   "h-seemings:debaucher": {
     "name": "Devasso",
     "prerequisites": "Fera",
-    "description": "Recebe um Vício e o satisfaz como um mortal. Após recuperar Força de Vontade dessa maneira uma vez em um capítulo, cada nova satisfação causa um dado de dano leve de Lucidez."
+    "description": "Recebe um Vício e o satisfaz como um mortal. Após recuperar Força de Vontade dessa maneira uma vez em uma sessão, cada nova satisfação causa um dado de dano leve de Lucidez."
   },
   "h-seemings:fae-pet": {
     "name": "Mascote Fae",
@@ -628,7 +628,7 @@
   "h-seemings:mirror-me": {
     "name": "Meu Reflexo",
     "prerequisites": "Trevoso",
-    "description": "Uma vez por capítulo, a critério do Narrador, um reflexo que não esteja sendo observado pode se mover ou furtar um objeto refletido de Tamanho 1 ou menor e colocá-lo junto ao personagem. O reflexo pode agir de maneira egoísta."
+    "description": "Uma vez por sessão, a critério do Narrador, um reflexo que não esteja sendo observado pode se mover ou furtar um objeto refletido de Tamanho 1 ou menor e colocá-lo junto ao personagem. O reflexo pode agir de maneira egoísta."
   },
   "h-seemings:perfect-stillness": {
     "name": "Imobilidade Perfeita",
@@ -659,7 +659,7 @@
   "h-seemings:wrapped-in-an-enigma": {
     "name": "Envolto em um Enigma",
     "prerequisites": "Trevoso, Subterfúgio •••",
-    "description": "Uma vez por capítulo, adiciona metade do Fado, arredondada para cima, como dados ou sucessos de bônus em Subterfúgio a respeito de fatos sobre o personagem."
+    "description": "Uma vez por sessão, adiciona metade do Fado, arredondada para cima, como dados ou sucessos de bônus em Subterfúgio a respeito de fatos sobre o personagem."
   },
   "h-seemings:conjuror-s-call": {
     "name": "Chamado do Conjurador",
@@ -772,7 +772,7 @@
   "h-seemings:living-large": {
     "name": "Vivendo à Grande",
     "prerequisites": "Ogro, Recursos •, Tamanho 6+",
-    "description": "Uma vez por capítulo, adquire bens por meio de intimidação ou pequenos crimes, em vez de Recursos, até uma Disponibilidade igual à metade do Tamanho, arredondada para cima; as consequências ainda se aplicam."
+    "description": "Uma vez por sessão, adquire bens por meio de intimidação ou pequenos crimes, em vez de Recursos, até uma Disponibilidade igual à metade do Tamanho, arredondada para cima; as consequências ainda se aplicam."
   },
   "h-seemings:looming-large": {
     "name": "Grande e Ameaçador",
@@ -786,7 +786,7 @@
     "levels": [
       { "rating": 1, "name": "Pense Duas Vezes", "description": "Adiciona Intimidação à Iniciativa no primeiro turno de um confronto violento." },
       { "rating": 2, "name": "Fique Atrás de Mim", "description": "Oferece ocultação substancial contra ataques à distância aos personagens atrás de você, ou ocultação total se forem menores." },
-      { "rating": 3, "name": "Lembra de Mim?", "description": "Uma vez por turno, disputa Presença + Intimidação contra um atacante que esteja mirando um aliado próximo; em caso de sucesso, ele ataca você em vez do aliado, contra metade da Defesa." },
+      { "rating": 3, "name": "Lembra de Mim?", "description": "Uma vez por turno, disputa Presença + Intimidação contra Perseverança + Compostura de um atacante que esteja mirando um aliado próximo; em caso de sucesso, ele ataca você em vez do aliado, contra metade da Defesa." },
       { "rating": 4, "name": "Eu Aguento", "description": "Gasta um ponto de Força de Vontade quando Lembra de Mim? redirecionar um ataque bem-sucedido para reduzir seu dano pela metade, arredondado para baixo, com mínimo de um." },
       { "rating": 5, "name": "Ganhar Tempo", "description": "Quando uma das três últimas caixas de Vitalidade estiver preenchida e um aliado for ameaçado, gasta um ponto de Força de Vontade e uma ação instantânea para receber Armadura igual ao Vigor até o próximo turno." }
     ]
@@ -865,7 +865,7 @@
   "h-seemings:token-crucible": {
     "name": "Cadinho de Penhores",
     "prerequisites": "Oficina •, Especialização de Oficina (Criação de Penhores)",
-    "description": "Uma instalação dedicada no Vão reduz em um capítulo a criação de Penhores forjados na Sebe, com mínimo de um, e permanece protegida pelo Vão. Consome uma nova carga de combustível exótico a cada capítulo de operação."
+    "description": "Uma instalação dedicada no Vão reduz em uma sessão a criação de Penhores forjados na Sebe, com mínimo de um, e permanece protegida pelo Vão. Consome uma nova carga de combustível exótico a cada sessão de operação."
   },
   "h-seemings:told-you-so": {
     "name": "Eu Avisei",

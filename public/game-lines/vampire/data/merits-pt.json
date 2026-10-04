@@ -28,7 +28,7 @@
   },
   "cofd-de2:shahrayads-tale": {
     "name": "O Conto de Shahrayad",
-    "description": "Uma vez por capítulo, encanta até um número de ouvintes igual à pontuação no Mérito com Vitae e dependência de histórias; cada conto melhora as impressões dos ouvintes dependentes.",
+    "description": "Uma vez por sessão, encanta até um número de ouvintes igual à pontuação no Mérito com Vitae e dependência de histórias; cada conto melhora as impressões dos ouvintes dependentes.",
     "prerequisites": "Status de al-Amin •"
   },
   "vtr-gttn:adaptive-feeding": {
@@ -41,7 +41,7 @@
   },
   "vtr-gttn:den-of-vice": {
     "name": "Covil do Vício",
-    "description": "Um local que reflete o Vício do personagem restaura toda a Força de Vontade uma vez por capítulo, mas a recuperação comum por Vício nesse local traz o risco de Viciado."
+    "description": "Um local que reflete o Vício do personagem restaura toda a Força de Vontade uma vez por sessão, mas a recuperação comum por Vício nesse local traz o risco de Viciado."
   },
   "vtr-gttn:friends-in-low-places": {
     "name": "Amigos em Lugares Baixos",
@@ -110,7 +110,7 @@
   },
   "vtr-better-feared:corrupting-influence": {
     "name": "Influência Corruptora",
-    "description": "Uma vez por capítulo, fornece Aliados, Contatos, Mentor ou Lacaio com pontuação igual à deste Mérito dentro da esfera da Necrópole."
+    "description": "Uma vez por sessão, fornece Aliados, Contatos, Mentor ou Lacaio com pontuação igual à deste Mérito dentro da esfera da Necrópole."
   },
   "vtr-better-feared:dark-hub": {
     "name": "Central Sombria",
@@ -179,7 +179,7 @@
   },
   "vtr-better-feared:lost-found": {
     "name": "Achados e Perdidos",
-    "description": "Uma vez por capítulo, vasculha a Necrópole em busca de equipamento defeituoso de Disponibilidade dois ou menos."
+    "description": "Uma vez por sessão, vasculha a Necrópole em busca de equipamento defeituoso de Disponibilidade dois ou menos."
   },
   "vtr-better-feared:necropolis-arsenal": {
     "name": "Arsenal da Necrópole",
@@ -458,7 +458,7 @@
   },
   "vtr-gttn:hiding-place": {
     "name": "Esconderijo",
-    "description": "Mantenha um local seguro que não pode ser compartilhado; se ele for descoberto, substitua-o no início do próximo capítulo."
+    "description": "Mantenha um local seguro que não pode ser compartilhado; se ele for descoberto, substitua-o no início do próxima sessão."
   },
   "vtr-gttn:mobster": {
     "name": "Mafioso",
@@ -625,7 +625,7 @@
   },
   "vtr-false-gods:money-talks": {
     "name": "Dinheiro Fala Mais Alto",
-    "description": "Uma vez por capítulo, substitui Status de Membro por Recursos ao exibir riqueza ao alvo.",
+    "description": "Uma vez por sessão, substitui Status de Membro por Recursos ao exibir riqueza ao alvo.",
     "prerequisites": "Membro; Recursos •••"
   },
   "vtr-false-gods:old-money": {
@@ -902,7 +902,7 @@
   },
   "vtr-sin-again:fake-it-till-you-make-it": {
     "name": "Finja Até Conseguir",
-    "description": "Uma vez por capítulo, uma mentira confiante pode substituir a competência prática que falta.",
+    "description": "Uma vez por sessão, uma mentira confiante pode substituir a competência prática que falta.",
     "prerequisites": "Fanfarrão •; Subterfúgio ••"
   },
   "vtr-sin-again:friends-abroad": {
@@ -1001,7 +1001,7 @@
   },
   "vtr-sin-again:social-chameleon": {
     "name": "Camaleão Social",
-    "description": "Uma vez por capítulo, usar Habitué para entrar em um novo grupo recupera Força de Vontade.",
+    "description": "Uma vez por sessão, usar Habitué para entrar em um novo grupo recupera Força de Vontade.",
     "prerequisites": "Habitué; Empatia ••"
   },
   "vtr-sin-again:sunglasses-at-night": {
@@ -1395,7 +1395,7 @@
   },
   "vtr-wild-hunt:atrocious-advanced": {
     "name": "Atroz (Avançado)",
-    "description": "Uma vez por capítulo, transforma a ferocidade lendária de Atroz em uma manifestação Bestial mais forte.",
+    "description": "Uma vez por sessão, transforma a ferocidade lendária de Atroz em uma manifestação Bestial mais forte.",
     "prerequisites": "Atroz"
   },
   "vtr-wild-hunt:beast-meld": {
@@ -1575,7 +1575,7 @@
   },
   "vtr-wild-hunt:top-dog": {
     "name": "Maioral",
-    "description": "Leia a hierarquia de um grupo após observá-lo e, uma vez por capítulo, obtenha sucesso excepcional com três sucessos ao lidar com seus líderes.",
+    "description": "Leia a hierarquia de um grupo após observá-lo e, uma vez por sessão, obtenha sucesso excepcional com três sucessos ao lidar com seus líderes.",
     "prerequisites": "Empatia •• ou Intimidação ••"
   },
   "vtr-wild-hunt:unbound-form": {

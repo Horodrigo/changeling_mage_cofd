@@ -486,29 +486,29 @@
     "source": "Hurt Locker",
     "category": "Fighting Styles",
     "prerequisites": "Dexterity •••, Firearms ••, Trained Observer •",
-    "description": "A progressive style with 4 maneuvers.",
+    "description": "A bow fighting Style using Dexterity + Firearms for precision attacks at long range.",
     "page": 47,
     "levels": [
-      { "rating": 1, "name": "Arcing Fire", "description": "Double range." },
+      { "rating": 1, "name": "Arcing Fire", "description": "Double the range increments when using a bow." },
       {
         "rating": 2,
         "name": "Bullseye",
-        "description": "You may reduce your weapon rating for +1 and 8-Again on a called shot."
+        "description": "When attacking a specified target, reduce the bow’s damage rating to any value of 0 or greater to gain +1 and 8-again on the attack roll."
       },
       {
         "rating": 3,
         "name": "Out of Nowhere",
-        "description": "When you make an unnoticed ambush shot, roll Dexterity + Stealth to force a Wits + Composure roll, penalized by successes, to avoid being Shaken."
+        "description": "After attacking a target unaware of your presence, roll Dexterity + Stealth as a reflexive action. The target rolls Wits + Composure minus your successes; failure applies Shaken."
       },
       {
         "rating": 4,
         "name": "Death from Above",
-        "description": "Fire over unroofed cover to ignore a point of concealment for every 10 yards of added arc distance."
+        "description": "Reduce the target’s Concealment by one point for each 10 yards (9 meters) added to the shot’s range. Vertical protection still subtracts Durability from damage normally."
       }
     ],
     "priority": 1,
     "translatedName": "Bowmanship",
-    "descriptionEn": "A progressive style with 4 maneuvers."
+    "descriptionEn": "A bow fighting Style using Dexterity + Firearms for precision attacks at long range."
   },
   {
     "id": "hurt-locker:boxing",
@@ -1172,34 +1172,34 @@
     "sourceId": "hurt-locker",
     "source": "Hurt Locker",
     "category": "Physical Styles",
-    "prerequisites": "Wits •••, Animal Ken •••, Bonded Condition",
-    "description": "A progressive style with 4 maneuvers.",
+    "prerequisites": "Wits •••, Animal Ken •••, Bonded Condition with a predatory bird of at least Size 2",
+    "description": "A Style used with a trained predatory bird sharing the Bonded Condition. Unless stated otherwise, the bird acts independently on a simple command without costing the character an action. The character may spend Willpower to benefit the bird’s actions while present.",
     "page": 48,
     "levels": [
       {
         "rating": 1,
         "name": "Predator's Vigil",
-        "description": "Your raptor's presence inflicts Shaken on animals its Size or smaller, and lesser predators flee."
+        "description": "Creatures of the bird’s Size or smaller in its immediate vicinity suffer Shaken for actions other than hiding or fleeing the area."
       },
       {
         "rating": 2,
         "name": "Flyby",
-        "description": "Your bird contests Presence + Intimidation vs Resolve + Composure to inflict a -3 action penalty."
+        "description": "As the bird’s attack action, roll Presence + Intimidation against Resolve + Composure. Success imposes −3 on the opponent’s next action."
       },
       {
         "rating": 3,
         "name": "Retrieve Item",
-        "description": "Command your bird to bring you an object. Your bird can make the equivalent of an all-out attack to exceptionally Disarm an opponent."
+        "description": "On your turn, designate an object no larger than the bird within both your fields of vision. The bird retrieves it; an actively held object requires Disarm, with a successful roll automatically exceptional. This generally requires an all-out attack."
       },
       {
         "rating": 4,
         "name": "Rake the Eyes",
-        "description": "Your bird attacks at -1 to blind a target."
+        "description": "The bird attacks at −1; success applies the Blinded Tilt."
       }
     ],
     "priority": 1,
     "translatedName": "Falconry",
-    "descriptionEn": "A progressive style with 4 maneuvers."
+    "descriptionEn": "A Style used with a trained predatory bird sharing the Bonded Condition. Unless stated otherwise, the bird acts independently on a simple command without costing the character an action. The character may spend Willpower to benefit the bird’s actions while present."
   },
   {
     "id": "core-2ed:fame",
@@ -2152,7 +2152,7 @@
     "sourceId": "hurt-locker",
     "source": "Hurt Locker",
     "category": "Fighting Styles",
-    "prerequisites": "Dexterity •••, Athletics ••, Animal Ken •••",
+    "prerequisites": "Dexterity •••, Athletics ••, Animal Ken ••",
     "description": "A progressive style with 4 maneuvers.",
     "page": 51,
     "levels": [
@@ -2681,7 +2681,7 @@
     "sourceId": "hurt-locker",
     "source": "Hurt Locker",
     "category": "Physical",
-    "prerequisites": "Willpower ••••••",
+    "prerequisites": "Willpower ••••••+",
     "description": "Spend Willpower to preserve your last Health point, upgrading preexisting damage instead.",
     "page": 43,
     "priority": 1,

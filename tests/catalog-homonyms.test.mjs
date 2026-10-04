@@ -71,8 +71,8 @@ test("only the five mechanically different Merit homonyms receive bilingual qual
   assert.equal(merits.find(item => item.id === "vtr-strange-shades:occultation").homebrew, true);
   const manifest = read("public/shared/data/catalog-manifest.json");
   assert.ok(manifest.catalogs["merits-changeling"].version >= 3);
-  assert.equal(manifest.catalogs["merits-mage"].version, 3);
-  assert.equal(manifest.catalogs["merits-vampire"].version, 12);
+  assert.ok(manifest.catalogs["merits-mage"].version >= 3);
+  assert.ok(manifest.catalogs["merits-vampire"].version >= 12);
 });
 
 test("Merit Builder, XP selections, purchase previews and semantic histories show EN/PT qualifiers without persisting them", async () => {

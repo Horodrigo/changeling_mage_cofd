@@ -50,7 +50,7 @@
   },
   "core-2ed:common-sense": {
     "name": "Bom Senso",
-    "description": "Uma vez por capítulo, realiza um teste de Raciocínio + Compostura como ação instantânea para fazer ao Narrador uma pergunta sobre riscos e escolhas."
+    "description": "Uma vez por sessão, realiza um teste de Raciocínio + Compostura como ação instantânea para fazer ao Narrador uma pergunta sobre riscos e escolhas."
   },
   "core-2ed:contacts": {
     "name": "Contatos",
@@ -487,7 +487,7 @@
   "core-2ed:unseen-sense": {
     "name": "Sentido do Invisível",
     "prerequisites": "Somente mortais",
-    "description": "Escolhe um fenômeno sobrenatural e um sinal sensorial. Uma vez por capítulo, aceita Assombrado para localizar a fonte próxima, a menos que magia apropriada a oculte."
+    "description": "Escolhe um fenômeno sobrenatural e um sinal sensorial. Uma vez por sessão, aceita Assombrado para localizar a fonte próxima, a menos que magia apropriada a oculte."
   },
   "core-2ed:untouchable": {
     "name": "Intocável",
@@ -1190,7 +1190,7 @@
   },
   "hurt-locker:punch-drunk": {
     "name": "Grogue",
-    "prerequisites": "Força de Vontade ••••••",
+    "prerequisites": "Força de Vontade •••••• ou mais",
     "description": "Gasta Força de Vontade para preservar o último ponto de Vitalidade, agravando dano preexistente em vez disso."
   },
   "hurt-locker:retain-weapon": {
@@ -1261,7 +1261,7 @@
   "hurt-locker:vengeful-soul": {
     "name": "Alma Vingativa",
     "prerequisites": "Somente mortais",
-    "description": "Após testemunhar ou descobrir rapidamente a morte de um ente querido, recebe 8-novamente a cada capítulo em um número de ações até a Integridade da vítima para encontrar ou punir os responsáveis, até que a vingança seja satisfeita."
+    "description": "Após testemunhar ou descobrir rapidamente a morte de um ente querido, recebe 8-novamente a cada sessão em um número de ações até a Integridade da vítima para encontrar ou punir os responsáveis, até que a vingança seja satisfeita."
   },
   "hurt-locker:aggressive-driving": {
     "name": "Direção Agressiva",
@@ -1342,27 +1342,27 @@
   "hurt-locker:bowmanship": {
     "name": "Tiro com Arco",
     "prerequisites": "Destreza •••, Armas de Fogo ••, Observador Treinado •",
-    "description": "Um Estilo progressivo com quatro manobras.",
+    "description": "Um Estilo de combate com arco que usa Destreza + Armas de Fogo para ataques precisos a longa distância.",
     "levels": [
       {
         "rating": 1,
         "name": "Tiro em Arco",
-        "description": "Dobra o alcance."
+        "description": "Dobra os incrementos de alcance ao usar um arco."
       },
       {
         "rating": 2,
         "name": "Na Mosca",
-        "description": "Pode reduzir a pontuação da arma para receber +1 e 8-novamente em um disparo contra uma parte específica do alvo."
+        "description": "Ao atacar uma parte específica do alvo, reduz a pontuação de dano do arco para qualquer valor de 0 ou mais para receber +1 e 8-novamente no teste de ataque."
       },
       {
         "rating": 3,
         "name": "Do Nada",
-        "description": "Ao realizar um disparo de emboscada sem ser notado, testa Destreza + Furtividade para forçar um teste de Raciocínio + Compostura, penalizado pelos sucessos, para evitar Abalado."
+        "description": "Após atacar um alvo que desconhece sua presença, testa Destreza + Furtividade como ação reflexiva. O alvo testa Raciocínio + Compostura menos seus sucessos; uma falha impõe Abalado."
       },
       {
         "rating": 4,
         "name": "Morte Vinda de Cima",
-        "description": "Dispara por cima de cobertura sem teto para ignorar um ponto de ocultação a cada 10 jardas de distância adicional no arco do disparo."
+        "description": "Reduz a Ocultação do alvo em um ponto para cada 10 jardas (9 metros) adicionadas ao alcance do disparo. Proteção vertical ainda subtrai a Durabilidade do dano normalmente."
       }
     ]
   },
@@ -1471,28 +1471,28 @@
   },
   "hurt-locker:falconry": {
     "name": "Falcoaria",
-    "prerequisites": "Raciocínio •••, Trato com Animais •••, Condição Vinculado",
-    "description": "Um Estilo progressivo com quatro manobras.",
+    "prerequisites": "Raciocínio •••, Empatia com Animais •••, Condição Vinculado com uma ave de rapina de Tamanho 2 ou maior",
+    "description": "Um Estilo usado com uma ave de rapina treinada que compartilha a Condição Vinculado. Salvo indicação em contrário, a ave age de forma independente com um comando simples, sem gastar uma ação do personagem. O personagem pode gastar Força de Vontade para beneficiar as ações da ave em sua presença.",
     "levels": [
       {
         "rating": 1,
         "name": "Vigília do Predador",
-        "description": "A presença da ave de rapina impõe Abalado a animais de Tamanho igual ou menor que o dela, e predadores inferiores fogem."
+        "description": "Criaturas de Tamanho igual ou menor que o da ave em sua proximidade imediata sofrem Abalado em ações que não sejam se esconder ou fugir da área."
       },
       {
         "rating": 2,
         "name": "Rasante",
-        "description": "A ave disputa Presença + Intimidação contra Perseverança + Compostura para impor uma penalidade de −3 às ações."
+        "description": "Como ação de ataque da ave, testa Presença + Intimidação contra Perseverança + Compostura. Um sucesso impõe −3 à próxima ação do oponente."
       },
       {
         "rating": 3,
         "name": "Buscar Item",
-        "description": "Ordena à ave que traga um objeto. Ela pode realizar o equivalente a um Ataque Total para Desarmar um oponente com um sucesso excepcional."
+        "description": "No seu turno, designa um objeto de Tamanho igual ou menor que o da ave no campo de visão de ambos. A ave o recupera; um objeto segurado ativamente exige Desarmar, com um teste bem-sucedido automaticamente excepcional. Isso geralmente exige um Ataque Total."
       },
       {
         "rating": 4,
         "name": "Arranhar os Olhos",
-        "description": "A ave ataca com −1 para cegar um alvo."
+        "description": "A ave ataca com −1; um sucesso impõe a Complicação Cegueira."
       }
     ]
   },
@@ -1584,7 +1584,7 @@
   },
   "hurt-locker:mounted-combat": {
     "name": "Combate Montado",
-    "prerequisites": "Destreza •••, Atletismo ••, Trato com Animais •••",
+    "prerequisites": "Destreza •••, Atletismo ••, Empatia com Animais ••",
     "description": "Um Estilo progressivo com quatro manobras.",
     "levels": [
       {

@@ -287,7 +287,7 @@ test("Changeling structure options localize presentation without altering canoni
         for (const key of [item.nameKey ?? item.labelKey, item.descriptionKey ?? item.effectKey]) assert.doesNotMatch(translate(locale, key), /missing translation/);
       }
       assert.equal(translate("en-US", item.nameKey ?? item.labelKey), item.name ?? item.label);
-      assert.equal(translate("en-US", item.descriptionKey ?? item.effectKey), item.description ?? item.effect);
+      assert.equal(translate("en-US", item.descriptionKey ?? item.effectKey), (item.description ?? item.effect).replace(/\bchapter\b/g, "session"));
     }
   }
   const { expandedConfigurationLines } = await vite.ssrLoadModule("/game-lines/changeling/sheet-merit-configurations.ts");

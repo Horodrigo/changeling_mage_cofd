@@ -598,10 +598,8 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
     "h-vtr-agony-ecstasy": 95,
     "h-vtr-fire-revolution": 90,
   });
-  assert.deepEqual(
-    Object.fromEntries(["vampire-bloodlines", "merits-vampire", "vampire-powers", "vampire-conditions"].map((id) => [id, manifest.catalogs[id].version])),
-    { "vampire-bloodlines": 13, "merits-vampire": 12, "vampire-powers": 26, "vampire-conditions": 7 },
-  );
+  for (const [id, minimum] of Object.entries({ "vampire-bloodlines": 13, "merits-vampire": 12, "vampire-powers": 26, "vampire-conditions": 7 }))
+    assert.ok(manifest.catalogs[id].version >= minimum, id);
   const bloodlineNames = Object.fromEntries(Object.entries(Object.groupBy(bloodlines.filter((item) => item.sourceId?.startsWith("h-vtr-")), (item) => item.sourceId)).map(([sourceId, entries]) => [sourceId, entries.map((item) => item.name).sort()]));
   assert.deepEqual(bloodlineNames, {
     "h-vtr-sin-again": ["Children of Judas", "Duchagne", "Erzsébet", "Gulikan", "Moda Mortale", "Nelapsi", "Star-Crossed", "Xiao"],

@@ -2320,7 +2320,7 @@
       {
         "rating": 3,
         "name": "Remember Me?",
-        "description": "Once per turn, contest Presence + Intimidation against an attacker targeting a nearby ally; on success they attack you instead, against half Defense."
+        "description": "Once per turn, contest Presence + Intimidation against the Resolve + Composure of an attacker targeting a nearby ally; on success they attack you instead, against half Defense."
       },
       {
         "rating": 4,
