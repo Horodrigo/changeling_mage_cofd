@@ -909,5 +909,104 @@
     "name": "Amigos no Exterior",
     "description": "Usa o conhecimento da Cacofonia para encontrar contatos úteis entre os Membros locais durante viagens.",
     "prerequisites": "Conhecimento da Cacofonia •"
+  },
+  "vtr-sotc:information-network": {
+    "name": "Rede de Informações",
+    "description": "Trata Contatos pertinentes como Especializações em Perícias ao agir com base nas informações que fornecem.",
+    "prerequisites": "Contatos •; Status no Invictus ••"
+  },
+  "vtr-sotc:moderator": {
+    "name": "Moderador",
+    "description": "Uma vez por história, usa sua pontuação como Aliados, Contatos ou Biblioteca à distância, por meio de uma comunidade on-line.",
+    "prerequisites": "Computação •••; Contatos (On-line) •; Status no Invictus ••"
+  },
+  "vtr-sotc:one-foot-in-the-door": {
+    "name": "Um Pé na Porta",
+    "description": "Alguém de fora recebe reconhecimento limitado no Invictus e um favor, convertendo o Mérito em Status ao ingressar formalmente.",
+    "prerequisites": "Não ser membro do Invictus"
+  },
+  "vtr-sotc:noblesse-oblige": {
+    "name": "Nobreza Obriga",
+    "description": "Um cargo político formal pode ocupar o lugar de um Touchstone pessoal.",
+    "prerequisites": "Status na Cidade •••"
+  },
+  "vtr-sotc:prestigious-sire": {
+    "name": "Senhor de Prestígio",
+    "description": "Usa o Status na Cidade, no Clã ou na Coalizão de um senhor renomado em situações sociais, arriscando perder o Mérito em caso de falha.",
+    "prerequisites": "Mentor ••••"
+  },
+  "vtr-sotc:social-engineering": {
+    "name": "Engenharia Social",
+    "description": "Após uma hora de preparação, Manipulação + Investigação pode violar a segurança de um Local Seguro, suprimir um Mérito Social, alterar ações Sociais ou revelar uma fraqueza.",
+    "prerequisites": "Investigação ••; Manipulação •••; Subterfúgio ••; Raciocínio •••"
+  },
+  "vtr-sotc:tech-savvy": {
+    "name": "Conhecimento Tecnológico",
+    "description": "Com uma hora de preparação, melhora o bônus de equipamento, a Estrutura ou a Durabilidade de um item tecnológico e concede 9-novamente.",
+    "prerequisites": "Computação ••; Ofícios ••; Ciência •; Recursos •"
+  },
+  "vtr-sotc:travel-agent": {
+    "name": "Agente de Viagens",
+    "description": "Oculta viagens entre cidades, melhora os presentes recebidos dos anfitriões e pode fornecer Aliados ou Contatos temporários em uma nova cidade.",
+    "prerequisites": "Contatos (Entre Cidades) •; Status no Invictus ••"
+  },
+  "vtr-sotc:oath-of-abstinence": {
+    "name": "Juramento de Abstinência",
+    "description": "Quem presta o juramento renuncia à alimentação nos termos declarados e evita o custo normal de Vitae para despertar enquanto mantiver a abstinência.",
+    "prerequisites": "Status no Invictus •"
+  },
+  "vtr-sotc:handshake-deal": {
+    "name": "Juramento do Aperto de Mão",
+    "description": "Duas partes juram um serviço ou uma proibição e oferecem um Mérito Social como garantia, que é transferido em caso de violação.",
+    "prerequisites": "Pelo menos uma das partes tem Status no Invictus"
+  },
+  "vtr-sin-again:good-in-bed": {
+    "name": "Bom de Cama",
+    "description": "Adiciona dois dados ao discernir os desejos românticos ou sexuais de outra pessoa.",
+    "prerequisites": "Empatia ••"
+  },
+  "vtr-sin-again:kissing-cousins": {
+    "name": "Parentes Íntimos",
+    "description": "Uma vez por história, recorre a uma família Daeva para obter três pontos de Aliados, Mentor ou Recursos.",
+    "prerequisites": "Daeva"
+  },
+  "vtr-sin-again:perfect-wingman": {
+    "name": "Cúmplice Perfeito",
+    "description": "Melhora o teste de trabalho em equipe Social do participante principal quando o personagem contribui com sucesso.",
+    "prerequisites": "Socialização ••"
+  },
+  "vtr-sin-again:quality-over-quantity": {
+    "name": "Qualidade Acima da Quantidade",
+    "description": "Uma vez por noite, alimentar-se de alguém Dependente concede Inspirado, mas torna essa pessoa um alvo prioritário no frenesi.",
+    "prerequisites": "Daeva; não possuir Quantidade Acima da Qualidade"
+  },
+  "vtr-sin-again:quantity-over-quality": {
+    "name": "Quantidade Acima da Qualidade",
+    "description": "Alimentar-se profundamente de várias fontes concede Inspirado, mas piora a resistência ao frenesi de fome.",
+    "prerequisites": "Daeva; não possuir Qualidade Acima da Quantidade"
+  },
+  "vtr-sin-again:resting-bitch-face": {
+    "name": "Cara de Poucos Amigos",
+    "description": "Melhora a Intimidação e a ocultação de emoções diante de desconhecidos, ao custo das primeiras impressões."
+  },
+  "vtr-sin-again:single-strike-individual": {
+    "name": "Atacante de Golpe Único",
+    "description": "Adiciona metade da Iniciativa como dados de bônus a um ataque inicial contra um alvo que ainda não agiu.",
+    "prerequisites": "Briga, Armas de Fogo ou Armas Brancas •••"
+  },
+  "vtr-sin-again:social-butterfly": {
+    "name": "Espírito Sociável",
+    "description": "Uma vez por noite, obtém um ponto temporário de Status em um grupo que não seja hostil.",
+    "prerequisites": "Fama •; Socialização ••; nenhum Mérito Status acima de ••"
+  },
+  "vtr-sin-again:social-chameleon": {
+    "name": "Camaleão Social",
+    "description": "Uma vez por capítulo, usar Habitué para entrar em um novo grupo recupera Força de Vontade.",
+    "prerequisites": "Habitué; Empatia ••"
+  },
+  "vtr-sin-again:sunglasses-at-night": {
+    "name": "Óculos Escuros à Noite",
+    "description": "Melhora os testes de Desapego por ferir mortais desconhecidos, mas faz aflorar a Maldição do Clã Daeva.",
+    "prerequisites": "Daeva; Perseverança •••; Humanidade 6 ou menor"
   }
 }

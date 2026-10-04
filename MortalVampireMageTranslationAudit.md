@@ -24,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
-| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 176 apresentações completas por ID (88 oficiais, 88 Homebrew), 49 níveis; 227 registros restantes, incluindo revisão de 15 descrições PT preexistentes |
+| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 196 apresentações completas por ID (98 oficiais, 98 Homebrew), 49 níveis; 207 registros restantes, incluindo revisão de 15 descrições PT preexistentes |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
@@ -182,10 +182,10 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 
 ## Verificação atual
 
-- **176/403** Méritos Vampire com apresentação completa por ID, 88 oficiais e 88 Homebrew; 49 níveis localizados. O catálogo canônico de 403 Méritos permanece intacto; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
+- **196/403** Méritos Vampire com apresentação completa por ID, 98 oficiais e 98 Homebrew; 49 níveis localizados. O catálogo canônico de 403 Méritos permanece intacto; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
 - **56 Bloodlines** com PT completo, incluindo Desventurados. IDs, compras, XP, recibos e textos autorais não são reescritos pela troca de idioma.
-- Manifesto `catalogVersion` **66**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire-pt` **8** e `vampire-bloodlines` **13**.
-- Último lote: 20 Méritos Vampire de Secrets of the Covenants e Sin Again (dez oficiais e dez Homebrew), incluindo 26 níveis de Estilos e Kingjan. **40/40** testes de integração EN/PT/EN, identidades, catálogos e arquitetura, lint e build aprovados. Nenhuma mudança de código TypeScript neste lote; o gate anterior segue válido. Referências reutilizam Desventurados, Iniciação em Culto dos Mistérios, Majestade, Pesadelo, Resoluto e Complicações. Courtoisie, Kingjan, Xiao, Mandragora, Electrum e os nomes próprios Athena, Enyo e Eris permanecem preservados.
+- Manifesto `catalogVersion` **67**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire-pt` **9** e `vampire-bloodlines` **13**.
+- Último lote: 20 Méritos Vampire de Secrets of the Covenants e Sin Again (dez oficiais e dez Homebrew). **40/40** testes de integração EN/PT/EN, identidades, catálogos e arquitetura, mais **2/2** de confirmação após uniformizar Computação; lint e build aprovados. Nenhuma mudança de código TypeScript neste lote; o gate anterior segue válido. Nobreza Obriga recebe o qualificador Membro, distinto de Changeling, sem alterar IDs ou efeitos. Referências reutilizam Habitué, Biblioteca, Dependente, Inspirado e Desapego; as exclusões entre Qualidade Acima da Quantidade e Quantidade Acima da Qualidade mantêm o canônico para os parsers.
 - Integração anterior de Especialização Interdisciplinar: **573/573** testes da suíte completa, **8/8** de confirmação final do vínculo, lint, TypeScript e build aprovados, incluindo preservação de bancos/recibos e concessões antigas com XP.
 - As demais correções aprovadas têm estado de aplicação na tabela de decisões respondidas; os catálogos Vampire/Mage e os pontos sem resposta permanecem separados no backlog.
 - Sem smoke de navegador. A suíte completa de encerramento será executada após concluir todo o escopo; gates proporcionais por lote.
