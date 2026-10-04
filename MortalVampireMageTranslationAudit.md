@@ -1,6 +1,6 @@
 # Auditoria de tradução — Mortal, Vampire e Mage
 
-Atualização: **2026-10-04**. **Meta ativa:** prioridade 0 e localização das etapas 1–2 implementadas e verificadas; novas correções aprovadas de Méritos Core em execução; etapa 3 em execução; etapa 4 pendente.
+Atualização: **2026-10-04**. **Meta ativa:** prioridade 0, localização das etapas 1–2 e correções aprovadas de Méritos Core implementadas e verificadas; etapa 3 em execução; etapa 4 pendente.
 
 ## Escopo e ordem
 
@@ -24,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
-| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 96 apresentações completas por ID (48 oficiais, 48 Homebrew), três níveis; 307 registros restantes, incluindo revisão de 15 descrições PT preexistentes |
+| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 116 apresentações completas por ID (58 oficiais, 58 Homebrew), 13 níveis; 287 registros restantes, incluindo revisão de 15 descrições PT preexistentes |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
@@ -141,7 +141,7 @@ Estes pontos **já receberam resposta**. As mudanças abaixo ainda precisam de a
 | Mystery Cult Influence | Fonte: **Mage: The Awakening p. 103**. | Mage 2e p. 103 revisado visualmente. Fonte e página do registro compartilhado corrigidas; o ID `core-2ed:mystery-cult-influence`, seu `sourceId` histórico, classificação, requisitos e efeitos permanecem intactos. O registro exclusivo de Mage já coincide com a fonte. 72/72 testes de identidades/concessões/Legacies/catálogos e build aprovados. |
 | Nighthawks — Nameless and Accursed p. 29 | **Prime 2 e Larceny 3**. | Revisão visual confirma o segundo Aperfeiçoamento, Under Cover of Night: o catálogo já exige ambos nos requisitos estruturados. Conservado. A iniciação/primeiro Aperfeiçoamento mantém Larceny 2, conforme a mesma página; a decisão sobre o segundo não altera a entrada. A apresentação PT completa continua na etapa Mage. |
 | Tyrian Archons — Nameless and Accursed p. 35 | **OK** para o comportamento auditado de Profane Tool (Scepters). | Conservar o requisito estruturado atual; nenhuma correção de configuração solicitada. |
-| Vardyvle / Penumbrae | **False Memory(ies) é a mesma Condition**, VtR p. 303. | Uniformizar a apresentação/referência à Condition canônica de Vampire sem criar outro ID ou fundir Conditions de outras linhas. |
+| Vardyvle / Penumbrae | **False Memory(ies) é a mesma Condition**, VtR p. 303. | Vardyvle agora usa **False Memories / Falsas Memórias**, como Penumbrae, referindo-se à Condition existente `false-memories`. Apenas a referência textual foi uniformizada: IDs, duração e efeito preservados. Integração EN/PT/EN de todas as Bloodlines aprovada; a localização completa do catálogo Vampire de Conditions continua na etapa 3. |
 | Area of Expertise — Core p. 44 | **Resolve 2**. | Requisito já coincide com o catálogo. Não acrescentar requisito de Especialização por inferência. |
 | Armed Defense — Core pp. 60–61 | **OK** para os resumos auditados. | Conservar os resumos atuais; limites omitidos não se tornam tarefa de reconstrução. |
 | Advanced Library — Mage p. 105 | **Safe Place igual ou maior** que Advanced Library. | Comparação implementada no requisito relativo compartilhado: uma instância canônica de Local Seguro com pontuação igual ou superior à compra; não somar instâncias. Biblioteca 3 continua obrigatória. EN/PT explicitam o limite; Mage 2e p. 105 revisado visualmente. 42/42 testes dirigidos, 36/36 de catálogos/arquitetura, lint, TypeScript e build aprovados. |
@@ -182,10 +182,10 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 
 ## Verificação atual
 
-- **96/403** Méritos Vampire com apresentação completa por ID, 48 oficiais e 48 Homebrew; três níveis localizados. O catálogo canônico de 403 Méritos permanece intacto; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
+- **116/403** Méritos Vampire com apresentação completa por ID, 58 oficiais e 58 Homebrew; 13 níveis localizados. O catálogo canônico de 403 Méritos permanece intacto; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
 - **56 Bloodlines** com PT completo, incluindo Desventurados. IDs, compras, XP, recibos e textos autorais não são reescritos pela troca de idioma.
-- Manifesto `catalogVersion` **62**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire-pt` **4** e `vampire-bloodlines` **12**.
-- Último lote: fonte de Mystery Cult Influence corrigida para Mage p. 103, preservando as identidades históricas; Nighthawks conferido e conservado conforme a decisão sobre o segundo Aperfeiçoamento. **72/72** testes de identidades/concessões/Legacies/catálogos e build aprovados. Lint/TypeScript do lote anterior seguem válidos: nenhuma mudança de código neste lote.
+- Manifesto `catalogVersion` **63**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire-pt` **5** e `vampire-bloodlines` **13**.
+- Último lote: 20 Méritos Vampire (dez oficiais e dez Homebrew), incluindo dez níveis de Psicognose/Alquimia do Sangue; referência de Vardyvle uniformizada conforme a decisão recebida. **59/59** testes de integração EN/PT/EN, identidades, referências e catálogos, lint e build aprovados. Nenhuma mudança de código TypeScript neste lote; o gate anterior segue válido. Nomes de poderes reutilizam a apresentação vigente; fórmulas latinas preservadas. Esconderijo conserva capítulo, sem estender a equivalência aprovada para Recursos/Mentor/Status.
 - Integração anterior de Especialização Interdisciplinar: **573/573** testes da suíte completa, **8/8** de confirmação final do vínculo, lint, TypeScript e build aprovados, incluindo preservação de bancos/recibos e concessões antigas com XP.
 - As demais correções aprovadas têm estado de aplicação na tabela de decisões respondidas; os catálogos Vampire/Mage e os pontos sem resposta permanecem separados no backlog.
 - Sem smoke de navegador. A suíte completa de encerramento será executada após concluir todo o escopo; gates proporcionais por lote.

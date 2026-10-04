@@ -14,7 +14,7 @@ const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").r
 
 test("Vampire Portuguese Merits cover applicable fields, level identities and numeric limits in both official and Homebrew records", () => {
   assert.equal(canonical.length, 403);
-  assert.equal(Object.keys(portuguese).length, 96);
+  assert.equal(Object.keys(portuguese).length, 116);
   for (const [id, presented] of Object.entries(portuguese)) {
     const definition = canonical.find(item => item.id === id);
     assert.ok(definition, id);
@@ -31,8 +31,8 @@ test("Vampire Portuguese Merits cover applicable fields, level identities and nu
     }
   }
   const localized = canonical.filter(item => portuguese[item.id]);
-  assert.equal(localized.filter(item => item.homebrew).length, 48);
-  assert.equal(localized.filter(item => !item.homebrew).length, 48);
+  assert.equal(localized.filter(item => item.homebrew).length, 58);
+  assert.equal(localized.filter(item => !item.homebrew).length, 58);
 });
 
 test("Vampire Merit snapshots and Builder/XP/Sheet/Homebrew render EN/PT/EN without rewriting identities, history or authored text", async () => {
@@ -86,6 +86,7 @@ test("Vampire Merit snapshots and Builder/XP/Sheet/Homebrew render EN/PT/EN with
       const homebrew = render(vampireHomebrew.Component, { catalogs });
       for (const definition of selected) {
         const presented = meritPresentation(definition, locale);
+        const owned = character.merits.find(item => item.definitionId === definition.id);
         for (const html of [creation, experience, summary, expanded]) {
           assert.ok(html.includes(escape(presented.name)), `${locale}: ${definition.id} name`);
           assert.ok(html.includes(escape(presented.description)), `${locale}: ${definition.id} description`);
@@ -94,9 +95,8 @@ test("Vampire Merit snapshots and Builder/XP/Sheet/Homebrew render EN/PT/EN with
         if (definition.homebrew) assert.ok(homebrew.includes(escape(presented.description)), `${locale}: ${definition.id} Homebrew`);
         for (const level of presented.levels ?? []) {
           for (const html of [creation, experience]) assert.ok(html.includes(escape(level.description)), `${locale}: ${definition.id} level ${level.rating}`);
-          assert.equal(expanded.includes(escape(level.description)), level.rating <= 2);
+          assert.equal(expanded.includes(escape(level.description)), level.rating <= owned.dots);
         }
-        const owned = character.merits.find(item => item.definitionId === definition.id);
         const entry = { id: `receipt-${owned.instanceId}`, cost: 1, createdAt: "2026-10-04", rating: owned.dots, label: "Original receipt label", undo: { kind: "merit", definitionId: owned.definitionId, instanceId: owned.instanceId, name: definition.name, dots: 1 } };
         const entryBefore = JSON.stringify(entry);
         assert.equal(vampireExperienceLabel(entry, character, catalog, emptyPowers, locale), `${presented.name} ${owned.dots}`);

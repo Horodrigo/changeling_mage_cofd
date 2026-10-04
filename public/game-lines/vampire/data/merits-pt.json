@@ -455,5 +455,108 @@
   "vtr-false-gods:don-t-flinch": {
     "name": "Não Vacile",
     "description": "Mantém a compostura diante de violência súbita e nega ao agressor a satisfação de perceber medo."
+  },
+  "vtr-gttn:hiding-place": {
+    "name": "Esconderijo",
+    "description": "Mantenha um local seguro que não pode ser compartilhado; se ele for descoberto, substitua-o no início do próximo capítulo."
+  },
+  "vtr-gttn:mobster": {
+    "name": "Mafioso",
+    "description": "Concede acesso ao território controlado por um grupo de crime organizado, mas torna o personagem um alvo dos rivais desse grupo."
+  },
+  "vtr-gttn:moonlighting": {
+    "name": "Bico",
+    "description": "Uma vez por história, obtenha Recursos •• com um negócio paralelo ou uma atividade ilícita."
+  },
+  "vtr-gttn:unassuming-guise": {
+    "name": "Aparência Inofensiva",
+    "description": "Receba +3 ao se apresentar como inofensivo, comum ou humano."
+  },
+  "vtr-gttn:tutelage": {
+    "name": "Tutoria",
+    "description": "Encontre um professor ou aluno uma vez por história; o aluno recebe um ponto de Experiência destinado à lição e fica devendo um favor, enquanto o professor recebe um desconto de um ponto de Experiência e herda problemas sociais."
+  },
+  "vtr-gttn:wicked-jaws": {
+    "name": "Mandíbulas Cruéis",
+    "description": "Uma mordida violenta para se alimentar torna-se um ataque de 2L, ou acrescenta +1L se outro efeito já aumentar o dano da mordida."
+  },
+  "vtr-nhsb:psychognosis": {
+    "name": "Psicognose",
+    "description": "Técnicas dos Icelus alimentadas por Força de Vontade e sonhos roubados de alguém adormecido sob hipnose.",
+    "prerequisites": "Icelus; Especialização em Medicina (Psicologia)",
+    "levels": [
+      { "rating": 1, "name": "Precognição Hipnótica", "description": "Dominação ••; Hipnotizar ou Édito de Ferro também concede informações como Visões Oníricas." },
+      { "rating": 2, "name": "Sonho Diagnóstico", "description": "Auspícios ••; os sucessos de Arrepio da Besta tornam-se excepcionais, e Vitae permite obter perguntas adicionais de Percepção Sobrenatural." },
+      { "rating": 3, "name": "Presciência em Vigília", "description": "Auspícios •••; Toque do Espírito tem sucesso automático, e Força de Vontade permite obter perguntas adicionais." },
+      { "rating": 4, "name": "Chantagem de Morfeu", "description": "Dominação ••••; gaste Vitae adicional para reduzir pela metade a resistência ou a disputa contra Dominação." },
+      { "rating": 5, "name": "Mentes Compartilhadas", "description": "Auspícios ••••; gaste Vitae adicional em Abrir a Mente para compartilhar os sentidos do alvo." }
+    ]
+  },
+  "vtr-nhsb:denouncement": {
+    "name": "Denúncia",
+    "description": "Gaste Força de Vontade em um discurso acusatório e vença uma ação Social disputada para isolar a vítima por meio de um escândalo.",
+    "prerequisites": "Os Parlamentares"
+  },
+  "vtr-nhsb:recruitment-tactics": {
+    "name": "Táticas de Recrutamento",
+    "description": "Uma vez por história, acrescente Potência de Sangue como sucessos adicionais à persuasão por argumentação; depois, sofra Competitivo ou Obsessão.",
+    "prerequisites": "Os Parlamentares"
+  },
+  "vtr-nhsb:blood-chymistry": {
+    "name": "Alquimia do Sangue",
+    "description": "Prepare misturas à base de Vitae com Inteligência + Ciência − pontuação do procedimento; cada preparação consome um ponto de Vitae.",
+    "prerequisites": "Recursos ••; Local Seguro •; Especialização em Ciência (Alquimia)",
+    "levels": [
+      { "rating": 1, "name": "Cinábrio", "description": "Cure dano letal e depois dano contundente, até a Potência de Sangue do doador de Vitae." },
+      { "rating": 2, "name": "Colostro", "description": "Conceda 8-novamente a duas Perícias Físicas por um número de horas igual à Potência de Sangue do doador." },
+      { "rating": 3, "name": "Ens Primum", "description": "Permita que Intensidade Física aprimore um Atributo Mental ou Social por um número de noites igual à Potência de Sangue do doador." },
+      { "rating": 4, "name": "Ens Veneris", "description": "Aumente a Potência de Sangue em um ponto por um número de noites igual à Potência de Sangue do doador." },
+      { "rating": 5, "name": "Terra Figulina", "description": "Gaste Força de Vontade e sofra dano agravado para criar um subordinado durante a noite; o procedimento pode ser repetido por um número de semanas igual à Potência de Sangue do doador." }
+    ]
+  },
+  "vtr-false-gods:ephor": {
+    "name": "Éforo",
+    "description": "Representa a autoridade reconhecida e o acesso de um conselheiro Ventrue dentro de uma dinastia."
+  },
+  "vtr-false-gods:eternal-predator": {
+    "name": "Predador Eterno",
+    "description": "Preserva um método de caça praticado ao longo de diferentes eras e sociedades mortais desconhecidas.",
+    "prerequisites": "Ventrue ou Animalismo •"
+  },
+  "vtr-false-gods:favored-servant": {
+    "name": "Servo Favorecido",
+    "description": "Distingue um lacaio escolhido como instrumento de confiança do vampiro e melhora seus serviços sob pressão.",
+    "prerequisites": "Lacaio"
+  },
+  "vtr-false-gods:first-rat-off-the-ship": {
+    "name": "Primeiro Rato a Abandonar o Navio",
+    "description": "Reconhece um empreendimento em declínio a tempo de preservar Status ou recursos ao abandoná-lo."
+  },
+  "vtr-false-gods:good-breeding": {
+    "name": "Bom Berço",
+    "description": "Uma linhagem prestigiosa melhora as primeiras impressões entre os Membros que valorizam a ancestralidade."
+  },
+  "vtr-false-gods:inherited-resistance": {
+    "name": "Resistência Herdada",
+    "description": "Um Ventrue treinado por sua linhagem resiste à compulsão mental e social de sangue igual ou mais fraco."
+  },
+  "vtr-false-gods:invisible-hand": {
+    "name": "Mão Invisível",
+    "description": "Um estilo de três pontos para infiltrar e redirecionar discretamente uma organização mortal.",
+    "prerequisites": "Manipulação ••; Subterfúgio •••; no máximo Status • na organização"
+  },
+  "vtr-false-gods:kennel-master": {
+    "name": "Mestre do Canil",
+    "description": "Coordena vários servos animais como uma extensão disciplinada da vontade do vampiro.",
+    "prerequisites": "Animalismo ••"
+  },
+  "vtr-false-gods:lingering-motivation": {
+    "name": "Motivação Persistente",
+    "description": "Torna persistente uma Diretiva implantada por um ancião e recompensa as ações que a obedecem."
+  },
+  "vtr-false-gods:lordly-palate": {
+    "name": "Paladar Senhorial",
+    "description": "Acrescenta metade da Potência de Sangue aos testes de Um Gosto de Sangue.",
+    "prerequisites": "Paladar Distinto"
   }
 }
