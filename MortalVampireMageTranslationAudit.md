@@ -23,7 +23,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
-| Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 48 Bloodlines com textos PT (14 oficiais, 34 Homebrew), oito restantes; caption Star-Crossed em consulta |
+| Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); caption Star-Crossed em consulta |
 | V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 353 descrições EN; revisar também os demais campos das 50 descrições já PT |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
@@ -36,7 +36,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 
 ### Vampire — detalhes de execução
 
-Catálogos em `public/game-lines/vampire/data/`. Bloodlines possuem uma visão de leitura própria usada na página, prévia de ingresso, Maldição da ficha e Homebrew. Ingresso, concessão e remoção continuam recebendo definições canônicas. Os oito registros sem `presentationPt` são o próximo lote.
+Catálogos em `public/game-lines/vampire/data/`. Bloodlines possuem uma visão de leitura própria usada na página, prévia de ingresso, Maldição da ficha e Homebrew. Ingresso, concessão e remoção continuam recebendo definições canônicas. Todos os 56 registros possuem os campos PT aplicáveis; resta a preferência da caption Star-Crossed.
 
 Méritos: revisar requisitos canônicos ainda exibidos como Brawl/Composure e referências antigas a Kindred/Covenant nas traduções parciais; não deduzir elegibilidade por títulos.
 
@@ -109,7 +109,7 @@ Decisões atuais prevalecem sobre propostas antigas. As traduções já concluí
 
 - Vampire Conditions: Bestial, Competitivo, Lascivo, Dependente, Mesmerizado, Falsas Memórias, Lânguido, Letárgico, Tentado, Distraído e Convite. Lânguido (Languid) e Letárgico (Lethargic) permanecem distintos. Jaded/Addiction/Swooning/Drained ainda devem acompanhar seus próprios registros.
 - Mage Conditions: Megalomaniacal/Rampant ainda aguardam seu catálogo; Húbris resolve seus IDs. Não criar uma tabela mecânica paralela.
-- Vampire poderes/Méritos: Meada de Clotho; Amigos no Exterior; Fome Intensificada; Coração Sombrio; Feudo Amaldiçoado; Fama (Avançada); Escola de Etiqueta; Crúac Banshee; Ouvidos para a Fera; O Veículo; Cerne (Heartwood de Yarilo, distinto da categoria Crux de Penhores); Unção; As Delícias; Riqueza Herdada; Verdades de Erebus; Lições de Erebus; Conheça Seu Público; Grilhão de Sangue; Sangue dos Relutantes; Sem Presas.
+- Vampire poderes/Méritos: Meada de Clotho; Amigos no Exterior; Fome Intensificada; Coração Sombrio; Feudo Amaldiçoado; Fama (Avançada); Escola de Etiqueta; Crúac Banshee; Ouvidos para a Fera; O Veículo; Cerne (Heartwood de Yarilo, distinto da categoria Crux de Penhores); Unção; As Delícias; Riqueza Herdada; Verdades de Erebus; Lições de Erebus; Conheça Seu Público; Grilhão de Sangue; Sangue dos Relutantes; Sem Presas; Surto Elétrico; Parentesco Insetoide; Mente de Colmeia; Semblante Perdido; Apofenia; Pareidolia; Dementação. Cirurgia Arthmoic conserva a grafia técnica cadastrada.
 - Coalizões: Evolução Triádica, Juramentos do Invictus, Código do Carrasco, O Conto de Shahrayad, Fachada, Cisma, Cripta/Saída, Atendente da Sepultura, Explorador Sagrado, Tocado por Mary e Visão Arcana. Detournement, Therion, Kimiya e Manteia mantêm a forma cadastrada.
 - Bloodlines: Cavaleiros sem Terra traduz Hedge Knights no contexto medieval de Bron; Purezas traduz Purities. Electrum, Udjat, Namus-Ur, Lobos de Sangre, Morrigans, Mystikos, Spiritus Sancti, Sublunario, Családtag, Lithopedia, Strix e draugr preservados.
 - Numina do Familiar já apresentada: Fascínio, Rajada, Enlouquecer, Drenar, Aura Emocional, Decadência Entrópica, Incendiário, Alucinação, Implantar Missão, Chave Canhota, Mascarilha Mortal, Desbravador, Regenerar, Buscar, Velocidade, Sinal, Inabalável e Telecinese. Propostas posteriores à confirmação histórica, já aplicadas; não equivalem à aprovação de nomes homônimos em outras linhas.
@@ -160,8 +160,8 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 
 ## Verificação atual
 
-- Último lote: 12 apresentações Bloodline Homebrew — Mnemosyne, Norvegi, Qedeshah, Acteius, Doceiros, Sociedade da Crista de Galo, Gethsemani, Guardiões das Trevas, Lygos, Família Von Schreck, Yagnatia e Adrestoi. **48/56** registros com PT, oito restantes e a caption Star-Crossed em consulta.
-- Integração EN → PT → EN, Homebrew e identidade/XP: 44 testes aprovados na execução dirigida; a expectativa antiga de 36 registros falhou e foi atualizada para 48, passando na reexecução do teste de completude/limites. Nenhuma falha permanece neste lote.
-- Lint, TypeScript, build e 34/34 testes de catálogos/arquitetura aprovados. Comparação conserva os 56 registros canônicos e as 36 apresentações anteriores.
-- Escolhas explícitas do usuário e limpeza documental: implementadas no commit `24105b4`, com 73/73 testes dirigidos, 34/34 de catálogos/arquitetura, lint, TypeScript e build aprovados. Relatos históricos concluídos não foram mantidos.
+- **56/56 Bloodlines** com os campos textuais PT aplicáveis: 14 oficiais e 42 Homebrew. Último lote: Gottlings, Keravnos, Malocusians, Melissidae, Rotgrafen, Typhos, Warumono e Malkovians. Caption Star-Crossed segue em consulta; Méritos, poderes, Conditions e presets Vampire permanecem pendentes.
+- **45/45** testes dirigidos aprovados: EN → PT → EN de Anchors/Clans/Covenants/Bloodlines, todas as abas Homebrew, campos/limites numéricos e identidade/XP Vampire. **34/34** testes de catálogos/arquitetura, lint, TypeScript e build aprovados.
+- Comparação conserva os 56 registros canônicos e as 48 apresentações anteriores. Manifesto `catalogVersion` 50, `vampire-bloodlines` 11; IDs/URLs preservados.
+- Escolhas explícitas do usuário e limpeza documental implementadas em `24105b4`, com 73/73 testes dirigidos, 34/34 de catálogos/arquitetura, lint, TypeScript e build aprovados. Relatos históricos concluídos não foram mantidos.
 - Sem smoke de navegador. Nova suíte completa de encerramento ainda deverá ser executada após concluir o escopo; os gates destes lotes são dirigidos.

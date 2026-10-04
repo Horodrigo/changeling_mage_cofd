@@ -2084,7 +2084,18 @@
     "homebrew": true,
     "parentClanIds": [
       "ventrue"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Diretores sobrenaturais que transformam pessoas em intérpretes de suas produções obsessivas.",
+      "baneName": "A Maldição da Musa",
+      "baneSummary": "Sem um Touchstone vinculado, recebe Obsessão pelo projeto atual até que ele seja concluído, a Humanidade aumente ou um novo Touchstone seja adquirido.",
+      "nicknames": [
+        "Diretores",
+        "Dramaturgos",
+        "Rainhas do Drama"
+      ],
+      "parentClan": "Ventrue"
+    }
   },
   {
     "id": "keravnos",
@@ -2118,7 +2129,20 @@
     "giftSummary": "An exclusive five-dot Discipline that consumes, stores, senses, and redirects electricity.",
     "parentClanIds": [
       "ventrue"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Ventrue elétricos que se alimentam de corrente e comandam redes de energia.",
+      "baneName": "A Maldição Voltaica",
+      "baneSummary": "Um Ponto de Ruptura por ferir mortais com eletricidade move os Touchstones um nível de Humanidade para cima. Se o vampiro se alimentou apenas de eletricidade naquela noite, os testes de Desapego sofrem -2.",
+      "giftName": "Surto Elétrico",
+      "giftSummary": "Uma Disciplina exclusiva de cinco pontos que consome, armazena, percebe e redireciona eletricidade.",
+      "nicknames": [
+        "Chocantes",
+        "Jovianos",
+        "O Tecnopólio"
+      ],
+      "parentClan": "Ventrue"
+    }
   },
   {
     "id": "malocusians",
@@ -2151,7 +2175,20 @@
     "giftSummary": "The vampire mystically extends senses and authority through her domicile, empowering its defenses and the bloodline's household Devotions.",
     "parentClanIds": [
       "ventrue"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Mestres de domínio reclusos cujos lares se tornam extensões de seus corpos e de sua vontade.",
+      "baneName": "A Maldição do Sedentarismo",
+      "baneSummary": "Sair de casa sem gastar Força de Vontade permite ficar fora por uma quantidade de horas igual à Humanidade menos Potência de Sangue, no mínimo uma, antes que a resistência ao frenesi sofra -1 cumulativo por hora até -5, até que se passe um dia inteiro em casa.",
+      "giftName": "Domus",
+      "giftSummary": "O vampiro estende misticamente seus sentidos e sua autoridade por sua residência, fortalecendo as defesas dela e as Devoções domésticas da Bloodline.",
+      "nicknames": [
+        "Aranhas",
+        "Eremitas",
+        "Carrapatos"
+      ],
+      "parentClan": "Ventrue"
+    }
   },
   {
     "id": "melissidae",
@@ -2185,7 +2222,21 @@
     "giftSummary": "The vampire can communicate with and command insects, laying the foundation for Hivemind and the bloodline's colony Devotions.",
     "parentClanIds": [
       "ventrue"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Ventrue que constroem colmeias e absorvem insetos e pessoas em um organismo coletivo.",
+      "baneName": "A Maldição do Enxame",
+      "baneSummary": "Todo Touchstone deve pertencer à colmeia, e pelo menos um Touchstone vinculado é necessário para que qualquer um conte como vinculado. Lugares e objetos inanimados não podem servir como Touchstones.",
+      "giftName": "Parentesco Insetoide",
+      "giftSummary": "O vampiro pode se comunicar com insetos e comandá-los, estabelecendo a base para Mente de Colmeia e as Devoções de colônia da Bloodline.",
+      "nicknames": [
+        "Rainhas",
+        "Abelhas-Rainhas",
+        "Colecionadores",
+        "Melissid"
+      ],
+      "parentClan": "Ventrue"
+    }
   },
   {
     "id": "rotgrafen",
@@ -2217,7 +2268,19 @@
     "homebrew": true,
     "parentClanIds": [
       "ventrue"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Lordes piratas cujas Feras rejeitam a obediência sem um preço justo.",
+      "baneName": "A Maldição da Recalcitrância",
+      "baneSummary": "Submeter-se à autoridade sem compensação justa limita os testes de resistência ao frenesi pela Humanidade durante a noite, inclusive retroativamente se o acordo for rompido. Exigências triviais, autopreservação e outros Rotgrafen estão isentos.",
+      "nicknames": [
+        "Reis do Mar",
+        "Lordes do Fogo",
+        "Condes Vermelhos",
+        "Anarquistas"
+      ],
+      "parentClan": "Ventrue"
+    }
   },
   {
     "id": "typhos",
@@ -2248,7 +2311,18 @@
     "homebrew": true,
     "parentClanIds": [
       "ventrue"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Predadores biomédicos que alteram hospedeiros mortais por meio da Cirurgia Arthmoic e do Instituto Typhos internacional.",
+      "baneName": "A Maldição do Clínico",
+      "baneSummary": "Trate a Humanidade como um ponto menor nos testes para se relacionar com humanos. A penalidade é removida permanentemente para um humano em quem o Typhos realize um procedimento médico substancial.",
+      "nicknames": [
+        "Corta-Ossos",
+        "O Instituto",
+        "Cirurgiões"
+      ],
+      "parentClan": "Ventrue"
+    }
   },
   {
     "id": "warumono",
@@ -2278,7 +2352,17 @@
     "homebrew": true,
     "parentClanIds": [
       "ventrue"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Gângsteres tatuados que canalizam o controle por caminhos disciplinados e violência espetacular.",
+      "baneName": "A Maldição da Turbulência",
+      "baneSummary": "Após uma ação violenta ou derramar sangue, incluindo alimentar-se, o Semblante Perdido falha pela cena, e os testes mundanos de sutileza, Furtividade e para escapar à percepção são limitados pela Humanidade.",
+      "nicknames": [
+        "Os Selvagens",
+        "Gângsteres"
+      ],
+      "parentClan": "Ventrue"
+    }
   },
   {
     "id": "malkovians",
@@ -2312,6 +2396,20 @@
     "giftSummary": "The vampire reads meaningful patterns in apparent coincidence, gaining prophetic insight while risking the Pareidolia Condition.",
     "parentClanIds": [
       "ventrue"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Videntes atormentados que percebem verdades impossíveis por meio de Malkavia e Dementação.",
+      "baneName": "A Maldição do Balbucio",
+      "baneSummary": "A cada capítulo, o Narrador recebe 10 menos Humanidade dados para se opor a tentativas Sociais bem-sucedidas de comunicar verdades. Se os sucessos forem reduzidos a uma falha, ela se torna dramática, e essa verdade não pode ser comunicada novamente até a noite seguinte; Touchstones estão isentos.",
+      "giftName": "Apofenia",
+      "giftSummary": "O vampiro lê padrões significativos em coincidências aparentes, obtendo percepção profética enquanto corre o risco de receber a Condição Pareidolia.",
+      "nicknames": [
+        "Oráculos",
+        "Os Lunáticos",
+        "Cassandras",
+        "Cavaleiros da Lua"
+      ],
+      "parentClan": "Ventrue"
+    }
   }
 ]
