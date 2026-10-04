@@ -1431,5 +1431,102 @@
     "name": "Coração de Ferro",
     "description": "Cada ponto aumenta em um o dano necessário para estaquear o vampiro.",
     "prerequisites": "Resiliência •"
+  },
+  "vtr-unsettling-gaze": {
+    "name": "Olhar Perturbador",
+    "description": "O olhar do predador desestabiliza aqueles que o encaram."
+  },
+  "vtr-bodies-buried": {
+    "name": "Onde os Corpos Estão Enterrados",
+    "description": "Conhece segredos comprometedores da sociedade local dos Membros."
+  },
+  "vtr-lex-terrae": {
+    "name": "Lex Terrae",
+    "description": "Faz o domínio responder a uma lei carthiana estabelecida.",
+    "prerequisites": "Status no Movimento Carthiano •"
+  },
+  "vtr-mandate-masses": {
+    "name": "Mandato das Massas",
+    "description": "A vontade coletiva reforça a autoridade carthiana.",
+    "prerequisites": "Status no Movimento Carthiano •••"
+  },
+  "vtr-plausible-deniability": {
+    "name": "Negação Plausível",
+    "description": "A estrutura carthiana protege os participantes das consequências diretas.",
+    "prerequisites": "Status no Movimento Carthiano ••"
+  },
+  "vtr-right-return": {
+    "name": "Direito de Retorno",
+    "description": "A lei protege o direito de retornar a um território ou posição.",
+    "prerequisites": "Status no Movimento Carthiano •"
+  },
+  "vtr-strength-resolution": {
+    "name": "Força da Resolução",
+    "description": "Uma resolução formal sustenta a determinação do Movimento.",
+    "prerequisites": "Status no Movimento Carthiano •"
+  },
+  "vtr-kindred-dueling": {
+    "name": "Duelo entre Membros",
+    "description": "Manobras para enfrentar outros vampiros em combate próximo.",
+    "prerequisites": "Briga ••; Compostura •••"
+  },
+  "vtr-notary": {
+    "name": "Notário",
+    "description": "Reconhece, registra e testemunha Juramentos do Invictus.",
+    "prerequisites": "Status no Invictus •"
+  },
+  "vtr-oath-action": {
+    "name": "Juramento de Ação",
+    "description": "Vincula o vampiro juramentado à execução de uma tarefa definida.",
+    "prerequisites": "Status no Invictus •"
+  },
+  "vtr-wild-hunt:mutable-psyche": {
+    "name": "Psique Mutável",
+    "description": "Após uma falha em um Ponto de Ruptura, escolha um novo Lamento que ainda não tenha sido usado durante a história.",
+    "prerequisites": "Metamorfose ••; Perseverança •••"
+  },
+  "vtr-wild-hunt:rose-thorn": {
+    "name": "Da Rosa e do Espinho",
+    "description": "Estenda Animalismo às plantas, incluindo comunicação, ordens, reanimação como mortos-vivos, controle de área, animação hostil e uso como vetores de familiares."
+  },
+  "vtr-wild-hunt:pack-blooded": {
+    "name": "Sangue de Matilha",
+    "description": "Com outro integrante da Matilha que possua este Mérito, ganhe +1 de Iniciativa, Defesa e Deslocamento em combate e some Empatia com Animais ao trabalho em equipe em cenas de ação; defender integrantes da Matilha agrava os Pontos de Ruptura.",
+    "prerequisites": "Gangrel"
+  },
+  "vtr-wild-hunt:pack-bond": {
+    "name": "Vínculo de Matilha",
+    "description": "Conte o maior Status dos Membros como um Touchstone adicional sem vínculo enquanto outro Touchstone permanecer.",
+    "prerequisites": "Gangrel; Status dos Membros •"
+  },
+  "vtr-wild-hunt:preys-trail": {
+    "name": "Rastro da Presa",
+    "description": "Rastreie qualquer pessoa cujo sangue o vampiro tenha provado com testes de Inteligência + Sobrevivência a cada hora, até passar um número de noites igual à Potência de Sangue.",
+    "prerequisites": "Sobrevivência ••"
+  },
+  "vtr-wild-hunt:roughin-it": {
+    "name": "Na Improvisação",
+    "description": "Reduza à metade as penalidades em Ofícios e Sobrevivência causadas por ferramentas inadequadas ou improvisadas.",
+    "prerequisites": "Ofícios ••; Sobrevivência ••"
+  },
+  "vtr-wild-hunt:savage-kenning": {
+    "name": "Tino Selvagem",
+    "description": "Ganhe uma Especialização gratuita em um grupo de animais, sucesso excepcional com três sucessos ao usá-la e reações geralmente favoráveis dos animais.",
+    "prerequisites": "Gangrel; Empatia com Animais •••"
+  },
+  "vtr-wild-hunt:taste-prey": {
+    "name": "Gosto da Presa",
+    "description": "Detecte antigas fontes de sangue ao dobro da distância normal dos Sentidos Vampíricos e obtenha sucesso excepcional com três sucessos ao encontrá-las.",
+    "prerequisites": "Gangrel; Sobrevivência ••"
+  },
+  "vtr-wild-hunt:the-red-surrender": {
+    "name": "A Rendição Rubra",
+    "description": "Permite que um Gangrel afrouxe deliberadamente a coleira da Fera para obter vantagens breves e perigosas.",
+    "prerequisites": "Gangrel; não possuir a Condição Fera Desperta"
+  },
+  "vtr-wild-hunt:tireless-pursuit": {
+    "name": "Perseguição Incansável",
+    "description": "Um Estilo de perseguição que combina movimento ao Deslocamento máximo com ações Mentais, usa Vigor no cálculo do Deslocamento e permite atravessar barreiras à força ou tomar a Vantagem.",
+    "prerequisites": "Vigor ••; Atletismo ••"
   }
 }
