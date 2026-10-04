@@ -234,5 +234,112 @@
     "name": "Máscara Inflexível",
     "description": "Fixa permanentemente uma máscara que melhora uma Perícia Social e pode resistir à coerção dos Membros, ao custo de uma característica corporal chamativa e que pode ser danificada.",
     "prerequisites": "Nosferatu; Pesadelo •"
+  },
+  "vtr-distinguished-palate": {
+    "name": "Paladar Distinto",
+    "description": "Prefere uma categoria específica de presa e percebe seu sangue com precisão."
+  },
+  "vtr-dream-visions": {
+    "name": "Visões Oníricas",
+    "description": "Recebe imagens proféticas durante o Sono Diurno."
+  },
+  "vtr-dynasty-membership": {
+    "name": "Membro de Dinastia",
+    "description": "Pertence a uma dinastia reconhecida de mortos-vivos."
+  },
+  "vtr-enticing": {
+    "name": "Sedutor",
+    "description": "O Beijo e a presença do vampiro são particularmente atraentes."
+  },
+  "vtr-feeding-grounds": {
+    "name": "Campo de Caça",
+    "description": "Um território estável e conhecido onde o vampiro pode se alimentar."
+  },
+  "vtr-friends-high-places": {
+    "name": "Amigos em Altos Cargos",
+    "description": "Mantém relações úteis com figuras influentes."
+  },
+  "vtr-haven": {
+    "name": "Refúgio",
+    "description": "Um local seguro para o Sono Diurno, definido por localização, segurança e tamanho."
+  },
+  "vtr-herd": {
+    "name": "Rebanho",
+    "description": "Mortais dos quais o vampiro pode se alimentar regularmente."
+  },
+  "vtr-honey-trap": {
+    "name": "Armadilha Sedutora",
+    "description": "Usa desejo e intimidade para conduzir vítimas a uma posição vulnerável."
+  },
+  "vtr-invested": {
+    "name": "Investido",
+    "description": "Possui autoridade formal concedida pelo Invictus.",
+    "prerequisites": "Status no Invictus •"
+  },
+  "vtr-kindred-status": {
+    "name": "Status dos Membros",
+    "description": "Posição reconhecida em um Clã, Coalizão ou domínio."
+  },
+  "vtr-kiss-succubus": {
+    "name": "Beijo da Súcubo",
+    "description": "O Beijo cria uma ligação emocional excepcionalmente intensa."
+  },
+  "vtr-better-feared:urban-legend": {
+    "name": "Lenda Urbana",
+    "description": "Imita uma história de fantasma local ou um criptídeo para receber +2 em ações Sociais adequadas com quem acredita na lenda, enquanto investigadores recebem +2 para rastrear o vampiro.",
+    "prerequisites": "Nosferatu"
+  },
+  "vtr-better-feared:verminous-fellowship": {
+    "name": "Companhia de Pragas",
+    "description": "Pragas procuram o vampiro e reagem favoravelmente; acrescenta metade da Potência de Sangue, arredondada para cima, aos testes de Empatia com Animais envolvendo essas criaturas, com possível custo Social.",
+    "prerequisites": "Nosferatu ou Animalismo •"
+  },
+  "vtr-better-feared:war-dog": {
+    "name": "Cão de Guerra",
+    "description": "Ignora as duas últimas penalidades por ferimentos enquanto o dano for apenas contundente e recebe +1 em Intimidação física.",
+    "prerequisites": "Nosferatu ou Resiliência •"
+  },
+  "vtr-false-gods:insect-envoy": {
+    "name": "Emissário Inseto",
+    "description": "Cria um familiar inseto cada vez mais capaz, que transmite os sentidos e comandos do Melissid."
+  },
+  "vtr-false-gods:hivemind": {
+    "name": "Mente de Colmeia",
+    "description": "Estabelece uma rede mental compartilhada entre os membros da colmeia do Melissid."
+  },
+  "vtr-false-gods:firefighter": {
+    "name": "Bombeiro",
+    "description": "Melhora a ação e a compostura em meio a fogo, fumaça e estruturas em chamas.",
+    "prerequisites": "Rotgrafen"
+  },
+  "vtr-false-gods:rime-salt": {
+    "name": "Sal de Geada",
+    "description": "Usa sangue e sal para proteger uma embarcação ou limiar contra invasões hostis.",
+    "prerequisites": "Rotgrafen"
+  },
+  "vtr-false-gods:sea-legs": {
+    "name": "Pernas de Marinheiro",
+    "description": "Elimina as penalidades comuns de conveses instáveis, águas agitadas e vida a bordo de uma embarcação.",
+    "prerequisites": "Rotgrafen"
+  },
+  "vtr-false-gods:mass-expansion": {
+    "name": "Expansão de Massa",
+    "description": "Um paciente mortal recebe Gigante e se torna mais fácil de interpretar e ferir para o médico Typhos.",
+    "prerequisites": "Paciente humano; médico Typhos com Cirurgião"
+  },
+  "vtr-false-gods:musculature-limiter-removal": {
+    "name": "Remoção dos Limitadores Musculares",
+    "description": "Um paciente mortal pode se ferir para imitar Intensidade Física e fornece sangue mais rico ao seu médico.",
+    "prerequisites": "Paciente humano; médico Typhos com Cirurgião"
+  },
+  "vtr-false-gods:necrobiological-transplant": {
+    "name": "Transplante Necrobiológico",
+    "description": "Um paciente mortal recebe um ponto de Atributo Físico além do limite humano por meio de tecido de Membro implantado.",
+    "prerequisites": "Paciente humano; médico Typhos com Cirurgião"
+  },
+  "vtr-false-gods:parasensory-awakening": {
+    "name": "Despertar Parassensorial",
+    "description": "Um paciente mortal recebe um sentido psíquico semelhante a Arrepio da Besta, que o médico Typhos pode acessar.",
+    "prerequisites": "Paciente humano; médico Typhos com Cirurgião; Auspex • (médico)"
   }
 }

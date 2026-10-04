@@ -24,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); caption Star-Crossed em consulta |
-| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 48 apresentações completas por ID (24 oficiais, 24 Homebrew), três níveis; 355 registros restantes, incluindo revisão de 39 descrições PT preexistentes |
+| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 72 apresentações completas por ID (36 oficiais, 36 Homebrew), três níveis; 331 registros restantes, incluindo revisão de 27 descrições PT preexistentes |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
@@ -176,8 +176,8 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 
 ## Verificação atual
 
-- **48/403** Méritos Vampire com apresentação completa por ID, 24 oficiais e 24 Homebrew; três níveis localizados. O segundo lote revisa 12 registros do livro básico e acrescenta 12 Homebrew de Better Feared, sem reconstruir campos ausentes.
+- **72/403** Méritos Vampire com apresentação completa por ID, 36 oficiais e 36 Homebrew; três níveis localizados. O terceiro lote revisa 12 registros do livro básico e acrescenta 12 Homebrew de Better Feared/False Gods, sem reconstruir campos ausentes.
 - Catálogo canônico de 403 registros e as 24 apresentações anteriores preservados integralmente. Manifesto `catalogVersion` 52; recurso `merits-vampire-pt` versão 2. Nomes, IDs, regras, alocações, XP e textos autorais não são reescritos.
-- Gates do lote corrente aprovados: 6/6 testes de integração EN → PT → EN e identidade de Méritos, 34/34 de catálogos/arquitetura, lint, TypeScript e build. O catálogo canônico de 403 Méritos e as 24 apresentações do lote anterior permanecem intactos. A suíte completa fica para o gate final da meta.
+- Gates do terceiro lote aprovados: 6/6 testes de integração EN → PT → EN e identidade de Méritos, 34/34 de catálogos/arquitetura, lint, TypeScript e build. O catálogo canônico de 403 Méritos e as 48 apresentações dos lotes anteriores permanecem intactos. A suíte completa fica para o gate final da meta.
 - Referências Vampire já verificadas: 56 Bloodlines com PT; caption Star-Crossed segue em consulta. Demais Méritos, poderes, Conditions/presets Vampire e etapa Mage permanecem pendentes.
 - Sem smoke de navegador. Nova suíte completa de encerramento deverá ser executada após concluir o escopo; gates proporcionais por lote.
