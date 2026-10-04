@@ -1,4 +1,4 @@
-import type { CharacterSheet, MeritSelection } from "./character-types";
+import type { CharacterSheet, MeritSelection, Specialty } from "./character-types";
 import { decodeMeritGrantChoice, normalizeMeritConfiguration } from "./merit-configuration";
 import { commonMeritId } from "./merit-identities";
 import { experienceMeritDots } from "@/lib/merit-progression";
@@ -7,7 +7,7 @@ const GENERATED_PREFIX = "Merit:";
 
 /** Shared grant mechanics used by Core merits; line modules apply their own automatic grants around this call. */
 export function synchronizeCommonMeritGrants(
-  sheet: CharacterSheet,
+  sheet: Pick<CharacterSheet, "merits" | "specializations" | "line_data">,
   includeGrantedBy: (source: string) => boolean = () => false,
   additionalCultIdentity: (merit: MeritSelection) => string | undefined = () => undefined,
 ) {
@@ -69,4 +69,17 @@ export function synchronizeCommonMeritGrants(
     }
   }
   return skillBonuses;
+}
+
+
+/** Creation previews recompose Core Specialty grants without changing purchases or the source sheet. */
+export function commonMeritSpecializations(
+  specializations: readonly Specialty[],
+  merits: readonly MeritSelection[],
+  includeGrantedBy: (source: string) => boolean = () => false,
+  additionalCultIdentity: (merit: MeritSelection) => string | undefined = () => undefined,
+): Specialty[] {
+  const preview = { specializations: structuredClone([...specializations]), merits: structuredClone([...merits]), line_data: {} };
+  synchronizeCommonMeritGrants(preview, includeGrantedBy, additionalCultIdentity);
+  return preview.specializations;
 }

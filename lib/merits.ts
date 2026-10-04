@@ -1,4 +1,5 @@
 import { requirementMet, textRequirementMet, type Requirement, type RequirementContext, type TextRequirementEvaluator } from "./merit-requirements";
+import type { Specialty } from "./core/character/character-types";
 import type { PersistedGameLineId } from "./core/character/game-line-ids";
 import type { MessageKey, TranslationParams } from "./i18n";
 import type { CatalogNameQualifier } from "./localized-catalog";
@@ -58,6 +59,7 @@ export type MeritPrerequisiteContext = RequirementContext & {
   skills?: Record<string, number>;
   size?: number;
   merits?: Array<{ definitionId?: string; sourceId?: string; instanceId?: string; name: string; dots: number; configuration?: Record<string,string|string[]> }>;
+  specializations?: readonly Specialty[];
   selectedDots?: number;
   configuration?: Record<string,string|string[]>;
   meritCatalog?: readonly MeritDefinition[];
@@ -72,6 +74,7 @@ export function meritPrerequisitesMet(
 ) {
   if(merit.line&&merit.line!=="Core"&&merit.line!==context.gameLine) return false;
   if(merit.mortalOnly && context.gameLine !== "CofD" && !context.mortalMeritsAllowed) return false;
+  if(merit.id === "core-2ed:fighting-finesse" && !context.specializations?.some(item => ["Brawl", "Weaponry"].includes(item.skill) && item.name.trim())) return false;
   if(merit.requirements&&!requirementMet(merit.requirements,context)) return false;
   const owned=context.merits??[];
   const forbidden=(definition:Partial<MeritDefinition>)=>definition.descriptivePrerequisites?[]:definition.excludes??definition.prerequisites?.match(/(?:Cannot have|No)\s+([^;,]+)/i)?.slice(1)??[];
@@ -154,10 +157,10 @@ export function meritGroupedPrerequisitesMet(value:string,context:MeritPrerequis
 }
 
 /** Neutral outer traits only. Each line supplies its effective Skill bonuses and its own mechanics. */
-export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Record<string,number>;skills:Record<string,number>;merits:NonNullable<MeritPrerequisiteContext["merits"]>;derived?:Record<string,number>}, meritCatalog?: readonly MeritDefinition[], archetypes?: readonly string[], skillBonuses?: Readonly<Record<string,number>>):MeritPrerequisiteContext {
+export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Record<string,number>;skills:Record<string,number>;merits:NonNullable<MeritPrerequisiteContext["merits"]>;specializations?:readonly Specialty[];derived?:Record<string,number>}, meritCatalog?: readonly MeritDefinition[], archetypes?: readonly string[], skillBonuses?: Readonly<Record<string,number>>):MeritPrerequisiteContext {
   const skills={...sheet.skills};
   for(const [name,value]of Object.entries(skillBonuses??{})) skills[name]=(skills[name]??0)+value;
-  return {gameLine:sheet.game_line,archetypes,attributes:sheet.attributes,skills,merits:sheet.merits,meritCatalog,
+  return {gameLine:sheet.game_line,archetypes,attributes:sheet.attributes,skills,specializations:sheet.specializations ?? [],merits:sheet.merits,meritCatalog,
     size:Number(sheet.derived?.Tamanho??5)};
 }
 

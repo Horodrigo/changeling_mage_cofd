@@ -1324,7 +1324,7 @@
     "sourceId": "core-2ed",
     "source": "Chronicles of Darkness",
     "category": "Fighting",
-    "prerequisites": "Dexterity •••",
+    "prerequisites": "Dexterity •••; Specialty in Brawl or Weaponry",
     "description": "You can substitute Dexterity for Strength when making rolls with a chosen Brawl or Weaponry Specialty.",
     "page": 61,
     "priority": 1,

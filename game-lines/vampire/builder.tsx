@@ -27,6 +27,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
 import { translate, useLanguage, type Locale } from "@/lib/i18n";
+import { commonMeritSpecializations } from "@/lib/core/character/synchronize-merit-grants";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
@@ -34,7 +35,7 @@ import { VampireExperiencePanel } from "./experience-panel";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampireAnchorDefinition, VampireClanDefinition, VampireCovenantDefinition, VampirePowers, VampireReference } from "./catalog-types";
 import { BLOOD_TETHER_PACK_GRANT, hollowKaLimits, hollowKaRank, ORDO_MYSTERIES, recordRatings, simplifiedHollowKaPool, stringArray, synchronizeAutomaticBloodlineDevotions, synchronizeBloodTetherPack, VAMPIRE_CREATION_DISCIPLINES, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName, vampireEditableCreationAttributes } from "./creation-rules";
-import { isShadowCultId, reconcileVampireCreationMeritGrants, synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
+import { SHADOW_CULT_SOURCE, isShadowCultId, reconcileVampireCreationMeritGrants, synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { vampireMeritEligible, vampireMeritFilterCategory, zirnitraMortalMeritCount, zirnitraMortalMeritLimit } from "./merit-eligibility";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
@@ -247,6 +248,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     gameLine: "VtR", archetypes: ["vampire", clanId, String(initial?.line_data.bloodline_id ?? ""), ...covenantIds], attributes: common.attributes,
     mortalMeritsAllowed: zirnitraRating > 0,
     skills: common.skills, merits: mergeCreationMerits(initial?.merits, common.merits), meritCatalog,
+    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits), source => source === SHADOW_CULT_SOURCE),
   };
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {

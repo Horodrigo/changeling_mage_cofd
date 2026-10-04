@@ -228,7 +228,7 @@
   },
   "core-2ed:fighting-finesse": {
     "name": "Destreza em Combate",
-    "prerequisites": "Destreza •••",
+    "prerequisites": "Destreza •••; Especialização em Briga ou Armas Brancas",
     "description": "Pode substituir Força por Destreza em testes de uma Especialização escolhida de Briga ou Armas Brancas."
   },
   "core-2ed:fixer": {

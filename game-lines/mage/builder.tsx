@@ -21,6 +21,7 @@ import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-lin
 import { useLanguage } from "@/lib/i18n";
 import { findMageAffiliation, hasStandardCreationOrderBenefits } from "./orders";
 import { type MeritDefinition } from "@/lib/merits";
+import { commonMeritSpecializations } from "@/lib/core/character/synchronize-merit-grants";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { mageBuilderPowerProgression } from "./builder-power-progression";
@@ -197,6 +198,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     skills: { ...common.skills, ...(hasCreationOrderBenefits ? { Occult: Math.min(5, (common.skills.Occult ?? 0) + 1) } : {}) },
     gnosis, arcana, path, order,
     merits: mergeCreationMerits(initial?.merits, common.merits),
+    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits), source => source === "Nameless Order", merit => resolveMeritDefinition(merit, meritCatalog)?.id === "mta-2ed:mystery-cult-influence" ? "mta-2ed:mystery-cult-influence" : undefined),
     meritCatalog,
   };
   const pathData = MTA_PATHS[path as keyof typeof MTA_PATHS] ?? MTA_PATHS.Acanthus;

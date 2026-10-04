@@ -29,6 +29,7 @@ import type { ContractDefinition } from "./contract-types";
 import { contractWithSupplementalBenefits } from "./contract-presentation";
 import { meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
 import { changelingMeritPrerequisitesMet, type ChangelingMeritContext } from "./merit-context";
+import { commonMeritSpecializations } from "@/lib/core/character/synchronize-merit-grants";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { changelingBuilderPowerProgression } from "./builder-power-progression";
@@ -159,6 +160,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
     seeming, kith, wyrd, court,
     mantle: court && !["sem corte", "courtless"].includes(court.toLowerCase()) ? Math.max(1, mergeCreationMerits(initial?.merits, common.merits).find(item => changelingMeritId(item) === "ctl-2ed:mantle" && item.grantedBy === "Corte")?.dots ?? 1) : 0,
     merits: mergeCreationMerits(initial?.merits, common.merits),
+    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits)),
     meritCatalog,
     powers: contracts.map((item) => item.originalName || item.name).filter(Boolean),
   };

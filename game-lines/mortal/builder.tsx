@@ -23,6 +23,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
+import { commonMeritSpecializations } from "@/lib/core/character/synchronize-merit-grants";
 import { mergeCreationMerits } from "@/lib/merit-progression";
 import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
@@ -85,6 +86,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
     skills: common.skills,
     size: 5,
     merits: mergeCreationMerits(initial?.merits, common.merits),
+    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits)),
     meritCatalog,
   };
 

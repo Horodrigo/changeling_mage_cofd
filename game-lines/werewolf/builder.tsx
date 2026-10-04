@@ -150,7 +150,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
   const renown = auspice && tribe && !templateProblems.includes("renownChoice") ? creationGiftSelection(auspice, tribe, choices.renown_choice as RenownId, gifts.gifts, choices).renown : renownRatings(null);
   const experienceRenown = renownRatings(advancementSource?.line_data.experience_renown);
   for (const id of Object.keys(renown) as RenownId[]) renown[id] += experienceRenown[id];
-  const context: MeritPrerequisiteContext = { gameLine: "WtF", archetypes: ["werewolf"], attributes: hishu.attributes, skills: member.skills, size: hishu.size, merits: member.merits, meritCatalog };
+  const context: MeritPrerequisiteContext = { gameLine: "WtF", archetypes: ["werewolf"], attributes: hishu.attributes, skills: member.skills, size: hishu.size, specializations: member.specializations, merits: member.merits, meritCatalog };
   const ownContext: WerewolfMeritContext = { attributes: hishu.attributes, skills: member.skills, harmony: Number(initial?.line_data.harmony ?? 7),
     primalUrge: choices.primal_urge + Number(advancementSource?.line_data.experience_primal_urge ?? 0), renown, tribeId: choices.tribe_id, auspice, forms: reference.forms, gifts: gifts.gifts, merits: resolveWerewolfMerits(member.merits, meritCatalog) };
   const eligible = (definition: MeritDefinition, candidate: MeritPrerequisiteContext) => meritPrerequisitesMet(definition, candidate) &&

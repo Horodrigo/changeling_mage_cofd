@@ -154,7 +154,7 @@ test("neutral Merit context never reads line_data and applies only explicitly su
   assert.equal(context.size, 6);
   assert.equal(context.merits, sheet.merits);
   assert.equal(context.meritCatalog, catalog);
-  assert.deepEqual(Object.keys(context).sort(), ["gameLine", "archetypes", "attributes", "skills", "merits", "meritCatalog", "size"].sort());
+  assert.deepEqual(Object.keys(context).sort(), ["gameLine", "archetypes", "attributes", "skills", "specializations", "merits", "meritCatalog", "size"].sort());
 });
 
 test("each line supplies only its own prerequisite fields and preserves purchased instances, effective Skills and authored data", () => {
@@ -206,4 +206,49 @@ test("Changeling Mantle context resolves exact canonical IDs and the documented 
   }
   sheet.merits = [{ ...owned, definitionId: undefined, name: "Mantle", sourceId: undefined }];
   assert.equal(changelingMeritContextForSheet(sheet, [mantle, { ...mantle, id: "homebrew:mantle", sourceId: "homebrew" }]).mantle, 0);
+});
+
+
+test("Fighting Finesse requires a real combat Specialty by canonical ID in all shared and line contexts without changing receipts or authored names", async () => {
+  const definition = catalog.find(item => item.id === "core-2ed:fighting-finesse");
+  const { meritPresentation, withMeritPresentation } = await vite.ssrLoadModule("/lib/merit-presentation.ts");
+  const pt = read("shared/data/merits-pt.json");
+  const presented = withMeritPresentation([definition], pt)[0];
+  for (const [line, contextFor] of [["CofD", mortalMeritContextForSheet], ["MtA", mageMeritContextForSheet], ["CtL", changelingMeritContextForSheet], ["VtR", sheet => vampireMeritContextForSheet(sheet, catalog, ["vampire"])], ["WtF", meritContextForSheet]]) {
+    const sheet = blankPrintCharacter(line);
+    sheet.attributes.Dexterity = 3;
+    sheet.skills.Brawl = 2;
+    sheet.skills.Weaponry = 2;
+    sheet.line_data.test_receipt = { definitionId: definition.id, instanceId: "paid-finesse", cost: 2, label: "Original receipt" };
+    for (const [specializations, expected] of [[[], false], [[{ skill: "Brawl", name: " " }], false], [[{ skill: "Medicine", name: "Authored specialty" }], false], [[{ skill: "Brawl", name: "Authored specialty" }], true], [[{ skill: "Weaponry", name: "Authored specialty" }], true]]) {
+      sheet.specializations = specializations;
+      const before = JSON.stringify(sheet);
+      const context = contextFor(sheet, catalog);
+      assert.equal(context.specializations, sheet.specializations);
+      for (const locale of ["en-US", "pt-BR", "en-US"]) {
+        assert.match(meritPresentation(presented, locale).prerequisites, locale === "pt-BR" ? /Especialização.*Briga.*Armas Brancas/ : /Specialty.*Brawl.*Weaponry/);
+        assert.equal(meritPrerequisitesMet(definition, context), expected, line);
+        assert.equal(meritSelectionProblems(definition, { dots: 2 }, context).length, expected ? 0 : 1);
+      }
+      assert.equal(JSON.stringify(sheet), before);
+    }
+    const context = contextFor(sheet, catalog);
+    assert.equal(meritPrerequisitesMet(definition, { ...context, attributes: { Dexterity: 2 } }), false);
+    const namesake = { ...definition, id: "homebrew:test:finesse", name: definition.name, sourceId: "homebrew:test", prerequisites: "Dexterity •••" };
+    assert.equal(meritPrerequisitesMet(namesake, { ...context, specializations: [] }), true);
+    assert.equal(meritPrerequisitesMet({ ...definition, name: "Renamed catalog label" }, context), true);
+  }
+});
+
+test("creation Specialty previews recompose current Core grants and retain manual/XP Specialties without rewriting purchased instances", async () => {
+  const { commonMeritSpecializations } = await vite.ssrLoadModule("/lib/core/character/synchronize-merit-grants.ts");
+  const specializations = [{ skill: "Medicine", name: "Authored creation Specialty" }, { skill: "Weaponry", name: "Purchased Specialty" }, { skill: "Brawl", name: "Obsolete generated Specialty", grantedBy: "Merit:old" }];
+  const merits = [{ definitionId: "core-2ed:professional-training", instanceId: "paid-profession", name: "Edited label", dots: 3, creationDots: 1, experienceDots: 2, configuration: { specialty_1_skill: "Brawl", specialty_1_name: "Authored granted Specialty" } }];
+  const before = JSON.stringify([specializations, merits]);
+  assert.deepEqual(commonMeritSpecializations(specializations, merits).map(item => item.name), ["Authored creation Specialty", "Purchased Specialty", "Authored granted Specialty"]);
+  assert.deepEqual(commonMeritSpecializations(specializations, [{ ...merits[0], dots: 2 }]).map(item => item.name), ["Authored creation Specialty", "Purchased Specialty"]);
+  const mageCult = { definitionId: "mta-2ed:mystery-cult-influence", name: "Renamed", dots: 3, configuration: { level_1_type: "specialty", level_1_specialty_skill: "Brawl", level_1_specialty_name: "Cult Specialty" } };
+  assert.equal(commonMeritSpecializations([], [mageCult]).length, 0);
+  assert.equal(commonMeritSpecializations([], [mageCult], () => false, item => item.definitionId === mageCult.definitionId ? mageCult.definitionId : undefined)[0].name, "Cult Specialty");
+  assert.equal(JSON.stringify([specializations, merits]), before);
 });

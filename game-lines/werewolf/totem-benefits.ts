@@ -102,7 +102,7 @@ export function resolveTotemAdvantage(character: CharacterSheet, totem: TotemSel
       const merit = definition(entry.choice), grant = grantedMerit(entry);
       if (!merit || !grant) continue;
       const hishu = formTraits(traits, catalogs.reference.forms.find(form => form.id === "hishu")!, 5, resolveWerewolfMerits(traits.merits, catalogs.merits), traits.merits);
-      const core = { gameLine: "WtF" as const, archetypes: ["werewolf"], attributes: hishu.attributes, skills: traits.skills, size: hishu.size, merits: traits.merits, meritCatalog: catalogs.merits, selectedDots: grant.dots, configuration: grant.configuration };
+      const core = { gameLine: "WtF" as const, archetypes: ["werewolf"], attributes: hishu.attributes, skills: traits.skills, size: hishu.size, specializations: traits.specializations, merits: traits.merits, meritCatalog: catalogs.merits, selectedDots: grant.dots, configuration: grant.configuration };
       const own = { attributes: hishu.attributes, skills: traits.skills, harmony: Number(character.line_data.harmony ?? 7), primalUrge: boundedPrimalUrge(character.line_data.primal_urge),
         renown: character.line_data.renown as Record<string, number> ?? {}, tribeId: String(character.line_data.tribe_id ?? ""), auspice: catalogs.reference.auspices.find(item => item.id === character.line_data.auspice_id),
         forms: catalogs.reference.forms, gifts: catalogs.gifts.gifts, merits: resolveWerewolfMerits(traits.merits, catalogs.merits) };

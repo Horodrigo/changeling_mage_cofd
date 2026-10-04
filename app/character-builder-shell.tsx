@@ -169,6 +169,7 @@ export function useCommonBuilderState(
     name, setName, concept, setConcept, playerName, setPlayerName, chronicle, setChronicle,
     attributes, setAttributes, skills, setSkills,
     specialties, setSpecialties, aspirations, setAspirations, merits, setMerits,
+    specializations: [...specialties, ...(options.purchasedSpecialties ?? []), ...(initial?.specializations ?? []).filter(item => item.grantedBy && !item.grantedBy.startsWith("Merit:"))],
   };
 }
 

@@ -56,7 +56,7 @@ const validGiftLedgers = (character: CharacterSheet) => {
 export function werewolfAdvancementContexts(character: CharacterSheet, catalogs: Pick<WerewolfAdvancementCatalogs, "reference" | "gifts" | "merits" | "totem">): { core: MeritPrerequisiteContext; own: WerewolfMeritContext } {
   const hishu = werewolfFormTraits(character, "hishu", catalogs), member = werewolfMemberTraits(character, catalogs);
   return {
-    core: { gameLine: "WtF", archetypes: ["werewolf"], attributes: hishu.attributes, skills: member.skills, size: hishu.size, merits: member.merits, meritCatalog: catalogs.merits },
+    core: { gameLine: "WtF", archetypes: ["werewolf"], attributes: hishu.attributes, skills: member.skills, size: hishu.size, specializations: member.specializations, merits: member.merits, meritCatalog: catalogs.merits },
     own: { attributes: hishu.attributes, skills: member.skills, harmony: Number(character.line_data.harmony ?? 7), primalUrge: boundedPrimalUrge(character.line_data.primal_urge),
       renown: renownRatings(character.line_data.renown), tribeId: String(character.line_data.tribe_id ?? ""), auspice: catalogs.reference.auspices.find(item => item.id === character.line_data.auspice_id),
       forms: catalogs.reference.forms, gifts: catalogs.gifts.gifts, merits: resolveWerewolfMerits(member.merits, catalogs.merits) },
