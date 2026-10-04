@@ -1528,5 +1528,79 @@
     "name": "Perseguição Incansável",
     "description": "Um Estilo de perseguição que combina movimento ao Deslocamento máximo com ações Mentais, usa Vigor no cálculo do Deslocamento e permite atravessar barreiras à força ou tomar a Vantagem.",
     "prerequisites": "Vigor ••; Atletismo ••"
+  },
+  "vtr-oath-fealty": {
+    "name": "Juramento de Fidelidade",
+    "description": "Formaliza a lealdade entre vassalo e suserano.",
+    "prerequisites": "Status no Invictus •"
+  },
+  "vtr-oath-penance": {
+    "name": "Juramento de Penitência",
+    "description": "Impõe uma penitência formal e sobrenatural.",
+    "prerequisites": "Status no Invictus •"
+  },
+  "vtr-oath-serfdom": {
+    "name": "Juramento de Servidão",
+    "description": "Estabelece deveres e proteção entre senhor e servo.",
+    "prerequisites": "Status no Invictus •"
+  },
+  "vtr-riding-wave": {
+    "name": "Cavalgar a Onda",
+    "description": "Técnicas para direcionar o frenesi em vez de suprimi-lo.",
+    "prerequisites": "Perseverança •••; Compostura •••"
+  },
+  "vtr-etiquette": {
+    "name": "Etiqueta",
+    "description": "Domine os costumes sociais, a reputação e a compostura por meio de cinco técnicas de Manobras Sociais.",
+    "prerequisites": "Compostura •••; Socialização ••",
+    "levels": [
+      { "rating": 1, "name": "Coitado Dele", "description": "Use Socialização no lugar do menor valor entre Perseverança e Compostura para determinar as Portas iniciais." },
+      { "rating": 2, "name": "Perdendo a Compostura", "description": "Ganhe +2 e 8-novamente ao humilhar verbalmente um alvo, depois piore a impressão em um passo." },
+      { "rating": 3, "name": "Na Boa Vida", "description": "Some um Mérito Fama ou Status pertinente aos testes que disputam interações Sociais." },
+      { "rating": 4, "name": "No Impulso", "description": "Com uma impressão boa ou melhor, ignore Perseverança e Compostura no primeiro teste de uma nova interação Social." },
+      { "rating": 5, "name": "Elegância sob Pressão", "description": "Quando receber uma alternativa após todas as Portas serem abertas, escolha uma das três Condições propostas pelo jogador adversário." }
+    ]
+  },
+  "vtr-hototogisu-status": {
+    "name": "Status no Hototogisu",
+    "description": "A posição no conglomerado empresarial antivampírico de Tokyo concede treinamento cumulativo e proteções ocultistas, além dos benefícios normais de Status.",
+    "prerequisites": "Pertencer ao Hototogisu",
+    "levels": [
+      { "rating": 1, "name": "Primeiro Círculo", "description": "Ganhe uma Especialização em Ocultismo sobre Vampiros." },
+      { "rating": 2, "name": "Segundo Círculo", "description": "A Especialização em Ocultismo (Vampiros) torna-se Interdisciplinar sempre que a influência dos Membros se aplicar." },
+      { "rating": 3, "name": "Terceiro Círculo", "description": "Ganhe os benefícios de Indomável." },
+      { "rating": 4, "name": "Quarto Círculo", "description": "Ganhe os benefícios de Vontade de Ferro e imunidade ao terceiro estágio de um Laço de Sangue." },
+      { "rating": 5, "name": "The Friday Club", "description": "Crie um amuleto que dura uma noite com Força de Vontade e Inteligência + Ocultismo; seu portador aparenta ser um vampiro, não precisa de comida e pode beber sangue humano com segurança." }
+    ]
+  },
+  "vtr-wild-hunt:top-dog": {
+    "name": "Maioral",
+    "description": "Leia a hierarquia de um grupo após observá-lo e, uma vez por capítulo, obtenha sucesso excepcional com três sucessos ao lidar com seus líderes.",
+    "prerequisites": "Empatia •• ou Intimidação ••"
+  },
+  "vtr-wild-hunt:unbound-form": {
+    "name": "Forma Sem Limites",
+    "description": "Manifeste Miasma Primevo como outra substância que impõe uma Complicação Ambiental apropriada a cada cena.",
+    "prerequisites": "Metamorfose •••••"
+  },
+  "vtr-wild-hunt:unstoppable": {
+    "name": "Imparável",
+    "description": "Um Estilo de resistência que ignora penalidades de ferimento por dano contundente, usa Vigor para a Defesa, prende lâminas, fere atacantes desarmados e adia o torpor por um turno.",
+    "prerequisites": "Atletismo ••; Briga ••• ou Armas Brancas •••; Vigor •••; Metamorfose •; Resiliência •"
+  },
+  "vtr-wild-hunt:urban-hunter": {
+    "name": "Caçador Urbano",
+    "description": "Ganhe 9-novamente em Investigação, Manha e Sobrevivência para encontrar ou rastrear uma pessoa conhecida em uma cidade.",
+    "prerequisites": "Manha ••"
+  },
+  "vtr-wild-hunt:veil-invulnerability": {
+    "name": "Véu da Invulnerabilidade",
+    "description": "Dano totalmente resistido com Resiliência não deixa ferimentos visíveis, e atacantes mortais sofrem −1 de Compostura contra o vampiro durante a cena.",
+    "prerequisites": "Resiliência •"
+  },
+  "h-vtr-agony-ecstasy:spell-swallowing": {
+    "name": "Engolir Feitiços",
+    "description": "Um Estilo de Crúac dos Clíodhna que conjura ritos rapidamente e os consome, absorve magia ritual hostil e, por fim, devora outras formas de feitiçaria sobrenatural.",
+    "prerequisites": "Status no Círculo da Anciã ••; Ocultismo ••"
   }
 }

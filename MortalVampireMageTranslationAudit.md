@@ -24,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
-| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 296 apresentações completas por ID (148 oficiais, 148 Homebrew), 70 níveis; 107 registros restantes, incluindo quatro descrições PT preexistentes ainda não revistas; título PT de Courtoisie aguarda escolha |
+| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 308 apresentações completas por ID (todos os 154 oficiais, 154 Homebrew), todos os 80 níveis; 95 Méritos Homebrew restantes; título PT de Courtoisie aguarda escolha |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
@@ -38,7 +38,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 
 Catálogos em `public/game-lines/vampire/data/`. Bloodlines possuem uma visão de leitura própria usada na página, prévia de ingresso, Maldição da ficha e Homebrew. Ingresso, concessão e remoção continuam recebendo definições canônicas. Todos os 56 registros possuem os campos PT aplicáveis; Desventurados é a apresentação aprovada de Star-Crossed.
 
-Méritos: `merits-vampire-pt` em `merits-pt.json` é carregado junto do catálogo canônico pelo grupo próprio de Vampire, usando o mecanismo de apresentação existente. Criação, XP, ficha e Homebrew recebem o mesmo snapshot. A ficha expandida apresenta requisitos, descrição e níveis adquiridos; nenhuma alocação é criada por essa exibição. Revisar os demais requisitos Brawl/Composure e referências antigas Kindred/Covenant nas traduções parciais; não deduzir elegibilidade por títulos.
+Méritos: `merits-vampire-pt` em `merits-pt.json` é carregado junto do catálogo canônico pelo grupo próprio de Vampire, usando o mecanismo de apresentação existente. Criação, XP, ficha e Homebrew recebem o mesmo snapshot. A ficha expandida apresenta requisitos, descrição e níveis adquiridos; nenhuma alocação é criada por essa exibição. As antigas traduções parciais oficiais e referências Brawl/Composure/Kindred/Covenant foram revistas; não deduzir elegibilidade por títulos.
 
 | Família de poderes | Registros | Níveis internos |
 | --- | ---: | ---: |
@@ -185,10 +185,10 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 
 ## Verificação atual
 
-- **296/403** Méritos Vampire com apresentação completa por ID, 148 oficiais e 148 Homebrew; 70 níveis localizados. A escolha do título Courtoisie permanece aberta acima. O catálogo canônico de 403 Méritos permanece intacto; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
+- **308/403** Méritos Vampire com apresentação completa por ID: todos os 154 oficiais, 154 Homebrew e os 80 níveis do catálogo. Restam 95 Méritos Homebrew; a escolha do título Courtoisie permanece aberta acima. O catálogo canônico de 403 Méritos permanece intacto; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
 - **56 Bloodlines** com PT completo, incluindo Desventurados. IDs, compras, XP, recibos e textos autorais não são reescritos pela troca de idioma.
-- Manifesto `catalogVersion` **72**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire-pt` **14** e `vampire-bloodlines` **13**.
-- Último lote: 20 Méritos Vampire de Vampire 2e e The Wild Hunt (dez oficiais e dez Homebrew), incluindo revisão de apresentações PT antigas e Duelo entre Membros. **40/40** testes de integração EN/PT/EN, identidades, catálogos e arquitetura, lint e build aprovados. Nenhuma mudança de código TypeScript neste lote; o gate anterior segue válido. Referências reutilizam Notário, Movimento Carthiano, Lamento, Matilha, Status dos Membros, Empatia com Animais, Sentidos Vampíricos e Tino. A Rendição Rubra apresenta Fera Desperta após a revisão visual registrada acima; requisitos ingleses e efeitos cadastrados permanecem intactos.
+- Manifesto `catalogVersion` **73**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire-pt` **15** e `vampire-bloodlines` **13**.
+- Último lote: 12 Méritos Vampire de Vampire 2e, The Wild Hunt e Agony & Ecstasy (seis oficiais e seis Homebrew), incluindo dez níveis de Etiqueta e Status no Hototogisu. **40/40** testes de integração EN/PT/EN, identidades, catálogos e arquitetura, lint e build aprovados. Nenhuma mudança de código TypeScript neste lote; o gate anterior segue válido. Referências reutilizam Indomável, Vontade de Ferro, Interdisciplinar, Miasma Primevo, Complicações Ambientais e Resiliência. Hototogisu, Tokyo, The Friday Club e Clíodhna preservam seus nomes próprios. As revisões de apresentações oficiais preexistentes foram concluídas; não se reconstruíram efeitos ou níveis ausentes no canônico.
 - Integração anterior de Especialização Interdisciplinar: **573/573** testes da suíte completa, **8/8** de confirmação final do vínculo, lint, TypeScript e build aprovados, incluindo preservação de bancos/recibos e concessões antigas com XP.
 - As demais correções aprovadas têm estado de aplicação na tabela de decisões respondidas; os catálogos Vampire/Mage e os pontos sem resposta permanecem separados no backlog.
 - Sem smoke de navegador. A suíte completa de encerramento será executada após concluir todo o escopo; gates proporcionais por lote.
