@@ -123,5 +123,116 @@
   "vtr-better-feared:honeycomb": {
     "name": "Favo",
     "description": "Fornece duas saídas para pedestres bem escondidas da Necrópole por ponto."
+  },
+  "vtr-retainer-ghoul": {
+    "name": "Lacaio (Ghoul)",
+    "description": "Use as regras de Lacaio para criar um servo ghoul. Acrescente um ponto das Disciplinas do regente em Lacaio 1-2, um segundo ponto em 3-4 e um terceiro ponto em 5."
+  },
+  "vtr-acute-senses": {
+    "name": "Sentidos Aguçados",
+    "description": "Os sentidos vampíricos são excepcionalmente precisos."
+  },
+  "vtr-altar": {
+    "name": "Altar",
+    "description": "Um local consagrado para práticas do Círculo da Anciã.",
+    "prerequisites": "Status no Círculo da Anciã •"
+  },
+  "vtr-anointed": {
+    "name": "Ungido",
+    "description": "Reconhecimento religioso dentro da Lancea et Sanctum.",
+    "prerequisites": "Status na Lancea et Sanctum •"
+  },
+  "vtr-atrocious": {
+    "name": "Atroz",
+    "description": "A monstruosidade do personagem reforça sua presença predatória."
+  },
+  "vtr-attache": {
+    "name": "Adido",
+    "description": "Experiência em etiqueta, favores e protocolo do Invictus.",
+    "prerequisites": "Status no Invictus •"
+  },
+  "vtr-bloodhound": {
+    "name": "Farejador de Sangue",
+    "description": "Reconhece propriedades sutis do sangue pelo cheiro e sabor."
+  },
+  "vtr-cacophony-savvy": {
+    "name": "Conhecimento da Cacofonia",
+    "description": "Sabe interpretar e utilizar os sinais locais da sociedade vampírica."
+  },
+  "vtr-carthian-pull": {
+    "name": "Influência Carthiana",
+    "description": "Mobiliza contatos e solidariedade dentro do Movimento.",
+    "prerequisites": "Status no Movimento Carthiano •"
+  },
+  "vtr-claws-unholy": {
+    "name": "Garras do Profano",
+    "description": "Torna especialmente perigosas as armas naturais concedidas por Metamorfose.",
+    "prerequisites": "Metamorfose ••••"
+  },
+  "vtr-close-family": {
+    "name": "Família Próxima",
+    "description": "Laços fortes com a linhagem vampírica concedem apoio e reconhecimento."
+  },
+  "vtr-cutthroat": {
+    "name": "Implacável",
+    "description": "Prospera em disputas cruéis da sociedade dos mortos."
+  },
+  "vtr-better-feared:lost-found": {
+    "name": "Achados e Perdidos",
+    "description": "Uma vez por capítulo, vasculha a Necrópole em busca de equipamento defeituoso de Disponibilidade dois ou menos."
+  },
+  "vtr-better-feared:necropolis-arsenal": {
+    "name": "Arsenal da Necrópole",
+    "description": "Fornece acesso a armas cada vez mais perigosas armazenadas na Necrópole."
+  },
+  "vtr-better-feared:bottom-feeder": {
+    "name": "Catador de Restos",
+    "description": "Obtém o dobro de Vitae de animais, cadáveres e sangue armazenado até que a Potência de Sangue atinja 3.",
+    "prerequisites": "Nosferatu; Potência de Sangue •• ou menos"
+  },
+  "vtr-better-feared:dirty-fighting": {
+    "name": "Luta Suja",
+    "description": "Um Estilo brutal de golpes traiçoeiros, ataques direcionados reforçados por Ímpeto, distrações com Ofuscação, mordidas em agarrões e ataques que intimidam inimigos próximos.",
+    "prerequisites": "Raciocínio •••; Briga ••; Subterfúgio ••; Ofuscação •; Ímpeto •"
+  },
+  "vtr-better-feared:ease-the-curse": {
+    "name": "Amenizar a Maldição",
+    "description": "Atenua a Maldição do Clã Nosferatu enquanto a Potência de Sangue permanecer baixa o suficiente e Maldição Potente estiver ausente.",
+    "prerequisites": "Nosferatu; Potência de Sangue 5 ou menos; sem Maldição Potente"
+  },
+  "vtr-better-feared:hidden-rest": {
+    "name": "Repouso Oculto",
+    "description": "Estende um efeito de Ofuscação ativado sobre o cadáver do vampiro durante todo o Sono Diurno.",
+    "prerequisites": "Furtividade ••; Ofuscação •"
+  },
+  "vtr-better-feared:living-expectations": {
+    "name": "Confirmando as Piores Expectativas",
+    "description": "Uma vez por noite, transforma um teste Social mundano fracassado em um sucesso ao corresponder a um estereótipo de Nosferatu; não funciona com outros Nosferatu.",
+    "prerequisites": "Nosferatu"
+  },
+  "vtr-better-feared:master-fright": {
+    "name": "Mestre do Pavor",
+    "description": "Ações mundanas de Empatia e Intimidação que envolvam medo recebem a qualidade de Ação Avançada uma vez por vítima a cada noite.",
+    "prerequisites": "Empatia ••; Intimidação •••"
+  },
+  "vtr-better-feared:shield-self-loathing": {
+    "name": "Escudo do Ódio a Si Mesmo",
+    "description": "Gaste Força de Vontade para suprimir Encantado(Membro) ou Enamorado por uma cena, mas perca 10-novamente nos testes mundanos de Socialização.",
+    "prerequisites": "Nosferatu; Perseverança ••••"
+  },
+  "vtr-better-feared:true-worm": {
+    "name": "Verme Verdadeiro",
+    "description": "A mais de nove metros no subsolo, resiste a Letárgico uma vez por cena em vez de no Sono Diurno; cenas repetidas impõem uma penalidade cumulativa.",
+    "prerequisites": "Nosferatu; Sobrevivência •"
+  },
+  "vtr-better-feared:unliving-anchor": {
+    "name": "Âncora da Não Vida",
+    "description": "Desenvolve uma afinidade com fantasmas: melhora interações diretas, fortalece Manifestações e Numina próximos e recorre a Aliados, Lacaio ou Funcionários fantasmagóricos.",
+    "prerequisites": "Nosferatu; Ocultismo ••"
+  },
+  "vtr-better-feared:unyielding-mask": {
+    "name": "Máscara Inflexível",
+    "description": "Fixa permanentemente uma máscara que melhora uma Perícia Social e pode resistir à coerção dos Membros, ao custo de uma característica corporal chamativa e que pode ser danificada.",
+    "prerequisites": "Nosferatu; Pesadelo •"
   }
 }

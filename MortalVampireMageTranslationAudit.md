@@ -24,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); caption Star-Crossed em consulta |
-| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 24 apresentações completas por ID (12 oficiais, 12 Homebrew), três níveis; 379 registros restantes, incluindo revisão das 50 descrições PT preexistentes |
+| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 48 apresentações completas por ID (24 oficiais, 24 Homebrew), três níveis; 355 registros restantes, incluindo revisão de 39 descrições PT preexistentes |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
@@ -119,6 +119,8 @@ Os cinco pares com efeitos distintos já aprovados recebem qualificadores de lin
 
 ### Referências já localizadas para os próximos catálogos
 
+- Segundo lote de Méritos: Máscara Inflexível segue Mask de Vampire → Máscara; Ímpeto é a Disciplina Vigor, distinta do Atributo Vigor/Stamina; Metamorfose, Pesadelo e Ofuscação reutilizam as apresentações existentes. Maldição Potente, Encantado(Membro) e Letárgico orientam as respectivas Conditions, preservando seus IDs e efeitos.
+
 - Primeiro lote de Méritos Vampire: Notário; Visões Oníricas; Necrópole; Guardiões das Trevas. Preservar Correio da Forca e O Conto de Shahrayad; Friends in Low Places de Vampire usa Amigos em Lugares Baixos com o qualificador Membro. Swooned no texto de Lingering Dreams foi apresentado como Enamorado, sem vincular ou alterar IDs por essa variante textual.
 
 - Vampire Conditions: Bestial, Competitivo, Lascivo, Dependente, Mesmerizado, Falsas Memórias, Lânguido, Letárgico, Tentado, Distraído e Convite. Lânguido (Languid) e Letárgico (Lethargic) permanecem distintos. Jaded/Addiction/Swooning/Drained ainda devem acompanhar seus próprios registros.
@@ -174,8 +176,8 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 
 ## Verificação atual
 
-- Lote atual: 24 apresentações de Méritos Vampire, três níveis e integração pelo novo recurso estático `merits-vampire-pt`. Categorias descritivas localizadas no dicionário da linha; categorias autorais preservadas.
-- Ficha expandida passa a exibir requisitos, descrição e os níveis até a graduação adquirida, inclusive quando há configuração. Não aplica efeitos, não muda XP nem desbloqueia níveis superiores.
-- EN → PT → EN, Homebrew, homônimos e identidade: 12/12 testes dirigidos aprovados; regressão Vampire/i18n: 54/54; catálogos/arquitetura: 34/34. Lint, TypeScript e build aprovados. Catálogo canônico de 403 Méritos, regras e IDs sem alterações. Manifesto `catalogVersion` 51; recurso PT versão 1.
-- Referências Vampire já verificadas: 56 Bloodlines com PT; caption Star-Crossed segue em consulta. Demais poderes, Conditions/presets Vampire e etapa Mage permanecem pendentes.
-- Sem smoke de navegador. Nova suíte completa de encerramento deverá ser executada após concluir o escopo; os gates dos lotes são proporcionais.
+- **48/403** Méritos Vampire com apresentação completa por ID, 24 oficiais e 24 Homebrew; três níveis localizados. O segundo lote revisa 12 registros do livro básico e acrescenta 12 Homebrew de Better Feared, sem reconstruir campos ausentes.
+- Catálogo canônico de 403 registros e as 24 apresentações anteriores preservados integralmente. Manifesto `catalogVersion` 52; recurso `merits-vampire-pt` versão 2. Nomes, IDs, regras, alocações, XP e textos autorais não são reescritos.
+- Gates do lote corrente aprovados: 6/6 testes de integração EN → PT → EN e identidade de Méritos, 34/34 de catálogos/arquitetura, lint, TypeScript e build. O catálogo canônico de 403 Méritos e as 24 apresentações do lote anterior permanecem intactos. A suíte completa fica para o gate final da meta.
+- Referências Vampire já verificadas: 56 Bloodlines com PT; caption Star-Crossed segue em consulta. Demais Méritos, poderes, Conditions/presets Vampire e etapa Mage permanecem pendentes.
+- Sem smoke de navegador. Nova suíte completa de encerramento deverá ser executada após concluir o escopo; gates proporcionais por lote.
