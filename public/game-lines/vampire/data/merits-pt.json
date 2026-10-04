@@ -1125,5 +1125,110 @@
     "name": "Onividente",
     "description": "Uma vez por noite, gaste Vitae para intensificar a observação além da percepção habitual dos Mekhet.",
     "prerequisites": "Mekhet; Raciocínio •••"
+  },
+  "vtr-sotc:laity": {
+    "name": "Laicato",
+    "description": "Alguém de fora recebe reconhecimento limitado entre os Santificados e um favor, convertendo o Mérito em Status ao ingressar formalmente.",
+    "prerequisites": "Não ser membro da Lancea et Sanctum"
+  },
+  "vtr-sotc:sanctuary": {
+    "name": "Santuário",
+    "description": "Confina um Lacaio criminoso •••• por ponto em um Local Seguro, exigindo manutenção, mas fornecendo alimentação controlada.",
+    "prerequisites": "Status na Cidade ••; Status na Lancea et Sanctum ••; Local Seguro •"
+  },
+  "vtr-sotc:sorcerous-eunuch": {
+    "name": "Eunuco Feiticeiro",
+    "description": "Magia sobrenatural que tenha o personagem como alvo sofre uma penalidade baseada em Perseverança, mas o personagem nunca pode aprender Feitiçaria de Sangue.",
+    "prerequisites": "Perseverança •••"
+  },
+  "vtr-sotc:stigmata": {
+    "name": "Estigmas",
+    "description": "Sangra Vitae ou sangue sagrados a cada semana, fortalecendo quem se alimenta e a Feitiçaria Tebana, mas causando ferimentos recorrentes.",
+    "prerequisites": "Humanidade de pelo menos a pontuação deste Mérito + 3, ou mortal"
+  },
+  "vtr-sotc:temple-of-damnation": {
+    "name": "Templo da Danação",
+    "description": "Um Local Seguro dedicado apoia ações alinhadas à sua doutrina e permite que os fiéis recebam bênçãos e sejam alvos de Feitiçaria Tebana à distância.",
+    "prerequisites": "Local Seguro de pontuação igual ou maior à deste Mérito"
+  },
+  "vtr-sotc:independent-study": {
+    "name": "Estudo Independente",
+    "description": "Alguém de fora recebe reconhecimento limitado na Ordem e um favor, convertendo o Mérito em Status ao ingressar formalmente.",
+    "prerequisites": "Não ser membro da Ordo Dracul"
+  },
+  "vtr-sotc:nest-guardian": {
+    "name": "Guardião do Ninho",
+    "description": "Concede acesso confiável a um Ninho do Dragão e soma a pontuação à percepção dentro de seus limites.",
+    "prerequisites": "Acesso a um Ninho do Dragão de pontuação igual ou maior"
+  },
+  "vtr-sotc:rites-of-the-impaled": {
+    "name": "Ritos do Empalado",
+    "description": "Um Estilo de combate que transforma a dor em poder, adia o torpor e contra-ataca usando o próprio ímpeto do atacante.",
+    "prerequisites": "Perseverança •••; Vigor •••; Armas Brancas ••; Juramentado •",
+    "levels": [
+      { "rating": 1, "name": "Paixão pela Dor", "description": "Inverta as penalidades de ferimento, transformando-as em bônus." },
+      { "rating": 2, "name": "Além dos Limites", "description": "Não entre em torpor por ter o marcador de Vitalidade preenchido com dano letal, a menos que o dano agravado alcance a Perseverança." },
+      { "rating": 3, "name": "Ação/Reação", "description": "Após sofrer dano, gaste Força de Vontade e a próxima ação para contra-atacar usando os sucessos do atacante e ignorando a Defesa." }
+    ]
+  },
+  "vtr-sotc:twilight-judge": {
+    "name": "Juiz do Crepúsculo",
+    "description": "Emite decisões da Ordo com autoridade respaldada por Status e recebe um poderoso Mentor dentro da Coalizão.",
+    "prerequisites": "Status na Ordo Dracul ••••"
+  },
+  "vtr-sotc:chapterhouse": {
+    "name": "Casa Capitular",
+    "description": "Dentro do Ninho, soma a pontuação para resistir ao frenesi ou encerrar uma ação violenta e a subtrai das tentativas de Incitar a Fera.",
+    "prerequisites": "Guardião do Ninho •; Status na Ordo Dracul •••"
+  },
+  "vtr-strange-shades:aporia": {
+    "name": "Aporia",
+    "description": "Usa a dúvida exercitada e a retórica para abalar a certeza de outra pessoa.",
+    "prerequisites": "Engabelar •••"
+  },
+  "vtr-strange-shades:cocoon": {
+    "name": "Casulo",
+    "description": "Cultiva um refúgio repleto de aranhas que protege o local de repouso e os segredos de um Mekhet.",
+    "prerequisites": "Mekhet; Empatia com Animais •; Local Seguro •"
+  },
+  "vtr-strange-shades:conspiracy-savant": {
+    "name": "Prodígio das Conspirações",
+    "description": "Encontra padrões significativos em informações fragmentadas e coincidências aparentes.",
+    "prerequisites": "Raciocínio ••"
+  },
+  "vtr-strange-shades:doll-face": {
+    "name": "Rosto de Boneca",
+    "description": "Um Mekhet desperta do Sono Diurno com o corpo cadavérico ainda sobrenaturalmente impecável.",
+    "prerequisites": "Mekhet"
+  },
+  "vtr-strange-shades:haven-occultation": {
+    "name": "Ocultação do Refúgio",
+    "description": "Estende a obscuridade do Sombra a um Local Seguro, tornando difícil que pessoas de fora percebam o refúgio ou se lembrem dele.",
+    "prerequisites": "Mekhet ou Culto das Sombras; Local Seguro •"
+  },
+  "vtr-strange-shades:holistic-detective": {
+    "name": "Detetive Holístico",
+    "description": "Aplica de forma abrangente uma Especialização Mental escolhida ao reconstruir uma investigação.",
+    "prerequisites": "Investigação •••; uma Especialização em Perícia Mental"
+  },
+  "vtr-strange-shades:hypnosis": {
+    "name": "Hipnose",
+    "description": "Usa uma técnica mundana de hipnose para colocar alguém disposto ou vulnerável em um estado de sugestionabilidade.",
+    "prerequisites": "Manipulação •••; Medicina •• ou Ocultismo ••"
+  },
+  "vtr-strange-shades:masquer": {
+    "name": "Mascarado",
+    "description": "Adota personas convincentes e extrai força de agir de forma coerente com o papel assumido.",
+    "prerequisites": "Mekhet; Subterfúgio ••••"
+  },
+  "vtr-strange-shades:occultation": {
+    "name": "Ocultação",
+    "description": "Move-se pela sociedade como uma sombra esquecível, reduzindo a atenção recebida e as lembranças posteriores.",
+    "prerequisites": "Mekhet; Furtividade •"
+  },
+  "vtr-strange-shades:speed-of-thought": {
+    "name": "Velocidade do Pensamento",
+    "description": "Aplica velocidade sobrenatural à análise rápida e a outros trabalhos mentais baseados em Inteligência.",
+    "prerequisites": "Mekhet; Inteligência •••"
   }
 }
