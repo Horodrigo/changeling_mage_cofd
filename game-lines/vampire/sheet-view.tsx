@@ -1,5 +1,6 @@
 "use client";
 import { vampireAnchorPresentation, vampireBloodlinePresentation, vampireClanPresentation } from "./reference-presentation";
+import { vampirePowerPresentation } from "./power-presentation";
 
 import { type ReactNode, useEffect, useState } from "react";
 import { Link2, Plus, Trash2 } from "lucide-react";
@@ -1914,7 +1915,8 @@ function DisciplineCards({
   ];
   return (
     <div className="vampire-power-grid">
-      {selected.map(({ item, rating }) => {
+      {selected.map(({ item: definition, rating }) => {
+        const item = vampirePowerPresentation(definition, locale);
         return (
           <details
             className="rule-power-card vampire-discipline-card"
@@ -1931,6 +1933,7 @@ function DisciplineCards({
               <PowerMechanics mechanics={item} />
               {(item.levels ?? [])
                 .filter((level) => level.rating <= rating)
+                .map((level) => vampirePowerPresentation(level, locale))
                 .map((level) => (
                   <details
                     className="rule-power-card vampire-discipline-level"
@@ -2016,13 +2019,14 @@ function DisciplineCards({
 }
 
 function PowerMechanics({
-  mechanics,
+  mechanics: definition,
   compact = false,
 }: {
   mechanics: VampireMechanics;
   compact?: boolean;
 }) {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
+  const mechanics = vampirePowerPresentation(definition, locale);
   const rows: Array<[string, string | number | undefined]> = [
     [t("ui.cost"), mechanics.cost],
     [t("ui.requirement"), mechanics.requirement],

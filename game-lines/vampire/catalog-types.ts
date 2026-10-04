@@ -123,6 +123,11 @@ export type VampireRuleEffect = {
 };
 
 export type VampireMechanics = {
+  presentationPt?: Partial<Pick<VampireMechanics,
+    "cost" | "requirement" | "condition" | "dicePool" | "action" | "duration" |
+    "contestedBy" | "resistedBy" | "sacrament" | "effect" | "procedure" | "outcome" |
+    "rollResults" | "suggestedModifiers"
+  >> & { summary?: string; prerequisites?: string; statusRequirement?: string; humanityCapFormula?: string };
   cost?: string;
   requirement?: string;
   condition?: string;

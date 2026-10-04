@@ -32,6 +32,7 @@ import { vampireExperienceLabel, type VampireExperienceEntry } from "./experienc
 import { activeVampirePowers, vampireHomebrewContentActive } from "./homebrew-catalog";
 import { mergeVampirePowers, mergeVampireReference } from "./catalog-homebrews";
 import { useVampireCatalogHomebrews } from "./use-catalog-homebrews";
+import { vampirePowerPresentation } from "./power-presentation";
 
 type PurchaseType = "attribute" | "skill" | "specialty" | "merit" | "discipline" | "blood-potency" | "humanity" | "willpower" | "devotion" | "lash" | "cruac" | "theban" | "kimiya" | "therion" | "gilded" | "rite" | "miracle" | "formula" | "sacrilege" | "invocation" | "detournement" | "coil" | "scale";
 type HistoryEntry = VampireExperienceEntry;
@@ -226,7 +227,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const freePowerSelections = ritualPurchase ? freeBloodSorcerySelections(freePowerCatalog, knownRites, freePowerIds, ratedCurrent, intendedRating, selectedRitualDiscipline?.id === "theban" ? Number(character.line_data.humanity ?? 7) : selectedRitualDiscipline?.id === "therion" ? Math.max(0, Number(character.line_data.humanity ?? 7) - 1) : 10) : [];
   const chosen = chosenOption;
   const selectedPower = [...powers.devotions, ...bloodTetherLashes, ...powers.cruacRites, ...powers.thebanMiracles, ...powers.kimiyaFormulae, ...powers.therionSacrileges, ...powers.gildedInvocations, ...powers.detournements, ...powers.coils, ...powers.scales].find((item) => item.id === chosen);
-  const mechanicsDetails = (item: VampireMechanics & { prerequisites?: string; experienceCost?: number }, prerequisitesMet = true) => {
+  const mechanicsDetails = (definition: VampireMechanics & { prerequisites?: string; experienceCost?: number }, prerequisitesMet = true) => {
+    const item = vampirePowerPresentation(definition, locale);
     const rows: Array<{ label: string; value: string; warning?: boolean }> = [];
     const add = (label: string, value: unknown, warning = false) => { if (value !== undefined && value !== "") rows.push({ label, value: String(value), warning }); };
     add(t("ui.prerequisites"), item.prerequisites, !prerequisitesMet);
@@ -245,10 +247,11 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     const item = powers.disciplines.find((definition) => definition.name === option.value);
     const ritual = powers.ritualDisciplines.find((definition) => definition.id === option.value);
     const coil = powers.coils.find((definition) => definition.id === option.value);
-    const definition = item ?? ritual ?? coil;
-    if (!definition) return [];
+    const canonical = item ?? ritual ?? coil;
+    if (!canonical) return [];
+    const definition = vampirePowerPresentation(canonical, locale);
     const category = item?.bloodlineId ? t("sheet.bloodline") : item?.covenantIds?.length || ritual || coil ? t("sheet.covenant") : clan?.disciplines.includes(item!.name) ? t("ui.clan") : t("ui.otherDisciplines");
-    const levels = "levels" in definition && definition.levels ? definition.levels.map((level) => ({ label: `${"•".repeat(level.rating)} ${locale === "pt-BR" ? level.translatedName : level.name}`, value: [level.summary, ...mechanicsDetails(level).map(({ label, value }) => `${label}: ${value}`)].join(" · ") })) : [];
+    const levels = "levels" in definition && definition.levels ? definition.levels.map((level) => vampirePowerPresentation(level, locale)).map((level) => ({ label: `${"•".repeat(level.rating)} ${locale === "pt-BR" ? level.translatedName : level.name}`, value: [level.summary, ...mechanicsDetails(level).map(({ label, value }) => `${label}: ${value}`)].join(" · ") })) : [];
     return [{ id: option.value, name: option.label, category, description: definition.summary, meta: `${definition.source} · p. ${definition.page || "—"}`, details: mechanicsDetails(definition), levels }];
   }) : [];
   const devotionPickerItems = purchase === "devotion" ? options.flatMap((option) => {

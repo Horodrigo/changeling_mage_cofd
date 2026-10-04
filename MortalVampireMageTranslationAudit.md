@@ -25,7 +25,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
 | V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | Apresentações completas e nove erratas ativadas verificadas; correções de fonte ainda sem resposta permanecem separadas abaixo |
-| V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
+| V05 — Poderes | 546 registros, 140 níveis internos | Animalismo e Verdades de Erebus: dois registros e dez níveis com PT verificado. Restam 544 registros e 130 níveis |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
 | G01 — Spells | 360 | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
@@ -54,6 +54,8 @@ Méritos: `merits-vampire-pt` em `merits-pt.json` é carregado junto do catálog
 | Detournements | 5 | — |
 | Coils | 6 | 30 |
 | Scales | 19 | — |
+
+Poderes e níveis usam `presentationPt` estático e a visão de leitura própria `power-presentation.ts`; regras continuam recebendo os campos canônicos. Primeiro lote: Animalismo (Vampire pp. 126–128) e Verdades de Erebus (Better Feared pp. 52–53), revisados visualmente. Nome descritivo da segunda Disciplina acompanha a referência Lygos já traduzida; Erebus e Dwellers Below permanecem originais. Sated será apresentado como **Saciado** nas referências e no catálogo de Conditions.
 
 Traduzir resumo, efeito, custo, parada, ação, duração, resultados, modificadores, procedimento, Sacrament, requisitos e opções **quando existentes**; não inventar conteúdo ausente. Breaking Points estão em `game-lines/vampire/catalog-data/detachment.json` (41 entradas e `vastDynastyEmbrace`); presets em `shadow-cults.json`.
 
@@ -193,7 +195,8 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 
 - **403/403** Méritos Vampire com apresentação completa por ID: 154 oficiais, 249 Homebrew e os 80 níveis do catálogo. Todos os campos existentes e 80 níveis apresentados; Courtoisie permanece no francês, conforme escolha aprovada. As nove erratas ativadas preservam campos herdados e identidades canônicas, incluindo escolhas antigas com nome/fonte originais. O catálogo canônico conserva identidades e efeitos, salvo as correções aprovadas de Agony & Ecstasy; poderes/Conditions/presets e a etapa Mage seguem no backlog.
 - **56 Bloodlines** com PT completo, incluindo Desventurados. IDs, compras, XP, recibos e textos autorais não são reescritos pela troca de idioma.
-- Manifesto `catalogVersion` **80**; recursos Core de Méritos nas versões **15/16**, Changeling nas versões **6/8**, `merits-vampire` **13**, `merits-vampire-pt` **21** e `vampire-bloodlines` **13**.
-- Último lote: 18 registros finais de Méritos Vampire: sete Leis Carthianas, nove erratas e dois registros opcionais apenas de referência. A composição de erratas preserva requisitos/níveis PT herdados quando seus campos canônicos não são substituídos e a fonte original em referências adicionais; o bridge schema-2 exige nome canônico e fonte exatos, sem reescrever compras. Substituições autorais sem PT conservam seu texto. **79/79** testes dirigidos e **577/577** da suíte completa aprovados, além de lint, TypeScript e build.
+- Manifesto `catalogVersion` **81**; recursos Core de Méritos nas versões **15/16**, Changeling nas versões **6/8**, `merits-vampire` **13**, `merits-vampire-pt` **21**, `vampire-bloodlines` **13** e `vampire-powers` **27**.
+- Méritos Vampire concluídos: **79/79** testes dirigidos e **577/577** da suíte completa aprovados, além de lint, TypeScript e build. Erratas preservam fontes originais e campos PT herdados; substituições autorais sem PT conservam seu texto.
+- Último lote: Animalismo e Verdades de Erebus, com dez níveis e todos os campos existentes. Integração EN/PT/EN de criação, XP, cards compartilhados Desktop/Mobile e Homebrew aprovada; níveis ainda não adquiridos permanecem ocultos na ficha. Comparação dos 546 registros/140 níveis com o commit anterior confirma campos canônicos intactos. **77/77** testes dirigidos, lint, TypeScript e build aprovados.
 - As demais correções aprovadas têm estado de aplicação na tabela de decisões respondidas; os catálogos Vampire/Mage e os pontos sem resposta permanecem separados no backlog.
 - Sem smoke de navegador. A suíte completa de encerramento será executada após concluir todo o escopo; gates proporcionais por lote.
