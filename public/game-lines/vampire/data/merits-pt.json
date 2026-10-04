@@ -1602,5 +1602,102 @@
     "name": "Engolir Feitiços",
     "description": "Um Estilo de Crúac dos Clíodhna que conjura ritos rapidamente e os consome, absorve magia ritual hostil e, por fim, devora outras formas de feitiçaria sobrenatural.",
     "prerequisites": "Status no Círculo da Anciã ••; Ocultismo ••"
+  },
+  "h-vtr-agony-ecstasy:neidan-gu": {
+    "name": "Neidan Gu",
+    "description": "Um Estilo de Crúac dos Jiju que substitui cerimônias externas por alquimia interior, envenena vítimas por meio de ritos e torna tóxica a Vitae do ritualista.",
+    "prerequisites": "Status no Círculo da Anciã ••; Ofícios ••"
+  },
+  "h-vtr-agony-ecstasy:uncaged-indulgence": {
+    "name": "Indulgência Sem Freios",
+    "description": "Um Estilo de Crúac dos Maenads que transforma excesso coletivo, fome e frenesi em poder ritual, deixando o conjurador Tentado.",
+    "prerequisites": "Status no Círculo da Anciã ••; Expressão ••"
+  },
+  "h-vtr-agony-ecstasy:unconscious-alignment": {
+    "name": "Alinhamento Inconsciente",
+    "description": "Um Estilo de Crúac dos Syzygists que alinha ritos a sonhos e presságios celestes para alterar o momento de aplicação, a escolha de alvos e a percepção profética.",
+    "prerequisites": "Status no Círculo da Anciã ••; Erudição ••"
+  },
+  "h-vtr-agony-ecstasy:annis-bite": {
+    "name": "Mordida de Annis",
+    "description": "Transforma a mordida do Acólito em um instrumento predatório e ritual mais temível."
+  },
+  "h-vtr-agony-ecstasy:apothecary": {
+    "name": "Boticário",
+    "description": "Um Estilo para destilar ritos de Crúac em poções, melhorando seu armazenamento, compartilhamento, potência e alcance simpático.",
+    "prerequisites": "Poção da Bruxa; Ofícios ou Ciência •••"
+  },
+  "h-vtr-agony-ecstasy:athame": {
+    "name": "Athame",
+    "description": "Consagra uma lâmina ritual que auxilia a feitiçaria de sangue e retém o significado de seus sacrifícios."
+  },
+  "h-vtr-agony-ecstasy:banshee": {
+    "name": "Banshee",
+    "description": "Permite a conjuração rápida e perigosa de Crúac com um grito ritual de lamentação.",
+    "prerequisites": "Ocultismo •••; Crúac ••"
+  },
+  "h-vtr-agony-ecstasy:blood-cult": {
+    "name": "Culto de Sangue",
+    "description": "Representa um culto mortal que fornece pontos combinados de Lacaio e Funcionários iguais ao dobro do Rebanho do vampiro.",
+    "prerequisites": "Status no Círculo da Anciã ••"
+  },
+  "h-vtr-agony-ecstasy:closer-family": {
+    "name": "Família Ainda Mais Próxima",
+    "description": "Aprofunda, por meio de Crúac, a conexão sobrenatural criada por Família Próxima.",
+    "prerequisites": "Família Próxima; Crúac ••"
+  },
+  "h-vtr-agony-ecstasy:conflict-of-faith": {
+    "name": "Conflito de Fé",
+    "description": "Permite que um Acólito mantenha um segundo voto religioso ao enfrentar Pontos de Ruptura pertinentes."
+  },
+  "h-vtr-agony-ecstasy:hag-blood": {
+    "name": "Sangue da Megera",
+    "description": "Permite que um carniçal use sangue derramado com dano letal no lugar de Vitae em ritos de Crúac, embora o ritualista que conduz o rito ainda deva fornecer a primeira Vitae normalmente.",
+    "prerequisites": "Carniçal"
+  },
+  "h-vtr-agony-ecstasy:hunting-party": {
+    "name": "Grupo de Caça",
+    "description": "Coordena a alimentação em grupo para que os vampiros participantes cacem com mais eficácia e compartilhem os benefícios resultantes.",
+    "prerequisites": "Status no Círculo da Anciã ••"
+  },
+  "h-vtr-agony-ecstasy:infectious-aura": {
+    "name": "Aura Contagiosa",
+    "description": "Torna contagiosa a Aura Predatória do vampiro, deixando um vínculo emocional sobrenatural com as vítimas afetadas.",
+    "prerequisites": "Ocultismo •••; Humanidade 6 ou menor"
+  },
+  "h-vtr-agony-ecstasy:master-s-shadow": {
+    "name": "Sombra do Mestre",
+    "description": "Fortalece o vínculo sobrenatural de um Guardião com uma fera ou um protegido escolhido.",
+    "prerequisites": "Guardião ou Empatia com Animais •••"
+  },
+  "h-vtr-agony-ecstasy:mythologist-advanced": {
+    "name": "Mitólogo (Avançado)",
+    "description": "Amplia Mitólogo para que o conhecimento prático de mitos melhore o uso de Crúac.",
+    "prerequisites": "Mitólogo; Crúac •"
+  },
+  "h-vtr-agony-ecstasy:older-than-i-look": {
+    "name": "Mais Velho do Que Pareço",
+    "description": "Um vampiro Abraçado quando criança ou adolescente tira proveito do contraste perturbador entre sua idade aparente e a real.",
+    "prerequisites": "Intimidação ••; Abraçado quando criança ou adolescente"
+  },
+  "h-vtr-agony-ecstasy:sacrificial-inurement": {
+    "name": "Habituação ao Sacrifício",
+    "description": "Reduz o impacto emocional e mecânico de sacrifícios rituais repetidos.",
+    "prerequisites": "Perseverança •••; Humanidade 6 ou menor"
+  },
+  "h-vtr-agony-ecstasy:sustaining-the-pack": {
+    "name": "Sustentar a Matilha",
+    "description": "Sustenta uma matilha coordenada por meio da caça e do sangue compartilhados.",
+    "prerequisites": "Empatia com Animais •••"
+  },
+  "h-vtr-agony-ecstasy:temple": {
+    "name": "Templo",
+    "description": "Estabelece um templo compartilhado de Acólitos cuja pontuação beneficia os ritos da Coalizão e seus colaboradores.",
+    "prerequisites": "Altar; Status no Círculo da Anciã ••; Local Seguro •"
+  },
+  "h-vtr-agony-ecstasy:red-vein-of-fate": {
+    "name": "Veia Rubra do Destino",
+    "description": "Lê o curso oculto do sangue e do destino por meio de Crúac.",
+    "prerequisites": "Crúac ••"
   }
 }

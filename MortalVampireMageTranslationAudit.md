@@ -24,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
-| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 308 apresentações completas por ID (todos os 154 oficiais, 154 Homebrew), todos os 80 níveis; 95 Méritos Homebrew restantes; título PT de Courtoisie aguarda escolha |
+| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 328 apresentações completas por ID (todos os 154 oficiais, 174 Homebrew), todos os 80 níveis; 75 Méritos Homebrew restantes; Courtoisie preservado conforme resposta do usuário |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
@@ -92,6 +92,7 @@ Decisões atuais prevalecem sobre propostas antigas. As traduções já concluí
 - Mystery Cult Initiation → **Iniciação em Culto dos Mistérios**, uniformização escolhida explicitamente pelo usuário em **2026-10-04** para catálogo, referências e interface. Substitui a forma singular anterior desse Mérito nos anexos; não altera sua identidade, concessões ou níveis.
 - Melee e Weaponry designam a mesma Perícia, por decisão explícita de **2026-10-04**: apresentar o rótulo da ficha, **Weaponry** em EN e **Armas Brancas** em PT, quando esses termos designarem a Perícia. Não criar outro ID de Perícia.
 - Numina permanece **Numina**. Nomes de Perícias seguem o dicionário atual, incluindo **Empatia com Animais**; não usar propostas antigas para substituir rótulos vigentes.
+- Chapter e session são equivalentes em todos os conflitos, por decisão ampliada de 2026-10-04. Apresentar **sessão**, conservando limites, IDs e a entrada canônica dos parsers.
 - Escolhas explícitas de 2026-10-04: oddments → **esquisitices**; Dread Power → **Poder Terrível**; Fighting Finesse → **Destreza em Combate**; Shiv → **Estilete**; Fast-Talking → **Engabelar**; Mastermind → **Topo da Pirâmide**. Mastermind nomeia o quinto nível dos registros de culto e não concede o Mérito Mentor por si só.
 
 | Contexto | Inglês → apresentação PT |
@@ -126,6 +127,7 @@ Os cinco pares com efeitos distintos já aprovados recebem qualificadores de lin
 
 - Vampire Conditions: Bestial, Competitivo, Lascivo, Dependente, Mesmerizado, Falsas Memórias, Lânguido, Letárgico, Tentado, Distraído e Convite. Subserviente traduz Subservient na referência de Kerberos; Intoxicado e Assustado traduzem Intoxicated e Frightened nas referências de Kingjan, sem criar identidade por nome. Lânguido (Languid) e Letárgico (Lethargic) permanecem distintos. Jaded/Addiction/Swooning/Drained ainda devem acompanhar seus próprios registros.
 - Mage Conditions: Megalomaniacal/Rampant ainda aguardam seu catálogo; Húbris resolve seus IDs. Não criar uma tabela mecânica paralela.
+- Vampire referências de Agony & Ecstasy: Poção da Bruxa traduz Witch's Brew; Guardião traduz Warden em Sombra do Mestre. Essas apresentações não criam identidades nem efeitos por nome.
 - Vampire poderes/Méritos: Meada de Clotho; Amigos no Exterior; Fome Intensificada; Coração Sombrio; Feudo Amaldiçoado; Fama (Avançada); Escola de Etiqueta; Crúac Banshee; Ouvidos para a Fera; O Veículo; Cerne (Heartwood de Yarilo, distinto da categoria Crux de Penhores); Unção; As Delícias; Riqueza Herdada; Verdades de Erebus; Lições de Erebus; Conheça Seu Público; Grilhão de Sangue; Sangue dos Relutantes; Sem Presas; Surto Elétrico; Parentesco Insetoide; Mente de Colmeia; Semblante Perdido; Apofenia; Pareidolia; Dementação. Cirurgia Arthmoic conserva a grafia técnica cadastrada.
 - Coalizões: Evolução Triádica, Juramentos do Invictus, Código do Carrasco, O Conto de Shahrayad, Fachada, Cisma, Cripta/Saída, Atendente da Sepultura, Explorador Sagrado, Tocado por Mary e Visão Arcana. Detournement, Therion, Kimiya e Manteia mantêm a forma cadastrada.
 - Referências para próximos catálogos: Embrocação traduz Embrocation, distinta de Anointment → Unção; não presume identidade ou equivalência de efeitos. Bode Expiatório também nomeia o Lamento Whipping Boy. Occultation recebe Ocultação na apresentação de Vampire; Mage deve acompanhar o título com seu próprio qualificador, preservando as duas definições distintas.
@@ -159,37 +161,38 @@ Estes pontos **já receberam resposta**. As mudanças abaixo ainda precisam de a
 | Bless Amulet — Hurt Locker pp. 72–73 | **Usar o livro**: dia por sucesso; semana com dois pontos; permanente com três. | Resumos EN/PT corrigidos após revisão visual de Hurt Locker pp. 72–73: um ponto de Força de Vontade, objeto significativo, proteção por dia por sucesso, semana com dois pontos e permanente com três. Gates aprovados. |
 | Ground Fighter — Hurt Locker p. 54 | **Usar o livro**. | Revisão visual de Hurt Locker p. 54 mostra Brawl 2, não 3 como constava na auditoria antiga. Catálogo já coincide com o PDF; requisito preservado e anotação antiga corrigida. |
 | Vaulting Defense — Hurt Locker p. 52 | **Melee = Weaponry; usar o termo da ficha**. | Resumo EN usa Weaponry e PT usa Armas Brancas; ID, pontuação e efeito preservados. Gates aprovados. |
+| Punch Drunk — Hurt Locker p. 43 | **Explicar o mínimo do livro**. | Revisão visual confirma Força de Vontade 6 ou mais. O parser já trata seis pontos como mínimo (`>= 6`); não há divergência de elegibilidade. Anotação antiga encerrada. |
 | Object Fetishism — Hurt Locker p. 42 | **Chapter = Session**. | Conservar sessão no resumo; divergência terminológica encerrada. |
-| Uncaged Indulgence / Unconscious Alignment — Agony & Ecstasy pp. 72 e 74 | **Corrigir conforme o PDF local**. | Revisão visual confirma Expression 2/p. 72 e Academics 2/p. 74. Requisitos e páginas canônicos corrigidos, preservando IDs e o tratamento descritivo existente. 41/41 testes de integração EN/PT/EN, identidade, catálogos e arquitetura, lint e build aprovados; apresentação PT no próximo lote. |
+| Uncaged Indulgence / Unconscious Alignment — Agony & Ecstasy pp. 72 e 74 | **Corrigir conforme o PDF local**. | Revisão visual confirma Expression 2/p. 72 e Academics 2/p. 74. Requisitos e páginas canônicos corrigidos, preservando IDs e o tratamento descritivo existente. 41/41 testes de integração EN/PT/EN, identidade, catálogos e arquitetura, lint e build aprovados; apresentação PT aplicada no lote seguinte. |
+
+| Courtoisie — Secrets of the Covenants p. 187 | **Preservar Courtoisie do francês**. | A apresentação existente já coincide; decisão encerrada. |
+| Glamour Fasting / Market Sense e demais catálogos | **Sessão e capítulo são equivalentes em todos os conflitos encontrados**. | Decisão ampliada pelo usuário; uniformizar a apresentação para sessão nos próximos lotes, sem alterar durações nem IDs. Os dois registros já usam sessão. |
+| Mounted Combat — Hurt Locker p. 51 | **Preferir o valor do livro**. | Correção autorizada de Animal Ken 3 para 2; aplicação e gates pendentes. |
+| Bowmanship / Falconry — Hurt Locker pp. 47–49 | **Textos do livro fornecidos pelo usuário**. | Completar resumos EN/PT, requisitos e manobras com os limites fornecidos; aplicação e gates pendentes. Não criar automações de combate por tradução. |
+| Book of Courts — Get the Manager, Can't Spook a Spooker, GTFO, Shivers, Snow Cover | **Não presumir nem substituir acesso**. | Conservar as regras e alternativas cadastradas; encerrado. |
+| Book of Courts — Acquired Taste | **Permite múltiplas instâncias**. | Metadado canônico já declara `repeatable: true`; verificar os fluxos de instância existentes, preservando configuração e XP. |
+| Book of Seemings — Hidden Life | **Conservar a comparação atual**. | Encerrado; não unificar Manto, Boa Vontade e Status. |
+| Book of Seemings — Meat Shield: Remember Me? | **Presence + Intimidation contra Resolve + Composure do oponente**. | Completar a resistência no resumo EN/PT; aplicação e gates pendentes. |
+| Book of Seemings — Material Affinity | **Ação Avançada é distinta da qualidade de Rotina**. | Conservar Ação Avançada; encerrado. |
 
 ## Pontos ainda sem resposta ou auditoria concluída
 
-A lista abaixo exclui as decisões respondidas acima. As referências foram registradas em lotes anteriores, sem alegar nova revisão de PDFs. Não corrigir por tradução ou por inferência.
+A lista abaixo exclui as decisões respondidas acima; Swarm Form, Choke Hold e Curse Effigy receberam pedidos de esclarecimento, não aprovação de mudanças. As referências foram registradas em lotes anteriores, sem alegar nova revisão de PDFs. Não corrigir por tradução ou por inferência.
 
 | Registro / fonte | Trabalho ainda não respondido |
 | --- | --- |
-| Courtoisie — Secrets of the Covenants p. 187 | Pergunta de apresentação enviada: localizar o título francês do Estilo como **Cortesia** ou preservar **Courtoisie**. A apresentação conserva Courtoisie enquanto aguarda a escolha; IDs e efeitos não dependem desse título. |
-| Swarm Form — Vampire p. 114 | Referência cadastrada Shape of the Beast (Forma da Fera) não consta do catálogo atual de Metamorfose. Não substituir por Beast's Skin ou mudar o requisito sem verificar a fonte. |
-| Choke Hold — Core p. 61 | O −2 cumulativo aplica-se apenas a Cheap Shot, conforme confirmação do usuário. Permanecem sem decisão os limites omitidos: limiar maior que duas vezes Vigor e duração 6 − Vigor minutos. |
-| Glamour Fasting / Market Sense | Catálogo usa sessão; livro usa capítulo. A equivalência aprovada para os Méritos nomeados acima não foi estendida automaticamente a estes registros. |
-| Punch Drunk — Hurt Locker p. 43 | Catálogo registra seis pontos de Willpower sem explicitar o mínimo do livro. |
-| Curse Effigy | Parada letal sem agrupar a resistência: Intelligence + Medicine − Stamina + Supernatural Tolerance. Agrupamento/elegibilidade requerem auditoria. |
-| Mounted Combat — Hurt Locker p. 51 | Animal Ken 3 no catálogo, Animal Ken 2 no livro. |
-| Bowmanship / Falconry e demais resumos Hurt Locker | Limiares, durações, modificadores e desvantagens ausentes não foram reconstruídos. |
-| Book of Courts — Get the Manager, Can't Spook a Spooker, GTFO, Shivers, Snow Cover | Manto é repetido após alternativa de Boa Vontade; não presumir dispensa nem substituir acesso por limiares de Contratos de Corte. |
-| Book of Courts — Acquired Taste | Aquisição separada por tipo sobrenatural; tradução não redefine instâncias/configuração. |
-| Book of Seemings — Hidden Life | Comparação de custo entre Manto, Boa Vontade e Status preservada, sem unificar mecânicas. |
-| Book of Seemings — Meat Shield: Remember Me? | Resumo omite parada de resistência do atacante. |
-| Book of Seemings — Material Affinity | Ação Avançada preservada; não substituída por qualidade de rotina. |
+| Swarm Form — Vampire p. 114 | O registro já é um Mérito. A dúvida era somente sobre a referência cadastrada Shape of the Beast (Forma da Fera). Revisão visual de Vampire p. 114 confirma Beast's Skin e Metamorfose 3, mas o catálogo exige 4. Pergunta enviada para corrigir referência/requisito conforme o livro ou conservar o registro. |
+| Choke Hold — Core p. 61 | O −2 cumulativo aplica-se apenas a Cheap Shot, conforme confirmação do usuário. Core p. 61 revisado visualmente: o resumo omite limiar maior que duas vezes Vigor e duração 6 − Vigor minutos. Pergunta enviada para completar esses limites ou conservar o resumo. |
+| Curse Effigy | Parada letal sem agrupar a resistência: Intelligence + Medicine − Stamina + Supernatural Tolerance. Hurt Locker p. 73 revisado visualmente: o próprio PDF mantém essa ambiguidade. Pergunta enviada sobre conservar a fórmula ou explicitar a interpretação; nenhum agrupamento foi alterado. |
 
 Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificação e a elegibilidade cadastradas, inclusive Homebrew. Tradução não cria acesso geral a Méritos exclusivos nem presume exceções do Narrador.
 
 ## Verificação atual
 
-- **308/403** Méritos Vampire com apresentação completa por ID: todos os 154 oficiais, 154 Homebrew e os 80 níveis do catálogo. Restam 95 Méritos Homebrew; a escolha do título Courtoisie permanece aberta acima. O catálogo canônico de 403 Méritos conserva identidades e efeitos; somente os dois requisitos/páginas aprovados de Agony & Ecstasy foram corrigidos neste lote; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
+- **328/403** Méritos Vampire com apresentação completa por ID: todos os 154 oficiais, 174 Homebrew e os 80 níveis do catálogo. Restam 75 Méritos Homebrew; Courtoisie permanece no francês, conforme escolha aprovada. O catálogo canônico de 403 Méritos conserva identidades e efeitos; somente os dois requisitos/páginas aprovados de Agony & Ecstasy foram corrigidos neste lote; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
 - **56 Bloodlines** com PT completo, incluindo Desventurados. IDs, compras, XP, recibos e textos autorais não são reescritos pela troca de idioma.
-- Manifesto `catalogVersion` **74**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire` **13**, `merits-vampire-pt` **15** e `vampire-bloodlines` **13**.
-- Último lote: 12 Méritos Vampire de Vampire 2e, The Wild Hunt e Agony & Ecstasy (seis oficiais e seis Homebrew), incluindo dez níveis de Etiqueta e Status no Hototogisu. **40/40** testes de integração EN/PT/EN, identidades, catálogos e arquitetura, lint e build aprovados. Nenhuma mudança de código TypeScript neste lote; o gate anterior segue válido. Referências reutilizam Indomável, Vontade de Ferro, Interdisciplinar, Miasma Primevo, Complicações Ambientais e Resiliência. Hototogisu, Tokyo, The Friday Club e Clíodhna preservam seus nomes próprios. As revisões de apresentações oficiais preexistentes foram concluídas; não se reconstruíram efeitos ou níveis ausentes no canônico.
+- Manifesto `catalogVersion` **75**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire` **13**, `merits-vampire-pt` **16** e `vampire-bloodlines` **13**.
+- Último lote: 20 Méritos Homebrew de Agony & Ecstasy, incluindo os requisitos corrigidos de Indulgência Sem Freios e Alinhamento Inconsciente. **41/41** testes de integração EN/PT/EN, identidades, catálogos e arquitetura aprovados, além de lint e build. IDs, efeitos, números, pontuações e textos autorais preservados; Jiju, Maenads, Syzygists, Neidan Gu, Annis, Athame e Banshee conservam seus nomes próprios. Sem mudança de TypeScript; o gate anterior segue válido.
 - Integração anterior de Especialização Interdisciplinar: **573/573** testes da suíte completa, **8/8** de confirmação final do vínculo, lint, TypeScript e build aprovados, incluindo preservação de bancos/recibos e concessões antigas com XP.
 - As demais correções aprovadas têm estado de aplicação na tabela de decisões respondidas; os catálogos Vampire/Mage e os pontos sem resposta permanecem separados no backlog.
 - Sem smoke de navegador. A suíte completa de encerramento será executada após concluir todo o escopo; gates proporcionais por lote.
