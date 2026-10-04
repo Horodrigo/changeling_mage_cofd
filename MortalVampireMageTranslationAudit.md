@@ -24,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
-| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 236 apresentações completas por ID (118 oficiais, 118 Homebrew), 65 níveis; 167 registros restantes, incluindo revisão de 15 descrições PT preexistentes; título PT de Courtoisie aguarda escolha |
+| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 256 apresentações completas por ID (128 oficiais, 128 Homebrew), 65 níveis; 147 registros restantes, incluindo revisão de 15 descrições PT preexistentes; título PT de Courtoisie aguarda escolha |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
@@ -184,10 +184,10 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 
 ## Verificação atual
 
-- **236/403** Méritos Vampire com apresentação completa por ID, 118 oficiais e 118 Homebrew; 65 níveis localizados. A escolha do título Courtoisie permanece aberta acima. O catálogo canônico de 403 Méritos permanece intacto; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
+- **256/403** Méritos Vampire com apresentação completa por ID, 128 oficiais e 128 Homebrew; 65 níveis localizados. A escolha do título Courtoisie permanece aberta acima. O catálogo canônico de 403 Méritos permanece intacto; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
 - **56 Bloodlines** com PT completo, incluindo Desventurados. IDs, compras, XP, recibos e textos autorais não são reescritos pela troca de idioma.
-- Manifesto `catalogVersion` **69**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire-pt` **11** e `vampire-bloodlines` **13**.
-- Último lote: 20 Méritos Vampire de Secrets of the Covenants e Strange Shades (dez oficiais e dez Homebrew), incluindo três níveis de Ritos do Empalado. **40/40** testes de integração EN/PT/EN, identidades, catálogos e arquitetura, mais **2/2** de confirmação após revisão textual; lint e build aprovados. Nenhuma mudança de código TypeScript neste lote; o gate anterior segue válido. Referências reutilizam Engabelar, Empatia com Animais, Ninho do Dragão, Juramentado, Feitiçaria Tebana, Sono Diurno e Incitar a Fera. Ocultação recebe o qualificador Membro, sem alterar a definição distinta de Mage, os IDs ou os efeitos.
+- Manifesto `catalogVersion` **70**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire-pt` **12** e `vampire-bloodlines` **13**.
+- Último lote: 20 Méritos Vampire de Secrets of the Covenants, Thousand Years, Strange Shades e The Wild Hunt (dez oficiais e dez Homebrew). **40/40** testes de integração EN/PT/EN, identidades, catálogos e arquitetura, lint e build aprovados. Nenhuma mudança de código TypeScript neste lote; o gate anterior segue válido. Referências reutilizam Ninho do Dragão, Escalas, Espirais, Campo de Caça, Refúgio, Status dos Membros, Sublunario, Forma de Enxame, Iniciação em Culto dos Mistérios e Cerne. Elysium, Feng Shui e os nomes próprios das Bloodlines permanecem preservados.
 - Integração anterior de Especialização Interdisciplinar: **573/573** testes da suíte completa, **8/8** de confirmação final do vínculo, lint, TypeScript e build aprovados, incluindo preservação de bancos/recibos e concessões antigas com XP.
 - As demais correções aprovadas têm estado de aplicação na tabela de decisões respondidas; os catálogos Vampire/Mage e os pontos sem resposta permanecem separados no backlog.
 - Sem smoke de navegador. A suíte completa de encerramento será executada após concluir todo o escopo; gates proporcionais por lote.

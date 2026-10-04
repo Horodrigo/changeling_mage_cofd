@@ -1230,5 +1230,100 @@
     "name": "Velocidade do Pensamento",
     "description": "Aplica velocidade sobrenatural à análise rápida e a outros trabalhos mentais baseados em Inteligência.",
     "prerequisites": "Mekhet; Inteligência •••"
+  },
+  "vtr-sotc:crucible": {
+    "name": "Cadinho",
+    "description": "Reduz o custo em Experiência das Espirais de um Mistério escolhido e das Escalas aprendidas dentro do Ninho.",
+    "prerequisites": "Guardião do Ninho •; Ocultismo ••••"
+  },
+  "vtr-sotc:feng-shui": {
+    "name": "Feng Shui",
+    "description": "Sintoniza uma Perícia escolhida com o Ninho do Dragão, somando a pontuação do Mérito aos usos dessa Perícia dentro de seus limites.",
+    "prerequisites": "Guardião do Ninho •; Erudição ••; Ocultismo •••"
+  },
+  "vtr-sotc:perilous-nest": {
+    "name": "Ninho Perigoso",
+    "description": "Cria um perigo sobrenatural no Ninho que ataca, a cada turno, os intrusos que correspondam aos critérios, com o dobro da pontuação do Mérito.",
+    "prerequisites": "Guardião do Ninho •; Ocultismo •••"
+  },
+  "vtr-ty:around-the-block": {
+    "name": "Já Vi de Tudo",
+    "description": "Ignore as penalidades por usar Perícias sem treinamento.",
+    "prerequisites": "Qualquer Perícia ••••••"
+  },
+  "vtr-ty:beloved": {
+    "name": "Amado",
+    "description": "Após passar uma hora com um Touchstone vivo, ganhe +1 para resistir ao Desapego desse Touchstone."
+  },
+  "vtr-ty:civilization-stalker": {
+    "name": "Espreitador da Civilização",
+    "description": "Política, Socialização e Manha recebem 9-novamente quando o ancião recorre à experiência acumulada.",
+    "prerequisites": "Inteligência ••• ou Manipulação •••"
+  },
+  "vtr-ty:heart-of-stone": {
+    "name": "Coração de Pedra",
+    "description": "Vincula a Humanidade a um edifício ou organização de longa existência, limitando tanto a necessidade quanto os benefícios dos Touchstones comuns.",
+    "prerequisites": "Campo de Caça"
+  },
+  "vtr-ty:major-domo": {
+    "name": "Mordomo-Mor",
+    "description": "Administre um Elysium ou local de reunião dos Membros e ganhe +2 em Persuasão, Intimidação e Socialização contra Membros enquanto a hospitalidade do local permanecer segura."
+  },
+  "vtr-ty:married-by-blood": {
+    "name": "Casados pelo Sangue",
+    "description": "Compartilhe Méritos Refúgio e Lacaio com um Touchstone Membro, mas também compartilhe as consequências das perdas de Status dos Membros um do outro."
+  },
+  "vtr-ty:mentor-in-immortality": {
+    "name": "Mentor na Imortalidade",
+    "description": "Mantenha um protegido por ponto no Mérito e peça um favor a cada aluno por história."
+  },
+  "vtr-strange-shades:twisted-shadow": {
+    "name": "Sombra Retorcida",
+    "description": "Permite que um Mekhet sem Bloodline troque a Maldição usual do Clã por uma Maldição pessoal distinta da sombra.",
+    "prerequisites": "Mekhet; não pertencer a uma Bloodline"
+  },
+  "vtr-strange-shades:unobtrusive": {
+    "name": "Discreto",
+    "description": "Uma vez por cena, trata uma falha discreta como se o personagem tivesse passado despercebido.",
+    "prerequisites": "Mekhet"
+  },
+  "vtr-wild-hunt:therian-psychoanalysis": {
+    "name": "Psicanálise Teriana",
+    "description": "Um Estilo progressivo de aconselhamento para ler, acalmar e redirecionar a Fera de outro vampiro.",
+    "prerequisites": "Daimonion; Manipulação •••; Compostura •••; Animalismo • ou Auspex •"
+  },
+  "vtr-wild-hunt:sublunario": {
+    "name": "Sublunario",
+    "description": "Concede adaptações lunares progressivas e permite que um Lobo Morto redefina a fase da lua que desencadeia a Maldição da Bloodline.",
+    "prerequisites": "Lobo Morto"
+  },
+  "vtr-wild-hunt:bloody-talent": {
+    "name": "Talento Sangrento",
+    "description": "Permite que um Oberloch aprenda uma Disciplina adicional de fora do Clã por meio do sangue da família e do isolamento.",
+    "prerequisites": "Oberloch"
+  },
+  "vtr-wild-hunt:turn-the-eye": {
+    "name": "Desviar o Olhar",
+    "description": "Oculta um Veículo vinculado à vista de todos e frustra tentativas de reconhecê-lo como um refúgio.",
+    "prerequisites": "Verlice"
+  },
+  "vtr-wild-hunt:breaking-up-the-flock": {
+    "name": "Dividindo o Bando",
+    "description": "Divide a consciência de um Wicker entre partes de uma forma de enxame.",
+    "prerequisites": "Wicker; Forma de Enxame"
+  },
+  "vtr-wild-hunt:mystery-cult-initiation-council-of-talons": {
+    "name": "Iniciação em Culto dos Mistérios (Conselho das Garras)",
+    "description": "Representa a iniciação e o posto dentro do Conselho das Garras dos Wickers."
+  },
+  "vtr-wild-hunt:wisdom-of-crowds": {
+    "name": "Sabedoria das Multidões",
+    "description": "Extrai discernimento ocultista dos movimentos e das reações de um bando reunido.",
+    "prerequisites": "Wicker"
+  },
+  "vtr-wild-hunt:heartwood": {
+    "name": "Cerne",
+    "description": "Vincula um Yarilo a uma árvore sagrada, aprofundando a percepção, o abrigo e o controle dentro de seu território.",
+    "prerequisites": "Yarilo; Metamorfose •"
   }
 }
