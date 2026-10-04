@@ -771,5 +771,143 @@
     "name": "Tinta Carmim",
     "description": "Misture partes iguais de Vitae e Electrum para criar um combustível de rituais, Disciplinas e Devoções que dura uma semana em recipiente vedado e não pode nutrir, causar dependência ou criar Laços de Sangue.",
     "prerequisites": "Desventurados"
+  },
+  "vtr-sotc:mandragora-garden": {
+    "name": "Jardim de Mandragora",
+    "description": "Um jardim alimentado com sangue auxilia rituais próximos, sustenta ritos que duram uma cena e produz, a cada mês, sangue animal equivalente ao dobro de sua pontuação.",
+    "prerequisites": "Local Seguro de pontuação igual à deste Mérito; Crúac •"
+  },
+  "vtr-sotc:weaponize-dissent": {
+    "name": "Dissidência como Arma",
+    "description": "Durante um ano e um dia, Status na Cidade é somado diretamente ao dano de armas na presença da detentora da lei ou perto de seus restos mortais.",
+    "prerequisites": "Status no Movimento Carthiano ••"
+  },
+  "vtr-sotc:temple-guardian": {
+    "name": "Guardião do Templo",
+    "description": "Um Estilo de combate defensivo para proteger outros Acólitos e fortalecer seu Crúac por meio de sacrifícios.",
+    "prerequisites": "Atletismo ••; Briga ••; Armas Brancas ••",
+    "levels": [
+      { "rating": 1, "name": "Armadura de Athena", "description": "Ignore o primeiro ponto de dano de cada ataque durante um turno dedicado a uma ação que não seja um ataque." },
+      { "rating": 2, "name": "Defesa de Enyo", "description": "Mova-se até seu Deslocamento para interceptar um ataque contra um aliado." },
+      { "rating": 3, "name": "Glória de Eris", "description": "Após sofrer dano letal ou agravado, inspire um aliado e transforme penalidades de ferimento em bônus ao Crúac dos aliados." }
+    ]
+  },
+  "vtr-sotc:viral-mythology": {
+    "name": "Mitologia Viral",
+    "description": "Uma manifestação divina presenciada pode semear a crença na mitologia do personagem e duplica os pontos comprados em Aliados ou Rebanho para os adeptos.",
+    "prerequisites": "Crúac •; Presença •••; Expressão •••"
+  },
+  "vtr-sotc:what-youve-done-for-her-lately": {
+    "name": "O Que Você Tem Feito por Ela",
+    "description": "Uma vez por história, um ritual de Crúac bem-sucedido soma sua pontuação ao Status efetivo no Círculo da Anciã durante a cena.",
+    "prerequisites": "Crúac ••"
+  },
+  "vtr-sotc:primal-creation": {
+    "name": "Criação Primordial",
+    "description": "Um Estilo de Crúac que acelera a fertilidade e o crescimento e pode criar cópias de curta duração de seres vivos.",
+    "prerequisites": "Crúac •",
+    "levels": [
+      { "rating": 1, "name": "Magnitude •", "description": "Estimule o crescimento e a fertilidade das plantas." },
+      { "rating": 2, "name": "Magnitude ••", "description": "Crie abundância de vida cada vez mais complexa." },
+      { "rating": 3, "name": "Magnitude •••", "description": "Molde a vida em uma escala mais ampla." },
+      { "rating": 4, "name": "Magnitude ••••", "description": "Gaste Força de Vontade para clonar um ser vivo de Tamanho até a Magnitude." },
+      { "rating": 5, "name": "Magnitude •••••", "description": "Crie a maior e mais capaz forma de vida temporária do Estilo." }
+    ]
+  },
+  "vtr-sotc:unbridled-chaos": {
+    "name": "Caos Desenfreado",
+    "description": "Um Estilo de Crúac que invoca mudanças destrutivas, progredindo de objetos danificados a formas de vida distorcidas e fenômenos climáticos violentos.",
+    "prerequisites": "Crúac •",
+    "levels": [
+      { "rating": 1, "name": "Magnitude •", "description": "Altere a Estrutura ou a Durabilidade dentro do alcance do ritual." },
+      { "rating": 2, "name": "Magnitude ••", "description": "Amplie a alteração destrutiva para matéria mais substancial." },
+      { "rating": 3, "name": "Magnitude •••", "description": "Cause mutações em formas vivas dentro do escopo do ritual." },
+      { "rating": 4, "name": "Magnitude ••••", "description": "Produza transformações severas e perturbações ambientais." },
+      { "rating": 5, "name": "Magnitude •••••", "description": "Gaste Força de Vontade para criar fenômenos climáticos violentos, permanecendo imune às suas Complicações." }
+    ]
+  },
+  "vtr-sotc:opening-the-void": {
+    "name": "Abrindo o Vazio",
+    "description": "Um Estilo de Crúac que invoca criaturas de fora do mundo ou arrasta uma vítima viva através do vazio.",
+    "prerequisites": "Crúac •",
+    "levels": [
+      { "rating": 1, "name": "Magnitude •", "description": "Invoque uma pequena criatura semelhante a um Lacaio por uma hora por ponto do ritual." },
+      { "rating": 2, "name": "Magnitude ••", "description": "Invoque uma criatura maior e mais forte." },
+      { "rating": 3, "name": "Magnitude •••", "description": "Invoque uma criatura substancial do vazio ou comece a arrastar uma vítima através dele." },
+      { "rating": 4, "name": "Magnitude ••••", "description": "Comande uma poderosa criatura invocada." },
+      { "rating": 5, "name": "Magnitude •••••", "description": "Invoque a maior criatura do Estilo ou arraste através do vazio uma vítima que oferece grande resistência." }
+    ]
+  },
+  "vtr-sotc:courtoisie": {
+    "name": "Courtoisie",
+    "description": "Um Estilo de duelo do Invictus que estabelece um oponente formal, transforma a postura social em competência de combate e exige atenção.",
+    "prerequisites": "Compostura •••; Socialização ••; Armas Brancas ••; Status no Invictus •",
+    "levels": [
+      { "rating": 1, "name": "Estabelecer o Duelo", "description": "Escolha um adversário; entrar no alcance do duelo prejudica os intrusos e concede Armas Brancas como Defesa contra os demais." },
+      { "rating": 2, "name": "Valorizar a Palavra", "description": "Substitua Atletismo ou Armas Brancas por uma Perícia Social apropriada, ou Força/Destreza por Presença/Manipulação." },
+      { "rating": 3, "name": "Exigir Atenção", "description": "O adversário escolhido deve lutar enquanto não houver uma ameaça maior; afastar-se ou atacar outra pessoa causa dano letal e a Complicação Derrubado." }
+    ]
+  },
+  "vtr-sotc:crowdsourcing": {
+    "name": "Colaboração em Rede",
+    "description": "Transfere temporariamente pontos de Méritos Sociais especificados entre membros do Invictus após uma ação bem-sucedida de Manipulação + Erudição.",
+    "prerequisites": "Contatos •; Recursos •••"
+  },
+  "vtr-sin-again:halcyon-days": {
+    "name": "Dias de Calmaria",
+    "description": "Reduza cinco Electrum ao longo de 24 horas para produzir uma poção que aumenta a Humanidade em um por uma noite; apenas uma dose pode beneficiar um personagem por vez.",
+    "prerequisites": "Desventurados"
+  },
+  "vtr-sin-again:times-ambrosia": {
+    "name": "Ambrosia do Tempo",
+    "description": "Submeta Electrum a um processo de cura por uma hora para recuperar um ponto de Força de Vontade gasto a cada dois Electrum; o elixir perde seu efeito ao fim da noite.",
+    "prerequisites": "Desventurados"
+  },
+  "vtr-sin-again:when-inspiration-strikes": {
+    "name": "Quando a Inspiração Chega",
+    "description": "Prepare, congele e consuma Electrum ao nascer do sol para somar os pontos usados ao teste de Vigor + Perseverança, evitar Letárgico(Membro) em caso de sucesso e ganhar Resoluto em caso de sucesso excepcional.",
+    "prerequisites": "Desventurados"
+  },
+  "vtr-sin-again:kingjan": {
+    "name": "Kingjan",
+    "description": "Drene emoções humanas intensas ao se alimentar, transformando sentimentos roubados em discernimento, Condições e domínio temporário sobre Majestade ou Pesadelo.",
+    "prerequisites": "Xiao; Iniciação em Culto dos Mistérios (Seita) •; Majestade ou Pesadelo ••",
+    "levels": [
+      { "rating": 1, "name": "Ladrão de Sorrisos", "description": "Uma vez por noite, ganhe Inspirado ao se alimentar de emoções; também ganhe Intoxicado, a menos que gaste Força de Vontade." },
+      { "rating": 2, "name": "O Jardineiro Colhe as Flores", "description": "Gaste Força de Vontade e descubra uma verdade sobre emoções ou Laços de Sangue por Vitae consumida." },
+      { "rating": 3, "name": "Eco do Sino que Dobra", "description": "Consuma Encantado(Membro) ou Assustado para ganhar 9-novamente com Majestade ou Pesadelo durante a noite." },
+      { "rating": 4, "name": "A Garganta Seca Drena o Poço", "description": "Após drenar pelo menos três Vitae, transfira uma Condição baseada em emoções da vítima e recupere um ponto de Força de Vontade." },
+      { "rating": 5, "name": "Beijo do Esquecimento", "description": "Alimente-se até preencher a última caixa de Vitalidade da vítima para suprimir a Maldição do Desapego durante a noite, correndo o risco de dependência." }
+    ]
+  },
+  "vtr-sin-again:braggart": {
+    "name": "Fanfarrão",
+    "description": "Usa bravatas confiantes para tornar convincentes alegações implausíveis e ocultar a falta de conhecimento especializado.",
+    "prerequisites": "Manipulação •••; Persuasão ••"
+  },
+  "vtr-sin-again:can-t-bullshit-a-bullshitter": {
+    "name": "Não Dá para Enrolar um Enrolador",
+    "description": "Percebe os métodos e as intenções de manipuladores sociais inferiores.",
+    "prerequisites": "Majestade ••; Manipulação •••"
+  },
+  "vtr-sin-again:dead-sexy": {
+    "name": "Sensual Até Morto",
+    "description": "Transforma a natureza cadavérica do vampiro em uma fonte perturbadora de atração.",
+    "prerequisites": "Aparência Marcante ••; Humanidade 5 ou menor"
+  },
+  "vtr-sin-again:enticing-advanced": {
+    "name": "Sedutor (Avançado)",
+    "description": "Amplia Sedutor ao tornar o personagem desejável de forma abrangente, além da atração convencional.",
+    "prerequisites": "Sedutor"
+  },
+  "vtr-sin-again:fake-it-till-you-make-it": {
+    "name": "Finja Até Conseguir",
+    "description": "Uma vez por capítulo, uma mentira confiante pode substituir a competência prática que falta.",
+    "prerequisites": "Fanfarrão •; Subterfúgio ••"
+  },
+  "vtr-sin-again:friends-abroad": {
+    "name": "Amigos no Exterior",
+    "description": "Usa o conhecimento da Cacofonia para encontrar contatos úteis entre os Membros locais durante viagens.",
+    "prerequisites": "Conhecimento da Cacofonia •"
   }
 }

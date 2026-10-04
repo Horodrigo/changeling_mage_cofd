@@ -24,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
-| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 156 apresentações completas por ID (78 oficiais, 78 Homebrew), 23 níveis; 247 registros restantes, incluindo revisão de 15 descrições PT preexistentes |
+| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 176 apresentações completas por ID (88 oficiais, 88 Homebrew), 49 níveis; 227 registros restantes, incluindo revisão de 15 descrições PT preexistentes |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
@@ -124,7 +124,7 @@ Os cinco pares com efeitos distintos já aprovados recebem qualificadores de lin
 
 - Vampire — títulos de Méritos: Notário; Visões Oníricas; Necrópole; Guardiões das Trevas. Preservar Correio da Forca e O Conto de Shahrayad; Friends in Low Places de Vampire usa Amigos em Lugares Baixos com o qualificador Membro. Swooned no texto de Lingering Dreams foi apresentado como Enamorado, sem vincular ou alterar IDs por essa variante textual.
 
-- Vampire Conditions: Bestial, Competitivo, Lascivo, Dependente, Mesmerizado, Falsas Memórias, Lânguido, Letárgico, Tentado, Distraído e Convite. Subserviente traduz Subservient na referência de Kerberos, sem criar identidade por nome. Lânguido (Languid) e Letárgico (Lethargic) permanecem distintos. Jaded/Addiction/Swooning/Drained ainda devem acompanhar seus próprios registros.
+- Vampire Conditions: Bestial, Competitivo, Lascivo, Dependente, Mesmerizado, Falsas Memórias, Lânguido, Letárgico, Tentado, Distraído e Convite. Subserviente traduz Subservient na referência de Kerberos; Intoxicado e Assustado traduzem Intoxicated e Frightened nas referências de Kingjan, sem criar identidade por nome. Lânguido (Languid) e Letárgico (Lethargic) permanecem distintos. Jaded/Addiction/Swooning/Drained ainda devem acompanhar seus próprios registros.
 - Mage Conditions: Megalomaniacal/Rampant ainda aguardam seu catálogo; Húbris resolve seus IDs. Não criar uma tabela mecânica paralela.
 - Vampire poderes/Méritos: Meada de Clotho; Amigos no Exterior; Fome Intensificada; Coração Sombrio; Feudo Amaldiçoado; Fama (Avançada); Escola de Etiqueta; Crúac Banshee; Ouvidos para a Fera; O Veículo; Cerne (Heartwood de Yarilo, distinto da categoria Crux de Penhores); Unção; As Delícias; Riqueza Herdada; Verdades de Erebus; Lições de Erebus; Conheça Seu Público; Grilhão de Sangue; Sangue dos Relutantes; Sem Presas; Surto Elétrico; Parentesco Insetoide; Mente de Colmeia; Semblante Perdido; Apofenia; Pareidolia; Dementação. Cirurgia Arthmoic conserva a grafia técnica cadastrada.
 - Coalizões: Evolução Triádica, Juramentos do Invictus, Código do Carrasco, O Conto de Shahrayad, Fachada, Cisma, Cripta/Saída, Atendente da Sepultura, Explorador Sagrado, Tocado por Mary e Visão Arcana. Detournement, Therion, Kimiya e Manteia mantêm a forma cadastrada.
@@ -182,10 +182,10 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 
 ## Verificação atual
 
-- **156/403** Méritos Vampire com apresentação completa por ID, 78 oficiais e 78 Homebrew; 23 níveis localizados. O catálogo canônico de 403 Méritos permanece intacto; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
+- **176/403** Méritos Vampire com apresentação completa por ID, 88 oficiais e 88 Homebrew; 49 níveis localizados. O catálogo canônico de 403 Méritos permanece intacto; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
 - **56 Bloodlines** com PT completo, incluindo Desventurados. IDs, compras, XP, recibos e textos autorais não são reescritos pela troca de idioma.
-- Manifesto `catalogVersion` **65**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire-pt` **7** e `vampire-bloodlines` **13**.
-- Último lote: 20 Méritos Vampire de Secrets of the Covenants, False Gods e Sin Again (dez oficiais e dez Homebrew). **40/40** testes de integração EN/PT/EN, identidades, catálogos e arquitetura, lint e build aprovados. Nenhuma mudança de código TypeScript neste lote; o gate anterior segue válido. Referências reutilizam Fama (Avançada), Fome Intensificada, Coração Sombrio, Desventurados, Ímpeto e Gaiola Dourada. Touchstone, Vinculum, Erzsébet, Moda Mortale, Nelapsi e Electrum preservados conforme a apresentação vigente.
+- Manifesto `catalogVersion` **66**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire-pt` **8** e `vampire-bloodlines` **13**.
+- Último lote: 20 Méritos Vampire de Secrets of the Covenants e Sin Again (dez oficiais e dez Homebrew), incluindo 26 níveis de Estilos e Kingjan. **40/40** testes de integração EN/PT/EN, identidades, catálogos e arquitetura, lint e build aprovados. Nenhuma mudança de código TypeScript neste lote; o gate anterior segue válido. Referências reutilizam Desventurados, Iniciação em Culto dos Mistérios, Majestade, Pesadelo, Resoluto e Complicações. Courtoisie, Kingjan, Xiao, Mandragora, Electrum e os nomes próprios Athena, Enyo e Eris permanecem preservados.
 - Integração anterior de Especialização Interdisciplinar: **573/573** testes da suíte completa, **8/8** de confirmação final do vínculo, lint, TypeScript e build aprovados, incluindo preservação de bancos/recibos e concessões antigas com XP.
 - As demais correções aprovadas têm estado de aplicação na tabela de decisões respondidas; os catálogos Vampire/Mage e os pontos sem resposta permanecem separados no backlog.
 - Sem smoke de navegador. A suíte completa de encerramento será executada após concluir todo o escopo; gates proporcionais por lote.
