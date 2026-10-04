@@ -73,9 +73,9 @@ test("all 23 Vampire Covenants localize descriptions and advantages while retain
   assert.ok(read("public/shared/data/catalog-manifest.json").catalogs["vampire-covenants"].version >= 6);
 });
 
-test("all 24 localized official/Homebrew Bloodlines have complete Portuguese reference fields without changing numeric limits", () => {
+test("all 36 localized official/Homebrew Bloodlines have complete Portuguese reference fields without changing numeric limits", () => {
   const bloodlines = data["vampire-bloodlines"].filter(item => item.presentationPt);
-  assert.equal(bloodlines.length, 24);
+  assert.equal(bloodlines.length, 36);
   for (const definition of bloodlines) {
     const fields = ["parentClan", "nicknames", "summary", "baneName", "baneSummary", ...["requirements", "giftName", "giftSummary"].filter(key => definition[key])];
     assert.deepEqual(Object.keys(definition.presentationPt).sort(), fields.sort(), definition.id);
@@ -85,7 +85,7 @@ test("all 24 localized official/Homebrew Bloodlines have complete Portuguese ref
       assert.deepEqual(definition.presentationPt[key].match(/\d+/g) ?? [], definition[key].match(/\d+/g) ?? [], `${definition.id}.${key}`);
     }
   }
-  assert.equal(bloodlines.filter(item => item.sourceId.startsWith("h-vtr-")).length, 10);
+  assert.equal(bloodlines.filter(item => item.sourceId.startsWith("h-vtr-")).length, 22);
   assert.ok(bloodlines.find(item => item.id === "vardyvle").presentationPt.nicknames.includes("Tiresias"));
   assert.equal(bloodlines.find(item => item.id === "icelus").presentationPt.parentClan, "Mekhet ou Ventrue");
   assert.equal(bloodlines.find(item => item.id === "children-of-judas").translatedName, "Filhos de Judas");
@@ -103,6 +103,8 @@ test("Vampire references render Anchors, Clans, Covenants and Bloodlines in EN/P
       const path = id.replaceAll("\\", "/");
       if (path.endsWith("/game-lines/vampire/builder.tsx")) return `${code}\nexport { AnchorChoice, CovenantSelector };`;
       if (path.endsWith("/game-lines/vampire/sheet-view.tsx")) return `${code}\nexport { BaneEditor };`;
+      // SSR normally mounts only the active tab; exercise every published Homebrew category.
+      if (path.endsWith("/components/ui/tabs.tsx")) return code.replace("<TabsPrimitive.Content", "<TabsPrimitive.Content forceMount");
       if (locale === "pt-BR" && path.endsWith("/lib/i18n.tsx")) return code.replace('const serverLocale = ():Locale => "en-US";', 'const serverLocale = ():Locale => "pt-BR";');
     } }] });
     try {

@@ -724,7 +724,7 @@
   },
   "ctl-kith-and-kin:shadow-puppet": {
     "name": "Fantoche de Sombra",
-    "description": "Anime uma criatura de sombra substancial como um Lacaio com nível igual à metade do Fado, usando uma das Especializações do changeling. Ela age na Iniciativa dele e recebe um Poder Temível goblin, Fado 1, Glamour 6 e uma caixa de Vitalidade. Sua destruição remove a parte correspondente da sombra dele até que seja recolocada na Sebe com uma mudança sutil de quatro sucessos.",
+    "description": "Anime uma criatura de sombra substancial como um Lacaio com nível igual à metade do Fado, usando uma das Especializações do changeling. Ela age na Iniciativa dele e recebe um Poder Terrível goblin, Fado 1, Glamour 6 e uma caixa de Vitalidade. Sua destruição remove a parte correspondente da sombra dele até que seja recolocada na Sebe com uma mudança sutil de quatro sucessos.",
     "dicePool": "Nenhuma",
     "action": "Instantânea",
     "duration": "Uma cena",

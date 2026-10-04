@@ -77,7 +77,7 @@
   },
   "ctl-2ed:goblin-bounty": {
     "name": "Abundância Goblin",
-    "description": "A cada capítulo, o personagem tem acesso a três Frutas Goblin comuns ou objetos goblin peculiares por ponto neste Mérito. O Fado ainda limita quantos pode carregar de uma vez; o restante fica guardado em segurança e não exige uma cena especial para ser recuperado."
+    "description": "A cada capítulo, o personagem tem acesso a três Frutas Goblin comuns ou esquisitices por ponto neste Mérito. O Fado ainda limita quantos pode carregar de uma vez; o restante fica guardado em segurança e não exige uma cena especial para ser recuperado."
   },
   "ctl-2ed:grounded": {
     "name": "Centrado",
@@ -562,7 +562,7 @@
     "name": "Mascote Fae",
     "prerequisites": "Fera ou Trato com Animais •••; Lacaio ••",
     "alternativePrerequisites": "Trato com Animais •••; Lacaio ••",
-    "description": "Um Lacaio animal recebe um Poder Temível, Passagem alimentada por Força de Vontade, uma Mascarilha e um Semblante Feérico. Pode desgastar sua Mascarilha, mas não fortalecê-la, e não pode ser morto por razões de enredo sem permissão."
+    "description": "Um Lacaio animal recebe um Poder Terrível, Passagem alimentada por Força de Vontade, uma Mascarilha e um Semblante Feérico. Pode desgastar sua Mascarilha, mas não fortalecê-la, e não pode ser morto por razões de enredo sem permissão."
   },
   "h-seemings:green-grocer": {
     "name": "Quitandeiro",

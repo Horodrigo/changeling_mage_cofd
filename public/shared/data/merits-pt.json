@@ -227,7 +227,7 @@
     "description": "Reuniu materiais esotéricos suficientes para fornecer os Flagelos de entidades efêmeras com Posto igual ou inferior à pontuação neste Mérito."
   },
   "core-2ed:fighting-finesse": {
-    "name": "Refinamento de Combate",
+    "name": "Destreza em Combate",
     "prerequisites": "Destreza •••",
     "description": "Pode substituir Força por Destreza em testes de uma Especialização escolhida de Briga ou Armas Brancas."
   },
@@ -401,7 +401,7 @@
     "description": "Recebe a Vantagem no primeiro turno de uma perseguição. Se o oponente falhar em um teste como se estivesse sendo emboscado, pode calcular os sucessos necessários sem considerar o Deslocamento ou a Iniciativa dele."
   },
   "core-2ed:shiv": {
-    "name": "Estoque",
+    "name": "Estilete",
     "prerequisites": "Luta de Rua ••, Armas Brancas •",
     "description": "Pode ocultar junto ao corpo uma arma de Briga que cause 0 de dano letal com um ponto, ou 1 de dano letal com dois. Aplica sua pontuação em Armas Brancas como penalidade aos testes para detectá-la."
   },
@@ -537,7 +537,7 @@
     ]
   },
   "core-2ed:fast-talking": {
-    "name": "Lábia",
+    "name": "Engabelar",
     "prerequisites": "Manipulação •••, Subterfúgio ••",
     "description": "Um Estilo progressivo com cinco manobras.",
     "levels": [
@@ -646,7 +646,7 @@
   },
   "core-2ed:light-weapons": {
     "name": "Armas Leves",
-    "prerequisites": "Raciocínio ••• ou Refinamento de Combate, Destreza •••, Atletismo ••, Armas Brancas ••",
+    "prerequisites": "Raciocínio ••• ou Destreza em Combate, Destreza •••, Atletismo ••, Armas Brancas ••",
     "description": "Um Estilo progressivo com cinco manobras.",
     "levels": [
       {
@@ -729,7 +729,7 @@
       },
       {
         "rating": 5,
-        "name": "Mentor Intelectual",
+        "name": "Topo da Pirâmide",
         "description": "Um Mérito de três pontos ou uma grande vantagem além das mecânicas comuns do jogo."
       }
     ]
@@ -760,7 +760,7 @@
       },
       {
         "rating": 5,
-        "name": "Mentor Intelectual",
+        "name": "Topo da Pirâmide",
         "description": "Um Mérito de três pontos ou uma grande vantagem além das mecânicas do jogo."
       }
     ]
@@ -1817,7 +1817,7 @@
   },
   "hurt-locker:two-weapon-fighting": {
     "name": "Combate com Duas Armas",
-    "prerequisites": "Raciocínio •••, Armas Brancas •••, Refinamento de Combate",
+    "prerequisites": "Raciocínio •••, Armas Brancas •••, Destreza em Combate",
     "description": "Um Estilo progressivo com quatro manobras.",
     "levels": [
       {

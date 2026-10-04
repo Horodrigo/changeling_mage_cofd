@@ -1010,7 +1010,7 @@
   {
     "id": "childer-of-the-morrigan",
     "name": "Childer of the Morrigan",
-    "translatedName": "Childer of the Morrigan",
+    "translatedName": "Descendentes da Morrigan",
     "parentClan": "Gangrel",
     "nicknames": [
       "Stormcrows",
@@ -1038,7 +1038,20 @@
     "giftSummary": "Spend Willpower to cast a rite of three dots or less instantly with reduced successes and Potency; failure becomes dramatic and temporarily curses everyone nearby. Beast's Skin always includes a crow or raven form.",
     "parentClanIds": [
       "gangrel"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Acólitos guerreiros que invocam Crúac em manifestações súbitas e violentas.",
+      "giftName": "Crúac Banshee",
+      "giftSummary": "Gaste Força de Vontade para lançar instantaneamente um rito de três pontos ou menos, com sucessos e Potência reduzidos; uma falha torna-se dramática e amaldiçoa temporariamente todos nas proximidades. Pele da Besta sempre inclui uma forma de corvo, pequeno ou grande.",
+      "baneName": "A Maldição do Belicista",
+      "baneSummary": "Recuar, reduzir a tensão ou resolver um problema importante sem conflito direto causa uma penalidade cumulativa de -1 à resistência ao frenesi pelo resto da noite.",
+      "nicknames": [
+        "Corvos da Tempestade",
+        "Corvos",
+        "Morrigans"
+      ],
+      "parentClan": "Gangrel"
+    }
   },
   {
     "id": "daimonion",
@@ -1070,12 +1083,24 @@
     "giftSummary": "Auspex gains an extra question about a vampire's Beast and intimate-contact benefits against frenzy, Bestial Triad Conditions, and draugr.",
     "parentClanIds": [
       "gangrel"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Conselheiros que leem e manipulam os instintos de outras Feras.",
+      "giftName": "Ouvidos para a Fera",
+      "giftSummary": "Auspex recebe uma pergunta adicional sobre a Fera de um vampiro e benefícios de contato íntimo contra frenesi, Condições da Tríade Bestial e draugr.",
+      "baneName": "A Maldição da Sintonia",
+      "baneSummary": "Enquanto estiver Tentado, presenciar outro vampiro entrar em frenesi involuntário exige gastar Força de Vontade ou resistir a um frenesi por afinidade cujo impulso é ajudar esse vampiro; resistir uma vez concede imunidade pela cena.",
+      "nicknames": [
+        "Conselheiros",
+        "Sussurradores da Fera"
+      ],
+      "parentClan": "Gangrel"
+    }
   },
   {
     "id": "dead-wolves",
     "name": "Dead Wolves",
-    "translatedName": "Dead Wolves",
+    "translatedName": "Lobos Mortos",
     "parentClan": "Gangrel",
     "nicknames": [
       "Lobos de Sangre",
@@ -1101,7 +1126,18 @@
     "homebrew": true,
     "parentClanIds": [
       "gangrel"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Gangrel vinculados à lua que tomam emprestadas as formas e os mistérios dos lobisomens.",
+      "baneName": "A Maldição da Lua",
+      "baneSummary": "Ver a lua cheia pela primeira vez a cada noite provoca frenesi; Sublunario pode mudar a fase que o desencadeia. O primeiro ferimento causado por uma arma de prata a cada cena provoca frenesi de medo com -3.",
+      "nicknames": [
+        "Lobos de Sangre",
+        "Lobos",
+        "Namus-Ur"
+      ],
+      "parentClan": "Gangrel"
+    }
   },
   {
     "id": "mystikoi",
@@ -1135,7 +1171,20 @@
     "giftSummary": "An exclusive five-dot Discipline that refines consumed supernatural essence into a path of bodily and spiritual transcendence.",
     "parentClanIds": [
       "gangrel"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Predadores místicos que buscam a divindade ao consumir essência sobrenatural.",
+      "giftName": "Spiritus Sancti",
+      "giftSummary": "Uma Disciplina exclusiva de cinco pontos que refina a essência sobrenatural consumida em um caminho de transcendência corporal e espiritual.",
+      "baneName": "A Maldição da Consubstanciação",
+      "baneSummary": "A cada noite, apenas uma quantidade de Vitae humana igual à Humanidade fornece nutrição, a menos que se gaste Força de Vontade por cada alimentação excedente. O sangue dos Membros está isento abaixo de Potência de Sangue 6, assim como o sangue de lobisomens.",
+      "nicknames": [
+        "Iluminados",
+        "Mystikos",
+        "Hereges"
+      ],
+      "parentClan": "Gangrel"
+    }
   },
   {
     "id": "oberlochs",
@@ -1165,7 +1214,17 @@
     "homebrew": true,
     "parentClanIds": [
       "gangrel"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Uma extensa família rural cujos cadáveres continuam a envelhecer e a gerar descendentes da própria linhagem.",
+      "baneName": "A Maldição da Putrefação",
+      "baneSummary": "O vampiro envelhece e sofre penalidades Sociais baseadas em Humanidade ao se relacionar com outros vampiros como se eles fossem mortais; Humanidade 9-10 não concede bônus. Seus descendentes vampíricos ingressam automaticamente na Bloodline.",
+      "nicknames": [
+        "Parentes",
+        "Ratos"
+      ],
+      "parentClan": "Gangrel"
+    }
   },
   {
     "id": "verlice",
@@ -1198,7 +1257,20 @@
     "giftSummary": "Anoint a vehicle with Vitae and spend Willpower to make it the vampire's bonded Ride, enabling the bloodline's vehicle Devotions.",
     "parentClanIds": [
       "gangrel"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Nômades inquietos vinculados misticamente a um veículo escolhido.",
+      "giftName": "O Veículo",
+      "giftSummary": "Unja um veículo com Vitae e gaste Força de Vontade para torná-lo o Veículo vinculado do vampiro, permitindo as Devoções veiculares da Bloodline.",
+      "baneName": "A Maldição da Estagnação",
+      "baneSummary": "A cada noite após a primeira passada dormindo dentro do mesmo raio, em milhas, igual à Potência de Sangue, a Humanidade efetiva diminui em um para os Touchstones vinculados. Descansar um dia inteiro em um lugar novo alivia isso, e a área antiga não pode ser reutilizada por uma semana.",
+      "nicknames": [
+        "Agulhas",
+        "Coiotes",
+        "Invasores"
+      ],
+      "parentClan": "Gangrel"
+    }
   },
   {
     "id": "wickers",
@@ -1228,7 +1300,17 @@
     "homebrew": true,
     "parentClanIds": [
       "gangrel"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Áugures aviários que extraem presságios terríveis da dor e do desastre.",
+      "baneName": "A Maldição do Parlamento",
+      "baneSummary": "Após um Ponto de Ruptura fracassado, faça um teste de Humanidade. Uma falha atrai uma Strix antes do fim da história; sucessos impõem uma penalidade cumulativa de -1 aos testes posteriores até que a Maldição seja ativada. Esta entrada registra a Maldição publicada, mas não implementa mecânicas de Strix.",
+      "nicknames": [
+        "Falcões",
+        "O Bando"
+      ],
+      "parentClan": "Gangrel"
+    }
   },
   {
     "id": "yarilo",
@@ -1258,12 +1340,22 @@
     "homebrew": true,
     "parentClanIds": [
       "gangrel"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Gangrel semelhantes a plantas, enraizados em árvores sagradas de Cerne e nuvens de esporos controladores.",
+      "baneName": "A Maldição da Mecha",
+      "baneSummary": "Após sofrer dano de fogo, trate a Humanidade como um ponto menor para vincular Touchstones pelo resto da noite.",
+      "nicknames": [
+        "Trepadeiras",
+        "Arborícolas"
+      ],
+      "parentClan": "Gangrel"
+    }
   },
   {
     "id": "connected",
     "name": "Connected",
-    "translatedName": "Connected",
+    "translatedName": "Conectados",
     "parentClan": "Mekhet",
     "nicknames": [
       "Oracles",
@@ -1291,7 +1383,19 @@
     "giftSummary": "An exclusive five-dot Discipline for sensing, entering, protecting, and controlling digital systems.",
     "parentClanIds": [
       "mekhet"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Mekhet conectados em rede que tratam sistemas digitais como extensões de seus sentidos.",
+      "giftName": "Interface",
+      "giftSummary": "Uma Disciplina exclusiva de cinco pontos para perceber, acessar, proteger e controlar sistemas digitais.",
+      "baneName": "A Maldição do Anonimato",
+      "baneSummary": "Entre mais de 10 menos Potência de Sangue mortais em uma situação realmente social ou com uma multidão, faça um teste de Humanidade. Uma falha causa Distraído até que o vampiro escape da multidão ou a cena termine; encontros digitais e Touchstones estão isentos.",
+      "nicknames": [
+        "Oráculos",
+        "TI"
+      ],
+      "parentClan": "Mekhet"
+    }
   },
   {
     "id": "csalad",
@@ -1325,7 +1429,20 @@
     "giftSummary": "A ritual Discipline whose rites bind the vampire to territory and reveal or direct the memories and forces of the land.",
     "parentClanIds": [
       "mekhet"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Mekhet territoriais que leem e comandam a história viva de cidades e terras.",
+      "giftName": "Lithopedia",
+      "giftSummary": "Uma Disciplina ritual cujos ritos vinculam o vampiro a um território e revelam ou direcionam as memórias e forças da terra.",
+      "baneName": "A Maldição Cívica",
+      "baneSummary": "Nas noites após descansar fora de seu território, sofrer qualquer Ponto de Ruptura também causa Letárgico. O território pode ser representado por Campo de Caça, Refúgio, Local Seguro ou um domínio narrativo.",
+      "nicknames": [
+        "Senhores de Pedra",
+        "A Família",
+        "Családtag"
+      ],
+      "parentClan": "Mekhet"
+    }
   },
   {
     "id": "kuufukuji",
@@ -1355,7 +1472,17 @@
     "homebrew": true,
     "parentClanIds": [
       "mekhet"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Mekhet ascéticos que buscam compreensão por meio da fome e da privação controlada.",
+      "baneName": "A Maldição Ascética",
+      "baneSummary": "Beber mais Vitae do que sua Humanidade em uma noite causa Bestial até que o vampiro se abstenha por uma noite inteira; falhas de frenesi nesse período tornam-se frenesi de fome. Referências à criação de revenantes não são implementadas deliberadamente.",
+      "nicknames": [
+        "Os Famintos",
+        "Celibatários"
+      ],
+      "parentClan": "Mekhet"
+    }
   },
   {
     "id": "leandros",
@@ -1385,7 +1512,17 @@
     "homebrew": true,
     "parentClanIds": [
       "mekhet"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Predadores que desenvolvem fixações românticas avassaladoras por meio da alimentação.",
+      "baneName": "A Maldição da Paixão",
+      "baneSummary": "Após se alimentar de um mortal, faça um teste de Perseverança + Compostura. Uma falha torna esse mortal a única vítima satisfatória, limitando a nutrição de todas as outras fontes à metade da Humanidade até que o mortal morra ou que o vampiro tenha seu próximo sucesso em um Ponto de Ruptura. Convite é obrigatório se a Maldição do Clã ainda não tiver se manifestado.",
+      "nicknames": [
+        "Destruidores de Corações",
+        "Sujeitos Sinistros"
+      ],
+      "parentClan": "Mekhet"
+    }
   },
   {
     "id": "mnemosyne",
