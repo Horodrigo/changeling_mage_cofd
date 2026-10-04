@@ -24,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); caption Star-Crossed em consulta |
-| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 72 apresentações completas por ID (36 oficiais, 36 Homebrew), três níveis; 331 registros restantes, incluindo revisão de 27 descrições PT preexistentes |
+| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 96 apresentações completas por ID (48 oficiais, 48 Homebrew), três níveis; 307 registros restantes, incluindo revisão de 15 descrições PT preexistentes |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
@@ -119,9 +119,9 @@ Os cinco pares com efeitos distintos já aprovados recebem qualificadores de lin
 
 ### Referências já localizadas para os próximos catálogos
 
-- Segundo lote de Méritos: Máscara Inflexível segue Mask de Vampire → Máscara; Ímpeto é a Disciplina Vigor, distinta do Atributo Vigor/Stamina; Metamorfose, Pesadelo e Ofuscação reutilizam as apresentações existentes. Maldição Potente, Encantado(Membro) e Letárgico orientam as respectivas Conditions, preservando seus IDs e efeitos.
+- Vampire — referências de Méritos: Máscara Inflexível segue Mask de Vampire → Máscara; Ímpeto é a Disciplina Vigor, distinta do Atributo Vigor/Stamina; Metamorfose, Pesadelo e Ofuscação reutilizam as apresentações existentes. Maldição Potente, Encantado(Membro) e Letárgico orientam as respectivas Conditions, preservando seus IDs e efeitos.
 
-- Primeiro lote de Méritos Vampire: Notário; Visões Oníricas; Necrópole; Guardiões das Trevas. Preservar Correio da Forca e O Conto de Shahrayad; Friends in Low Places de Vampire usa Amigos em Lugares Baixos com o qualificador Membro. Swooned no texto de Lingering Dreams foi apresentado como Enamorado, sem vincular ou alterar IDs por essa variante textual.
+- Vampire — títulos de Méritos: Notário; Visões Oníricas; Necrópole; Guardiões das Trevas. Preservar Correio da Forca e O Conto de Shahrayad; Friends in Low Places de Vampire usa Amigos em Lugares Baixos com o qualificador Membro. Swooned no texto de Lingering Dreams foi apresentado como Enamorado, sem vincular ou alterar IDs por essa variante textual.
 
 - Vampire Conditions: Bestial, Competitivo, Lascivo, Dependente, Mesmerizado, Falsas Memórias, Lânguido, Letárgico, Tentado, Distraído e Convite. Lânguido (Languid) e Letárgico (Lethargic) permanecem distintos. Jaded/Addiction/Swooning/Drained ainda devem acompanhar seus próprios registros.
 - Mage Conditions: Megalomaniacal/Rampant ainda aguardam seu catálogo; Húbris resolve seus IDs. Não criar uma tabela mecânica paralela.
@@ -145,6 +145,7 @@ Pendências de uma auditoria de regras separada. **Não corrigir por tradução.
 | Mystery Cult Influence — Core p. 51 | As pp. 51–53 apresentam Initiation, sem esse Mérito separado. Origem exata requer auditoria; ID, fonte cadastrada e benefícios preservados. Core/Mage conservam a apresentação sem qualificador pelo efeito equivalente cadastrado. |
 | Nighthawks — Nameless and Accursed p. 29 | Catálogo inclui Prime 2 no segundo Attainment; lista impressa de pré-requisitos cita Larceny 3. |
 | Tyrian Archons — Nameless and Accursed p. 35 | Profane Tool (Scepters) aparece no texto; requisito estruturado verifica Mérito/ponto, sem a restrição de configuração. |
+| Swarm Form — Vampire p. 114 | Referência cadastrada Shape of the Beast (Forma da Fera) não consta do catálogo atual de Metamorfose. Não substituir por Beast's Skin ou mudar o requisito sem verificar a fonte. |
 | Vardyvle / Penumbrae | Referências canônicas False Memory (singular) / False Memories (plural) preservadas; não inferir IDs ou fundir efeitos. |
 | Area of Expertise — Core p. 44 | Especialização exigida no livro, ausente no requisito cadastrado Resolve 2. |
 | Armed Defense — Core pp. 60–61 | Resumos omitem limites de Weak Spot, sucessos extras/declaração de Aggressive Defense e detalhes de Dodge/Press the Advantage. |
@@ -176,8 +177,8 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 
 ## Verificação atual
 
-- **72/403** Méritos Vampire com apresentação completa por ID, 36 oficiais e 36 Homebrew; três níveis localizados. O terceiro lote revisa 12 registros do livro básico e acrescenta 12 Homebrew de Better Feared/False Gods, sem reconstruir campos ausentes.
+- **96/403** Méritos Vampire com apresentação completa por ID, 48 oficiais e 48 Homebrew; três níveis localizados. O quarto lote revisa 12 registros do livro básico e acrescenta 12 Homebrew de False Gods, sem reconstruir campos ausentes. Touchstone permanece no original; Pack Alpha usa Alfa da Matilha.
 - Catálogo canônico de 403 registros e as 24 apresentações anteriores preservados integralmente. Manifesto `catalogVersion` 52; recurso `merits-vampire-pt` versão 2. Nomes, IDs, regras, alocações, XP e textos autorais não são reescritos.
-- Gates do terceiro lote aprovados: 6/6 testes de integração EN → PT → EN e identidade de Méritos, 34/34 de catálogos/arquitetura, lint, TypeScript e build. O catálogo canônico de 403 Méritos e as 48 apresentações dos lotes anteriores permanecem intactos. A suíte completa fica para o gate final da meta.
+- Gates do quarto lote aprovados: 6/6 testes de integração EN → PT → EN e identidade de Méritos, 34/34 de catálogos/arquitetura, lint, TypeScript e build. O catálogo canônico de 403 Méritos e as 72 apresentações dos lotes anteriores permanecem intactos. A suíte completa fica para o gate final da meta.
 - Referências Vampire já verificadas: 56 Bloodlines com PT; caption Star-Crossed segue em consulta. Demais Méritos, poderes, Conditions/presets Vampire e etapa Mage permanecem pendentes.
 - Sem smoke de navegador. Nova suíte completa de encerramento deverá ser executada após concluir o escopo; gates proporcionais por lote.

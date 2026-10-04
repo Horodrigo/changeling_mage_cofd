@@ -341,5 +341,119 @@
     "name": "Despertar Parassensorial",
     "description": "Um paciente mortal recebe um sentido psíquico semelhante a Arrepio da Besta, que o médico Typhos pode acessar.",
     "prerequisites": "Paciente humano; médico Typhos com Cirurgião; Auspex • (médico)"
+  },
+  "vtr-lineage": {
+    "name": "Linhagem",
+    "description": "A descendência do vampiro é conhecida e carrega peso social."
+  },
+  "vtr-lorekeeper": {
+    "name": "Guardião do Saber",
+    "description": "Conserva e interpreta conhecimento oculto da Ordo Dracul.",
+    "prerequisites": "Status na Ordo Dracul •"
+  },
+  "vtr-night-doctor-surgery": {
+    "name": "Cirurgia do Médico Noturno",
+    "description": "Aplica práticas cirúrgicas experimentais da Ordo Dracul.",
+    "prerequisites": "Status na Ordo Dracul •; Medicina •••"
+  },
+  "vtr-mother-daughter-bond": {
+    "name": "O Laço Mãe-Filha",
+    "description": "Expressa um vínculo ritual profundo entre Acólitos.",
+    "prerequisites": "Status no Círculo da Anciã •"
+  },
+  "vtr-pack-alpha": {
+    "name": "Alfa da Matilha",
+    "description": "Exerce domínio sobre animais ou uma matilha ligada ao vampiro.",
+    "prerequisites": "Gangrel"
+  },
+  "vtr-secret-society-junkie": {
+    "name": "Viciado em Sociedades Secretas",
+    "description": "Reconhece padrões, rumores e protocolos de organizações ocultas."
+  },
+  "vtr-speaker-silent": {
+    "name": "Voz dos Silenciosos",
+    "description": "Interpreta sinais e revelações dos mortos silenciosos.",
+    "prerequisites": "Status na Lancea et Sanctum •"
+  },
+  "vtr-swarm-form": {
+    "name": "Forma de Enxame",
+    "description": "Expande Forma da Fera para uma forma composta por muitos animais pequenos.",
+    "prerequisites": "Metamorfose ••••"
+  },
+  "vtr-unnatural-affinity": {
+    "name": "Afinidade Sobrenatural",
+    "description": "Permite alimentar-se de uma categoria sobrenatural incomum."
+  },
+  "vtr-i-know-a-guy": {
+    "name": "Conheço uma Pessoa",
+    "description": "Encontra rapidamente um contato adequado por meio da rede Carthiana.",
+    "prerequisites": "Status no Movimento Carthiano •"
+  },
+  "vtr-sworn": {
+    "name": "Juramentado",
+    "description": "Está vinculado a um juramento reconhecido pelo Invictus.",
+    "prerequisites": "Status no Invictus •"
+  },
+  "vtr-touchstone": {
+    "name": "Touchstone",
+    "description": "Acrescenta ligações humanas que sustentam a Humanidade do vampiro."
+  },
+  "vtr-false-gods:predatory-pheromone": {
+    "name": "Feromônio Predatório",
+    "description": "Um paciente mortal recebe bônus sociais com humanos, mas se torna mais suscetível ao fascínio dos vampiros.",
+    "prerequisites": "Paciente humano; médico Typhos com Cirurgião"
+  },
+  "vtr-false-gods:surgeon": {
+    "name": "Cirurgião",
+    "description": "Realiza Cirurgia Arthmoic e recebe explosão do 9 sempre que uma Especialidade em Cirurgia se aplica. Os Méritos de Procedimento destinados a pacientes não estão disponíveis para personagens Vampire.",
+    "prerequisites": "Status de Typhos •; Medicina ••; Especialidade em Medicina (Cirurgia)"
+  },
+  "vtr-false-gods:sanguine-sensory-enhancement": {
+    "name": "Aprimoramento Sensorial Sanguíneo",
+    "description": "Um paciente mortal recebe Sentidos Aguçados em proporção à Potência de Sangue do médico.",
+    "prerequisites": "Paciente humano; médico Typhos com Cirurgião"
+  },
+  "vtr-false-gods:aggressive-path": {
+    "name": "Caminho Agressivo",
+    "description": "Um caminho de combate tatuado que recompensa a violência direta e o comando vigoroso.",
+    "prerequisites": "Warumono"
+  },
+  "vtr-false-gods:dutiful-path": {
+    "name": "Caminho do Dever",
+    "description": "Um caminho tatuado de lealdade, obrigação e força obtida pelo serviço.",
+    "prerequisites": "Warumono"
+  },
+  "vtr-false-gods:harmonious-path": {
+    "name": "Caminho Harmonioso",
+    "description": "Um caminho tatuado que equilibra a disciplina pessoal com as necessidades da gangue.",
+    "prerequisites": "Warumono"
+  },
+  "vtr-false-gods:bad-breeding": {
+    "name": "Má Linhagem",
+    "description": "Transforma uma linhagem ou senhor infame em vantagem entre Membros que temem essa associação.",
+    "prerequisites": "Nenhum ponto em Boa Linhagem"
+  },
+  "vtr-false-gods:best-fiend": {
+    "name": "Melhor Monstro",
+    "description": "Torna um aliado escolhido no Réquiem excepcionalmente eficaz ao promover um objetivo compartilhado."
+  },
+  "vtr-false-gods:born-leader": {
+    "name": "Líder Nato",
+    "description": "Melhora a ação coordenada e a determinação dos seguidores que aceitam o comando do personagem.",
+    "prerequisites": "Presença •••"
+  },
+  "vtr-false-gods:cutthroat-advanced": {
+    "name": "Implacável, Avançado",
+    "description": "Amplia Implacável ao transformar o fracasso público de um rival em uma vantagem social concreta.",
+    "prerequisites": "Implacável"
+  },
+  "vtr-false-gods:designer-suit": {
+    "name": "Terno de Grife",
+    "description": "Um guarda-roupa vistoso e perfeitamente ajustado melhora as primeiras impressões em ambientes de elite.",
+    "prerequisites": "Resiliência ••"
+  },
+  "vtr-false-gods:don-t-flinch": {
+    "name": "Não Vacile",
+    "description": "Mantém a compostura diante de violência súbita e nega ao agressor a satisfação de perceber medo."
   }
 }
