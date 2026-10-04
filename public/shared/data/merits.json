@@ -604,11 +604,11 @@
     "source": "Chronicles of Darkness",
     "category": "Fighting",
     "prerequisites": "Street Fighting •••, Subterfuge ••",
-    "description": "During a fight, you can reflexively contest Dexterity + Subterfuge against Wits + Composure to deny an opponent Defense next turn through dirty tricks and distractions.",
+    "description": "During a fight, you can reflexively contest Dexterity + Subterfuge against Wits + Composure to deny an opponent Defense next turn through dirty tricks and distractions. Each use in the scene imposes a cumulative −2 penalty on subsequent uses.",
     "page": 61,
     "priority": 1,
     "translatedName": "Cheap Shot",
-    "descriptionEn": "During a fight, you can reflexively contest Dexterity + Subterfuge against Wits + Composure to deny an opponent Defense next turn through dirty tricks and distractions."
+    "descriptionEn": "During a fight, you can reflexively contest Dexterity + Subterfuge against Wits + Composure to deny an opponent Defense next turn through dirty tricks and distractions. Each use in the scene imposes a cumulative −2 penalty on subsequent uses."
   },
   {
     "id": "core-2ed:choke-hold",

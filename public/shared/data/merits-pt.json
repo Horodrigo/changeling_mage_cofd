@@ -180,7 +180,7 @@
   "core-2ed:cheap-shot": {
     "name": "Golpe Baixo",
     "prerequisites": "Luta de Rua •••, Subterfúgio ••",
-    "description": "Durante uma luta, pode disputar reflexivamente Destreza + Subterfúgio contra Raciocínio + Compostura para negar a Defesa de um oponente no próximo turno por meio de truques sujos e distrações."
+    "description": "Durante uma luta, pode disputar reflexivamente Destreza + Subterfúgio contra Raciocínio + Compostura para negar a Defesa de um oponente no próximo turno por meio de truques sujos e distrações. Cada uso na cena impõe uma penalidade cumulativa de −2 aos usos seguintes."
   },
   "core-2ed:choke-hold": {
     "name": "Estrangulamento",

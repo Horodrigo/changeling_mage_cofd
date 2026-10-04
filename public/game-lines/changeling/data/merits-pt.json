@@ -139,7 +139,7 @@
   },
   "ctl-2ed:hedgespun-item": {
     "name": "Item Fiado na Sebe",
-    "description": "Um objeto fiado na Sebe permanentemente ativo, cuja pontuação é distribuída entre Equipamento Extraordinário, Alacridade Aprimorada e Durabilidade Aumentada. Cada benefício pode ser escolhido até três vezes."
+    "description": "Um objeto fiado na Sebe permanentemente ativo, cuja pontuação é distribuída entre Equipamento Extraordinário, Alacridade Aprimorada e Durabilidade Aumentada. Cada benefício pode ser escolhido até três vezes. Desvantagem: enquanto usa o item, qualquer teste para passar despercebido à vista de todos ou desviar a atenção do personagem falha automaticamente, concedendo um Ato ao jogador. Quando usado por um ser não feérico, o item impõe −1 em tarefas que exigem concentração ou interação social."
   },
   "ctl-2ed:touchstone": {
     "name": "Touchstone",

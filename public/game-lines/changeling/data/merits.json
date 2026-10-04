@@ -551,11 +551,11 @@
     "sourceId": "ctl-2ed",
     "source": "Changeling the Lost",
     "category": "Changeling",
-    "description": "A permanently active Hedgespun object whose rating is divided among Extraordinary Equipment, Improved Alacrity, and Increased Durability. Each benefit may be selected up to three times.",
+    "description": "A permanently active Hedgespun object whose rating is divided among Extraordinary Equipment, Improved Alacrity, and Increased Durability. Each benefit may be selected up to three times. Drawback: While using the item, any roll to go unnoticed in plain sight or divert attention away from the character automatically fails, granting a Beat to the player. When used by a non-fae being, the item imposes a −1 penalty on tasks requiring concentration or social interaction.",
     "page": 225,
     "priority": 2,
     "translatedName": "Hedgespun Item",
-    "descriptionEn": "A permanently active Hedgespun object whose rating is divided among Extraordinary Equipment, Improved Alacrity, and Increased Durability. Each benefit may be selected up to three times."
+    "descriptionEn": "A permanently active Hedgespun object whose rating is divided among Extraordinary Equipment, Improved Alacrity, and Increased Durability. Each benefit may be selected up to three times. Drawback: While using the item, any roll to go unnoticed in plain sight or divert attention away from the character automatically fails, granting a Beat to the player. When used by a non-fae being, the item imposes a −1 penalty on tasks requiring concentration or social interaction."
   },
   {
     "id": "ctl-2ed:touchstone",
