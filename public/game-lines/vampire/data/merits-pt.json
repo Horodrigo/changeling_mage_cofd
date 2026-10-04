@@ -1325,5 +1325,111 @@
     "name": "Cerne",
     "description": "Vincula um Yarilo a uma árvore sagrada, aprofundando a percepção, o abrigo e o controle dentro de seu território.",
     "prerequisites": "Yarilo; Metamorfose •"
+  },
+  "vtr-ty:mother-goddess-altar": {
+    "name": "Altar da Deusa-Mãe",
+    "description": "Conduza rituais de Crúac em um Altar à velocidade plena.",
+    "prerequisites": "Potência de Sangue ••••••; Altar; Status no Círculo da Anciã •••••"
+  },
+  "vtr-ty:practiced-puppeteer": {
+    "name": "Marionetista Experiente",
+    "description": "Escolha uma Disciplina; seus poderes recebem 9-novamente contra alvos cuja Tolerância Sobrenatural seja inferior à Potência de Sangue − 3.",
+    "prerequisites": "Qualquer Disciplina •••••"
+  },
+  "vtr-ty:prima-donna": {
+    "name": "Prima-Dona",
+    "description": "Uma vez por ponto a cada história, gaste Força de Vontade para ignorar formas brandas de pressão, encerrar uma Condição Social, exercer Status como se tivesse um ponto a mais ou ganhar 8-novamente em ações Sociais contra uma Coalizão.",
+    "prerequisites": "Não possuir Status de Coalizão"
+  },
+  "vtr-ty:receptive-mind": {
+    "name": "Mente Receptiva",
+    "description": "Adicione um alvo extra por ponto no Mérito ao usar Abrir a Mente.",
+    "prerequisites": "Potência de Sangue ••••••; Auspex ••••"
+  },
+  "vtr-ty:dynasty-progenitor": {
+    "name": "Progenitor de Dinastia",
+    "description": "Dobre os bônus de simpatia de sangue ao usar Disciplinas e Devoções nos membros da dinastia que você fundou.",
+    "prerequisites": "Membro de Dinastia •••"
+  },
+  "vtr-ty:oath-of-dynasty": {
+    "name": "Juramento de Dinastia",
+    "description": "Membros juramentados de uma dinastia podem tomar Méritos Sociais emprestados, comunicar-se com parentes em torpor ou despertá-los por simpatia de sangue, sujeitos às penalidades declaradas pelo juramento.",
+    "prerequisites": "Status em qualquer Coalizão •••; Membro de Dinastia •••"
+  },
+  "vtr-ty:spectral-communion": {
+    "name": "Comunhão Espectral",
+    "description": "Uma vez por história, unja um espelho com três Vitae e dispute Perseverança + Compostura + Auspex contra Poder + Resistência para aprisionar o Ka ou libertá-lo no Crepúsculo.",
+    "prerequisites": "Mekhet Vazio"
+  },
+  "vtr-ty:stare-decisis": {
+    "name": "Stare Decisis",
+    "description": "Os outros devem gastar Força de Vontade para se opor à anciã quando ela fala sobre violações da lei ou das Tradições; recupere Força de Vontade quando a autoridade decidir a favor dela.",
+    "prerequisites": "Ancião; Status de Coalizão •••"
+  },
+  "vtr-ty:undeniable-aura": {
+    "name": "Aura Inegável",
+    "description": "A Aura Predatória disputa Perseverança + Tolerância Sobrenatural para reduzir de cinco para três o limiar de sucesso excepcional das ações Sociais contra o alvo.",
+    "prerequisites": "Atroz, Implacável ou Sedutor"
+  },
+  "vtr-undead-menses": {
+    "name": "Menstruação dos Mortos-Vivos",
+    "description": "Produz um componente sanguíneo de importância ritual.",
+    "prerequisites": "Status no Círculo da Anciã •"
+  },
+  "vtr-wild-hunt:alien-limbs": {
+    "name": "Extremidades Alienígenas",
+    "description": "Um Estilo de combate de Metamorfose baseado em alcance flexível, equilíbrio impossível, agarrões constritores, golpes que perfuram armadura e um ataque explosivo de agarrão.",
+    "prerequisites": "Metamorfose ••; Atletismo ••; Briga ••; Sobrevivência ••",
+    "levels": [
+      { "rating": 1, "name": "Golpes Flexíveis", "description": "Conte como dois atacantes para reduzir a Defesa e reduza à metade a Defesa de escudos." },
+      { "rating": 2, "name": "Deslizamento e Torção", "description": "Enquanto estiver apoiado no solo, ganhe +1 de Defesa contra Briga e Armas Brancas e não poderá ser derrubado." },
+      { "rating": 3, "name": "Constrição", "description": "Some Metamorfose aos testes para iniciar agarrões." },
+      { "rating": 4, "name": "Dilacerar", "description": "Ataques Totais ignoram dois pontos de armadura e impõem Braço Lesionado ou Perna Lesionada." },
+      { "rating": 5, "name": "Envolver", "description": "Gaste Força de Vontade para iniciar um agarrão e realizar um ataque desarmado em uma única ação." }
+    ]
+  },
+  "vtr-wild-hunt:aspect-predator": {
+    "name": "Aspecto do Predador",
+    "description": "Considere a Potência de Sangue um ponto mais alta ao Incitar a Fera, mas perder para um predador mais forte impõe uma Condição da Tríade Bestial dobrada.",
+    "prerequisites": "Gangrel"
+  },
+  "vtr-wild-hunt:atrocious-advanced": {
+    "name": "Atroz (Avançado)",
+    "description": "Uma vez por capítulo, transforma a ferocidade lendária de Atroz em uma manifestação Bestial mais forte.",
+    "prerequisites": "Atroz"
+  },
+  "vtr-wild-hunt:beast-meld": {
+    "name": "Fusão Bestial",
+    "description": "Use Túmulo Sem Marca dentro de outra criatura gastando Vitae igual ao Vigor dela; um hospedeiro sapiente que não consinta pode expulsar o vampiro com Força de Vontade.",
+    "prerequisites": "Metamorfose •"
+  },
+  "vtr-wild-hunt:feral-combatant": {
+    "name": "Combatente Feral",
+    "description": "Compre técnicas de combate em forma animal, como emboscadas camufladas, ataques reativos, ações em movimento, vantagem em terreno alto ou baixo, agarrões aderentes e defesa na escuridão.",
+    "prerequisites": "Atletismo ••; Briga ••; Metamorfose •••"
+  },
+  "vtr-wild-hunt:flesh-focus": {
+    "name": "Foco na Carne",
+    "description": "Com um ponto, memorize uma quarta adaptação de Aspecto Predatório; com três pontos, gaste Vitae adicional para assumir uma segunda característica de Aspecto Sobrenatural."
+  },
+  "vtr-wild-hunt:harts-blood": {
+    "name": "Sangue do Cervo",
+    "description": "Animais caçados pessoalmente fornecem Vitae igual ao Tamanho com Potência de Sangue 1–2 e uma Vitae com 3–5; o Mérito é perdido com Potência de Sangue 6.",
+    "prerequisites": "Gangrel; Animalismo •; Potência de Sangue 5 ou menor"
+  },
+  "vtr-wild-hunt:head-pin": {
+    "name": "Cabeça de Alfinete",
+    "description": "Use Túmulo Sem Marca em objetos tão pequenos quanto Tamanho 1.",
+    "prerequisites": "Metamorfose •"
+  },
+  "vtr-wild-hunt:inhuman-resistance": {
+    "name": "Resistência Inumana",
+    "description": "Contra um predador de Potência de Sangue menor, ganhe 9-novamente ao resistir a compulsões mentais ou sociais e remova 10-novamente do uso ao qual resiste; uma falha custa Força de Vontade.",
+    "prerequisites": "Gangrel; Potência de Sangue ••"
+  },
+  "vtr-wild-hunt:iron-heart": {
+    "name": "Coração de Ferro",
+    "description": "Cada ponto aumenta em um o dano necessário para estaquear o vampiro.",
+    "prerequisites": "Resiliência •"
   }
 }
