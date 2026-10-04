@@ -15,7 +15,7 @@ import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import type { MeritDefinition } from "@/lib/merits";
 import { meritPresentation } from "@/lib/merit-presentation";
-import { vampireClanPresentation } from "./reference-presentation";
+import { vampireClanPresentation, vampireCovenantPresentation } from "./reference-presentation";
 import { vampireDisciplineDisplayName } from "./creation-rules";
 import { BloodlineHomebrewEditor } from "./bloodline-homebrew-editor";
 import { BLOODLINE_HOMEBREW_SOURCE_ID, saveBloodlineHomebrews } from "./bloodline-homebrews";
@@ -69,7 +69,10 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
     const item = vampireClanPresentation(definition, locale);
     add(item, t("ui.clans"), [...detail(t("ui.favoredAttributes"), item.favoredAttributes.map(name => systemTerm(name, locale)).join(" / ")), ...detail(t("ui.disciplines"), item.disciplines.map(name => vampireDisciplineDisplayName(name, powers.disciplines, locale)).join(", ")), ...detail(item.baneName, item.baneSummary)]);
   });
-  reference.covenants.forEach((item) => add(item, t("ui.covenants"), [...detail(t("ui.descriptionLabel"), item.description), ...detail(t("ui.advantage"), item.advantage)]));
+  reference.covenants.forEach((definition) => {
+    const item = vampireCovenantPresentation(definition, locale);
+    add(item, t("ui.covenants"), [...detail(t("ui.descriptionLabel"), item.description), ...detail(t("ui.advantage"), item.advantage)]);
+  });
   reference.bloodlines.forEach((item) => add(item, t("ui.bloodlines"), [...detail(t("ui.summary"), item.summary), ...detail(t("ui.parentClan"), item.parentClan), ...detail(t("ui.prerequisites"), item.requirements), ...detail(t("ui.favoredAttributes"), item.favoredAttributes.map(name => systemTerm(name, locale)).join(" / ")), ...detail(t("ui.disciplines"), item.disciplines.map(name => vampireDisciplineDisplayName(name, powers.disciplines, locale)).join(", ")), ...detail(item.giftName ?? "", item.giftSummary), ...detail(item.baneName, item.baneSummary)]));
   powers.disciplines.forEach((item) => add(item, item.id === "lithopedia" ? bloodSorcery : disciplines, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.bloodline"), item.bloodlineId), ...(item.levels ?? []).flatMap((level) => detail(`${"•".repeat(level.rating)} ${level.name}`, level.summary))]));
   powers.ritualDisciplines.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.statusRequirement), ...mechanics(item)]));

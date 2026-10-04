@@ -21,6 +21,7 @@ export type VampireCovenantDefinition = {
   translatedName: string;
   advantage: string;
   description: string;
+  presentationPt?: Pick<VampireCovenantDefinition, "advantage" | "description">;
   group: "core" | "historical" | "uncommon" | "shadow-cult";
   source: string;
   page: number;

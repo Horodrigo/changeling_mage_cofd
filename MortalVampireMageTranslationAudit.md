@@ -31,7 +31,7 @@ Impressão/PDF/blank fica **fora desta meta**, inclusive a inconsistência de Nu
 | Merits Core | 202 | Todos têm entrada PT; não precisam de uma nova tradução integral |
 | Conditions Core | 34 | Implementado: apresentação PT completa e integração em Mortals/Core, Vampire e Mage |
 | Tilts compartilhados | 35 | Implementado: apresentação PT completa, títulos descritivos e integração no combate |
-| Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Anchors implementados; Covenants/Bloodlines pendentes |
+| Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors implementados; Bloodlines pendentes |
 | Vampire — Merits | 403 | 353 descrições em inglês; 50 descrições PT existentes precisam de revisão dos demais campos |
 | Vampire — poderes | 546 registros, mais 140 entradas de níveis internas | Textos mecânicos em inglês; nomes parcialmente traduzidos |
 | Vampire — Conditions | 66 | Sem apresentação PT dedicada |
@@ -77,11 +77,11 @@ Isso confirma cobertura, não uma nova auditoria editorial de cada efeito ou uma
 Arquivos: `public/game-lines/vampire/data/clans.json` e `covenants.json`. O carregador `game-lines/vampire/catalogs/reference.ts` não agrega uma apresentação PT equivalente à dos Merits Core.
 
 - **16 Clans implementados:** 32 textos de Maldição com apresentação PT na ficha Desktop/Mobile e no consumidor Homebrew. Nomes próprios preservados; Hollow Mekhet → Mekhet Vazios e Twice-Cursed → Duplamente Amaldiçoados. Os nomes e efeitos canônicos permanecem intactos.
-- **23 Covenants:** descrições e vantagens em inglês. Só três registros têm nome PT diferente do inglês: `Covenantless`, `Carthian Movement` e `Circle of the Crone`.
-- A apresentação atual `Sem Covenant` contradiz a decisão já aprovada de usar “Coalizão”.
+- **23 Covenants implementados:** 46 textos PT para descrições/vantagens no seletor de criação e no consumidor Homebrew; títulos descritivos localizados, nomes próprios e identidades canônicas preservados.
+- `Covenantless` agora apresenta **Sem Coalizão**, conforme a decisão aprovada.
 - Há organizações históricas e conteúdo Homebrew distribuído junto do catálogo: não tratar todo o inventário como conteúdo oficial do livro básico.
 
-Exemplos de campos pendentes: `The Wanton Curse`, `Carthian Law Merits`, `Coils and Scales of the Dragon`, `Invictus Oaths`.
+Os antigos exemplos pendentes (`The Wanton Curse`, `Carthian Law Merits`, `Coils and Scales of the Dragon`, `Invictus Oaths`) agora têm apresentação PT; os campos canônicos em inglês permanecem usados pelas regras.
 
 ### V02 — Mask e Dirge
 
@@ -263,13 +263,18 @@ As decisões mais recentes do usuário prevalecem sobre as propostas históricas
 - Cowed → **Acovardado**; Berserk → **Frenético**; Fatigued → **Fatigado**.
 - Primal Urge → **Instinto Primitivo**; Lunacy → **Lunagem**; Wolf-Blooded → **Parente**.
 - Nas entidades efêmeras de todas as linhas: Ban → **Proibição**; Bane → **Fraqueza**. Não aplicar automaticamente ao Bane de Clan/Bloodline ou ao papel homônimo de Changeling. A grafia “Poribição” foi corrigida pelo usuário.
+- Mystery Cult Initiation → **Iniciação em Culto dos Mistérios**, uniformização escolhida explicitamente pelo usuário em **2026-10-04** para catálogo, referências e interface. Substitui a forma singular anterior desse Mérito nos anexos; não altera sua identidade, concessões ou níveis.
 - Numina permanece **Numina**. Demais decisões e contextos constam integralmente nos anexos abaixo; divergências históricas como Fighting Finesse, Animal Ken, Rank, Dread Power e nomes de cultos precisam ser conciliadas com a apresentação atual e o contexto, não substituídas por busca textual indiscriminada.
 
 As decisões mecânicas anteriores de Contracts — Waters of Lethe, Enveloping Sands e Whisperwind — permanecem adotadas; esta meta não reabre essa reconstrução. `WerewolfAudit.md` conserva as decisões mecânicas e as pendências adiadas de Werewolf, fora do escopo desta meta.
 
 ## Dúvidas novas durante a execução
 
-Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abaixo o contexto e a decisão necessária quando uma dúvida surgir.
+| Data | Dúvida | Decisão/estado |
+| --- | --- | --- |
+| 2026-10-04 | Mystery Cult Initiation tinha “Iniciação em Culto de Mistério” no catálogo Core e “Iniciação em Culto dos Mistérios” na interface. | **Resolvida pelo usuário:** uniformizar **Iniciação em Culto dos Mistérios**. Aplicada ao catálogo Core e às referências de Coalizão; dicionários já usavam essa forma. |
+
+Preservar o contexto e registrar aqui novas dúvidas quando surgirem.
 
 ## Progresso — prioridade 0, primeiro lote
 
@@ -627,6 +632,18 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Manifesto: catalogVersion **43 → 44** e `vampire-clans` **4 → 5**, com IDs/URLs inalterados. Comparação com o commit anterior confirmou igualdade integral dos campos canônicos ao retirar a metadata PT e as duas captions localizadas.
 - Verificação dirigida **8/8**: snapshots/renderização de todos os textos de Clan/Anchor EN → PT → EN, Homebrew e identidades de Merits Vampire. O teste também preserva as Maldições pessoais e verifica os 16 conjuntos de números. Lint, build, TypeScript e diff check aprovados. A suíte completa executou 553 testes: 552 aprovados e uma falha no teste de inventário Homebrew, que exigia a iteração direta do catálogo. A iteração foi simplificada sem mudar a apresentação; nova verificação de inventário, integração Vampire e EN/PT **40/40** aprovada. Sem smoke de navegador e sem mudanças em componentes de impressão.
 - Covenants, Bloodlines, Merits, poderes e Conditions Vampire continuam pendentes. A etapa 3 permanece ativa.
+
+### Etapa 3 — Coalizões Vampire e uniformização Core (2026-10-04)
+
+- As 23 Coalizões recebem `presentationPt` para `description` e `advantage` (**46 textos**), inclusive Children of the Thorns e Faithful of Propylaia, mantendo sua origem Homebrew. Os nomes canônicos, IDs, grupos, fontes/páginas e concessões não mudam. A comparação com o commit anterior confirmou igualdade integral dos campos canônicos ao retirar metadata PT e restaurar as captions anteriores.
+- Onze captions foram atualizadas: **Sem Coalizão**, Prole de Belial, Ordem Esotérica da Estrela Dourada, Correio da Forca, Legião do Verde, Décimo Coro, Arquitetos do Monólito, Seguidores de Seth, A Sala de Moldagem, Filhos dos Espinhos e Fiéis de Propylaia. Os dez nomes próprios integrais e os segmentos Belial, Seth, Shahrayad, Mary e Propylaia permanecem originais. Os títulos previamente localizados Movimento Carthiano/Círculo da Anciã foram preservados.
+- Vantagens usam Feitiçaria Tebana, Espirais/Escalas do Dragão, Gaiola Dourada e Pacto com o Estranho, conforme a apresentação existente; Evolução Triádica, Juramentos do Invictus, Código do Carrasco, O Conto de Shahrayad e Fachada serão reutilizados nos respectivos catálogos de poderes. Detournement, Therion, Kimiya e Manteia mantêm sua forma cadastrada. All Night Society foi localizado como **Sociedade da Noite** na descrição; nenhuma regra foi inferida desse título.
+- As exclusões de Children of the Thorns permanecem explícitas: Cisma, Cripta/Saída, Atendente da Sepultura, Explorador Sagrado e Tocado por Mary. Os benefícios de Propylaia preservam as alternativas de Especialização/Perícia, o quinto nível e a Visão Arcana gratuita. Configurações/presets e textos escritos pelo jogador não foram reescritos.
+- `vampireCovenantPresentation` fornece apenas a visão de leitura do seletor de criação (resumo e diálogo) e de Homebrew. Os mecanismos de concessão/eligibilidade conservam o catálogo canônico. Personagens existentes e Homebrew autoral sem metadata PT conservam seus dados.
+- A escolha explícita do usuário uniformiza o nome PT de `core-2ed:mystery-cult-initiation` como **Iniciação em Culto dos Mistérios**. Somente o título de apresentação Core mudou; requisitos, níveis, benefícios e identidade permanecem intactos, e os dicionários existentes passam a coincidir com o catálogo.
+- Manifesto: catalogVersion **44 → 45**, `vampire-covenants` **5 → 6**, `merits-core-pt` **6 → 7**; IDs/URLs e demais versões preservados.
+- Verificação EN → PT → EN das 23 Coalizões e dos dois registros Homebrew, texto autoral homônimo, snapshots congelados e alinhamento do título Core/interface: **50/50 testes dirigidos** aprovados. Após o build, integridade dos catálogos e arquitetura **34/34** aprovadas. Lint, build, TypeScript e diff check aprovados. Sem smoke de navegador e sem mudanças em componentes de impressão.
+- Bloodlines, Merits, poderes, Conditions e presets de Cultos das Sombras Vampire continuam pendentes; Mage permanece como etapa 4. A meta continua ativa.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 

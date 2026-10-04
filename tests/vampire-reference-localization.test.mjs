@@ -49,13 +49,37 @@ test("all 16 Vampire Clans have Portuguese Bane titles/summaries with preserved 
   assert.ok(read("public/shared/data/catalog-manifest.json").catalogs["vampire-clans"].version >= 5);
 });
 
-test("Vampire reference snapshot, Anchor recovery and Clan Banes render in EN/PT/EN without mutating choices", async () => {
+test("all 23 Vampire Covenants localize descriptions and advantages while retaining proper names and Homebrew exclusions", () => {
+  const covenants = data["vampire-covenants"];
+  assert.equal(covenants.length, 23);
+  assert.equal(new Set(covenants.map(item => item.id)).size, 23);
+  for (const item of covenants) {
+    assert.deepEqual(Object.keys(item.presentationPt).sort(), ["advantage", "description"]);
+    assert.ok(item.presentationPt.advantage.trim(), item.id);
+    assert.ok(item.presentationPt.description.trim(), item.id);
+    assert.notEqual(item.presentationPt.description, item.description, item.id);
+  }
+  for (const id of ["invictus", "lancea-et-sanctum", "ordo-dracul", "weihan-cynn", "ahl-al-mumit", "al-amin", "firawn", "jaliniyya", "inconnu", "moirai"]) {
+    const item = covenants.find(item => item.id === id);
+    assert.equal(item.translatedName, item.name, id);
+  }
+  assert.equal(covenants.find(item => item.id === "covenantless").translatedName, "Sem Coalizão");
+  const thorns = covenants.find(item => item.id === "children-of-the-thorns");
+  assert.match(thorns.presentationPt.advantage, /Cisma.*Cripta\/Saída.*Atendente da Sepultura.*Explorador Sagrado.*Tocado por Mary.*excluídos/);
+  const propylaia = covenants.find(item => item.id === "faithful-of-propylaia");
+  for (const item of [thorns, propylaia]) assert.equal(item.sourceId, "h-vtr-agony-ecstasy");
+  assert.match(propylaia.presentationPt.advantage, /Ofícios \(Açougue\) ou Ocultismo \(Oferendas\).*Socialização ou Subterfúgio.*cinco pontos.*Visão Arcana/);
+  assert.ok(propylaia.presentationPt.advantage.startsWith(read("public/shared/data/merits-pt.json")["core-2ed:mystery-cult-initiation"].name));
+  assert.ok(read("public/shared/data/catalog-manifest.json").catalogs["vampire-covenants"].version >= 6);
+});
+
+test("Vampire references render Anchors, Clan Banes and Covenant text in EN/PT/EN without mutating choices", async () => {
   const selection = { mask_id: "rebel", dirge_id: "visionary", notes: "Authored English stays." };
   const before = JSON.stringify({ data, selection });
   for (const locale of ["en-US", "pt-BR", "en-US"]) {
     const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] }, plugins: [{ name: "anchor-locale-and-test-surface", enforce: "pre", transform(code, id) {
       const path = id.replaceAll("\\", "/");
-      if (path.endsWith("/game-lines/vampire/builder.tsx")) return `${code}\nexport { AnchorChoice };`;
+      if (path.endsWith("/game-lines/vampire/builder.tsx")) return `${code}\nexport { AnchorChoice, CovenantSelector };`;
       if (path.endsWith("/game-lines/vampire/sheet-view.tsx")) return `${code}\nexport { BaneEditor };`;
       if (locale === "pt-BR" && path.endsWith("/lib/i18n.tsx")) return code.replace('const serverLocale = ():Locale => "en-US";', 'const serverLocale = ():Locale => "pt-BR";');
     } }] });
@@ -65,8 +89,8 @@ test("Vampire reference snapshot, Anchor recovery and Clan Banes render in EN/PT
       const requested = [];
       const reference = freezeCatalogData(await vampireReferenceCatalogGroup.load({ getCatalog: async id => { requested.push(id); return data[id]; } }));
       assert.deepEqual(requested.sort(), groups.map(group => `vampire-${group}`).sort());
-      const { vampireAnchorPresentation, vampireClanPresentation } = await vite.ssrLoadModule("/game-lines/vampire/reference-presentation.ts");
-      const { AnchorChoice } = await vite.ssrLoadModule("/game-lines/vampire/builder.tsx");
+      const { vampireAnchorPresentation, vampireClanPresentation, vampireCovenantPresentation } = await vite.ssrLoadModule("/game-lines/vampire/reference-presentation.ts");
+      const { AnchorChoice, CovenantSelector } = await vite.ssrLoadModule("/game-lines/vampire/builder.tsx");
       const { BaneEditor } = await vite.ssrLoadModule("/game-lines/vampire/sheet-view.tsx");
       const { SheetField } = await vite.ssrLoadModule("/app/workspace/character-paper-shell.tsx");
       const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
@@ -105,6 +129,36 @@ test("Vampire reference snapshot, Anchor recovery and Clan Banes render in EN/PT
       assert.equal(JSON.stringify(character), characterBefore);
       const customClan = { id: "homebrew:clan", name: "Authored Clan", baneName: "Authored Bane", baneSummary: "Authored English stays." };
       assert.equal(vampireClanPresentation(customClan, locale), customClan);
+      for (const definition of reference.covenants) {
+        const presented = vampireCovenantPresentation(definition, locale);
+        assert.equal(presented.id, definition.id);
+        assert.equal(presented.name, definition.name);
+        assert.equal(presented.source, definition.source);
+        assert.equal(presented.sourceId, definition.sourceId);
+        if (locale === "en-US") assert.equal(presented, definition);
+        assert.equal(Object.isFrozen(definition.presentationPt), true);
+        const html = render(CovenantSelector, { items: reference.covenants, values: [definition.id], primary: definition.id, onToggle: refuseMutation, onPrimary: refuseMutation, locale, invalid: false });
+        assert.ok(html.includes(`<strong>${escape(locale === "pt-BR" ? definition.translatedName : definition.name)}</strong>`), `${locale}: ${definition.id} name`);
+        assert.ok(html.includes(escape(presented.description)), `${locale}: ${definition.id} description`);
+        assert.ok(html.includes(escape(presented.advantage)), `${locale}: ${definition.id} advantage`);
+        if (locale === "pt-BR") assert.ok(!html.includes(escape(definition.description)), definition.id);
+      }
+      const customCovenant = { id: "homebrew:covenant", name: "Invictus", translatedName: "Invictus", group: "uncommon", description: "Authored Covenant stays.", advantage: "Authored benefit stays." };
+      assert.equal(vampireCovenantPresentation(customCovenant, locale), customCovenant);
+      const customChoice = render(CovenantSelector, { items: [customCovenant], values: [customCovenant.id], primary: customCovenant.id, onToggle: refuseMutation, onPrimary: refuseMutation, locale, invalid: false });
+      assert.ok(customChoice.includes(customCovenant.description));
+      assert.ok(customChoice.includes(customCovenant.advantage));
+      const { vampireHomebrew } = await vite.ssrLoadModule("/game-lines/vampire/homebrew.tsx");
+      const emptyPowers = Object.fromEntries(["disciplines", "ritualDisciplines", "devotions", "lashes", "cruacRites", "thebanMiracles", "gildedInvocations", "detournements"].map(key => [key, []]));
+      const catalogs = { get: id => ({ "vampire-reference": reference, "vampire-powers": emptyPowers, "vampire-conditions": [], "core-merits": [], "vampire-merits": [] })[id] };
+      const homebrewHtml = render(vampireHomebrew.Component, { catalogs });
+      for (const id of ["children-of-the-thorns", "faithful-of-propylaia"]) {
+        const definition = reference.covenants.find(item => item.id === id);
+        const presented = vampireCovenantPresentation(definition, locale);
+        assert.ok(homebrewHtml.includes(escape(presented.description)), `${locale}: ${id} Homebrew description`);
+        assert.ok(homebrewHtml.includes(escape(presented.advantage)), `${locale}: ${id} Homebrew advantage`);
+        assert.ok(homebrewHtml.includes(escape(definition.source)));
+      }
       assert.equal(JSON.stringify({ data, selection }), before);
     } finally { await vite.close(); }
   }

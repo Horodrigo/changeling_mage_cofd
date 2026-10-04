@@ -64,6 +64,19 @@ test("pt-BR Merit records reference canonical IDs and cover every translated fie
   assert.match(changelingPt["ctl-2ed:court-goodwill"].description, /ambas diminuem em um ponto/);
 });
 
+test("Mystery Cult Initiation uses the approved Portuguese title in both Core catalog and line interface without changing canonical identity", async () => {
+  const { translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const definition = withMeritPresentation(core, corePt).find(item => item.id === "core-2ed:mystery-cult-initiation");
+  for (const locale of ["en-US", "pt-BR", "en-US"]) {
+    const name = meritPresentation(definition, locale).name;
+    assert.equal(name, translate(locale, "ui.mysteryCultInitiation"));
+    assert.ok(translate(locale, "ui.shadowCultInitiationGrant", { cult: "Authored Cult" }).startsWith(name));
+    assert.equal(definition.name, "Mystery Cult Initiation");
+    assert.equal(definition.id, "core-2ed:mystery-cult-initiation");
+    assert.equal(definition.levels, core.find(item => item.id === definition.id).levels);
+  }
+});
+
 test("switching Merit locale changes presentation, never eligibility or canonical identities", () => {
   const before = structuredClone(changeling);
   const catalog = withMeritPresentation(changeling, changelingPt);

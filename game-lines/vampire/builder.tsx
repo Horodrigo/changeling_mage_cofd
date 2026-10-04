@@ -1,5 +1,5 @@
 "use client";
-import { vampireAnchorPresentation } from "./reference-presentation";
+import { vampireAnchorPresentation, vampireCovenantPresentation } from "./reference-presentation";
 import { vampireMeritId } from "./merit-identities";
 import { meritProblemMessage } from "@/lib/merit-ui";
 import { meritPresentation } from "@/lib/merit-presentation";
@@ -465,8 +465,9 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
 
 function CovenantSelector({ items, values, primary, onToggle, onPrimary, locale, invalid }: { items: readonly VampireCovenantDefinition[]; values: string[]; primary: string; onToggle: (value: string) => void; onPrimary: (value: string) => void; locale: Locale; invalid: boolean }) {
   const { t } = useLanguage();
-  const selected = items.find((item) => item.id === primary);
-  const selectedItems = items.filter((item) => values.includes(item.id));
+  const presentedItems = items.map(item => vampireCovenantPresentation(item, locale));
+  const selected = presentedItems.find((item) => item.id === primary);
+  const selectedItems = presentedItems.filter((item) => values.includes(item.id));
   return <div className={`template-choice-field vampire-covenant-field${invalid ? " missing-field" : ""}`}>
     <span>{t("sheet.covenant")}</span>
     <div className="template-choice-current vampire-template-current">
@@ -479,7 +480,7 @@ function CovenantSelector({ items, values, primary, onToggle, onPrimary, locale,
       <DialogContent className="merit-dialog vtr-dialog">
         <DialogHeader><DialogTitle>{t("ui.selectCovenant")}</DialogTitle><DialogDescription>{t("ui.selectCovenantsDescription")}</DialogDescription></DialogHeader>
         <div className="vampire-covenant-options">{(["core", "historical", "uncommon", "shadow-cult"] as const).map((group) => {
-          const groupItems = items.filter((item) => item.group === group);
+          const groupItems = presentedItems.filter((item) => item.group === group);
           if (!groupItems.length) return null;
           const groupLabel = group === "core" ? t("ui.coreOptions") : group === "historical" ? t("ui.historicalOptions") : group === "uncommon" ? t("ui.uncommonOptions") : t("ui.shadowCults");
           return <section key={group}><h3>{groupLabel}</h3>{groupItems.map((item) => <article key={item.id} className={values.includes(item.id) ? "selected" : ""}><div><strong>{displayName(item, locale)}</strong><small>{item.advantage}</small></div><Button type="button" size="sm" variant={values.includes(item.id) ? "default" : "outline"} onClick={() => onToggle(item.id)}>{t(values.includes(item.id) ? "ui.removeAction" : "ui.join")}</Button>{values.includes(item.id) && item.id !== "covenantless" && <Button type="button" size="sm" variant={primary === item.id ? "default" : "ghost"} onClick={() => onPrimary(item.id)}>{t(primary === item.id ? "ui.primary" : "ui.makePrimary")}</Button>}</article>)}</section>;
