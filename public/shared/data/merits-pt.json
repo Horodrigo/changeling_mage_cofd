@@ -190,7 +190,7 @@
   "core-2ed:citywalker": {
     "name": "Andarilho Urbano",
     "prerequisites": "Somente mortais; Manha ••",
-    "description": "Em uma cidade com pelo menos 250 mil habitantes, passa oito horas dormindo e testa Perseverança + Manha para percorrer correspondências ocultas até outra cidade conhecida; o resultado determina se o personagem chega, sofre um atraso ou entra no reino dos pesadelos."
+    "description": "Em uma cidade com pelo menos 250 mil habitantes, testa Perseverança + Manha para caminhar até outra cidade conhecida. Uma falha impõe −3 nas novas tentativas daquele dia; oito horas de sono removem essa restrição. Uma falha dramática leva ao reino dos pesadelos."
   },
   "core-2ed:clairvoyance": {
     "name": "Clarividência",
@@ -1033,7 +1033,7 @@
   "hurt-locker:bless-amulet": {
     "name": "Abençoar Amuleto",
     "prerequisites": "Somente mortais; Ocultismo •••",
-    "description": "Gasta Força de Vontade e testa Perseverança + Compostura com modificadores de abjuração para criar um amuleto que impeça Reivindicado ou Possuído por um dia com dois pontos ou por uma semana com três pontos."
+    "description": "Usa um objeto de significado pessoal, gasta um ponto de Força de Vontade e testa Perseverança + Compostura com modificadores de abjuração para criar um amuleto que impeça Reivindicado ou Possuído. Cada sucesso protege o portador por um dia; com dois pontos, a proteção dura uma semana e, com três pontos, é permanente."
   },
   "hurt-locker:body-as-weapon": {
     "name": "Corpo como Arma",

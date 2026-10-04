@@ -441,8 +441,8 @@
     "category": "Supernatural",
     "priority": 1,
     "translatedName": "Bless Amulet",
-    "description": "Spend Willpower and roll Resolve + Composure with abjuration modifiers to create a charm that prevents Claimed or Possessed for a day at two dots or a week at three dots.",
-    "descriptionEn": "Spend Willpower and roll Resolve + Composure with abjuration modifiers to create a charm that prevents Claimed or Possessed for a day at two dots or a week at three dots.",
+    "description": "Use an object of personal significance, spend one Willpower, and roll Resolve + Composure with abjuration modifiers to create a charm that prevents Claimed or Possessed. Each success protects the wearer for one day; with two dots, protection lasts one week, and with three dots it is permanent.",
+    "descriptionEn": "Use an object of personal significance, spend one Willpower, and roll Resolve + Composure with abjuration modifiers to create a charm that prevents Claimed or Possessed. Each success protects the wearer for one day; with two dots, protection lasts one week, and with three dots it is permanent.",
     "prerequisites": "Mortal only; Occult •••",
     "page": 72,
     "mortalOnly": true
@@ -635,8 +635,8 @@
     "category": "Supernatural",
     "priority": 1,
     "translatedName": "Citywalker",
-    "description": "In a city of at least one quarter-million people, spend eight hours asleep and roll Resolve + Streetwise to walk occult correspondences into another familiar city; the result determines whether the character arrives, is delayed, or enters the nightmare realm.",
-    "descriptionEn": "In a city of at least one quarter-million people, spend eight hours asleep and roll Resolve + Streetwise to walk occult correspondences into another familiar city; the result determines whether the character arrives, is delayed, or enters the nightmare realm.",
+    "description": "In a city of at least one quarter-million people, roll Resolve + Streetwise to walk to another familiar city. Failure imposes −3 on further attempts that day; eight hours of sleep remove this restriction. Dramatic failure leads to the nightmare realm.",
+    "descriptionEn": "In a city of at least one quarter-million people, roll Resolve + Streetwise to walk to another familiar city. Failure imposes −3 on further attempts that day; eight hours of sleep remove this restriction. Dramatic failure leads to the nightmare realm.",
     "prerequisites": "Mortal only; Streetwise ••",
     "page": 236,
     "mortalOnly": true
