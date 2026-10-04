@@ -24,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
-| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 345 apresentações completas por ID (todos os 154 oficiais, 191 Homebrew), todos os 80 níveis; 58 Méritos Homebrew restantes; Courtoisie preservado conforme resposta do usuário |
+| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 365 apresentações completas por ID (todos os 154 oficiais, 211 Homebrew), todos os 80 níveis; 38 Méritos Homebrew restantes; Courtoisie preservado conforme resposta do usuário |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
@@ -127,6 +127,7 @@ Os cinco pares com efeitos distintos já aprovados recebem qualificadores de lin
 
 - Vampire Conditions: Bestial, Competitivo, Lascivo, Dependente, Mesmerizado, Falsas Memórias, Lânguido, Letárgico, Tentado, Distraído e Convite. Subserviente traduz Subservient na referência de Kerberos; Intoxicado e Assustado traduzem Intoxicated e Frightened nas referências de Kingjan, sem criar identidade por nome. Lânguido (Languid) e Letárgico (Lethargic) permanecem distintos. Jaded/Addiction/Swooning/Drained ainda devem acompanhar seus próprios registros.
 - Mage Conditions: Megalomaniacal/Rampant ainda aguardam seu catálogo; Húbris resolve seus IDs. Não criar uma tabela mecânica paralela.
+- Vampire referências carthianas: Regra de Um Só traduz Rule of One; Conheço uma Pessoa, Exército de Um Só, Coda contra a Feitiçaria e Experimentador de Devoções acompanham as apresentações existentes. Bloodroots, PPI e Janus permanecem no original.
 - Vampire referências de Agony & Ecstasy: Poção da Bruxa traduz Witch's Brew; Guardião traduz Warden em Sombra do Mestre; Dedo Vermelho traduz Red Thumb; Abrir o Vazio traduz Opening the Void. Essas apresentações não criam identidades nem efeitos por nome.
 - Vampire poderes/Méritos: Meada de Clotho; Amigos no Exterior; Fome Intensificada; Coração Sombrio; Feudo Amaldiçoado; Fama (Avançada); Escola de Etiqueta; Crúac Banshee; Ouvidos para a Fera; O Veículo; Cerne (Heartwood de Yarilo, distinto da categoria Crux de Penhores); Unção; As Delícias; Riqueza Herdada; Verdades de Erebus; Lições de Erebus; Conheça Seu Público; Grilhão de Sangue; Sangue dos Relutantes; Sem Presas; Surto Elétrico; Parentesco Insetoide; Mente de Colmeia; Semblante Perdido; Apofenia; Pareidolia; Dementação. Cirurgia Arthmoic conserva a grafia técnica cadastrada.
 - Coalizões: Evolução Triádica, Juramentos do Invictus, Código do Carrasco, O Conto de Shahrayad, Fachada, Cisma, Cripta/Saída, Atendente da Sepultura, Explorador Sagrado, Tocado por Mary e Visão Arcana. Detournement, Therion, Kimiya e Manteia mantêm a forma cadastrada.
@@ -177,22 +178,23 @@ Estes pontos **já receberam resposta**. As mudanças abaixo ainda precisam de a
 
 ## Pontos ainda sem resposta ou auditoria concluída
 
-A lista abaixo exclui as decisões respondidas acima; Swarm Form, Choke Hold e Curse Effigy receberam pedidos de esclarecimento, não aprovação de mudanças. A revisão visual atual está indicada em cada registro abaixo. Não corrigir por tradução ou por inferência.
+A lista abaixo exclui as decisões respondidas acima; Swarm Form, Choke Hold, Curse Effigy e Fire & Revolution receberam pedidos de esclarecimento, não aprovação de mudanças. A revisão visual atual está indicada em cada registro abaixo. Não corrigir por tradução ou por inferência.
 
 | Registro / fonte | Trabalho ainda não respondido |
 | --- | --- |
 | Swarm Form — Vampire p. 114 | O registro já é um Mérito. A dúvida era somente sobre a referência cadastrada Shape of the Beast (Forma da Fera). Revisão visual de Vampire p. 114 confirma Beast's Skin e Metamorfose 3, mas o catálogo exige 4. Pergunta enviada para corrigir referência/requisito conforme o livro ou conservar o registro. |
 | Choke Hold — Core p. 61 | O −2 cumulativo aplica-se apenas a Cheap Shot, conforme confirmação do usuário. Core p. 61 revisado visualmente: o resumo omite limiar maior que duas vezes Vigor e duração 6 − Vigor minutos. Pergunta enviada para completar esses limites ou conservar o resumo. |
 | Curse Effigy | Parada letal sem agrupar a resistência: Intelligence + Medicine − Stamina + Supernatural Tolerance. Hurt Locker p. 73 revisado visualmente: o próprio PDF mantém essa ambiguidade. Pergunta enviada sobre conservar a fórmula ou explicitar a interpretação; nenhum agrupamento foi alterado. |
+| Fire & Revolution — facções e Méritos pp. 72–76, 94–95 | Revisão visual do PDF local: páginas das oito facções são 72/73/75/75/76/76/76/76, enquanto o catálogo usa 70/70/71/71/72/72/73/73. Artefato Cultural omite Status Carthiano 2; Experimentador de Devoções (Avançado) omite três Devoções da Disciplina escolhida; Imposição omite Armas de Fogo 2 ou Armas Brancas 2; Bombista Incendiário omite Ímpeto 1. Pergunta enviada para corrigir páginas/requisitos conforme esse PDF ou conservar o catálogo. Tradução conserva os campos atuais até a resposta; não reconstrói outros limites. |
 
 Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificação e a elegibilidade cadastradas, inclusive Homebrew. Tradução não cria acesso geral a Méritos exclusivos nem presume exceções do Narrador.
 
 ## Verificação atual
 
-- **345/403** Méritos Vampire com apresentação completa por ID: todos os 154 oficiais, 191 Homebrew e os 80 níveis do catálogo. Restam 58 Méritos Homebrew; Courtoisie permanece no francês, conforme escolha aprovada. O catálogo canônico de 403 Méritos conserva identidades e efeitos; somente os dois requisitos/páginas aprovados de Agony & Ecstasy foram corrigidos no lote anterior; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
+- **365/403** Méritos Vampire com apresentação completa por ID: todos os 154 oficiais, 211 Homebrew e os 80 níveis do catálogo. Restam 38 Méritos Homebrew; Courtoisie permanece no francês, conforme escolha aprovada. O catálogo canônico de 403 Méritos conserva identidades e efeitos; somente os dois requisitos/páginas aprovados de Agony & Ecstasy foram corrigidos no lote anterior; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
 - **56 Bloodlines** com PT completo, incluindo Desventurados. IDs, compras, XP, recibos e textos autorais não são reescritos pela troca de idioma.
-- Manifesto `catalogVersion` **77**; recursos Core de Méritos nas versões **15/16**, Changeling nas versões **6/8**, `merits-vampire` **13**, `merits-vampire-pt` **18** e `vampire-bloodlines` **13**.
-- Último lote: 17 Méritos Homebrew restantes de Agony & Ecstasy, incluindo Estilos de Crúac, Mandragora e a errata de O Que Você Tem Feito por Ela. **41/41** testes de integração EN/PT/EN, identidade, catálogos e arquitetura, lint e build aprovados. Resumos, referências e requisitos existentes localizados; níveis ausentes não reconstruídos. O canônico, IDs e efeitos foram preservados; textos autorais permanecem intactos.
+- Manifesto `catalogVersion` **78**; recursos Core de Méritos nas versões **15/16**, Changeling nas versões **6/8**, `merits-vampire` **13**, `merits-vampire-pt` **19** e `vampire-bloodlines` **13**.
+- Último lote: 20 Méritos Homebrew de Fire & Revolution: facções, configurações políticas, experimentação e combate. **41/41** testes de integração EN/PT/EN, identidade, catálogos e arquitetura aprovados, além de lint e build. Canônico, efeitos, números e IDs preservados; Bloodroots, PPI e Janus conservados. Referências reutilizam Conheço uma Pessoa, Exército de Um Só, Coda contra a Feitiçaria e Experimentador de Devoções. Restam 27 registros carthianos e 11 erratas, incluindo três de Agony & Ecstasy.
 - Gate completo anterior: **576/576** testes, lint, TypeScript e build aprovados após as correções de Core/Changeling e equivalência capítulo/sessão, incluindo vínculos de Especialização, instâncias independentes, bancos e recibos.
 - As demais correções aprovadas têm estado de aplicação na tabela de decisões respondidas; os catálogos Vampire/Mage e os pontos sem resposta permanecem separados no backlog.
 - Sem smoke de navegador. A suíte completa de encerramento será executada após concluir todo o escopo; gates proporcionais por lote.

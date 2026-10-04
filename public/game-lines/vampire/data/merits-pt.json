@@ -1776,5 +1776,104 @@
   "h-vtr-agony-ecstasy:what-you-ve-done-for-her-lately": {
     "name": "O Que Você Tem Feito por Ela",
     "description": "Estende de uma cena para uma noite o benefício ritual de Acólito que foi testemunhado."
+  },
+  "h-vtr-fire-revolution:bloodroots-associate": {
+    "name": "Associado dos Bloodroots",
+    "description": "Vincula o personagem à facção Bloodroots e concede seus benefícios políticos e de organização de base.",
+    "prerequisites": "Status no Movimento Carthiano ••"
+  },
+  "h-vtr-fire-revolution:cultist-of-self": {
+    "name": "Cultista de Si",
+    "description": "Concede 9-novamente em Manha e Sobrevivência relacionadas à agenda da facção e acesso limitado a Regra de Um Só, mas limita o Status Carthiano a três pontos.",
+    "prerequisites": "Status no Movimento Carthiano ••"
+  },
+  "h-vtr-fire-revolution:digital-upriser": {
+    "name": "Insurgente Digital",
+    "description": "Concede 9-novamente em Computação e Subterfúgio relacionados à agenda da facção e permite que Conheço uma Pessoa recorra a Recursos.",
+    "prerequisites": "Status no Movimento Carthiano ••"
+  },
+  "h-vtr-fire-revolution:carthian-atheist": {
+    "name": "Ateu Carthiano",
+    "description": "Concede 9-novamente em Erudição e Ocultismo relacionados à agenda da facção e melhora a primeira compra de Coda contra a Feitiçaria.",
+    "prerequisites": "Status no Movimento Carthiano ••"
+  },
+  "h-vtr-fire-revolution:oppositionist": {
+    "name": "Oposicionista",
+    "description": "Concede 9-novamente em Atletismo e Sobrevivência relacionados à agenda da facção e permite recorrer a Exército de Um Só por meio da solidariedade da facção.",
+    "prerequisites": "Status no Movimento Carthiano ••"
+  },
+  "h-vtr-fire-revolution:sabotage-artist": {
+    "name": "Artista da Sabotagem",
+    "description": "Concede 9-novamente em Furto e Furtividade relacionados à agenda da facção e amplia Conheço uma Pessoa ao enfraquecer outra Coalizão.",
+    "prerequisites": "Status no Movimento Carthiano ••"
+  },
+  "h-vtr-fire-revolution:sophocrat": {
+    "name": "Sofocrata",
+    "description": "Concede 9-novamente em Erudição e Ciência relacionadas à agenda da facção e substitui Status por conhecimento em Méritos Carthianos de poucos pontos sem requisitos Físicos.",
+    "prerequisites": "Status no Movimento Carthiano ••"
+  },
+  "h-vtr-fire-revolution:ppi-cadreman": {
+    "name": "Integrante do PPI",
+    "description": "Concede 9-novamente em Ocultismo e Política relacionados à agenda da facção, além de Contatos sobrenaturais e uma Especialização em Política relacionada a eles.",
+    "prerequisites": "Status no Movimento Carthiano ••"
+  },
+  "h-vtr-fire-revolution:antagonizing-aura": {
+    "name": "Aura Provocadora",
+    "description": "Provoca Membros a seguir ou confrontar o personagem em cenas sociais.",
+    "prerequisites": "Presença •••"
+  },
+  "h-vtr-fire-revolution:beast-gestalt": {
+    "name": "Gestalt da Fera",
+    "description": "Coordena as Feras de uma colônia por meio de benefícios coletivos cada vez mais fortes.",
+    "prerequisites": "Integrante de uma colônia"
+  },
+  "h-vtr-fire-revolution:agent-provocateur": {
+    "name": "Agente Provocador",
+    "description": "Usa encenação e engano para provocar ação política.",
+    "prerequisites": "Expressão •••; Subterfúgio •••"
+  },
+  "h-vtr-fire-revolution:carthian-lawyer": {
+    "name": "Advogado Carthiano",
+    "description": "Aplica conhecimento jurídico às disputas carthianas e à Lei Carthiana.",
+    "prerequisites": "Status no Movimento Carthiano ••; Erudição •••"
+  },
+  "h-vtr-fire-revolution:constituent": {
+    "name": "Representado",
+    "description": "Concede ao carniçal de um regente carthiano Status Carthiano efetivo e acesso a Leis Carthianas até a pontuação do Mérito.",
+    "prerequisites": "Política •••; Carniçal com regente carthiano"
+  },
+  "h-vtr-fire-revolution:devotion-experimenter-advanced": {
+    "name": "Experimentador de Devoções (Avançado)",
+    "description": "Amplia Experimentador de Devoções com experimentação mais confiável e produtiva.",
+    "prerequisites": "Experimentador de Devoções"
+  },
+  "h-vtr-fire-revolution:cultural-artifact": {
+    "name": "Artefato Cultural",
+    "description": "Possui um objeto de significado cultural que confere autoridade e influência."
+  },
+  "h-vtr-fire-revolution:enforcement": {
+    "name": "Imposição",
+    "description": "Um Estilo progressivo para impor as decisões do Movimento por meio de pressão física crescente.",
+    "prerequisites": "Status no Movimento Carthiano •; Perseverança ••; Briga ••"
+  },
+  "h-vtr-fire-revolution:firebomber": {
+    "name": "Bombista Incendiário",
+    "description": "Usa o fogo como arma revolucionária enquanto controla o pânico e o risco de danos colaterais.",
+    "prerequisites": "Atletismo ••; Perseverança •••"
+  },
+  "h-vtr-fire-revolution:fire-branded": {
+    "name": "Marcado pelo Fogo",
+    "description": "Suporta e usa como arma o simbolismo e o terror do fogo.",
+    "prerequisites": "Compostura •••; Resiliência ••"
+  },
+  "h-vtr-fire-revolution:i-know-a-guy-advanced": {
+    "name": "Conheço uma Pessoa (Avançado)",
+    "description": "Uma vez por sessão, testa Inteligência + Manipulação + Contatos para obter um item ou serviço disponível por meio de alguém que lhe deve um favor.",
+    "prerequisites": "Contatos ••; Conheço uma Pessoa"
+  },
+  "h-vtr-fire-revolution:janus": {
+    "name": "Janus",
+    "description": "Mantém faces políticas e lealdades opostas sem revelar facilmente a contradição.",
+    "prerequisites": "Subterfúgio ••"
   }
 }
