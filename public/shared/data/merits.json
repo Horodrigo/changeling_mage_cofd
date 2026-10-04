@@ -1824,7 +1824,7 @@
     "sourceId": "core-2ed",
     "source": "Chronicles of Darkness",
     "category": "Social",
-    "prerequisites": "Resolve ••••",
+    "prerequisites": "Resolve •••",
     "description": "When you spend Willpower to contest or resist Social influence, substitute your Resolve rating for the usual Willpower bonus. If the roll is contested, take 8-Again.",
     "page": 51,
     "priority": 1,
@@ -2501,7 +2501,7 @@
     "sourceId": "core-2ed",
     "source": "Chronicles of Darkness",
     "category": "Mental Styles",
-    "description": "A progressive style with 5 maneuvers.",
+    "description": "A progressive style with 5 maneuvers. Choose a profession and two Asset Skills when purchasing the Merit; the 9-again benefit begins at two dots.",
     "page": 46,
     "levels": [
       {
@@ -2512,7 +2512,7 @@
       {
         "rating": 2,
         "name": "Continuing Education",
-        "description": "Choose two Asset Skills relating to profession. Take 9-Again to roll Asset Skills."
+        "description": "Take 9-Again to roll the Asset Skills chosen when purchasing the Merit."
       },
       {
         "rating": 3,
@@ -2532,7 +2532,7 @@
     ],
     "priority": 1,
     "translatedName": "Professional Training",
-    "descriptionEn": "A progressive style with 5 maneuvers."
+    "descriptionEn": "A progressive style with 5 maneuvers. Choose a profession and two Asset Skills when purchasing the Merit; the 9-again benefit begins at two dots."
   },
   {
     "id": "hurt-locker:psychic-concealment",

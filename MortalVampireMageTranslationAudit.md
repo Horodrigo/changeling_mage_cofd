@@ -1,6 +1,6 @@
 # Auditoria de tradução — Mortal, Vampire e Mage
 
-Atualização: **2026-10-04**. **Meta ativa:** prioridade 0 e etapas 1–2 implementadas e verificadas; etapa 3 em execução; etapa 4 pendente.
+Atualização: **2026-10-04**. **Meta ativa:** prioridade 0 e localização das etapas 1–2 implementadas e verificadas; novas correções aprovadas de Méritos Core em execução; etapa 3 em execução; etapa 4 pendente.
 
 ## Escopo e ordem
 
@@ -149,13 +149,13 @@ Estes pontos **já receberam resposta**. As mudanças abaixo ainda precisam de a
 | Cheap Shot / Choke Hold — Core p. 61 | **Adicionar −2 cumulativo nos resumos**. | Aplicação pendente conforme a resposta recebida; conferir a atribuição e o contexto da penalidade ao editar cada resumo. A resposta não resolve automaticamente os outros limites de Choke Hold. |
 | Fighting Finesse | **Apenas verificar a existência de alguma Especialização em Brawl ou Weaponry**; Melee equivale a Weaponry. | Implementar a verificação nas superfícies pertinentes, respeitando os IDs de Perícias existentes; conservar os demais requisitos cadastrados. |
 | Interdisciplinary Specialty | **Selecionar uma Especialização já cadastrada na ficha; removê-la ou alterá-la remove o Mérito junto**. | Implementar seleção e vínculo, remoção sincronizada e preservação coerente de compras/XP/estornos; usar identidade canônica de Mérito e instância. |
-| Iron Will — Core p. 51 | **Resolve 3**. | Alterar requisito canônico e apresentação PT; validar criação, XP e dependências. |
+| Iron Will — Core p. 51 | **Resolve 3**, decisão do usuário. | Aplicado ao requisito canônico/PT; gates aprovados. Revisão visual de Core p. 51 nesta data mostra Resolve 4 no PDF local: conservar 3 como decisão explícita de projeto. |
 | Resources / Mentor / Status | **Chapter = Session**. | Conservar sessão nos resumos; não reabrir a divergência terminológica. |
-| Professional Training — Core p. 46 | **Selecionar as duas primeiras Asset Skills ao comprar o Mérito**, mesmo que o benefício só faça diferença no segundo ponto. | Conferir configuração no primeiro ponto, concessões e reedição; corrigir resumos que adiem a escolha ao segundo nível. Não antecipar o benefício de 9-novamente. |
+| Professional Training — Core p. 46 | **Selecionar as duas primeiras Asset Skills ao comprar o Mérito**, mesmo que o benefício só faça diferença no segundo ponto. | Editor e resumo Desktop/Mobile apresentam duas Perícias desde o primeiro ponto; resumos EN/PT corrigidos. Terceira Perícia e demais concessões mantêm seus níveis. Core p. 46 revisado visualmente; editor/resumo e preservação de configuração verificados em EN/PT; gates aprovados. |
 | Like a Book / Breaking Point (estilo) | **OK** para os resumos auditados. | Conservar os resumos atuais; nenhuma reconstrução de limites solicitada. |
 | Hedgespun Item | **Adicionar as desvantagens do livro**. | Consultar a fonte aplicável e completar EN/PT; preservar IDs, configurações e textos autorais. |
 | Bless Amulet — Hurt Locker pp. 72–73 | **Usar o livro**: dia por sucesso; semana com dois pontos; permanente com três. | Corrigir resumos canônicos/PT e verificar limites na fonte antes dos gates. |
-| Ground Fighter — Hurt Locker p. 54 | **Usar o livro**: Brawl 3. | Corrigir requisito canônico/PT e validar elegibilidade/dependências. |
+| Ground Fighter — Hurt Locker p. 54 | **Usar o livro**. | Revisão visual de Hurt Locker p. 54 mostra Brawl 2, não 3 como constava na auditoria antiga. Catálogo já coincide com o PDF; requisito preservado e anotação antiga corrigida. |
 | Vaulting Defense — Hurt Locker p. 52 | **Melee = Weaponry; usar o termo da ficha**. | Resumo EN usa Weaponry e PT usa Armas Brancas; ID, pontuação e efeito preservados. Gates aprovados. |
 | Object Fetishism — Hurt Locker p. 42 | **Chapter = Session**. | Conservar sessão no resumo; divergência terminológica encerrada. |
 
@@ -183,8 +183,9 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 ## Verificação atual
 
 - **96/403** Méritos Vampire com apresentação completa por ID, 48 oficiais e 48 Homebrew; três níveis localizados. O quarto lote revisa 12 registros do livro básico e acrescenta 12 Homebrew de False Gods, sem reconstruir campos ausentes. Touchstone permanece no original; Pack Alpha usa Alfa da Matilha.
-- Catálogo canônico de 403 Méritos preservado integralmente. Manifesto `catalogVersion` 55; recursos `merits-vampire-pt` versão 4 e `vampire-bloodlines` versão 12; recursos Core de Méritos incrementados para o rótulo Weaponry/Armas Brancas. Nomes, IDs, regras, alocações, XP e textos autorais não são reescritos.
+- Catálogo canônico de 403 Méritos preservado integralmente. Manifesto `catalogVersion` 56; recursos `merits-vampire-pt` versão 4 e `vampire-bloodlines` versão 12; recursos Core de Méritos nas versões 8/10 para as decisões aprovadas. Nomes, IDs, regras, alocações, XP e textos autorais não são reescritos.
 - Gates do quarto lote aprovados: 6/6 testes de integração EN → PT → EN e identidade de Méritos, 34/34 de catálogos/arquitetura, lint, TypeScript e build. O catálogo canônico de 403 Méritos e as 72 apresentações dos lotes anteriores permanecem intactos. A suíte completa fica para o gate final da meta.
 - Referências Vampire já verificadas: 56 Bloodlines com PT; Star-Crossed apresentado como Desventurados. Demais Méritos, poderes, Conditions/presets Vampire e etapa Mage permanecem pendentes.
 - Decisões do usuário separadas das pendências sem resposta; Desventurados e Weaponry/Armas Brancas verificados: 16/16 testes dirigidos EN/PT, 34/34 de catálogos/arquitetura, lint, TypeScript e build aprovados.
+- Correções Core em execução: Vontade de Ferro exige Perseverança 3 por decisão explícita; Treinamento Profissional permite duas Perícias de Ativo desde o primeiro ponto. Ground Fighter confirmado no PDF com Briga 2. Gates deste lote aprovados: 38/38 testes de requisitos/configuração/concessões/identidade, 34/34 de catálogos/arquitetura, lint, TypeScript e build.
 - Sem smoke de navegador. Nova suíte completa de encerramento deverá ser executada após concluir o escopo; gates proporcionais por lote.

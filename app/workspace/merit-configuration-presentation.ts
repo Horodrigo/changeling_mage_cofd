@@ -41,7 +41,7 @@ export function commonExpandedConfigurationLines(
     const assets = Array.isArray(configuration.asset_skills) ? configuration.asset_skills.filter(Boolean) : [];
     if (profession) lines.push(`${translate(locale, "ui.profession")}: ${profession}`);
     if (dots >= 1 && contacts.length) lines.push(`${translate(locale, "ui.contacts")}: ${contacts.join(", ")}`);
-    if (dots >= 2 && assets.length) lines.push(`${translate(locale, "ui.assetSkills")}: ${assets.map((skill) => systemTerm(skill, locale)).join(", ")}`);
+    if (dots >= 1 && assets.length) lines.push(`${translate(locale, "ui.assetSkills")}: ${assets.slice(0, dots >= 3 ? 3 : 2).map((skill) => systemTerm(skill, locale)).join(", ")}`);
     for (const index of [1, 2]) {
       const skill = String(configuration[`specialty_${index}_skill`] ?? "").trim();
       const specialty = String(configuration[`specialty_${index}_name`] ?? "").trim();

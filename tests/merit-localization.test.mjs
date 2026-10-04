@@ -177,3 +177,19 @@ test("Builder and Experience selected Merit names retain canonical identity and 
     assert.equal(meritPresentation(definition, locale).name, locale === "pt-BR" ? "Escudo de Carne" : "Meat Shield");
   }
 });
+
+
+test("approved Core thresholds use Resolve 3 for Iron Will and the visually verified Brawl 2 for Ground Fighter in every locale", () => {
+  const catalog = withMeritPresentation(core, corePt);
+  const iron = catalog.find(item => item.id === "core-2ed:iron-will");
+  const ground = catalog.find(item => item.id === "hurt-locker:ground-fighter");
+  for (const locale of ["en-US", "pt-BR", "en-US"]) {
+    assert.ok(meritPresentation(iron, locale).prerequisites.endsWith("•••"));
+    assert.ok(meritPresentation(ground, locale).prerequisites.endsWith("••"));
+    for (const gameLine of ["CofD", "VtR", "MtA", "CtL", "WtF"]) {
+      for (const Resolve of [2, 3, 4]) assert.equal(meritPrerequisitesMet(iron, { gameLine, attributes: { Resolve } }), Resolve >= 3);
+      for (const Brawl of [1, 2, 3]) assert.equal(meritPrerequisitesMet(ground, { gameLine, attributes: { Wits: 3, Dexterity: 3 }, skills: { Brawl } }), Brawl >= 2);
+      assert.equal(meritPrerequisitesMet(ground, { gameLine, attributes: { Wits: 2, Dexterity: 3 }, skills: { Brawl: 3 } }), false);
+    }
+  }
+});

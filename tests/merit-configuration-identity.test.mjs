@@ -89,3 +89,27 @@ test("Mage Masque configuration levels identify the style by ID and reject unrel
   assert.equal(mage.masqueConfigurationDots(selection, [{ ...style, name: "Masque (Style)", definitionId: "unknown" }], catalog), undefined);
   assert.equal(mage.masqueConfigurationDots(selection, [style, style], catalog), undefined);
 });
+
+
+test("Professional Training selects two Asset Skills at one dot and keeps the third Skill and later grants locked until their own levels", async () => {
+  const { commonExpandedConfigurationLines } = await vite.ssrLoadModule("/app/workspace/merit-configuration-presentation.ts");
+  const configuration = { profession: "Authored profession", contacts: ["Authored contact"], asset_skills: ["Medicine", "Occult", "Science"], specialty_1_skill: "Medicine", specialty_1_name: "Authored specialty", boosted_skill: "Medicine" };
+  const selection = { definitionId: "core-2ed:professional-training", instanceId: "paid-profession", name: "Renamed saved label", dots: 1, experienceDots: 1, configuration };
+  const before = JSON.stringify(selection);
+  for (const [dots, count] of [[1, 2], [2, 2], [3, 5]]) {
+    const html = render({ ...selection, dots });
+    assert.equal((html.match(/role="combobox"/g) ?? []).length, count);
+    assert.ok(html.includes("Asset Skill 1") && html.includes("Asset Skill 2"));
+    assert.equal(html.includes("Asset Skill 3"), dots >= 3);
+    for (const locale of ["en-US", "pt-BR", "en-US"]) {
+      const lines = commonExpandedConfigurationLines(selection.definitionId, dots, configuration, locale, catalog);
+      const asset = lines.find(line => line.startsWith(translate(locale, "ui.assetSkills")));
+      assert.ok(asset, locale);
+      assert.ok(asset.includes(locale === "pt-BR" ? "Medicina" : "Medicine"));
+      assert.equal(asset.includes(locale === "pt-BR" ? "Ciência" : "Science"), dots >= 3);
+      assert.equal(lines.some(line => line.includes("Authored specialty")), dots >= 3);
+      assert.ok(!lines.some(line => line.includes("+1")));
+    }
+  }
+  assert.equal(JSON.stringify(selection), before);
+});

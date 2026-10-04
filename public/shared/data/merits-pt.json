@@ -306,7 +306,7 @@
   },
   "core-2ed:iron-will": {
     "name": "Vontade de Ferro",
-    "prerequisites": "Perseverança ••••",
+    "prerequisites": "Perseverança •••",
     "description": "Ao gastar Força de Vontade para disputar ou resistir a influência Social, substitui o bônus habitual de Força de Vontade pela pontuação em Perseverança. Se o teste for disputado, recebe 8-novamente."
   },
   "core-2ed:language": {
@@ -821,7 +821,7 @@
   },
   "core-2ed:professional-training": {
     "name": "Treinamento Profissional",
-    "description": "Uma progressão com cinco níveis de benefícios.",
+    "description": "Uma progressão com cinco níveis de benefícios. Escolhe uma profissão e duas Perícias de Ativo ao adquirir o Mérito; o benefício de 9-novamente começa no segundo ponto.",
     "levels": [
       {
         "rating": 1,
@@ -831,7 +831,7 @@
       {
         "rating": 2,
         "name": "Educação Continuada",
-        "description": "Escolhe duas Perícias de Ativo relacionadas à profissão. Recebe 9-novamente nos testes de Perícias de Ativo."
+        "description": "Recebe 9-novamente nos testes das Perícias de Ativo escolhidas ao adquirir o Mérito."
       },
       {
         "rating": 3,

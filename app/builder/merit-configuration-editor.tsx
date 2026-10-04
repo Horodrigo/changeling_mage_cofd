@@ -102,7 +102,7 @@ function ProfessionalTrainingEditor({ merit, configuration, onChange, compact }:
   const { t } = useLanguage();
   const contacts = Array.isArray(configuration.contacts) ? configuration.contacts : ["", ""];
   const skills = Array.isArray(configuration.asset_skills) ? configuration.asset_skills : [];
-  const assetCount = merit.dots >= 3 ? 3 : merit.dots >= 2 ? 2 : 0;
+  const assetCount = merit.dots >= 3 ? 3 : merit.dots >= 1 ? 2 : 0;
   const set = (key: string, value: string | string[]) => onChange({ ...configuration, [key]: value });
   const setArray = (key: string, current: string[], index: number, next: string) => { const changed = [...current]; changed[index] = next; set(key, changed); };
   return <details className={`merit-configuration structured${compact ? " compact" : ""}`} open={!compact}><summary>{t("ui.configureProfessionalTraining")}</summary><div>
