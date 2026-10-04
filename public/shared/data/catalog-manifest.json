@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 42,
+  "catalogVersion": 43,
   "catalogs": {
     "werewolf-totem-powers": { "version": 2, "url": "/game-lines/werewolf/data/totem-powers.json" },
     "werewolf-totem-powers-pt": { "version": 2, "url": "/game-lines/werewolf/data/totem-powers-pt.json" },
@@ -67,7 +67,7 @@
     "mage-conditions": { "version": 2, "url": "/game-lines/mage/data/conditions.json" },
     "vampire-clans": { "version": 4, "url": "/game-lines/vampire/data/clans.json" },
     "vampire-covenants": { "version": 5, "url": "/game-lines/vampire/data/covenants.json" },
-    "vampire-anchors": { "version": 1, "url": "/game-lines/vampire/data/anchors.json" },
+    "vampire-anchors": { "version": 2, "url": "/game-lines/vampire/data/anchors.json" },
     "vampire-blood-potency": { "version": 1, "url": "/game-lines/vampire/data/blood-potency.json" },
     "vampire-torpor": { "version": 1, "url": "/game-lines/vampire/data/torpor.json" },
     "vampire-bloodlines": { "version": 6, "url": "/game-lines/vampire/data/bloodlines.json" },

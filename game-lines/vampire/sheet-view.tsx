@@ -1,4 +1,5 @@
 "use client";
+import { vampireAnchorPresentation } from "./reference-presentation";
 
 import { type ReactNode, useEffect, useState } from "react";
 import { Link2, Plus, Trash2 } from "lucide-react";
@@ -1262,14 +1263,14 @@ export function VampireCharacterPaper({
       <SheetField
         label={t("sheet.mask")}
         value={localized(mask, locale)}
-        tooltip={mask?.singleWillpower}
+        tooltip={mask && vampireAnchorPresentation(mask, locale).singleWillpower}
       />
       <SheetField label={t("sheet.clan")} value={localized(clan, locale)} />
       <SheetField label={t("ui.player")} value={character.character.player} />
       <SheetField
         label={t("sheet.dirge")}
         value={localized(dirge, locale)}
-        tooltip={dirge?.allWillpower}
+        tooltip={dirge && vampireAnchorPresentation(dirge, locale).allWillpower}
       />
       <SheetField
         label={t("sheet.covenant")}

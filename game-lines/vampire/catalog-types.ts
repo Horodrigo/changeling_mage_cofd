@@ -31,6 +31,7 @@ export type VampireAnchorDefinition = {
   translatedName: string;
   singleWillpower: string;
   allWillpower: string;
+  presentationPt?: Pick<VampireAnchorDefinition, "singleWillpower" | "allWillpower">;
   source: string;
   page: number;
 };

@@ -1,4 +1,5 @@
 "use client";
+import { vampireAnchorPresentation } from "./reference-presentation";
 import { vampireMeritId } from "./merit-identities";
 import { meritProblemMessage } from "@/lib/merit-ui";
 import { meritPresentation } from "@/lib/merit-presentation";
@@ -524,7 +525,8 @@ function ChoiceLines({ label, values, count, placeholder, onChange }: { label: s
 }
 
 function AnchorChoice({ label, value, setValue, anchors, locale, invalid }: { label: string; value: string; setValue: (value: string) => void; anchors: VampireAnchorDefinition[]; locale: Locale; invalid: boolean }) {
-  const selected = anchors.find((item) => item.id === value);
+  const definition = anchors.find((item) => item.id === value);
+  const selected = definition && vampireAnchorPresentation(definition, locale);
   return <div><Choice label={label} value={value} setValue={setValue} options={anchors.map((item) => item.id)} optionLabels={Object.fromEntries(anchors.map((item) => [item.id, displayName(item, locale)]))} invalid={invalid} />{selected && <small className="anchor-recovery">{translate(locale, "ui.recoverWillpowerSummary", { single: selected.singleWillpower, all: selected.allWillpower })}</small>}</div>;
 }
 

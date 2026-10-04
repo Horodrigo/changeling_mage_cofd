@@ -1,6 +1,6 @@
 # Auditoria de tradução — Mortal, Vampire e Mage
 
-Data inicial: 2026-10-02. Atualização: 2026-10-03. Estado: **meta ativa; prioridade 0 e etapas 1–2 implementadas e verificadas; etapa 3 em execução; etapa 4 pendente**.
+Data inicial: 2026-10-02. Atualização: 2026-10-04. Estado: **meta ativa; prioridade 0 e etapas 1–2 implementadas e verificadas; etapa 3 em execução; etapa 4 pendente**.
 
 ## Escopo e método
 
@@ -87,9 +87,9 @@ Exemplos de campos pendentes: `The Wanton Curse`, `Carthian Law Merits`, `Coils 
 
 Arquivo: `public/game-lines/vampire/data/anchors.json`.
 
-São **27 definições compartilhadas por Mask e Dirge**, não 54 Anchors diferentes. Os nomes já têm apresentação PT, exceto `Monster`, cuja grafia igual não caracteriza necessariamente uma lacuna.
+São **27 definições compartilhadas por Mask e Dirge**, não 54 Anchors diferentes. Os nomes já têm apresentação PT; o estado atual confirma Monster → Monstro, corrigindo a observação inicial do inventário.
 
-Os **54 textos de recuperação de Willpower** — dois por definição — permanecem em inglês. Aparecem na explicação da criação e nas informações da ficha, embora os rótulos ao redor estejam traduzidos.
+Os **54 textos de recuperação de Willpower** — dois por definição — possuem apresentação PT em `presentationPt`. O helper próprio de Vampire aplica essa apresentação à explicação da criação e aos tooltips da ficha, usados em Desktop/Mobile. O inglês canônico, os nomes/IDs e as seleções persistidas permanecem intactos.
 
 ### V03 — Bloodlines
 
@@ -610,6 +610,14 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Estados de Sabedoria agora usam Iluminado/Consciente/Caído/Louco em PT e Enlightened/Understanding/Falling/Mad em EN. Os limites, pools e retornos canônicos de `wisdomState` não mudaram. O discriminador interno Feitiço do picker compartilhado continua canônico; sua legenda já é localizada pelo mecanismo existente.
 - Verificação: 45 testes existentes de i18n/experiência aprovados; novo SSR EN → PT → EN aprovado para os sete valores-limite de Sabedoria e nomes resolvidos de Conditions, incluindo um Homebrew homônimo e preservação do catálogo. Lint, build, TypeScript e diff check aprovados. Sem smoke de navegador.
 - A etapa 2 está implementada e verificada para mecanismos, mensagens e controles de interface. Textos e títulos editoriais vindos dos catálogos Vampire/Mage continuam explicitamente nas etapas 3–4; a integração desses lotes também será verificada em EN/PT. Não se declara a localização integral concluída. Próximo lote: 54 textos de recuperação de Mask/Dirge Vampire.
+
+### Etapa 3 — Recuperação de Mask/Dirge Vampire (2026-10-04)
+
+- Os 27 Anchors recebem `presentationPt` para seus 54 textos de recuperação. Os nomes previamente localizados foram preservados, incluindo Monstro; nenhum nome próprio, fonte ou página mudou. Rebel usa **Tradição dos Membros** e **Coalizão**; expressões descritivas foram localizadas sem mudar o gatilho canônico.
+- `vampireAnchorPresentation` pertence a Vampire e fornece apenas uma visão de apresentação para os mesmos registros. A criação mostra os dois gatilhos; os tooltips de Mask/Dirge mostram seus respectivos textos na ficha Desktop/Mobile. Snapshot, IDs e escolhas salvas permanecem intactos; definições sem apresentação preservam seu texto.
+- Manifesto: catalogVersion **42 → 43** e recurso `vampire-anchors` **1 → 2**, com o mesmo ID/URL. Nenhum outro recurso mudou de versão. Impressão não recebeu alterações de componente.
+- Comparação com o commit anterior confirmou igualdade integral dos 27 registros canônicos ao retirar apenas a metadata PT. Testes de snapshot, renderização de todos os textos EN → PT → EN, Homebrew e arquitetura: **33/33**. Lint, build, TypeScript e diff check aprovados. Após o build, testes de integração Vampire, catálogos e arquitetura **70/70** aprovados. Sem smoke de navegador.
+- Clans, Covenants, Bloodlines, Merits, poderes e Conditions Vampire continuam pendentes. A etapa 3 e a meta permanecem em execução.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
