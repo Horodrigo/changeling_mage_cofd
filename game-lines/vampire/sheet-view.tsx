@@ -1,5 +1,5 @@
 "use client";
-import { vampireAnchorPresentation } from "./reference-presentation";
+import { vampireAnchorPresentation, vampireClanPresentation } from "./reference-presentation";
 
 import { type ReactNode, useEffect, useState } from "react";
 import { Link2, Plus, Trash2 } from "lucide-react";
@@ -1076,6 +1076,7 @@ export function VampireCharacterPaper({
       ? (data.blood_sorcery as Record<string, unknown>)
       : {};
   const clan = reference.clans.find((item) => item.id === data.clan_id);
+  const presentedClan = clan && vampireClanPresentation(clan, locale);
   const bloodline = bloodlines.find((item) => item.id === data.bloodline_id);
   const covenants = reference.covenants.filter((item) =>
     vampireCovenantIds(data).includes(item.id),
@@ -1354,8 +1355,8 @@ export function VampireCharacterPaper({
     <BaneEditor
       character={character}
       updateSheet={updateSheet}
-      clanBaneName={clan?.baneName ?? t("ui.clanBane")}
-      clanBaneSummary={clan?.baneSummary ?? ""}
+      clanBaneName={presentedClan?.baneName ?? t("ui.clanBane")}
+      clanBaneSummary={presentedClan?.baneSummary ?? ""}
       vastDynasty={hasRuleEffect("embrace-humanity")}
       clanBaneActive={clanBaneActive}
       bloodlineBane={

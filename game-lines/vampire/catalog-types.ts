@@ -9,6 +9,7 @@ export type VampireClanDefinition = {
   disciplines: [string, string, string];
   baneName: string;
   baneSummary: string;
+  presentationPt?: Pick<VampireClanDefinition, "baneName" | "baneSummary">;
   group: "core" | "historical" | "uncommon";
   source: string;
   page: number;

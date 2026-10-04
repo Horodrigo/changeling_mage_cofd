@@ -31,7 +31,7 @@ Impressão/PDF/blank fica **fora desta meta**, inclusive a inconsistência de Nu
 | Merits Core | 202 | Todos têm entrada PT; não precisam de uma nova tradução integral |
 | Conditions Core | 34 | Implementado: apresentação PT completa e integração em Mortals/Core, Vampire e Mage |
 | Tilts compartilhados | 35 | Implementado: apresentação PT completa, títulos descritivos e integração no combate |
-| Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Textos mecânicos; nomes parcialmente traduzidos ou próprios |
+| Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Anchors implementados; Covenants/Bloodlines pendentes |
 | Vampire — Merits | 403 | 353 descrições em inglês; 50 descrições PT existentes precisam de revisão dos demais campos |
 | Vampire — poderes | 546 registros, mais 140 entradas de níveis internas | Textos mecânicos em inglês; nomes parcialmente traduzidos |
 | Vampire — Conditions | 66 | Sem apresentação PT dedicada |
@@ -76,7 +76,7 @@ Isso confirma cobertura, não uma nova auditoria editorial de cada efeito ou uma
 
 Arquivos: `public/game-lines/vampire/data/clans.json` e `covenants.json`. O carregador `game-lines/vampire/catalogs/reference.ts` não agrega uma apresentação PT equivalente à dos Merits Core.
 
-- **16 Clans:** textos de `baneName` e `baneSummary` em inglês. Separar nomes próprios, como `Daeva`, de títulos descritivos, como `Hollow Mekhet` e `Twice-Cursed`, antes de decidir quais nomes traduzir.
+- **16 Clans implementados:** 32 textos de Maldição com apresentação PT na ficha Desktop/Mobile e no consumidor Homebrew. Nomes próprios preservados; Hollow Mekhet → Mekhet Vazios e Twice-Cursed → Duplamente Amaldiçoados. Os nomes e efeitos canônicos permanecem intactos.
 - **23 Covenants:** descrições e vantagens em inglês. Só três registros têm nome PT diferente do inglês: `Covenantless`, `Carthian Movement` e `Circle of the Crone`.
 - A apresentação atual `Sem Covenant` contradiz a decisão já aprovada de usar “Coalizão”.
 - Há organizações históricas e conteúdo Homebrew distribuído junto do catálogo: não tratar todo o inventário como conteúdo oficial do livro básico.
@@ -618,6 +618,15 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Manifesto: catalogVersion **42 → 43** e recurso `vampire-anchors` **1 → 2**, com o mesmo ID/URL. Nenhum outro recurso mudou de versão. Impressão não recebeu alterações de componente.
 - Comparação com o commit anterior confirmou igualdade integral dos 27 registros canônicos ao retirar apenas a metadata PT. Testes de snapshot, renderização de todos os textos EN → PT → EN, Homebrew e arquitetura: **33/33**. Lint, build, TypeScript e diff check aprovados. Após o build, testes de integração Vampire, catálogos e arquitetura **70/70** aprovados. Sem smoke de navegador.
 - Clans, Covenants, Bloodlines, Merits, poderes e Conditions Vampire continuam pendentes. A etapa 3 e a meta permanecem em execução.
+
+### Etapa 3 — Maldições dos Clans Vampire (2026-10-04)
+
+- Os 16 Clans recebem `presentationPt` para `baneName` e `baneSummary` (**32 textos**). Os 14 nomes próprios mantêm sua apresentação anterior; os dois títulos descritivos agora são **Mekhet Vazios** e **Duplamente Amaldiçoados**. Nome canônico, ID, Atributos, Disciplinas, modo de favorecimento, grupo, fonte e página não mudam.
+- A ficha Desktop/Mobile usa `vampireClanPresentation` no editor de Maldições, conservando o objeto canônico para os cálculos. Homebrew também aplica essa visão quando a definição fornece metadata PT; textos autorais sem metadata permanecem intactos, sem inferência por nome.
+- Foram preservados números, fórmulas e limites. Referências usam Cavalgar a Onda, Membros, Enamorado (Core) e Marcado por Cicatrizes (léxico aprovado). Dependente/Lânguido deverão ser os mesmos títulos na apresentação futura das respectivas Conditions Vampire. Embodiments foi localizado como Encarnações; The Strigid Curse como **A Maldição das Strix**, preservando Strix como nome próprio. O Bane de Clan usa **Maldição**, sem importar Fraqueza das entidades efêmeras.
+- Manifesto: catalogVersion **43 → 44** e `vampire-clans` **4 → 5**, com IDs/URLs inalterados. Comparação com o commit anterior confirmou igualdade integral dos campos canônicos ao retirar a metadata PT e as duas captions localizadas.
+- Verificação dirigida **8/8**: snapshots/renderização de todos os textos de Clan/Anchor EN → PT → EN, Homebrew e identidades de Merits Vampire. O teste também preserva as Maldições pessoais e verifica os 16 conjuntos de números. Lint, build, TypeScript e diff check aprovados. A suíte completa executou 553 testes: 552 aprovados e uma falha no teste de inventário Homebrew, que exigia a iteração direta do catálogo. A iteração foi simplificada sem mudar a apresentação; nova verificação de inventário, integração Vampire e EN/PT **40/40** aprovada. Sem smoke de navegador e sem mudanças em componentes de impressão.
+- Covenants, Bloodlines, Merits, poderes e Conditions Vampire continuam pendentes. A etapa 3 permanece ativa.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 

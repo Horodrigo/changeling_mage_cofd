@@ -30,13 +30,33 @@ test("all 27 Vampire Anchors have complete presentation for both Willpower recov
   assert.equal(manifest.catalogs["vampire-anchors"].url, "/game-lines/vampire/data/anchors.json");
 });
 
-test("Vampire reference snapshot/creation recovery/sheet tooltips render all Anchor triggers in EN/PT/EN without mutating choices", async () => {
+test("all 16 Vampire Clans have Portuguese Bane titles/summaries with preserved numeric limits and proper names", () => {
+  const clans = data["vampire-clans"];
+  assert.equal(clans.length, 16);
+  for (const item of clans) {
+    assert.deepEqual(Object.keys(item.presentationPt).sort(), ["baneName", "baneSummary"]);
+    for (const field of ["baneName", "baneSummary"]) {
+      assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
+      assert.notEqual(item.presentationPt[field], item[field], `${item.id}.${field}`);
+    }
+    assert.deepEqual(item.presentationPt.baneSummary.match(/\d+/g) ?? [], item.baneSummary.match(/\d+/g) ?? [], item.id);
+    if (!["hollow-mekhet", "twice-cursed"].includes(item.id)) assert.equal(item.translatedName, item.name, item.id);
+  }
+  assert.equal(clans.find(item => item.id === "hollow-mekhet").translatedName, "Mekhet Vazios");
+  assert.equal(clans.find(item => item.id === "twice-cursed").translatedName, "Duplamente Amaldiçoados");
+  assert.match(clans.find(item => item.id === "gangrel").presentationPt.baneSummary, /Cavalgar a Onda/);
+  assert.match(clans.find(item => item.id === "jiang-shi").presentationPt.baneSummary, /Enamorado.*Marcado por Cicatrizes/);
+  assert.ok(read("public/shared/data/catalog-manifest.json").catalogs["vampire-clans"].version >= 5);
+});
+
+test("Vampire reference snapshot, Anchor recovery and Clan Banes render in EN/PT/EN without mutating choices", async () => {
   const selection = { mask_id: "rebel", dirge_id: "visionary", notes: "Authored English stays." };
   const before = JSON.stringify({ data, selection });
   for (const locale of ["en-US", "pt-BR", "en-US"]) {
     const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] }, plugins: [{ name: "anchor-locale-and-test-surface", enforce: "pre", transform(code, id) {
       const path = id.replaceAll("\\", "/");
       if (path.endsWith("/game-lines/vampire/builder.tsx")) return `${code}\nexport { AnchorChoice };`;
+      if (path.endsWith("/game-lines/vampire/sheet-view.tsx")) return `${code}\nexport { BaneEditor };`;
       if (locale === "pt-BR" && path.endsWith("/lib/i18n.tsx")) return code.replace('const serverLocale = ():Locale => "en-US";', 'const serverLocale = ():Locale => "pt-BR";');
     } }] });
     try {
@@ -45,8 +65,9 @@ test("Vampire reference snapshot/creation recovery/sheet tooltips render all Anc
       const requested = [];
       const reference = freezeCatalogData(await vampireReferenceCatalogGroup.load({ getCatalog: async id => { requested.push(id); return data[id]; } }));
       assert.deepEqual(requested.sort(), groups.map(group => `vampire-${group}`).sort());
-      const { vampireAnchorPresentation } = await vite.ssrLoadModule("/game-lines/vampire/reference-presentation.ts");
+      const { vampireAnchorPresentation, vampireClanPresentation } = await vite.ssrLoadModule("/game-lines/vampire/reference-presentation.ts");
       const { AnchorChoice } = await vite.ssrLoadModule("/game-lines/vampire/builder.tsx");
+      const { BaneEditor } = await vite.ssrLoadModule("/game-lines/vampire/sheet-view.tsx");
       const { SheetField } = await vite.ssrLoadModule("/app/workspace/character-paper-shell.tsx");
       const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
       const render = (Component, props) => renderToStaticMarkup(createElement(LanguageProvider, null, createElement(Component, props)));
@@ -66,10 +87,30 @@ test("Vampire reference snapshot/creation recovery/sheet tooltips render all Anc
       }
       const authored = { id: "unavailable:anchor", name: "Authored Anchor", singleWillpower: "Authored trigger", allWillpower: "Authored full trigger" };
       assert.equal(vampireAnchorPresentation(authored, locale), authored);
+      const character = { id: "test-clan", line_data: { banes: [{ id: "authored-bane", name: "Authored personal Bane" }] }, current_state: {} };
+      const characterBefore = JSON.stringify(character);
+      for (const definition of reference.clans) {
+        const presented = vampireClanPresentation(definition, locale);
+        assert.equal(presented.id, definition.id);
+        assert.equal(presented.name, definition.name);
+        assert.equal(presented.favoredAttributes, definition.favoredAttributes);
+        assert.equal(presented.disciplines, definition.disciplines);
+        if (locale === "en-US") assert.equal(presented, definition);
+        assert.equal(Object.isFrozen(definition.presentationPt), true);
+        const html = render(BaneEditor, { character, updateSheet: refuseMutation, clanBaneName: presented.baneName, clanBaneSummary: presented.baneSummary, vastDynasty: false, clanBaneActive: true });
+        assert.ok(html.includes(escape(presented.baneName)), `${locale}: ${definition.id} name`);
+        assert.ok(html.includes(escape(presented.baneSummary)), `${locale}: ${definition.id} summary`);
+        assert.ok(html.includes('value="Authored personal Bane"'));
+      }
+      assert.equal(JSON.stringify(character), characterBefore);
+      const customClan = { id: "homebrew:clan", name: "Authored Clan", baneName: "Authored Bane", baneSummary: "Authored English stays." };
+      assert.equal(vampireClanPresentation(customClan, locale), customClan);
       assert.equal(JSON.stringify({ data, selection }), before);
     } finally { await vite.close(); }
   }
   const sheet = readFileSync(new URL("../game-lines/vampire/sheet-view.tsx", import.meta.url), "utf8");
   assert.match(sheet, /tooltip=\{mask && vampireAnchorPresentation\(mask, locale\)\.singleWillpower\}/);
   assert.match(sheet, /tooltip=\{dirge && vampireAnchorPresentation\(dirge, locale\)\.allWillpower\}/);
+  assert.match(sheet, /clanBaneName=\{presentedClan\?\.baneName/);
+  assert.match(sheet, /clanBaneSummary=\{presentedClan\?\.baneSummary/);
 });
