@@ -33,7 +33,7 @@ const namesake = { ...resources, id: "homebrew:test:resources", sourceId: "homeb
 const catalogs = [namesake, ...catalog];
 
 test("pure Core Merit identities reconcile the canonical catalog, not a second editorial dataset", () => {
-  assert.equal(COMMON_MERIT_IDENTITIES.length, 8);
+  assert.equal(COMMON_MERIT_IDENTITIES.length, 9);
   for (const identity of COMMON_MERIT_IDENTITIES) {
     const definition = catalog.find(item => item.id === identity.id);
     assert.ok(definition, identity.id);

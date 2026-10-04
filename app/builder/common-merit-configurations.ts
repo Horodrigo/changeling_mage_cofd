@@ -30,6 +30,7 @@ export const COMMON_MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [
   { id:"core-2ed:quick-draw", name:"Quick Draw", fields: [{ key: "specialty", label: "ui.meritConfig.weaponSpecialty", kind: "text", placeholder: "ui.meritConfig.firearmsOrWeaponrySpecialty" }] },
   { id:"core-2ed:unseen-sense", name:"Unseen Sense", fields: [{ key: "phenomenon", label: "ui.meritConfig.supernaturalPhenomenon", kind: "text" }] },
   { id:"core-2ed:professional-training", name:"Professional Training", fields: [] },
+  { id:"core-2ed:interdisciplinary-specialty", name:"Interdisciplinary Specialty", fields: [] },
   { id:"core-2ed:mystery-cult-initiation", name:"Mystery Cult Initiation", fields: [] },
   { id:"core-2ed:mystery-cult-influence", name:"Mystery Cult Influence", fields: [] },
 ];

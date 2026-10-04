@@ -69,7 +69,7 @@ function BenefitChoiceEditor({ choice, onChange, character, catalogs }: {
         options={meritRatingsFor(definition, 10).map(dots => ({ value: String(dots), label: String(dots), localized: true }))}/></label>
         <div>{WEREWOLF_MERIT_CONFIGURATION_IDS.has(definition.id)
           ? <WerewolfMeritConfigurationEditor merit={{ id: definition.id, dots: choice.dots, configuration: choice.configuration }} context={contexts.own} onChange={configuration => onChange({ ...choice, configuration })} giftPresentation={catalogs.gifts.presentation}/>
-          : <MeritConfigurationEditor merit={{ definitionId: definition.id, name: definition.name, dots: choice.dots, configuration: choice.configuration }} catalog={[...catalogs.merits]} ownedMerits={contexts.core.merits} definitions={COMMON_MERIT_CONFIGURATIONS} inline onChange={configuration => onChange({ ...choice, configuration })}/>}</div>
+          : <MeritConfigurationEditor specialtyContext={contexts.core} merit={{ definitionId: definition.id, name: definition.name, dots: choice.dots, configuration: choice.configuration }} catalog={[...catalogs.merits]} ownedMerits={contexts.core.merits} definitions={COMMON_MERIT_CONFIGURATIONS} inline onChange={configuration => onChange({ ...choice, configuration })}/>}</div>
         <BenefitRules choice={choice} catalogs={catalogs}/>
       </>}
     </>}

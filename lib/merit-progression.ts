@@ -15,8 +15,10 @@ export function creationMerits(merits: MeritSelection[] = []) {
     .filter((merit) => !merit.grantedBy && merit.dots > 0);
 }
 
-/** Replaces only creation allocations and preserves every Experience allocation. */
-export function mergeCreationMerits(existing: MeritSelection[] = [], selected: MeritSelection[] = []) {
+/** Replaces creation allocations, preserving XP except for explicitly removed linked instances. */
+export function mergeCreationMerits(existing: MeritSelection[] = [], selected: MeritSelection[] = [], explicitlyRemoved: (merit: MeritSelection) => boolean = () => false) {
+  existing = existing.filter(item => !explicitlyRemoved(item));
+  selected = selected.filter(item => !explicitlyRemoved(item));
   const selectedIds = new Set(selected.map((merit) => merit.instanceId).filter(Boolean));
   const result = existing
     .filter((merit) => experienceMeritDots(merit) > 0 && !selectedIds.has(merit.instanceId))

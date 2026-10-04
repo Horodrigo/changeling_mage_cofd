@@ -4,6 +4,7 @@ import { decodeMeritGrantChoice, normalizeMeritConfiguration, type MeritConfigDe
 import type { MeritDefinition } from "@/lib/merits";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";
+import { INTERDISCIPLINARY_SPECIALTY_ID, configuredSpecialty } from "@/lib/core/character/specialty-merits";
 
 export function configuredDefinitionLines(
   definition: MeritConfigDefinition | undefined,
@@ -34,6 +35,10 @@ export function commonExpandedConfigurationLines(
   catalog: readonly MeritDefinition[] = [],
 ): string[] | undefined {
   const configuration = normalizeMeritConfiguration(value);
+  if (definitionId === INTERDISCIPLINARY_SPECIALTY_ID) {
+    const selected = configuredSpecialty(configuration);
+    return selected ? [`${translate(locale, "ui.specialty")}: ${systemTerm(selected.skill, locale)} (${selected.name})`] : [];
+  }
   if (definitionId === "core-2ed:professional-training") {
     const lines: string[] = [];
     const profession = String(configuration.profession ?? "").trim();

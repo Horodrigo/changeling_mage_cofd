@@ -79,6 +79,23 @@ const configuredTotem = () => ({ ...newTotem(), instanceId: "individual-totem", 
   influences: [{ instanceId: "mountain-influence", domain: "Mountains", dots: 1 }], numina: ["numen:innocuous", "numen:speed"],
   manifestations: ["manifestation:twilight-form", "manifestation:image"] });
 
+test("Core Interdisciplinary Specialty is removed with its refunded Werewolf Specialty without crediting the Merit or rewriting its receipt", () => {
+  const specialty = { kind: "specialty", skill: "Survival", name: "Authored expedition" };
+  let character = buy(funded(), specialty, advancementCatalogs);
+  const specialtyReceipt = history(character).at(-1);
+  const configuration = { specialty_skill: specialty.skill, specialty_name: specialty.name, specialty_grantedBy: "" };
+  character = buy(character, purchaseMerit("core-2ed:interdisciplinary-specialty", 1, configuration), advancementCatalogs);
+  const meritReceipt = history(character).at(-1), before = structuredClone(character);
+  const next = refund(character, specialtyReceipt.id, advancementCatalogs);
+  assert.equal(next.merits.some(item => item.definitionId === "core-2ed:interdisciplinary-specialty"), false);
+  assert.equal(next.specializations.some(item => item.name === specialty.name), false);
+  assert.equal(next.current_state.experience_available, character.current_state.experience_available + 1);
+  assert.deepEqual(history(next).find(item => item.id === meritReceipt.id), meritReceipt);
+  const unchanged = structuredClone(next);
+  assert.throws(() => refund(next, meritReceipt.id, advancementCatalogs));
+  assert.deepEqual(next, unchanged); assert.deepEqual(character, before);
+});
+
 test("Individual Totem allocations use canonical contributions, audited Rank/Defense and separate power exchanges", () => {
   const entity = configuredTotem();
   assert.equal(personalTotemPoints(create().merits, meritCatalog), 1);

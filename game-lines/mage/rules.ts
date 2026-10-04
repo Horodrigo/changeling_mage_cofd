@@ -1,6 +1,9 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
+import { commonMeritId } from "@/lib/core/character/merit-identities";
+import { removeSpecialtyMeritGrantChoices } from "@/lib/core/character/specialty-merits";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 
 const numberValue = (value: unknown) => {
   const parsed = Number(value);
@@ -26,6 +29,10 @@ function mageDerived(character: CharacterSheet): CharacterSheet["derived"] {
 
 /** Mage-owned persistence effects run only after the current schema is valid. */
 export const mageRules: GameLineRulesModule = {
+  onSpecialtyMeritsRemoved(character, removed) {
+    return { ...character, merits: removeSpecialtyMeritGrantChoices(character.merits, removed, merit => commonMeritId(merit) ??
+      resolveMeritDefinition(merit, [{ id: "mta-2ed:mystery-cult-influence", name: "Mystery Cult Influence", sourceId: "mta-2ed" }])?.id) };
+  },
   synchronizeCharacter(character) {
     return synchronizeMageBuilderMeritGrants(structuredClone(character));
   },

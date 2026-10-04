@@ -25,6 +25,11 @@ import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
 import { boundedIntegrity, mortalBreakingPointPool, mortalDerived, mortalIntegrityModifier } from "./creation-rules";
 import { MortalExperiencePanel } from "./experience-panel";
+import { mortalMeritContextForSheet } from "./rules";
+import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
+import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
+import { commonExpandedConfigurationLines } from "@/app/workspace/merit-configuration-presentation";
+import { INTERDISCIPLINARY_SPECIALTY_ID } from "@/lib/core/character/specialty-merits";
 
 type CoreReference = {
   conditions: ConditionDefinition[];
@@ -86,7 +91,7 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
   </section>;
   const attributes = <><SheetHeading className="cofd-attributes-heading">{t("ui.attributes")}</SheetHeading><div className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"}>{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames={isMobile} />)}</div></>;
   const skills = <><SheetHeading>{t("ui.skills")}</SheetHeading><div className={isMobile ? "mobile-trait-stack" : "mortal-skill-stack"}>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")} names={names} values={character.skills} specialties={character.specializations} />)}</div></>;
-  const merits = <MeritList character={character} catalog={meritCatalog} />;
+  const merits = <MeritList character={character} catalog={meritCatalog} updateSheet={updateSheet} />;
   const aspirationList = <EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => setLineValue("aspirations", value)} />;
   const breakingPointList = <EditableList values={breakingPoints} minimum={5} placeholder={t("ui.writeBreakingPoint")} onChange={(value) => setLineValue("breaking_points", value)} />;
   const conditionList = <ConditionManager selected={conditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)} />;
@@ -209,7 +214,7 @@ function MortalIntegritySection({ character, integrity, breakingPoints, conditio
   </div>;
 }
 
-function MeritList({ character, catalog }: { character: CharacterSheet; catalog: readonly MeritDefinition[] }) {
+function MeritList({ character, catalog, updateSheet }: { character: CharacterSheet; catalog: readonly MeritDefinition[]; updateSheet: (sheet: CharacterSheet) => void }) {
   const { locale, t } = useLanguage();
   if (!character.merits.length) return <em>{t("ui.noMeritSelected")}</em>;
   return <div className="sheet-merits single-column">{character.merits.map((merit, index) => {
@@ -220,6 +225,12 @@ function MeritList({ character, catalog }: { character: CharacterSheet; catalog:
     const tooltip = presented ? `${presented.prerequisites ? `${t("ui.prerequisites")}: ${presented.prerequisites}\n` : ""}${presented.description}` : merit.source;
     return <div className="sheet-merit-row" key={`${merit.instanceId ?? merit.name}-${index}`} title={tooltip}>
       <div className="sheet-merit-main"><span>{name}{configured ? `: ${configured}` : ""}</span><DotValue value={merit.dots} max={Math.max(5, merit.dots)} /></div>
+      {definition?.id === INTERDISCIPLINARY_SPECIALTY_ID && <>
+        {commonExpandedConfigurationLines(definition.id, merit.dots, merit.configuration, locale, catalog)?.map(line => <small key={line}>{line}</small>)}
+        <MeritConfigurationEditor merit={merit} catalog={catalog} definitions={COMMON_MERIT_CONFIGURATIONS} specialtyContext={mortalMeritContextForSheet(character, catalog)} onChange={configuration => {
+          const next = structuredClone(character); next.merits[index].configuration = configuration; updateSheet(next);
+        }} />
+      </>}
     </div>;
   })}</div>;
 }

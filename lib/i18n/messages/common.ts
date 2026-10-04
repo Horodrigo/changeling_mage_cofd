@@ -369,6 +369,7 @@ export const commonMessages = {
       "configureChoices": "Configurar escolhas",
       "meritPrerequisitesNotMet": "Pré-requisitos não atendidos: {prerequisites}",
       "meritSelectLinked": "Selecione um dos Méritos listados ({minimum}+ pontos): {merits}.",
+      "meritSelectExistingSpecialty": "Selecione uma Especialização existente em uma Perícia com três pontos ou mais.",
       "meritConfig": {
         "resources": "Recursos",
         "meritAndSkill": "Mérito e Perícia",
@@ -1063,6 +1064,7 @@ export const commonMessages = {
       "configureChoices": "Configure choices",
       "meritPrerequisitesNotMet": "Prerequisites not met: {prerequisites}",
       "meritSelectLinked": "Select one of the listed Merits ({minimum}+ dots): {merits}.",
+      "meritSelectExistingSpecialty": "Select an existing Specialty in a Skill rated three or higher.",
       "meritConfig": {
         "resources": "Resources",
         "meritAndSkill": "Merit and Skill",

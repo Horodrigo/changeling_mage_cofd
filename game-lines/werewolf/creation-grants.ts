@@ -72,8 +72,8 @@ export function werewolfCreationMeritCost(selected: readonly MeritSelection[], c
 }
 
 /** Shared exact-instance progression keeps creation grants and XP purchases independent. */
-export function mergeWerewolfCreationMerits(existing: MeritSelection[], selected: MeritSelection[], catalog: readonly MeritDefinition[]) {
-  return mergeCreationMerits(existing, withWerewolfCreationGrants(selected, existing, catalog));
+export function mergeWerewolfCreationMerits(existing: MeritSelection[], selected: MeritSelection[], catalog: readonly MeritDefinition[], explicitlyRemoved?: (merit: MeritSelection) => boolean) {
+  return mergeCreationMerits(existing, withWerewolfCreationGrants(selected, existing, catalog), explicitlyRemoved);
 }
 
 export type AuspiceSkillGrant = { skill: string; dots: 1 };

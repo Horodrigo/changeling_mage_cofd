@@ -24,27 +24,29 @@ async function hydrateCharacterCatalogs(gameLine: CharacterSheet["game_line"]) {
 async function normalizeCharacter(
   sheet: CharacterSheet,
   hydrateCatalogs: boolean,
+  previous?: CharacterSheet,
 ): Promise<CharacterSheet> {
   if (hydrateCatalogs) await hydrateCharacterCatalogs(sheet.game_line);
   const { normalizeStoredSheet } = await import("@/lib/character-persistence");
-  return normalizeGameLineCharacter(normalizeStoredSheet(sheet));
+  return normalizeGameLineCharacter(normalizeStoredSheet(sheet), previous);
 }
 
 export function prepareCharacterForOpen(sheet: CharacterSheet) {
   return normalizeCharacter(sheet, true);
 }
 
-export function prepareCharacterForSave(sheet: CharacterSheet) {
-  return normalizeCharacter(sheet, false);
+export function prepareCharacterForSave(sheet: CharacterSheet, previous?: CharacterSheet) {
+  return normalizeCharacter(sheet, false, previous);
 }
 
-export function prepareCharacterForUpdate(sheet: CharacterSheet) {
+export function prepareCharacterForUpdate(sheet: CharacterSheet, previous?: CharacterSheet) {
   return normalizeCharacter(
     {
       ...sheet,
       updated_at: new Date().toISOString(),
     },
     false,
+    previous,
   );
 }
 

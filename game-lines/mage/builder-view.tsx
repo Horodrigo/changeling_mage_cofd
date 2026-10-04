@@ -278,7 +278,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
           setPower={props.setGnosis}
           isInlineConfiguration={(id) => isCommonInlineMeritConfiguration(id) || Boolean(MAGE_MERIT_CONFIGURATIONS.find((item) => item.id === id && item.fields.length === 1 && item.fields[0].kind === "text"))}
           renderConfiguration={({ merit, ownedMerits, inline, onChange }) => (
-            resolveMeritDefinition(merit, props.meritCatalog)?.id === "mta-2ed:familiar" ? null : <MeritConfigurationEditor merit={merit} ownedMerits={ownedMerits} configurationDots={masqueConfigurationDots(merit, ownedMerits, props.meritCatalog)} inline={inline} onChange={onChange} catalog={props.meritCatalog} definitions={MAGE_BUILDER_MERIT_CONFIGURATIONS} renderStructured={(editorProps) => renderMageStructuredMeritEditor({...editorProps, catalog: props.meritCatalog, factions: props.factionCatalog, order: props.order})} />
+            resolveMeritDefinition(merit, props.meritCatalog)?.id === "mta-2ed:familiar" ? null : <MeritConfigurationEditor specialtyContext={props.meritContext} merit={merit} ownedMerits={ownedMerits} configurationDots={masqueConfigurationDots(merit, ownedMerits, props.meritCatalog)} inline={inline} onChange={onChange} catalog={props.meritCatalog} definitions={MAGE_BUILDER_MERIT_CONFIGURATIONS} renderStructured={(editorProps) => renderMageStructuredMeritEditor({...editorProps, catalog: props.meritCatalog, factions: props.factionCatalog, order: props.order})} />
           )}
         />
       </div>

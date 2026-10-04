@@ -61,7 +61,7 @@ export function decodeMeritGrantChoice(value: unknown): MeritGrantChoice | undef
 
 export function meritConfigurationTitle(value: unknown) {
   const configuration = normalizeMeritConfiguration(value);
-  for (const key of ["subject", "identity", "language", "place", "group", "appearance", "name", "court", "firstManeuver", "cult", "profession", "focus", "heritage", "yantra", "skill"]) {
+  for (const key of ["subject", "specialty_name", "identity", "language", "place", "group", "appearance", "name", "court", "firstManeuver", "cult", "profession", "focus", "heritage", "yantra", "skill"]) {
     const item = configuration[key];
     if (typeof item === "string" && item.trim()) return item.trim();
   }

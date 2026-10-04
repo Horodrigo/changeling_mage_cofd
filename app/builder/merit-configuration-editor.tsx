@@ -15,6 +15,7 @@ import { systemTerm } from "@/lib/system-terms";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { Choice } from "./common-controls";
+import { INTERDISCIPLINARY_SPECIALTY_ID, configuredSpecialty, interdisciplinarySpecialties, specialtyIdentity } from "@/lib/core/character/specialty-merits";
 
 export type StructuredMeritEditorProps = {
   merit: MeritSelection;
@@ -38,6 +39,7 @@ export function MeritConfigurationEditor({
   inline = false,
   configurationDots,
   ownedMerits = [],
+  specialtyContext,
   renderStructured,
   renderCustomField,
   definitions,
@@ -49,6 +51,7 @@ export function MeritConfigurationEditor({
   inline?: boolean;
   configurationDots?: number;
   ownedMerits?: NonNullable<MeritPrerequisiteContext["merits"]>;
+  specialtyContext?: Pick<MeritPrerequisiteContext, "specializations" | "skills">;
   renderStructured?: (props: StructuredMeritEditorProps) => ReactNode;
   renderCustomField?: (kind: string, props: CustomMeritFieldProps) => ReactNode;
   definitions: readonly MeritConfigDefinition[];
@@ -67,6 +70,15 @@ export function MeritConfigurationEditor({
   const set = (key: string, value: string | string[]) => onChange({ ...configuration, [key]: value });
   const label = (value: string) => value.startsWith("ui.") ? t(value as MessageKey) : systemTerm(value, locale);
   if (canonical.id === "core-2ed:professional-training") return <ProfessionalTrainingEditor {...structuredProps} />;
+  if (canonical.id === INTERDISCIPLINARY_SPECIALTY_ID) {
+    const choices = interdisciplinarySpecialties(specialtyContext?.specializations, specialtyContext?.skills);
+    const selected = configuredSpecialty(configuration);
+    const value = selected ? specialtyIdentity(selected) : "";
+    return <label>{t("ui.specialty")}<select value={choices.some(item => specialtyIdentity(item) === value) ? value : ""} onChange={event => {
+      const choice = choices.find(item => specialtyIdentity(item) === event.target.value);
+      onChange({ ...configuration, specialty_skill: choice?.skill ?? "", specialty_name: choice?.name ?? "", specialty_grantedBy: choice?.grantedBy ?? "" });
+    }}><option value="">{t("ui.selectAnOption")}</option>{choices.map(item => <option key={specialtyIdentity(item)} value={specialtyIdentity(item)}>{systemTerm(item.skill, locale)} ({item.name})</option>)}</select><small>{t("ui.meritSelectExistingSpecialty")}</small></label>;
+  }
   if (canonical.id === "core-2ed:mystery-cult-initiation" || canonical.id === "core-2ed:mystery-cult-influence") return <CultMeritEditor {...structuredProps} catalog={catalog} />;
   if (!visible.length) return null;
   const fields = <div>{visible.map((field) => {

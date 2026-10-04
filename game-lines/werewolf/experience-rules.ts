@@ -17,6 +17,7 @@ import { renownRatings, werewolfDerived, werewolfFormTraits, werewolfIds, werewo
 import type { WerewolfTotemCatalog } from "./catalogs/totem";
 import { resolveTotemAdvantage } from "./totem-benefits";
 import { totemSelection } from "./totem-rules";
+import { reconcileSpecialtyMerits } from "@/lib/core/character/specialty-merits";
 
 export type WerewolfPurchase =
   | { kind: "trait"; group: "attributes" | "skills"; name: string; target: number }
@@ -317,6 +318,7 @@ export function refundWerewolfAdvancement(character: CharacterSheet, id: string,
         next.merits[index].configuration = structuredClone(undo.previousConfiguration);
     }
   } else return fail("refundMissing");
+  next.merits = reconcileSpecialtyMerits(character.merits, character.specializations, next.merits, next.specializations).merits;
   if (hasNewDependencies(character, next, catalogs)) fail("refundDependent");
   next.current_state = { ...next.current_state, experience_available: balance(next.current_state.experience_available) + (builderMode ? 0 : entry.cost),
     experience_spent: balance(next.current_state.experience_spent) - entry.cost,

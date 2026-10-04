@@ -158,9 +158,9 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
   const meritContext: ChangelingMeritContext = {
     gameLine: "CtL", archetypes: ["changeling"], attributes: common.attributes, skills: common.skills,
     seeming, kith, wyrd, court,
-    mantle: court && !["sem corte", "courtless"].includes(court.toLowerCase()) ? Math.max(1, mergeCreationMerits(initial?.merits, common.merits).find(item => changelingMeritId(item) === "ctl-2ed:mantle" && item.grantedBy === "Corte")?.dots ?? 1) : 0,
-    merits: mergeCreationMerits(initial?.merits, common.merits),
-    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits)),
+    mantle: court && !["sem corte", "courtless"].includes(court.toLowerCase()) ? Math.max(1, mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved).find(item => changelingMeritId(item) === "ctl-2ed:mantle" && item.grantedBy === "Corte")?.dots ?? 1) : 0,
+    merits: mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved),
+    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved)),
     meritCatalog,
     powers: contracts.map((item) => item.originalName || item.name).filter(Boolean),
   };
@@ -213,7 +213,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
         const definition = resolveMeritDefinition(item, meritCatalog);
         return { ...item, configuration: normalizeMeritConfiguration(item.configuration), definitionId: definition?.id ?? item.definitionId,
           sourceId: definition?.sourceId ?? item.sourceId, source: definition?.source ?? item.source };
-      })),
+      }), common.meritWasRemoved),
       line_data: {
         ...(source?.line_data ?? {}), seeming, kith, kith_choice: customKith ? "" : kithChoice,
         court: court || "Sem Corte", needle, thread, touchstone,

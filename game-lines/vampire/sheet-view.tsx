@@ -59,6 +59,7 @@ import { meritConfigurationTitle } from "@/lib/core/character/merit-configuratio
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage, type Locale } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
+import { vampireMeritContextForSheet } from "./merit-eligibility";
 import { vampireMeritId } from "./merit-identities";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
@@ -2230,6 +2231,7 @@ function VampireExpandedMeritList({
           ) ? (
             <MeritConfigurationEditor
               compact
+              specialtyContext={vampireMeritContextForSheet(character, catalog, [])}
               merit={merit}
               ownedMerits={character.merits}
               catalog={[...catalog]}

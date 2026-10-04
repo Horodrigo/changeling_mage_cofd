@@ -85,8 +85,8 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
     attributes: common.attributes,
     skills: common.skills,
     size: 5,
-    merits: mergeCreationMerits(initial?.merits, common.merits),
-    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits)),
+    merits: mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved),
+    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved)),
     meritCatalog,
   };
 
@@ -148,7 +148,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
           source: definition?.source ?? merit.source,
           configuration: normalizeMeritConfiguration(merit.configuration),
         };
-      })),
+      }), common.meritWasRemoved),
       line_data: {
         ...(source?.line_data ?? {}),
         age: age.trim(),
@@ -211,7 +211,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
         <h3>{t("ui.breakingPoints")}</h3>
         {BREAKING_POINT_KEYS.map((key, index) => <label key={key}>{t(key)}<Textarea value={breakingPoints[index] ?? ""} onChange={(event) => { const next = [...breakingPoints]; next[index] = event.target.value; setBreakingPoints(next); }} /></label>)}
       </section>
-      <div className={missing("merits") ? "missing-field block" : ""}><MeritPicker merits={common.merits} setMerits={common.setMerits} catalog={meritCatalog} context={meritContext} spent={meritSpent} budget={7} renderConfiguration={({ merit, ownedMerits, inline, onChange }) => <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={meritCatalog} ownedMerits={ownedMerits} inline={inline} definitions={COMMON_MERIT_CONFIGURATIONS} />} isInlineConfiguration={isCommonInlineMeritConfiguration} /></div>
+      <div className={missing("merits") ? "missing-field block" : ""}><MeritPicker merits={common.merits} setMerits={common.setMerits} catalog={meritCatalog} context={meritContext} spent={meritSpent} budget={7} renderConfiguration={({ merit, ownedMerits, inline, onChange }) => <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={meritCatalog} specialtyContext={meritContext} ownedMerits={ownedMerits} inline={inline} definitions={COMMON_MERIT_CONFIGURATIONS} />} isInlineConfiguration={isCommonInlineMeritConfiguration} /></div>
     </div>}
   />;
 }

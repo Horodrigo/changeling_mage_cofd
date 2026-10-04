@@ -546,7 +546,7 @@ export function MageExperiencePanel({
                 />
               </label>
             )}
-            {purchase==="merit"&&selectedMerit&&nextMerit&&<MeritConfigurationEditor merit={{definitionId:selectedMerit.id,name:selectedMerit.name,dots:nextMerit,configuration:mageMeritConfiguration}} ownedMerits={character.merits} configurationDots={masqueConfigurationDots({definitionId:selectedMerit.id,name:selectedMerit.name}, character.merits, meritCatalog)} catalog={meritCatalog} definitions={MAGE_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props)=>renderMageStructuredMeritEditor({...props,catalog:meritCatalog,factions:factionCatalog,order:String(character.line_data.order??"")})} onChange={setMageMeritConfiguration}/>}
+            {purchase==="merit"&&selectedMerit&&nextMerit&&<MeritConfigurationEditor specialtyContext={meritContext} merit={{definitionId:selectedMerit.id,name:selectedMerit.name,dots:nextMerit,configuration:mageMeritConfiguration}} ownedMerits={character.merits} configurationDots={masqueConfigurationDots({definitionId:selectedMerit.id,name:selectedMerit.name}, character.merits, meritCatalog)} catalog={meritCatalog} definitions={MAGE_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props)=>renderMageStructuredMeritEditor({...props,catalog:meritCatalog,factions:factionCatalog,order:String(character.line_data.order??"")})} onChange={setMageMeritConfiguration}/>}
             {purchase === "specialty" && <>
               <label>{t("ui.skill")}<RuleSelect value={mageSpecialtySkill} onChange={setMageSpecialtySkill} options={SKILL_OPTIONS}/></label>
               <label>{t("ui.specialty")}<Input value={mageSpecialtyName} onChange={(event)=>setMageSpecialtyName(event.target.value)} maxLength={80}/></label>

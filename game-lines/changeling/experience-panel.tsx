@@ -1,5 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
+import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
+import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
+import { normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core/character/merit-configuration";
+import { INTERDISCIPLINARY_SPECIALTY_ID } from "@/lib/core/character/specialty-merits";
 import { History, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -137,6 +141,7 @@ export function ExperiencePanel({
   const [meritId, setMeritId] = useState("");
   const [meritDots, setMeritDots] = useState(0);
   const [meritInstance, setMeritInstance] = useState(-1);
+  const [meritConfiguration, setMeritConfiguration] = useState<MeritConfiguration>({});
   const [specialtySkill, setSpecialtySkill] = useState<string>(
     Object.values(SKILLS).flat()[0],
   );
@@ -483,7 +488,8 @@ export function ExperiencePanel({
       if (!selectedMerit || !nextMeritRating)
         return setFeedback(t("ui.thisMeritHasNoHigherAvailableRating"));
       if(!changelingExperienceMeritEligible(selectedMerit,{...meritContext,selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(t("ui.prerequisitesNotMet"));
-      const quoted = quoteChangelingMeritPurchase(character, selectedMerit.id, nextMeritRating, meritInstance, meritCatalog);
+      const quoted = quoteChangelingMeritPurchase(character, selectedMerit.id, nextMeritRating, meritInstance, meritCatalog,
+        selectedMerit.id === INTERDISCIPLINARY_SPECIALTY_ID ? meritConfiguration : undefined);
       if (!quoted) return setFeedback(t("ui.selectAnAvailableMerit"));
       spend(
         quoted.cost,
@@ -738,10 +744,14 @@ export function ExperiencePanel({
                       setMeritId(id);
                       setMeritDots(dots);
                       setMeritInstance(instance);
+                      setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration));
                     }}
                   />
                 </label>
               )}
+              {purchaseType === "merit" && selectedMerit?.id === INTERDISCIPLINARY_SPECIALTY_ID && nextMeritRating &&
+                <MeritConfigurationEditor merit={{ definitionId: selectedMerit.id, name: selectedMerit.name, dots: nextMeritRating, configuration: meritConfiguration }}
+                  catalog={meritCatalog} specialtyContext={meritContext} definitions={COMMON_MERIT_CONFIGURATIONS} onChange={setMeritConfiguration} />}
               {purchaseType === "specialty" && (
                 <>
                   <label>

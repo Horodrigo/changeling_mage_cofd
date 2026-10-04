@@ -281,7 +281,7 @@
   },
   "core-2ed:interdisciplinary-specialty": {
     "name": "Especialização Interdisciplinar",
-    "prerequisites": "Qualquer Perícia •••",
+    "prerequisites": "Perícia com três pontos ou mais e uma Especialização",
     "description": "Escolhe uma Especialização na Perícia correspondente. Aplica o dado de bônus da Especialização aos testes pertinentes de qualquer Perícia, exceto aos testes sem treinamento."
   },
   "core-2ed:investigative-aide": {

@@ -3,6 +3,8 @@ import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-ru
 import { normalizeChangelingFrailties } from "./creation-rules";
 import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants";
 import { recoverChangelingMeritAllocations } from "./merit-allocation";
+import { INTERDISCIPLINARY_SPECIALTY_ID } from "@/lib/core/character/specialty-merits";
+import { commonMeritId } from "@/lib/core/character/merit-identities";
 
 const numberValue = (value: unknown) => {
   const parsed = Number(value);
@@ -28,6 +30,11 @@ function changelingDerived(character: CharacterSheet): CharacterSheet["derived"]
 
 /** Pure Changeling rule hooks. No browser, persistence, or cross-line I/O. */
 export const changelingRules: GameLineRulesModule = {
+  onSpecialtyMeritsRemoved(character, removed) {
+    const state = character.line_data.entitlement as { definitionId?: string; suspendedBenefitIds?: string[] } | undefined;
+    if (!state || !removed.some(item => commonMeritId(item) === INTERDISCIPLINARY_SPECIALTY_ID && item.grantedBy === `Entitlement:${state.definitionId}`)) return character;
+    return { ...character, line_data: { ...character.line_data, entitlement: { ...state, suspendedBenefitIds: [...new Set([...(state.suspendedBenefitIds ?? []), "hedge-interdisciplinary"])] } } };
+  },
   normalizeCharacter(character) {
     const wyrd = numberValue(character.line_data.wyrd) || 1;
     return {

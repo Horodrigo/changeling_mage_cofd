@@ -3,7 +3,8 @@ import { asRecord } from "@/lib/core/character/current-character-validation";
 import { addExperienceMeritDots, creationMeritDots, experienceMeritDots, removeExperienceMeritDots } from "@/lib/merit-progression";
 import { resolveMeritDefinition, meritMatchesDefinition } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";
-import { meritRatingsFor, type MeritDefinition } from "@/lib/merits";
+import { meritRatingsFor, meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
+import type { MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { Locale } from "@/lib/i18n";
 import { createRandomId } from "@/lib/random-id";
 import { canAdvanceChangelingGrant, changelingExperienceMeritEligible, changelingMeritContextForSheet } from "./merit-context";
@@ -24,7 +25,7 @@ export function changelingExperienceMeritInstance(sheet: CharacterSheet, definit
 }
 
 /** CtL's existing one-XP-per-dot transaction, with canonical definition/instance identity. */
-export function quoteChangelingMeritPurchase(sheet: CharacterSheet, definitionId: string, target: number, index: number, catalog: readonly MeritDefinition[]) {
+export function quoteChangelingMeritPurchase(sheet: CharacterSheet, definitionId: string, target: number, index: number, catalog: readonly MeritDefinition[], configuration?: MeritConfiguration) {
   const definition = catalog.find(item => item.id === definitionId);
   if (sheet.game_line !== "CtL" || !definition || !natural(target) || !Number.isInteger(index) || index < -1) return;
   const owned = changelingExperienceMeritInstance(sheet, definition, index, catalog);
@@ -32,11 +33,12 @@ export function quoteChangelingMeritPurchase(sheet: CharacterSheet, definitionId
   if (owned && (!natural(owned.dots) || owned.dots < 1)) return;
   if (!owned && !definition.repeatable && sheet.merits.some(item => meritMatchesDefinition(item, definition, catalog))) return;
   const cost = target - (owned?.dots ?? 0);
+  const selectedConfiguration = configuration ?? owned?.configuration ?? {};
   if (cost < 1 || !meritRatingsFor(definition, target).includes(target) ||
-    !changelingExperienceMeritEligible(definition, { ...changelingMeritContextForSheet(sheet, catalog), selectedDots: target, configuration: owned?.configuration })) return;
+    meritSelectionProblems(definition, { dots: target, configuration: selectedConfiguration }, changelingMeritContextForSheet(sheet, catalog), changelingExperienceMeritEligible).length) return;
   const selection: MeritSelection = owned ? structuredClone(owned) : {
     name: definition.name, dots: 0, creationDots: 0, experienceDots: 0,
-    sourceId: definition.sourceId, source: definition.source, configuration: {},
+    sourceId: definition.sourceId, source: definition.source, configuration: structuredClone(selectedConfiguration),
   };
   // Schema-2 selections predating allocation fields are creation dots, as in creationMerits().
   // Purchase quotes consume this bridge; remove it when those ID-less allocations end.

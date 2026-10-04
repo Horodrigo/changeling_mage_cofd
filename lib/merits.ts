@@ -4,6 +4,7 @@ import type { PersistedGameLineId } from "./core/character/game-line-ids";
 import type { MessageKey, TranslationParams } from "./i18n";
 import type { CatalogNameQualifier } from "./localized-catalog";
 import { resolveMeritDefinition, resolveMeritReference } from "./merit-identity";
+import { INTERDISCIPLINARY_SPECIALTY_ID, configuredSpecialty, interdisciplinarySpecialties, interdisciplinarySpecialtySelected } from "./core/character/specialty-merits";
 
 export type GameLine = PersistedGameLineId;
 export type MeritLevel = { rating: number; name: string; description: string };
@@ -75,6 +76,9 @@ export function meritPrerequisitesMet(
   if(merit.line&&merit.line!=="Core"&&merit.line!==context.gameLine) return false;
   if(merit.mortalOnly && context.gameLine !== "CofD" && !context.mortalMeritsAllowed) return false;
   if(merit.id === "core-2ed:fighting-finesse" && !context.specializations?.some(item => ["Brawl", "Weaponry"].includes(item.skill) && item.name.trim())) return false;
+  if (merit.id === INTERDISCIPLINARY_SPECIALTY_ID && !(configuredSpecialty(context.configuration)
+    ? interdisciplinarySpecialtySelected(context.configuration, context.specializations, context.skills)
+    : interdisciplinarySpecialties(context.specializations, context.skills).length)) return false;
   if(merit.requirements&&!requirementMet(merit.requirements,context)) return false;
   const owned=context.merits??[];
   const forbidden=(definition:Partial<MeritDefinition>)=>definition.descriptivePrerequisites?[]:definition.excludes??definition.prerequisites?.match(/(?:Cannot have|No)\s+([^;,]+)/i)?.slice(1)??[];
@@ -174,5 +178,6 @@ export type MeritSelectionProblem = { key: MessageKey; params?: TranslationParam
 export function meritSelectionProblems(merit:MeritDefinition,selection:{dots:number;configuration?:Record<string,string|string[]>},context:MeritPrerequisiteContext,isEligible:(merit:MeritDefinition,context:MeritPrerequisiteContext)=>boolean=meritPrerequisitesMet):MeritSelectionProblem[]{
   const config=selection.configuration??{}, problems:MeritSelectionProblem[]=[];
   if(!isEligible(merit,{...context,selectedDots:selection.dots,configuration:config})) problems.push({key:"ui.meritPrerequisitesNotMet",params:{prerequisites:merit.prerequisites??merit.name}});
+  if (merit.id === INTERDISCIPLINARY_SPECIALTY_ID && !interdisciplinarySpecialtySelected(config, context.specializations, context.skills)) problems.push({ key: "ui.meritSelectExistingSpecialty" });
   return problems;
 }

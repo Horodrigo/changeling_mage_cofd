@@ -198,6 +198,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
           isInlineConfiguration={(id) => isCommonInlineMeritConfiguration(id) || isChangelingInlineMeritConfiguration(id)}
           renderConfiguration={({ merit, ownedMerits, inline, onChange }) => (
             <MeritConfigurationEditor
+              specialtyContext={props.meritContext}
               merit={merit}
               ownedMerits={ownedMerits}
               inline={inline}

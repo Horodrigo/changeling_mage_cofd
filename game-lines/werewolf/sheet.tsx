@@ -44,6 +44,10 @@ import { WerewolfExperiencePanel } from "./experience-panel";
 import { knownWerewolfFacets } from "./gift-progression";
 import { changeWerewolfForm, changeWerewolfTotem } from "./form-state";
 import { TotemAdvantageEditor } from "./totem-advantage";
+import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
+import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
+import { INTERDISCIPLINARY_SPECIALTY_ID } from "@/lib/core/character/specialty-merits";
+import { commonExpandedConfigurationLines } from "@/app/workspace/merit-configuration-presentation";
 import "./styles/sheet.css";
 
 export function WerewolfCharacterPaper({ character, updateState, updateSheet, catalogs }: GameLineSheetProps) {
@@ -123,6 +127,15 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
         {(Object.keys(fieldLabels) as Array<keyof typeof fieldLabels>).map(key => { const value = selection.configuration?.[key]; return typeof value === "string" && value
           ? <p className="wtf-rule-field" key={key}><strong>{t(`werewolf.meritChoice.${fieldLabels[key]}`)}:</strong>{" "}{choiceText(key, value)}</p> : null; })}
         {favoredFormPenalties(selection.configuration).map((penalty, row) => <p className="wtf-rule-field" key={row}><strong>{t("werewolf.meritChoice.penalty", { dot: row + 1 })}:</strong>{" "}{name(penalty.formId, reference.forms)} · {systemTerm(penalty.attribute, locale)} −1</p>)}
+      </>}
+      {definition?.id === INTERDISCIPLINARY_SPECIALTY_ID && <>
+        {commonExpandedConfigurationLines(definition.id, selection.dots, selection.configuration, locale, merits)?.map(line => <p key={line}>{line}</p>)}
+        <MeritConfigurationEditor merit={selection} catalog={merits} definitions={COMMON_MERIT_CONFIGURATIONS} specialtyContext={{ specializations: member.specializations, skills: member.skills }} onChange={configuration => {
+          const next = structuredClone(character); const candidates = next.merits.filter(item => selection.instanceId ? item.instanceId === selection.instanceId :
+            !item.instanceId && werewolfMeritDefinition(item, merits)?.id === INTERDISCIPLINARY_SPECIALTY_ID);
+          const target = candidates.length === 1 ? candidates[0] : undefined;
+          if (target) { target.configuration = configuration; updateSheet(next); }
+        }} />
       </>}
       {definition && <small>{t("conditions.sourcePage", { source: definition.source, page: definition.page })}</small>}
     </details>;

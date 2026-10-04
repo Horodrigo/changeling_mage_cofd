@@ -1,4 +1,4 @@
-import type { CharacterSheet } from "@/lib/core/character/character-types";
+import type { CharacterSheet, MeritSelection } from "@/lib/core/character/character-types";
 
 export type GameLineValidationIssue = {
   field?: string;
@@ -15,4 +15,6 @@ export interface GameLineRulesModule {
   deriveCharacterState?: (character: CharacterSheet) => CharacterSheet["derived"];
   validateCreation?: (character: CharacterSheet) => readonly GameLineValidationIssue[];
   synchronizeCharacter?: (character: CharacterSheet) => CharacterSheet;
+  /** Owning automatic-benefit producers respond to explicit linked-Specialty removal. */
+  onSpecialtyMeritsRemoved?: (character: CharacterSheet, removed: readonly MeritSelection[]) => CharacterSheet;
 }

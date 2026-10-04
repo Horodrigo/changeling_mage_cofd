@@ -247,8 +247,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     statusMeritIds: ["vtr-kindred-status"],
     gameLine: "VtR", archetypes: ["vampire", clanId, String(initial?.line_data.bloodline_id ?? ""), ...covenantIds], attributes: common.attributes,
     mortalMeritsAllowed: zirnitraRating > 0,
-    skills: common.skills, merits: mergeCreationMerits(initial?.merits, common.merits), meritCatalog,
-    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits), source => source === SHADOW_CULT_SOURCE),
+    skills: common.skills, merits: mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved), meritCatalog,
+    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved), source => source === SHADOW_CULT_SOURCE),
   };
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {
@@ -369,7 +369,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     const finalMerits = mergeCreationMerits(source?.merits, common.merits.map((merit) => {
         const definition = resolveMeritDefinition(merit, meritCatalog);
         return { ...merit, ...(definition ? { definitionId: definition.id } : {}), sourceId: definition?.sourceId ?? merit.sourceId, source: definition?.source ?? merit.source, configuration: normalizeMeritConfiguration(merit.configuration) };
-      }));
+      }), common.meritWasRemoved);
     const finalTouchstones = reconcileTouchstones(source, finalMerits, touchstoneSlot, touchstone);
     const completed: CharacterSheet = {
       id: source?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR",
@@ -459,7 +459,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
         {covenantId === "ordo-dracul" && <div className={missing("mystery") ? "missing-field block" : ""}><Choice label={t("ui.mystery")} value={mysteryId} setValue={(value) => { setMysteryId(value); setCreationCovenantPowerId(""); }} options={[...ORDO_MYSTERIES]} optionLabels={{ ascendant: t("ui.ascendant"), wyrm: t("ui.wyrm"), voivode: t("ui.voivode"), quintessence: t("ui.quintessence") }} /></div>}
         {hasCreationCovenantPower && covenantPowerOptions.length > 1 && <div className={missing("covenantPower") ? "missing-field block" : ""}><Choice label={covenantId === "circle-of-the-crone" || covenantId === "followers-of-seth" ? t("ui.freeRite") : covenantId === "lancea-et-sanctum" ? t("ui.freeMiracle") : covenantId === "jaliniyya" ? t("ui.freeFormula") : covenantId === "architects-of-the-monolith" ? t("ui.freeInvocation") : t("ui.freeSacrilege")} value={creationCovenantPowerId} setValue={setCreationCovenantPowerId} options={covenantPowerOptions.map((item) => item.id)} optionLabels={Object.fromEntries(covenantPowerOptions.map((item) => [item.id, displayName(item, locale)]))} /></div>}
         <Aspirations values={common.aspirations} setValues={common.setAspirations} />
-        <div className={missing("merits") ? "missing-field block" : ""}><MeritPicker merits={common.merits} setMerits={common.setMerits} catalog={[...meritCatalog]} context={meritContext} spent={meritSpent} budget={meritBudget} powerLabel={t("ui.bloodPotency")} power={bloodPotency} setPower={(value) => setBloodPotency(Math.min(maxBloodPotency, value))} renderConfiguration={({ merit, ownedMerits, inline, onChange }) => <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={[...meritCatalog]} ownedMerits={ownedMerits} inline={inline} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />} isInlineConfiguration={isVampireInlineMeritConfiguration} isEligible={(definition, context) => vampireMeritEligible(definition, context, zirnitraRating)} categoryFor={vampireMeritFilterCategory} /></div>
+        <div className={missing("merits") ? "missing-field block" : ""}><MeritPicker merits={common.merits} setMerits={common.setMerits} catalog={[...meritCatalog]} context={meritContext} spent={meritSpent} budget={meritBudget} powerLabel={t("ui.bloodPotency")} power={bloodPotency} setPower={(value) => setBloodPotency(Math.min(maxBloodPotency, value))} renderConfiguration={({ merit, ownedMerits, inline, onChange }) => <MeritConfigurationEditor merit={merit} onChange={onChange} catalog={[...meritCatalog]} specialtyContext={meritContext} ownedMerits={ownedMerits} inline={inline} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />} isInlineConfiguration={isVampireInlineMeritConfiguration} isEligible={(definition, context) => vampireMeritEligible(definition, context, zirnitraRating)} categoryFor={vampireMeritFilterCategory} /></div>
       </div>}
     />
   </>;

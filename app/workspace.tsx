@@ -155,7 +155,8 @@ export function Workspace({
 
   async function saveCharacter(sheet: CharacterSheet) {
     try {
-      const normalized = await prepareCharacterForSave(sheet);
+      const previous = characters.find(item => storedCharacterId(item) === sheet.id);
+      const normalized = await prepareCharacterForSave(sheet, previous && isCurrentStoredCharacter(previous) ? previous : undefined);
       upsertCharacter(normalized);
       setEditing(null);
       setSelected(normalized);
@@ -166,8 +167,14 @@ export function Workspace({
     }
   }
 
-  function saveCharacterDraft(sheet: CharacterSheet) {
-    upsertCharacter(sheet);
+  async function saveCharacterDraft(sheet: CharacterSheet) {
+    try {
+      const previous = characters.find(item => storedCharacterId(item) === sheet.id);
+      upsertCharacter(await prepareCharacterForSave(sheet, previous && isCurrentStoredCharacter(previous) ? previous : undefined));
+    } catch {
+      setNotice(t("workspace.invalidCharacterJson"));
+      return;
+    }
     setEditing(null);
     setSelected(null);
     setView("personagens");
@@ -195,7 +202,8 @@ export function Workspace({
 
   async function updateCharacter(sheet: CharacterSheet) {
     try {
-      const normalized = await prepareCharacterForUpdate(sheet);
+      const previous = characters.find(item => storedCharacterId(item) === sheet.id);
+      const normalized = await prepareCharacterForUpdate(sheet, previous && isCurrentStoredCharacter(previous) ? previous : undefined);
       replaceCharacter(normalized);
       setSelected(normalized);
     } catch {

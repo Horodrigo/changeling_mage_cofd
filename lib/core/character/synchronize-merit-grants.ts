@@ -5,6 +5,13 @@ import { experienceMeritDots } from "@/lib/merit-progression";
 
 const GENERATED_PREFIX = "Merit:";
 
+/** Creation merges omit free rows. Seed their exact configurations before the owning grant engine recomposes them. */
+export function preservePreviousCommonGrants(sheet: CharacterSheet, previous: CharacterSheet) {
+  sheet.merits.push(...previous.merits.filter(item => item.grantedBy?.startsWith(GENERATED_PREFIX) && !experienceMeritDots(item) &&
+    item.instanceId && previous.merits.filter(candidate => candidate.instanceId === item.instanceId).length === 1 &&
+    !sheet.merits.some(candidate => candidate.instanceId === item.instanceId)).map(item => structuredClone(item)));
+}
+
 /** Shared grant mechanics used by Core merits; line modules apply their own automatic grants around this call. */
 export function synchronizeCommonMeritGrants(
   sheet: Pick<CharacterSheet, "merits" | "specializations" | "line_data">,

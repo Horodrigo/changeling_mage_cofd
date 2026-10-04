@@ -33,6 +33,7 @@ import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui"
 import { translate, useLanguage,type Locale } from "@/lib/i18n";
 import { CHANGELING_SHEET_MERIT_CONFIGURATIONS, decodeConfiguredRows, expandedConfigurationLines, findMeritConfiguration, meritConfigurationTitle, normalizeMeritConfiguration, synchronizeMeritGrants, type TokenConfigurationItem } from "./sheet-merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
+import { changelingMeritContextForSheet } from "./merit-context";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { changelingMeritId } from "./merit-identities";
@@ -373,7 +374,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
             const definition = resolveMeritDefinition(item, catalog), style = definition?.levels?.length ? definition : undefined, configured = expandedConfigurationLines(definition?.id, item.dots, item.configuration, locale, courtCatalog, tokenCatalog, catalog), tokenItems = definition?.id === "ctl-2ed:token" ? decodeConfiguredRows<TokenConfigurationItem>(normalizeMeritConfiguration(item.configuration).items) : [], cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = definition?.id === "ctl-2ed:token"
                 ? t("ui.tokens")
                 : meritLabel(item, catalog, courtCatalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(definition?.id) && !["ctl-2ed:fae-mount", "h-seemings:fae-pet", "oak-ash-thorn:entitlement"].includes(definition?.id ?? "")
-                ? <MeritConfigurationEditor compact merit={item} ownedMerits={character.merits} catalog={[...catalog]} definitions={CHANGELING_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => renderChangelingStructuredMeritEditor(props, entitlementCatalog, tokenCatalog)} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
+                ? <MeritConfigurationEditor compact specialtyContext={changelingMeritContextForSheet(character, catalog)} merit={item} ownedMerits={character.merits} catalog={[...catalog]} definitions={CHANGELING_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => renderChangelingStructuredMeritEditor(props, entitlementCatalog, tokenCatalog)} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
                     target.configuration = configuration; updateSheet(synchronizeMeritGrants(next, entitlementCatalog)); }}/>
                 : null;
             if (!style)

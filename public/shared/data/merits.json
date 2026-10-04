@@ -1718,7 +1718,7 @@
     "sourceId": "core-2ed",
     "source": "Chronicles of Darkness",
     "category": "Mental",
-    "prerequisites": "Any Skill •••",
+    "prerequisites": "Skill at three dots or higher with a Specialty",
     "description": "Choose a Specialty in the corresponding Skill. Apply the Specialty's bonus die to relevant rolls of any Skill, except unskilled rolls.",
     "page": 45,
     "priority": 1,

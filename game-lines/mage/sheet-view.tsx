@@ -90,6 +90,7 @@ import {
   synchronizeMeritGrants,
 } from "./sheet-merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
+import { mageMeritContextForSheet } from "./merits";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { normalizeDamage, powerResourceLimits } from "@/lib/resource-rules";
@@ -1300,6 +1301,7 @@ function ExpandedMeritList({
             resolveMeritDefinition(item, catalog)?.id !== "mta-2ed:familiar" ? (
               <MeritConfigurationEditor
                 compact
+                specialtyContext={mageMeritContextForSheet(character, catalog)}
                 merit={item}
                 ownedMerits={character.merits}
                 configurationDots={masqueConfigurationDots(item, character.merits, catalog)}

@@ -7,6 +7,7 @@ export const COMMON_MERIT_IDENTITIES = [
   ["mystery-cult-initiation", "Mystery Cult Initiation"],
   ["mystery-cult-influence", "Mystery Cult Influence"],
   ["contacts", "Contacts"],
+  ["interdisciplinary-specialty", "Interdisciplinary Specialty"],
   ["fast-reflexes", "Fast Reflexes"],
   ["fleet-of-foot", "Fleet of Foot"],
   ["giant", "Giant"],

@@ -197,8 +197,8 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     attributes: common.attributes,
     skills: { ...common.skills, ...(hasCreationOrderBenefits ? { Occult: Math.min(5, (common.skills.Occult ?? 0) + 1) } : {}) },
     gnosis, arcana, path, order,
-    merits: mergeCreationMerits(initial?.merits, common.merits),
-    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits), source => source === "Nameless Order", merit => resolveMeritDefinition(merit, meritCatalog)?.id === "mta-2ed:mystery-cult-influence" ? "mta-2ed:mystery-cult-influence" : undefined),
+    merits: mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved),
+    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved), source => source === "Nameless Order", merit => resolveMeritDefinition(merit, meritCatalog)?.id === "mta-2ed:mystery-cult-influence" ? "mta-2ed:mystery-cult-influence" : undefined),
     meritCatalog,
   };
   const pathData = MTA_PATHS[path as keyof typeof MTA_PATHS] ?? MTA_PATHS.Acanthus;
@@ -254,7 +254,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
         ...mergeCreationMerits(source?.merits, common.merits.map((item) => {
           const definition = resolveMeritDefinition(item, meritCatalog);
           return { ...item, ...(definition ? { definitionId: definition.id } : {}), configuration: normalizeMeritConfiguration(item.configuration), sourceId: definition?.sourceId ?? item.sourceId, source: definition?.source ?? item.source };
-        })),
+        }), common.meritWasRemoved),
         ...(hasStandardCreationOrderBenefits(order) && !common.merits.some((item) => resolveMeritDefinition(item, meritCatalog)?.id === "mta-2ed:high-speech") && !source?.merits.some((item) => resolveMeritDefinition(item, meritCatalog)?.id === "mta-2ed:high-speech" && item.experienceDots)
           ? [{ definitionId: "mta-2ed:high-speech", name: "High Speech", dots: 1, sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {}, grantedBy: "Ordem" }]
           : []),
