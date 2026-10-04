@@ -24,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
-| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 136 apresentações completas por ID (68 oficiais, 68 Homebrew), 23 níveis; 267 registros restantes, incluindo revisão de 15 descrições PT preexistentes |
+| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 156 apresentações completas por ID (78 oficiais, 78 Homebrew), 23 níveis; 247 registros restantes, incluindo revisão de 15 descrições PT preexistentes |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
@@ -182,10 +182,10 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 
 ## Verificação atual
 
-- **136/403** Méritos Vampire com apresentação completa por ID, 68 oficiais e 68 Homebrew; 23 níveis localizados. O catálogo canônico de 403 Méritos permanece intacto; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
+- **156/403** Méritos Vampire com apresentação completa por ID, 78 oficiais e 78 Homebrew; 23 níveis localizados. O catálogo canônico de 403 Méritos permanece intacto; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
 - **56 Bloodlines** com PT completo, incluindo Desventurados. IDs, compras, XP, recibos e textos autorais não são reescritos pela troca de idioma.
-- Manifesto `catalogVersion` **64**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire-pt` **6** e `vampire-bloodlines` **13**.
-- Último lote: 20 Méritos Vampire (dez oficiais e dez Homebrew), incluindo dez níveis de Athenian/As Três Cabeças de Kerberos. **40/40** testes de integração EN/PT/EN, identidades, catálogos e arquitetura, lint e build aprovados. Nenhuma mudança de código TypeScript neste lote; o gate anterior segue válido. Athenian/Athenians, Nereid e Kerberos preservados como nomes próprios; benefícios e títulos descritivos localizados. Dinheiro Fala Mais Alto conserva capítulo, sem estender a equivalência aprovada para Recursos/Mentor/Status.
+- Manifesto `catalogVersion` **65**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire-pt` **7** e `vampire-bloodlines` **13**.
+- Último lote: 20 Méritos Vampire de Secrets of the Covenants, False Gods e Sin Again (dez oficiais e dez Homebrew). **40/40** testes de integração EN/PT/EN, identidades, catálogos e arquitetura, lint e build aprovados. Nenhuma mudança de código TypeScript neste lote; o gate anterior segue válido. Referências reutilizam Fama (Avançada), Fome Intensificada, Coração Sombrio, Desventurados, Ímpeto e Gaiola Dourada. Touchstone, Vinculum, Erzsébet, Moda Mortale, Nelapsi e Electrum preservados conforme a apresentação vigente.
 - Integração anterior de Especialização Interdisciplinar: **573/573** testes da suíte completa, **8/8** de confirmação final do vínculo, lint, TypeScript e build aprovados, incluindo preservação de bancos/recibos e concessões antigas com XP.
 - As demais correções aprovadas têm estado de aplicação na tabela de decisões respondidas; os catálogos Vampire/Mage e os pontos sem resposta permanecem separados no backlog.
 - Sem smoke de navegador. A suíte completa de encerramento será executada após concluir todo o escopo; gates proporcionais por lote.

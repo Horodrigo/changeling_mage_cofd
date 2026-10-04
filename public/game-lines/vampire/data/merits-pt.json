@@ -671,5 +671,105 @@
     "name": "Adega",
     "description": "Fornece acesso controlado a um ancião em torpor para se alimentar e, com quatro pontos, a uma Disciplina de fora do Clã.",
     "prerequisites": "Local Seguro •"
+  },
+  "vtr-sotc:jack-booted-thug": {
+    "name": "Capanga de Coturno",
+    "description": "Intimida Membros com Status na Cidade igual ou menor para que gastem Força de Vontade ao se opor aos carthianos, e impõe às ações deles uma penalidade igual ao Status na Cidade.",
+    "prerequisites": "Status no Movimento Carthiano ••; Status na Cidade •; Intimidação •••"
+  },
+  "vtr-sotc:breaking-the-chains": {
+    "name": "Quebrando as Correntes",
+    "description": "Um consenso carthiano substitui o Vinculum de um alvo por Laços de Sangue de primeiro estágio com os carthianos participantes.",
+    "prerequisites": "Status no Movimento Carthiano •"
+  },
+  "vtr-sotc:sell-out": {
+    "name": "Vendido",
+    "description": "Mantém reconhecimento nominal em todas as Coalizões e pode decidir se a Lei Carthiana o reconhece como carthiano.",
+    "prerequisites": "Status no Movimento Carthiano ••••; Status na Cidade ••••; Política •••"
+  },
+  "vtr-sotc:smooth-criminal": {
+    "name": "Criminoso Astuto",
+    "description": "Uma vez por história, encerra uma cena ou debate ao superar um oponente com Manipulação + Subterfúgio disputado por Raciocínio + Subterfúgio.",
+    "prerequisites": "Política •; Manha ••; Subterfúgio ••"
+  },
+  "vtr-sotc:toss-that-shit-right-back": {
+    "name": "Jogue Essa Merda de Volta",
+    "description": "Esquiva-se de uma arma arremessada e, com sucessos excedentes, apanha a arma e a arremessa de volta imediatamente, sem permitir Defesa.",
+    "prerequisites": "Atletismo ••; Destreza •••"
+  },
+  "vtr-sotc:cease-fire": {
+    "name": "Cessar-Fogo",
+    "description": "Um consenso carthiano em todo o domínio faz com que Disciplinas e Devoções custem Força de Vontade e pune o uso de poderes que já custam Força de Vontade com dano agravado.",
+    "prerequisites": "Status no Movimento Carthiano •••••"
+  },
+  "vtr-sotc:coda-against-sorcery": {
+    "name": "Coda contra a Feitiçaria",
+    "description": "Define uma categoria de feitiçaria ou ritual; a pontuação penaliza sua ativação e protege contra aplicações ofensivas.",
+    "prerequisites": "Status no Movimento Carthiano •"
+  },
+  "vtr-sotc:empower-judiciary": {
+    "name": "Fortalecer o Judiciário",
+    "description": "Investe um juiz com Vitae e Força de Vontade para emitir interpretações vinculantes; violá-las custa Status na Cidade ou causa dano agravado.",
+    "prerequisites": "Status no Movimento Carthiano •••"
+  },
+  "vtr-sotc:establish-precedent": {
+    "name": "Estabelecer Precedente",
+    "description": "Transforma uma decisão judicial da mesma noite em um precedente que dura um ano e um dia e marca e pune violações conscientes.",
+    "prerequisites": "Status no Movimento Carthiano ••••"
+  },
+  "vtr-sotc:chorister": {
+    "name": "Corista",
+    "description": "Alguém de fora do Círculo recebe reconhecimento limitado, pode aprender Crúac e Méritos do Círculo e converte o Mérito em Status ao ingressar formalmente.",
+    "prerequisites": "Não ser membro do Círculo da Anciã"
+  },
+  "vtr-false-gods:comrade-card-index": {
+    "name": "Fichário de Camaradas",
+    "description": "Ao bloquear Méritos, considere Status na Cidade um ponto mais alto, mesmo acima de cinco; cada ponto de Status na Cidade concede um ponto de Lacaio ou Funcionários.",
+    "prerequisites": "Arquitetos do Monólito; Status na Cidade •"
+  },
+  "vtr-false-gods:dowser": {
+    "name": "Radiestesista",
+    "description": "Percebe linhas ley automaticamente e identifica suas ressonâncias com Raciocínio + Ocultismo; os sucessos são acrescentados ao primeiro teste de conjuração de Gaiola Dourada, até +5.",
+    "prerequisites": "Status nos Arquitetos do Monólito •"
+  },
+  "vtr-sin-again:family-fortune": {
+    "name": "Fortuna da Família",
+    "description": "Recorre ao imenso patrimônio da dinastia Erzsébet como Recursos temporários.",
+    "prerequisites": "Membro de Dinastia (Erzsébet) •"
+  },
+  "vtr-sin-again:guise": {
+    "name": "Aparência",
+    "description": "Permite a um Daeva manter uma aparência mortal cuidadosamente cultivada, ligada a um Touchstone ao qual permanece apegado.",
+    "prerequisites": "Daeva; Touchstone ao qual permanece apegado"
+  },
+  "vtr-sin-again:stitching-the-ditch": {
+    "name": "Costurando a Vala",
+    "description": "Permite que fashionistas veteranos reparem ou concluam um contrato fracassado de outro Moda Mortale.",
+    "prerequisites": "Status na Moda Mortale •••"
+  },
+  "vtr-sin-again:the-medium-is-the-message": {
+    "name": "O Meio É a Mensagem",
+    "description": "Torna inequívoca a intenção do assassinato contratado de um fashionista para os Membros que se depararem com ele.",
+    "prerequisites": "Status na Moda Mortale •"
+  },
+  "vtr-sin-again:fame-advanced": {
+    "name": "Fama (Avançada)",
+    "description": "Transforma a notoriedade sobrenatural em uma extensão temível de Fama entre mortais e Membros.",
+    "prerequisites": "Membro; Fama de pontuação igual ou maior"
+  },
+  "vtr-sin-again:quickened-hunger": {
+    "name": "Fome Intensificada",
+    "description": "Permite a um Nelapsi considerar temporariamente a Potência de Sangue como mais alta ao determinar os limites de alimentação.",
+    "prerequisites": "Nelapsi; Ímpeto •"
+  },
+  "vtr-sin-again:shadow-heart": {
+    "name": "Coração Sombrio",
+    "description": "Um segundo coração, sombrio, ajuda um Nelapsi a suportar ferimentos que ameaçam o coração verdadeiro.",
+    "prerequisites": "Nelapsi; Resiliência •"
+  },
+  "vtr-sin-again:carmine-paint": {
+    "name": "Tinta Carmim",
+    "description": "Misture partes iguais de Vitae e Electrum para criar um combustível de rituais, Disciplinas e Devoções que dura uma semana em recipiente vedado e não pode nutrir, causar dependência ou criar Laços de Sangue.",
+    "prerequisites": "Desventurados"
   }
 }
