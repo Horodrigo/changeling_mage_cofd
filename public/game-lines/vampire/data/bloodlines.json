@@ -1553,7 +1553,18 @@
     "homebrew": true,
     "parentClanIds": [
       "mekhet"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Ladrões de memórias que preservam a história ao bebê-la do sangue.",
+      "baneName": "A Maldição da Gestalt",
+      "baneSummary": "Ao se alimentar novamente de uma vítima anterior, faça um teste de Humanidade. Uma falha causa Falsas Memórias extraídas dessa vítima; falhas posteriores alteram a mesma instância única.",
+      "nicknames": [
+        "Guardiões",
+        "Mnemóvoros",
+        "Ladrões de Mentes"
+      ],
+      "parentClan": "Mekhet"
+    }
   },
   {
     "id": "norvegi",
@@ -1585,7 +1596,19 @@
     "homebrew": true,
     "parentClanIds": [
       "mekhet"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Foras da lei endogâmicos cujas Feras deformam visivelmente sua carne.",
+      "baneName": "A Maldição de Glamr",
+      "baneSummary": "A menos que se gaste Força de Vontade ou se obtenha sucesso em um teste de Humanidade, as ações Sociais pela cena sofrem uma penalidade igual à metade da Potência de Sangue, arredondada para cima. A penalidade não se aplica a outros Norvegi nem aos seus parentes designados. Sem Presas é obrigatório se a Maldição do Clã ainda não tiver se manifestado.",
+      "nicknames": [
+        "Facas",
+        "Foras da Lei",
+        "Norvegus",
+        "Norvega"
+      ],
+      "parentClan": "Mekhet"
+    }
   },
   {
     "id": "qedeshah",
@@ -1618,7 +1641,20 @@
     "giftSummary": "The bloodline can consecrate selected mortals as anointed attachments used by its protective Merits and Devotions.",
     "parentClanIds": [
       "mekhet"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Mekhet protetores que ungem mortais como extensões de seus Touchstones.",
+      "baneName": "A Maldição da Inquietação",
+      "baneSummary": "Após passar mais noites do que a Humanidade sem defender um Touchstone ou mortal ungido, recebe Culpado. A Condição só se resolve ao defender um vínculo com intensidade suficiente para recuperar toda a Força de Vontade; sem vínculos, torna-se Persistente até que um seja obtido.",
+      "giftName": "Unção",
+      "giftSummary": "A Bloodline pode consagrar mortais escolhidos como vínculos ungidos usados por seus Méritos e Devoções de proteção.",
+      "nicknames": [
+        "Mães",
+        "Mães do Céu",
+        "Pais"
+      ],
+      "parentClan": "Mekhet"
+    }
   },
   {
     "id": "acteius",
@@ -1648,12 +1684,22 @@
     "homebrew": true,
     "parentClanIds": [
       "nosferatu"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Artesãos de sangue metódicos que fabricam ferramentas e armas com Vitae.",
+      "baneName": "A Maldição da Inflexibilidade",
+      "baneSummary": "Quando ocorre um revés inesperado ou uma reviravolta improvável, faça um teste de Humanidade. Uma falha causa Tentado enquanto a Fera reage à perturbação.",
+      "nicknames": [
+        "Artesãos",
+        "Telchines"
+      ],
+      "parentClan": "Nosferatu"
+    }
   },
   {
     "id": "candymen",
     "name": "Candymen",
-    "translatedName": "Candymen",
+    "translatedName": "Doceiros",
     "parentClan": "Nosferatu",
     "nicknames": [
       "Peddlers",
@@ -1680,12 +1726,24 @@
     "giftSummary": "The vampire can infuse drugs and treats with Vitae, making consumers valid vessels and enabling the bloodline's addictive Devotions.",
     "parentClanIds": [
       "nosferatu"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Traficantes alquímicos cujas misturas com sangue remodelam o apetite.",
+      "baneName": "A Maldição do Doce Pecado",
+      "baneSummary": "Escolha um tipo de vítima característico. Ao despertar, faça um teste de Humanidade; uma falha torna todas as outras vítimas incapazes de nutrir pela noite, incluindo sangue armazenado, a menos que tenham consumido as misturas do vampiro.",
+      "giftName": "As Delícias",
+      "giftSummary": "O vampiro pode infundir drogas e guloseimas com Vitae, tornando seus consumidores vítimas válidas e permitindo as Devoções viciantes da Bloodline.",
+      "nicknames": [
+        "Vendedores",
+        "Traficantes"
+      ],
+      "parentClan": "Nosferatu"
+    }
   },
   {
     "id": "cockscomb-society",
     "name": "The Cockscomb Society",
-    "translatedName": "The Cockscomb Society",
+    "translatedName": "A Sociedade da Crista de Galo",
     "parentClan": "Nosferatu",
     "nicknames": [
       "Cockerels",
@@ -1716,7 +1774,23 @@
     "giftSummary": "The Society's inherited wealth and connections provide lineage-specific social leverage and support its role-playing Devotions.",
     "parentClanIds": [
       "nosferatu"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Aristocratas decadentes cuja civilidade cultivada mal contém impulsos monstruosos.",
+      "baneName": "A Maldição do Tédio",
+      "baneSummary": "Aplique a penalidade Social de Nosferatu com mortais aos testes para resistir a Bestial, Competitivo, Lascivo e impulsos semelhantes; use o modificador maior se os efeitos se sobrepuserem, e as falhas tornam-se falhas dramáticas.",
+      "giftName": "Riqueza Herdada",
+      "giftSummary": "A riqueza e as conexões herdadas da Sociedade proporcionam influência social específica da linhagem e sustentam suas Devoções baseadas em interpretação de papéis.",
+      "nicknames": [
+        "Galos",
+        "A Sociedade",
+        "Damas",
+        "Cavalheiros",
+        "Velhotas",
+        "Tolos"
+      ],
+      "parentClan": "Nosferatu"
+    }
   },
   {
     "id": "gethsemani",
@@ -1749,12 +1823,25 @@
     "giftSummary": "The bloodline's supernatural stigmata enable its signature Theban Miracles and devotional feeding practices.",
     "parentClanIds": [
       "nosferatu"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Profetas estigmatizados que transformam terror sagrado em milagres de sangue.",
+      "baneName": "A Maldição dos Estigmas",
+      "baneSummary": "Ao despertar, gaste Vitae adicional igual à metade da Potência de Sangue, arredondada para cima, ou manifeste ferimentos estigmáticos que reduzem a Humanidade efetiva em um para a Maldição do Clã Nosferatu até o Sono Diurno.",
+      "giftName": "Stigmatica",
+      "giftSummary": "Os estigmas sobrenaturais da Bloodline permitem seus Milagres Tebanos característicos e práticas devocionais de alimentação.",
+      "nicknames": [
+        "Extáticos",
+        "Avivalistas",
+        "Charlatães"
+      ],
+      "parentClan": "Nosferatu"
+    }
   },
   {
     "id": "keepers-of-the-dark",
     "name": "Keepers of the Dark",
-    "translatedName": "Keepers of the Dark",
+    "translatedName": "Guardiões das Trevas",
     "parentClan": "Nosferatu",
     "nicknames": [
       "Wardens",
@@ -1779,7 +1866,17 @@
     "homebrew": true,
     "parentClanIds": [
       "nosferatu"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Guardiões subterrâneos que moldam refúgios labirínticos e acumulam segredos na escuridão.",
+      "baneName": "A Maldição Radiante",
+      "baneSummary": "Luz intensa, como a de uma lanterna, fogueira ou lua cheia, causa Distraído pela cena, a menos que se obtenha sucesso em um teste de Humanidade.",
+      "nicknames": [
+        "Vigias",
+        "Ratos-Toupeira"
+      ],
+      "parentClan": "Nosferatu"
+    }
   },
   {
     "id": "lygos",
@@ -1811,12 +1908,24 @@
     "giftSummary": "The bloodline treats the five Truths as a primary Mystery and may learn Lessons of Erebus as its associated procedures.",
     "parentClanIds": [
       "nosferatu"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Místicos da escuridão absoluta que aprendem as progressivas Verdades de Erebus.",
+      "baneName": "A Maldição Luminosa",
+      "baneSummary": "Fora de luz fraca, a Humanidade conta como um ponto menor para a Maldição de Nosferatu, e a resistência ao frenesi sofre -1.",
+      "giftName": "Verdades de Erebus",
+      "giftSummary": "A Bloodline trata as cinco Verdades como um Mistério primário e pode aprender Lições de Erebus como seus procedimentos associados.",
+      "nicknames": [
+        "Sombras",
+        "Sujeitos Sinistros"
+      ],
+      "parentClan": "Nosferatu"
+    }
   },
   {
     "id": "von-schreck-family",
     "name": "Von Schreck Family",
-    "translatedName": "Von Schreck Family",
+    "translatedName": "Família Von Schreck",
     "parentClan": "Nosferatu",
     "nicknames": [
       "Scream Queens",
@@ -1844,7 +1953,20 @@
     "giftSummary": "The bloodline exploits live spectators and horror fandom to amplify fear, feeding, and its cinematic Devotions.",
     "parentClanIds": [
       "nosferatu"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Predadores da indústria do horror que precisam de uma plateia ao vivo para suas performances de alimentação.",
+      "baneName": "A Maldição do Exibicionista",
+      "baneSummary": "A menos que mortais observem a alimentação ao vivo, diretamente ou à distância, gaste Força de Vontade ou limite a capacidade de Vitae de cada vítima à metade da Humanidade, arredondada para baixo. Frenesi e sangue dos Membros estão isentos.",
+      "giftName": "Conheça Seu Público",
+      "giftSummary": "A Bloodline explora espectadores ao vivo e fãs de horror para amplificar o medo, a alimentação e suas Devoções cinematográficas.",
+      "nicknames": [
+        "Rainhas do Grito",
+        "Fangorianos",
+        "A Família"
+      ],
+      "parentClan": "Nosferatu"
+    }
   },
   {
     "id": "yagnatia",
@@ -1875,7 +1997,18 @@
     "homebrew": true,
     "parentClanIds": [
       "nosferatu"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Feiticeiros do sangue feudais que negociam com os deuses e espíritos de sua terra.",
+      "baneName": "A Maldição de Bielobog",
+      "baneSummary": "A Humanidade limita as paradas de dados e características usadas para resistir aos Numina de seres efêmeros. Referências aos poderes de Strix são registradas pela fonte, mas não implementadas.",
+      "nicknames": [
+        "Boiardos",
+        "Vozhds",
+        "Pretendentes"
+      ],
+      "parentClan": "Nosferatu"
+    }
   },
   {
     "id": "adrestoi",
@@ -1908,7 +2041,19 @@
     "giftSummary": "A five-dot Discipline that binds a pack to its master and distributes senses, emotion, strength, and feeding across the tether.",
     "parentClanIds": [
       "ventrue"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Lordes vinculados à Matilha que submetem suas Feras a um mestre escolhido por meio do Grilhão de Sangue.",
+      "baneName": "A Maldição da Submissão",
+      "baneSummary": "O vampiro tem Sangue dos Relutantes, mas precisa que um superior com Status dos Membros relevante igual ou maior lhe conceda permissão para se alimentar; um mestre da Matilha tem autoridade final. Uma vez concedida, a permissão normalmente não pode ser revogada.",
+      "giftName": "Grilhão de Sangue",
+      "giftSummary": "Uma Disciplina de cinco pontos que vincula uma Matilha ao seu mestre e distribui sentidos, emoção, força e alimentação pelo grilhão.",
+      "nicknames": [
+        "Os Desacorrentados",
+        "Filhos de Midas"
+      ],
+      "parentClan": "Ventrue"
+    }
   },
   {
     "id": "gottlings",
