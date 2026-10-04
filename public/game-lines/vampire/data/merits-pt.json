@@ -1875,5 +1875,95 @@
     "name": "Janus",
     "description": "Mantém faces políticas e lealdades opostas sem revelar facilmente a contradição.",
     "prerequisites": "Subterfúgio ••"
+  },
+  "h-vtr-fire-revolution:grassroots": {
+    "name": "Organização de Base",
+    "description": "Constrói uma rede de ajuda mútua que fornece favores, resistência à coerção e crédito prático.",
+    "prerequisites": "Status no Movimento Carthiano ••; Contatos •• ou Aliados ••"
+  },
+  "h-vtr-fire-revolution:laissez-faire-predator": {
+    "name": "Predador Laissez-Faire",
+    "description": "Alimenta-se de forma oportunista de fontes acessíveis e rejeita a propriedade territorial.",
+    "prerequisites": "Manha •• ou Sobrevivência ••"
+  },
+  "h-vtr-fire-revolution:poser": {
+    "name": "Rebelde de Fachada",
+    "description": "Transforma uma encenação superficial de rebeldia em vantagem social, mas não pode coexistir com Punk Rock.",
+    "prerequisites": "Não pode ter Punk Rock"
+  },
+  "h-vtr-fire-revolution:hobbyist-clique-advanced": {
+    "name": "Grupo de Entusiastas (Avançado)",
+    "description": "Fortalece um Grupo de Entusiastas por meio de conhecimento excepcional na Perícia escolhida.",
+    "prerequisites": "Grupo de Entusiastas; Perícia escolhida •••"
+  },
+  "h-vtr-fire-revolution:punk-rock": {
+    "name": "Punk Rock",
+    "description": "Recompensa a rejeição sincera da autoridade, mas não pode coexistir com Rebelde de Fachada.",
+    "prerequisites": "Não pode ter Rebelde de Fachada"
+  },
+  "h-vtr-fire-revolution:strange-laws": {
+    "name": "Leis Estranhas",
+    "description": "Adapta a Lei Carthiana a comunidades incomuns e estruturas sociais sobrenaturais.",
+    "prerequisites": "Dois pontos em um Mérito Social"
+  },
+  "h-vtr-fire-revolution:rule-of-one": {
+    "name": "Regra de Um Só",
+    "description": "Permite que um carthiano autossuficiente resista sozinho à pressão de um grupo, a um custo.",
+    "prerequisites": "Perseverança •••"
+  },
+  "h-vtr-fire-revolution:share-and-share-alike": {
+    "name": "Partilha Igualitária",
+    "description": "Compartilha os benefícios de uma Lei Carthiana com outras pessoas, aceitando parte do fardo delas.",
+    "prerequisites": "Ocultismo ••; uma Lei Carthiana"
+  },
+  "h-vtr-fire-revolution:true-believer": {
+    "name": "Crente Convicto",
+    "description": "Faz do compromisso ideológico uma fonte de determinação e influência."
+  },
+  "h-vtr-fire-revolution:show-the-belly": {
+    "name": "Mostrar a Barriga",
+    "description": "Usa submissão deliberada para controlar os termos de um confronto predatório.",
+    "prerequisites": "Compostura •••"
+  },
+  "h-vtr-fire-revolution:unflinching-eye": {
+    "name": "Olhar Inabalável",
+    "description": "Mantém a observação concentrada sob pressão sobrenatural ou política.",
+    "prerequisites": "Sentidos Aguçados; Perseverança •••"
+  },
+  "h-vtr-fire-revolution:beast-of-law": {
+    "name": "Fera da Lei",
+    "description": "A Fera do personagem reconhece a Lei Carthiana e reage a ela."
+  },
+  "h-vtr-fire-revolution:breaking-bread": {
+    "name": "Partilhar o Pão",
+    "description": "Uma refeição compartilhada estabelece hospitalidade sobrenatural e suas consequências."
+  },
+  "h-vtr-fire-revolution:birth-control": {
+    "name": "Controle de Natalidade",
+    "description": "Regula a criação de novos vampiros dentro da jurisdição do Movimento."
+  },
+  "h-vtr-fire-revolution:enforce-elysium": {
+    "name": "Impor a Paz de Elysium",
+    "description": "Faz com que a paz de Elysium carregue a força sobrenatural da Lei."
+  },
+  "h-vtr-fire-revolution:i-do-not-recognize-your-authority": {
+    "name": "Não Reconheço Sua Autoridade",
+    "description": "Rejeita a autoridade sobrenatural de alguém de fora que a reivindica."
+  },
+  "h-vtr-fire-revolution:the-judas-gambit": {
+    "name": "Gambito de Judas",
+    "description": "Transforma um sacrifício voluntário ou uma traição em vantagem jurídica."
+  },
+  "h-vtr-fire-revolution:full-transparency": {
+    "name": "Transparência Total",
+    "description": "Obriga a revelar informações e pune acordos ocultos sob autoridade carthiana."
+  },
+  "h-vtr-fire-revolution:private-property": {
+    "name": "Propriedade Privada",
+    "description": "Protege um Refúgio e seus limites de forma jurídica e sobrenatural."
+  },
+  "h-vtr-fire-revolution:retroactive-continuity": {
+    "name": "Continuidade Retroativa",
+    "description": "Reescreve a continuidade jurídica de um evento anterior, com consequências permanentes."
   }
 }

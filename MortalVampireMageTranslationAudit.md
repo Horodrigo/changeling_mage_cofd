@@ -24,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
-| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 365 apresentações completas por ID (todos os 154 oficiais, 211 Homebrew), todos os 80 níveis; 38 Méritos Homebrew restantes; Courtoisie preservado conforme resposta do usuário |
+| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | 385 apresentações completas por ID (todos os 154 oficiais, 231 Homebrew), todos os 80 níveis; 18 Méritos Homebrew restantes; Courtoisie preservado conforme resposta do usuário |
 | V05 — Poderes | 546 registros, 140 níveis internos | Traduzir campos existentes e integrar criação/XP/ficha/Homebrew |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
@@ -191,10 +191,10 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 
 ## Verificação atual
 
-- **365/403** Méritos Vampire com apresentação completa por ID: todos os 154 oficiais, 211 Homebrew e os 80 níveis do catálogo. Restam 38 Méritos Homebrew; Courtoisie permanece no francês, conforme escolha aprovada. O catálogo canônico de 403 Méritos conserva identidades e efeitos; somente os dois requisitos/páginas aprovados de Agony & Ecstasy foram corrigidos no lote anterior; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
+- **385/403** Méritos Vampire com apresentação completa por ID: todos os 154 oficiais, 231 Homebrew e os 80 níveis do catálogo. Restam 18 Méritos Homebrew; Courtoisie permanece no francês, conforme escolha aprovada. O catálogo canônico de 403 Méritos conserva identidades e efeitos; somente os dois requisitos/páginas aprovados de Agony & Ecstasy foram corrigidos no lote anterior; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
 - **56 Bloodlines** com PT completo, incluindo Desventurados. IDs, compras, XP, recibos e textos autorais não são reescritos pela troca de idioma.
-- Manifesto `catalogVersion` **78**; recursos Core de Méritos nas versões **15/16**, Changeling nas versões **6/8**, `merits-vampire` **13**, `merits-vampire-pt` **19** e `vampire-bloodlines` **13**.
-- Último lote: 20 Méritos Homebrew de Fire & Revolution: facções, configurações políticas, experimentação e combate. **41/41** testes de integração EN/PT/EN, identidade, catálogos e arquitetura aprovados, além de lint e build. Canônico, efeitos, números e IDs preservados; Bloodroots, PPI e Janus conservados. Referências reutilizam Conheço uma Pessoa, Exército de Um Só, Coda contra a Feitiçaria e Experimentador de Devoções. Restam 27 registros carthianos e 11 erratas, incluindo três de Agony & Ecstasy.
+- Manifesto `catalogVersion` **79**; recursos Core de Méritos nas versões **15/16**, Changeling nas versões **6/8**, `merits-vampire` **13**, `merits-vampire-pt` **20** e `vampire-bloodlines` **13**.
+- Último lote: 20 Méritos e Leis Carthianas de Fire & Revolution, incluindo auxílio mútuo, Regra de Um Só, Elysium, hospitalidade, propriedade e continuidade jurídica. **41/41** testes de integração EN/PT/EN, identidade, catálogos e arquitetura aprovados, além de lint e build. IDs, efeitos e campos canônicos preservados; capítulos apresentados como sessões. Restam sete Leis Carthianas, nove erratas e dois registros opcionais apenas de referência.
 - Gate completo anterior: **576/576** testes, lint, TypeScript e build aprovados após as correções de Core/Changeling e equivalência capítulo/sessão, incluindo vínculos de Especialização, instâncias independentes, bancos e recibos.
 - As demais correções aprovadas têm estado de aplicação na tabela de decisões respondidas; os catálogos Vampire/Mage e os pontos sem resposta permanecem separados no backlog.
 - Sem smoke de navegador. A suíte completa de encerramento será executada após concluir todo o escopo; gates proporcionais por lote.

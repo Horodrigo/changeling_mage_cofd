@@ -14,7 +14,7 @@ const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").r
 
 test("Vampire Portuguese Merits cover applicable fields, level identities and numeric limits in both official and Homebrew records", () => {
   assert.equal(canonical.length, 403);
-  assert.equal(Object.keys(portuguese).length, 365);
+  assert.equal(Object.keys(portuguese).length, 385);
   for (const [id, presented] of Object.entries(portuguese)) {
     const definition = canonical.find(item => item.id === id);
     assert.ok(definition, id);
@@ -31,7 +31,7 @@ test("Vampire Portuguese Merits cover applicable fields, level identities and nu
     }
   }
   const localized = canonical.filter(item => portuguese[item.id]);
-  assert.equal(localized.filter(item => item.homebrew).length, 211);
+  assert.equal(localized.filter(item => item.homebrew).length, 231);
   assert.equal(localized.filter(item => !item.homebrew).length, 154);
 });
 
