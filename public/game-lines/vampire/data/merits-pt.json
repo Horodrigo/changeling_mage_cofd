@@ -1008,5 +1008,122 @@
     "name": "Óculos Escuros à Noite",
     "description": "Melhora os testes de Desapego por ferir mortais desconhecidos, mas faz aflorar a Maldição do Clã Daeva.",
     "prerequisites": "Daeva; Perseverança •••; Humanidade 6 ou menor"
+  },
+  "vtr-sotc:hard-motherfucker": {
+    "name": "Juramento do Durão do Caralho",
+    "description": "Um beneficiário que não pertence ao Invictus recebe Status, Aliados, Contatos, Recursos e 9-novamente em duas Perícias enquanto honra o juramento.",
+    "prerequisites": "Não ser membro do Invictus"
+  },
+  "vtr-sotc:oath-of-matrimony": {
+    "name": "Juramento de Matrimônio",
+    "description": "Os cônjuges compartilham ou igualam Méritos Sociais, Potência de Sangue, uma Disciplina, simpatia de sangue e um Laço de Sangue mútuo de terceiro estágio.",
+    "prerequisites": "Pelo menos uma das partes tem Status no Invictus"
+  },
+  "vtr-sotc:model-prisoner": {
+    "name": "Juramento do Prisioneiro Exemplar",
+    "description": "O prisioneiro não pode escapar nem sabotar os captores, enquanto os captores devem alimentá-lo e protegê-lo de tortura ou execução ilegal."
+  },
+  "vtr-sotc:oath-of-office": {
+    "name": "Juramento do Cargo",
+    "description": "Um cargo assumido sob juramento concede uma Máscara adicional e permite que o Status pertinente substitua os modificadores normais de Força de Vontade enquanto seus deveres forem cumpridos.",
+    "prerequisites": "Status na Cidade ••• ou Status no Invictus •••"
+  },
+  "vtr-sotc:refugee": {
+    "name": "Juramento do Refugiado",
+    "description": "Um Membro renuncia a um domínio e recebe proteção contra seus cidadãos enquanto se muda, trocando posteriormente o juramento por novos pontos de Status na Cidade e no Invictus.",
+    "prerequisites": "Status no Invictus •"
+  },
+  "vtr-sotc:righteous-kill": {
+    "name": "Juramento da Morte Justa",
+    "description": "Quem presta o juramento aceita o fardo moral de uma morte premeditada causada por outra pessoa e realiza o teste de Desapego com um bônus.",
+    "prerequisites": "Empatia •••; Status no Invictus •••"
+  },
+  "vtr-sotc:safe-word": {
+    "name": "Juramento da Palavra de Segurança",
+    "description": "Duas partes compartilham um Mérito Social e acesso às reservas de Força de Vontade uma da outra até que uma delas invoque a palavra de segurança."
+  },
+  "vtr-sotc:true-knight": {
+    "name": "Juramento do Cavaleiro Verdadeiro",
+    "description": "Protege um cavaleiro juramentado contra coerção por Membros e carniçais e concede armadura contra eles, ao mesmo tempo que rejeita violentamente outros juramentos de sangue.",
+    "prerequisites": "Status no Invictus ••; nenhum outro juramento ou Laço de Sangue ao prestar o juramento"
+  },
+  "vtr-sotc:crusade": {
+    "name": "Cruzada",
+    "description": "Um Estilo de combate dos Santificados que perturba a feitiçaria, silencia conjuradores e interrompe trabalhos sobrenaturais prolongados com um golpe de arma.",
+    "prerequisites": "Ocultismo ••; Perseverança •••; Armas Brancas ••; Feitiçaria Tebana •• ou Eunuco Feiticeiro •",
+    "levels": [
+      { "rating": 1, "name": "Escudo contra a Feitiçaria", "description": "Enquanto estiver armado e mantiver a Defesa, imponha uma penalidade igual à pontuação do Estilo à magia hostil usada a uma distância em jardas igual à Força de Vontade." },
+      { "rating": 2, "name": "Silêncio", "description": "Um golpe direcionado à garganta não sofre a penalidade por ataque localizado e silencia a vítima." },
+      { "rating": 3, "name": "Martelo", "description": "Gaste Força de Vontade e ataque com −2 para interromper a ação sobrenatural prolongada da vítima como uma falha dramática e somar sua pontuação ao dano." }
+    ]
+  },
+  "vtr-sotc:flock": {
+    "name": "Congregação",
+    "description": "Amplia um Rebanho para uma congregação de fiéis cujos membros começam as cenas com Força de Vontade e a recuperam por meio da alimentação.",
+    "prerequisites": "Rebanho de pontuação igual ou maior à deste Mérito"
+  },
+  "vtr-sin-again:these-guns": {
+    "name": "Esses Músculos",
+    "description": "Feitos notáveis de força ou resistência sob Fascínio melhoram o impacto social posterior sobre as testemunhas.",
+    "prerequisites": "Majestade •; Força ••• ou Vigor •••"
+  },
+  "vtr-sin-again:total-badass": {
+    "name": "Fodão Completo",
+    "description": "Um Estilo de combate de cinco pontos que combina Celeridade, Majestade e Ímpeto em uma abertura de violência espetacular.",
+    "prerequisites": "Briga ou Armas Brancas ••; Celeridade •; Majestade •; Ímpeto •"
+  },
+  "vtr-sin-again:true-love-s-kiss": {
+    "name": "Beijo do Amor Verdadeiro",
+    "description": "Amplia Beijo da Súcubo para que um beijo possa despertar outro vampiro do torpor.",
+    "prerequisites": "Beijo da Súcubo"
+  },
+  "vtr-sin-again:voyeur": {
+    "name": "Voyeur",
+    "description": "Recupera Força de Vontade ao observar mortais satisfazerem desejos, com a pontuação mais alta recompensando observações mais arriscadas.",
+    "prerequisites": "Daeva"
+  },
+  "vtr-strange-shades:shihai": {
+    "name": "Shihai",
+    "description": "Uma disciplina da fome de cinco pontos por meio da qual a privação ascética produz controle crescente sobre a Fera.",
+    "prerequisites": "Kuufukuji; Compostura •••; Perseverança •••"
+  },
+  "vtr-strange-shades:whipping-boy": {
+    "name": "Bode Expiatório",
+    "description": "Adiciona o Lamento Bode Expiatório, recuperando Força de Vontade por meio de serviço seguido de ressentimento oculto.",
+    "prerequisites": "Norvegi"
+  },
+  "vtr-strange-shades:mother-s-little-helper": {
+    "name": "Ajudante da Mamãe",
+    "description": "Amplia Embrocação ao permitir que um Qedeshah obtenha sustento e proteção adicionais por meio de um mortal ungido.",
+    "prerequisites": "Qedeshah"
+  },
+  "vtr-strange-shades:facade": {
+    "name": "Fachada",
+    "description": "Construa uma identidade alternativa de duração indefinida a serviço da Máscara; cada ponto é um aperfeiçoamento separado, comprado em ordem.",
+    "prerequisites": "Membro; Iniciação no Inconnu •",
+    "levels": [
+      { "rating": 1, "name": "O Véu", "description": "Use uma Máscara e um Lamento diferentes enquanto estiver na Fachada." },
+      { "rating": 2, "name": "O Trabalho", "description": "Escolha um número de Especializações em Perícias igual aos pontos em Fachada e use-as enquanto estiver disfarçado." },
+      { "rating": 3, "name": "A Fera", "description": "Ganhe Atroz, Implacável ou Sedutor e imponha uma penalidade às tentativas de Um Gosto de Sangue para identificar você." },
+      { "rating": 4, "name": "O Peso", "description": "Ganhe um Touchstone adicional relacionado ao disfarce enquanto a Fachada estiver ativa." },
+      { "rating": 5, "name": "O Sangue", "description": "Acesse um ponto de uma Disciplina básica que você não conhece enquanto estiver na Fachada." }
+    ]
+  },
+  "vtr-strange-shades:manteia": {
+    "name": "Manteia",
+    "description": "Amplie Visões Oníricas por meio de um oráculo mortal. Cinco minutos adicionais de adivinhação concedem +1 dado, cumulativamente até +3.",
+    "prerequisites": "Visões Oníricas; Iniciação nos Moirai •",
+    "levels": [
+      { "rating": 1, "name": "Sonhos Profundos", "description": "Faça uma pergunta adicional de esclarecimento cuja resposta seja sim, não ou talvez." },
+      { "rating": 2, "name": "Caminho Bifurcado", "description": "Uma vez por noite, saiba a resposta correta a uma escolha entre duas opções encontrada de forma natural." },
+      { "rating": 3, "name": "Caminho Triplo", "description": "Substitua a resposta normal por duas verdades e uma mentira." },
+      { "rating": 4, "name": "Lucidez", "description": "Gaste Vitae para somar Ocultismo à Potência de Sangue; em vez disso, uma falha impõe Assombrado por causa de um sonho falso." },
+      { "rating": 5, "name": "Profecia Autorrealizável", "description": "Pergunte sobre o próximo mês lunar e ganhe +5 uma vez por noite para favorecer ou dificultar o resultado provável." }
+    ]
+  },
+  "vtr-strange-shades:all-seeing": {
+    "name": "Onividente",
+    "description": "Uma vez por noite, gaste Vitae para intensificar a observação além da percepção habitual dos Mekhet.",
+    "prerequisites": "Mekhet; Raciocínio •••"
   }
 }
