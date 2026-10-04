@@ -1,0 +1,127 @@
+{
+  "cofd-de:envoy": {
+    "name": "Emissário",
+    "description": "Transita entre domínios sob a proteção do Correio da Forca, leva um presente descartável ou rumor e, uma vez por história, aplica metade da pontuação como Aliados ou Contatos temporários."
+  },
+  "cofd-de:contract-with-uncanny": {
+    "name": "Pacto com o Estranho",
+    "description": "Escolha uma facção ou força sobrenatural e invoque uma barganha ancestral por favores proporcionais à pontuação, retribuídos com um serviço equivalente."
+  },
+  "cofd-de2:contracts-night-day": {
+    "name": "Contratos da Noite e do Dia",
+    "description": "Um Notário pode presidir um Juramento do Invictus com um vassalo changeling, estabelecendo simpatia de sangue e tornando o suserano uma Brecha universal para Contratos.",
+    "prerequisites": "Ocultismo ••; Notário"
+  },
+  "cofd-de2:faith-militant": {
+    "name": "Fé Militante",
+    "description": "Utiliza Rebanho como Recursos."
+  },
+  "cofd-de2:ifrits-might": {
+    "name": "Poder do Ifrit",
+    "description": "Domina um rito Crúac por cada ponto de Potência de Sangue acima de cinco; os ritos dominados obtêm sucesso excepcional com três sucessos.",
+    "prerequisites": "Potência de Sangue ••••••; Status de Fir'awn •"
+  },
+  "cofd-de2:lingering-dreams": {
+    "name": "Sonhos Persistentes",
+    "description": "Os alvos de Visões Oníricas compartilham o sonho profético e ficam Enamorados pelo vampiro.",
+    "prerequisites": "Visões Oníricas"
+  },
+  "cofd-de2:shahrayads-tale": {
+    "name": "O Conto de Shahrayad",
+    "description": "Uma vez por capítulo, encanta até um número de ouvintes igual à pontuação no Mérito com Vitae e dependência de histórias; cada conto melhora as impressões dos ouvintes dependentes.",
+    "prerequisites": "Status de al-Amin •"
+  },
+  "vtr-gttn:adaptive-feeding": {
+    "name": "Alimentação Adaptativa",
+    "description": "Sangue animal sustenta o vampiro até Potência de Sangue 5; acima disso, cada ponto de Força de Vontade gasto permite obter duas Vitae de animais em vez de uma."
+  },
+  "vtr-gttn:beneath-notice": {
+    "name": "Abaixo da Percepção",
+    "description": "Quem considera o personagem de status inferior ignora sua presença; ele não precisa testar Furtividade perto dessas pessoas e recebe +3 para escutar conversas alheias."
+  },
+  "vtr-gttn:den-of-vice": {
+    "name": "Covil do Vício",
+    "description": "Um local que reflete o Vício do personagem restaura toda a Força de Vontade uma vez por capítulo, mas a recuperação comum por Vício nesse local traz o risco de Viciado."
+  },
+  "vtr-gttn:friends-in-low-places": {
+    "name": "Amigos em Lugares Baixos",
+    "description": "Status entre criminosos, marginalizados e outros às margens da sociedade."
+  },
+  "vtr-sotc:mobilize-outrage": {
+    "name": "Mobilizar a Indignação",
+    "description": "Um Estilo de combate que transforma Força de Vontade e fúria política em força preventiva, resistência à coerção e recusa em cair durante uma luta.",
+    "prerequisites": "Briga ••; Força de Vontade •••••",
+    "levels": [
+      {
+        "rating": 1,
+        "name": "Ataque Preventivo",
+        "description": "Em um ataque no primeiro turno, gaste Força de Vontade para somar os pontos de Força de Vontade em vez de +3; perca a ação e a Defesa do turno seguinte."
+      },
+      {
+        "rating": 2,
+        "name": "Inquebrável",
+        "description": "Em combate, gaste Força de Vontade para usar os pontos de Força de Vontade em vez do bônus normal ao resistir à coerção."
+      },
+      {
+        "rating": 3,
+        "name": "Morrendo de Pé",
+        "description": "Ignore penalidades por ferimentos e torpor por dano letal até o fim do combate; entre em torpor depois se o quadro de Vitalidade ainda estiver cheio."
+      }
+    ]
+  },
+  "vtr-better-feared:bloodcrafting": {
+    "name": "Artesanato de Sangue",
+    "description": "Cria ferramentas e armas cada vez mais potentes com Vitae solidificada, usando uma Especialização escolhida de Ofícios.",
+    "prerequisites": "Acteius; Ofícios •••; Especialização em Ofícios"
+  },
+  "vtr-better-feared:darksight": {
+    "name": "Visão no Escuro",
+    "description": "Concede Ação Avançada nos testes de Percepção feitos na escuridão total.",
+    "prerequisites": "Guardião das Trevas; Sentidos Aguçados"
+  },
+  "vtr-better-feared:labyrinth": {
+    "name": "Labirinto",
+    "description": "Cria um labirinto subterrâneo que confunde intrusos e concede ao seu guardião bônus flexíveis de movimento e combate.",
+    "prerequisites": "Guardião das Trevas; Local Seguro •"
+  },
+  "vtr-better-feared:a-nose-for-secrets": {
+    "name": "Faro para Segredos",
+    "description": "Revela quando um alvo visto pertence a um culto ou sociedade secreta, sem identificá-los.",
+    "prerequisites": "Guardião das Trevas"
+  },
+  "vtr-better-feared:library-advanced": {
+    "name": "Biblioteca Avançada",
+    "description": "Acrescenta temas sobrenaturais profundamente secretos a uma Biblioteca suficientemente grande e concede Informado quando ela é consultada.",
+    "prerequisites": "Biblioteca •••; Local Seguro igual à pontuação"
+  },
+  "vtr-better-feared:ritual-buster": {
+    "name": "Interromper Rituais",
+    "description": "Penaliza magia ritual nas proximidades e pode transformar um lançamento fracassado em falha dramática ao custo da Defesa.",
+    "prerequisites": "Guardião das Trevas; Ocultismo •••; Especialização em Rituais"
+  },
+  "vtr-better-feared:the-sealed-door": {
+    "name": "A Porta Selada",
+    "description": "Fortalece barreiras naturais dentro de um Labirinto com Vitae e as torna resistentes a invasões.",
+    "prerequisites": "Labirinto •"
+  },
+  "vtr-better-feared:bleak-annals": {
+    "name": "Anais Sombrios",
+    "description": "Fornece um ponto de Biblioteca e uma Especialização Mental por ponto para pesquisas ligadas à Necrópole."
+  },
+  "vtr-better-feared:corrupting-influence": {
+    "name": "Influência Corruptora",
+    "description": "Uma vez por capítulo, fornece Aliados, Contatos, Mentor ou Lacaio com pontuação igual à deste Mérito dentro da esfera da Necrópole."
+  },
+  "vtr-better-feared:dark-hub": {
+    "name": "Central Sombria",
+    "description": "Testes de Computação feitos localmente para obter serviços de internet obtêm sucesso excepcional com três sucessos."
+  },
+  "vtr-better-feared:home-turf": {
+    "name": "Território Próprio",
+    "description": "Distribui seus pontos entre Defesa, Iniciativa e Deslocamento durante combate na Necrópole."
+  },
+  "vtr-better-feared:honeycomb": {
+    "name": "Favo",
+    "description": "Fornece duas saídas para pedestres bem escondidas da Necrópole por ponto."
+  }
+}

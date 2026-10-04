@@ -2200,7 +2200,8 @@ function VampireExpandedMeritList({
         const configDefinition = VAMPIRE_MERIT_CONFIGURATIONS.find(
           (item) => item.id === definition?.id,
         );
-        const displayName = definition ? meritPresentation(definition, locale).name : merit.name;
+        const presented = definition && meritPresentation(definition, locale);
+        const displayName = presented?.name ?? merit.name;
         const detail = meritConfigurationTitle(merit.configuration);
         const configured = configuredDefinitionLines(
           configDefinition,
@@ -2266,9 +2267,14 @@ function VampireExpandedMeritList({
                   <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
                 </section>
               ))}
-              {!configured.length && definition?.description && (
-                <p>{meritPresentation(definition, locale).description}</p>
-              )}
+              {presented?.prerequisites && <p><strong>{t("ui.prerequisites")}:</strong> {presented.prerequisites}</p>}
+              {presented?.description && <p>{presented.description}</p>}
+              {presented?.levels?.filter((level) => level.rating <= merit.dots).map((level, levelIndex) => (
+                <section key={`${level.rating}-${levelIndex}`}>
+                  <strong>{"•".repeat(level.rating)} {level.name}</strong>
+                  <p>{level.description}</p>
+                </section>
+              ))}
               {editor}
             </div>
           </details>
