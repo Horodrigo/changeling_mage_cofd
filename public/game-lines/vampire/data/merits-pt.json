@@ -558,5 +558,118 @@
     "name": "Paladar Senhorial",
     "description": "Acrescenta metade da Potência de Sangue aos testes de Um Gosto de Sangue.",
     "prerequisites": "Paladar Distinto"
+  },
+  "vtr-nhsb:athenian": {
+    "name": "Athenian",
+    "description": "Benefícios cumulativos de filiação à comunidade de vampiros conhecida como Athenians.",
+    "prerequisites": "Vampiro",
+    "levels": [
+      { "rating": 1, "name": "Apoiador", "description": "Receba Aliados (Athenians) •." },
+      { "rating": 2, "name": "Bem Relacionado", "description": "Receba Conhecimento da Cacofonia •." },
+      { "rating": 3, "name": "Membro", "description": "Receba uma função e um ponto na Perícia dessa função." },
+      { "rating": 4, "name": "Residente", "description": "Compartilhe Local Seguro • e Refúgio •• entre os Athenians, mas limite todos os Status a um ponto." },
+      { "rating": 5, "name": "Fanático", "description": "Receba três pontos de Méritos para os Méritos concedidos pelos Athenians, ou um ponto de Perícia de outra função." }
+    ]
+  },
+  "vtr-nhsb:each-to-each": {
+    "name": "De Cada Um para Todos",
+    "description": "Gaste um turno transmitindo uma mensagem ouvida por todos os Nereid a até Potência de Sangue × 10 milhas, enquanto se move a no máximo metade do Deslocamento.",
+    "prerequisites": "Nereid"
+  },
+  "vtr-nhsb:swimmers-skin": {
+    "name": "Pele de Nadador",
+    "description": "Mova-se e lute livremente debaixo d'água; com três pontos, corra debaixo d'água com o triplo do Deslocamento por um número de turnos igual à Potência de Sangue.",
+    "prerequisites": "Nereid"
+  },
+  "vtr-onyx-path:three-heads-kerberos": {
+    "name": "As Três Cabeças de Kerberos",
+    "description": "Escolha o aspecto competitivo, monstruoso ou sedutor; cada aspecto é comprado como uma instância separada do Estilo.",
+    "prerequisites": "Kerberos",
+    "levels": [
+      { "rating": 1, "name": "Aprimoramento", "description": "Acrescente a pontuação do Estilo como dados adicionais ao Incitar a Fera com o aspecto escolhido." },
+      { "rating": 2, "name": "Internalização", "description": "Receba voluntariamente a Condição correspondente ao aspecto escolhido." },
+      { "rating": 3, "name": "Subjugação", "description": "Ao Incitar a Fera com o aspecto escolhido, substitua a Condição por uma versão de Subserviente limitada a esse aspecto." },
+      { "rating": 4, "name": "Golpear", "description": "Quando uma ação tocar uma vítima, gaste Força de Vontade para Incitar a Fera reflexivamente com o aspecto escolhido." },
+      { "rating": 5, "name": "Chamas do Inferno", "description": "Ao Incitar a Fera, afete um número de vítimas até a Potência de Sangue; com Golpear, a ação usada como vetor deve tocar cada vítima." }
+    ]
+  },
+  "vtr-sotc:alley-cat": {
+    "name": "Gato de Rua",
+    "description": "Nas ruas de sua cidade natal, reduz o limiar de sucesso excepcional para navegação, esconder-se, evasão e perseguição conforme a pontuação aumenta.",
+    "prerequisites": "Atletismo ••; Furtividade ••; Manha ••"
+  },
+  "vtr-sotc:army-of-one": {
+    "name": "Exército de Um Só",
+    "description": "Chama reforços carthianos com Presença + Política + Status Carthiano; cada ponto fornece um aliado que responde ao chamado, e as perdas reduzem o Mérito conforme a Santidade dos Méritos.",
+    "prerequisites": "Status no Movimento Carthiano igual ou superior a este Mérito"
+  },
+  "vtr-sotc:casual-user": {
+    "name": "Usuário Ocasional",
+    "description": "Alguém de fora do Movimento é tratado como se tivesse Status • para acesso social e consenso da Lei Carthiana, e pode recorrer a um Mérito Social carthiano de um ponto uma vez por história.",
+    "prerequisites": "Não ser membro do Movimento Carthiano"
+  },
+  "vtr-sotc:court-jester": {
+    "name": "Bobo da Corte",
+    "description": "Uma retaliação oficial às críticas políticas abertas do personagem custa à autoridade um ponto de Status na Cidade e concede um Ato ao personagem.",
+    "prerequisites": "Status na Cidade ••; Política ••"
+  },
+  "vtr-sotc:devotion-experimenter": {
+    "name": "Experimentador de Devoções",
+    "description": "Devoções experimentais custam um ponto de Experiência a menos, recebem 9-novamente na ativação e podem recompensar o personagem por ensiná-las a outro Membro.",
+    "prerequisites": "Status no Movimento Carthiano ••; Ciência ••"
+  },
+  "vtr-sotc:fucking-thief": {
+    "name": "Ladrão do Caralho",
+    "description": "Rouba acesso a uma vantagem de um ponto de outra Coalizão por um custo adicional de Experiência; uma falha é tratada como dramática.",
+    "prerequisites": "Subterfúgio •••"
+  },
+  "vtr-false-gods:money-talks": {
+    "name": "Dinheiro Fala Mais Alto",
+    "description": "Uma vez por capítulo, substitui Status de Membro por Recursos ao exibir riqueza ao alvo.",
+    "prerequisites": "Membro; Recursos •••"
+  },
+  "vtr-false-gods:old-money": {
+    "name": "Riqueza Herdada",
+    "description": "Melhora a influência social sobre Membros ricos e aprimora o Status pertinente.",
+    "prerequisites": "Dinheiro Fala Mais Alto"
+  },
+  "vtr-false-gods:pain-is-power": {
+    "name": "Dor É Poder",
+    "description": "Converte penalidades por ferimentos em bônus ao usar Hipnotizar.",
+    "prerequisites": "Dominação •"
+  },
+  "vtr-false-gods:proclamation": {
+    "name": "Proclamação",
+    "description": "Um estilo de oratória de cinco pontos que reforça Status, disputas, intimidação e abertura forçada de Portas.",
+    "prerequisites": "Presença •••; Expressão ••; Intimidação ••; Dominação •"
+  },
+  "vtr-false-gods:ruthless-bastard": {
+    "name": "Desgraçado Implacável",
+    "description": "Melhora testes de Desapego causados pela busca das Aspirações, ao custo de uma perda permanente de Empatia."
+  },
+  "vtr-false-gods:saving-face": {
+    "name": "Salvar as Aparências",
+    "description": "Resiste a tentativas sobrenaturais de forçar recuo ou submissão quando seus pares estão observando.",
+    "prerequisites": "Compostura •••"
+  },
+  "vtr-false-gods:silver-spoon": {
+    "name": "Berço de Ouro",
+    "description": "Considera um Mentor poderoso como Recursos adicionais enquanto as exigências do patrono forem atendidas.",
+    "prerequisites": "Mentor •••"
+  },
+  "vtr-false-gods:sommelier": {
+    "name": "Sommelier",
+    "description": "Identifica a presa ideal em uma multidão e pode conceder Inspirado a um vampiro que se alimente da presa recomendada.",
+    "prerequisites": "Ventrue; Farejador de Sangue"
+  },
+  "vtr-false-gods:survivor": {
+    "name": "Sobrevivente",
+    "description": "Acrescenta uma caixa de Vitalidade.",
+    "prerequisites": "Resiliência ••"
+  },
+  "vtr-false-gods:wine-cellar": {
+    "name": "Adega",
+    "description": "Fornece acesso controlado a um ancião em torpor para se alimentar e, com quatro pontos, a uma Disciplina de fora do Clã.",
+    "prerequisites": "Local Seguro •"
   }
 }
