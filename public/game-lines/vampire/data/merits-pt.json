@@ -1699,5 +1699,82 @@
     "name": "Veia Rubra do Destino",
     "description": "Lê o curso oculto do sangue e do destino por meio de Crúac.",
     "prerequisites": "Crúac ••"
+  },
+  "h-vtr-agony-ecstasy:reviled": {
+    "name": "Execrado",
+    "description": "Transforma o ódio de um grupo escolhido em notoriedade e influência, mas proíbe Status nesse grupo.",
+    "prerequisites": "Não pode ter Status dos Membros no grupo escolhido"
+  },
+  "h-vtr-agony-ecstasy:underground-matron": {
+    "name": "Matriarca Clandestina",
+    "description": "Constrói uma rede oculta que ajuda Acólitos a se deslocar e atuar entre domínios.",
+    "prerequisites": "Status no Círculo da Anciã •••; Manha"
+  },
+  "h-vtr-agony-ecstasy:witch-s-brew": {
+    "name": "Poção da Bruxa",
+    "description": "Armazena um rito de Crúac conjurado com sucesso em uma poção preparada para uso posterior.",
+    "prerequisites": "Recursos •; Ocultismo •••; Crúac •"
+  },
+  "h-vtr-agony-ecstasy:unmasked-devil": {
+    "name": "Diabo Desmascarado",
+    "description": "Um Estilo para encarnar abertamente a Fera e obter benefícios predatórios cada vez mais fortes.",
+    "prerequisites": "Intimidação •••; Humanidade 6 ou menor"
+  },
+  "h-vtr-agony-ecstasy:opening-the-void": {
+    "name": "Abrir o Vazio",
+    "description": "Abre Crúac ao vazio além do mundo, progredindo da conjuração tocada pelo vazio até um familiar de sombras."
+  },
+  "h-vtr-agony-ecstasy:omen-plague": {
+    "name": "Praga de Presságios",
+    "description": "Torna os presságios de Crúac contagiosos e cada vez mais perigosos para aqueles envolvidos por eles."
+  },
+  "h-vtr-agony-ecstasy:primal-creation": {
+    "name": "Criação Primeva",
+    "description": "Canaliza sacrifícios para criações férteis e monstruosas e transformações permanentes."
+  },
+  "h-vtr-agony-ecstasy:shadow-calling": {
+    "name": "Chamado das Sombras",
+    "description": "Invoca seres efêmeros e negocia com eles por meio de Crúac."
+  },
+  "h-vtr-agony-ecstasy:sating-the-crone": {
+    "name": "Saciar a Anciã",
+    "description": "Extrai mais poder de sacrifícios cada vez mais custosos e significativos."
+  },
+  "h-vtr-agony-ecstasy:storm-herald": {
+    "name": "Arauto da Tempestade",
+    "description": "Acrescenta efeitos de clima, movimento e tempestade aos ritos de Crúac."
+  },
+  "h-vtr-agony-ecstasy:void-familiar": {
+    "name": "Familiar do Vazio",
+    "description": "Desenvolve o familiar criado por meio de Abrir o Vazio.",
+    "prerequisites": "Abrir o Vazio"
+  },
+  "h-vtr-agony-ecstasy:unbridled-chaos": {
+    "name": "Caos Desenfreado",
+    "description": "Introduz instabilidade sobrenatural crescente nos ritos e em seus alvos."
+  },
+  "h-vtr-agony-ecstasy:mandragora-garden": {
+    "name": "Jardim de Mandragora",
+    "description": "Mantém um jardim de plantas carniçais alimentado com sangue, que produz Vitae a cada mês e pode dar fim a presas indefesas.",
+    "prerequisites": "Membro; Local Seguro •"
+  },
+  "h-vtr-agony-ecstasy:sorcerer-s-harvest": {
+    "name": "Colheita do Feiticeiro",
+    "description": "Usa um Jardim de Mandragora cultivado pelo próprio ritualista como extensão de seu corpo e prolonga os ritos conjurados dentro dele.",
+    "prerequisites": "Jardim de Mandragora •; Crúac •"
+  },
+  "h-vtr-agony-ecstasy:red-thumb": {
+    "name": "Dedo Vermelho",
+    "description": "Torna as mandragora mais resistentes e baratas de cultivar, permitindo até que plantas delicadas sobrevivam à transformação.",
+    "prerequisites": "Jardim de Mandragora •; Ocultismo ••"
+  },
+  "h-vtr-agony-ecstasy:witch-s-garden": {
+    "name": "Jardim da Bruxa",
+    "description": "Aprimora mandragora recém-criadas com uma Disciplina de Clan ou mobilidade durante uma cena; com quatro pontos, elas recebem ambos os benefícios.",
+    "prerequisites": "Dedo Vermelho; Potência de Sangue 2"
+  },
+  "h-vtr-agony-ecstasy:what-you-ve-done-for-her-lately": {
+    "name": "O Que Você Tem Feito por Ela",
+    "description": "Estende de uma cena para uma noite o benefício ritual de Acólito que foi testemunhado."
   }
 }
