@@ -14,8 +14,8 @@ const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").r
 const fields = ["summary", "cost", "requirement", "condition", "dicePool", "action", "duration", "contestedBy", "resistedBy", "sacrament", "effect", "procedure", "outcome"];
 
 test("Vampire official and Homebrew power presentations cover existing fields and preserve numeric limits", () => {
-  assert.deepEqual(selected.map(item => item.id).sort(), ["animalism", "celerity", "crochan", "resilience", "truths-of-erebus", "vigor"]);
-  assert.equal(selected.flatMap(item => item.levels).length, 15);
+  assert.deepEqual(selected.map(item => item.id).sort(), ["animalism", "auspex", "blood-tether", "celerity", "crochan", "resilience", "truths-of-erebus", "vigor"]);
+  assert.equal(selected.flatMap(item => item.levels).length, 25);
   for (const definition of selected) {
     for (const item of [definition, ...definition.levels]) {
       assert.ok(item.presentationPt, `${definition.id}.${item.rating ?? "summary"}`);
@@ -52,6 +52,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       const catalog = freezeCatalogData(await vampirePowersCatalogGroup.load({ getCatalog: async id => { requests.push(id); return powers; } }));
       assert.deepEqual(requests, ["vampire-powers"]);
       const { vampirePowerPresentation } = await vite.ssrLoadModule("/game-lines/vampire/power-presentation.ts");
+      const { vampireHomebrewSourceId } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
       const { vampireDisciplinePrerequisitesMet } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
       const { vampireExperienceLabel } = await vite.ssrLoadModule("/game-lines/vampire/experience-presentation.ts");
       const { VampireExperiencePanel } = await vite.ssrLoadModule("/game-lines/vampire/experience-panel.tsx");
@@ -88,12 +89,15 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
           for (const html of [sheet, experience]) assert.ok(html.includes(escape(presented[field])), `${locale}: ${definition.id}.${field}`);
         }
         if (!definition.bloodlineId) assert.ok(creation.includes(escape(locale === "pt-BR" ? definition.translatedName : definition.name)));
-        if (definition.id === "truths-of-erebus") assert.ok(homebrew.includes(escape(presented.summary)));
+        const homebrewDefinition = vampireHomebrewSourceId(definition)?.startsWith("h-");
+        if (homebrewDefinition) {
+          for (const field of fields.filter(key => presented[key])) assert.ok(homebrew.includes(escape(presented[field])), `${locale}: ${definition.id}.${field} Homebrew`);
+        }
         for (const level of definition.levels) {
           const text = vampirePowerPresentation(level, locale);
           for (const field of fields.filter(key => text[key])) {
             for (const html of [sheet, experience]) assert.ok(html.includes(escape(text[field])), `${locale}: ${definition.id}.${level.rating}.${field}`);
-            if (definition.id === "truths-of-erebus") assert.ok(homebrew.includes(escape(text[field])));
+            if (homebrewDefinition) assert.ok(homebrew.includes(escape(text[field])), `${locale}: ${definition.id}.${level.rating}.${field} Homebrew`);
           }
           for (const result of Object.values(text.rollResults ?? {})) {
             for (const html of [sheet, experience]) assert.ok(html.includes(escape(result)));
