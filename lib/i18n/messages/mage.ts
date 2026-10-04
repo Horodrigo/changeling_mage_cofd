@@ -1,6 +1,9 @@
 export const mageMessages = {
   "pt-BR": {
     "ui": {
+      "spellDescriptionUnavailable": "Descrição não disponível.",
+      "legacyTutelage": "Tutoria",
+      "legacySoulStudy": "Estudo de uma Alma ou Pedra da Alma",
       "meritSelectStatusDomain": "Selecione o domínio do Status.",
       "meritStatusOutsideOrder": "O Status fora da sua própria Ordem não pode exceder um ponto.",
       "meritAdamantHandSkill": "Escolha Atletismo, Briga ou Armas Brancas com três pontos ou mais.",
@@ -321,7 +324,7 @@ export const mageMessages = {
       "path": "Caminho",
       "persistent": "Persistente",
       "power": "Poder",
-      "practice": "Prática",
+      "practice": "Práticas",
       "praxes": "Práxis",
       "preservedFromExperiences": "por experiência preservados",
       "primaryFactor": "Fator Primário",
@@ -402,6 +405,9 @@ export const mageMessages = {
   },
   "en-US": {
     "ui": {
+      "spellDescriptionUnavailable": "Description unavailable.",
+      "legacyTutelage": "Tutelage",
+      "legacySoulStudy": "Soul or Soul Stone Study",
       "meritSelectStatusDomain": "Select a Status domain.",
       "meritStatusOutsideOrder": "Status outside your own Order cannot exceed one dot.",
       "meritAdamantHandSkill": "Choose Athletics, Brawl or Weaponry at three dots or higher.",

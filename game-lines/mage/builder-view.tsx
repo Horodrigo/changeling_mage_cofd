@@ -380,9 +380,9 @@ function SpellSelector({
           <p className="rule-detail"><strong>{t("ui.practice")}:</strong> {spell.practice}</p>
           <p className="rule-detail"><strong>{t("ui.primaryFactor")}:</strong> {spell.primaryFactor}</p>
           {spell.withstand && <p className="rule-detail"><strong>{t("ui.withstand")}:</strong> {spell.withstand}</p>}
-          {rote && spell.roteSkills.length > 0 && <p className="rule-detail"><strong>{t("ui.roteSkill")}:</strong> {spell.roteSkills.filter((skill)=>!allowedRoteSkills?.length||allowedRoteSkills.includes(skill)).join(", ")}</p>}
+          {rote && spell.roteSkills.length > 0 && <p className="rule-detail"><strong>{t("ui.roteSkill")}:</strong> {spell.roteSkills.filter((skill)=>!allowedRoteSkills?.length||allowedRoteSkills.includes(skill)).map(skill => systemTerm(skill, locale)).join(", ")}</p>}
           <p className="rule-detail">
-            <strong>{t("ui.summary")}:</strong> {spellSummary(spell)}
+            <strong>{t("ui.summary")}:</strong> {spellSummary(spell, t("ui.spellDescriptionUnavailable"))}
           </p>
           {spellReach(spell) && <p className="rule-detail"><strong>{t("ui.reach")}:</strong> {spellReach(spell)}</p>}
         </div>
@@ -415,7 +415,7 @@ function SpellSelector({
               <summary className="rule-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {t("ui.remove7d41cc")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>{t("ui.practice")}:</strong> {item.practice}</span><span className="spell-card-rule-line"><strong>{t("ui.primaryFactor")}:</strong> {item.primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{t("ui.withstand")}:</strong> {item.withstand}</span>}{rote&&roteSkillOptions.length>0&&<span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={t("ui.roteSkill")} value={roteSkillOptions.includes(item.roteSkill??"")?item.roteSkill??"":""} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={roteSkillOptions}/></span>}</summary>
               <div className="rule-power-details">
                 <dl>
-                  <div><dt>{t("ui.summary")}</dt><dd>{spellSummary(item)}</dd></div>
+                  <div><dt>{t("ui.summary")}</dt><dd>{spellSummary(item, t("ui.spellDescriptionUnavailable"))}</dd></div>
                   {spellReach(item) && <div><dt>{t("ui.reach")}</dt><dd>{spellReach(item)}</dd></div>}
                 </dl>
               </div>
@@ -465,9 +465,9 @@ function SpellSelector({
 
 
 
-function spellSummary(spell: SpellDefinition) {
+function spellSummary(spell: SpellDefinition, fallback: string) {
   if (spell.summary?.trim()) return spell.summary.trim();
-  const description = spell.description?.trim() || "Descrição não disponível.";
+  const description = spell.description?.trim() || fallback;
   return description.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || description;
 }
 

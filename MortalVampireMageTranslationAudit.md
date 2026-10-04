@@ -582,6 +582,13 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - O teste SSR percorre EN → PT → EN com conteúdo autoral em inglês, inclusive poderes aninhados, e verifica captions, metadados, resultados, fontes e ausência de mutação dos registros.
 - Verificação: os 28 testes existentes de Homebrew, transferência e i18n passaram; o novo teste EN/PT passou após corrigir sua fixture para incluir o pai de uma invocação aninhada. Lint, build, TypeScript e diff check aprovados. O sandbox bloqueou realpath de dependências React; os testes foram executados com acesso escalado autorizado. Sem smoke de navegador. A etapa 2 continua em execução, incluindo os fallbacks de descrição de Spells e outros textos dinâmicos.
 
+### Etapa 2 — Fallbacks, controles Legacy e abas Mobile Mage (2026-10-03)
+
+- O fallback de descrição de Spells agora recebe a mensagem do idioma atual tanto na criação quanto na ficha; deixa de exibir português em EN quando o resumo/descrição estiver vazio. As Perícias de Rota no catálogo de criação também usam apresentação localizada.
+- Tutoria, estudo de Alma/Pedra da Alma e pagamento da iniciação de Legado usam mensagens sem alterar os valores canônicos de método ou XP. Daimonomikon permanece como termo próprio. As abas Mobile Stats/Legacy usam as chaves existentes.
+- O rótulo Practice foi uniformizado para **Práticas**, conforme A06. Os valores editoriais de Practice, fatores, Resistência e cláusulas continuam pertencendo à tradução de Spells na etapa 4; o parser recebe o mesmo texto inglês. Seu separador preexistente antes de Add Fate/+2 Reach foi preservado, sem correção incidental.
+- Verificação: 53 testes existentes de i18n, Spells e Legacies aprovados e novo teste SSR EN → PT → EN aprovado. Lint, build, TypeScript e diff check aprovados. Sem smoke de navegador. A etapa 2 prossegue com a remoção das tabelas bilíngues de Utility Attainments dos componentes. Rótulos de Conditions nos resultados de Húbris continuam vinculados à pendência do catálogo Mage (G05), conforme a decisão histórica preservada no anexo.
+
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
 Documento anterior consolidado abaixo; suas tarefas de interface foram concluídas. Pendências de catálogo e propostas com status próprio continuam identificadas no texto histórico.

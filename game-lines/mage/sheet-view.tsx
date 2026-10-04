@@ -552,7 +552,7 @@ export function MageCharacterPaper({
             onValueChange={setSheetTab}
             tabs={[
               { value: "resumo", label: t("ui.summary") },
-              { value: "stats", label: "Stats" },
+              { value: "stats", label: t("ui.stats") },
               { value: "detalhes", label: t("ui.details") },
               { value: "poderes", label: t("ui.powers") },
               ...[],
@@ -560,7 +560,7 @@ export function MageCharacterPaper({
                 ? [
                     {
                       value: "legacy",
-                      label: "Legacy",
+                      label: t("ui.legacy"),
                       hidden: !legacyState?.joined,
                     },
                   ]
@@ -2206,7 +2206,7 @@ function SpellColumn({
           <div className="rule-power-details">
             <p>
               <strong>{t("ui.summary")}:</strong>{" "}
-              {spellItemSummary(item, catalog)}
+              {spellItemSummary(item, catalog, t("ui.spellDescriptionUnavailable"))}
             </p>
             {spellItemReach(item, catalog) && (
               <p>
@@ -2354,6 +2354,7 @@ function MageOrderSummary({ data }: { data: Record<string, unknown> }) {
 function spellItemSummary(
   item: Record<string, unknown>,
   catalog: readonly SpellDefinition[],
+  fallback: string,
 ) {
   const current = catalog.find(
     (spell) =>
@@ -2364,7 +2365,7 @@ function spellItemSummary(
   if (reviewedSummary) return reviewedSummary;
   const description =
     String(current?.description ?? item.description ?? "").trim() ||
-    "Descrição não disponível.";
+    fallback;
   return description.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || description;
 }
 function spellItemReach(
