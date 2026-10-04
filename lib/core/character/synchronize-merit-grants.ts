@@ -11,6 +11,7 @@ export function synchronizeCommonMeritGrants(
   includeGrantedBy: (source: string) => boolean = () => false,
   additionalCultIdentity: (merit: MeritSelection) => string | undefined = () => undefined,
 ) {
+  const previousGrants = sheet.merits.filter(item => item.grantedBy?.startsWith(GENERATED_PREFIX));
   sheet.merits = sheet.merits.flatMap((item) => {
     if (!item.grantedBy?.startsWith(GENERATED_PREFIX)) return [item];
     const experienceDots = experienceMeritDots(item);
@@ -29,7 +30,15 @@ export function synchronizeCommonMeritGrants(
   const grantMerit = (owner: string, row: unknown, index: number) => {
     const choice = decodeMeritGrantChoice(row);
     if (!choice) return;
-    sheet.merits.push({ ...choice, instanceId: grantInstanceId(owner, index), configuration: {}, grantedBy: `${GENERATED_PREFIX}${owner}` });
+    const instanceId = grantInstanceId(owner, index), grantedBy = `${GENERATED_PREFIX}${owner}`;
+    const candidates = previousGrants.filter(item => item.instanceId === instanceId);
+    const previous = candidates.length === 1 ? candidates[0] : undefined;
+    // Only the same producer and exact grant identity retain authored choices.
+    // Existing schema-2 name|dots rows can retain choices only when both rows lack IDs.
+    const sameDefinition = choice.definitionId ? previous?.definitionId === choice.definitionId :
+      previous && !previous.definitionId && previous.name === choice.name && previous.sourceId === choice.sourceId;
+    const configuration = previous?.grantedBy === grantedBy && sameDefinition ? structuredClone(previous.configuration ?? {}) : {};
+    sheet.merits.push({ ...choice, instanceId, configuration, grantedBy });
   };
   for (const merit of sheet.merits.filter((item) => !item.grantedBy || includeGrantedBy(item.grantedBy))) {
     const additionalCultId = additionalCultIdentity(merit);

@@ -187,6 +187,57 @@ test("Cult summaries localize the exact chosen definition without changing rows 
   assert.doesNotMatch(markup, /definitionId|core-2ed:resources/);
 });
 
+test("recomposing Cult grants retains authored configuration only for the same definition, instance and producer", () => {
+  const definition = catalog.find(item => item.id === "core-2ed:interdisciplinary-specialty");
+  const sameName = { ...definition, id: "homebrew:test:specialty", sourceId: "homebrew:test" };
+  const owner = { definitionId: "core-2ed:mystery-cult-initiation", name: "Authored cult", instanceId: "cult", dots: 1, configuration: { level_1_type: "merit", level_1_merits: [encodeMeritGrantChoice(definition, 1)] } };
+  const sheet = blankPrintCharacter("CofD");
+  sheet.merits = [structuredClone(owner)];
+  sheet.current_state.experience_available = 7;
+  sheet.current_state.experience_history = [{ id: "receipt", kind: "spend", experience: -2, description: "Authored historical label", createdAt: "2026-10-03T00:00:00Z" }];
+  synchronizeCommonMeritGrants(sheet);
+  const grant = sheet.merits[1];
+  grant.name = "Changed stored display";
+  grant.configuration = { specialty_skill: "Weaponry", specialty_name: "Authored specialty", notes: ["Player notes"] };
+  const identity = { definitionId: grant.definitionId, instanceId: grant.instanceId, grantedBy: grant.grantedBy };
+  const stateBefore = structuredClone(sheet.current_state);
+  const choicesBefore = structuredClone(grant.configuration);
+  for (const locale of ["en-US", "pt-BR", "en-US"]) {
+    synchronizeCommonMeritGrants(sheet);
+    const next = sheet.merits[1];
+    assert.deepEqual({ definitionId: next.definitionId, instanceId: next.instanceId, grantedBy: next.grantedBy }, identity);
+    assert.deepEqual(next.configuration, choicesBefore, locale);
+    assert.deepEqual(sheet.current_state, stateBefore);
+    assert.deepEqual(sheet.merits[0], owner);
+    assert.equal(validateCurrentCharacter(normalizeStoredSheet(sheet)), "valid");
+  }
+  const stable = JSON.stringify(sheet);
+  synchronizeCommonMeritGrants(sheet);
+  assert.equal(JSON.stringify(sheet), stable);
+  for (const change of [{ definitionId: "unavailable:original" }, { definitionId: sameName.id, name: definition.name }, { grantedBy: "Merit:foreign-producer" }, { instanceId: "foreign-instance" }]) {
+    const candidate = structuredClone(sheet);
+    Object.assign(candidate.merits[1], change);
+    synchronizeCommonMeritGrants(candidate);
+    assert.deepEqual(candidate.merits[1].configuration, {}, JSON.stringify(change));
+    assert.deepEqual(candidate.current_state, stateBefore);
+  }
+  const duplicate = structuredClone(sheet);
+  duplicate.merits.push(structuredClone(duplicate.merits[1]));
+  synchronizeCommonMeritGrants(duplicate);
+  assert.deepEqual(duplicate.merits[1].configuration, {});
+  const paid = structuredClone(sheet);
+  Object.assign(paid.merits[1], { creationDots: 1, experienceDots: 1, dots: 2 });
+  synchronizeCommonMeritGrants(paid);
+  assert.deepEqual(paid.merits[1].configuration, choicesBefore);
+  assert.equal(paid.merits[1].instanceId, identity.instanceId);
+  assert.equal(paid.merits[1].experienceDots, 1);
+  assert.equal(paid.merits[1].dots, 1);
+  assert.equal(paid.merits[1].grantedBy, undefined);
+  assert.notEqual(paid.merits[2].instanceId, identity.instanceId);
+  assert.deepEqual(paid.merits[2].configuration, {});
+  assert.deepEqual(paid.current_state, stateBefore);
+});
+
 test("malformed grants fail without being interpreted as a canonical name or manufacturing ratings", () => {
   for (const row of [null, [], {}, "Resources", "Resources|", "Resources|0", "Resources|-1", "Resources|1.5", "Resources|Infinity", "Resources|1|2", "{broken", '{"name":"Resources","dots":1}', '{"definitionId":"id","name":"Resources","dots":"1"}', '{"definitionId":"id","name":"Resources","dots":1,"sourceId":[]}', '{"definitionId":"","name":"Resources","dots":1}']) assert.equal(decodeMeritGrantChoice(row), undefined, String(row));
 });
