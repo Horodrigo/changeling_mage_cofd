@@ -437,7 +437,16 @@
     "page": 94,
     "parentClanIds": [
       "mekhet"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Anjos da peste marginalizados que cultivam doenças e as usam como armas a partir das sombras.",
+      "baneName": "A Maldição Impura",
+      "baneSummary": "Além da Maldição dos Mekhet, o Morbus só pode se alimentar de mortais vivos quando eles estão doentes; a Vitae dos Membros continua a nutri-lo.",
+      "nicknames": [
+        "Os Aflitos"
+      ],
+      "parentClan": "Mekhet"
+    }
   },
   {
     "id": "bron",
@@ -466,7 +475,16 @@
     "page": 117,
     "parentClanIds": [
       "ventrue"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Cavaleiros errantes e espadachins que se vinculam ao sangue, às missões e aos juramentos.",
+      "baneName": "A Maldição Errante",
+      "baneSummary": "Além da Maldição dos Ventrue, uma mudança na Potência de Sangue permanente desvincula todos os Touchstones; a cada noite, um Touchstone desvinculado pode ser substituído após um teste fracassado de Humanidade.",
+      "nicknames": [
+        "Cavaleiros sem Terra"
+      ],
+      "parentClan": "Ventrue"
+    }
   },
   {
     "id": "khaibit",
@@ -494,7 +512,16 @@
     "page": 0,
     "parentClanIds": [
       "mekhet"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Soldados antigos que combatem a escuridão ao abraçá-la e dominá-la.",
+      "baneName": "A Maldição da Cegueira",
+      "baneSummary": "Uma luz forte que prejudicaria a visão normal causa o Tilt Cego e suprime Udjat pela cena.",
+      "nicknames": [
+        "Áspides"
+      ],
+      "parentClan": "Mekhet"
+    }
   },
   {
     "id": "kerberos",
@@ -523,7 +550,17 @@
     "page": 0,
     "parentClanIds": [
       "gangrel"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Predadores sociais que se reinventam e se destacam ao projetar a Fera por meio de seus três aspectos.",
+      "baneName": "A Maldição da Oposição",
+      "baneSummary": "Contra qualquer pessoa que não esteja sob uma Condição de Aura Predatória, perde 10-novamente em todas as ações não reflexas; os testes de Aura Predatória não são afetados.",
+      "nicknames": [
+        "Filhos de Typhon",
+        "Cães de Guarda"
+      ],
+      "parentClan": "Gangrel"
+    }
   },
   {
     "id": "children-of-judas",
@@ -646,7 +683,22 @@
     "giftSummary": "Hair and nails grow at will, physical changes persist through daysleep without Willpower, and a permanent blush of life can be intensified with Vitae for mortal healing, masked aura, and exceptional Empathy.",
     "parentClanIds": [
       "daeva"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Daeva quase vivos cujos corpos envelhecem à medida que a Humanidade diminui.",
+      "giftName": "Quase Humano",
+      "giftSummary": "Cabelos e unhas crescem à vontade, mudanças físicas persistem durante o sono diurno sem Força de Vontade, e um Rubor da Vida permanente pode ser intensificado com Vitae para obter cura mortal, ocultar a aura e ter Empatia excepcional.",
+      "baneName": "A Maldição da Decomposição",
+      "baneSummary": "Com Humanidade 6 ou menos, o vampiro envelhece a um quarto da velocidade humana. Uma vez por capítulo, após um Ponto de Ruptura, uma falha em um teste de Humanidade faz com que envelheça um ano durante o sono diurno; passar o mesmo tempo em torpor reverte isso apenas até a idade que tinha no Abraço.",
+      "nicknames": [
+        "Cavalheiros",
+        "Os Definhados",
+        "Moretti",
+        "Rózsa",
+        "Syska"
+      ],
+      "parentClan": "Daeva"
+    }
   },
   {
     "id": "gulikan",
@@ -678,7 +730,18 @@
     "exclusiveDiscipline": "Ortam",
     "parentClanIds": [
       "daeva"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Perfumistas com olfato aguçado que destilam aromas roubados em receitas ocultas.",
+      "baneName": "A Maldição da Hiperosmia",
+      "baneSummary": "Após um contato íntimo com uma pessoa viva que seja mais do que passageiro, faça um teste de Humanidade. Uma falha causa uma Obsessão focada no aroma dessa pessoa até que o vampiro mergulhe nele; uma nova instância substitui a anterior.",
+      "nicknames": [
+        "Perfumistas",
+        "Sabujos",
+        "Mascates"
+      ],
+      "parentClan": "Daeva"
+    }
   },
   {
     "id": "moda-mortale",
@@ -710,7 +773,19 @@
     "giftSummary": "Bloodline Status grants Friends Abroad alongside Cacophony Savvy, a qualifying Fighting Style dot, and Taste or a one-Experience refund if Taste is already owned.",
     "parentClanIds": [
       "daeva"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Assassinos perfeccionistas que transformam moda e assassinato em mensagens precisas.",
+      "giftName": "Escola de Etiqueta",
+      "giftSummary": "Status de Bloodline concede Amigos no Exterior junto de Conhecimento da Cacofonia, um ponto em um Estilo de Combate elegível e Gosto Refinado, ou o reembolso de um ponto de Experiência se Gosto Refinado já tiver sido adquirido.",
+      "baneName": "A Maldição Impecável",
+      "baneSummary": "Quando um contratempo ou uma falha atrapalha o plano atual do vampiro, faça um teste de Humanidade. Uma falha causa Quebrado até que a Condição seja resolvida ou a tarefa esteja concluída; a Maldição não pode ser ativada novamente enquanto Quebrado persistir.",
+      "nicknames": [
+        "Fashionistas",
+        "Viúvas"
+      ],
+      "parentClan": "Daeva"
+    }
   },
   {
     "id": "nelapsi",
@@ -742,7 +817,19 @@
     "giftSummary": "Nelapsi mentorship is expressed through Quickened Hunger and Shadow Heart, Fame (Advanced), and the Cursed Fiefdom Devotion rather than an automatic power.",
     "parentClanIds": [
       "daeva"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Predadores assombrados por lendas cuja alimentação insaciável sustenta suas reputações aterrorizantes.",
+      "giftName": "As Lições",
+      "giftSummary": "A orientação dos Nelapsi se expressa por meio de Fome Intensificada e Coração Sombrio, Fama (Avançada) e a Devoção Feudo Amaldiçoado, em vez de um poder automático.",
+      "baneName": "A Maldição Voraz",
+      "baneSummary": "Após se alimentar, faça um teste de Humanidade. Uma falha faz com que o vampiro seja considerado faminto para fins de frenesi até beber uma quantidade de Vitae igual à Potência de Sangue; Força de Vontade suprime isso por uma cena, e o sangue em excesso é vomitado.",
+      "nicknames": [
+        "Glutões",
+        "Gafanhotos"
+      ],
+      "parentClan": "Daeva"
+    }
   },
   {
     "id": "star-crossed",
@@ -774,7 +861,19 @@
     "giftSummary": "Anoint a mortal with Vitae and Willpower to lock the subject into a renewable 24-hour biological loop that reverses aging, disease, injury, and death while imposing persistent confusion.",
     "parentClanIds": [
       "daeva"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Custódios que preservam mortais chamados Purezas em momentos que se repetem e refinam seu sangue atemporal em Electrum.",
+      "giftName": "Purificação",
+      "giftSummary": "Unja um mortal com Vitae e Força de Vontade para prendê-lo em um ciclo biológico renovável de 24 horas que reverte envelhecimento, doença, ferimentos e morte, ao mesmo tempo que impõe confusão persistente.",
+      "baneName": "A Maldição da Autorreflexão",
+      "baneSummary": "Depois que um mortal vê qualquer representação visual do vampiro, as ações Sociais dele com esse mortal são limitadas pela Humanidade pelo resto da noite. Touchstones estão isentos, mas Purezas não.",
+      "nicknames": [
+        "Custódios",
+        "Sofistas"
+      ],
+      "parentClan": "Daeva"
+    }
   },
   {
     "id": "xiao",
@@ -806,7 +905,19 @@
     "homebrew": true,
     "parentClanIds": [
       "daeva"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Predadores emocionalmente insensibilizados divididos entre a Seita exploradora e Apóstatas que usam seu desapego como arma.",
+      "baneName": "A Maldição do Desapego",
+      "baneSummary": "Testes mundanos de Empatia e Socialização envolvendo humanos tratam a Humanidade como dois pontos menor, e falhas tornam-se falhas dramáticas. Isso não se aplica a Touchstones.",
+      "nicknames": [
+        "Ascendidos",
+        "Apóstatas",
+        "Parasitas",
+        "Xiao de California"
+      ],
+      "parentClan": "Daeva"
+    }
   },
   {
     "id": "baetyl",
@@ -838,7 +949,19 @@
     "giftSummary": "The vampire can swallow inanimate matter and once per scene spend Vitae to add the consumed material's Size, maximum +5, to Auspex rolls for the scene.",
     "parentClanIds": [
       "gangrel"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Gangrel que comem pedras e incorporam o material engolido à sua carne mutável.",
+      "giftName": "Núcleo de Bezoar",
+      "giftSummary": "O vampiro pode engolir matéria inanimada e, uma vez por cena, gastar Vitae para acrescentar o Tamanho do material consumido, até o máximo de +5, aos testes de Auspex pela cena.",
+      "baneName": "A Maldição Quimérica",
+      "baneSummary": "Além da Maldição Feral, o vampiro também sofre a Maldição do Clã Nosferatu à medida que o material inorgânico deforma progressivamente seu corpo.",
+      "nicknames": [
+        "Cupins",
+        "Gárgulas"
+      ],
+      "parentClan": "Gangrel"
+    }
   },
   {
     "id": "cerrid",
@@ -870,7 +993,19 @@
     "giftSummary": "Gain one Expression dot on joining, or another Social Skill if Expression is already maximum; spending Willpower on mundane Expression grants +5 instead of +3.",
     "parentClanIds": [
       "gangrel"
-    ]
+    ],
+    "presentationPt": {
+      "summary": "Artistas nômades cujas canções acalmam e direcionam a Fera.",
+      "giftName": "A Garganta Dourada",
+      "giftSummary": "Recebe um ponto de Expressão ao ingressar, ou outra Perícia Social se Expressão já estiver no máximo; gastar Força de Vontade em Expressão mundana concede +5 em vez de +3.",
+      "baneName": "A Maldição da Cadência",
+      "baneSummary": "Ao menos uma vez a cada 11 menos Potência de Sangue noites, recupere Força de Vontade pela Máscara por meio de uma apresentação artística. Caso contrário, uma mutação visível reduz a Humanidade efetiva em dois para a Maldição Feral até que toda a Força de Vontade seja recuperada por meio de apresentações ou que haja um período de torpor.",
+      "nicknames": [
+        "Sedutores",
+        "Trovadores"
+      ],
+      "parentClan": "Gangrel"
+    }
   },
   {
     "id": "childer-of-the-morrigan",

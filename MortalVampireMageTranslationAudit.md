@@ -31,7 +31,7 @@ Impressão/PDF/blank fica **fora desta meta**, inclusive a inconsistência de Nu
 | Merits Core | 202 | Todos têm entrada PT; não precisam de uma nova tradução integral |
 | Conditions Core | 34 | Implementado: apresentação PT completa e integração em Mortals/Core, Vampire e Mage |
 | Tilts compartilhados | 35 | Implementado: apresentação PT completa, títulos descritivos e integração no combate |
-| Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors implementados; Bloodlines 12/56 implementadas |
+| Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors implementados; Bloodlines 24/56 com textos PT; caption Star-Crossed em consulta |
 | Vampire — Merits | 403 | 353 descrições em inglês; 50 descrições PT existentes precisam de revisão dos demais campos |
 | Vampire — poderes | 546 registros, mais 140 entradas de níveis internas | Textos mecânicos em inglês; nomes parcialmente traduzidos |
 | Vampire — Conditions | 66 | Sem apresentação PT dedicada |
@@ -95,7 +95,7 @@ Os **54 textos de recuperação de Willpower** — dois por definição — poss
 
 Arquivo: `public/game-lines/vampire/data/bloodlines.json`.
 
-**56 registros: 14 não marcados como Homebrew e 42 marcados como Homebrew.** O primeiro lote cobre **12 registros** (10 oficiais e dois Homebrew), com apresentação PT de resumo, apelidos, afiliação, Clan de origem e Gift/Maldição quando presentes; **44 continuam pendentes**. Títulos descritivos são localizados individualmente, conservando nomes próprios e nomes canônicos.
+**56 registros: 14 não marcados como Homebrew e 42 marcados como Homebrew.** Os dois primeiros lotes cobrem **24 registros** (14 oficiais e dez Homebrew), com apresentação PT de resumo, apelidos, afiliação, Clan de origem e Gift/Maldição quando presentes; **32 continuam pendentes**; a caption Star-Crossed está em consulta. Títulos descritivos são localizados individualmente, conservando nomes próprios e nomes canônicos.
 
 Página, prévia de ingresso, Maldição na ficha Desktop/Mobile e Homebrew recebem a visão própria de Vampire. Ingresso, concessões, remoção e seus estornos continuam usando a definição canônica; a apresentação não muda Clan, Disciplinas, pré-requisitos, escolhas ou identidades.
 
@@ -273,6 +273,7 @@ As decisões mecânicas anteriores de Contracts — Waters of Lethe, Enveloping 
 | Data | Dúvida | Decisão/estado |
 | --- | --- | --- |
 | 2026-10-04 | Mystery Cult Initiation tinha “Iniciação em Culto de Mistério” no catálogo Core e “Iniciação em Culto dos Mistérios” na interface. | **Resolvida pelo usuário:** uniformizar **Iniciação em Culto dos Mistérios**. Aplicada ao catálogo Core e às referências de Coalizão; dicionários já usavam essa forma. |
+| 2026-10-04 | Star-Crossed é um título descritivo cujo sentido idiomático é destino adverso. | **Em consulta:** propostas Desventurados / Marcados por um Destino Adverso; a caption canônica foi mantida enquanto se aguarda a preferência. |
 
 Preservar o contexto e registrar aqui novas dúvidas quando surgirem.
 
@@ -654,6 +655,16 @@ Preservar o contexto e registrar aqui novas dúvidas quando surgirem.
 - Manifesto: catalogVersion **45 → 46**, `vampire-bloodlines` **6 → 7**, com IDs/URLs inalterados. O teste de versões esperadas do inventário foi atualizado junto do recurso; nenhuma contagem ou conteúdo de outra fonte mudou.
 - Verificação dirigida EN → PT → EN, Homebrew, identidade/XP e ingresso/remoção de Bloodlines: **46/46 testes** aprovados. Lint, build e TypeScript aprovados. A comparação com o commit anterior confirmou igualdade integral dos 56 registros canônicos ao retirar metadata PT/restaurar captions; a checagem final de catálogos/arquitetura **34/34** e diff check foram aprovados. Sem smoke de navegador e sem mudanças em componentes de impressão.
 - **44 Bloodlines pendentes**, além de Merits, poderes, Conditions e presets Vampire; a etapa 4 Mage permanece pendente. A meta continua ativa.
+
+### Etapa 3 — Bloodlines, segundo lote (2026-10-04)
+
+- **24/56 textos de referência PT**, cobrindo todos os 14 registros oficiais e dez Homebrew. Este lote adiciona Morbus, Bron, Khaibit, Kerberos, Erzsébet, Gulikan, Moda Mortale, Nelapsi, Star-Crossed, Xiao, Baetyl e Cerrid. Nenhuma identidade, regra, fonte, alocação ou histórico foi alterado; a comparação com o commit anterior preservou os 56 registros e as 12 apresentações do lote anterior.
+- Apelidos próprios Moretti, Rózsa, Syska e Typhon permanecem intactos; Udjat e Electrum também foram preservados. Hedge Knights foi localizado como **Cavaleiros sem Terra**, no contexto medieval de Bron, sem importar a Sebe de Changeling. Purities aparece como **Purezas**, designação dos mortais de Star-Crossed; sua caption idiomática continua em consulta.
+- Referências usam Cego/Quebrado/Obsessão e Gosto Refinado dos catálogos Core, além de Conhecimento da Cacofonia já apresentado em Vampire. Friends Abroad → **Amigos no Exterior**, Quickened Hunger → **Fome Intensificada**, Shadow Heart → **Coração Sombrio**, Cursed Fiefdom → **Feudo Amaldiçoado** e Fame (Advanced) → **Fama (Avançada)** orientam os futuros lotes de Merits/poderes. Finishing School foi localizado como **Escola de Etiqueta**; títulos e números canônicos continuam intactos.
+- Xiao usa **A Maldição do Desapego**, distinguindo a caption da Maldição do Distanciamento de Ankou, sem alterar qualquer efeito. A apresentação mantém limiares, gatilhos, durações, exceções, 10-novamente e demais modificadores; o teste verifica as sequências numéricas e todos os campos textuais aplicáveis.
+- Manifesto: catalogVersion **46 → 47**, `vampire-bloodlines` **7 → 8**, IDs/URLs preservados. O inventário esperado acompanha somente essa versão; o teste Homebrew passa a verificar Gifts apenas quando presentes, conservando a cobertura dos resumos e Maldições de todas as entradas traduzidas.
+- EN → PT → EN, Homebrew e integração de ingresso/remoção/identidade Vampire **46/46** aprovados; lint e TypeScript aprovados. Build e checagem final de catálogos/arquitetura **34/34**, além de diff check, aprovados. Sem smoke de navegador ou mudanças em componentes de impressão.
+- **32 Bloodlines restantes** e a preferência idiomática de Star-Crossed ainda pendentes; continuam os demais catálogos Vampire e a etapa 4 Mage. A meta permanece ativa.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 
