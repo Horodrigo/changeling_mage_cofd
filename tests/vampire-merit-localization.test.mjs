@@ -14,7 +14,7 @@ const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").r
 
 test("Vampire Portuguese Merits cover applicable fields, level identities and numeric limits in both official and Homebrew records", () => {
   assert.equal(canonical.length, 403);
-  assert.equal(Object.keys(portuguese).length, 385);
+  assert.equal(Object.keys(portuguese).length, 403);
   for (const [id, presented] of Object.entries(portuguese)) {
     const definition = canonical.find(item => item.id === id);
     assert.ok(definition, id);
@@ -31,8 +31,59 @@ test("Vampire Portuguese Merits cover applicable fields, level identities and nu
     }
   }
   const localized = canonical.filter(item => portuguese[item.id]);
-  assert.equal(localized.filter(item => item.homebrew).length, 231);
+  assert.equal(localized.filter(item => item.homebrew).length, 249);
   assert.equal(localized.filter(item => !item.homebrew).length, 154);
+});
+
+test("active Vampire errata preserve canonical and schema-2 identities plus inherited locale fields", async () => {
+  const before = JSON.stringify({ canonical, portuguese });
+  const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] } });
+  try {
+    const { vampireMeritsCatalogGroup } = await vite.ssrLoadModule("/game-lines/vampire/catalogs/merits.ts");
+    const { activeMeritCatalog } = await vite.ssrLoadModule("/lib/merit-homebrews.ts");
+    const { resolveMeritDefinition } = await vite.ssrLoadModule("/lib/merit-identity.ts");
+    const { meritPresentation } = await vite.ssrLoadModule("/lib/merit-presentation.ts");
+    const { vampireExperienceLabel } = await vite.ssrLoadModule("/game-lines/vampire/experience-presentation.ts");
+    const catalog = await vampireMeritsCatalogGroup.load({ getCatalog: async id => id === "merits-vampire" ? canonical : portuguese });
+    const errata = catalog.filter(item => item.errataFor);
+    assert.equal(errata.length, 9);
+    const owned = errata.map(item => {
+      const original = catalog.find(base => base.id === item.errataFor);
+      return { definitionId: original.id, instanceId: `paid-${original.id}`, name: original.name, sourceId: original.sourceId, dots: original.ratings[0], creationDots: 0, experienceDots: original.ratings[0], configuration: { subject: "Authored choice" } };
+    });
+    const character = { game_line: "VtR", merits: owned, current_state: { experience_available: 4, experience_spent: 9 } };
+    const characterBefore = JSON.stringify(character);
+    const active = activeMeritCatalog(catalog, [], { disabledIds: [], enabledIds: catalog.filter(item => item.defaultDisabled).map(item => item.id) }, owned);
+    for (const item of catalog.filter(item => item.catalogOnly)) assert.equal(active.some(definition => definition.id === item.id), false);
+    for (const erratum of errata) {
+      const original = catalog.find(item => item.id === erratum.errataFor);
+      const revised = active.find(item => item.id === original.id);
+      assert.equal(revised.name, original.name);
+      assert.equal(revised.sourceId, erratum.sourceId);
+      assert.equal(revised.prerequisites, erratum.prerequisites ?? original.prerequisites);
+      assert.deepEqual(revised.levels, erratum.levels ?? original.levels);
+      const selection = owned.find(item => item.definitionId === original.id);
+      const legacy = { ...selection }; delete legacy.definitionId;
+      assert.equal(resolveMeritDefinition(legacy, active), revised);
+      assert.equal(resolveMeritDefinition({ ...legacy, definitionId: "unavailable:merit" }, active), undefined);
+      assert.equal(resolveMeritDefinition({ ...legacy, sourceId: "unavailable-source" }, active), undefined);
+      assert.equal(resolveMeritDefinition({ ...legacy, name: original.presentationPt.name }, active), undefined);
+      for (const locale of ["en-US", "pt-BR", "en-US"]) {
+        const presented = meritPresentation(revised, locale);
+        const base = meritPresentation(original, locale);
+        const replacement = meritPresentation(erratum, locale);
+        assert.equal(presented.description, replacement.description);
+        assert.equal(presented.prerequisites, erratum.prerequisites ? replacement.prerequisites : base.prerequisites);
+        assert.deepEqual(presented.levels, erratum.levels ? replacement.levels : base.levels);
+        const receipt = { id: `receipt-${selection.instanceId}`, cost: selection.dots, rating: selection.dots, label: "Original receipt", undo: { kind: "merit", definitionId: original.id, instanceId: selection.instanceId, name: original.name, dots: selection.dots } };
+        const receiptBefore = JSON.stringify(receipt);
+        assert.equal(vampireExperienceLabel(receipt, character, active, {}, locale), `${presented.name} ${selection.dots}`);
+        assert.equal(JSON.stringify(receipt), receiptBefore);
+      }
+    }
+    assert.equal(JSON.stringify(character), characterBefore);
+    assert.equal(JSON.stringify({ canonical, portuguese }), before);
+  } finally { await vite.close(); }
 });
 
 test("Vampire Merit snapshots and Builder/XP/Sheet/Homebrew render EN/PT/EN without rewriting identities, history or authored text", async () => {

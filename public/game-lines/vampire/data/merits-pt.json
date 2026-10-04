@@ -1965,5 +1965,78 @@
   "h-vtr-fire-revolution:retroactive-continuity": {
     "name": "Continuidade Retroativa",
     "description": "Reescreve a continuidade jurídica de um evento anterior, com consequências permanentes."
+  },
+  "h-vtr-fire-revolution:legal-guardian": {
+    "name": "Guardião Legal",
+    "description": "Coloca outro vampiro sob a proteção legal do personagem."
+  },
+  "h-vtr-fire-revolution:parlay": {
+    "name": "Negociação",
+    "description": "Cria um espaço protegido para negociação sob a Lei Carthiana."
+  },
+  "h-vtr-fire-revolution:rules-of-engagement": {
+    "name": "Regras de Engajamento",
+    "description": "Define e impõe limites legais à violência."
+  },
+  "h-vtr-fire-revolution:special-reserve": {
+    "name": "Reserva Especial",
+    "description": "Protege uma reserva de alimentação designada por meio de Lex Terrae."
+  },
+  "h-vtr-fire-revolution:stake-your-claim": {
+    "name": "Reivindique Seu Território",
+    "description": "Alerta o personagem quando outro vampiro invade o território reivindicado."
+  },
+  "h-vtr-fire-revolution:working-to-rule": {
+    "name": "Operação Padrão",
+    "description": "Transforma o cumprimento estrito das regras em resistência organizada."
+  },
+  "h-vtr-fire-revolution:those-responsible": {
+    "name": "Os Responsáveis",
+    "description": "Faz com que líderes respondam pela conduta das instituições que controlam."
+  },
+  "h-vtr-agony-ecstasy:chorister-errata": {
+    "name": "Corista — Errata",
+    "description": "Remove o acesso automático a Crúac e Méritos do Círculo; Acólitos ainda podem ensinar Crúac por sua conta e risco.",
+    "prerequisites": "Não ser membro do Círculo da Anciã"
+  },
+  "h-vtr-agony-ecstasy:temple-guardian-errata": {
+    "name": "Guardião do Templo — Errata",
+    "description": "Defesa de Enyo aplica-se uma vez por turno; Glória de Eris concede Inspirado uma vez por sessão, e seus bônus ao Crúac duram até o nascer do sol."
+  },
+  "h-vtr-agony-ecstasy:viral-mythology-errata": {
+    "name": "Mitologia Viral — Errata",
+    "description": "Usa a Condição Semente de Sua Divindade revisada fornecida por esta fonte."
+  },
+  "h-vtr-fire-revolution:army-of-one-errata": {
+    "name": "Exército de Um Só — Errata",
+    "description": "A pontuação mede a qualidade de um grupo de reforço; ele auxilia ações em equipe e cria a Complicação Reforço Carthiano em situações de violência."
+  },
+  "h-vtr-fire-revolution:all-roads-lead-to-rome-errata": {
+    "name": "Todos os Caminhos Levam a Rome — Errata",
+    "description": "Interpretação histórica opcional: a Lei Carthiana pode reconstruir poderes da Camarilla a partir de textos romanos antigos."
+  },
+  "h-vtr-fire-revolution:balancing-act-errata": {
+    "name": "Ato de Equilíbrio — Errata",
+    "description": "Registra ajustes opcionais de fortalecimento e limitação do sistema de Leis improvisadas que foi excluído."
+  },
+  "h-vtr-fire-revolution:smooth-criminal-errata": {
+    "name": "Criminoso Astuto — Errata",
+    "description": "Aplica-se a um debate preparado ou a qualquer situação em que o personagem tenha direito de apresentar seus argumentos; o Narrador pode continuar a cena concedendo recuperação completa de Força de Vontade e um ponto de Experiência."
+  },
+  "h-vtr-fire-revolution:court-jester-errata": {
+    "name": "Bobo da Corte — Errata",
+    "description": "Trate Bobo da Corte como uma Lei Carthiana."
+  },
+  "h-vtr-fire-revolution:jack-booted-thug-errata": {
+    "name": "Capanga de Coturno — Errata",
+    "description": "Só afeta cidadãos engajados e em situação regular, não pessoas de fora ou proscritos que estejam fora da estrutura política do domínio."
+  },
+  "h-vtr-fire-revolution:coda-against-sorcery-errata": {
+    "name": "Coda contra a Feitiçaria — Errata",
+    "description": "Para vampiros, aplica-se apenas à feitiçaria de sangue e aos rituais associados, não a Disciplinas comuns de Clan ou Bloodline, a menos que sejam Disciplinas Rituais."
+  },
+  "h-vtr-fire-revolution:mobilize-outrage-errata": {
+    "name": "Mobilizar a Indignação — Errata",
+    "description": "Inquebrável deve ser declarado antes do turno de combate e compromete a próxima ação instantânea com violência física contra o agressor."
   }
 }

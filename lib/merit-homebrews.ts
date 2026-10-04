@@ -86,7 +86,17 @@ export function activeMeritCatalog(catalog: readonly MeritDefinition[], custom: 
     .filter((item) => !item.catalogOnly && !item.errataFor && (owned.has(item.id) || homebrewContentActive(preferences, item.id, item.sourceId, item.defaultDisabled)))
     .map((item) => {
       const replacement = errata.get(item.id);
-      return replacement ? { ...item, ...replacement, id: item.id, name: item.name, translatedName: item.translatedName, presentationPt: replacement.presentationPt, category: replacement.replacementCategory ?? item.category } : item;
+      return replacement ? {
+        ...item, ...replacement, id: item.id, name: item.name, translatedName: item.translatedName,
+        additionalSources: [{ sourceId: item.sourceId, source: item.source, page: item.page }, ...(item.additionalSources ?? []), ...(replacement.additionalSources ?? [])].filter(source => source.sourceId !== replacement.sourceId),
+        presentationPt: replacement.presentationPt ? {
+          ...replacement.presentationPt,
+          prerequisites: replacement.presentationPt.prerequisites ?? ("prerequisites" in replacement ? undefined : item.presentationPt?.prerequisites),
+          alternativePrerequisites: replacement.presentationPt.alternativePrerequisites ?? ("alternativePrerequisites" in replacement ? undefined : item.presentationPt?.alternativePrerequisites),
+          levels: replacement.presentationPt.levels ?? ("levels" in replacement ? undefined : item.presentationPt?.levels),
+        } : undefined,
+        category: replacement.replacementCategory ?? item.category,
+      } : item;
     });
   const existing = new Set(normal.map((item) => item.id));
   return [...normal, ...[...errata.entries()].flatMap(([id, item]) => existing.has(id) ? [] : [{ ...item, id, name: item.errataForName ?? item.name, translatedName: item.errataForName ?? item.translatedName, category: item.replacementCategory ?? item.category }])];
