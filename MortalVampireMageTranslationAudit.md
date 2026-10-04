@@ -155,7 +155,7 @@ Pendentes: nomes, resumos, descrições, Practice, Primary Factor, Withstand e t
 
 **Cuidado de implementação futura:** `spellReach` em `builder-view.tsx` interpreta padrões ingleses como `Reach:` e `Add Arcanum`. Não substituir texto canônico por PT na entrada desse parser. A apresentação localizada deve permanecer separada da interpretação mecânica.
 
-Há também um fallback literal `Descrição não disponível.` fora do dicionário, tanto no Builder quanto na ficha: pode aparecer em EN quando faltar uma descrição.
+O fallback de descrição no Builder e na ficha foi movido para o dicionário e verificado em EN/PT. Os metadados e o conteúdo editorial de Spells continuam pendentes.
 
 ### G02 — Merits
 
@@ -183,7 +183,7 @@ Inventário: `The Eleventh Question`, `Chronologue`, `Engineers of the System`, 
 
 Além do catálogo:
 
-- `game-lines/mage/legacy-page.tsx` apresenta literalmente `Tutelage`, `Daimonomikon`, `Soul or Soul Stone Study`, `1 Experience` e `1 Arcane Experience` nas opções (movido da antiga superfície compartilhada).
+- **Resolvido na etapa 2:** controles de iniciação/pagamento de `game-lines/mage/legacy-page.tsx` usam o dicionário; Daimonomikon permanece original.
 - `game-lines/mage/legacies.ts` gera rótulos de requisitos em inglês, incluindo nomes de traits e `Qualifying Skill`.
 - As identidades, os valores necessários e as opções mecânicas devem permanecer canônicos; apenas a apresentação precisa ser localizada.
 
@@ -191,10 +191,10 @@ Além do catálogo:
 
 - **24 Conditions** em `public/game-lines/mage/data/conditions.json`: nomes, descrição, resolução e Beat sem apresentação PT.
 - A ficha usa literalmente `Megalomaniacal` e `Rampant` nas opções de resultados de Hubris.
-- As abas mobile `Stats` e `Legacy`, em `game-lines/mage/sheet-view.tsx`, não usam os dicionários. Há também um fallback literal `Legacy` no nome da seção.
+- **Abas Mobile resolvidas na etapa 2:** Stats/Legacy usam os dicionários. Ainda há um fallback literal Legacy no nome da seção e em seu título de página.
 - A impressão do Familiar mostra os nomes canônicos de Numina diretamente em `game-lines/mage/print-sheet.tsx`, enquanto a página do Companion já possui apresentação localizada para os 18 nomes. É inconsistência de consumo, não um novo catálogo inteiro por traduzir. O termo **Numina permanece Numina**, conforme decisão anterior.
 
-Os Lesser/Greater Utility Attainments já possuem textos bilíngues locais na ficha. Não entram como tradução integral pendente, embora futuramente sua organização de apresentação possa ser uniformizada.
+Os 20 Lesser/Greater Utility Attainments já possuíam textos bilíngues completos. Sua organização foi uniformizada na etapa 2: os 80 textos agora pertencem ao dicionário Mage, preservando integralmente a redação, os limiares de Arcana e a apresentação Desktop/Mobile. Não entram como tradução integral pendente.
 
 ## X — Consistência entre idiomas
 
@@ -588,6 +588,13 @@ Nenhuma nova dúvida registrada nesta etapa de criação da meta. Preservar abai
 - Tutoria, estudo de Alma/Pedra da Alma e pagamento da iniciação de Legado usam mensagens sem alterar os valores canônicos de método ou XP. Daimonomikon permanece como termo próprio. As abas Mobile Stats/Legacy usam as chaves existentes.
 - O rótulo Practice foi uniformizado para **Práticas**, conforme A06. Os valores editoriais de Practice, fatores, Resistência e cláusulas continuam pertencendo à tradução de Spells na etapa 4; o parser recebe o mesmo texto inglês. Seu separador preexistente antes de Add Fate/+2 Reach foi preservado, sem correção incidental.
 - Verificação: 53 testes existentes de i18n, Spells e Legacies aprovados e novo teste SSR EN → PT → EN aprovado. Lint, build, TypeScript e diff check aprovados. Sem smoke de navegador. A etapa 2 prossegue com a remoção das tabelas bilíngues de Utility Attainments dos componentes. Rótulos de Conditions nos resultados de Húbris continuam vinculados à pendência do catálogo Mage (G05), conforme a decisão histórica preservada no anexo.
+
+### Etapa 2 — Utility Attainments no dicionário Mage (2026-10-03)
+
+- Os 20 Lesser/Greater Utility Attainments passaram das tabelas bilíngues no componente para `mageMessages[locale].ui.utilityAttainments`. A ficha lê diretamente sua apresentação no idioma atual, sem criar um catálogo mecânico paralelo ou novos tipos universais.
+- Comparação exata dos 80 textos EN/PT antes/depois aprovada; nenhum título, resumo ou efeito foi retraduzido. O teste SSR verifica os dez Arcana nos níveis 0–5 em EN → PT → EN, inclusive ausência de benefícios ainda não desbloqueados e preservação dos valores recebidos.
+- Verificação dirigida **19/19**, lint, build, TypeScript e diff check aprovados. Suíte completa **548/548** aprovada no estado final, incluindo todos os lotes de interface anteriores desta continuação. Sem smoke de navegador.
+- Próximo lote de interface: requisitos dinâmicos de entrada em Legacy (`Gnosis`, traits, alternativas de Perícias e parentagem/Práxis) e fallback de título da seção. As opções e mensagens de Húbris ainda acompanham a tradução de Conditions Mage, conforme G05; a etapa 2 não está declarada concluída.
 
 ## Anexo D — Histórico integral de DictionaryAudit.md
 

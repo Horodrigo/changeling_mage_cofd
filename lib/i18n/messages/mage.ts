@@ -1,6 +1,92 @@
 export const mageMessages = {
   "pt-BR": {
     "ui": {
+      "utilityAttainments": {
+        "lesser": {
+          "Death": {
+            "name": "Olhos dos Mortos",
+            "description": "Percebe fantasmas, almas e fenômenos do Crepúsculo com a Visão da Morte; com Mana, pode interagir com eles pela cena."
+          },
+          "Fate": {
+            "name": "Duração Condicional",
+            "description": "Acrescenta a um feitiço uma condição de encerramento que amplia sua Duração."
+          },
+          "Forces": {
+            "name": "Força Precisa",
+            "description": "Otimiza a aplicação deliberada de força contra objetos ou alvos imóveis."
+          },
+          "Life": {
+            "name": "Restauração Aprimorada do Padrão",
+            "description": "Cura dano com Mana de modo mais eficiente e reduz efeitos derivados do Esfolamento de Atributos Físicos."
+          },
+          "Matter": {
+            "name": "Permanência",
+            "description": "Permite pagar Mana, em vez de Alcance, para aplicar Duração Avançada a feitiços cujo Arcano mais alto seja Matéria."
+          },
+          "Mind": {
+            "name": "Olho da Mente",
+            "description": "Percebe Goetia, entidades Astrais e projeções no Crepúsculo; com Mana, pode interagir com elas pela cena."
+          },
+          "Prime": {
+            "name": "Contramágica Universal",
+            "description": "Permite usar Contramágica contra qualquer feitiço Desperto usando Gnose + Primórdio."
+          },
+          "Space": {
+            "name": "Alcance Simpático",
+            "description": "Permite conjurar à distância por uma conexão simpática, um Yantra apropriado e Mana."
+          },
+          "Spirit": {
+            "name": "Olhos do Espírito",
+            "description": "Percebe espíritos e fenômenos do Crepúsculo espiritual; com Mana, pode interagir com eles pela cena."
+          },
+          "Time": {
+            "name": "Simpatia Temporal",
+            "description": "Permite lançar determinados feitiços de Tempo sobre o passado de um alvo atual."
+          }
+        },
+        "greater": {
+          "Death": {
+            "name": "Alma Inviolável",
+            "description": "Pode repelir reflexivamente poderes que afetem sua alma, Nimbus, aura ou tentem possuí-lo."
+          },
+          "Fate": {
+            "name": "Destino Desimpedido",
+            "description": "Pode repelir juramentos, compulsões e alterações sobrenaturais impostas ao próprio destino."
+          },
+          "Forces": {
+            "name": "Imunidade Ambiental",
+            "description": "Com Mana, ignora Complicações Ambientais e Ambientes Extremos pela cena."
+          },
+          "Life": {
+            "name": "Autonomia Corporal",
+            "description": "Pode repelir reflexivamente poderes que alterem ou firam seu corpo ou imponham Complicações Pessoais."
+          },
+          "Matter": {
+            "name": "Controle de Durabilidade",
+            "description": "Com Mana e toque, aumenta ou reduz a Durabilidade de um objeto pelos pontos em Matéria."
+          },
+          "Mind": {
+            "name": "Salto Intuitivo",
+            "description": "Com Mana, transforma três ou mais sucessos em teste Mental ou Social num sucesso excepcional."
+          },
+          "Prime": {
+            "name": "Imbuir Item",
+            "description": "Permite criar um Item Imbuído com um feitiço que o mago saiba conjurar."
+          },
+          "Space": {
+            "name": "Onipresença",
+            "description": "Permite pagar Mana, em vez de Alcance, para aplicar Escala Avançada."
+          },
+          "Spirit": {
+            "name": "Posto Honorário",
+            "description": "Espíritos reconhecem um Posto honorário igual a Espírito, com benefícios sociais e ofensivos."
+          },
+          "Time": {
+            "name": "Tempo numa Garrafa",
+            "description": "Permite pagar Mana, em vez de Alcance, para usar tempo de conjuração instantâneo."
+          }
+        }
+      },
       "spellDescriptionUnavailable": "Descrição não disponível.",
       "legacyTutelage": "Tutoria",
       "legacySoulStudy": "Estudo de uma Alma ou Pedra da Alma",
@@ -405,6 +491,92 @@ export const mageMessages = {
   },
   "en-US": {
     "ui": {
+      "utilityAttainments": {
+        "lesser": {
+          "Death": {
+            "name": "Eyes of the Dead",
+            "description": "Perceive ghosts, souls, and Twilight phenomena with Death Sight; by spending Mana, interact with them for the scene."
+          },
+          "Fate": {
+            "name": "Conditional Duration",
+            "description": "Add a termination condition to a spell to extend its Duration."
+          },
+          "Forces": {
+            "name": "Precise Force",
+            "description": "Optimize the deliberate application of force against objects or stationary targets."
+          },
+          "Life": {
+            "name": "Improved Pattern Restoration",
+            "description": "Heal damage more efficiently with Mana and reduce effects caused by Pattern scouring Physical Attributes."
+          },
+          "Matter": {
+            "name": "Permanence",
+            "description": "Spend Mana instead of Reach to apply Advanced Duration when Matter is the spell's highest Arcanum."
+          },
+          "Mind": {
+            "name": "Mind's Eye",
+            "description": "Perceive Goetia, Astral entities, and projections in Twilight; by spending Mana, interact with them for the scene."
+          },
+          "Prime": {
+            "name": "Universal Counterspell",
+            "description": "Use Counterspell against any Awakened spell with Gnosis + Prime."
+          },
+          "Space": {
+            "name": "Sympathetic Range",
+            "description": "Cast at a distance through a sympathetic connection, an appropriate Yantra, and Mana."
+          },
+          "Spirit": {
+            "name": "Spirit Eyes",
+            "description": "Perceive spirits and spiritual Twilight phenomena; by spending Mana, interact with them for the scene."
+          },
+          "Time": {
+            "name": "Temporal Sympathy",
+            "description": "Cast certain Time spells upon the past of a present target."
+          }
+        },
+        "greater": {
+          "Death": {
+            "name": "Inviolate Soul",
+            "description": "Reflexively repel powers that affect the soul, Nimbus, or aura, or that attempt possession."
+          },
+          "Fate": {
+            "name": "Unfettered Fate",
+            "description": "Repel oaths, compulsions, and supernatural alterations imposed on your fate."
+          },
+          "Forces": {
+            "name": "Environmental Immunity",
+            "description": "Spend Mana to ignore Environmental Tilts and Extreme Environments for the scene."
+          },
+          "Life": {
+            "name": "Body Autonomy",
+            "description": "Reflexively repel powers that alter or harm the body or impose Personal Tilts."
+          },
+          "Matter": {
+            "name": "Durability Control",
+            "description": "Spend Mana and touch an object to raise or lower its Durability by Matter dots."
+          },
+          "Mind": {
+            "name": "Intuitive Leap",
+            "description": "Spend Mana to turn three or more successes on a Mental or Social roll into an exceptional success."
+          },
+          "Prime": {
+            "name": "Imbue Item",
+            "description": "Create an Imbued Item with a spell the mage can cast."
+          },
+          "Space": {
+            "name": "Omnipresence",
+            "description": "Spend Mana instead of Reach to apply Advanced Scale."
+          },
+          "Spirit": {
+            "name": "Honorary Rank",
+            "description": "Spirits recognize an honorary Rank equal to Spirit, with social and offensive benefits."
+          },
+          "Time": {
+            "name": "Time in a Bottle",
+            "description": "Spend Mana instead of Reach to use instant casting time."
+          }
+        }
+      },
       "spellDescriptionUnavailable": "Description unavailable.",
       "legacyTutelage": "Tutelage",
       "legacySoulStudy": "Soul or Soul Stone Study",

@@ -70,6 +70,7 @@ import {
 } from "./experience-refunds";
 import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage, type Locale } from "@/lib/i18n";
+import { mageMessages } from "@/lib/i18n/messages/mage";
 import { findLegacy, normalizeLegacyState } from "@/game-lines/mage/legacies";
 import { findMageAffiliation } from "@/game-lines/mage/orders";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
@@ -1935,132 +1936,10 @@ function NimbusEditor({
     </div>
   );
 }
-const LESSER_ATTAINMENTS: Record<string, [string, string, string, string]> = {
-  Death: [
-    "Olhos dos Mortos",
-    "Percebe fantasmas, almas e fenômenos do Crepúsculo com a Visão da Morte; com Mana, pode interagir com eles pela cena.",
-    "Eyes of the Dead",
-    "Perceive ghosts, souls, and Twilight phenomena with Death Sight; by spending Mana, interact with them for the scene.",
-  ],
-  Fate: [
-    "Duração Condicional",
-    "Acrescenta a um feitiço uma condição de encerramento que amplia sua Duração.",
-    "Conditional Duration",
-    "Add a termination condition to a spell to extend its Duration.",
-  ],
-  Forces: [
-    "Força Precisa",
-    "Otimiza a aplicação deliberada de força contra objetos ou alvos imóveis.",
-    "Precise Force",
-    "Optimize the deliberate application of force against objects or stationary targets.",
-  ],
-  Life: [
-    "Restauração Aprimorada do Padrão",
-    "Cura dano com Mana de modo mais eficiente e reduz efeitos derivados do Esfolamento de Atributos Físicos.",
-    "Improved Pattern Restoration",
-    "Heal damage more efficiently with Mana and reduce effects caused by Pattern scouring Physical Attributes.",
-  ],
-  Matter: [
-    "Permanência",
-    "Permite pagar Mana, em vez de Alcance, para aplicar Duração Avançada a feitiços cujo Arcano mais alto seja Matéria.",
-    "Permanence",
-    "Spend Mana instead of Reach to apply Advanced Duration when Matter is the spell's highest Arcanum.",
-  ],
-  Mind: [
-    "Olho da Mente",
-    "Percebe Goetia, entidades Astrais e projeções no Crepúsculo; com Mana, pode interagir com elas pela cena.",
-    "Mind's Eye",
-    "Perceive Goetia, Astral entities, and projections in Twilight; by spending Mana, interact with them for the scene.",
-  ],
-  Prime: [
-    "Contramágica Universal",
-    "Permite usar Contramágica contra qualquer feitiço Desperto usando Gnose + Primórdio.",
-    "Universal Counterspell",
-    "Use Counterspell against any Awakened spell with Gnosis + Prime.",
-  ],
-  Space: [
-    "Alcance Simpático",
-    "Permite conjurar à distância por uma conexão simpática, um Yantra apropriado e Mana.",
-    "Sympathetic Range",
-    "Cast at a distance through a sympathetic connection, an appropriate Yantra, and Mana.",
-  ],
-  Spirit: [
-    "Olhos do Espírito",
-    "Percebe espíritos e fenômenos do Crepúsculo espiritual; com Mana, pode interagir com eles pela cena.",
-    "Spirit Eyes",
-    "Perceive spirits and spiritual Twilight phenomena; by spending Mana, interact with them for the scene.",
-  ],
-  Time: [
-    "Simpatia Temporal",
-    "Permite lançar determinados feitiços de Tempo sobre o passado de um alvo atual.",
-    "Temporal Sympathy",
-    "Cast certain Time spells upon the past of a present target.",
-  ],
-};
-const GREATER_ATTAINMENTS: Record<string, [string, string, string, string]> = {
-  Death: [
-    "Alma Inviolável",
-    "Pode repelir reflexivamente poderes que afetem sua alma, Nimbus, aura ou tentem possuí-lo.",
-    "Inviolate Soul",
-    "Reflexively repel powers that affect the soul, Nimbus, or aura, or that attempt possession.",
-  ],
-  Fate: [
-    "Destino Desimpedido",
-    "Pode repelir juramentos, compulsões e alterações sobrenaturais impostas ao próprio destino.",
-    "Unfettered Fate",
-    "Repel oaths, compulsions, and supernatural alterations imposed on your fate.",
-  ],
-  Forces: [
-    "Imunidade Ambiental",
-    "Com Mana, ignora Complicações Ambientais e Ambientes Extremos pela cena.",
-    "Environmental Immunity",
-    "Spend Mana to ignore Environmental Tilts and Extreme Environments for the scene.",
-  ],
-  Life: [
-    "Autonomia Corporal",
-    "Pode repelir reflexivamente poderes que alterem ou firam seu corpo ou imponham Complicações Pessoais.",
-    "Body Autonomy",
-    "Reflexively repel powers that alter or harm the body or impose Personal Tilts.",
-  ],
-  Matter: [
-    "Controle de Durabilidade",
-    "Com Mana e toque, aumenta ou reduz a Durabilidade de um objeto pelos pontos em Matéria.",
-    "Durability Control",
-    "Spend Mana and touch an object to raise or lower its Durability by Matter dots.",
-  ],
-  Mind: [
-    "Salto Intuitivo",
-    "Com Mana, transforma três ou mais sucessos em teste Mental ou Social num sucesso excepcional.",
-    "Intuitive Leap",
-    "Spend Mana to turn three or more successes on a Mental or Social roll into an exceptional success.",
-  ],
-  Prime: [
-    "Imbuir Item",
-    "Permite criar um Item Imbuído com um feitiço que o mago saiba conjurar.",
-    "Imbue Item",
-    "Create an Imbued Item with a spell the mage can cast.",
-  ],
-  Space: [
-    "Onipresença",
-    "Permite pagar Mana, em vez de Alcance, para aplicar Escala Avançada.",
-    "Omnipresence",
-    "Spend Mana instead of Reach to apply Advanced Scale.",
-  ],
-  Spirit: [
-    "Posto Honorário",
-    "Espíritos reconhecem um Posto honorário igual a Espírito, com benefícios sociais e ofensivos.",
-    "Honorary Rank",
-    "Spirits recognize an honorary Rank equal to Spirit, with social and offensive benefits.",
-  ],
-  Time: [
-    "Tempo numa Garrafa",
-    "Permite pagar Mana, em vez de Alcance, para usar tempo de conjuração instantâneo.",
-    "Time in a Bottle",
-    "Spend Mana instead of Reach to use instant casting time.",
-  ],
-};
 function MageAttainmentList({ arcana }: { arcana: Record<string, number> }) {
   const { locale, t } = useLanguage();
+  const lesser: Readonly<Record<string, { name: string; description: string }>> = mageMessages[locale].ui.utilityAttainments.lesser;
+  const greater: Readonly<Record<string, { name: string; description: string }>> = mageMessages[locale].ui.utilityAttainments.greater;
   const owned = (minimum: number) =>
     Object.entries(arcana)
       .filter(([, dots]) => Number(dots) >= minimum)
@@ -2081,11 +1960,11 @@ function MageAttainmentList({ arcana }: { arcana: Record<string, number> }) {
       description: t("ui.unravelTheImagoOfASpellObservedWith"),
     });
   for (const [name, dots] of Object.entries(arcana)) {
-    if (Number(dots) >= 2 && LESSER_ATTAINMENTS[name])
+    if (Number(dots) >= 2 && lesser[name])
       rows.push({
-        name: LESSER_ATTAINMENTS[name][locale === "en-US" ? 2 : 0],
+        name: lesser[name].name,
         arcana: [systemTerm(name, locale)],
-        description: LESSER_ATTAINMENTS[name][locale === "en-US" ? 3 : 1],
+        description: lesser[name].description,
       });
   }
   if (two.length)
@@ -2103,11 +1982,11 @@ function MageAttainmentList({ arcana }: { arcana: Record<string, number> }) {
       description: t("ui.whenSummoningASupernalBeingSpecifyASecond"),
     });
   for (const [name, dots] of Object.entries(arcana)) {
-    if (Number(dots) >= 4 && GREATER_ATTAINMENTS[name])
+    if (Number(dots) >= 4 && greater[name])
       rows.push({
-        name: GREATER_ATTAINMENTS[name][locale === "en-US" ? 2 : 0],
+        name: greater[name].name,
         arcana: [systemTerm(name, locale)],
-        description: GREATER_ATTAINMENTS[name][locale === "en-US" ? 3 : 1],
+        description: greater[name].description,
       });
   }
   if (five.length)

@@ -16,13 +16,14 @@ test("Mage creation/sheet description fallbacks and Legacy controls follow EN/PT
     const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] }, plugins: [{ name: "mage-interface-test-surface", enforce: "pre", transform(code, id) {
       const path = id.replaceAll("\\", "/");
       if (path.endsWith("/game-lines/mage/builder-view.tsx")) return `${code}\nexport { SpellSelector, spellReach };`;
-      if (path.endsWith("/game-lines/mage/sheet-view.tsx")) return `${code}\nexport { SpellColumn, spellItemReach };`;
+      if (path.endsWith("/game-lines/mage/sheet-view.tsx")) return `${code}\nexport { SpellColumn, spellItemReach, MageAttainmentList };`;
       if (locale === "pt-BR" && path.endsWith("/lib/i18n.tsx")) return code.replace('const serverLocale = ():Locale => "en-US";', 'const serverLocale = ():Locale => "pt-BR";');
     } }] });
     try {
       const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
       const { SpellSelector, spellReach } = await vite.ssrLoadModule("/game-lines/mage/builder-view.tsx");
-      const { SpellColumn, spellItemReach } = await vite.ssrLoadModule("/game-lines/mage/sheet-view.tsx");
+      const { SpellColumn, spellItemReach, MageAttainmentList } = await vite.ssrLoadModule("/game-lines/mage/sheet-view.tsx");
+      const { mageMessages } = await vite.ssrLoadModule("/lib/i18n/messages/mage.ts");
       const { LegacyPage } = await vite.ssrLoadModule("/game-lines/mage/legacy-page.tsx");
       const refuseMutation = () => { throw new Error("Rendering mutated data"); };
       const render = (Component, props) => renderToStaticMarkup(createElement(LanguageProvider, null, createElement(Component, props)));
@@ -41,6 +42,19 @@ test("Mage creation/sheet description fallbacks and Legacy controls follow EN/PT
       assert.ok(legacy.includes(translate(locale, "ui.legacyTutelage")), locale);
       assert.ok(legacy.includes(translate(locale, "ui.oneExperience")), locale);
       assert.equal(translate(locale, "ui.legacySoulStudy"), locale === "pt-BR" ? "Estudo de uma Alma ou Pedra da Alma" : "Soul or Soul Stone Study");
+      const utility = mageMessages[locale].ui.utilityAttainments;
+      const escape = value => value.replaceAll("&", "&amp;").replaceAll("'", "&#x27;");
+      for (let dots = 0; dots <= 5; dots++) {
+        const arcana = Object.fromEntries(Object.keys(utility.lesser).map(name => [name, dots]));
+        const original = JSON.stringify(arcana);
+        const html = render(MageAttainmentList, { arcana });
+        for (const [kind, minimum] of [["lesser", 2], ["greater", 4]])
+          for (const item of Object.values(utility[kind])) {
+            assert.equal(html.includes(escape(item.name)), dots >= minimum, `${locale} ${dots}: ${item.name}`);
+            assert.equal(html.includes(escape(item.description)), dots >= minimum, `${locale} ${dots}: ${item.description}`);
+          }
+        assert.equal(JSON.stringify(arcana), original);
+      }
       assert.equal(JSON.stringify({ spell, reached, character }), before);
     } finally { await vite.close(); }
   }
