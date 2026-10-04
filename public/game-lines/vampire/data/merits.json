@@ -6260,10 +6260,10 @@
     "translatedName": "Uncaged Indulgence",
     "description": "A Maenad Crúac Style that turns communal excess, hunger, and frenzy into ritual power while leaving the caster Tempted.",
     "descriptionEn": "A Maenad Crúac Style that turns communal excess, hunger, and frenzy into ritual power while leaving the caster Tempted.",
-    "page": 73,
+    "page": 72,
     "homebrew": true,
     "descriptivePrerequisites": true,
-    "prerequisites": "Circle of the Crone Status ••; Socialize ••"
+    "prerequisites": "Circle of the Crone Status ••; Expression ••"
   },
   {
     "id": "h-vtr-agony-ecstasy:unconscious-alignment",
@@ -6283,10 +6283,10 @@
     "translatedName": "Unconscious Alignment",
     "description": "A Syzygist Crúac Style that aligns rites with dreams and celestial omens to alter timing, targeting, and prophetic insight.",
     "descriptionEn": "A Syzygist Crúac Style that aligns rites with dreams and celestial omens to alter timing, targeting, and prophetic insight.",
-    "page": 75,
+    "page": 74,
     "homebrew": true,
     "descriptivePrerequisites": true,
-    "prerequisites": "Circle of the Crone Status ••; Occult ••"
+    "prerequisites": "Circle of the Crone Status ••; Academics ••"
   },
   {
     "id": "h-vtr-agony-ecstasy:annis-bite",

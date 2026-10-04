@@ -160,6 +160,17 @@ test("Changeling contract shards have globally unique IDs and required structura
   }
 });
 
+test("approved Agony & Ecstasy prerequisites match the visually reviewed source pages", async () => {
+  const merits = await json(new URL("../public/game-lines/vampire/data/merits.json", import.meta.url));
+  for (const [slug, skill, page] of [["uncaged-indulgence", "Expression", 72], ["unconscious-alignment", "Academics", 74]]) {
+    const merit = merits.find(item => item.id === `h-vtr-agony-ecstasy:${slug}`);
+    assert.equal(merit.sourceId, "h-vtr-agony-ecstasy");
+    assert.equal(merit.prerequisites, `Circle of the Crone Status ••; ${skill} ••`);
+    assert.equal(merit.page, page);
+    assert.equal(merit.descriptivePrerequisites, true);
+  }
+});
+
 test("Mage spell index entries are unique and point at a stable source shard", async () => {
   const index = await json(new URL("../public/game-lines/mage/data/spells/index.json", import.meta.url));
   const ids = index.map((item) => item.id);

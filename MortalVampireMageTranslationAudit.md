@@ -160,6 +160,7 @@ Estes pontos **já receberam resposta**. As mudanças abaixo ainda precisam de a
 | Ground Fighter — Hurt Locker p. 54 | **Usar o livro**. | Revisão visual de Hurt Locker p. 54 mostra Brawl 2, não 3 como constava na auditoria antiga. Catálogo já coincide com o PDF; requisito preservado e anotação antiga corrigida. |
 | Vaulting Defense — Hurt Locker p. 52 | **Melee = Weaponry; usar o termo da ficha**. | Resumo EN usa Weaponry e PT usa Armas Brancas; ID, pontuação e efeito preservados. Gates aprovados. |
 | Object Fetishism — Hurt Locker p. 42 | **Chapter = Session**. | Conservar sessão no resumo; divergência terminológica encerrada. |
+| Uncaged Indulgence / Unconscious Alignment — Agony & Ecstasy pp. 72 e 74 | **Corrigir conforme o PDF local**. | Revisão visual confirma Expression 2/p. 72 e Academics 2/p. 74. Requisitos e páginas canônicos corrigidos, preservando IDs e o tratamento descritivo existente. 41/41 testes de integração EN/PT/EN, identidade, catálogos e arquitetura, lint e build aprovados; apresentação PT no próximo lote. |
 
 ## Pontos ainda sem resposta ou auditoria concluída
 
@@ -185,9 +186,9 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 
 ## Verificação atual
 
-- **308/403** Méritos Vampire com apresentação completa por ID: todos os 154 oficiais, 154 Homebrew e os 80 níveis do catálogo. Restam 95 Méritos Homebrew; a escolha do título Courtoisie permanece aberta acima. O catálogo canônico de 403 Méritos permanece intacto; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
+- **308/403** Méritos Vampire com apresentação completa por ID: todos os 154 oficiais, 154 Homebrew e os 80 níveis do catálogo. Restam 95 Méritos Homebrew; a escolha do título Courtoisie permanece aberta acima. O catálogo canônico de 403 Méritos conserva identidades e efeitos; somente os dois requisitos/páginas aprovados de Agony & Ecstasy foram corrigidos neste lote; os demais registros/poderes/Conditions/presets e a etapa Mage seguem no backlog.
 - **56 Bloodlines** com PT completo, incluindo Desventurados. IDs, compras, XP, recibos e textos autorais não são reescritos pela troca de idioma.
-- Manifesto `catalogVersion` **73**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire-pt` **15** e `vampire-bloodlines` **13**.
+- Manifesto `catalogVersion` **74**; recursos Core de Méritos nas versões **14/15**, Changeling nas versões **5/7**, `merits-vampire` **13**, `merits-vampire-pt` **15** e `vampire-bloodlines` **13**.
 - Último lote: 12 Méritos Vampire de Vampire 2e, The Wild Hunt e Agony & Ecstasy (seis oficiais e seis Homebrew), incluindo dez níveis de Etiqueta e Status no Hototogisu. **40/40** testes de integração EN/PT/EN, identidades, catálogos e arquitetura, lint e build aprovados. Nenhuma mudança de código TypeScript neste lote; o gate anterior segue válido. Referências reutilizam Indomável, Vontade de Ferro, Interdisciplinar, Miasma Primevo, Complicações Ambientais e Resiliência. Hototogisu, Tokyo, The Friday Club e Clíodhna preservam seus nomes próprios. As revisões de apresentações oficiais preexistentes foram concluídas; não se reconstruíram efeitos ou níveis ausentes no canônico.
 - Integração anterior de Especialização Interdisciplinar: **573/573** testes da suíte completa, **8/8** de confirmação final do vínculo, lint, TypeScript e build aprovados, incluindo preservação de bancos/recibos e concessões antigas com XP.
 - As demais correções aprovadas têm estado de aplicação na tabela de decisões respondidas; os catálogos Vampire/Mage e os pontos sem resposta permanecem separados no backlog.
