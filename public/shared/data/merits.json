@@ -8,11 +8,11 @@
     "source": "Mage the Awakening",
     "category": "Mental",
     "prerequisites": "Library •••, ≤ Safe Place",
-    "description": "Your library is vast enough to contain useful, direct information about supernatural topics. Choose a topic per Advanced Library dot. Every story, once per topic, you can take the Informed Condition when you consult your library about that topic.",
+    "description": "Your library is vast enough to contain useful, direct information about supernatural topics. Choose a topic per Advanced Library dot. Every story, once per topic, you can take the Informed Condition when you consult your library about that topic. Advanced Library cannot exceed the rating of one Safe Place instance.",
     "page": 105,
     "priority": 1,
     "translatedName": "Advanced Library",
-    "descriptionEn": "Your library is vast enough to contain useful, direct information about supernatural topics. Choose a topic per Advanced Library dot. Every story, once per topic, you can take the Informed Condition when you consult your library about that topic."
+    "descriptionEn": "Your library is vast enough to contain useful, direct information about supernatural topics. Choose a topic per Advanced Library dot. Every story, once per topic, you can take the Informed Condition when you consult your library about that topic. Advanced Library cannot exceed the rating of one Safe Place instance."
   },
   {
     "id": "hurt-locker:aggressive-driving",

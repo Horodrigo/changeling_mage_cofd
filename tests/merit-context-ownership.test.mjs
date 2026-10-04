@@ -17,6 +17,37 @@ const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-p
 const read = path => JSON.parse(readFileSync(new URL(`../public/${path}`, import.meta.url), "utf8"));
 const catalog = [...read("shared/data/merits.json"), ...read("game-lines/changeling/data/merits.json"), ...read("game-lines/mage/data/merits.json"), ...read("game-lines/werewolf/data/merits.json")];
 
+test("Advanced Library requires one canonical Safe Place at least equal to the purchase rating in every line and locale", async () => {
+  const { meritPresentation, withMeritPresentation } = await vite.ssrLoadModule("/lib/merit-presentation.ts");
+  const definition = catalog.find(item => item.id === "mta-2ed:advanced-library");
+  const shown = withMeritPresentation([definition], read("shared/data/merits-pt.json"))[0];
+  const safePlace = catalog.find(item => item.id === "core-2ed:safe-place");
+  const library = { definitionId: "core-2ed:library", instanceId: "library", name: "Authored library", dots: 3 };
+  const place = dots => ({ definitionId: safePlace.id, instanceId: `place-${dots}`, sourceId: safePlace.sourceId, name: "Authored location", dots, creationDots: 1, experienceDots: dots - 1, configuration: { name: "My location" } });
+  for (const [line, contextFor] of [["CofD", mortalMeritContextForSheet], ["MtA", mageMeritContextForSheet], ["CtL", changelingMeritContextForSheet], ["VtR", sheet => vampireMeritContextForSheet(sheet, catalog, ["vampire"])], ["WtF", meritContextForSheet]]) {
+    const sheet = blankPrintCharacter(line);
+    sheet.line_data.test_receipt = { definitionId: definition.id, instanceId: "advanced-library", cost: 6, label: "Original receipt" };
+    for (const [places, expected] of [[[], false], [[place(2)], false], [[place(3)], true], [[place(4)], true], [[place(1), place(2)], false], [[{ ...place(3), definitionId: "unavailable:safe-place", name: safePlace.name }], false], [[{ ...place(3), definitionId: "homebrew:safe-place", name: safePlace.name }], false], [[{ ...place(3), definitionId: undefined, name: safePlace.name }], true], [[{ ...place(3), definitionId: undefined, name: "Local Seguro" }], false]]) {
+      sheet.merits = [library, ...places];
+      const before = JSON.stringify(sheet);
+      const context = contextFor(sheet, catalog);
+      for (const locale of ["en-US", "pt-BR", "en-US"]) {
+        assert.equal(meritPrerequisitesMet(shown, { ...context, selectedDots: 3 }), expected, line);
+        assert.equal(meritSelectionProblems(shown, { dots: 3 }, context).length, expected ? 0 : 1);
+        assert.match(meritPresentation(shown, locale).description, locale === "pt-BR" ? /uma única instância de Local Seguro/ : /one Safe Place instance/);
+      }
+      assert.equal(JSON.stringify(sheet), before);
+    }
+    sheet.merits = [library, place(2)];
+    const context = contextFor(sheet, catalog);
+    assert.equal(meritPrerequisitesMet(definition, context), true, "picker can offer the first dot");
+    assert.equal(meritPrerequisitesMet(definition, { ...context, selectedDots: 2 }), true);
+    assert.equal(meritPrerequisitesMet(definition, { ...context, selectedDots: 3 }), false);
+    assert.equal(meritPrerequisitesMet(definition, { ...context, merits: [{ ...library, dots: 2 }, place(3)] }), false);
+    assert.equal(meritPrerequisitesMet(definition, { ...context, meritCatalog: catalog.filter(item => item.id !== safePlace.id) }), false);
+  }
+});
+
 test("line parsers compose numeric traits and AND/OR identity clauses without changing saved values", () => {
   const mage = { gameLine: "MtA", archetypes: ["awakened"], gnosis: 2, arcana: { Death: 2 }, path: "Moros" };
   const definition = { name: "Authored", prerequisites: "Awakened; Gnosis ••; Death •• or Mind •••; Moros" };

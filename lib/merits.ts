@@ -111,9 +111,14 @@ export function meritTextPrerequisitesMet(value:string|undefined,context:MeritPr
 /** Common category/max-rating wording, also composed by line-owned text parsers. */
 export function meritGroupedPrerequisitesMet(value:string,context:MeritPrerequisiteContext):boolean{
   const text=value.replace(/≤/g," maximum ");
-  return text.split(";").every((rawGroup)=>{
+  return text.split(/[,;]/).every((rawGroup)=>{
     const group=rawGroup.trim();
     if(!group) return true;
+    const relativeMerit = group.match(/^maximum\s+(.+)$/i)?.[1];
+    if (relativeMerit && ![...ATTRIBUTE_NAMES, ...SKILL_NAMES].includes(relativeMerit)) {
+      const definition = resolveMeritReference(relativeMerit, (context.meritCatalog ?? []).filter(item => !item.sourceId.startsWith("homebrew:")));
+      return Boolean(definition && requirementMet({ merit: definition.id, minimum: context.selectedDots ?? 1 }, context));
+    }
     if(/Cannot have/i.test(group)){
       const forbidden=group.replace(/Cannot have/i,"").trim();
       return !requirementMet({merit:forbidden},context);

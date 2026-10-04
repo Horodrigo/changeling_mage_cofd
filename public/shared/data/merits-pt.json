@@ -89,8 +89,8 @@
   },
   "mta-2ed:advanced-library": {
     "name": "Biblioteca Avançada",
-    "prerequisites": "Biblioteca •••; pontuação não superior à de Local Seguro",
-    "description": "A biblioteca é vasta o bastante para conter informações úteis e diretas sobre assuntos sobrenaturais. Escolhe um assunto por ponto de Biblioteca Avançada. A cada história, uma vez por assunto, o personagem pode receber a Condição Informado ao consultar a biblioteca sobre esse assunto."
+    "prerequisites": "Biblioteca •••; um Local Seguro com pontuação igual ou superior à de Biblioteca Avançada",
+    "description": "A biblioteca é vasta o bastante para conter informações úteis e diretas sobre assuntos sobrenaturais. Escolhe um assunto por ponto de Biblioteca Avançada. A cada história, uma vez por assunto, o personagem pode receber a Condição Informado ao consultar a biblioteca sobre esse assunto. A pontuação de Biblioteca Avançada não pode superar a de uma única instância de Local Seguro."
   },
   "h-vtr-agony-ecstasy:mythologist": {
     "name": "Mitólogo",
