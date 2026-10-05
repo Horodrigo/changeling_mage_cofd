@@ -61,6 +61,7 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
       ["dramaticFailure", t("ui.dramaticFailure")], ["failure", t("ui.failure")],
       ["success", t("ui.success")], ["exceptionalSuccess", t("ui.exceptionalSuccess")],
     ] as const).flatMap(([key, label]) => detail(label, item.rollResults?.[key])),
+    ...(item.suggestedModifiers ?? []).flatMap(modifier => detail(`${t("ui.suggestedModifiers")} ${modifier.modifier}`, modifier.situation)),
   ];
   merits.forEach((item) => {
     const presented = meritPresentation(item, locale);

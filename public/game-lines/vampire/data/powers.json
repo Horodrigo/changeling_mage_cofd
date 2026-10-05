@@ -2004,7 +2004,15 @@
           "dicePool": "None",
           "action": "Instant",
           "duration": "Scene",
-          "effect": "Observers ignore and poorly remember the vampire unless the vampire draws attention. Actions that would draw notice prompt Wits + Composure penalized by Obfuscate."
+          "effect": "Observers ignore and poorly remember the vampire unless the vampire draws attention. Actions that would draw notice prompt Wits + Composure penalized by Obfuscate.",
+          "presentationPt": {
+            "summary": "Torna o vampiro comum e fácil de ignorar.",
+            "cost": "Nenhum",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "duration": "Cena",
+            "effect": "Observadores ignoram o vampiro e pouco se lembram dele, a menos que ele chame atenção. Ações que atrairiam atenção exigem Raciocínio + Compostura com penalidade igual aos pontos de Ofuscação."
+          }
         },
         {
           "rating": 2,
@@ -2036,7 +2044,36 @@
               "modifier": "–3",
               "situation": "Increase maximum affected Size by 3"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Oculta um objeto ou animal da atenção.",
+            "cost": "1 Vitae",
+            "requirement": "Tocar o alvo; alvos relutantes exigem um ataque de toque; o limite normal de Tamanho é o Tamanho do vampiro",
+            "dicePool": "Raciocínio + Furto + Ofuscação",
+            "action": "Reflexiva",
+            "duration": "Cena",
+            "effect": "Aplica a um objeto ou animal uma ocultação semelhante à de Rosto na Multidão.",
+            "rollResults": {
+              "dramaticFailure": "O alvo se torna chamativo.",
+              "failure": "O alvo continua perceptível.",
+              "success": "O alvo deixa de chamar atenção.",
+              "exceptionalSuccess": "O alvo também não se destaca em fotografias ou vídeos registrados enquanto o poder estava ativo."
+            },
+            "suggestedModifiers": [
+              {
+                "modifier": "–1",
+                "situation": "Aumentar o Tamanho máximo afetado em 1"
+              },
+              {
+                "modifier": "–2",
+                "situation": "Aumentar o Tamanho máximo afetado em 2"
+              },
+              {
+                "modifier": "–3",
+                "situation": "Aumentar o Tamanho máximo afetado em 3"
+              }
+            ]
+          }
         },
         {
           "rating": 3,
@@ -2046,7 +2083,14 @@
           "cost": "1 Vitae",
           "dicePool": "None",
           "action": "None",
-          "effect": "Touch of Shadow may affect people. Spending Vitae with Face in the Crowd makes the vampire disappear completely; indirect tracking remains possible."
+          "effect": "Touch of Shadow may affect people. Spending Vitae with Face in the Crowd makes the vampire disappear completely; indirect tracking remains possible.",
+          "presentationPt": {
+            "summary": "Desaparece completamente e estende Ofuscação a pessoas.",
+            "cost": "1 Vitae",
+            "dicePool": "Nenhuma",
+            "action": "Nenhuma",
+            "effect": "Toque da Sombra pode afetar pessoas. Gastar Vitae com Rosto na Multidão faz o vampiro desaparecer completamente; ainda é possível rastreá-lo por meios indiretos."
+          }
         },
         {
           "rating": 4,
@@ -2056,21 +2100,40 @@
           "cost": "2 Vitae",
           "dicePool": "None",
           "action": "None",
-          "effect": "When using Face in the Crowd or Touch of Shadow on a person, project a chosen identity or subjective archetype. Objects can likewise be visually redefined within similar Size."
+          "effect": "When using Face in the Crowd or Touch of Shadow on a person, project a chosen identity or subjective archetype. Objects can likewise be visually redefined within similar Size.",
+          "presentationPt": {
+            "summary": "Assume uma identidade específica ou subjetiva que os observadores esperam encontrar.",
+            "cost": "2 Vitae",
+            "dicePool": "Nenhuma",
+            "action": "Nenhuma",
+            "effect": "Ao usar Rosto na Multidão ou Toque da Sombra em uma pessoa, projeta uma identidade escolhida ou um arquétipo subjetivo. Objetos também podem ter sua aparência redefinida, mantendo um Tamanho semelhante."
+          }
         },
         {
           "rating": 5,
           "name": "Oubliette",
-          "translatedName": "Oubliette",
+          "translatedName": "Masmorra do Esquecimento",
           "summary": "Turn a blood-marked haven into a large-scale Obfuscate domain.",
           "cost": "3–9 Vitae and 1 Willpower",
           "requirement": "Mark the area's boundaries, gateways, exits, and landmarks with Vitae and sleep a full day there",
           "dicePool": "None",
           "action": "Instant",
           "duration": "One week per Blood Potency",
-          "effect": "Use Touch of Shadow, Cloak of Night, and Familiar Stranger at any distance within the haven and affect multiple subjects with a single activation; associated extra Vitae costs are reduced as described by the power."
+          "effect": "Use Touch of Shadow, Cloak of Night, and Familiar Stranger at any distance within the haven and affect multiple subjects with a single activation; associated extra Vitae costs are reduced as described by the power.",
+          "presentationPt": {
+            "summary": "Transforma um Refúgio marcado com sangue em um domínio de Ofuscação em grande escala.",
+            "cost": "3–9 Vitae e 1 Força de Vontade",
+            "requirement": "Marcar os limites, entradas, saídas e pontos de referência da área com Vitae e dormir ali por um dia inteiro",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "duration": "Uma semana por Potência do Sangue",
+            "effect": "Usa Toque da Sombra, Manto da Noite e O Estranho Familiar a qualquer distância dentro do Refúgio e afeta vários alvos com uma única ativação; os custos adicionais de Vitae associados são reduzidos conforme descrito pelo poder."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "Apaga o vampiro, seus companheiros, objetos e lugares da atenção e da memória."
+      }
     },
     {
       "id": "protean",
@@ -2090,7 +2153,16 @@
           "dicePool": "None",
           "action": "Instant",
           "duration": "Indefinite",
-          "effect": "Merge with the ground, remain mostly insulated from the outside world, retain limited Kindred senses, absorb blood spilled above, and take bashing as the shelter loses Structure."
+          "effect": "Merge with the ground, remain mostly insulated from the outside world, retain limited Kindred senses, absorb blood spilled above, and take bashing as the shelter loses Structure.",
+          "presentationPt": {
+            "summary": "Funde-se à terra ou a um material sólido para descansar em segurança.",
+            "cost": "0 em solo/terra; em outros materiais, Vitae igual à Durabilidade do material",
+            "requirement": "Esconderijo com pelo menos o Tamanho do vampiro",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "duration": "Indefinida",
+            "effect": "Funde-se ao chão, permanece em grande parte isolado do mundo exterior, conserva sentidos limitados de Membro, absorve sangue derramado acima e sofre dano contundente conforme o abrigo perde Estrutura."
+          }
         },
         {
           "rating": 2,
@@ -2101,29 +2173,53 @@
           "dicePool": "None",
           "action": "Reflexive",
           "duration": "Scene",
-          "effect": "Manifest any or all of three stored adaptations. Stored adaptations can be changed by spending a day in Unmarked Grave and Vitae per replacement."
+          "effect": "Manifest any or all of three stored adaptations. Stored adaptations can be changed by spending a day in Unmarked Grave and Vitae per replacement.",
+          "presentationPt": {
+            "summary": "Manifesta três adaptações predatórias escolhidas.",
+            "cost": "1 Vitae",
+            "dicePool": "Nenhuma",
+            "action": "Reflexiva",
+            "duration": "Cena",
+            "effect": "Manifesta qualquer uma ou todas as três adaptações armazenadas. As adaptações podem ser trocadas passando um dia em Túmulo Sem Marca e gastando Vitae por substituição."
+          }
         },
         {
           "rating": 3,
           "name": "Beast's Skin",
-          "translatedName": "Pele da Besta",
+          "translatedName": "Pele da Fera",
           "summary": "Assume stored forms of consumed predatory animals.",
           "cost": "2 Vitae",
           "dicePool": "None",
           "action": "Instant",
           "duration": "Indefinite",
-          "effect": "Use a stored animal's Physical Attributes, Skills, Size, Speed, Health, senses, locomotion, and natural attacks. Store up to Protean dots in forms."
+          "effect": "Use a stored animal's Physical Attributes, Skills, Size, Speed, Health, senses, locomotion, and natural attacks. Store up to Protean dots in forms.",
+          "presentationPt": {
+            "summary": "Assume formas armazenadas de animais predadores que consumiu.",
+            "cost": "2 Vitae",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "duration": "Indefinida",
+            "effect": "Usa os Atributos Físicos, Habilidades, Tamanho, Deslocamento, Vitalidade, sentidos, locomoção e ataques naturais de um animal cuja forma foi armazenada. Armazena tantas formas quanto seus pontos de Metamorfose."
+          }
         },
         {
           "rating": 4,
           "name": "Unnatural Aspect",
-          "translatedName": "Aspecto Antinatural",
+          "translatedName": "Aspecto Sobrenatural",
           "summary": "Add one monstrous adaptation when using Predatory Aspect.",
           "cost": "1 additional Vitae",
           "dicePool": "None",
           "action": "None",
           "duration": "Scene",
-          "effect": "Add one stored monstrous adaptation such as Barbed Hands, Hooked Hands, Horrid Talons, Rubbery Flesh, or Wings. Change the stored choice after a full day/night in Unmarked Grave and two Vitae."
+          "effect": "Add one stored monstrous adaptation such as Barbed Hands, Hooked Hands, Horrid Talons, Rubbery Flesh, or Wings. Change the stored choice after a full day/night in Unmarked Grave and two Vitae.",
+          "presentationPt": {
+            "summary": "Acrescenta uma adaptação monstruosa ao usar Aspecto Predatório.",
+            "cost": "1 Vitae adicional",
+            "dicePool": "Nenhuma",
+            "action": "Nenhuma",
+            "duration": "Cena",
+            "effect": "Acrescenta uma adaptação monstruosa armazenada, como Mãos Farpadas, Mãos com Ganchos, Garras Horrendas, Carne Elástica ou Asas. A escolha pode ser trocada após um dia e uma noite inteiros em Túmulo Sem Marca e o gasto de dois Vitae."
+          }
         },
         {
           "rating": 5,
@@ -2133,9 +2229,19 @@
           "cost": "3 Vitae",
           "dicePool": "None",
           "action": "Instant",
-          "effect": "Become a mobile smoke cloud immune to physical harm except fire, sunlight, and damaging banes; move through non-airtight barriers, retain Kindred senses, feed from open wounds, and sleep in this form like Unmarked Grave."
+          "effect": "Become a mobile smoke cloud immune to physical harm except fire, sunlight, and damaging banes; move through non-airtight barriers, retain Kindred senses, feed from open wounds, and sleep in this form like Unmarked Grave.",
+          "presentationPt": {
+            "summary": "Dissolve-se em uma nuvem predatória de fumaça.",
+            "cost": "3 Vitae",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "effect": "Torna-se uma nuvem móvel de fumaça, imune a dano físico, exceto fogo, luz solar e Maldições que causem dano; atravessa barreiras que não sejam herméticas, conserva os sentidos de Membro, alimenta-se de feridas abertas e dorme nessa forma como em Túmulo Sem Marca."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "Remodela o vampiro por meio da terra, de adaptações animais, de formas completas e de transformações monstruosas."
+      }
     },
     {
       "id": "resilience",

@@ -14,8 +14,8 @@ const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").r
 const fields = ["summary", "cost", "requirement", "condition", "dicePool", "action", "duration", "contestedBy", "resistedBy", "sacrament", "effect", "procedure", "outcome"];
 
 test("Vampire official and Homebrew power presentations cover existing fields and preserve numeric limits", () => {
-  assert.deepEqual(selected.map(item => item.id).sort(), ["animalism", "auspex", "blood-tether", "celerity", "crochan", "dominate", "interface", "majesty", "nightmare", "resilience", "spiritus-sancti", "surge", "truths-of-erebus", "vigor"]);
-  assert.equal(selected.flatMap(item => item.levels).length, 55);
+  assert.deepEqual(selected.map(item => item.id).sort(), ["animalism", "auspex", "blood-tether", "celerity", "crochan", "dominate", "interface", "majesty", "nightmare", "obfuscate", "protean", "resilience", "spiritus-sancti", "surge", "truths-of-erebus", "vigor"]);
+  assert.equal(selected.flatMap(item => item.levels).length, 65);
   for (const definition of selected) {
     for (const item of [definition, ...definition.levels]) {
       assert.ok(item.presentationPt, `${definition.id}.${item.rating ?? "summary"}`);
@@ -27,6 +27,13 @@ test("Vampire official and Homebrew power presentations cover existing fields an
       for (const [result, text] of Object.entries(item.rollResults ?? {})) {
         assert.ok(item.presentationPt.rollResults[result]?.trim());
         assert.deepEqual(item.presentationPt.rollResults[result].match(/\d+/g) ?? [], text.match(/\d+/g) ?? []);
+      }
+      assert.equal(item.presentationPt.suggestedModifiers?.length ?? 0, item.suggestedModifiers?.length ?? 0);
+      for (const [index, modifier] of (item.suggestedModifiers ?? []).entries()) {
+        const translated = item.presentationPt.suggestedModifiers[index];
+        assert.equal(translated.modifier, modifier.modifier);
+        assert.ok(translated.situation.trim());
+        assert.deepEqual(translated.situation.match(/\d+/g) ?? [], modifier.situation.match(/\d+/g) ?? []);
       }
     }
   }
@@ -101,6 +108,13 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
           }
           for (const result of Object.values(text.rollResults ?? {})) {
             for (const html of [sheet, experience]) assert.ok(html.includes(escape(result)));
+            if (homebrewDefinition) assert.ok(homebrew.includes(escape(result)));
+          }
+          for (const modifier of text.suggestedModifiers ?? []) {
+            for (const html of [sheet, experience, ...(homebrewDefinition ? [homebrew] : [])]) {
+              assert.ok(html.includes(escape(modifier.modifier)));
+              assert.ok(html.includes(escape(modifier.situation)));
+            }
           }
           assert.equal(partial.includes(escape(text.summary)), level.rating <= 3);
         }

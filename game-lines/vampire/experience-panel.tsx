@@ -241,6 +241,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     if (item.rollResults?.failure) add(t("ui.failure"), item.rollResults.failure);
     if (item.rollResults?.success) add(t("ui.success"), item.rollResults.success);
     if (item.rollResults?.exceptionalSuccess) add(t("ui.exceptionalSuccess"), item.rollResults.exceptionalSuccess);
+    for (const modifier of item.suggestedModifiers ?? []) add(`${t("ui.suggestedModifiers")} ${modifier.modifier}`, modifier.situation);
     return rows;
   };
   const disciplinePickerItems = purchase === "discipline" ? options.flatMap((option) => {
