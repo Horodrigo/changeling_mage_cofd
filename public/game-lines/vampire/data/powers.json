@@ -891,7 +891,7 @@
     {
       "id": "vitiate",
       "name": "Vitiate",
-      "translatedName": "Vitiate",
+      "translatedName": "Debilitação",
       "clanIds": [
         "bekaak"
       ],
@@ -902,59 +902,102 @@
         {
           "rating": 1,
           "name": "Vitiate •",
-          "translatedName": "Vitiate •",
+          "translatedName": "Debilitação •",
           "summary": "Close contact penalizes the subject's next Physical action; Vitae strips Initiative or inflicts a temporary impairment.",
           "cost": "None (persistent) or 1 Vitae per active effect",
           "dicePool": "None",
           "action": "None (persistent) or reflexive (active)",
           "duration": "Permanent (persistent) or one turn (active)",
-          "effect": "Anyone touching or closely engaging the vampire suffers −1 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of dealing damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for one turn, or send the victim to the end of Initiative; afterward they reroll Initiative with −1. Outside combat, one turn of touch can inflict a Tilt. Only one such Tilt may affect a victim at once."
+          "effect": "Anyone touching or closely engaging the vampire suffers −1 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of dealing damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for one turn, or send the victim to the end of Initiative; afterward they reroll Initiative with −1. Outside combat, one turn of touch can inflict a Tilt. Only one such Tilt may affect a victim at once.",
+          "presentationPt": {
+            "summary": "O contato próximo penaliza a próxima ação Física do alvo; Vitae reduz sua Iniciativa ou causa uma limitação temporária.",
+            "cost": "Nenhum (persistente) ou 1 Vitae por efeito ativo",
+            "dicePool": "Nenhuma",
+            "action": "Nenhuma (persistente) ou reflexiva (ativa)",
+            "duration": "Permanente (persistente) ou um turno (ativo)",
+            "effect": "Quem tocar o vampiro ou interagir de perto com ele sofre −1 na próxima ação Física. Após um ataque de Briga bem-sucedido, gasta um Vitae em vez de causar dano para impor Braço Lesionado, Cego em um olho, Surdo, Perna Lesionada ou Mudo por um turno, ou colocar a vítima no fim da ordem de Iniciativa; depois, ela testa novamente sua Iniciativa com −1. Fora de combate, um turno de contato pode impor uma Complicação. Apenas uma dessas Complicações pode afetar a vítima por vez."
+          }
         },
         {
           "rating": 2,
           "name": "Vitiate ••",
-          "translatedName": "Vitiate ••",
+          "translatedName": "Debilitação ••",
           "summary": "Increase Vitiate's persistent penalty and active duration.",
           "cost": "None (persistent) or 1 Vitae per active effect",
           "dicePool": "None",
           "action": "None (persistent) or reflexive (active)",
           "duration": "Permanent (persistent) or one turn (active)",
-          "effect": "Anyone touching or closely engaging the vampire suffers −2 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for two turns, or move the victim to the end of Initiative; afterward they reroll Initiative with −2. Celerity may negate the Initiative effect through a Clash of Wills."
+          "effect": "Anyone touching or closely engaging the vampire suffers −2 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for two turns, or move the victim to the end of Initiative; afterward they reroll Initiative with −2. Celerity may negate the Initiative effect through a Clash of Wills.",
+          "presentationPt": {
+            "summary": "Aumenta a penalidade persistente e a duração ativa de Debilitação.",
+            "cost": "Nenhum (persistente) ou 1 Vitae por efeito ativo",
+            "dicePool": "Nenhuma",
+            "action": "Nenhuma (persistente) ou reflexiva (ativa)",
+            "duration": "Permanente (persistente) ou um turno (ativo)",
+            "effect": "Quem tocar o vampiro ou interagir de perto com ele sofre −2 na próxima ação Física. Após um ataque de Briga bem-sucedido, gasta um Vitae em vez de causar dano para impor Braço Lesionado, Cego em um olho, Surdo, Perna Lesionada ou Mudo por dois turnos, ou colocar a vítima no fim da ordem de Iniciativa; depois, ela testa novamente sua Iniciativa com −2. Celeridade pode anular o efeito na Iniciativa por meio de um Confronto de Vontades."
+          }
         },
         {
           "rating": 3,
           "name": "Vitiate •••",
-          "translatedName": "Vitiate •••",
+          "translatedName": "Debilitação •••",
           "summary": "Increase Vitiate's persistent penalty and active duration.",
           "cost": "None (persistent) or 1 Vitae per active effect",
           "dicePool": "None",
           "action": "None (persistent) or reflexive (active)",
           "duration": "Permanent (persistent) or one turn (active)",
-          "effect": "Anyone touching or closely engaging the vampire suffers −3 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for three turns, or move the victim to the end of Initiative; afterward they reroll Initiative with −3. Celerity may negate the Initiative effect through a Clash of Wills."
+          "effect": "Anyone touching or closely engaging the vampire suffers −3 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for three turns, or move the victim to the end of Initiative; afterward they reroll Initiative with −3. Celerity may negate the Initiative effect through a Clash of Wills.",
+          "presentationPt": {
+            "summary": "Aumenta a penalidade persistente e a duração ativa de Debilitação.",
+            "cost": "Nenhum (persistente) ou 1 Vitae por efeito ativo",
+            "dicePool": "Nenhuma",
+            "action": "Nenhuma (persistente) ou reflexiva (ativa)",
+            "duration": "Permanente (persistente) ou um turno (ativo)",
+            "effect": "Quem tocar o vampiro ou interagir de perto com ele sofre −3 na próxima ação Física. Após um ataque de Briga bem-sucedido, gasta um Vitae em vez de causar dano para impor Braço Lesionado, Cego em um olho, Surdo, Perna Lesionada ou Mudo por três turnos, ou colocar a vítima no fim da ordem de Iniciativa; depois, ela testa novamente sua Iniciativa com −3. Celeridade pode anular o efeito na Iniciativa por meio de um Confronto de Vontades."
+          }
         },
         {
           "rating": 4,
           "name": "Vitiate ••••",
-          "translatedName": "Vitiate ••••",
+          "translatedName": "Debilitação ••••",
           "summary": "Increase Vitiate's persistent penalty and active duration.",
           "cost": "None (persistent) or 1 Vitae per active effect",
           "dicePool": "None",
           "action": "None (persistent) or reflexive (active)",
           "duration": "Permanent (persistent) or one turn (active)",
-          "effect": "Anyone touching or closely engaging the vampire suffers −4 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for four turns, or move the victim to the end of Initiative; afterward they reroll Initiative with −4. Celerity may negate the Initiative effect through a Clash of Wills."
+          "effect": "Anyone touching or closely engaging the vampire suffers −4 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for four turns, or move the victim to the end of Initiative; afterward they reroll Initiative with −4. Celerity may negate the Initiative effect through a Clash of Wills.",
+          "presentationPt": {
+            "summary": "Aumenta a penalidade persistente e a duração ativa de Debilitação.",
+            "cost": "Nenhum (persistente) ou 1 Vitae por efeito ativo",
+            "dicePool": "Nenhuma",
+            "action": "Nenhuma (persistente) ou reflexiva (ativa)",
+            "duration": "Permanente (persistente) ou um turno (ativo)",
+            "effect": "Quem tocar o vampiro ou interagir de perto com ele sofre −4 na próxima ação Física. Após um ataque de Briga bem-sucedido, gasta um Vitae em vez de causar dano para impor Braço Lesionado, Cego em um olho, Surdo, Perna Lesionada ou Mudo por quatro turnos, ou colocar a vítima no fim da ordem de Iniciativa; depois, ela testa novamente sua Iniciativa com −4. Celeridade pode anular o efeito na Iniciativa por meio de um Confronto de Vontades."
+          }
         },
         {
           "rating": 5,
           "name": "Vitiate •••••",
-          "translatedName": "Vitiate •••••",
+          "translatedName": "Debilitação •••••",
           "summary": "Increase Vitiate's persistent penalty and active duration.",
           "cost": "None (persistent) or 1 Vitae per active effect",
           "dicePool": "None",
           "action": "None (persistent) or reflexive (active)",
           "duration": "Permanent (persistent) or one turn (active)",
-          "effect": "Anyone touching or closely engaging the vampire suffers −5 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for five turns, or move the victim to the end of Initiative; afterward they reroll Initiative with −5. Celerity may negate the Initiative effect through a Clash of Wills."
+          "effect": "Anyone touching or closely engaging the vampire suffers −5 on their next Physical action. After a successful Brawl attack, spend one Vitae instead of damage to inflict Arm Wrack, one-eye Blinded, Deafened, Leg Wrack, or Mute for five turns, or move the victim to the end of Initiative; afterward they reroll Initiative with −5. Celerity may negate the Initiative effect through a Clash of Wills.",
+          "presentationPt": {
+            "summary": "Aumenta a penalidade persistente e a duração ativa de Debilitação.",
+            "cost": "Nenhum (persistente) ou 1 Vitae por efeito ativo",
+            "dicePool": "Nenhuma",
+            "action": "Nenhuma (persistente) ou reflexiva (ativa)",
+            "duration": "Permanente (persistente) ou um turno (ativo)",
+            "effect": "Quem tocar o vampiro ou interagir de perto com ele sofre −5 na próxima ação Física. Após um ataque de Briga bem-sucedido, gasta um Vitae em vez de causar dano para impor Braço Lesionado, Cego em um olho, Surdo, Perna Lesionada ou Mudo por cinco turnos, ou colocar a vítima no fim da ordem de Iniciativa; depois, ela testa novamente sua Iniciativa com −5. Celeridade pode anular o efeito na Iniciativa por meio de um Confronto de Vontades."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "A corrupção dos Bekaak que enfraquece corpos pela proximidade e pelo toque."
+      }
     },
     {
       "id": "ortam",
@@ -1398,7 +1441,15 @@
           "dicePool": "None",
           "action": "None (persistent) or reflexive (active)",
           "duration": "Permanent (persistent) or one turn (active)",
-          "effect": "Add one die to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds one as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened. A dramatic failure cannot be replaced unless another active effect first reduces it to a normal failure."
+          "effect": "Add one die to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds one as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened. A dramatic failure cannot be replaced unless another active effect first reduces it to a normal failure.",
+          "presentationPt": {
+            "summary": "Soma Praestantia à Iniciativa e às paradas de Destreza; Vitae aplica esse valor como bônus de arma ou substitui uma ação violenta fracassada.",
+            "cost": "Nenhum (persistente) ou 1 Vitae por efeito ativo",
+            "dicePool": "Nenhuma",
+            "action": "Nenhuma (persistente) ou reflexiva (ativa)",
+            "duration": "Permanente (persistente) ou um turno (ativo)",
+            "effect": "Soma um dado a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência do Sangue. Cada Vitae gasto soma um como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido. Uma falha dramática não pode ser substituída, a menos que outro efeito ativo primeiro a reduza a uma falha normal."
+          }
         },
         {
           "rating": 2,
@@ -1409,7 +1460,15 @@
           "dicePool": "None",
           "action": "None (persistent) or reflexive (active)",
           "duration": "Permanent (persistent) or one turn (active)",
-          "effect": "Add two dice to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds two as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened."
+          "effect": "Add two dice to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds two as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened.",
+          "presentationPt": {
+            "summary": "Aumenta os bônus persistentes e ativos de Praestantia para dois dados.",
+            "cost": "Nenhum (persistente) ou 1 Vitae por efeito ativo",
+            "dicePool": "Nenhuma",
+            "action": "Nenhuma (persistente) ou reflexiva (ativa)",
+            "duration": "Permanente (persistente) ou um turno (ativo)",
+            "effect": "Soma dois dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência do Sangue. Cada Vitae gasto soma dois como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
+          }
         },
         {
           "rating": 3,
@@ -1420,7 +1479,15 @@
           "dicePool": "None",
           "action": "None (persistent) or reflexive (active)",
           "duration": "Permanent (persistent) or one turn (active)",
-          "effect": "Add three dice to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds three as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened."
+          "effect": "Add three dice to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds three as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened.",
+          "presentationPt": {
+            "summary": "Aumenta os bônus persistentes e ativos de Praestantia para três dados.",
+            "cost": "Nenhum (persistente) ou 1 Vitae por efeito ativo",
+            "dicePool": "Nenhuma",
+            "action": "Nenhuma (persistente) ou reflexiva (ativa)",
+            "duration": "Permanente (persistente) ou um turno (ativo)",
+            "effect": "Soma três dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência do Sangue. Cada Vitae gasto soma três como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
+          }
         },
         {
           "rating": 4,
@@ -1431,7 +1498,15 @@
           "dicePool": "None",
           "action": "None (persistent) or reflexive (active)",
           "duration": "Permanent (persistent) or one turn (active)",
-          "effect": "Add four dice to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds four as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened."
+          "effect": "Add four dice to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds four as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened.",
+          "presentationPt": {
+            "summary": "Aumenta os bônus persistentes e ativos de Praestantia para quatro dados.",
+            "cost": "Nenhum (persistente) ou 1 Vitae por efeito ativo",
+            "dicePool": "Nenhuma",
+            "action": "Nenhuma (persistente) ou reflexiva (ativa)",
+            "duration": "Permanente (persistente) ou um turno (ativo)",
+            "effect": "Soma quatro dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência do Sangue. Cada Vitae gasto soma quatro como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
+          }
         },
         {
           "rating": 5,
@@ -1442,9 +1517,20 @@
           "dicePool": "None",
           "action": "None (persistent) or reflexive (active)",
           "duration": "Permanent (persistent) or one turn (active)",
-          "effect": "Add five dice to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds five as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened."
+          "effect": "Add five dice to Dexterity-based Attribute or Skill rolls and to Initiative; this may exceed the Blood Potency limit. Each Vitae spent either adds five as a weapon bonus to Dexterity-based Firearms, Athletics, and Weaponry attacks this turn, or replaces a failed violent action with a fundamentally different action as though the first never happened.",
+          "presentationPt": {
+            "summary": "Aumenta os bônus persistentes e ativos de Praestantia para cinco dados.",
+            "cost": "Nenhum (persistente) ou 1 Vitae por efeito ativo",
+            "dicePool": "Nenhuma",
+            "action": "Nenhuma (persistente) ou reflexiva (ativa)",
+            "duration": "Permanente (persistente) ou um turno (ativo)",
+            "effect": "Soma cinco dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência do Sangue. Cada Vitae gasto soma cinco como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "A velocidade dos Akhud expressa como Iniciativa e Destreza perfeitas."
+      }
     },
     {
       "id": "animalism",
