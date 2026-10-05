@@ -11612,7 +11612,7 @@
       "id": "theban-apparition-host",
       "kind": "theban-miracle",
       "name": "Apparition of the Host",
-      "translatedName": "Apparition of the Host",
+      "translatedName": "Aparição da Hoste",
       "rating": 2,
       "experienceCost": 2,
       "summary": "Bless a switch that terrorizes a victim with angelic phantasms.",
@@ -11622,27 +11622,39 @@
       "sacrament": "A holly switch",
       "contestedBy": "Resolve + Blood Potency",
       "duration": "The switch remains blessed for one month",
-      "effect": "When snapped, the target gains Frightened, or Spooked if mortal; spending Willpower can make the apparition visible only to the victim."
+      "effect": "When snapped, the target gains Frightened and mortal bystanders gain Spooked; spending Willpower can make the apparition visible only to the victim.",
+      "presentationPt": {
+        "summary": "Abençoar um ramo que aterroriza uma vítima com aparições angelicais.",
+        "sacrament": "Um ramo de azevinho",
+        "contestedBy": "Perseverança + Potência do Sangue",
+        "duration": "O ramo permanece abençoado por um mês",
+        "effect": "Quando o ramo é quebrado, o alvo recebe Assustado e os mortais espectadores recebem Assombrado; gastar Força de Vontade pode tornar a aparição visível apenas para a vítima."
+      }
     },
     {
       "id": "theban-apple-eden",
       "kind": "theban-miracle",
       "name": "Apple of Eden",
-      "translatedName": "Apple of Eden",
+      "translatedName": "Maçã do Eden",
       "rating": 1,
       "experienceCost": 2,
       "summary": "Infuse a fruit that expands a human's intellect and supernatural perception.",
       "source": "Secrets of the Covenants",
       "page": 194,
       "targetSuccesses": 5,
-      "sacrament": "An apple and one Vitae",
-      "effect": "A human eater suffers a breaking point, distributes dots equal to Theban Sorcery between Intelligence and Wits, and safely perceives supernatural beings for days; the benefit can be made permanent with Experience."
+      "sacrament": "An apple and a drop of Vitae",
+      "effect": "A human eater suffers a breaking point, distributes dots equal to Theban Sorcery between Intelligence and Wits, and safely perceives supernatural beings for days; the benefit can be made permanent with Experience.",
+      "presentationPt": {
+        "summary": "Imbuir uma fruta que amplia o intelecto e a percepção sobrenatural de um humano.",
+        "sacrament": "Uma maçã e uma gota de Vitae",
+        "effect": "Um humano que a coma sofre um Ponto de Ruptura, distribui pontos iguais à Feitiçaria Tebana entre Inteligência e Raciocínio e percebe seres sobrenaturais sem risco por dias; o benefício pode se tornar permanente com Experiência."
+      }
     },
     {
       "id": "theban-marian-apparition",
       "kind": "theban-miracle",
       "name": "Marian Apparition",
-      "translatedName": "Marian Apparition",
+      "translatedName": "Aparição Mariana",
       "rating": 1,
       "experienceCost": 2,
       "summary": "Bless cloth that reveals a shaming holy apparition when torn.",
@@ -11652,13 +11664,20 @@
       "sacrament": "White cloth stained with menstrual blood",
       "contestedBy": "Humanity",
       "duration": "Scene after activation",
-      "effect": "All witnesses see the apparition. Kindred who lose the contest add the caster's Theban Sorcery to Humanity for detachment, while Crúac cast beneath it gains the same bonus."
+      "effect": "All witnesses see the apparition. Kindred who lose the contest add the caster's Theban Sorcery to Humanity for detachment, while Crúac cast beneath it gains the same bonus.",
+      "presentationPt": {
+        "summary": "Abençoar um tecido que revela uma aparição sagrada que causa vergonha ao ser rasgado.",
+        "sacrament": "Tecido branco manchado com sangue menstrual",
+        "contestedBy": "Humanidade",
+        "duration": "Cena após a ativação",
+        "effect": "Todas as testemunhas veem a aparição. Membros que perdem a disputa somam a Feitiçaria Tebana do conjurador à Humanidade para determinar Desapego; Crúac conjurado sob a aparição recebe o mesmo bônus."
+      }
     },
     {
       "id": "theban-revelatory-shroud",
       "kind": "theban-miracle",
       "name": "Revelatory Shroud",
-      "translatedName": "Revelatory Shroud",
+      "translatedName": "Mortalha Reveladora",
       "rating": 1,
       "experienceCost": 2,
       "summary": "Reveal the face of the last person to touch an object or pass through an area.",
@@ -11666,13 +11685,18 @@
       "page": 194,
       "targetSuccesses": 5,
       "sacrament": "A shroud",
-      "effect": "Cover the subject with the blessed shroud to display the face of the last person who touched the object or crossed the covered place."
+      "effect": "Cover the subject with the blessed shroud to display the face of the last person who touched the object or crossed the covered place.",
+      "presentationPt": {
+        "summary": "Revelar o rosto da última pessoa que tocou um objeto ou atravessou uma área.",
+        "sacrament": "Uma mortalha",
+        "effect": "Cubra o alvo com a mortalha abençoada para exibir o rosto da última pessoa que tocou o objeto ou atravessou o local coberto."
+      }
     },
     {
       "id": "theban-aarons-rod",
       "kind": "theban-miracle",
       "name": "Aaron’s Rod",
-      "translatedName": "Aaron’s Rod",
+      "translatedName": "Bastão de Aaron",
       "rating": 3,
       "experienceCost": 2,
       "summary": "Bless a rod that becomes a venomous serpent when cast down.",
@@ -11682,13 +11706,20 @@
       "sacrament": "A rod",
       "cost": "1 Willpower to activate",
       "duration": "Scene",
-      "effect": "The serpent obeys its wielder or instructions set during the blessing; its venom destroys Vitae or deals lethal damage with Toxicity equal to Blood Potency."
+      "effect": "The serpent obeys its wielder or instructions set during the blessing; its venom destroys Vitae or deals lethal damage with Toxicity equal to Blood Potency.",
+      "presentationPt": {
+        "summary": "Abençoar um bastão que se torna uma serpente venenosa quando lançado ao chão.",
+        "sacrament": "Um bastão",
+        "cost": "1 Força de Vontade para ativar",
+        "duration": "Cena",
+        "effect": "A serpente obedece a quem a empunha ou às instruções definidas durante a bênção; seu veneno destrói Vitae ou causa dano letal, com Toxicidade igual à Potência do Sangue."
+      }
     },
     {
       "id": "theban-blessing-legion",
       "kind": "theban-miracle",
       "name": "Blessing the Legion",
-      "translatedName": "Blessing the Legion",
+      "translatedName": "Abençoar a Legião",
       "rating": 3,
       "experienceCost": 2,
       "summary": "Store Vitae in blessed armor so a crusader can heal beyond normal per-turn limits.",
@@ -11696,13 +11727,18 @@
       "page": 195,
       "targetSuccesses": 6,
       "sacrament": "Armor",
-      "effect": "The caster or wearer stores Vitae up to Theban Sorcery in the armor. While worn, it spends one stored Vitae per turn to heal without counting against the wearer's Vitae-per-turn limit; extra successes bless additional suits."
+      "effect": "The caster or wearer stores Vitae up to Theban Sorcery in the armor. While worn, it spends one stored Vitae per turn to heal without counting against the wearer's Vitae-per-turn limit; extra successes bless additional suits.",
+      "presentationPt": {
+        "summary": "Armazenar Vitae em uma armadura abençoada para um cruzado curar ferimentos além dos limites normais por turno.",
+        "sacrament": "Armadura",
+        "effect": "O conjurador ou usuário armazena na armadura até Feitiçaria Tebana pontos de Vitae. Enquanto vestida, ela gasta um ponto armazenado por turno para curar, sem contar para o limite de Vitae por turno do usuário; sucessos extras abençoam armaduras adicionais."
+      }
     },
     {
       "id": "theban-bloody-icon",
       "kind": "theban-miracle",
       "name": "Bloody Icon",
-      "translatedName": "Bloody Icon",
+      "translatedName": "Ícone Sangrento",
       "rating": 2,
       "experienceCost": 2,
       "summary": "Sacrifice Humanity so a holy icon weeps Vitae.",
@@ -11711,14 +11747,21 @@
       "targetSuccesses": 6,
       "sacrament": "A statue of a saint",
       "requirement": "Detach from Humanity during a religious reverie",
-      "duration": "Until the stored Vitae is consumed",
-      "effect": "The statue produces Vitae equal to casting successes, which causes neither blood addiction nor Vinculum, then crumbles when emptied."
+      "duration": "Until the end of the night",
+      "effect": "The statue produces Vitae equal to casting successes, usable for the rest of the night as Kindred Vitae without blood addiction. Later that night, the statue crumbles beyond recognition and cannot be used again.",
+      "presentationPt": {
+        "summary": "Sacrificar Humanidade para que um ícone sagrado chore Vitae.",
+        "sacrament": "Uma estátua de um santo",
+        "requirement": "Sofrer Desapego da Humanidade durante um êxtase religioso",
+        "duration": "Até o fim da noite",
+        "effect": "A estátua produz Vitae igual aos sucessos da conjuração, utilizável durante o restante da noite como Vitae de Membro, sem vício em sangue. Mais tarde naquela noite, a estátua desmorona até ficar irreconhecível e não pode ser usada novamente."
+      }
     },
     {
       "id": "theban-walls-jericho",
       "kind": "theban-miracle",
       "name": "The Walls of Jericho",
-      "translatedName": "The Walls of Jericho",
+      "translatedName": "As Muralhas de Jericho",
       "rating": 2,
       "experienceCost": 2,
       "summary": "Bless a horn to break barriers between the bearer and a named Kindred.",
@@ -11728,13 +11771,20 @@
       "sacrament": "A horn",
       "dicePool": "Presence + Academics + Theban Sorcery",
       "duration": "One week",
-      "effect": "Blowing the horn removes Structure from intervening barriers per success; living obstacles suffer bashing damage."
+      "effect": "Blowing the horn removes Structure from intervening barriers per success; living obstacles suffer bashing damage.",
+      "presentationPt": {
+        "summary": "Abençoar uma trombeta para romper barreiras entre o portador e um Membro nomeado.",
+        "sacrament": "Uma trombeta",
+        "dicePool": "Presença + Erudição + Feitiçaria Tebana",
+        "duration": "Uma semana",
+        "effect": "Tocar a trombeta remove Estrutura das barreiras no caminho por sucesso; obstáculos vivos sofrem dano contundente."
+      }
     },
     {
       "id": "theban-great-prophecy",
       "kind": "theban-miracle",
       "name": "Great Prophecy",
-      "translatedName": "Great Prophecy",
+      "translatedName": "Grande Profecia",
       "rating": 4,
       "experienceCost": 2,
       "summary": "Declare a group's fate within the next month and the means to escape it.",
@@ -11743,13 +11793,19 @@
       "targetSuccesses": 8,
       "sacrament": "A saint's body part",
       "duration": "One month or until fulfilled or averted",
-      "effect": "A positive prophecy grants temporary Merits up to Theban Sorcery; a negative one can destroy Merits up to casting successes but cannot directly cause Final Death."
+      "effect": "A positive prophecy grants temporary Merits up to Theban Sorcery; a negative one can destroy Merits up to casting successes but cannot directly cause Final Death.",
+      "presentationPt": {
+        "summary": "Declarar o destino de um grupo no próximo mês e a maneira de evitá-lo.",
+        "sacrament": "Uma parte do corpo de um santo",
+        "duration": "Um mês ou até ser cumprida ou evitada",
+        "effect": "Uma profecia positiva concede Méritos temporários até Feitiçaria Tebana; uma negativa pode destruir Méritos até os sucessos da conjuração, mas não pode causar Morte Final diretamente."
+      }
     },
     {
       "id": "theban-miracle-dead-sun",
       "kind": "theban-miracle",
       "name": "Miracle of the Dead Sun",
-      "translatedName": "Miracle of the Dead Sun",
+      "translatedName": "Milagre do Sol Morto",
       "rating": 3,
       "experienceCost": 2,
       "summary": "Destroy blessed jewelry and sacrifice Humanity to turn day into rainy night.",
@@ -11758,13 +11814,19 @@
       "targetSuccesses": 6,
       "sacrament": "Silver jewelry",
       "duration": "Ten minutes per remaining Humanity dot",
-      "effect": "The domain becomes a sunless storm in which vampires function as at night and may awaken normally."
+      "effect": "The domain becomes a sunless storm in which vampires function as at night and may awaken normally.",
+      "presentationPt": {
+        "summary": "Destruir uma joia abençoada e sacrificar Humanidade para transformar o dia em uma noite chuvosa.",
+        "sacrament": "Joia de prata",
+        "duration": "Dez minutos por ponto de Humanidade restante",
+        "effect": "O domínio torna-se uma tempestade sem sol na qual os vampiros funcionam como à noite e podem despertar normalmente."
+      }
     },
     {
       "id": "theban-pledge-worthless-one",
       "kind": "theban-miracle",
       "name": "Pledge to the Worthless One",
-      "translatedName": "Pledge to the Worthless One",
+      "translatedName": "Juramento ao Indigno",
       "rating": 3,
       "experienceCost": 2,
       "summary": "Swear to Belial for feeding power, frenzy's strength, and a demonic familiar.",
@@ -11772,13 +11834,18 @@
       "page": 196,
       "targetSuccesses": 8,
       "sacrament": "A contented mortal",
-      "effect": "Choose a deadly sin: active sinners provide twice normal Vitae and innocents half; gain frenzy bonuses, lose Touchstone benefits, bear a mark, and receive a Retainer ••••• familiar with three Disciplines."
+      "effect": "Choose a deadly sin: active sinners provide twice normal Vitae and innocents half; gain frenzy bonuses even while lucid, cannot maintain a Touchstone, and bear a physical mark. Receive a demonic animal familiar using Retainer(Ghoul) •••••: three total dots of the regnant's Disciplines, not three additional dots. The vampire can see through its eyes and speak through its mouth.",
+      "presentationPt": {
+        "summary": "Jurar a Belial em troca de poder ao se alimentar, força do Frenesi e um familiar demoníaco.",
+        "sacrament": "Um mortal satisfeito com a vida",
+        "effect": "O vampiro escolhe um pecado capital: quem o pratica fornece o dobro da Vitae normal e inocentes, metade. Recebe os benefícios de frenesi mesmo lúcido, não pode manter um Touchstone e exibe uma marca física. Recebe um familiar demoníaco em forma animal usando Lacaio (Ghoul) •••••: três pontos totais das Disciplinas do regente, sem acrescentar outros três. O vampiro pode ver pelos olhos do familiar e falar por sua boca."
+      }
     },
     {
       "id": "theban-guiding-star",
       "kind": "theban-miracle",
       "name": "The Guiding Star",
-      "translatedName": "The Guiding Star",
+      "translatedName": "A Estrela Guia",
       "rating": 3,
       "experienceCost": 2,
       "summary": "Bless coins that guide bearers to a hidden refuge and blood bounty.",
@@ -11786,14 +11853,20 @@
       "page": 196,
       "targetSuccesses": 8,
       "sacrament": "A star chart and gold coins",
-      "duration": "One night per coin, extendable with Willpower",
-      "effect": "A bearer follows the stars to a concealed Safe Place, Haven, and Feeding Ground equivalent to five dots, then forgets its location on leaving."
+      "duration": "One night, extendable with Willpower",
+      "effect": "A bearer follows the stars to a concealed Safe Place, Haven, and Feeding Ground equivalent to five dots, then forgets its location on leaving.",
+      "presentationPt": {
+        "summary": "Abençoar moedas que guiam seus portadores até um refúgio oculto e abundante em sangue.",
+        "sacrament": "Uma carta estelar e moedas de ouro",
+        "duration": "Uma noite, prorrogável com Força de Vontade",
+        "effect": "O portador segue as estrelas até um Local Seguro, Refúgio e Campo de Caça ocultos, equivalentes a cinco pontos, depois esquece a localização ao sair."
+      }
     },
     {
       "id": "theban-apocalypse",
       "kind": "theban-miracle",
       "name": "Apocalypse",
-      "translatedName": "Apocalypse",
+      "translatedName": "Apocalipse",
       "rating": 5,
       "experienceCost": 2,
       "summary": "Reveal signs of supernatural beings' true nature across a wide area.",
@@ -11802,13 +11875,19 @@
       "targetSuccesses": 10,
       "sacrament": "An ancient text",
       "duration": "One week",
-      "effect": "Within a half-mile area per five successes beyond the first ten, supernatural natures become evident and Obfuscate or comparable illusions fail or Clash with the miracle."
+      "effect": "The initial radius is half a mile, increasing by half a mile for every five successes beyond the first ten. Vampires reveal their true age and corpse-like nature; Obfuscate and illusionary Disciplines fail. Other supernatural creatures may be revealed at the Storyteller's discretion.",
+      "presentationPt": {
+        "summary": "Revelar sinais da verdadeira natureza de seres sobrenaturais em uma área ampla.",
+        "sacrament": "Um texto antigo",
+        "duration": "Uma semana",
+        "effect": "O raio inicial é de meia milha, aumentando em meia milha a cada cinco sucessos além dos dez primeiros. Vampiros revelam sua idade real e natureza cadavérica; Ofuscação e Disciplinas ilusórias falham. Outras criaturas sobrenaturais podem ser reveladas a critério do Narrador."
+      }
     },
     {
       "id": "theban-judgment-fast",
       "kind": "theban-miracle",
       "name": "The Judgment Fast",
-      "translatedName": "The Judgment Fast",
+      "translatedName": "O Jejum do Julgamento",
       "rating": 5,
       "experienceCost": 2,
       "summary": "Curse a domain so vampires cannot sustain Vitae above Humanity.",
@@ -11817,7 +11896,13 @@
       "targetSuccesses": 15,
       "sacrament": "A rotten feast",
       "duration": "One month",
-      "effect": "Vitae above a vampire's Humanity can neither be stored nor used and is vomited out as worthless blood."
+      "effect": "Vitae above a vampire's Humanity can neither be stored nor used and is vomited out as worthless blood.",
+      "presentationPt": {
+        "summary": "Amaldiçoar um domínio para que vampiros não consigam manter Vitae acima da Humanidade.",
+        "sacrament": "Um banquete apodrecido",
+        "duration": "Um mês",
+        "effect": "Vitae acima da Humanidade de um vampiro não pode ser armazenada nem usada e é vomitada como sangue sem valor."
+      }
     },
     {
       "id": "theban-curse-isolation",

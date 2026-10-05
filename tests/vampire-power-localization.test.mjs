@@ -35,8 +35,8 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.equal(detournements.length, 5);
   assert.deepEqual(devotions.map(item => item.id).sort(), ["devotion-body-of-will", "devotion-chain-of-command", "devotion-cloak-the-gathering", "devotion-conditioning", "devotion-cross-contamination", "devotion-cult-of-personality", "devotion-enchantment", "devotion-enfeebling-aura", "devotion-force-of-nature", "devotion-foul-grave", "devotion-gargoyles-vigilance", "devotion-hint-of-fear", "devotion-juggernauts-gait", "devotion-quicken-sight", "devotion-reasons-salon", "devotion-riot", "devotion-shared-sight", "devotion-shatter-the-shroud", "devotion-stalwart-servant", "devotion-subsume-lesser-beast", "devotion-summoning-dominate", "devotion-summoning-majesty", "devotion-suns-brutal-dreamscape", "devotion-the-wish", "devotion-touch-of-deprivation", "devotion-undying-familiar", "devotion-vermin-flood", "devotion-wet-dream", "devotion-wraiths-presence"]);
   assert.equal(rites.length, 24);
-  assert.equal(miracles.length, 9);
-  assert.ok(miracles.every(item => item.source === "Vampire: The Requiem Second Edition"));
+  assert.equal(miracles.length, 23);
+  assert.deepEqual(Object.fromEntries([...new Set(miracles.map(item => item.source))].map(source => [source, miracles.filter(item => item.source === source).length])), { "Secrets of the Covenants": 14, "Vampire: The Requiem Second Edition": 9 });
   assert.deepEqual(Object.fromEntries([...new Set(rites.map(item => item.source))].map(source => [source, rites.filter(item => item.source === source).length])), { "Vampire: The Requiem Second Edition": 10, "Secrets of the Covenants": 14 });
   assert.deepEqual(coils.map(item => item.id).sort(), ["coil-ascendant", "coil-quintessence", "coil-voivode", "coil-wyrm", "coil-zirnitra", "coil-ziva"]);
   assert.equal(coils.flatMap(item => item.levels).length, 30);
@@ -57,6 +57,22 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.match(rites.find(item => item.id === "cruac-curse-aphrodites-favor").requirement, /three separate nights/);
   assert.match(rites.find(item => item.id === "cruac-gorgons-gaze").effect, /one limb per success.*one aggravated damage.*five lethal damage.*until they heal a single level/);
   assert.match(rites.find(item => item.id === "cruac-bounty-storm").effect, /Cash equipment with Availability five.*Humanity 2 or lower/);
+  assert.equal(miracles.find(item => item.id === "theban-apple-eden").sacrament, "An apple and a drop of Vitae");
+  assert.match(miracles.find(item => item.id === "theban-apparition-host").effect, /target gains Frightened and mortal bystanders gain Spooked/);
+  const icon = miracles.find(item => item.id === "theban-bloody-icon");
+  assert.equal(icon.duration, "Until the end of the night");
+  assert.match(icon.effect, /Later that night, the statue crumbles/);
+  assert.equal(icon.effect.includes("nor Vinculum"), false);
+  const pledge = miracles.find(item => item.id === "theban-pledge-worthless-one");
+  assert.match(pledge.effect, /cannot maintain a Touchstone.*Retainer\(Ghoul\) •••••: three total dots of the regnant's Disciplines, not three additional dots/);
+  assert.match(pledge.presentationPt.effect, /Lacaio \(Ghoul\) •••••: três pontos totais das Disciplinas do regente/);
+  assert.equal(miracles.find(item => item.id === "theban-guiding-star").duration, "One night, extendable with Willpower");
+  assert.match(miracles.find(item => item.id === "theban-apocalypse").effect, /initial radius is half a mile, increasing by half a mile for every five successes beyond the first ten/);
+  assert.equal(miracles.find(item => item.id === "theban-apocalypse").effect.includes("Clash"), false);
+  for (const level of selected.find(item => item.id === "lithopedia").levels) {
+    assert.match(level.effect, /half a square mile.*another half mile per Potency/);
+    assert.match(level.presentationPt.effect, /meia milha quadrada.*outra meia milha por Potência/);
+  }
   const zirnitra = coils.find(item => item.id === "coil-zirnitra");
   assert.match(zirnitra.levels[1].effect, /Drawbacks do not always occur/);
   assert.match(zirnitra.levels[2].effect, /Supernatural Merits cost one Experience less, to a minimum of one; already-owned Supernatural Merits refund one Experience each/);
