@@ -185,7 +185,7 @@
   "core-2ed:choke-hold": {
     "name": "Estrangulamento",
     "prerequisites": "Briga ••",
-    "description": "Após uma manobra Segurar bem-sucedida, permite usar a manobra de agarrão Estrangular: acumula sucessos ao longo de vários turnos para deixar a vítima inconsciente por alguns minutos."
+    "description": "Após uma manobra Segurar bem-sucedida, permite usar a manobra de agarrão Estrangular: uma soma de sucessos maior que duas vezes o Vigor da vítima a deixa inconsciente por (6 − Vigor) minutos. Se os sucessos iniciais não bastarem, pode Estrangular em turnos posteriores e somar os sucessos."
   },
   "core-2ed:citywalker": {
     "name": "Andarilho Urbano",
@@ -1073,7 +1073,7 @@
   "hurt-locker:curse-effigy": {
     "name": "Amaldiçoar Efígie",
     "prerequisites": "Somente mortais",
-    "description": "Gasta Força de Vontade e uma noite confeccionando uma efígie, então testa Raciocínio + Ocultismo − Perseverança. Gasta sucessos para impor Complicações Pessoais, distrair a vítima e reduzir sua próxima ação Social ou realizar ataques letais com Inteligência + Medicina − Vigor + Tolerância Sobrenatural."
+    "description": "Gasta um ponto de Força de Vontade e uma noite inteira confeccionando uma efígie com uma amostra pessoal de cabelo ou sangue, então testa Raciocínio + Ocultismo − Perseverança da vítima. Os sucessos formam uma reserva. Como ações instantâneas, gasta sucessos para impor uma Complicação Pessoal sem causar dano, com duração de um turno por sucesso gasto; gasta um sucesso da reserva para atacar órgãos vitais com Inteligência + Medicina − Vigor da vítima + Tolerância Sobrenatural da vítima, causando dano letal igual aos sucessos desse ataque; ou gasta um sucesso da reserva para reduzir a próxima ação Social da vítima a um dado de sorte. Quando a reserva se esgota, a efígie se desfaz e uma nova exige uma amostra fresca. A destruição da efígie ou sua posse pela vítima desperdiça todos os sucessos restantes."
   },
   "hurt-locker:dark-passenger": {
     "name": "Passageiro Sombrio",

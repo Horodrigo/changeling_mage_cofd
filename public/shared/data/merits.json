@@ -613,17 +613,19 @@
   {
     "id": "core-2ed:choke-hold",
     "name": "Choke Hold",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "Core",
     "sourceId": "core-2ed",
     "source": "Chronicles of Darkness",
     "category": "Fighting",
     "prerequisites": "Brawl ••",
-    "description": "After a successful Hold, add the Choke grapple maneuver: accumulates successes across multiple turns to knock unconscious for a few minutes.",
+    "description": "After a successful Hold, use the Choke grapple move: more successes than twice the victim's Stamina render them unconscious for (6 − Stamina) minutes. If the initial successes are insufficient, Choke on later turns and add the successes together.",
     "page": 61,
     "priority": 1,
     "translatedName": "Choke Hold",
-    "descriptionEn": "After a successful Hold, add the Choke grapple maneuver: accumulates successes across multiple turns to knock unconscious for a few minutes."
+    "descriptionEn": "After a successful Hold, use the Choke grapple move: more successes than twice the victim's Stamina render them unconscious for (6 − Stamina) minutes. If the initial successes are insufficient, Choke on later turns and add the successes together."
   },
   {
     "id": "core-2ed:citywalker",
@@ -864,15 +866,17 @@
   {
     "id": "hurt-locker:curse-effigy",
     "name": "Curse Effigy",
-    "ratings": [3],
+    "ratings": [
+      3
+    ],
     "line": "Core",
     "sourceId": "hurt-locker",
     "source": "Hurt Locker",
     "category": "Supernatural",
     "priority": 1,
     "translatedName": "Curse Effigy",
-    "description": "Spend Willpower and a night crafting an effigy, then roll Wits + Occult - Resolve. Spend successes to inflict Personal Tilts, distract the victim and reduce the next Social action, or make lethal attacks with Intelligence + Medicine - Stamina + Supernatural Tolerance.",
-    "descriptionEn": "Spend Willpower and a night crafting an effigy, then roll Wits + Occult - Resolve. Spend successes to inflict Personal Tilts, distract the victim and reduce the next Social action, or make lethal attacks with Intelligence + Medicine - Stamina + Supernatural Tolerance.",
+    "description": "Spend one Willpower and an entire night crafting an effigy with a personal hair or blood sample, then roll Wits + Occult − the victim's Resolve. The successes form a reserve. As instant actions, spend successes to inflict a Personal Tilt without dealing damage, lasting one turn per success spent; spend one reserved success to attack vital organs with Intelligence + Medicine − the victim's Stamina + the victim's Supernatural Tolerance, dealing lethal damage equal to this attack roll's successes; or spend one reserved success to reduce the victim's next Social action to a chance die. Once the reserve is exhausted, the effigy falls apart and a new one requires a fresh sample. Destruction or possession of the effigy by the victim wastes all remaining successes.",
+    "descriptionEn": "Spend one Willpower and an entire night crafting an effigy with a personal hair or blood sample, then roll Wits + Occult − the victim's Resolve. The successes form a reserve. As instant actions, spend successes to inflict a Personal Tilt without dealing damage, lasting one turn per success spent; spend one reserved success to attack vital organs with Intelligence + Medicine − the victim's Stamina + the victim's Supernatural Tolerance, dealing lethal damage equal to this attack roll's successes; or spend one reserved success to reduce the victim's next Social action to a chance die. Once the reserve is exhausted, the effigy falls apart and a new one requires a fresh sample. Destruction or possession of the effigy by the victim wastes all remaining successes.",
     "prerequisites": "Mortal only",
     "page": 73,
     "mortalOnly": true
