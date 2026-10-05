@@ -2422,7 +2422,7 @@ function PurchasedPowers({
     ...powers.devotions.filter((item) => ids.has(item.id)),
     ...powers.scales.filter((item) => scaleIds.has(item.id)),
     ...powers.detournements.filter((item) => detournementIds.has(item.id)),
-  ];
+  ].map((item) => vampirePowerPresentation(item, locale));
   if (!selected.length) return null;
   return (
     <>
@@ -2442,7 +2442,7 @@ function PurchasedPowers({
               </summary>
               <div className="rule-power-details">
                 <small>
-                  {item.kind} · {item.source} · p. {item.page || "—"}
+                  {t(item.kind === "devotion" ? "ui.devotion" : item.kind === "scale" ? "ui.scaleOfTheDragon" : "ui.detournement")} · {item.source} · p. {item.page || "—"}
                 </small>
                 {item.prerequisites && (
                   <p>

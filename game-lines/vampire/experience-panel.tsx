@@ -282,12 +282,12 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     details.push({ label: t("ui.experienceCost"), value: `${prerequisiteMet ? 1 : 2} ${t("ui.xp")}` });
     return [{ id: item.id, name: option.label, category: t("ui.lashesOfBloodTether"), description: item.summary, meta: `${item.source} · p. ${item.page || "—"}`, details }];
   }) : [];
-  const ritualCatalog = ({ rite: powers.cruacRites, miracle: powers.thebanMiracles, formula: powers.kimiyaFormulae, sacrilege: powers.therionSacrileges, invocation: powers.gildedInvocations } as Partial<Record<PurchaseType, VampirePurchasablePower[]>>)[purchase];
+  const ritualCatalog = ({ rite: powers.cruacRites, miracle: powers.thebanMiracles, formula: powers.kimiyaFormulae, sacrilege: powers.therionSacrileges, invocation: powers.gildedInvocations, detournement: powers.detournements } as Partial<Record<PurchaseType, VampirePurchasablePower[]>>)[purchase];
   const ritualPickerItems = ritualCatalog ? options.flatMap((option) => {
     const definition = ritualCatalog.find((item) => item.id === option.value);
     if (!definition) return [];
     const item = vampirePowerPresentation(definition, locale);
-    return [{ id: item.id, name: option.label, category: `${t("ui.level")} ${item.rating}`, description: item.summary, meta: `${item.source} · p. ${item.page || "—"}`, details: mechanicsDetails(item) }];
+    return [{ id: item.id, name: option.label, category: item.rating === undefined ? purchaseLabel(purchase, locale) : `${t("ui.level")} ${item.rating}`, description: item.summary, meta: `${item.source} · p. ${item.page || "—"}`, details: mechanicsDetails(item) }];
   }) : [];
   const bloodlineDiscipline = powers.disciplines.find((item) => item.name === chosen)?.bloodlineId === bloodlineId;
   const cost = purchase === "attribute" ? 4 * ratingAmount : purchase === "skill" ? 2 * ratingAmount : purchase === "specialty" ? 1 : purchase === "merit" ? Math.max(0, Number(nextMeritRating ?? 0) - Number(ownedMerit?.dots ?? 0)) : purchase === "discipline" ? (selectedRitualDiscipline ? 4 : selectedCoil ? coilInMystery ? 3 : 4 : clan?.disciplines.includes(chosen) || bloodlineDiscipline ? 3 : 4) * ratingAmount : purchase === "blood-potency" ? 5 * ratingAmount : purchase === "humanity" ? 2 * ratingAmount : purchase === "willpower" ? ratingAmount : purchase === "devotion" || purchase === "detournement" ? Number(selectedPower?.experienceCost ?? 0) : purchase === "lash" ? bloodTetherRating >= Number(selectedPower?.rating ?? 0) ? 1 : 2 : purchase === "rite" || purchase === "miracle" || purchase === "formula" || purchase === "sacrilege" || purchase === "invocation" ? 2 : purchase === "scale" ? (coilPrerequisiteMet(selectedPower?.prerequisites, coilRatings) ? 1 : 2) : 0;

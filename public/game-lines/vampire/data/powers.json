@@ -11953,7 +11953,7 @@
       "id": "detournement-contagion-principle",
       "kind": "detournement",
       "name": "Contagion Principle",
-      "translatedName": "Contagion Principle",
+      "translatedName": "Princípio do Contágio",
       "experienceCost": 2,
       "covenantIds": [
         "moulding-room"
@@ -11964,13 +11964,19 @@
       "page": 78,
       "procedure": "Amputate a finger for one lethal damage, soak it in Vitae, and implant it in the subject.",
       "outcome": "Track with Wits + Empathy; a vampire subject resists with Stamina + Blood Potency.",
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "prerequisites": "Iniciação na Sala de Moldagem •; Arrepio da Fera opcional",
+        "summary": "Implantar um dedo decepado embebido em Vitae e rastrear seu portador por um número de noites igual à Vitae gasta.",
+        "procedure": "Ampute um dedo, sofrendo um ponto de dano letal, embeba-o em Vitae e implante-o no sujeito.",
+        "outcome": "Rastreie com Raciocínio + Empatia; um sujeito vampiro resiste com Vigor + Potência de Sangue."
+      }
     },
     {
       "id": "detournement-eye-behind-glass",
       "kind": "detournement",
       "name": "Eye Behind Glass",
-      "translatedName": "Eye Behind Glass",
+      "translatedName": "Olho Atrás do Vidro",
       "experienceCost": 2,
       "covenantIds": [
         "moulding-room"
@@ -11981,13 +11987,19 @@
       "page": 78,
       "procedure": "Gouge out an eye for one lethal damage and install it within a camera.",
       "outcome": "Access the feed remotely; while doing so, Perception and Defense suffer −3.",
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "prerequisites": "Iniciação na Sala de Moldagem •; Projeção Crepuscular opcional",
+        "summary": "Sacrificar um olho a uma câmera e perceber sua transmissão, prejudicando a visão normal.",
+        "procedure": "Arranque um olho, sofrendo um ponto de dano letal, e instale-o em uma câmera.",
+        "outcome": "Acesse a transmissão remotamente; enquanto o fizer, Percepção e Defesa sofrem −3."
+      }
     },
     {
       "id": "detournement-face-new-flesh",
       "kind": "detournement",
       "name": "Face of New Flesh",
-      "translatedName": "Face of New Flesh",
+      "translatedName": "Rosto da Nova Carne",
       "experienceCost": 2,
       "covenantIds": [
         "moulding-room"
@@ -11998,13 +12010,19 @@
       "page": 79,
       "procedure": "Remove the vampire's face for one aggravated damage and replace it with the victim's.",
       "outcome": "The disguise defeats aura and medical scrutiny and interacts normally with Blush of Life.",
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "prerequisites": "Iniciação na Sala de Moldagem •; Abrir a Mente opcional",
+        "summary": "Usar o rosto removido cirurgicamente de um mortal como uma identidade indetectável e foco para mídia.",
+        "procedure": "Remova o rosto do vampiro, causando um ponto de dano agravado, e substitua-o pelo da vítima.",
+        "outcome": "O disfarce engana a leitura de aura e exames médicos e interage normalmente com o Rubor da Vida."
+      }
     },
     {
       "id": "detournement-pleasure-text",
       "kind": "detournement",
       "name": "Pleasure of Text",
-      "translatedName": "Pleasure of Text",
+      "translatedName": "Prazer do Texto",
       "experienceCost": 2,
       "covenantIds": [
         "moulding-room"
@@ -12015,13 +12033,19 @@
       "page": 79,
       "procedure": "Coat the medium and the vampire's tongue in Vitae, then ritually consume its information.",
       "outcome": "Gain Eidetic Memory for days equal to Vitae spent and erase the original medium.",
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "prerequisites": "Iniciação na Sala de Moldagem •; Toque do Espírito opcional",
+        "summary": "Consumir o conteúdo de uma mídia escrita ou gravada e conservá-lo com perfeita clareza.",
+        "procedure": "Cubra a mídia e a língua do vampiro com Vitae e consuma sua informação ritualmente.",
+        "outcome": "Receba Memória Eidética por um número de dias igual à Vitae gasta e apague a mídia original."
+      }
     },
     {
       "id": "detournement-soul-transplant",
       "kind": "detournement",
       "name": "Soul Transplant",
-      "translatedName": "Soul Transplant",
+      "translatedName": "Transplante de Alma",
       "experienceCost": 2,
       "covenantIds": [
         "moulding-room"
@@ -12032,7 +12056,13 @@
       "page": 79,
       "procedure": "Insert the prepared parasite through the sternum for one lethal damage.",
       "outcome": "The subject becomes Soulless while the implant remains; the vampire gains the procedure's occult insight.",
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "prerequisites": "Iniciação na Sala de Moldagem •; Percepção Sobrenatural opcional",
+        "summary": "Implantar sob o esterno um verme preparado ritualmente para deslocar a alma do sujeito e revelar percepções sobrenaturais.",
+        "procedure": "Insira o parasita preparado pelo esterno, causando um ponto de dano letal.",
+        "outcome": "O sujeito fica Sem Alma enquanto o implante permanecer; o vampiro recebe a percepção oculta proporcionada pelo procedimento."
+      }
     }
   ],
   "coils": [

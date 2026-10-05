@@ -25,7 +25,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
 | V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | Apresentações completas, nove erratas ativadas e correções de fonte aprovadas verificadas |
-| V05 — Poderes | 546 registros, 140 níveis internos | 23/23 Disciplinas, seus 110 níveis, 5/5 Disciplinas Rituais, 2/2 Açoites, 5/5 fórmulas de Kimiya, 7/7 Sacrilégios de Therion e 10/10 Invocações de Gaiola Dourada com PT. Restam 494 registros e os 30 níveis de Espirais |
+| V05 — Poderes | 546 registros, 140 níveis internos | 23/23 Disciplinas, seus 110 níveis, 5/5 Disciplinas Rituais, 2/2 Açoites, 5/5 fórmulas de Kimiya, 7/7 Sacrilégios de Therion, 10/10 Invocações de Gaiola Dourada e 5/5 Detournements com PT. Restam 489 registros e os 30 níveis de Espirais |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
 | G01 — Spells | 360 | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
@@ -68,6 +68,8 @@ As cinco fórmulas de Kimiya têm os campos existentes apresentados em PT nos ca
 Os sete Sacrilégios de Therion têm apresentação PT dos campos existentes na ficha e no seletor de XP. Dark Eras 2 pp. 345–346 revisado visualmente; Avatar de Apollyon preserva o nome próprio. As referências reutilizam Culpado, Derrotado, Lascivo e Materializado; Poder, Refinamento e Resistência seguem os Atributos efêmeros. Alcance de 30 metros, Sucessos Alvo, paradas e durações permanecem canônicos.
 
 As dez Invocações de Gaiola Dourada têm apresentação PT na ficha, XP e Homebrew, incluindo Meios e Recursos e Sucessos Alvo. False Gods: Ventrue pp. 137–139 revisado visualmente. Referências de página corrigidas: Crowdsourcing/Green Light → 137; Cordon/Gerrymandering → 138. Apenas apresentação e citações alteradas; regras e IDs preservados. Mobilização Coletiva, Sinal Verde, Sinal Vermelho, Isolamento, Manipulação de Distritos, Semiótica, Trânsito Rápido, Rezoneamento, Sinóptico e Renovação localizam títulos descritivos. Ação Avançada permanece distinta de Rotina; Stampede recebe Debandada apenas como referência textual, sem criar ID ou efeito.
+
+Os cinco Detournements têm títulos descritivos, resumos, requisitos, procedimentos e resultados PT na ficha, XP e Homebrew. Strange Shades: Mekhet pp. 78–79 revisado visualmente. Requisitos opcionais reutilizam os títulos dos poderes de Auspex; Sem Alma e Memória Eidética seguem Core. O seletor de XP reaproveita o catálogo visual de rituais sem alterar o acesso pela Iniciação na Sala de Moldagem. Os cards de outros poderes também resolvem a apresentação por definição e localizam o rótulo de tipo; compras e textos autorais permanecem canônicos.
 
 Traduzir resumo, efeito, custo, parada, ação, duração, resultados, modificadores, procedimento, Sacrament, requisitos e opções **quando existentes**; não inventar conteúdo ausente. Breaking Points estão em `game-lines/vampire/catalog-data/detachment.json` (41 entradas e `vastDynastyEmbrace`); presets em `shadow-cults.json`.
 
@@ -152,7 +154,7 @@ Os cinco pares com efeitos distintos já aprovados recebem qualificadores de lin
 
 ## Decisões respondidas pelo usuário — 2026-10-04 e 2026-10-05
 
-Estes pontos **já receberam resposta e estão aplicados ou conservados conforme indicado**. Permanecem aqui como decisões para os próximos catálogos, não como perguntas abertas. As correções mecânicas solicitadas pelo usuário são trabalho adicional autorizado; a tradução isolada continua preservando as demais regras.
+Estes pontos **já receberam resposta; aplicação, conservação ou trabalho autorizado constam na última coluna**. Permanecem aqui como decisões para os próximos catálogos, não como perguntas abertas. As correções mecânicas solicitadas pelo usuário são trabalho adicional autorizado; a tradução isolada continua preservando as demais regras.
 
 | Registro / fonte | Decisão recebida | Aplicação / verificação |
 | --- | --- | --- |
@@ -195,10 +197,11 @@ Estes pontos **já receberam resposta e estão aplicados ou conservados conforme
 | Therion — Dark Eras 2 p. 344 | **Corrigir conforme o PDF**, confirmado em 2026-10-05. | EN/PT agora causam Ponto de Ruptura quando a Humanidade é maior que a pontuação do Sacrilégio. Removidos o falso requisito mínimo e o limite de Humanidade nas escolhas de Sacrilégios pagos/gratuitos; pontuação de Therion, acesso e escolhas existentes preservados. |
 | Gilded Cage — False Gods: Ventrue pp. 136–137 | **Corrigir conforme o PDF**, confirmado em 2026-10-05. | EN/PT descrevem Convergências como locais onde os testes do ritual obtêm sucesso excepcional com três sucessos em vez de cinco. Não se recebe uma Condition Convergência. |
 | Spider's Hijra — Dark Eras 2 p. 143 | **Manter 10 metros do catálogo**, confirmado em 2026-10-05. | Raio de Potência × 10 metros conservado em EN/PT por decisão do usuário; o PDF usa Potência × 10 jardas. Não aplicar a diferença de unidades aos outros poderes. |
+| Espiral de Zirnitra — Secrets of the Covenants p. 200 | **Alinhar os resumos ao livro**, confirmado em 2026-10-05; sem alterar automaticamente compras ou XP existentes. | Decisão recebida: nível 2 deve explicitar que as desvantagens não ocorrem sempre; nível 3 descreve uma Experiência de desconto por Mérito e reembolso retroativo por Mérito já possuído. Implementação EN/PT no próximo lote de Espirais. |
 
-## Esclarecimento ainda pendente
+## Esclarecimentos ainda pendentes
 
-As quatro decisões finais do usuário estão aplicadas na tabela acima. A lista abaixo conserva apenas o esclarecimento enviado após corrigir a leitura de Lithopedia; o catálogo continua conforme o PDF. As traduções restantes estão no backlog inicial.
+As decisões recebidas estão aplicadas na tabela acima. A lista conserva apenas esclarecimentos ainda sem resposta; as demais traduções estão no backlog inicial.
 
 | Registro / fonte | Trabalho ainda não respondido |
 | --- | --- |
@@ -209,13 +212,14 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 ## Verificação atual
 
 - **403/403 Méritos Vampire**, incluindo os 80 níveis, e **56 Bloodlines** com apresentação PT completa. As nove erratas ativadas conservam identidades e campos herdados; conteúdo autoral não é traduzido automaticamente.
-- **23/23 Disciplinas Vampire, 110 níveis, 5/5 Disciplinas Rituais, 2/2 Açoites, 5/5 fórmulas de Kimiya, 7/7 Sacrilégios de Therion e 10/10 Invocações de Gaiola Dourada** apresentados em PT. Restam os 494 registros dos demais grupos e os 30 níveis de Espirais; Conditions, Breaking Points, presets e Mage permanecem no backlog inicial.
+- **23/23 Disciplinas Vampire, 110 níveis, 5/5 Disciplinas Rituais, 2/2 Açoites, 5/5 fórmulas de Kimiya, 7/7 Sacrilégios de Therion, 10/10 Invocações de Gaiola Dourada e 5/5 Detournements** apresentados em PT. Restam os 489 registros dos demais grupos e os 30 níveis de Espirais; Conditions, Breaking Points, presets e Mage permanecem no backlog inicial.
 - As quatro decisões finais estão aplicadas: Choke Hold e Curse Effigy em EN/PT; Swarm Form com Metamorfose 3/Pele da Fera; Fire & Revolution com oito páginas e quatro requisitos corrigidos conforme o PDF. Apenas os campos autorizados foram alterados; IDs, compras, XP, estornos e textos autorais permanecem preservados.
-- Manifesto `catalogVersion` **99**; recursos Core de Méritos **16/18**, Changeling **6/8**, `merits-vampire` **14**, `merits-vampire-pt` **22**, `vampire-bloodlines` **14**, `vampire-powers` **42**.
+- Manifesto `catalogVersion` **100**; recursos Core de Méritos **16/18**, Changeling **6/8**, `merits-vampire` **14**, `merits-vampire-pt` **22**, `vampire-bloodlines` **14**, `vampire-powers` **43**.
 - Encerramento do dia: **579/579 testes da suíte completa**, lint, TypeScript e build final aprovados. Integração EN/PT/EN cobre criação, XP, cards compartilhados Desktop/Mobile e Homebrew, incluindo Clans/Bloodlines/Coalizões exclusivos, Sucessos Alvo, modificadores e níveis ainda não adquiridos.
 - Lote de Disciplinas Rituais: **94/94 testes dirigidos**, lint, TypeScript e build aprovados. EN/PT/EN cobre resumos, Status, teto de Humanidade, paradas, resultados e modificadores; opções pagas/gratuitas de Therion verificadas com Humanidade 0/1/3/7. O limite próprio de Feitiçaria Tebana continua ativo. Recibos, fichas e notas autorais permanecem intactos.
 - Lote de Açoites: **74 testes dirigidos verificados**, lint, TypeScript e build aprovados. A integração EN/PT/EN cobre requisitos, procedimentos e resultados nas três superfícies; histórico e estorno por ID preservam a outra compra e os recibos. O teste antigo de agrupamento Homebrew foi ajustado para aceitar o uso da apresentação localizada; seus 36 testes passaram na reexecução.
 - Lote de Kimiya e detalhes de compra de rituais: **90 testes dirigidos verificados e 579/579 da suíte completa serial**, lint, TypeScript e build aprovados. EN/PT/EN cobre os cinco resumos, mecânicas e Sucessos Alvo na ficha e no XP; histórico e estorno por ID preservam as outras fórmulas, recibos e textos autorais. A comparação do catálogo com o commit anterior confirma que apenas a apresentação foi alterada.
 - Lote de Sacrilégios de Therion: **76/76 testes dirigidos**, TypeScript e build aprovados; lint sem erros, com um aviso de importação não utilizada no Builder em edição por outro agente. EN/PT/EN cobre os sete rituais, campos existentes e Sucessos Alvo; histórico e estorno por ID preservam as compras irmãs. Comparação com o commit anterior confirma regras, números e IDs inalterados.
 - Lote de Invocações de Gaiola Dourada: **76 testes dirigidos verificados**, TypeScript e build aprovados; lint sem erros, com o mesmo aviso externo no Builder. A falha inicial de apresentação Homebrew foi corrigida; seus 38 testes de integração passaram na reexecução. EN/PT/EN cobre os dez resumos, mecânicas e Sucessos Alvo nas três superfícies, histórico e estorno por ID. Apenas quatro páginas e campos de apresentação diferem do canônico anterior.
+- Lote de Detournements: **76 testes dirigidos verificados**, TypeScript e build aprovados; lint sem erros, com o aviso externo no Builder. EN/PT/EN cobre os cinco títulos, requisitos, procedimentos e resultados na ficha, XP e Homebrew, mantendo os IDs e recibos. O teste antigo de inventário foi atualizado para aceitar a apresentação localizada, e seus 36 testes passaram na reexecução.
 - Alterações autorais dos commits `a6a28a1` e `7268e69` preservadas. Meta retomada pelo usuário em 2026-10-05; continuar pelo backlog inicial. Sem smoke de navegador; a meta integral ainda não está concluída.
