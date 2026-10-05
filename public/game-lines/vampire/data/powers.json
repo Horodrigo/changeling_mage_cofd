@@ -12070,7 +12070,7 @@
       "id": "coil-zirnitra",
       "kind": "coil",
       "name": "Coil of Zirnitra",
-      "translatedName": "Coil of Zirnitra",
+      "translatedName": "Espiral de Zirnitra",
       "rating": 5,
       "summary": "Transforms mortal Supernatural Merits into controllable tools of the Dragon's perfected mind.",
       "source": "Secrets of the Covenants",
@@ -12079,45 +12079,68 @@
         {
           "rating": 1,
           "name": "Opening the Third Eye",
-          "translatedName": "Opening the Third Eye",
+          "translatedName": "Abrir o Terceiro Olho",
           "summary": "Unlock mortal Supernatural Merits through the Coil.",
-          "effect": "Each Coil dot unlocks one mortal Supernatural Merit. Activation costs one additional Vitae and failed uses can become dramatic failures."
+          "effect": "Each Coil dot unlocks one mortal Supernatural Merit. Activation costs one additional Vitae and failed uses can become dramatic failures.",
+          "presentationPt": {
+            "summary": "Obter acesso a Méritos Sobrenaturais mortais por meio da Espiral.",
+            "effect": "Cada ponto da Espiral permite adquirir um Mérito Sobrenatural mortal. Sua ativação custa um ponto adicional de Vitae, e os usos que falharem podem se tornar falhas dramáticas."
+          }
         },
         {
           "rating": 2,
           "name": "Unleash the Mind",
-          "translatedName": "Unleash the Mind",
-          "summary": "Use Supernatural Merits without normal Willpower timing restrictions.",
-          "effect": "Willpower spent on Supernatural Merits does not count against the per-turn Willpower limit; their printed drawbacks and dramatic failures remain."
+          "translatedName": "Liberar a Mente",
+          "summary": "Use Supernatural Merits without normal per-turn Willpower restrictions.",
+          "effect": "Willpower spent on Supernatural Merits does not count against the per-turn limit. Drawbacks do not always occur when using these Merits; failed uses remain dramatic failures.",
+          "presentationPt": {
+            "summary": "Usar Méritos Sobrenaturais sem as restrições normais de gasto de Força de Vontade por turno.",
+            "effect": "A Força de Vontade gasta em Méritos Sobrenaturais não conta para o limite por turno. As desvantagens não ocorrem sempre ao usar esses Méritos; os usos que falharem continuam sendo falhas dramáticas."
+          }
         },
         {
           "rating": 3,
           "name": "Embolden Potential",
-          "translatedName": "Embolden Potential",
-          "summary": "Enhance Supernatural Merits with Vitae and buy them more cheaply.",
-          "effect": "Physical Intensity can enhance physical expressions of Supernatural Merits; each dot costs one less Experience, minimum one, and no longer costs extra Vitae."
+          "translatedName": "Estimular o Potencial",
+          "summary": "Enhance Supernatural Merits with Vitae and reduce each Merit's Experience cost.",
+          "effect": "Vitae can increase Supernatural Merit dice pools as if they were Physical Attribute pools. Supernatural Merits cost one Experience less, to a minimum of one; already-owned Supernatural Merits refund one Experience each. Their activation no longer costs additional Vitae.",
+          "presentationPt": {
+            "summary": "Aprimorar Méritos Sobrenaturais com Vitae e reduzir o custo de Experiência de cada Mérito.",
+            "effect": "Vitae pode aumentar as paradas de Méritos Sobrenaturais como se fossem paradas de Atributos Físicos. Méritos Sobrenaturais custam uma Experiência a menos, até o mínimo de uma; Méritos Sobrenaturais já possuídos reembolsam uma Experiência cada. Sua ativação deixa de custar Vitae adicional."
+          }
         },
         {
           "rating": 4,
           "name": "The Dragon’s Breath",
-          "translatedName": "The Dragon’s Breath",
+          "translatedName": "O Sopro do Dragão",
           "summary": "Spend Willpower for a Coil-sized bonus and avoid dramatic failures.",
-          "effect": "Willpower adds the Coil rating as bonus dice to a Supernatural Merit and failed uses no longer become dramatic failures."
+          "effect": "Willpower adds the Coil rating as bonus dice to a Supernatural Merit and failed uses no longer become dramatic failures.",
+          "presentationPt": {
+            "summary": "Gastar Força de Vontade para receber um bônus igual à Espiral e evitar falhas dramáticas.",
+            "effect": "A Força de Vontade soma a pontuação da Espiral como dados de bônus a um Mérito Sobrenatural, e os usos que falharem deixam de se tornar falhas dramáticas."
+          }
         },
         {
           "rating": 5,
           "name": "Ascendancy",
-          "translatedName": "Ascendancy",
+          "translatedName": "Ascendência",
           "summary": "Perfect Supernatural Merits beyond mortal limits.",
-          "effect": "Suffer one unavoidable aggravated damage to give a Supernatural Merit the rote quality; Coil dots no longer limit how many such Merits may be learned."
+          "effect": "Suffer one unavoidable aggravated damage to give a Supernatural Merit the rote quality; Coil dots no longer limit how many such Merits may be learned.",
+          "presentationPt": {
+            "summary": "Aperfeiçoar Méritos Sobrenaturais além dos limites mortais.",
+            "effect": "Sofra um ponto inevitável de dano agravado para conceder a qualidade de Rotina a um Mérito Sobrenatural; os pontos da Espiral deixam de limitar quantos desses Méritos podem ser aprendidos."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "Transformar Méritos Sobrenaturais mortais em ferramentas controláveis da mente aperfeiçoada do Dragão."
+      }
     },
     {
       "id": "coil-ziva",
       "kind": "coil",
       "name": "Coil of Ziva",
-      "translatedName": "Coil of Ziva",
+      "translatedName": "Espiral de Ziva",
       "rating": 5,
       "summary": "Transforms Humanity, detachment, banes, and the Beast's hold on the Dragon.",
       "source": "Secrets of the Covenants",
@@ -12126,45 +12149,68 @@
         {
           "rating": 1,
           "name": "Denying the Bane",
-          "translatedName": "Denying the Bane",
+          "translatedName": "Negar a Maldição",
           "summary": "Raise effective Humanity against most banes.",
-          "effect": "For banes other than fire and sunlight, add Coil dots to Humanity when determining their effects."
+          "effect": "For banes other than fire and sunlight, add Coil dots to Humanity when determining their effects.",
+          "presentationPt": {
+            "summary": "Aumentar a Humanidade efetiva contra a maioria das Maldições.",
+            "effect": "Para Maldições que não sejam fogo ou luz solar, some os pontos da Espiral à Humanidade ao determinar seus efeitos."
+          }
         },
         {
           "rating": 2,
           "name": "Buttress the Soul",
-          "translatedName": "Buttress the Soul",
+          "translatedName": "Fortalecer a Alma",
           "summary": "Spend Vitae to resist detachment.",
-          "effect": "Spend Vitae up to the per-turn limit and add one die per Vitae to a detachment roll."
+          "effect": "Spend Vitae up to the per-turn limit and add one die per Vitae to a detachment roll.",
+          "presentationPt": {
+            "summary": "Gastar Vitae para resistir ao Desapego.",
+            "effect": "Gaste Vitae até o limite por turno e some um dado por Vitae a um teste de Desapego."
+          }
         },
         {
           "rating": 3,
           "name": "Enliven the Anima",
-          "translatedName": "Enliven the Anima",
+          "translatedName": "Avivar a Ânima",
           "summary": "Replace a detachment Condition with Raptured.",
-          "effect": "Spend Willpower after detachment to take the Raptured Condition instead of the Condition that would normally result."
+          "effect": "Spend Willpower after detachment to take the Raptured Condition instead of the Condition that would normally result.",
+          "presentationPt": {
+            "summary": "Substituir uma Condição de Desapego por Arrebatado.",
+            "effect": "Gaste Força de Vontade após o Desapego para receber a Condição Arrebatado em vez da Condição que normalmente resultaria."
+          }
         },
         {
           "rating": 4,
           "name": "Embracing the Banes",
-          "translatedName": "Embracing the Banes",
+          "translatedName": "Abraçar as Maldições",
           "summary": "Callous Humanity against many self-chosen banes.",
-          "effect": "Maintain a number of voluntarily adopted banes up to Willpower dots rather than the normal limit."
+          "effect": "Maintain a number of voluntarily adopted banes up to Willpower dots rather than the normal limit.",
+          "presentationPt": {
+            "summary": "Endurecer a Humanidade contra muitas Maldições escolhidas voluntariamente.",
+            "effect": "Mantenha um número de Maldições adotadas voluntariamente até seus pontos de Força de Vontade, em vez do limite normal."
+          }
         },
         {
           "rating": 5,
           "name": "Shedding the Beast’s Skin",
-          "translatedName": "Shedding the Beast’s Skin",
+          "translatedName": "Despir a Pele da Fera",
           "summary": "Temporarily become a living mortal.",
-          "effect": "Spend three Willpower and five turns to shed vampiric traits for 11 − Blood Potency hours; returning takes 30 minutes and restores limited Vitae."
+          "effect": "Spend three Willpower and five turns to shed vampiric traits for 11 − Blood Potency hours; returning takes 30 minutes and restores limited Vitae.",
+          "presentationPt": {
+            "summary": "Tornar-se temporariamente um mortal vivo.",
+            "effect": "Gaste três pontos de Força de Vontade e cinco turnos para abandonar as características vampíricas por 11 − Potência de Sangue horas; o retorno leva 30 minutos e restaura uma quantidade limitada de Vitae."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "Transformar a Humanidade, o Desapego, as Maldições e o domínio da Fera sobre o Dragão."
+      }
     },
     {
       "id": "coil-quintessence",
       "kind": "coil",
       "name": "Coil of Quintessence",
-      "translatedName": "Coil of Quintessence",
+      "translatedName": "Espiral da Quintessência",
       "summary": "Bind the Dragon to a centuries-old domain and become its dread avatar.",
       "source": "Thousand Years of Night",
       "page": 81,
@@ -12172,39 +12218,62 @@
         {
           "rating": 1,
           "name": "Forever Mine",
-          "translatedName": "Forever Mine",
+          "translatedName": "Meu para Sempre",
           "summary": "Claim a domain occupied for a century and sense forbidden Kindred predation within it.",
-          "effect": "The Dragon automatically senses when another Kindred feeds or kills without permission in her domain, though not the offender's identity. She may lash out with Predatory Aura at any range and recognizes the transgressor on a later face-to-face meeting. If the domain is a Touchstone, she gains one Willpower for lashing out whether she wins or loses."
+          "effect": "The Dragon automatically senses when another Kindred feeds or kills without permission in her domain, though not the offender's identity. She may lash out with Predatory Aura at any range and recognizes the transgressor on a later face-to-face meeting. If the domain is a Touchstone, she gains one Willpower for lashing out whether she wins or loses.",
+          "presentationPt": {
+            "summary": "Reivindicar um domínio ocupado por um século e perceber a predação proibida de Membros dentro dele.",
+            "effect": "O Dragão percebe automaticamente quando outro Membro se alimenta ou mata sem permissão em seu domínio, embora não descubra a identidade do infrator. Pode atacar com a Aura Predatória a qualquer distância e reconhece o transgressor ao encontrá-lo pessoalmente depois. Se o domínio for uma Touchstone, recebe um ponto de Força de Vontade ao atacar com a Aura, vença ou perca."
+          }
         },
         {
           "rating": 2,
           "name": "Home Turf",
-          "translatedName": "Home Turf",
+          "translatedName": "Território Próprio",
           "summary": "Residents must spend Willpower to resist your feeding.",
-          "effect": "Any denizen of the Dragon's domain must spend one Willpower to resist her feeding actions. Minor Storyteller characters without Willpower cannot resist."
+          "effect": "Any denizen of the Dragon's domain must spend one Willpower to resist her feeding actions. Minor Storyteller characters without Willpower cannot resist.",
+          "presentationPt": {
+            "summary": "Moradores precisam gastar Força de Vontade para resistir à sua alimentação.",
+            "effect": "Qualquer habitante do domínio do Dragão precisa gastar um ponto de Força de Vontade para resistir às suas ações de alimentação. Personagens secundários do Narrador sem Força de Vontade não podem resistir."
+          }
         },
         {
           "rating": 3,
           "name": "Smother",
-          "translatedName": "Smother",
+          "translatedName": "Abafar",
           "summary": "Suppress natural fire and contest supernatural flames in the domain.",
-          "effect": "Natural fires near the Dragon count one step lower for both size and heat, and combustible objects take two turns to ignite. Within her domain, she adds one to Traits resisting supernatural fire or heat and +1 to contested rolls against them. She may reflexively spend three Vitae to Clash with a supernatural fire's creator; victory extinguishes it in a diameter equal to Blood Potency meters."
+          "effect": "Natural fires near the Dragon count one step lower for both size and heat, and combustible objects take two turns to ignite. Within her domain, she adds one to Traits resisting supernatural fire or heat and +1 to contested rolls against them. She may reflexively spend three Vitae to Clash with a supernatural fire's creator; victory extinguishes it in a diameter equal to Blood Potency meters.",
+          "presentationPt": {
+            "summary": "Suprimir o fogo natural e disputar as chamas sobrenaturais no domínio.",
+            "effect": "Incêndios naturais próximos ao Dragão contam como um grau menores em tamanho e calor, e objetos combustíveis levam dois turnos para se incendiar. Dentro de seu domínio, soma um às Características usadas para resistir a fogo ou calor sobrenatural e +1 aos testes disputados contra eles. Pode gastar três pontos de Vitae reflexivamente para realizar um Confronto de Vontades com o criador de um fogo sobrenatural; se vencer, extingue-o em um diâmetro igual à Potência de Sangue em metros."
+          }
         },
         {
           "rating": 4,
           "name": "In the Motherland's Arms",
-          "translatedName": "In the Motherland's Arms",
+          "translatedName": "Nos Braços da Pátria",
           "summary": "Gain supernatural Safe Place and Haven protection while sleeping in the domain.",
-          "effect": "While sleeping or in torpor within the domain, the Dragon counts as having Haven and Safe Place dots equal to half Blood Potency. When she sleeps in a haven for which she owns the Merits, each is treated as one dot higher, even to six effective dots, whether or not that haven lies in her domain."
+          "effect": "While sleeping or in torpor within the domain, the Dragon counts as having Haven and Safe Place dots equal to half Blood Potency. When she sleeps in a haven for which she owns the Merits, each is treated as one dot higher, even to six effective dots, whether or not that haven lies in her domain.",
+          "presentationPt": {
+            "summary": "Receber a proteção sobrenatural de Local Seguro e Refúgio enquanto dorme no domínio.",
+            "effect": "Enquanto dorme ou está em torpor no domínio, o Dragão conta como se tivesse pontos de Refúgio e Local Seguro iguais à metade de sua Potência de Sangue. Quando dorme em um refúgio cujos Méritos possui, cada um é tratado como um ponto maior, podendo chegar a seis pontos efetivos, esteja ou não esse refúgio no domínio."
+          }
         },
         {
           "rating": 5,
           "name": "Fingers on a Dead Pulse",
-          "translatedName": "Fingers on a Dead Pulse",
+          "translatedName": "Dedos em um Pulso Morto",
           "summary": "Read residents' Vices and Conditions and receive domain-wide blood-sympathy visions.",
-          "effect": "By spending one Vitae while interacting with a denizen, immediately learn their Vice and Conditions reflecting shameful secrets, such as Guilty, Leveraged, or Notoriety. Once per scene, observing a denizen regain Willpower from Vice also restores one Willpower to the Dragon. Major events provoking widespread emotion may trigger blood sympathy at the Storyteller's discretion."
+          "effect": "By spending one Vitae while interacting with a denizen, immediately learn their Vice and Conditions reflecting shameful secrets, such as Guilty, Leveraged, or Notoriety. Once per scene, observing a denizen regain Willpower from Vice also restores one Willpower to the Dragon. Major events provoking widespread emotion may trigger blood sympathy at the Storyteller's discretion.",
+          "presentationPt": {
+            "summary": "Ler os Vícios e Condições dos habitantes e receber visões de simpatia de sangue em todo o domínio.",
+            "effect": "Ao gastar um ponto de Vitae enquanto interage com um habitante, descubra imediatamente seu Vício e as Condições que refletem segredos vergonhosos, como Culpado, Coagido ou Notoriedade. Uma vez por cena, observar um habitante recuperar Força de Vontade pelo Vício também restaura um ponto de Força de Vontade do Dragão. Grandes acontecimentos que provoquem emoções generalizadas podem desencadear simpatia de sangue a critério do Narrador."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "Vincular o Dragão a um domínio centenário e tornar-se seu avatar temível."
+      }
     },
     {
       "id": "coil-ascendant",
@@ -12235,7 +12304,11 @@
               "value": true,
               "condition": "Blush of Life active during daytime"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Permanecer ativo durante o dia com mais facilidade enquanto o Rubor da Vida estiver ativo.",
+            "effect": "Enquanto recebe os benefícios do Rubor da Vida, não é preciso testar para resistir ao Sono Diurno, e permanecer ativo durante o dia não impõe Letárgico."
+          }
         },
         {
           "rating": 2,
@@ -12249,7 +12322,11 @@
               "operation": "set",
               "value": "24 hours"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Estender o Rubor da Vida para um dia inteiro.",
+            "effect": "O Rubor da Vida dura 24 horas em vez de uma cena."
+          }
         },
         {
           "rating": 3,
@@ -12268,7 +12345,11 @@
               "operation": "ignore",
               "value": "sunlight"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Fogo e luz solar deixam de provocar Frenesi.",
+            "effect": "A exposição a fogo ou luz solar não desencadeia Frenesi, embora o dano continue sendo aplicado normalmente."
+          }
         },
         {
           "rating": 4,
@@ -12289,7 +12370,11 @@
               "value": "one lethal → bashing per Resilience dot",
               "condition": "Blush of Life active"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Reduzir a gravidade do dano por fogo enquanto o Rubor da Vida estiver ativo.",
+            "effect": "Enquanto o Rubor da Vida estiver ativo, o fogo causa dano letal em vez de agravado. Cada ponto de Resiliência pode reduzir ainda mais um ponto desse dano por fogo, de letal para contundente."
+          }
         },
         {
           "rating": 5,
@@ -12305,9 +12390,17 @@
               "value": "1 per extra Vitae spent with Blush of Life",
               "minimum": 1
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Gastar Vitae adicional com o Rubor da Vida para aumentar o intervalo entre danos por luz solar.",
+            "cost": "Vitae adicional ao ativar o Rubor da Vida",
+            "effect": "Cada ponto adicional de Vitae faz a Potência de Sangue contar como um ponto menor apenas para o intervalo de dano por luz solar, até uma Potência de Sangue efetiva mínima de 1."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "Transcender o Sono Diurno, o fogo e a luz solar por meio de cinco níveis cumulativos."
+      }
     },
     {
       "id": "coil-wyrm",
@@ -12322,16 +12415,22 @@
         {
           "rating": 1,
           "name": "Stir the Beast",
-          "translatedName": "Despertar a Besta",
+          "translatedName": "Despertar a Fera",
           "summary": "Enter a voluntary frenzy with a declared objective.",
           "cost": "1 Willpower",
           "action": "Reflexive",
-          "effect": "Enter frenzy voluntarily and name a short goal. Escaping before the goal is met suffers a penalty; the frenzy ends when the goal is no longer pressing or possible."
+          "effect": "Enter frenzy voluntarily and name a short goal. Escaping before the goal is met suffers a penalty; the frenzy ends when the goal is no longer pressing or possible.",
+          "presentationPt": {
+            "summary": "Entrar em Frenesi voluntário com um objetivo declarado.",
+            "cost": "1 ponto de Força de Vontade",
+            "action": "Reflexiva",
+            "effect": "Entre em Frenesi voluntariamente e declare um objetivo curto. Escapar antes de cumprir o objetivo sofre uma penalidade; o Frenesi termina quando o objetivo deixa de ser urgente ou possível."
+          }
         },
         {
           "rating": 2,
           "name": "Beast's Hunger",
-          "translatedName": "Fome da Besta",
+          "translatedName": "Fome da Fera",
           "summary": "Increase effective Blood Potency for senses and predatory aura while frenzying.",
           "effect": "During any frenzy, add the current Coil of the Wyrm rating to Blood Potency for Kindred senses and predatory aura.",
           "ruleEffects": [
@@ -12347,12 +12446,16 @@
               "value": "Coil of the Wyrm rating",
               "condition": "In frenzy"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Aumentar a Potência de Sangue efetiva para os sentidos e a Aura Predatória durante o Frenesi.",
+            "effect": "Durante qualquer Frenesi, some a pontuação atual da Espiral da Serpente à Potência de Sangue para os sentidos dos Membros e a Aura Predatória."
+          }
         },
         {
           "rating": 3,
           "name": "Leash the Beast",
-          "translatedName": "Conter a Besta",
+          "translatedName": "Conter a Fera",
           "summary": "Ride the Wave without Willpower and with a Coil bonus.",
           "effect": "Riding the Wave no longer costs Willpower and gains the Coil of the Wyrm rating as bonus dice.",
           "ruleEffects": [
@@ -12366,12 +12469,16 @@
               "operation": "add",
               "value": "Coil of the Wyrm rating"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Cavalgar a Onda sem Força de Vontade e com um bônus da Espiral.",
+            "effect": "Cavalgar a Onda deixa de custar Força de Vontade e recebe a pontuação da Espiral da Serpente como dados de bônus."
+          }
         },
         {
           "rating": 4,
           "name": "Beast's Power",
-          "translatedName": "Poder da Besta",
+          "translatedName": "Poder da Fera",
           "summary": "Surrender fully to frenzy for major physical bonuses.",
           "effect": "When entering frenzy, the Dragon may forgo resistance until the Beast is sated; during that frenzy add Blood Potency to Defense, Health, and Speed.",
           "ruleEffects": [
@@ -12393,7 +12500,11 @@
               "value": "Blood Potency",
               "condition": "Chose to forgo frenzy resistance"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Entregar-se inteiramente ao Frenesi para receber grandes bônus físicos.",
+            "effect": "Ao entrar em Frenesi, o Dragão pode abrir mão da resistência até saciar a Fera; durante esse Frenesi, some a Potência de Sangue à Defesa, Vitalidade e Deslocamento."
+          }
         },
         {
           "rating": 5,
@@ -12408,9 +12519,16 @@
               "value": true,
               "condition": "In frenzy"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Permanecer em Frenesi apesar de ferimentos letais que normalmente forçariam torpor.",
+            "effect": "Enquanto estiver em Frenesi, preencher a Vitalidade com dano letal não causa torpor. Se o Frenesi terminar enquanto a Vitalidade ainda estiver preenchida por dano letal, o torpor começa imediatamente; o Frenesi pode persistir entre cenas."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "Refinar e direcionar a Fera por meio de cinco níveis cumulativos."
+      }
     },
     {
       "id": "coil-voivode",
@@ -12435,7 +12553,11 @@
               "value": 2,
               "condition": "Drinking the Dragon's Vitae"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Tornar a Vitae do Dragão excepcionalmente viciante e a única capaz de satisfazer seus dependentes.",
+            "effect": "Cada ponto da Vitae do Dragão conta como dois para o vício em Vitae; os dependentes só podem resolver Privado decorrente do vício em sangue com Vitae de alguém que possua esta Espiral."
+          }
         },
         {
           "rating": 2,
@@ -12450,7 +12572,11 @@
               "value": "stage 1 = four-times removed; stage 2 = three-times removed; stage 3 = twice removed",
               "condition": "Subject blood-bound to Dragon"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Criar simpatia de sangue com sujeitos sob Laço de Sangue.",
+            "effect": "O Dragão e os sujeitos sob Laço de Sangue recebem simpatia de sangue cuja proximidade depende do estágio do Laço."
+          }
         },
         {
           "rating": 3,
@@ -12464,7 +12590,11 @@
               "operation": "set",
               "value": "3 Vitae → stage 2; 5 Vitae → stage 3"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Acelerar um novo Laço de Sangue com Vitae adicional.",
+            "effect": "Três pontos de Vitae em uma breve alimentação podem estabelecer o segundo estágio; cinco pontos de Vitae podem estabelecer o terceiro. Esse gasto ignora o limite normal de Vitae por turno."
+          }
         },
         {
           "rating": 4,
@@ -12479,7 +12609,11 @@
               "value": "blood-sympathy attack bonus removed against Dragon",
               "condition": "Attacker connected by blood sympathy"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Transformar a simpatia de sangue em resistência em vez de vulnerabilidade.",
+            "effect": "A simpatia de sangue não concede bônus de Disciplina contra o Dragão; o Dragão soma seu bônus de simpatia de sangue para resistir a Laços de Sangue e disputar a Aura Predatória daqueles que vinculou."
+          }
         },
         {
           "rating": 5,
@@ -12493,9 +12627,16 @@
               "operation": "replace",
               "value": "Humanity 3 breaking point; +1 die to detachment"
             }
-          ]
+          ],
+          "presentationPt": {
+            "summary": "Substituir a perda automática de Humanidade pelo Abraço por um Ponto de Ruptura menor.",
+            "effect": "O Abraço deixa de custar Humanidade automaticamente. Torna-se um Ponto de Ruptura de Humanidade 3, com +1 dado para evitar o Desapego."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "Transformar o vício em Vitae, a simpatia de sangue, os Laços de Sangue e o Abraço."
+      }
     }
   ],
   "scales": [

@@ -16,6 +16,7 @@ const formulae = powers.kimiyaFormulae.filter(item => item.presentationPt);
 const sacrileges = powers.therionSacrileges.filter(item => item.presentationPt);
 const invocations = powers.gildedInvocations.filter(item => item.presentationPt);
 const detournements = powers.detournements.filter(item => item.presentationPt);
+const coils = powers.coils.filter(item => item.presentationPt);
 const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#x27;");
 const fields = ["summary", "cost", "requirement", "condition", "dicePool", "action", "duration", "contestedBy", "resistedBy", "sacrament", "effect", "procedure", "outcome", "prerequisites", "statusRequirement", "humanityCapFormula"];
 
@@ -28,12 +29,17 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.deepEqual(sacrileges.map(item => item.id).sort(), ["therion-apotheosis", "therion-avatar-apollyon", "therion-curse-faithful", "therion-demons-tongue", "therion-morning-star", "therion-nine-choirs", "therion-profanity"]);
   assert.equal(invocations.length, 10);
   assert.equal(detournements.length, 5);
+  assert.deepEqual(coils.map(item => item.id).sort(), ["coil-ascendant", "coil-quintessence", "coil-voivode", "coil-wyrm", "coil-zirnitra", "coil-ziva"]);
+  assert.equal(coils.flatMap(item => item.levels).length, 30);
+  const zirnitra = coils.find(item => item.id === "coil-zirnitra");
+  assert.match(zirnitra.levels[1].effect, /Drawbacks do not always occur/);
+  assert.match(zirnitra.levels[2].effect, /Supernatural Merits cost one Experience less, to a minimum of one; already-owned Supernatural Merits refund one Experience each/);
   for (const [id, page] of [["gilded-crowdsourcing", 137], ["gilded-green-light", 137], ["gilded-cordon", 138], ["gilded-gerrymandering", 138]]) assert.equal(invocations.find(item => item.id === id).page, page);
   const therion = rituals.find(item => item.id === "therion");
   assert.match(therion.effect, /^If Humanity is higher than the Sacrilege rating/);
   assert.equal(therion.minimumHumanityToCast, undefined);
   assert.match(rituals.find(item => item.id === "gilded-cage").effect, /in a Convergence, ritual rolls achieve exceptional success with three successes instead of five/);
-  for (const definition of [...selected, ...rituals, ...lashes, ...formulae, ...sacrileges, ...invocations, ...detournements]) {
+  for (const definition of [...selected, ...rituals, ...lashes, ...formulae, ...sacrileges, ...invocations, ...detournements, ...coils]) {
     for (const item of [definition, ...(definition.levels ?? [])]) {
       assert.ok(item.presentationPt, `${definition.id}.${item.rating ?? "summary"}`);
       for (const field of fields.filter(key => item[key])) {
@@ -269,6 +275,33 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         assert.equal(JSON.stringify(ritualCharacter), ritualCharacterBefore);
         assert.equal(JSON.stringify(ritualBuyer), ritualBuyerBefore);
       }
+      const coilCharacter = blankPrintCharacter("VtR");
+      coilCharacter.merits = [{ definitionId: "vtr-kindred-status", instanceId: "ordo-status", name: "Kindred Status", dots: 5, creationDots: 5, configuration: { group: "ordo-dracul" } }];
+      coilCharacter.line_data = { ...coilCharacter.line_data, clan_id: "gangrel", covenant_ids: ["ordo-dracul"], ordo_dracul: { mystery_id: "zirnitra", coil_ratings: Object.fromEntries(coils.map(item => [item.id, 5])) }, notes: "Authored Coil research stays." };
+      const coilCharacterBefore = JSON.stringify(coilCharacter);
+      const coilSheet = render(DisciplineCards, { character: coilCharacter, updateSheet: noMutation, powers: catalog, disciplines: {}, coilRatings: coilCharacter.line_data.ordo_dracul.coil_ratings, locale, onRaiseFamiliar: noMutation });
+      const coilPartial = render(DisciplineCards, { character: coilCharacter, updateSheet: noMutation, powers: catalog, disciplines: {}, coilRatings: Object.fromEntries(coils.map(item => [item.id, 3])), locale, onRaiseFamiliar: noMutation });
+      const coilExperience = render(VampireExperiencePanel, { character: coilCharacter, updateSheet: noMutation, catalogs });
+      for (const definition of catalog.coils) {
+        const presented = vampirePowerPresentation(definition, locale);
+        const title = locale === "pt-BR" ? definition.translatedName : definition.name;
+        for (const html of [coilSheet, coilExperience]) assert.ok(html.includes(escape(title)));
+        for (const item of [presented, ...definition.levels.map(level => vampirePowerPresentation(level, locale))]) {
+          for (const field of fields.filter(key => item[key])) for (const html of [coilSheet, coilExperience]) assert.ok(html.includes(escape(item[field])), `${locale}: Coil ${definition.id}.${item.rating ?? "summary"}.${field}`);
+        }
+        for (const level of definition.levels) {
+          const caption = `<strong>${"•".repeat(level.rating)} ${escape(locale === "pt-BR" ? level.translatedName : level.name)}</strong>`;
+          assert.equal(coilPartial.includes(caption), level.rating <= 3);
+        }
+        const receipt = { id: "old-coil-purchase", label: "Authored research receipt", rating: 5, cost: 4, undo: { kind: "coil", id: definition.id, amount: 1 } };
+        const receiptBefore = JSON.stringify(receipt);
+        assert.equal(vampireExperienceLabel(receipt, coilCharacter, [], catalog, locale), `${title} 5`);
+        const refunded = structuredClone(coilCharacter);
+        assert.equal(refundVampireAdvancement(refunded, receipt.undo), true);
+        assert.deepEqual(refunded.line_data.ordo_dracul.coil_ratings, Object.fromEntries(coils.map(item => [item.id, item.id === definition.id ? 4 : 5])));
+        assert.equal(JSON.stringify(receipt), receiptBefore);
+      }
+      assert.equal(JSON.stringify(coilCharacter), coilCharacterBefore);
       const detournementCharacter = blankPrintCharacter("VtR");
       detournementCharacter.merits = [{ definitionId: "core-2ed:mystery-cult-initiation", instanceId: "moulding-initiation", name: "Mystery Cult Initiation", dots: 1, creationDots: 1, configuration: { cult: "moulding-room" } }];
       detournementCharacter.line_data = { ...detournementCharacter.line_data, covenant_ids: ["moulding-room"], detournement_ids: detournements.map(item => item.id), notes: "Authored sacrifice notes stay." };
