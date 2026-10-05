@@ -7793,7 +7793,17 @@
       "dicePool": "Presence + Intimidation + Majesty vs. Composure + Blood Potency",
       "action": "Contested; resistance is reflexive",
       "duration": "Scene",
-      "effect": "If successful, this Devotion temporarily removes dots of the victim’s Celerity, Resilience, and Vigor, in whatever combination the vampire wishes. The vampire removes dots one-for-one along with her Majesty dots for the scene, up to her successes. For example, she can sacrifice three dots of her Majesty, losing access to them for the scene, to remove two dots of Vigor and one dot of Resilience from her victim for the scene."
+      "effect": "If successful, this Devotion temporarily removes dots of the victim’s Celerity, Resilience, and Vigor, in whatever combination the vampire wishes. The vampire removes dots one-for-one along with her Majesty dots for the scene, up to her successes. For example, she can sacrifice three dots of her Majesty, losing access to them for the scene, to remove two dots of Vigor and one dot of Resilience from her victim for the scene.",
+      "presentationPt": {
+        "name": "Aura Debilitante",
+        "prerequisites": "Majestade •, Resiliência •",
+        "summary": "Trocar pontos de Majestade para suprimir as Disciplinas físicas de uma vítima durante a cena.",
+        "cost": "1 Vitae",
+        "dicePool": "Presença + Intimidação + Majestade contra Autocontrole + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Cena",
+        "effect": "Em caso de sucesso, esta Devoção remove temporariamente pontos de Celeridade, Resiliência e Ímpeto da vítima, na combinação desejada pela vampira. Durante a cena, a vampira perde um ponto de Majestade por ponto removido, até o limite dos sucessos. Por exemplo, ela pode sacrificar três pontos de Majestade, perdendo acesso a eles durante a cena, para remover dois pontos de Ímpeto e um de Resiliência da vítima pelo mesmo período."
+      }
     },
     {
       "id": "devotion-force-of-nature",
@@ -7809,7 +7819,17 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "When activating Force of Nature, the vampire gains as many of the advantages of Predatory Aspect, Beast’s Skin, and Unnatural Aspect as she wishes, without Vitae costs. She can adopt additional modifications or shed existing ones as a reflexive action. As well, with an instant action, she can shift a number of Physical Attribute dots equal to her Protean to other Physical Attributes. These change derived traits, and can exceed her normal limitations. The effects of Force of Nature last for the scene."
+      "effect": "When activating Force of Nature, the vampire gains as many of the advantages of Predatory Aspect, Beast’s Skin, and Unnatural Aspect as she wishes, without Vitae costs. She can adopt additional modifications or shed existing ones as a reflexive action. As well, with an instant action, she can shift a number of Physical Attribute dots equal to her Protean to other Physical Attributes. These change derived traits, and can exceed her normal limitations. The effects of Force of Nature last for the scene.",
+      "presentationPt": {
+        "name": "Força da Natureza",
+        "prerequisites": "Metamorfose ••••, Resiliência ••••, Ímpeto ••",
+        "summary": "Assumir várias vantagens de Metamorfose e redistribuir Atributos Físicos.",
+        "cost": "8 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "Ao ativar Força da Natureza, a vampira recebe quantas vantagens de Aspecto Predatório, Pele da Fera e Aspecto Sobrenatural desejar, sem custos de Vitae. Ela pode adotar modificações adicionais ou descartar as existentes como ação reflexiva. Além disso, com uma ação instantânea, pode transferir um número de pontos de Atributos Físicos igual à sua Metamorfose para outros Atributos Físicos. Isso altera características derivadas e pode exceder seus limites normais. Os efeitos de Força da Natureza duram a cena."
+      }
     },
     {
       "id": "devotion-foul-grave",
@@ -7824,7 +7844,16 @@
       "cost": "1 Vitae",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "While the vampire does not fully maintain all his senses, he’s vaguely aware of those nearby. He gets a brief mental glimpse of mortals in the vicinity, and still feels the auras of Kindred. While in his Unmarked Grave, he can activate predatory aura normally, but it costs a point of Vitae in addition to the Willpower required if the victim is Kindred."
+      "effect": "While the vampire does not fully maintain all his senses, he’s vaguely aware of those nearby. He gets a brief mental glimpse of mortals in the vicinity, and still feels the auras of Kindred. While in his Unmarked Grave, he can activate predatory aura normally, but it costs a point of Vitae in addition to the Willpower required if the victim is Kindred.",
+      "presentationPt": {
+        "name": "Sepultura Profana",
+        "prerequisites": "Metamorfose •, Pesadelo •",
+        "summary": "Projetar a aura predatória enquanto descansa em Túmulo Sem Marca.",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Embora o vampiro não mantenha plenamente todos os sentidos, ele percebe vagamente quem está por perto. Tem um breve vislumbre mental dos mortais nas proximidades e ainda sente as auras dos Membros. Enquanto estiver em Túmulo Sem Marca, pode ativar a aura predatória normalmente, mas isso custa um ponto de Vitae além da Força de Vontade exigida se a vítima for um Membro."
+      }
     },
     {
       "id": "devotion-gargoyles-vigilance",
@@ -7840,7 +7869,17 @@
       "requirement": "Remain stationary for at least ten minutes in a Safe Place",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "This Devotion requires the vampire to remain completely still, in a location reflected by the Safe Place Merit (see p. 123). She has to be stationary for at least ten minutes before this Devotion offers its benefits. While stationary, she has full use of her Auspex abilities, centered on any single spot of her choosing within the haven. Having full awareness, she may change the spot at will. She receives +5 to any rolls to detect intruders. If she decides to move against an intruder, she gains +5 to her Initiative for the scene. As well, she does not need to spend Vitae to activate her Resilience. With a point of Willpower, this Devotion may be used while the vampire slumbers. An advanced version of this Devotion exists, utilizing Protean 5, costing 4 Experiences. This version allows the vampire to become a statue, immune to fire and sunlight while remaining stationary."
+      "effect": "This Devotion requires the vampire to remain completely still, in a location reflected by the Safe Place Merit (see p. 123). She has to be stationary for at least ten minutes before this Devotion offers its benefits. While stationary, she has full use of her Auspex abilities, centered on any single spot of her choosing within the haven. Having full awareness, she may change the spot at will. She receives +5 to any rolls to detect intruders. If she decides to move against an intruder, she gains +5 to her Initiative for the scene. As well, she does not need to spend Vitae to activate her Resilience. With a point of Willpower, this Devotion may be used while the vampire slumbers. An advanced version of this Devotion exists, utilizing Protean 5, costing 4 Experiences. This version allows the vampire to become a statue, immune to fire and sunlight while remaining stationary.",
+      "presentationPt": {
+        "name": "Vigilância da Gárgula",
+        "prerequisites": "Auspícios •, Resiliência ••, Local Seguro •",
+        "summary": "Manter vigilância completa sobre um refúgio enquanto permanece imóvel.",
+        "cost": "1 Vitae",
+        "requirement": "Permanecer imóvel por pelo menos dez minutos em um Local Seguro",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Esta Devoção exige que a vampira permaneça completamente imóvel em um local representado pelo Mérito Local Seguro (ver p. 123). Ela deve ficar parada por pelo menos dez minutos antes de receber os benefícios. Enquanto imóvel, pode usar plenamente suas habilidades de Auspícios, centradas em qualquer ponto escolhido dentro do refúgio. Com percepção completa do local, pode mudar esse ponto à vontade. Recebe +5 em testes para detectar intrusos. Se decidir agir contra um intruso, recebe +5 de Iniciativa durante a cena. Além disso, não precisa gastar Vitae para ativar Resiliência. Com um ponto de Força de Vontade, esta Devoção pode ser usada enquanto a vampira dorme. Existe uma versão avançada que usa Metamorfose 5 e custa 4 Experiências. Essa versão permite tornar-se uma estátua, imune a fogo e luz solar enquanto permanece imóvel."
+      }
     },
     {
       "id": "devotion-hint-of-fear",
@@ -7855,7 +7894,16 @@
       "cost": "1 Vitae plus Face of the Beast's cost",
       "dicePool": "None; roll Face of the Beast normally",
       "action": "Reflexive",
-      "effect": "This Devotion allows the vampire to use Face of the Beast as a reflexive action. This requires a second point of Vitae, so the vampire must be able to spend two vitae in a turn to use it without preparation."
+      "effect": "This Devotion allows the vampire to use Face of the Beast as a reflexive action. This requires a second point of Vitae, so the vampire must be able to spend two vitae in a turn to use it without preparation.",
+      "presentationPt": {
+        "name": "Indício de Medo",
+        "prerequisites": "Celeridade ••, Pesadelo ••",
+        "summary": "Usar Face da Fera com um olhar rápido e reflexivo.",
+        "cost": "1 Vitae mais o custo de Face da Fera",
+        "dicePool": "Nenhuma; teste Face da Fera normalmente",
+        "action": "Reflexiva",
+        "effect": "Esta Devoção permite ao vampiro usar Face da Fera como ação reflexiva. Isso exige um segundo ponto de Vitae; portanto, ele deve conseguir gastar dois pontos de Vitae em um turno para usá-la sem preparação."
+      }
     },
     {
       "id": "devotion-juggernauts-gait",
@@ -7871,7 +7919,17 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "One turn per 5 Vitae",
-      "effect": "This Devotion requires the vampire spend five Vitae per turn she wishes to remain immune to harm. During this time, all damage — bashing, lethal, aggravated, even damage caused by the fire or by sunlight — is absorbed into her blood before it reaches her skin. She takes no damage from any source. Note that this Devotion does not allow the vampire to spend additional Vitae; she must be able to spend five in a turn to use Juggernaut’s Gait without preparation. She can spend the first four on preceding turns, and the fifth when she wishes to evoke the protection. However, invoking the Devotion is reflexive, and the Vitae may be spent after an opponent makes a successful attack roll."
+      "effect": "This Devotion requires the vampire spend five Vitae per turn she wishes to remain immune to harm. During this time, all damage — bashing, lethal, aggravated, even damage caused by the fire or by sunlight — is absorbed into her blood before it reaches her skin. She takes no damage from any source. Note that this Devotion does not allow the vampire to spend additional Vitae; she must be able to spend five in a turn to use Juggernaut’s Gait without preparation. She can spend the first four on preceding turns, and the fifth when she wishes to evoke the protection. However, invoking the Devotion is reflexive, and the Vitae may be spent after an opponent makes a successful attack roll.",
+      "presentationPt": {
+        "name": "Passo do Colosso",
+        "prerequisites": "Resiliência •••••, Ímpeto •••",
+        "summary": "Tornar-se brevemente imune a todo dano.",
+        "cost": "5 Vitae por turno",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Um turno por 5 Vitae",
+        "effect": "Esta Devoção exige que a vampira gaste cinco pontos de Vitae por turno em que desejar permanecer imune a ferimentos. Durante esse tempo, todo dano — contundente, letal, agravado e até o causado por fogo ou luz solar — é absorvido pelo sangue antes de alcançar a pele. Ela não sofre dano de fonte alguma. Esta Devoção não permite gastar Vitae adicional; a vampira deve conseguir gastar cinco pontos em um turno para usar Passo do Colosso sem preparação. Pode gastar os quatro primeiros em turnos anteriores e o quinto quando desejar invocar a proteção. Ativar a Devoção é reflexivo, e a Vitae pode ser gasta após um oponente obter sucesso em um teste de ataque."
+      }
     },
     {
       "id": "devotion-quicken-sight",
@@ -7887,7 +7945,17 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "One turn",
-      "effect": "When activated, Quicken Sight lasts for a turn. The vampire can examine the details on fast-moving items, and respond to things outside the normal human spectrum. She can read multiple pages of text in three seconds. She can apply her Defense to ranged attacks, and can benefit from aiming instantly. Vampire: the Requiem"
+      "effect": "When activated, Quicken Sight lasts for a turn. The vampire can examine the details on fast-moving items, and respond to things outside the normal human spectrum. She can read multiple pages of text in three seconds. She can apply her Defense to ranged attacks, and can benefit from aiming instantly.",
+      "presentationPt": {
+        "name": "Visão Acelerada",
+        "prerequisites": "Auspícios •, Celeridade •",
+        "summary": "Perceber acontecimentos rápidos em câmera lenta e reagir a eles.",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Um turno",
+        "effect": "Quando ativada, Visão Acelerada dura um turno. A vampira pode examinar detalhes em objetos que se movem rapidamente e reagir a acontecimentos fora da percepção humana normal. Pode ler várias páginas em três segundos, aplicar Defesa contra ataques à distância e receber o benefício de mirar instantaneamente."
+      }
     },
     {
       "id": "devotion-reasons-salon",
