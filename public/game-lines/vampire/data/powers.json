@@ -8294,7 +8294,16 @@
       "dicePool": "Manipulation + Empathy + Nightmare vs. Composure + Blood Potency",
       "action": "Contested; resistance is reflexive",
       "duration": "Successes nights",
-      "effect": "Once used successfully, this Devotion remains active for a number of nights equal to the successes rolled. While it is active, the victim, selected by touch, suffers every sunlight wound the vampire takes, so long as the victim is asleep when the damage occurs. The vampire still takes the damage. This damage can awaken the victim. A victim so awakened wakes with the Frightened Condition (see p. 303)."
+      "effect": "Once used successfully, this Devotion remains active for a number of nights equal to the successes rolled. While it is active, the victim, selected by touch, suffers every sunlight wound the vampire takes, so long as the victim is asleep when the damage occurs. The vampire still takes the damage. This damage can awaken the victim. A victim so awakened wakes with the Frightened Condition (see p. 303).",
+      "presentationPt": {
+        "prerequisites": "Pesadelo •••••, Resiliência ••",
+        "summary": "Faça uma vítima Membro adormecida sofrer os mesmos ferimentos de luz solar que o vampiro.",
+        "cost": "1 Vitae",
+        "dicePool": "Manipulação + Empatia + Pesadelo contra Compostura + Potência do Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Noites iguais aos sucessos",
+        "effect": "Após ser usada com sucesso, esta Devoção permanece ativa por um número de noites igual aos sucessos obtidos. Enquanto estiver ativa, a vítima, escolhida pelo toque, sofre cada ferimento de luz solar que o vampiro receber, desde que esteja dormindo no momento do dano. O vampiro ainda sofre o dano. Esse dano pode despertar a vítima. Uma vítima despertada dessa maneira acorda com a Condição Assustado (veja p. 303)."
+      }
     },
     {
       "id": "devotion-the-wish",
@@ -8311,7 +8320,17 @@
       "dicePool": "Manipulation + Persuasion + Majesty",
       "action": "Instant",
       "duration": "Three nights",
-      "effect": "To use this Devotion, the victim must agree to the terms; three nights of power, but he willl belong to the vampire afterward. The terms can be that vague, but must be stated and agreed to, without any supernatural coercion. The victim must feed from the vampire as part of the agreement. When the deal is struck, the victim gains a number of advantages for three nights: • He gains two levels of Celerity and Vigor. He can activate them by spending Willpower instead of Vitae. • He gains three levels of Majesty. He can activate these with Willpower instead of Vitae. • He needs no sleep, and can go without food and water without issue. At the end of the period, he gains the Persistent Enthralled Condition. It persists indefinitely."
+      "effect": "To use this Devotion, the victim must agree to the terms; three nights of power, but he willl belong to the vampire afterward. The terms can be that vague, but must be stated and agreed to, without any supernatural coercion. The victim must feed from the vampire as part of the agreement. When the deal is struck, the victim gains a number of advantages for three nights: • He gains two levels of Celerity and Vigor. He can activate them by spending Willpower instead of Vitae. • He gains three levels of Majesty. He can activate these with Willpower instead of Vitae. • He needs no sleep, and can go without food and water without issue. At the end of the period, he gains the Persistent Enthralled Condition. It persists indefinitely.",
+      "presentationPt": {
+        "prerequisites": "Celeridade ••, Majestade ••••, Ímpeto ••",
+        "summary": "Conceda poder temporário a um mortal que consinta e depois torne-o Cativado indefinidamente.",
+        "cost": "5 Vitae",
+        "requirement": "O alvo mortal concorda livremente e bebe do vampiro; utilizável uma vez por personagem",
+        "dicePool": "Manipulação + Persuasão + Majestade",
+        "action": "Instantânea",
+        "duration": "Três noites",
+        "effect": "Para usar esta Devoção, a vítima deve concordar com os termos: três noites de poder, mas depois pertencerá ao vampiro. Os termos podem ser tão vagos assim, mas devem ser declarados e aceitos sem coerção sobrenatural. A vítima deve beber do vampiro como parte do acordo. Ao firmar o acordo, recebe vantagens por três noites: • Ganha dois níveis de Celeridade e Ímpeto, que pode ativar gastando Força de Vontade em vez de Vitae. • Ganha três níveis de Majestade, que pode ativar com Força de Vontade em vez de Vitae. • Não precisa dormir e pode ficar sem comida e água sem problemas. Ao final do período, recebe a Condição Persistente Cativado, que permanece indefinidamente."
+      }
     },
     {
       "id": "devotion-touch-of-deprivation",
@@ -8328,7 +8347,17 @@
       "dicePool": "Intelligence + Medicine + Auspex vs. Resolve + Blood Potency",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "To activate this Devotion, the vampire must touch his victim (see Touching an Opponent on p. 177). If successful, the vampire denies the victim’s chosen sense for the remainder of the scene. This Devotion can be used to deny the victim one of her Auspex abilities, if known."
+      "effect": "To activate this Devotion, the vampire must touch his victim (see Touching an Opponent on p. 177). If successful, the vampire denies the victim’s chosen sense for the remainder of the scene. This Devotion can be used to deny the victim one of her Auspex abilities, if known.",
+      "presentationPt": {
+        "prerequisites": "Ofuscação ••••, Dominação ••",
+        "summary": "Prive temporariamente uma vítima tocada de um sentido ou de uma habilidade conhecida de Auspícios.",
+        "cost": "1 Vitae",
+        "requirement": "Tocar a vítima",
+        "dicePool": "Inteligência + Medicina + Auspícios contra Perseverança + Potência do Sangue",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "Para ativar esta Devoção, o vampiro deve tocar a vítima (veja Tocar um Oponente na p. 177). Se tiver sucesso, priva a vítima do sentido escolhido pelo restante da cena. Esta Devoção pode privar a vítima de uma de suas habilidades de Auspícios, se conhecida."
+      }
     },
     {
       "id": "devotion-undying-familiar",
@@ -8343,7 +8372,15 @@
       "cost": "2 Vitae",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "Activate this Devotion and Raise the Familiar at the same time, when feeding an animal Vitae. As long as the animal remains ghouled, this Devotion remains in effect. If the animal dies while ghouled, it immediately rises under Raise the Familiar, but its undead existence is measured in weeks instead of nights."
+      "effect": "Activate this Devotion and Raise the Familiar at the same time, when feeding an animal Vitae. As long as the animal remains ghouled, this Devotion remains in effect. If the animal dies while ghouled, it immediately rises under Raise the Familiar, but its undead existence is measured in weeks instead of nights.",
+      "presentationPt": {
+        "prerequisites": "Animalismo ••, Resiliência ••",
+        "summary": "Faça um animal carniçal vivo se erguer com Erguer o Familiar ao morrer.",
+        "cost": "2 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "Ative esta Devoção e Erguer o Familiar ao mesmo tempo, ao alimentar um animal com Vitae. A Devoção permanece em efeito enquanto o animal continuar carniçal. Se ele morrer enquanto for carniçal, ergue-se imediatamente sob Erguer o Familiar, mas sua existência como morto-vivo é medida em semanas em vez de noites."
+      }
     },
     {
       "id": "devotion-wet-dream",
@@ -8358,13 +8395,21 @@
       "cost": "1 Vitae",
       "dicePool": "Manipulation + Empathy + Majesty vs. Composure + Blood Potency",
       "action": "Contested; resistance is reflexive",
-      "effect": "If successful, this Devotion takes effect when next the victim sleeps. His frightening and arousing dreams cause the both the Spooked and Swooning Conditions (see p. 305 and p. 306). The vampire chooses the subject of both Conditions. The victim sheds each Condition individually. However, the two Conditions only give one Beat, and only once they’re both resolved."
+      "effect": "If successful, this Devotion takes effect when next the victim sleeps. His frightening and arousing dreams cause the both the Spooked and Swooning Conditions (see p. 305 and p. 306). The vampire chooses the subject of both Conditions. The victim sheds each Condition individually. However, the two Conditions only give one Beat, and only once they’re both resolved.",
+      "presentationPt": {
+        "prerequisites": "Majestade ••, Pesadelo ••",
+        "summary": "Plante medo e desejo entrelaçados nos sonhos de uma vítima.",
+        "cost": "1 Vitae",
+        "dicePool": "Manipulação + Empatia + Majestade contra Compostura + Potência do Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "effect": "Se tiver sucesso, esta Devoção faz efeito na próxima vez que a vítima dormir. Seus sonhos assustadores e excitantes causam as Condições Assombrado e Enamorado (veja p. 305 e p. 306). O vampiro escolhe o objeto de ambas as Condições. A vítima resolve cada uma individualmente. Porém, as duas Condições concedem apenas um Ato, e somente depois que ambas forem resolvidas."
+      }
     },
     {
       "id": "devotion-vermin-flood",
       "kind": "devotion",
       "name": "Vermin Flood",
-      "translatedName": "Dilúvio de Vermes",
+      "translatedName": "Dilúvio de Pragas",
       "prerequisites": "Animalism •••, Celerity ••, Vigor ••",
       "experienceCost": 4,
       "summary": "Call a destructive plague of small animals over a prepared area.",
@@ -8375,7 +8420,17 @@
       "dicePool": "Presence + Animal Ken + Animalism",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "To activate this devotion, the vampire must spread her Vitae over an area no larger than a small house or an alleyway. Once activated, every animal of Size 2 or lower immediately swarms with the speed and intensity of the vampire’s Celerity and Vigor (persistent effects only). This includes any vermin, cats, birds, and insects. They wash over the area, tearing, chewing, and destroying. Everything in the area but the vampire takes lethal damage equal to the vampire’s Animalism dots each turn. This ignores any non-magical armor. Characters moving in the swarm move at half Speed. The vermin will not leave the affected area for the remainder of the scene. Only a very large fire will slow the swarm, and even then, only in the area aflame."
+      "effect": "To activate this devotion, the vampire must spread her Vitae over an area no larger than a small house or an alleyway. Once activated, every animal of Size 2 or lower immediately swarms with the speed and intensity of the vampire’s Celerity and Vigor (persistent effects only). This includes any vermin, cats, birds, and insects. They wash over the area, tearing, chewing, and destroying. Everything in the area but the vampire takes lethal damage equal to the vampire’s Animalism dots each turn. This ignores any non-magical armor. Characters moving in the swarm move at half Speed. The vermin will not leave the affected area for the remainder of the scene. Only a very large fire will slow the swarm, and even then, only in the area aflame.",
+      "presentationPt": {
+        "prerequisites": "Animalismo •••, Celeridade ••, Ímpeto ••",
+        "summary": "Convoque uma praga destrutiva de pequenos animais para uma área preparada.",
+        "cost": "10 Vitae",
+        "requirement": "Espalhar Vitae por uma área que não seja maior que uma casa pequena ou um beco",
+        "dicePool": "Presença + Empatia com Animais + Animalismo",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "Para ativar esta Devoção, o vampiro deve espalhar sua Vitae por uma área que não seja maior que uma casa pequena ou um beco. Ao ativá-la, todos os animais de Tamanho 2 ou menor imediatamente formam um enxame com a velocidade e a intensidade da Celeridade e do Ímpeto do vampiro (somente os efeitos persistentes). Isso inclui pragas, gatos, aves e insetos. Eles inundam a área, rasgando, roendo e destruindo. Tudo na área, exceto o vampiro, sofre dano letal igual aos pontos de Animalismo do vampiro a cada turno. Esse dano ignora qualquer armadura não mágica. Personagens no enxame se movem com metade do Deslocamento. As pragas não deixam a área afetada pelo restante da cena. Somente um incêndio muito grande retarda o enxame e, mesmo assim, apenas na área em chamas."
+      }
     },
     {
       "id": "devotion-wraiths-presence",
@@ -8390,7 +8445,15 @@
       "cost": "1 Vitae",
       "dicePool": "Wits + Subterfuge + Obfuscate",
       "action": "Instant",
-      "effect": "Activate this Devotion when using Cloak of Night. The vampire projects an exact image of the desired subject in another place she can see. The image stays mostly still unless the vampire concentrates on moving it. It’ll make the necessary motions to appear realistic — for example, an image of a human will breathe. The image cannot talk or make noises. The image vanishes as soon as anyone touches it. Breaking this effect without touching the phantom uses the normal Clash of Wills rules (see p. 125)."
+      "effect": "Activate this Devotion when using Cloak of Night. The vampire projects an exact image of the desired subject in another place she can see. The image stays mostly still unless the vampire concentrates on moving it. It’ll make the necessary motions to appear realistic — for example, an image of a human will breathe. The image cannot talk or make noises. The image vanishes as soon as anyone touches it. Breaking this effect without touching the phantom uses the normal Clash of Wills rules (see p. 125).",
+      "presentationPt": {
+        "prerequisites": "Ofuscação •••, Pesadelo •",
+        "summary": "Projete uma imagem falsa em outro lugar enquanto usa Manto da Noite.",
+        "cost": "1 Vitae",
+        "dicePool": "Raciocínio + Subterfúgio + Ofuscação",
+        "action": "Instantânea",
+        "effect": "Ative esta Devoção ao usar Manto da Noite. O vampiro projeta uma imagem exata do alvo desejado em outro lugar que possa ver. A imagem fica quase imóvel, a menos que o vampiro se concentre em movê-la. Faz os movimentos necessários para parecer realista; por exemplo, uma imagem humana respira. A imagem não pode falar nem fazer sons. Desaparece assim que alguém a toca. Romper esse efeito sem tocar o fantasma usa as regras normais de Confronto de Vontades (veja p. 125)."
+      }
     },
     {
       "id": "devotion-bezoar-thorns",
