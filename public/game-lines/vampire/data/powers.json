@@ -11601,92 +11601,127 @@
       "id": "therion-avatar-apollyon",
       "kind": "therion-sacrilege",
       "name": "Avatar of Apollyon",
-      "translatedName": "Avatar of Apollyon",
+      "translatedName": "Avatar de Apollyon",
       "rating": 3,
       "targetSuccesses": 8,
       "summary": "Become the bane of a chosen angelic or demonic quarry for up to a scene.",
       "source": "Dark Eras 2",
       "page": 345,
       "duration": "One scene or until the vampire destroys a Grigor",
-      "effect": "The vampire's fangs become a bane to the type of Grigor whose substance powered the ritual. While such beings remain in Twilight, she can affect them physically but their attacks pass through her."
+      "effect": "The vampire's fangs become a bane to the type of Grigor whose substance powered the ritual. While such beings remain in Twilight, she can affect them physically but their attacks pass through her.",
+      "presentationPt": {
+        "summary": "Tornar-se a Fraqueza de um tipo escolhido de anjo ou demônio por até uma cena.",
+        "duration": "Uma cena ou até o vampiro destruir um Grigor",
+        "effect": "As presas do vampiro tornam-se uma Fraqueza para o tipo de Grigor cuja substância alimentou o ritual. Enquanto esses seres permanecem no Crepúsculo, ela pode afetá-los fisicamente, mas os ataques deles atravessam seu corpo."
+      }
     },
     {
       "id": "therion-curse-faithful",
       "kind": "therion-sacrilege",
       "name": "Curse the Faithful",
-      "translatedName": "Curse the Faithful",
+      "translatedName": "Amaldiçoar os Fiéis",
       "rating": 2,
       "targetSuccesses": 6,
       "contestedBy": "Resolve + Supernatural Tolerance",
       "summary": "Replace a mortal witness's Virtue with an additional compulsive Vice.",
       "source": "Dark Eras 2",
       "page": 345,
-      "effect": "Name a mortal who witnessed the Chorist feed from a Grigor during the last chapter. Replace the mortal's Virtue with a Vice chosen by the Chorist. On any night the victim fails to regain Willpower through a Vice, he gains Guilty."
+      "effect": "Name a mortal who witnessed the Chorist feed from a Grigor during the last chapter. Replace the mortal's Virtue with a Vice chosen by the Chorist. On any night the victim fails to regain Willpower through a Vice, he gains Guilty.",
+      "presentationPt": {
+        "contestedBy": "Perseverança + Tolerância Sobrenatural",
+        "summary": "Substituir a Virtude de um mortal que testemunhou a alimentação por um Vício compulsivo adicional.",
+        "effect": "Nomeie um mortal que tenha testemunhado o Corista alimentar-se de um Grigor durante a última sessão. Substitua a Virtude do mortal por um Vício escolhido pelo Corista. Em qualquer noite em que a vítima não recuperar Força de Vontade por meio de um Vício, ela recebe Culpado."
+      }
     },
     {
       "id": "therion-demons-tongue",
       "kind": "therion-sacrilege",
       "name": "Demon's Tongue",
-      "translatedName": "Demon's Tongue",
+      "translatedName": "Língua do Demônio",
       "rating": 1,
       "targetSuccesses": 5,
       "summary": "Gain 8-again to Subterfuge and contest supernatural truth powers for the night.",
       "source": "Dark Eras 2",
       "page": 345,
       "duration": "Until sunrise",
-      "effect": "Gain 8-again on Subterfuge rolls, including activation rolls for Disciplines and Devotions. Supernatural effects that compel truth or detect lies provoke a Clash of Wills."
+      "effect": "Gain 8-again on Subterfuge rolls, including activation rolls for Disciplines and Devotions. Supernatural effects that compel truth or detect lies provoke a Clash of Wills.",
+      "presentationPt": {
+        "summary": "Receber 8-novamente em Subterfúgio e disputar poderes sobrenaturais de verdade durante a noite.",
+        "duration": "Até o nascer do sol",
+        "effect": "Receba 8-novamente nos testes de Subterfúgio, incluindo os testes de ativação de Disciplinas e Devoções. Efeitos sobrenaturais que obrigam a dizer a verdade ou detectam mentiras provocam um Confronto de Vontades."
+      }
     },
     {
       "id": "therion-profanity",
       "kind": "therion-sacrilege",
       "name": "Profanity",
-      "translatedName": "Profanity",
+      "translatedName": "Profanação",
       "rating": 4,
       "targetSuccesses": 10,
       "summary": "Sense and desecrate sacred places, weakening alien powers and strengthening Chorists.",
       "source": "Dark Eras 2",
       "page": 345,
       "duration": "Sense until sunrise; desecration until chapter end",
-      "effect": "Sense the nearest sacred or supernatural place of power and, when applicable, which perceived Grigor type it aligns with. Baptizing it in sacrificial blood imposes −5 on non-vampiric supernatural powers there, grants Chorists 8-again on Discipline and Devotion rolls, gives mortals Wanton, and prevents them regaining Willpower through Virtue."
+      "effect": "Sense the nearest sacred or supernatural place of power and, when applicable, which perceived Grigor type it aligns with. Baptizing it in sacrificial blood imposes −5 on non-vampiric supernatural powers there, grants Chorists 8-again on Discipline and Devotion rolls, gives mortals Wanton, and prevents them regaining Willpower through Virtue.",
+      "presentationPt": {
+        "summary": "Detectar e profanar locais sagrados, enfraquecendo poderes alheios e fortalecendo os Coristas.",
+        "duration": "Detecção até o nascer do sol; profanação até o fim da sessão",
+        "effect": "Detecte o local sagrado ou sobrenatural de poder mais próximo e, quando aplicável, o tipo de Grigor percebido ao qual ele se alinha. Batizá-lo com sangue sacrificial impõe −5 aos poderes sobrenaturais não vampíricos usados ali, concede 8-novamente aos Coristas nos testes de Disciplinas e Devoções, impõe Lascivo aos mortais e os impede de recuperar Força de Vontade por meio de Virtude."
+      }
     },
     {
       "id": "therion-morning-star",
       "kind": "therion-sacrilege",
       "name": "The Morning Star",
-      "translatedName": "The Morning Star",
+      "translatedName": "A Estrela da Manhã",
       "rating": 1,
       "targetSuccesses": 5,
       "summary": "Add Therion to the Predatory Aura for the night and assume a dark angelic aspect.",
       "source": "Dark Eras 2",
       "page": 345,
       "duration": "Until sunrise",
-      "effect": "Take on a sinister angelic aspect and add Therion dots to Predatory Aura rolls. An exceptional success also inflicts Beaten Down."
+      "effect": "Take on a sinister angelic aspect and add Therion dots to Predatory Aura rolls. An exceptional success also inflicts Beaten Down.",
+      "presentationPt": {
+        "summary": "Somar Therion à Aura Predatória durante a noite e assumir um aspecto angelical sombrio.",
+        "duration": "Até o nascer do sol",
+        "effect": "Assuma um aspecto angelical sinistro e some os pontos de Therion aos testes de Aura Predatória. Um sucesso excepcional também impõe Derrotado."
+      }
     },
     {
       "id": "therion-apotheosis",
       "kind": "therion-sacrilege",
       "name": "Apotheosis",
-      "translatedName": "Apotheosis",
+      "translatedName": "Apoteose",
       "rating": 5,
       "targetSuccesses": 10,
       "summary": "Become a vampiric angel wielding the Influences and Numina of consumed divinities.",
       "source": "Dark Eras 2",
       "page": 346,
       "duration": "One scene or until Vitae is exhausted",
-      "effect": "Transform into a vampire-angel and use the Influences and Numina of Grigori consumed to fuel the rite, spending Vitae instead of their costs and using half Blood Potency, rounded up, for Rank. Power equals Intelligence + Strength + Presence; Finesse equals Wits + Dexterity + Manipulation; Resistance equals Resolve + Stamina + Composure. Recalculate derived traits from those Attributes while retaining vampiric powers and weaknesses. Each Grigor destroyed adds one to one Attribute and contributes its powers for the duration."
+      "effect": "Transform into a vampire-angel and use the Influences and Numina of Grigori consumed to fuel the rite, spending Vitae instead of their costs and using half Blood Potency, rounded up, for Rank. Power equals Intelligence + Strength + Presence; Finesse equals Wits + Dexterity + Manipulation; Resistance equals Resolve + Stamina + Composure. Recalculate derived traits from those Attributes while retaining vampiric powers and weaknesses. Each Grigor destroyed adds one to one Attribute and contributes its powers for the duration.",
+      "presentationPt": {
+        "summary": "Tornar-se um anjo vampírico que usa as Influências e Numina de divindades consumidas.",
+        "duration": "Uma cena ou até a Vitae acabar",
+        "effect": "Transforme-se em um vampiro-anjo e use as Influências e Numina dos Grigori consumidos para alimentar o rito, gastando Vitae em vez de seus custos normais e usando metade da Potência de Sangue, arredondada para cima, como Graduação. Poder é igual a Inteligência + Força + Presença; Refinamento é igual a Raciocínio + Destreza + Manipulação; Resistência é igual a Perseverança + Vigor + Compostura. Recalcule as características derivadas a partir desses Atributos, conservando os poderes e fraquezas vampíricos. Cada Grigor destruído acrescenta um ponto a um Atributo e contribui com seus poderes durante a duração."
+      }
     },
     {
       "id": "therion-nine-choirs",
       "kind": "therion-sacrilege",
       "name": "Nine Choirs Bend the Knee",
-      "translatedName": "Nine Choirs Bend the Knee",
+      "translatedName": "Os Nove Coros Dobram o Joelho",
       "rating": 5,
       "targetSuccesses": 10,
       "summary": "Force nearby angels and demons to Materialize and spend Willpower to disobey.",
       "source": "Dark Eras 2",
       "page": 346,
       "duration": "One scene",
-      "effect": "All Grigori in Twilight within 30 meters gain Materialized unless Resistance penalized by Potency succeeds. They cannot end it themselves; outside supernatural attempts provoke a Clash. Any Materialized being the Chorist could normally perceive in Twilight must spend Willpower to disobey her orders."
+      "effect": "All Grigori in Twilight within 30 meters gain Materialized unless Resistance penalized by Potency succeeds. They cannot end it themselves; outside supernatural attempts provoke a Clash. Any Materialized being the Chorist could normally perceive in Twilight must spend Willpower to disobey her orders.",
+      "presentationPt": {
+        "summary": "Forçar anjos e demônios próximos a se materializar e gastar Força de Vontade para desobedecer.",
+        "duration": "Uma cena",
+        "effect": "Todos os Grigori no Crepúsculo a até 30 metros recebem Materializado, a menos que tenham sucesso em um teste de Resistência penalizado pela Potência. Eles não podem encerrar essa Condição por conta própria; tentativas sobrenaturais externas provocam um Confronto de Vontades. Qualquer ser Materializado que o Corista normalmente pudesse perceber no Crepúsculo deve gastar Força de Vontade para desobedecer às suas ordens."
+      }
     }
   ],
   "gildedInvocations": [
