@@ -94,7 +94,10 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
     const item = vampirePowerPresentation(definition, locale);
     add(item, disciplines, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], "blood-tether");
   });
-  powers.cruacRites.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)]));
+  powers.cruacRites.forEach((definition) => {
+    const item = vampirePowerPresentation(definition, locale);
+    add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)]);
+  });
   powers.thebanMiracles.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)]));
   powers.gildedInvocations.forEach((definition) => {
     const item = vampirePowerPresentation(definition, locale);

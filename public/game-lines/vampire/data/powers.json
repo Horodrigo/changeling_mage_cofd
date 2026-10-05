@@ -10277,7 +10277,16 @@
       "resistedBy": "Composure",
       "requirement": "Subject present and physically touched",
       "duration": "Rest of the night",
-      "effect": "The ritualist sees and hears what the subject does regardless of distance."
+      "effect": "The ritualist sees and hears what the subject does regardless of distance.",
+      "presentationPt": {
+        "name": "Cheval",
+        "summary": "Ver e ouvir pelos sentidos de um sujeito tocado.",
+        "cost": "2 Vitae",
+        "resistedBy": "Autocontrole",
+        "requirement": "Sujeito presente e tocado fisicamente",
+        "duration": "Restante da noite",
+        "effect": "O ritualista vê e ouve o que o sujeito vê e ouve, independentemente da distância."
+      }
     },
     {
       "id": "cruac-pangs-proserpina",
@@ -10292,7 +10301,14 @@
       "cost": "1 Vitae",
       "targetSuccesses": 6,
       "contestedBy": "Composure + Blood Potency",
-      "effect": "A victim within one mile counts as starving for the next frenzy-resistance roll, regardless of recent feeding."
+      "effect": "A victim within one mile counts as starving for the next frenzy-resistance roll, regardless of recent feeding.",
+      "presentationPt": {
+        "name": "Dores de Prosérpina",
+        "summary": "Provocar fome sobrenatural em uma vítima distante.",
+        "cost": "1 Vitae",
+        "contestedBy": "Autocontrole + Potência de Sangue",
+        "effect": "Uma vítima a até uma milha de distância é considerada faminta no próximo teste para resistir ao Frenesi, independentemente de quando se alimentou."
+      }
     },
     {
       "id": "cruac-rigor-mortis",
@@ -10307,7 +10323,14 @@
       "cost": "1 Vitae",
       "targetSuccesses": 5,
       "resistedBy": "Composure",
-      "effect": "A vampire victim within one mile suffers –3 dice on the next physical action."
+      "effect": "A vampire victim within one mile suffers –3 dice on the next physical action.",
+      "presentationPt": {
+        "name": "Rigor Mortis",
+        "summary": "Suprimir a força reanimadora da Vitae de um vampiro.",
+        "cost": "1 Vitae",
+        "resistedBy": "Autocontrole",
+        "effect": "Uma vítima vampira a até uma milha de distância sofre −3 dados na próxima ação física."
+      }
     },
     {
       "id": "cruac-hydras-vitae",
@@ -10322,7 +10345,14 @@
       "cost": "2 Vitae",
       "targetSuccesses": 5,
       "duration": "Until next sunrise",
-      "effect": "Vampires/Strix drinking the ritualist's blood take lethal per Vitae and gain no nourishment; mortals/ghouls take heavier lethal damage."
+      "effect": "Vampires/Strix drinking the ritualist's blood take lethal per Vitae and gain no nourishment; mortals/ghouls take heavier lethal damage.",
+      "presentationPt": {
+        "name": "Vitae da Hidra",
+        "summary": "Amaldiçoar o próprio sangue do ritualista, transformando-o em veneno.",
+        "cost": "2 Vitae",
+        "duration": "Até o próximo nascer do sol",
+        "effect": "Vampiros e Strix que bebam o sangue do ritualista sofrem dano letal por ponto de Vitae e não recebem sustento; mortais e carniçais sofrem dano letal maior."
+      }
     },
     {
       "id": "cruac-blood-blight",
@@ -10337,7 +10367,14 @@
       "cost": "4 Vitae",
       "targetSuccesses": 8,
       "contestedBy": "Stamina + Blood Potency",
-      "effect": "Mortals take ritual Potency lethal damage; Kindred, Strix, and ghouls lose ritual Potency Vitae, usually provoking hunger frenzy checks in Kindred."
+      "effect": "Mortals take ritual Potency lethal damage; Kindred, Strix, and ghouls lose ritual Potency Vitae, usually provoking hunger frenzy checks in Kindred.",
+      "presentationPt": {
+        "name": "Praga do Sangue",
+        "summary": "Destruir misticamente o sangue ou a Vitae de uma vítima.",
+        "cost": "4 Vitae",
+        "contestedBy": "Vigor + Potência de Sangue",
+        "effect": "Mortais sofrem dano letal igual à Potência do ritual; Membros, Strix e carniçais perdem essa quantidade de Vitae, geralmente provocando testes de Frenesi de fome nos Membros."
+      }
     },
     {
       "id": "cruac-blood-price",
@@ -10354,7 +10391,16 @@
       "contestedBy": "Composure + Blood Potency",
       "requirement": "Vampire or ghoul subject present",
       "duration": "Until next sunrise",
-      "effect": "Whenever the subject drinks blood, up to ritual Potency Vitae go to the ritualist first; excess remains with the subject."
+      "effect": "Whenever the subject drinks blood, up to ritual Potency Vitae go to the ritualist first; excess remains with the subject.",
+      "presentationPt": {
+        "name": "Preço de Sangue",
+        "summary": "Redirecionar para o ritualista o sangue consumido por um sujeito.",
+        "cost": "4 Vitae",
+        "contestedBy": "Autocontrole + Potência de Sangue",
+        "requirement": "Sujeito vampiro ou carniçal presente",
+        "duration": "Até o próximo nascer do sol",
+        "effect": "Sempre que o sujeito bebe sangue, até Potência do ritual pontos de Vitae vão primeiro para o ritualista; o excedente fica com o sujeito."
+      }
     },
     {
       "id": "cruac-deflection-wooden-doom",
@@ -10369,7 +10415,14 @@
       "cost": "3 Vitae",
       "targetSuccesses": 6,
       "duration": "Until next sunrise",
-      "effect": "All attempts to stake the ritualist fail."
+      "effect": "All attempts to stake the ritualist fail.",
+      "presentationPt": {
+        "name": "Desvio da Perdição de Madeira",
+        "summary": "Proteger o ritualista contra estacas.",
+        "cost": "3 Vitae",
+        "duration": "Até o próximo nascer do sol",
+        "effect": "Todas as tentativas de enfiar uma estaca no coração do ritualista falham."
+      }
     },
     {
       "id": "cruac-feeding-crone",
@@ -10384,7 +10437,14 @@
       "cost": "4 Vitae",
       "targetSuccesses": 10,
       "duration": "Until next sunrise or cancelled with 1 Vitae",
-      "effect": "The ritualist gains no Vitae from feeding but the bite deals +2 aggravated damage."
+      "effect": "The ritualist gains no Vitae from feeding but the bite deals +2 aggravated damage.",
+      "presentationPt": {
+        "name": "Alimentando a Anciã",
+        "summary": "Transformar a alimentação em uma mordida sobrenatural feroz.",
+        "cost": "4 Vitae",
+        "duration": "Até o próximo nascer do sol ou ser cancelado com 1 Vitae",
+        "effect": "O ritualista não recebe Vitae ao se alimentar, mas sua mordida causa +2 de dano agravado."
+      }
     },
     {
       "id": "cruac-touch-morrigan",
@@ -10399,7 +10459,14 @@
       "cost": "3 Vitae",
       "targetSuccesses": 6,
       "duration": "Until first use or next sunrise",
-      "effect": "The first successful touch attack inflicts lethal damage equal to ritual Potency and ends the rite."
+      "effect": "The first successful touch attack inflicts lethal damage equal to ritual Potency and ends the rite.",
+      "presentationPt": {
+        "name": "Toque da Morrigan",
+        "summary": "Carregar o toque do ritualista com força letal.",
+        "cost": "3 Vitae",
+        "duration": "Até o primeiro uso ou o próximo nascer do sol",
+        "effect": "O primeiro ataque de toque bem-sucedido causa dano letal igual à Potência do ritual e encerra o rito."
+      }
     },
     {
       "id": "cruac-willful-vitae",
@@ -10414,7 +10481,14 @@
       "cost": "4 Vitae",
       "targetSuccesses": 7,
       "duration": "Rest of the night",
-      "effect": "The ritualist is immune to new Vinculum and blood addiction; existing bonds/addiction remain."
+      "effect": "The ritualist is immune to new Vinculum and blood addiction; existing bonds/addiction remain.",
+      "presentationPt": {
+        "name": "Vitae Obstinada",
+        "summary": "Impedir novos Vinculum e vício em sangue durante a noite.",
+        "cost": "4 Vitae",
+        "duration": "Restante da noite",
+        "effect": "O ritualista fica imune a novos Vinculum e vício em sangue; vínculos e vícios existentes permanecem."
+      }
     },
     {
       "id": "cruac-preys-blood",
