@@ -11525,7 +11525,7 @@
       "id": "theban-miracle-confession",
       "kind": "theban-miracle",
       "name": "Confession",
-      "translatedName": "Confession",
+      "translatedName": "Confissão",
       "summary": "A 3-dot Gethsemani Theban Miracle of holy terror and supernatural stigmata.",
       "source": "Better Feared: Nosferatu",
       "page": 41,
@@ -11535,13 +11535,19 @@
       "targetSuccesses": 6,
       "contestedBy": "Resolve + Blood Potency",
       "sacrament": "A physical likeness of the victim, such as a photograph or artistic rendering",
-      "effect": "A victim within one mile loudly proclaims what they consider their sins for turns equal to the ritualist's Theban Sorcery dots. The victim cannot stop confessing, though they may flee from witnesses or otherwise limit who hears them."
+      "effect": "A victim within one mile loudly proclaims what they consider their sins for turns equal to the ritualist's Theban Sorcery dots. The victim cannot stop confessing, though they may flee from witnesses or otherwise limit who hears them.",
+      "presentationPt": {
+        "summary": "Um Milagre Tebano Gethsemani de 3 pontos de terror sagrado e estigmas sobrenaturais.",
+        "contestedBy": "Perseverança + Potência de Sangue",
+        "sacrament": "Uma representação física da vítima, como uma fotografia ou uma imagem artística",
+        "effect": "Uma vítima a até uma milha proclama em voz alta o que considera seus pecados por turnos iguais aos pontos de Feitiçaria Tebana do ritualista. Não consegue parar de confessar, mas pode fugir das testemunhas ou limitar de outra forma quem a ouve."
+      }
     },
     {
       "id": "theban-miracle-crown-of-thorns",
       "kind": "theban-miracle",
       "name": "Crown of Thorns",
-      "translatedName": "Crown of Thorns",
+      "translatedName": "Coroa de Espinhos",
       "summary": "A Gethsemani Theban Miracle of holy terror and supernatural stigmata.",
       "source": "Better Feared: Nosferatu",
       "page": 41,
@@ -11552,13 +11558,20 @@
       "resistedBy": "Stamina",
       "sacrament": "A sprig of thorns, swallowed by the ritualist",
       "duration": "One scene",
-      "effect": "A victim within one mile takes one bashing damage as a ring of bony thorns erupts from their skull. While the thorns remain, the victim suffers a penalty equal to Potency on Social actions, and many mundane interactions may be impossible. After a scene the thorns recede, leaving gruesome scars for nights equal to the ritualist's Theban Sorcery dots; pious or superstitious witnesses react unfavorably."
+      "effect": "A victim within one mile takes one bashing damage as a ring of bony thorns erupts from their skull. While the thorns remain, the victim suffers a penalty equal to Potency on Social actions, and many mundane interactions may be impossible. After a scene the thorns recede, leaving gruesome scars for nights equal to the ritualist's Theban Sorcery dots; pious or superstitious witnesses react unfavorably.",
+      "presentationPt": {
+        "summary": "Um Milagre Tebano Gethsemani de terror sagrado e estigmas sobrenaturais.",
+        "resistedBy": "Vigor",
+        "sacrament": "Um ramo de espinhos, engolido pelo ritualista",
+        "duration": "Uma cena",
+        "effect": "Uma vítima a até uma milha sofre um ponto de dano contusivo quando um anel de espinhos ósseos emerge de seu crânio. Enquanto os espinhos permanecerem, sofre uma penalidade igual à Potência em ações Sociais, e muitas interações mundanas podem ser impossíveis. Após uma cena, os espinhos recuam e deixam cicatrizes horrendas por noites iguais aos pontos de Feitiçaria Tebana do ritualista; testemunhas devotas ou supersticiosas reagem de forma desfavorável."
+      }
     },
     {
       "id": "theban-miracle-holy-visions",
       "kind": "theban-miracle",
       "name": "Holy Visions",
-      "translatedName": "Holy Visions",
+      "translatedName": "Visões Sagradas",
       "summary": "A 2-dot Gethsemani Theban Miracle of holy terror and supernatural stigmata.",
       "source": "Better Feared: Nosferatu",
       "page": 41,
@@ -11568,13 +11581,19 @@
       "targetSuccesses": 4,
       "contestedBy": "Resolve + Blood Potency",
       "sacrament": "A mirror smeared with the victim's blood",
-      "effect": "After preparing the miracle, the vampire activates it by touching the intended victim before night's end. The victim suffers the Insensate Tilt for turns equal to the ritualist's Theban Sorcery dots while experiencing a rapturous vision around a simple theme chosen by the ritualist. When it ends, the victim gains Inspired regarding that theme."
+      "effect": "After preparing the miracle, the vampire activates it by touching the intended victim before night's end. The victim suffers the Insensate Tilt for turns equal to the ritualist's Theban Sorcery dots while experiencing a rapturous vision around a simple theme chosen by the ritualist. When it ends, the victim gains Inspired regarding that theme.",
+      "presentationPt": {
+        "summary": "Um Milagre Tebano Gethsemani de 2 pontos de terror sagrado e estigmas sobrenaturais.",
+        "contestedBy": "Perseverança + Potência de Sangue",
+        "sacrament": "Um espelho manchado com o sangue da vítima",
+        "effect": "Após preparar o milagre, o vampiro o ativa tocando a vítima pretendida antes do fim da noite. A vítima sofre a Complicação Insensível por turnos iguais aos pontos de Feitiçaria Tebana do ritualista enquanto experimenta uma visão extática sobre um tema simples escolhido por ele. Quando a visão termina, a vítima recebe Inspirado em relação ao tema."
+      }
     },
     {
       "id": "theban-miracle-rain-of-blood",
       "kind": "theban-miracle",
       "name": "Rain of Blood",
-      "translatedName": "Rain of Blood",
+      "translatedName": "Chuva de Sangue",
       "summary": "A Gethsemani Theban Miracle of holy terror and supernatural stigmata.",
       "source": "Better Feared: Nosferatu",
       "page": 41,
@@ -11584,13 +11603,19 @@
       "targetSuccesses": 11,
       "sacrament": "A single ruby of any size or cut",
       "duration": "One scene",
-      "effect": "A storm of corrosive blood fills a radius of up to 40 meters and imposes the Heavy Rain Tilt. Allies anointed with the sign of the cross before casting are immune. Anyone else exposed takes one lethal damage each turn; only full cover prevents it. Mortals reflexively roll Stamina + Composure or suffer the moderate Sick Tilt until they escape. The rain may provoke hunger frenzy but cannot be consumed as Vitae. The ritualist may end the miracle early with an instant action."
+      "effect": "A storm of corrosive blood fills a radius of up to 40 meters and imposes the Heavy Rain Tilt. Allies anointed with the sign of the cross before casting are immune. Anyone else exposed takes one lethal damage each turn; only full cover prevents it. Mortals reflexively roll Stamina + Composure or suffer the moderate Sick Tilt until they escape. The rain may provoke hunger frenzy but cannot be consumed as Vitae. The ritualist may end the miracle early with an instant action.",
+      "presentationPt": {
+        "summary": "Um Milagre Tebano Gethsemani de terror sagrado e estigmas sobrenaturais.",
+        "sacrament": "Um único rubi de qualquer tamanho ou lapidação",
+        "duration": "Uma cena",
+        "effect": "Uma tempestade de sangue corrosivo preenche um raio de até 40 metros e impõe a Complicação Chuva Forte. Aliados ungidos com o sinal da cruz antes da conjuração são imunes. Qualquer outra pessoa exposta sofre um ponto de dano letal a cada turno; somente cobertura completa o impede. Mortais fazem reflexivamente um teste de Vigor + Compostura ou sofrem a Complicação Doente moderada até escaparem. A chuva pode provocar frenesi de fome, mas não pode ser consumida como Vitae. O ritualista pode encerrar o milagre antecipadamente com uma ação instantânea."
+      }
     },
     {
       "id": "theban-miracle-stigmatic-feast",
       "kind": "theban-miracle",
       "name": "Stigmatic Feast",
-      "translatedName": "Stigmatic Feast",
+      "translatedName": "Banquete Estigmático",
       "summary": "A Gethsemani Theban Miracle of holy terror and supernatural stigmata.",
       "source": "Better Feared: Nosferatu",
       "page": 42,
@@ -11600,7 +11625,13 @@
       "targetSuccesses": 8,
       "resistedBy": "Stamina",
       "sacrament": "A crown of thorns woven by the ritualist and placed on the subject's head",
-      "effect": "A present subject suffers stigmatic wounds for turns equal to Potency, bleeding one Vitae per turn; mortal subjects also take lethal damage from blood loss. Anyone who consumes Vitae shed this way gains one dot in a chosen Physical Attribute, including corresponding derived traits, until sunrise. If the Attribute would exceed the cap from Blood Potency, the drinker instead gains one Willpower. Kindred blood still risks Vitae addiction and the Vinculum."
+      "effect": "A present subject suffers stigmatic wounds for turns equal to Potency, bleeding one Vitae per turn; mortal subjects also take lethal damage from blood loss. Anyone who consumes Vitae shed this way gains one dot in a chosen Physical Attribute, including corresponding derived traits, until sunrise. If the Attribute would exceed the cap from Blood Potency, the drinker instead gains one Willpower. Kindred blood still risks Vitae addiction and the Vinculum.",
+      "presentationPt": {
+        "summary": "Um Milagre Tebano Gethsemani de terror sagrado e estigmas sobrenaturais.",
+        "resistedBy": "Vigor",
+        "sacrament": "Uma coroa de espinhos trançada pelo ritualista e colocada na cabeça do alvo",
+        "effect": "Um alvo presente sofre ferimentos estigmáticos por turnos iguais à Potência, sangrando um Vitae por turno; alvos mortais também sofrem dano letal pela perda de sangue. Quem consumir Vitae derramada dessa maneira recebe um ponto em um Atributo Físico escolhido, incluindo as características derivadas correspondentes, até o nascer do sol. Se o Atributo ultrapassar o limite da Potência de Sangue, quem bebe recebe um ponto de Força de Vontade em vez disso. Sangue de Membro ainda traz o risco de vício em Vitae e Vinculum."
+      }
     },
     {
       "id": "theban-trials-job",

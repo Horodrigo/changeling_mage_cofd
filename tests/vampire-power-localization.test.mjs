@@ -35,8 +35,8 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.equal(detournements.length, 5);
   assert.deepEqual(devotions.map(item => item.id).sort(), ["devotion-body-of-will", "devotion-chain-of-command", "devotion-cloak-the-gathering", "devotion-conditioning", "devotion-cross-contamination", "devotion-cult-of-personality", "devotion-enchantment", "devotion-enfeebling-aura", "devotion-force-of-nature", "devotion-foul-grave", "devotion-gargoyles-vigilance", "devotion-hint-of-fear", "devotion-juggernauts-gait", "devotion-quicken-sight", "devotion-reasons-salon", "devotion-riot", "devotion-shared-sight", "devotion-shatter-the-shroud", "devotion-stalwart-servant", "devotion-subsume-lesser-beast", "devotion-summoning-dominate", "devotion-summoning-majesty", "devotion-suns-brutal-dreamscape", "devotion-the-wish", "devotion-touch-of-deprivation", "devotion-undying-familiar", "devotion-vermin-flood", "devotion-wet-dream", "devotion-wraiths-presence"]);
   assert.equal(rites.length, 26);
-  assert.equal(miracles.length, 24);
-  assert.deepEqual(Object.fromEntries([...new Set(miracles.map(item => item.source))].map(source => [source, miracles.filter(item => item.source === source).length])), { "Secrets of the Covenants": 14, "Vampire: The Requiem Second Edition": 9, "Thousand Years of Night": 1 });
+  assert.equal(miracles.length, 29);
+  assert.deepEqual(Object.fromEntries([...new Set(miracles.map(item => item.source))].map(source => [source, miracles.filter(item => item.source === source).length])), { "Better Feared: Nosferatu": 5, "Secrets of the Covenants": 14, "Vampire: The Requiem Second Edition": 9, "Thousand Years of Night": 1 });
   assert.deepEqual(Object.fromEntries([...new Set(rites.map(item => item.source))].map(source => [source, rites.filter(item => item.source === source).length])), { "Vampire: The Requiem Second Edition": 10, "Secrets of the Covenants": 14, "Thousand Years of Night": 2 });
   assert.deepEqual(coils.map(item => item.id).sort(), ["coil-ascendant", "coil-quintessence", "coil-voivode", "coil-wyrm", "coil-zirnitra", "coil-ziva"]);
   assert.equal(coils.flatMap(item => item.levels).length, 30);
@@ -296,10 +296,21 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         ritualBuyer.character.concept = `${purchase}-test`;
         ritualBuyer.line_data.blood_sorcery[idsKey] = [];
         const ritualBuyerBefore = JSON.stringify(ritualBuyer);
-        const ritualExperience = render(VampireExperiencePanel, { character: ritualBuyer, updateSheet: noMutation, catalogs });
+        const generalRitualExperience = render(VampireExperiencePanel, { character: ritualBuyer, updateSheet: noMutation, catalogs });
+        const bloodlineExperiences = new Map();
+        for (const bloodlineId of new Set(definitions.map(item => item.bloodlineId).filter(Boolean))) {
+          const bloodlineBuyer = structuredClone(ritualBuyer);
+          bloodlineBuyer.line_data.bloodline_id = bloodlineId;
+          bloodlineBuyer.line_data.clan_id = reference.bloodlines.find(item => item.id === bloodlineId).parentClanIds[0];
+          const bloodlineBuyerBefore = JSON.stringify(bloodlineBuyer);
+          bloodlineExperiences.set(bloodlineId, render(VampireExperiencePanel, { character: bloodlineBuyer, updateSheet: noMutation, catalogs }));
+          assert.equal(JSON.stringify(bloodlineBuyer), bloodlineBuyerBefore);
+        }
         for (const definition of definitions) {
+          const ritualExperience = bloodlineExperiences.get(definition.bloodlineId) ?? generalRitualExperience;
           const presented = vampirePowerPresentation(definition, locale);
           const title = locale === "pt-BR" ? definition.translatedName : definition.name;
+          if (definition.bloodlineId) assert.equal(generalRitualExperience.includes(`<strong>${escape(title)}</strong>`), false, "Bloodline ritual stays off an unrelated character's picker");
           for (const field of fields.filter(key => presented[key])) for (const html of [ritualSheet, ritualExperience, ...(vampireHomebrewSourceId(definition)?.startsWith("h-") ? [homebrew] : [])]) assert.ok(html.includes(escape(presented[field])), `${locale}: ${purchase} ${definition.id}.${field}`);
           for (const html of [ritualSheet, ritualExperience]) {
             assert.ok(html.includes(escape(title)));
