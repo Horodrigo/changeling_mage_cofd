@@ -1,6 +1,6 @@
 # Auditoria de tradução — Mortal, Vampire e Mage
 
-Atualização: **2026-10-04**. **Meta ativa:** prioridade 0, localização das etapas 1–2 e correções aprovadas de Méritos Core implementadas e verificadas; etapa 3 em execução; etapa 4 pendente.
+Atualização: **2026-10-05**. **Meta pausada a pedido do usuário:** prioridade 0, localização das etapas 1–2 e correções aprovadas de Méritos Core implementadas e verificadas; etapas 3–4 ainda têm o backlog abaixo.
 
 ## Escopo e ordem
 
@@ -24,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Área | Inventário | Trabalho restante |
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
-| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | Apresentações completas e nove erratas ativadas verificadas; correções de fonte ainda sem resposta permanecem separadas abaixo |
+| V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | Apresentações completas, nove erratas ativadas e correções de fonte aprovadas verificadas |
 | V05 — Poderes | 546 registros, 140 níveis internos | 23/23 Disciplinas e seus 110 níveis com PT verificado. Restam 523 registros e os 30 níveis de Espirais |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
@@ -142,7 +142,7 @@ Os cinco pares com efeitos distintos já aprovados recebem qualificadores de lin
 
 ## Decisões respondidas pelo usuário — 2026-10-04
 
-Estes pontos **já receberam resposta**. As mudanças abaixo ainda precisam de aplicação e gates próprios, salvo os estados explícitos de concluído ou de conservação. Não representam perguntas abertas nem uma nova revisão de PDFs. As correções mecânicas solicitadas pelo usuário são trabalho adicional autorizado; a tradução isolada continua preservando as demais regras.
+Estes pontos **já receberam resposta e estão aplicados ou conservados conforme indicado**. Permanecem aqui como decisões para os próximos catálogos, não como perguntas abertas. As correções mecânicas solicitadas pelo usuário são trabalho adicional autorizado; a tradução isolada continua preservando as demais regras.
 
 | Registro / fonte | Decisão recebida | Aplicação / verificação |
 | --- | --- | --- |
@@ -155,7 +155,7 @@ Estes pontos **já receberam resposta**. As mudanças abaixo ainda precisam de a
 | Armed Defense — Core pp. 60–61 | **OK** para os resumos auditados. | Conservar os resumos atuais; limites omitidos não se tornam tarefa de reconstrução. |
 | Advanced Library — Mage p. 105 | **Safe Place igual ou maior** que Advanced Library. | Comparação implementada no requisito relativo compartilhado: uma instância canônica de Local Seguro com pontuação igual ou superior à compra; não somar instâncias. Biblioteca 3 continua obrigatória. EN/PT explicitam o limite; Mage 2e p. 105 revisado visualmente. 42/42 testes dirigidos, 36/36 de catálogos/arquitetura, lint, TypeScript e build aprovados. |
 | Citywalker — Core p. 236 | **Sono remove a restrição para novas tentativas**. | Resumos EN/PT corrigidos e Core p. 236 revisado visualmente: falha impõe −3 nas tentativas seguintes naquele dia; oito horas de sono removem essa restrição. Não exigir sono antes de cada teste. Gates aprovados. |
-| Cheap Shot / Choke Hold — Core p. 61 | **Adicionar −2 cumulativo apenas a Cheap Shot**, conforme confirmação posterior após revisão do PDF. Choke Hold não recebe essa penalidade. | Core p. 61 revisado visualmente. EN/PT de Golpe Baixo agora explicitam que cada uso na cena impõe −2 cumulativo aos usos seguintes. Choke Hold preservado; seus outros limites permanecem na lista sem resposta. 30/30 testes de apresentação/identidade/concessões, 36/36 de catálogos/arquitetura e build aprovados. |
+| Cheap Shot / Choke Hold — Core p. 61 | **Adicionar −2 cumulativo apenas a Cheap Shot**, conforme confirmação posterior após revisão do PDF. Choke Hold não recebe essa penalidade. | Core p. 61 revisado visualmente. EN/PT de Golpe Baixo explicitam que cada uso na cena impõe −2 cumulativo aos usos seguintes. Os limites de Choke Hold também estão aplicados, conforme sua decisão específica abaixo. |
 | Fighting Finesse | **Apenas verificar a existência de alguma Especialização em Brawl ou Weaponry**; Melee equivale a Weaponry. | Requisito implementado por ID: exige uma Especialização preenchida em Briga ou Armas Brancas, conservando Destreza 3. Contextos da criação/ficha/XP recebem Especializações atuais e concessões Core recompostas sem alterar compras. 38/38 testes dirigidos, 34/34 de catálogos/arquitetura, lint, TypeScript e build aprovados. |
 | Interdisciplinary Specialty — Core p. 45 | **Selecionar uma Especialização já cadastrada na ficha; removê-la ou alterá-la remove o Mérito junto**. | Implementado: seletor de Especializações existentes na Perícia correspondente com três pontos ou mais, vinculadas pela Perícia canônica, nome autoral e origem. Remoção/alteração explícita elimina a instância vinculada, sem crédito automático de XP nem reescrita do recibo. Criação, ficha e XP usam o mesmo contexto. Configurações e índices de concessões irmãs são preservados; culto de Mage e Título de Changeling usam seus produtores próprios. Abrir/importar não apaga escolhas antigas sem vínculo; elas precisam de seleção explícita. Core p. 45 revisado visualmente. 573/573 testes da suíte completa, lint, TypeScript e build aprovados. |
 | Iron Will — Core p. 51 | **Resolve 3**, decisão do usuário. | Aplicado ao requisito canônico/PT; gates aprovados. Revisão visual de Core p. 51 nesta data mostra Resolve 4 no PDF local: conservar 3 como decisão explícita de projeto. |
@@ -200,4 +200,5 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 - As quatro decisões finais estão aplicadas: Choke Hold e Curse Effigy em EN/PT; Swarm Form com Metamorfose 3/Pele da Fera; Fire & Revolution com oito páginas e quatro requisitos corrigidos conforme o PDF. Apenas os campos autorizados foram alterados; IDs, compras, XP, estornos e textos autorais permanecem preservados.
 - Manifesto `catalogVersion` **94**; recursos Core de Méritos **16/18**, Changeling **6/8**, `merits-vampire` **14**, `merits-vampire-pt` **22**, `vampire-bloodlines` **14**, `vampire-powers` **37**.
 - Encerramento do dia: **579/579 testes da suíte completa**, lint, TypeScript e build final aprovados. Integração EN/PT/EN cobre criação, XP, cards compartilhados Desktop/Mobile e Homebrew, incluindo Clans/Bloodlines/Coalizões exclusivos, Sucessos Alvo, modificadores e níveis ainda não adquiridos.
+- Fechamento de 2026-10-05: alterações autorais preservadas nos commits `a6a28a1` e `7268e69`; **37/37 testes dirigidos** de Méritos, dicionários e integridade dos catálogos aprovados. Referências antigas a decisões ainda não aplicadas foram corrigidas; nenhuma nova família de poderes foi iniciada.
 - Sem smoke de navegador. Ponto de parada solicitado pelo usuário em 2026-10-04: lotes verificados e registrados em commits locais. Retomar pelo backlog inicial; a meta integral ainda não está concluída.
