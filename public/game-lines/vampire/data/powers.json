@@ -11729,71 +11729,95 @@
       "id": "gilded-crowdsourcing",
       "kind": "gilded-invocation",
       "name": "Crowdsourcing",
-      "translatedName": "Crowdsourcing",
+      "translatedName": "Mobilização Coletiva",
       "rating": 1,
       "experienceCost": 2,
       "targetSuccesses": 6,
       "summary": "Turn nearby strangers into a temporary source of coordinated information and assistance.",
       "source": "False Gods: Ventrue",
-      "page": 136,
+      "page": 137,
       "manualOnly": true,
       "duration": "Night",
       "requirement": "Ways and Means: Walk from a place frequented by the desired people to the target, using polished quartz to capture and direct their energy, then leave it at the epicenter.",
-      "effect": "The invocation attracts people who embody a specified emotion or group identity to an area about the size of a large city block. This is not compulsion; anyone who follows the impulse refreshes one spent Willpower. For the rest of the night, the ritualist exceptionally succeeds with three successes when searching the area for such people, including with supernatural senses such as Beast's Hackles."
+      "effect": "The invocation attracts people who embody a specified emotion or group identity to an area about the size of a large city block. This is not compulsion; anyone who follows the impulse refreshes one spent Willpower. For the rest of the night, the ritualist exceptionally succeeds with three successes when searching the area for such people, including with supernatural senses such as Beast's Hackles.",
+      "presentationPt": {
+        "summary": "Transformar desconhecidos próximos em uma fonte temporária de informação e auxílio coordenados.",
+        "duration": "Uma noite",
+        "requirement": "Meios e Recursos: Caminhe de um local frequentado pelas pessoas desejadas até o alvo, usando quartzo polido para captar e direcionar sua energia, e deixe-o no epicentro.",
+        "effect": "A Invocação atrai pessoas que representam uma emoção ou identidade de grupo específica para uma área do tamanho de um grande quarteirão. Isso não é compulsão; quem segue o impulso recupera um ponto gasto de Força de Vontade. Pelo resto da noite, o ritualista obtém sucesso excepcional com três sucessos ao procurar essas pessoas na área, inclusive com sentidos sobrenaturais como Arrepio da Fera."
+      }
     },
     {
       "id": "gilded-green-light",
       "kind": "gilded-invocation",
       "name": "Green Light",
-      "translatedName": "Green Light",
+      "translatedName": "Sinal Verde",
       "rating": 1,
       "experienceCost": 2,
       "targetSuccesses": 5,
       "summary": "Make urban routes and systems favor movement through the affected area.",
       "source": "False Gods: Ventrue",
-      "page": 136,
+      "page": 137,
       "manualOnly": true,
       "duration": "Until sunrise",
       "requirement": "Ways and Means: A detailed map of the area with its routes traced in pencil using a straightedge.",
-      "effect": "The urban landscape subtly becomes more efficient: alleys shorten, paths smooth, and crossing lights synchronize. Rolls to travel through the area gain the Advanced Action quality: roll twice and keep the better result."
+      "effect": "The urban landscape subtly becomes more efficient: alleys shorten, paths smooth, and crossing lights synchronize. Rolls to travel through the area gain the Advanced Action quality: roll twice and keep the better result.",
+      "presentationPt": {
+        "summary": "Fazer com que as rotas e os sistemas urbanos favoreçam o deslocamento pela área afetada.",
+        "duration": "Até o nascer do sol",
+        "requirement": "Meios e Recursos: Um mapa detalhado da área, com suas rotas traçadas a lápis usando uma régua.",
+        "effect": "A paisagem urbana torna-se sutilmente mais eficiente: becos encurtam, caminhos se tornam mais fáceis de percorrer e semáforos sincronizam. Testes para atravessar a área recebem a qualidade de Ação Avançada: role duas vezes e use o melhor resultado."
+      }
     },
     {
       "id": "gilded-cordon",
       "kind": "gilded-invocation",
       "name": "Cordon",
-      "translatedName": "Cordon",
+      "translatedName": "Isolamento",
       "rating": 3,
       "experienceCost": 2,
       "targetSuccesses": 10,
       "summary": "Turn a boundary into an occult barrier that discourages or blocks passage.",
       "source": "False Gods: Ventrue",
-      "page": 137,
+      "page": 138,
       "manualOnly": true,
       "duration": "24 hours",
       "requirement": "Ways and Means: Cast inside a legal building with jurisdiction over the target area and smear one Vitae on an official record connected to the subject.",
-      "effect": "A subject currently within the chosen area cannot escape by mundane means; every mundane attempt automatically fails as the city produces barriers and coincidences. Supernatural escape triggers a Clash of Wills."
+      "effect": "A subject currently within the chosen area cannot escape by mundane means; every mundane attempt automatically fails as the city produces barriers and coincidences. Supernatural escape triggers a Clash of Wills.",
+      "presentationPt": {
+        "summary": "Transformar um limite em uma barreira oculta que desencoraja ou impede a passagem.",
+        "duration": "24 horas",
+        "requirement": "Meios e Recursos: Lance o ritual dentro de um edifício jurídico com jurisdição sobre a área-alvo e unte com um ponto de Vitae um registro oficial relacionado ao sujeito.",
+        "effect": "Um sujeito que esteja na área escolhida não pode escapar por meios mundanos; toda tentativa mundana falha automaticamente, pois a cidade produz barreiras e coincidências. Escapar por meios sobrenaturais provoca um Confronto de Vontades."
+      }
     },
     {
       "id": "gilded-gerrymandering",
       "kind": "gilded-invocation",
       "name": "Gerrymandering",
-      "translatedName": "Gerrymandering",
+      "translatedName": "Manipulação de Distritos",
       "rating": 3,
       "experienceCost": 2,
       "targetSuccesses": 9,
       "summary": "Redefine which places and people count as belonging to the Invocation's area.",
       "source": "False Gods: Ventrue",
-      "page": 137,
+      "page": 138,
       "manualOnly": true,
       "duration": "One scene after the crowd gathers",
       "requirement": "Ways and Means: A space capable of holding the intended crowd, plus photographs or detailed plans marking every exit.",
-      "effect": "Within one hour, traffic and civic infrastructure gather up to 100 people, plus another 100 per Potency, into a predefined space. Crowdsourcing may define the type of people gathered. They are not compelled to remain, but attempts to leave during the scene suffer a penalty equal to Gilded Cage dots, reduced by one per 100 people in the crowd. A mass attempt to escape may cause the Stampede Tilt."
+      "effect": "Within one hour, traffic and civic infrastructure gather up to 100 people, plus another 100 per Potency, into a predefined space. Crowdsourcing may define the type of people gathered. They are not compelled to remain, but attempts to leave during the scene suffer a penalty equal to Gilded Cage dots, reduced by one per 100 people in the crowd. A mass attempt to escape may cause the Stampede Tilt.",
+      "presentationPt": {
+        "summary": "Redefinir quais lugares e pessoas são considerados parte da área da Invocação.",
+        "duration": "Uma cena após a multidão se reunir",
+        "requirement": "Meios e Recursos: Um espaço capaz de acomodar a multidão pretendida, além de fotografias ou plantas detalhadas que marquem todas as saídas.",
+        "effect": "Em uma hora, o trânsito e a infraestrutura urbana reúnem até 100 pessoas, mais 100 por Potência, em um espaço predeterminado. Mobilização Coletiva pode definir o tipo de pessoas reunidas. Elas não são obrigadas a permanecer, mas tentativas de sair durante a cena sofrem uma penalidade igual aos pontos de Gaiola Dourada, reduzida em um por 100 pessoas na multidão. Uma tentativa de fuga em massa pode causar a Complicação Debandada."
+      }
     },
     {
       "id": "gilded-red-light",
       "kind": "gilded-invocation",
       "name": "Red Light",
-      "translatedName": "Red Light",
+      "translatedName": "Sinal Vermelho",
       "rating": 2,
       "experienceCost": 2,
       "targetSuccesses": 5,
@@ -11803,13 +11827,19 @@
       "manualOnly": true,
       "duration": "Night",
       "requirement": "Ways and Means: A detailed map of the area with its routes traced using a straightedge, then damaged beyond use.",
-      "effect": "The urban landscape develops obstacles and inefficiencies. Rolls to navigate or travel quickly through it automatically fail, and all travel takes three times as long. The ritualist is immune while on foot or controlling her own vehicle and may grant immunity to up to Potency other people using geomantic symbols. Where Green Light overlaps, only the ritualist and her allies receive Green Light's benefit."
+      "effect": "The urban landscape develops obstacles and inefficiencies. Rolls to navigate or travel quickly through it automatically fail, and all travel takes three times as long. The ritualist is immune while on foot or controlling her own vehicle and may grant immunity to up to Potency other people using geomantic symbols. Where Green Light overlaps, only the ritualist and her allies receive Green Light's benefit.",
+      "presentationPt": {
+        "summary": "Fazer com que as rotas e os sistemas urbanos dificultem o deslocamento pela área afetada.",
+        "duration": "Uma noite",
+        "requirement": "Meios e Recursos: Um mapa detalhado da área, com suas rotas traçadas usando uma régua, depois danificado até ficar inutilizável.",
+        "effect": "A paisagem urbana desenvolve obstáculos e ineficiências. Testes para orientar-se ou deslocar-se rapidamente pela área falham automaticamente, e todo deslocamento leva três vezes mais tempo. O ritualista é imune enquanto estiver a pé ou controlar seu próprio veículo e pode conceder imunidade a até Potência outras pessoas usando símbolos geomânticos. Onde houver sobreposição com Sinal Verde, apenas o ritualista e seus aliados recebem o benefício de Sinal Verde."
+      }
     },
     {
       "id": "gilded-semiotics",
       "kind": "gilded-invocation",
       "name": "Semiotics",
-      "translatedName": "Semiotics",
+      "translatedName": "Semiótica",
       "rating": 2,
       "experienceCost": 2,
       "targetSuccesses": 6,
@@ -11819,13 +11849,19 @@
       "manualOnly": true,
       "duration": "One month",
       "requirement": "Ways and Means: A diagram marking the symbol's location and a visible covenant symbol created by the ritualist.",
-      "effect": "The symbol carries a specific behavioral resonance. Actions within visual range that further that resonance gain 8-again. The effect may be renewed before expiration by a Mason who knows Semiotics spending one Willpower and touching the object; removing or destroying it ends the invocation."
+      "effect": "The symbol carries a specific behavioral resonance. Actions within visual range that further that resonance gain 8-again. The effect may be renewed before expiration by a Mason who knows Semiotics spending one Willpower and touching the object; removing or destroying it ends the invocation.",
+      "presentationPt": {
+        "summary": "Reescrever o significado social de sinais e marcos na área afetada.",
+        "duration": "Um mês",
+        "requirement": "Meios e Recursos: Um diagrama que marque a localização do símbolo e um símbolo visível da Coalizão criado pelo ritualista.",
+        "effect": "O símbolo transmite uma ressonância comportamental específica. Ações realizadas à vista dele que promovam essa ressonância recebem 8-novamente. Antes de expirar, um Maçom que conheça Semiótica pode renovar o efeito gastando um ponto de Força de Vontade e tocando o objeto; removê-lo ou destruí-lo encerra a Invocação."
+      }
     },
     {
       "id": "gilded-rapid-transit",
       "kind": "gilded-invocation",
       "name": "Rapid Transit",
-      "translatedName": "Rapid Transit",
+      "translatedName": "Trânsito Rápido",
       "rating": 5,
       "experienceCost": 2,
       "targetSuccesses": 8,
@@ -11835,13 +11871,19 @@
       "manualOnly": true,
       "duration": "Until the end of the night or until used",
       "requirement": "Ways and Means: Mark the destination on a physical map using the point of a precious gemstone and keep the gem until activation.",
-      "effect": "The ritualist may teleport to the marked destination as a reflexive action. She may take anything she is touching, limited to a number of Size 3+ objects or people equal to Potency, and cannot carry anything larger than herself. The gemstone remains at the departure point."
+      "effect": "The ritualist may teleport to the marked destination as a reflexive action. She may take anything she is touching, limited to a number of Size 3+ objects or people equal to Potency, and cannot carry anything larger than herself. The gemstone remains at the departure point.",
+      "presentationPt": {
+        "summary": "Criar uma rota de eficiência impossível entre pontos preparados na cidade.",
+        "duration": "Até o fim da noite ou até ser usada",
+        "requirement": "Meios e Recursos: Marque o destino em um mapa físico usando a ponta de uma gema preciosa e conserve a gema até a ativação.",
+        "effect": "O ritualista pode se teleportar para o destino marcado como uma ação reflexiva. Pode levar tudo o que estiver tocando, limitado a uma quantidade de objetos ou pessoas de Tamanho 3+ igual à Potência, e não pode transportar nada maior que si mesmo. A gema permanece no ponto de partida."
+      }
     },
     {
       "id": "gilded-rezoning",
       "kind": "gilded-invocation",
       "name": "Rezoning",
-      "translatedName": "Rezoning",
+      "translatedName": "Rezoneamento",
       "rating": 4,
       "experienceCost": 2,
       "targetSuccesses": 9,
@@ -11851,13 +11893,19 @@
       "manualOnly": true,
       "duration": "One month",
       "requirement": "Ways and Means: A pint of blood from several residents, used to draw a detailed picture of the area.",
-      "effect": "The invocation changes an area's physical and metaphysical trajectory toward prosperity or decline. Actions opposing that change automatically fail unless the actor spends Willpower; this expenditure permits the roll but grants no +3 bonus."
+      "effect": "The invocation changes an area's physical and metaphysical trajectory toward prosperity or decline. Actions opposing that change automatically fail unless the actor spends Willpower; this expenditure permits the roll but grants no +3 bonus.",
+      "presentationPt": {
+        "summary": "Alterar a natureza sobrenatural e os usos permitidos de um distrito urbano.",
+        "duration": "Um mês",
+        "requirement": "Meios e Recursos: Uma pinta de sangue de vários moradores, usada para desenhar uma imagem detalhada da área.",
+        "effect": "A Invocação altera a trajetória física e metafísica da área em direção à prosperidade ou ao declínio. Ações que contrariem essa mudança falham automaticamente, a menos que o personagem gaste Força de Vontade; esse gasto permite o teste, mas não concede o bônus de +3."
+      }
     },
     {
       "id": "gilded-synopticon",
       "kind": "gilded-invocation",
       "name": "Synopticon",
-      "translatedName": "Synopticon",
+      "translatedName": "Sinóptico",
       "rating": 4,
       "experienceCost": 2,
       "targetSuccesses": 10,
@@ -11867,13 +11915,19 @@
       "manualOnly": true,
       "duration": "One hour, plus one hour per additional Potency",
       "requirement": "Ways and Means: Give reflective objects to at least two people and spill one Vitae at each cardinal direction around their building.",
-      "effect": "The reflective objects record everything their bearers see and hear while inside the building. Smearing another mirror with one Vitae provides a live feed for minutes equal to Potency; additional periods cost another Vitae. Afterward, the ritualist may drink the blood used in the Ways and Means to review each feed once in real time. Reviewing everything instantaneously causes Distracted for the rest of the scene."
+      "effect": "The reflective objects record everything their bearers see and hear while inside the building. Smearing another mirror with one Vitae provides a live feed for minutes equal to Potency; additional periods cost another Vitae. Afterward, the ritualist may drink the blood used in the Ways and Means to review each feed once in real time. Reviewing everything instantaneously causes Distracted for the rest of the scene.",
+      "presentationPt": {
+        "summary": "Usar os sistemas e observadores da cidade como uma rede sobrenatural de vigilância.",
+        "duration": "Uma hora, mais uma hora por Potência adicional",
+        "requirement": "Meios e Recursos: Entregue objetos reflexivos a pelo menos duas pessoas e derrame um ponto de Vitae em cada direção cardeal ao redor do edifício delas.",
+        "effect": "Os objetos reflexivos registram tudo o que seus portadores veem e ouvem enquanto estiverem dentro do edifício. Untar outro espelho com um ponto de Vitae fornece uma transmissão ao vivo por um número de minutos igual à Potência; períodos adicionais custam mais um ponto de Vitae. Depois, o ritualista pode beber o sangue usado nos Meios e Recursos para rever cada transmissão uma vez em tempo real. Rever tudo instantaneamente causa Distraído pelo resto da cena."
+      }
     },
     {
       "id": "gilded-remise-a-neuf",
       "kind": "gilded-invocation",
       "name": "Remise à neuf",
-      "translatedName": "Remise à neuf",
+      "translatedName": "Renovação",
       "rating": 5,
       "experienceCost": 2,
       "targetSuccesses": 10,
@@ -11884,7 +11938,14 @@
       "cost": "1 Willpower dot",
       "duration": "Indefinite",
       "requirement": "Ways and Means: Cast within the target area over its original blueprints or government property plans.",
-      "effect": "The ritualist rearranges streets, alleys, paths, rooms, or whole buildings within a large city block or a single building. She cannot merge rooms or create impossible architecture. The Storyteller sets the limits but should favor permissive interpretations. Ending the invocation restores the spent Willpower dot; if it was already repurchased, the character instead gains a Beat."
+      "effect": "The ritualist rearranges streets, alleys, paths, rooms, or whole buildings within a large city block or a single building. She cannot merge rooms or create impossible architecture. The Storyteller sets the limits but should favor permissive interpretations. Ending the invocation restores the spent Willpower dot; if it was already repurchased, the character instead gains a Beat.",
+      "presentationPt": {
+        "summary": "Renovar um distrito conforme o projeto pretendido pelos Arquitetos.",
+        "cost": "1 ponto permanente de Força de Vontade",
+        "duration": "Indefinida",
+        "requirement": "Meios e Recursos: Lance o ritual dentro da área-alvo, sobre suas plantas originais ou plantas governamentais dos imóveis.",
+        "effect": "O ritualista reorganiza ruas, becos, caminhos, cômodos ou edifícios inteiros em um grande quarteirão ou um único edifício. Não pode unir cômodos nem criar uma arquitetura impossível. O Narrador estabelece os limites, mas deve favorecer interpretações permissivas. Encerrar a Invocação restaura o ponto permanente de Força de Vontade gasto; se ele já tiver sido comprado novamente, o personagem recebe um Ato."
+      }
     }
   ],
   "detournements": [

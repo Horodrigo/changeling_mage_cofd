@@ -96,7 +96,10 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
   });
   powers.cruacRites.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)]));
   powers.thebanMiracles.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)]));
-  powers.gildedInvocations.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.discipline"), t("ui.gildedCage")), ...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)], "gilded-cage"));
+  powers.gildedInvocations.forEach((definition) => {
+    const item = vampirePowerPresentation(definition, locale);
+    add(item, bloodSorcery, [...detail(t("ui.discipline"), t("ui.gildedCage")), ...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)], "gilded-cage");
+  });
   powers.detournements.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)]));
   conditions.forEach((item) => add(item, t("ui.conditions"), [...detail(t("ui.descriptionLabel"), item.description), ...detail(t("ui.penalty"), item.penalty), ...detail(t("ui.persistent"), item.persistent ? t("ui.yes") : ""), ...detail(t("ui.resolution"), item.resolution), ...detail(t("ui.beat"), item.beat)]));
   listed.push({ id: SIMPLIFIED_HOLLOW_ID, sourceId: "h-vtr-strange-shades", source: "Strange Shades: Mekhet", kind: "Errata", name: t("ui.simplifiedHollow"), details: detail(t("ui.effect"), t("ui.simplifiedHollowHomebrewEffect")) });

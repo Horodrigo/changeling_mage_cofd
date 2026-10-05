@@ -14,6 +14,7 @@ const rituals = powers.ritualDisciplines.filter(item => item.presentationPt);
 const lashes = powers.lashes.filter(item => item.presentationPt);
 const formulae = powers.kimiyaFormulae.filter(item => item.presentationPt);
 const sacrileges = powers.therionSacrileges.filter(item => item.presentationPt);
+const invocations = powers.gildedInvocations.filter(item => item.presentationPt);
 const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#x27;");
 const fields = ["summary", "cost", "requirement", "condition", "dicePool", "action", "duration", "contestedBy", "resistedBy", "sacrament", "effect", "procedure", "outcome", "prerequisites", "statusRequirement", "humanityCapFormula"];
 
@@ -24,11 +25,13 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.deepEqual(lashes.map(item => item.id).sort(), ["devotion-iron-joy", "devotion-shared-feast"]);
   assert.deepEqual(formulae.map(item => item.id).sort(), ["kimiya-al-ajsad", "kimiya-curse-monkey-prince", "kimiya-ebony-horse", "kimiya-sayihs-khol", "kimiya-spiders-hijra"]);
   assert.deepEqual(sacrileges.map(item => item.id).sort(), ["therion-apotheosis", "therion-avatar-apollyon", "therion-curse-faithful", "therion-demons-tongue", "therion-morning-star", "therion-nine-choirs", "therion-profanity"]);
+  assert.equal(invocations.length, 10);
+  for (const [id, page] of [["gilded-crowdsourcing", 137], ["gilded-green-light", 137], ["gilded-cordon", 138], ["gilded-gerrymandering", 138]]) assert.equal(invocations.find(item => item.id === id).page, page);
   const therion = rituals.find(item => item.id === "therion");
   assert.match(therion.effect, /^If Humanity is higher than the Sacrilege rating/);
   assert.equal(therion.minimumHumanityToCast, undefined);
   assert.match(rituals.find(item => item.id === "gilded-cage").effect, /in a Convergence, ritual rolls achieve exceptional success with three successes instead of five/);
-  for (const definition of [...selected, ...rituals, ...lashes, ...formulae, ...sacrileges]) {
+  for (const definition of [...selected, ...rituals, ...lashes, ...formulae, ...sacrileges, ...invocations]) {
     for (const item of [definition, ...(definition.levels ?? [])]) {
       assert.ok(item.presentationPt, `${definition.id}.${item.rating ?? "summary"}`);
       for (const field of fields.filter(key => item[key])) {
@@ -59,7 +62,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
     const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] }, plugins: [{ name: "power-locale-test-surfaces", enforce: "pre", transform(code, id) {
       const path = id.replaceAll("\\", "/");
       if (path.endsWith("/game-lines/vampire/sheet-view.tsx")) return `${code}\nexport { DisciplineCards, RitualDisciplines };`;
-      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return code.replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : character.character.concept === "formula-test" ? "formula" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : "");');
+      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return code.replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : character.character.concept === "formula-test" ? "formula" : character.character.concept === "invocation-test" ? "invocation" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : "");');
       if (path.endsWith("/components/ui/dialog.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Dialog, Wrapper as DialogTrigger, Wrapper as DialogPortal, Wrapper as DialogClose, Wrapper as DialogOverlay, Wrapper as DialogContent, Wrapper as DialogHeader, Wrapper as DialogFooter, Wrapper as DialogTitle, Wrapper as DialogDescription };';
       if (path.endsWith("/components/ui/select.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Select, Wrapper as SelectContent, Wrapper as SelectGroup, Wrapper as SelectItem, Wrapper as SelectLabel, Wrapper as SelectSeparator, Wrapper as SelectTrigger, Wrapper as SelectValue };';
       if (path.endsWith("/components/ui/tabs.tsx")) return code.replace("<TabsPrimitive.Content", "<TabsPrimitive.Content forceMount");
@@ -231,7 +234,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       }
       assert.equal(JSON.stringify(lashCharacter), lashCharacterBefore);
       assert.equal(JSON.stringify(lashBuyer), lashBuyerBefore);
-      for (const [ritualId, group, purchase, idsKey] of [["kimiya", "kimiyaFormulae", "formula", "kimiya_formula_ids"], ["therion", "therionSacrileges", "sacrilege", "therion_sacrilege_ids"]]) {
+      for (const [ritualId, group, purchase, idsKey] of [["kimiya", "kimiyaFormulae", "formula", "kimiya_formula_ids"], ["therion", "therionSacrileges", "sacrilege", "therion_sacrilege_ids"], ["gilded-cage", "gildedInvocations", "invocation", "gilded_invocation_ids"]]) {
         const definitions = catalog[group];
         const ritualCharacter = structuredClone(ritualCharacters[ritualId]);
         ritualCharacter.line_data.blood_sorcery[idsKey] = definitions.map(item => item.id);
@@ -245,7 +248,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         for (const definition of definitions) {
           const presented = vampirePowerPresentation(definition, locale);
           const title = locale === "pt-BR" ? definition.translatedName : definition.name;
-          for (const field of fields.filter(key => presented[key])) for (const html of [ritualSheet, ritualExperience]) assert.ok(html.includes(escape(presented[field])), `${locale}: ${purchase} ${definition.id}.${field}`);
+          for (const field of fields.filter(key => presented[key])) for (const html of [ritualSheet, ritualExperience, ...(vampireHomebrewSourceId(definition)?.startsWith("h-") ? [homebrew] : [])]) assert.ok(html.includes(escape(presented[field])), `${locale}: ${purchase} ${definition.id}.${field}`);
           for (const html of [ritualSheet, ritualExperience]) {
             assert.ok(html.includes(escape(title)));
           }
