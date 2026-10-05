@@ -11420,7 +11420,16 @@
       "contestedBy": "Resolve + Blood Potency",
       "sacrament": "Paper bearing the victim's name",
       "duration": "Until triggered or sunrise",
-      "effect": "The next bashing damage from one attack becomes lethal. A separate four-dot version with 8 target successes upgrades lethal to aggravated."
+      "effect": "The next bashing damage from one attack becomes lethal. A separate four-dot version with 8 target successes upgrades lethal to aggravated.",
+      "presentationPt": {
+        "name": "Lisonja do Pecado",
+        "summary": "Converter o próximo dano contundente sofrido por uma vítima distante.",
+        "cost": "1 Força de Vontade + sacramento",
+        "contestedBy": "Perseverança + Potência de Sangue",
+        "sacrament": "Papel com o nome da vítima",
+        "duration": "Até ser acionado ou o nascer do sol",
+        "effect": "O próximo dano contundente de um ataque torna-se letal. Uma versão separada de quatro pontos, com 8 Sucessos Alvo, converte dano letal em agravado."
+      }
     },
     {
       "id": "theban-blood-scourge",
@@ -11436,7 +11445,15 @@
       "targetSuccesses": 6,
       "sacrament": "At least 1 Vitae of the ritualist's own blood",
       "duration": "Until sunrise; created whip lasts until scene end",
-      "effect": "Create a 2L Vitae whip at any point before sunrise."
+      "effect": "Create a 2L Vitae whip at any point before sunrise.",
+      "presentationPt": {
+        "name": "Flagelo de Sangue",
+        "summary": "Criar um chicote temporário de Vitae.",
+        "cost": "1 Força de Vontade + sacramento",
+        "sacrament": "Pelo menos 1 Vitae do próprio sangue do ritualista",
+        "duration": "Até o nascer do sol; o chicote criado dura até o fim da cena",
+        "effect": "Crie um chicote de Vitae de 2L a qualquer momento antes do nascer do sol."
+      }
     },
     {
       "id": "theban-curse-babel",
@@ -11453,7 +11470,16 @@
       "resistedBy": "Resolve",
       "sacrament": "An animal or human tongue",
       "duration": "Until next sunrise",
-      "effect": "A victim within one mile cannot speak or write."
+      "effect": "A victim within one mile cannot speak or write.",
+      "presentationPt": {
+        "name": "Maldição de Babel",
+        "summary": "Impedir uma vítima de falar ou escrever.",
+        "cost": "1 Força de Vontade + sacramento",
+        "resistedBy": "Perseverança",
+        "sacrament": "Uma língua animal ou humana",
+        "duration": "Até o próximo nascer do sol",
+        "effect": "Uma vítima a até uma milha de distância não pode falar nem escrever."
+      }
     },
     {
       "id": "theban-liars-plague",
@@ -11470,7 +11496,16 @@
       "contestedBy": "Resolve + Blood Potency",
       "sacrament": "An insect carapace",
       "duration": "Next scene",
-      "effect": "If the victim lies during the next scene, beetles swarm from the victim's mouth."
+      "effect": "If the victim lies during the next scene, beetles swarm from the victim's mouth.",
+      "presentationPt": {
+        "name": "Praga do Mentiroso",
+        "summary": "Punir uma vítima presente por contar mentiras.",
+        "cost": "1 Força de Vontade + sacramento",
+        "contestedBy": "Perseverança + Potência de Sangue",
+        "sacrament": "Uma carapaça de inseto",
+        "duration": "Próxima cena",
+        "effect": "Se a vítima mentir durante a próxima cena, besouros saem em enxame de sua boca."
+      }
     },
     {
       "id": "theban-vitae-reliquary",
@@ -11486,7 +11521,15 @@
       "targetSuccesses": 5,
       "sacrament": "Any object up to Size •••",
       "duration": "One lunar month",
-      "effect": "Transfer up to ritual Potency Vitae into the object. Vampires, Strix, or ghouls can later retrieve it; normal bond/addiction risks apply."
+      "effect": "Transfer up to ritual Potency Vitae into the object. Vampires, Strix, or ghouls can later retrieve it; normal bond/addiction risks apply.",
+      "presentationPt": {
+        "name": "Relicário de Vitae",
+        "summary": "Armazenar Vitae em um objeto sacramental.",
+        "cost": "1 Força de Vontade + sacramento",
+        "sacrament": "Qualquer objeto de até Tamanho •••",
+        "duration": "Um mês lunar",
+        "effect": "Transfira até Potência do ritual pontos de Vitae para o objeto. Vampiros, Strix ou carniçais podem recuperá-los depois; aplicam-se os riscos normais de Laço de Sangue e vício."
+      }
     },
     {
       "id": "theban-gift-lazarus",
@@ -11502,7 +11545,15 @@
       "targetSuccesses": 8,
       "sacrament": "A communion wafer under the corpse's tongue",
       "duration": "Up to one lunar month",
-      "effect": "Raise a corpse retaining its former Skills but no Willpower; age of corpse degrades Attributes. It is destroyed by enough aggravated damage or when the miracle expires."
+      "effect": "Raise a corpse retaining its former Skills but no Willpower; age of corpse degrades Attributes. It is destroyed by enough aggravated damage or when the miracle expires.",
+      "presentationPt": {
+        "name": "Dádiva de Lázaro",
+        "summary": "Animar um cadáver humano como servo.",
+        "cost": "1 Força de Vontade + sacramento",
+        "sacrament": "Uma hóstia sob a língua do cadáver",
+        "duration": "Até um mês lunar",
+        "effect": "Erga um cadáver que conserve as Perícias anteriores, mas não tenha Força de Vontade; o tempo desde a morte reduz os Atributos. Ele é destruído por dano agravado suficiente ou quando o milagre expira."
+      }
     },
     {
       "id": "theban-malediction-despair",
@@ -11519,7 +11570,16 @@
       "contestedBy": "Resolve + Blood Potency",
       "sacrament": "A lock of the victim's hair",
       "duration": "Until triggered or one lunar month",
-      "effect": "The next time the victim performs the specified action, suffer –5 dice once."
+      "effect": "The next time the victim performs the specified action, suffer –5 dice once.",
+      "presentationPt": {
+        "name": "Maldição do Desespero",
+        "summary": "Amaldiçoar uma ação futura específica.",
+        "cost": "1 Força de Vontade + sacramento",
+        "contestedBy": "Perseverança + Potência de Sangue",
+        "sacrament": "Uma mecha de cabelo da vítima",
+        "duration": "Até ser acionado ou um mês lunar",
+        "effect": "Na próxima vez que a vítima realizar a ação especificada, ela sofre −5 dados uma única vez."
+      }
     },
     {
       "id": "theban-stigmata",
@@ -11536,7 +11596,16 @@
       "resistedBy": "Stamina",
       "sacrament": "A crucifix",
       "duration": "Ritual Potency turns",
-      "effect": "Mortals take one lethal per turn; vampires and ghouls lose one Vitae per turn, then take lethal if a vampire reaches zero Vitae."
+      "effect": "Mortals take one lethal per turn; vampires and ghouls lose one Vitae per turn, then take lethal if a vampire reaches zero Vitae.",
+      "presentationPt": {
+        "name": "Estigmas",
+        "summary": "Causar feridas milagrosas que sangram.",
+        "cost": "1 Força de Vontade + sacramento",
+        "resistedBy": "Vigor",
+        "sacrament": "Um crucifixo",
+        "duration": "Potência do ritual turnos",
+        "effect": "Mortais sofrem um ponto de dano letal por turno; vampiros e carniçais perdem um ponto de Vitae por turno, passando a sofrer dano letal se um vampiro chegar a zero Vitae."
+      }
     },
     {
       "id": "theban-transubstantiation",
@@ -11553,7 +11622,16 @@
       "contestedBy": "Stamina + Blood Potency",
       "sacrament": "A drop of liquid gold",
       "duration": "Until next sunrise",
-      "effect": "Transform a subject no larger than the ritualist without creating intelligence or directly healing/harming it; existing injuries remain and the change reverses at sunrise."
+      "effect": "Transform a subject no larger than the ritualist without creating intelligence or directly healing/harming it; existing injuries remain and the change reverses at sunrise.",
+      "presentationPt": {
+        "name": "Transubstanciação",
+        "summary": "Transformar uma substância, criatura ou pessoa presente em outra forma.",
+        "cost": "1 Força de Vontade + sacramento",
+        "contestedBy": "Vigor + Potência de Sangue",
+        "sacrament": "Uma gota de ouro líquido",
+        "duration": "Até o próximo nascer do sol",
+        "effect": "Transforme um sujeito que não seja maior que o ritualista, sem criar inteligência nem curá-lo ou feri-lo diretamente; ferimentos existentes permanecem e a transformação se desfaz ao nascer do sol."
+      }
     }
   ],
   "kimiyaFormulae": [

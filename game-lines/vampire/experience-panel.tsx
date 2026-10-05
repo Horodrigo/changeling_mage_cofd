@@ -239,6 +239,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     add(t("ui.cost"), item.cost); add(t("ui.requirement"), item.requirement); add(t("ui.condition"), item.condition);
     add(t("ui.dicePool"), item.dicePool); add(t("ui.action"), item.action); add(t("ui.duration"), item.duration);
     add(t("ui.targetSuccesses"), item.targetSuccesses);
+    add(t("ui.sacrament"), item.sacrament);
     add(t("ui.contestedBy"), item.contestedBy); add(t("ui.resistedBy"), item.resistedBy); add(t("ui.effect"), item.effect);
     add(t("ui.procedure"), item.procedure); add(t("ui.outcome"), item.outcome);
     if (item.rollResults?.dramaticFailure) add(t("ui.dramaticFailure"), item.rollResults.dramaticFailure);

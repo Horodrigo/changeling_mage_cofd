@@ -98,7 +98,10 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
     const item = vampirePowerPresentation(definition, locale);
     add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)]);
   });
-  powers.thebanMiracles.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)]));
+  powers.thebanMiracles.forEach((definition) => {
+    const item = vampirePowerPresentation(definition, locale);
+    add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)]);
+  });
   powers.gildedInvocations.forEach((definition) => {
     const item = vampirePowerPresentation(definition, locale);
     add(item, bloodSorcery, [...detail(t("ui.discipline"), t("ui.gildedCage")), ...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)], "gilded-cage");

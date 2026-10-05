@@ -19,6 +19,7 @@ const detournements = powers.detournements.filter(item => item.presentationPt);
 const coils = powers.coils.filter(item => item.presentationPt);
 const scales = powers.scales.filter(item => item.presentationPt);
 const rites = powers.cruacRites.filter(item => item.presentationPt);
+const miracles = powers.thebanMiracles.filter(item => item.presentationPt);
 const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#x27;");
 const fields = ["summary", "cost", "requirement", "condition", "dicePool", "action", "duration", "contestedBy", "resistedBy", "sacrament", "effect", "procedure", "outcome", "prerequisites", "statusRequirement", "humanityCapFormula"];
 
@@ -32,6 +33,8 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.equal(invocations.length, 10);
   assert.equal(detournements.length, 5);
   assert.equal(rites.length, 10);
+  assert.equal(miracles.length, 9);
+  assert.ok(miracles.every(item => item.source === "Vampire: The Requiem Second Edition"));
   assert.ok(rites.every(item => item.source === "Vampire: The Requiem Second Edition"));
   assert.deepEqual(coils.map(item => item.id).sort(), ["coil-ascendant", "coil-quintessence", "coil-voivode", "coil-wyrm", "coil-zirnitra", "coil-ziva"]);
   assert.equal(coils.flatMap(item => item.levels).length, 30);
@@ -51,7 +54,7 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.match(therion.effect, /^If Humanity is higher than the Sacrilege rating/);
   assert.equal(therion.minimumHumanityToCast, undefined);
   assert.match(rituals.find(item => item.id === "gilded-cage").effect, /in a Convergence, ritual rolls achieve exceptional success with three successes instead of five/);
-  for (const definition of [...selected, ...rituals, ...lashes, ...formulae, ...sacrileges, ...invocations, ...detournements, ...coils, ...scales, ...rites]) {
+  for (const definition of [...selected, ...rituals, ...lashes, ...formulae, ...sacrileges, ...invocations, ...detournements, ...coils, ...scales, ...rites, ...miracles]) {
     for (const item of [definition, ...(definition.levels ?? [])]) {
       assert.ok(item.presentationPt, `${definition.id}.${item.rating ?? "summary"}`);
       for (const field of fields.filter(key => item[key])) {
@@ -255,7 +258,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       }
       assert.equal(JSON.stringify(lashCharacter), lashCharacterBefore);
       assert.equal(JSON.stringify(lashBuyer), lashBuyerBefore);
-      for (const [ritualId, group, purchase, idsKey] of [["cruac", "cruacRites", "rite", "cruac_rite_ids"], ["kimiya", "kimiyaFormulae", "formula", "kimiya_formula_ids"], ["therion", "therionSacrileges", "sacrilege", "therion_sacrilege_ids"], ["gilded-cage", "gildedInvocations", "invocation", "gilded_invocation_ids"]]) {
+      for (const [ritualId, group, purchase, idsKey] of [["theban", "thebanMiracles", "miracle", "theban_miracle_ids"], ["cruac", "cruacRites", "rite", "cruac_rite_ids"], ["kimiya", "kimiyaFormulae", "formula", "kimiya_formula_ids"], ["therion", "therionSacrileges", "sacrilege", "therion_sacrilege_ids"], ["gilded-cage", "gildedInvocations", "invocation", "gilded_invocation_ids"]]) {
         const definitions = catalog[group].filter(item => item.presentationPt);
         const ritualCharacter = structuredClone(ritualCharacters[ritualId]);
         ritualCharacter.line_data.blood_sorcery[idsKey] = definitions.map(item => item.id);
