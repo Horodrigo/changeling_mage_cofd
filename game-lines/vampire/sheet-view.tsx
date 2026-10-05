@@ -1902,7 +1902,7 @@ function DisciplineCards({
   const lashIds = new Set(stringList(character.line_data.lash_ids));
   const ownedLashes = vampireBloodTetherLashes(powers).filter((lash) =>
     lashIds.has(lash.id),
-  );
+  ).map((lash) => vampirePowerPresentation(lash, locale));
   const packActive = character.line_data.blood_tether_pack_active === true;
   const selected = [
     ...powers.disciplines

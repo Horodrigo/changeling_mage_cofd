@@ -274,9 +274,10 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     return [{ id: item.id, name: option.label, category: item.bloodlineId ? t("sheet.bloodline") : t("ui.generalDevotions"), description: item.effect ?? item.summary, descriptionAfterDetails: true, meta: `${item.source} · p. ${item.page || "—"}`, disabled: !prerequisitesMet, details, footerDetails }];
   }) : [];
   const lashPickerItems = purchase === "lash" ? options.flatMap((option) => {
-    const item = bloodTetherLashes.find((definition) => definition.id === option.value);
-    if (!item) return [];
-    const prerequisiteMet = bloodTetherRating >= Number(item.rating ?? 0);
+    const definition = bloodTetherLashes.find((item) => item.id === option.value);
+    if (!definition) return [];
+    const item = vampirePowerPresentation(definition, locale);
+    const prerequisiteMet = bloodTetherRating >= Number(definition.rating ?? 0);
     const details = mechanicsDetails(item, prerequisiteMet).filter(({ label }) => label !== t("ui.experienceCost"));
     details.push({ label: t("ui.experienceCost"), value: `${prerequisiteMet ? 1 : 2} ${t("ui.xp")}` });
     return [{ id: item.id, name: option.label, category: t("ui.lashesOfBloodTether"), description: item.summary, meta: `${item.source} · p. ${item.page || "—"}`, details }];

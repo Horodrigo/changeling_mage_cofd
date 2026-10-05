@@ -90,7 +90,10 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
     add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.statusRequirement), ...detail(t("ui.humanityCap"), item.humanityCapFormula), ...mechanics(item)]);
   });
   powers.devotions.forEach((item) => { const placement = item.category ? nestedDevotions[item.category] : undefined; add(item, placement?.kind ?? item.category ?? t("ui.devotions"), [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], placement?.parentId); });
-  powers.lashes.forEach((item) => add(item, disciplines, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], "blood-tether"));
+  powers.lashes.forEach((definition) => {
+    const item = vampirePowerPresentation(definition, locale);
+    add(item, disciplines, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], "blood-tether");
+  });
   powers.cruacRites.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)]));
   powers.thebanMiracles.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)]));
   powers.gildedInvocations.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.discipline"), t("ui.gildedCage")), ...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)], "gilded-cage"));

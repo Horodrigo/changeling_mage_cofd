@@ -641,7 +641,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   assert.match(homebrew, /const coreMerits = catalogs\.get/);
   assert.match(homebrew, /gildedInvocations[\s\S]*"gilded-cage"/);
   assert.match(homebrew, /"Lessons of Erebus": \{ kind: disciplines, parentId: "truths-of-erebus" \}/);
-  assert.match(homebrew, /powers\.lashes\.forEach\(\(item\) => add\(item, disciplines,[\s\S]*"blood-tether"\)\)/);
+  assert.match(homebrew, /powers\.lashes\.forEach\([\s\S]*?add\(item, disciplines,[^\n]*"blood-tether"\)/);
   assert.match(homebrew, /"Ortam Recipes": \{ kind: disciplines, parentId: "ortam" \}/);
   assert.match(homebrew, /"Lithopedia Rites": \{ kind: bloodSorcery, parentId: "lithopedia" \}/);
   assert.match(homebrew, /item\.id === "lithopedia" \? bloodSorcery : disciplines/);

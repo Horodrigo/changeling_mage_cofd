@@ -9719,7 +9719,7 @@
       "id": "devotion-iron-joy",
       "kind": "lash",
       "name": "Iron Joy",
-      "translatedName": "Iron Joy",
+      "translatedName": "Júbilo de Ferro",
       "rating": 2,
       "prerequisites": "Pack Extremities",
       "summary": "Offer a mortal the pack's emotional high while protecting him from other predators.",
@@ -9728,13 +9728,19 @@
       "manualOnly": true,
       "bloodlineId": "adrestoi",
       "procedure": "With this Lash, the Unchained can offer a fleeting sense of their emotional highs to temporarily stun, seduce, or entice a mortal, while also keeping him safe from the will of other predators. The vampire makes a scratch to draw the mortal’s blood, then makes a matching scratch on herself, mingling their blood with clasped hands or bloodied kisses. This costs a Vitae.",
-      "outcome": "The blood offering obliterates other thoughts or goals in the subject’s mind. They become compliant and suggestible, eager to obey the pack. In addition to the usual effects of drinking Vitae, for the next week, any pack member using mental or social Disciplines on the subject treats a normal success as an exceptional success. However, the subject’s pleasure in submission hardens his will, adding the vampire’s Blood Tether dots as a bonus to all Resolve rolls (except when resisting the pack’s abilities)."
+      "outcome": "The blood offering obliterates other thoughts or goals in the subject’s mind. They become compliant and suggestible, eager to obey the pack. In addition to the usual effects of drinking Vitae, for the next week, any pack member using mental or social Disciplines on the subject treats a normal success as an exceptional success. However, the subject’s pleasure in submission hardens his will, adding the vampire’s Blood Tether dots as a bonus to all Resolve rolls (except when resisting the pack’s abilities).",
+      "presentationPt": {
+        "prerequisites": "Extremos da Matilha",
+        "summary": "Oferecer a um mortal o êxtase emocional da matilha, protegendo-o de outros predadores.",
+        "procedure": "Com este Açoite, os Desacorrentados podem oferecer uma sensação fugaz de seus êxtases emocionais para atordoar, seduzir ou atrair temporariamente um mortal, mantendo-o a salvo da vontade de outros predadores. O vampiro faz um arranhão para tirar sangue do mortal, faz um arranhão correspondente em si e mistura o sangue de ambos ao apertar as mãos ou trocar beijos ensanguentados. Isso custa uma Vitae.",
+        "outcome": "A oferenda de sangue apaga outros pensamentos ou objetivos da mente do alvo. Ele se torna obediente e sugestionável, ansioso para atender à matilha. Além dos efeitos normais de beber Vitae, durante a próxima semana, qualquer membro da matilha que use Disciplinas mentais ou sociais no alvo trata um sucesso normal como excepcional. Porém, o prazer do alvo na submissão fortalece sua vontade, somando os pontos de Grilhão de Sangue do vampiro como bônus a todos os testes de Perseverança, exceto para resistir às habilidades da matilha."
+      }
     },
     {
       "id": "devotion-shared-feast",
       "kind": "lash",
       "name": "Shared Feast",
-      "translatedName": "Shared Feast",
+      "translatedName": "Banquete Compartilhado",
       "rating": 3,
       "prerequisites": "Mass Euphoria",
       "summary": "Bind a mortal's feeding to the pack through a shared vessel of blood.",
@@ -9743,7 +9749,13 @@
       "manualOnly": true,
       "bloodlineId": "adrestoi",
       "procedure": "To establish this Lash, the vampire and a mortal subject feed from the same vessel of blood. The vessel must include one Vitae each from at least two members of the pack, including the one initiating the Lash. Performing this ritual does not risk blood bonds, but it does risk addiction.",
-      "outcome": "Once a night, the mortal regains a point of Willpower for being fed upon. In return, the pack member who granted this feeding gains double the Vitae she normally would. This effect lasts for feedings equal to Vitae spent into the Lash."
+      "outcome": "Once a night, the mortal regains a point of Willpower for being fed upon. In return, the pack member who granted this feeding gains double the Vitae she normally would. This effect lasts for feedings equal to Vitae spent into the Lash.",
+      "presentationPt": {
+        "prerequisites": "Euforia Coletiva",
+        "summary": "Vincular a alimentação de um mortal à matilha por meio de um recipiente de sangue compartilhado.",
+        "procedure": "Para estabelecer este Açoite, o vampiro e um alvo mortal alimentam-se do mesmo recipiente de sangue. O recipiente deve incluir uma Vitae de cada um de pelo menos dois membros da matilha, incluindo quem inicia o Açoite. Este ritual não oferece risco de Laço de Sangue, mas pode causar dependência.",
+        "outcome": "Uma vez por noite, o mortal recupera um ponto de Força de Vontade ao servir de alimento. Em troca, o membro da matilha que concedeu essa alimentação obtém o dobro da Vitae que normalmente obteria. O efeito dura por um número de alimentações igual à Vitae gasta no Açoite."
+      }
     }
   ],
   "cruacRites": [

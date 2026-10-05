@@ -11,18 +11,20 @@ const read = path => JSON.parse(readFileSync(new URL(`../${path}`, import.meta.u
 const powers = read("public/game-lines/vampire/data/powers.json");
 const selected = powers.disciplines.filter(item => item.presentationPt);
 const rituals = powers.ritualDisciplines.filter(item => item.presentationPt);
+const lashes = powers.lashes.filter(item => item.presentationPt);
 const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#x27;");
-const fields = ["summary", "cost", "requirement", "condition", "dicePool", "action", "duration", "contestedBy", "resistedBy", "sacrament", "effect", "procedure", "outcome", "statusRequirement", "humanityCapFormula"];
+const fields = ["summary", "cost", "requirement", "condition", "dicePool", "action", "duration", "contestedBy", "resistedBy", "sacrament", "effect", "procedure", "outcome", "prerequisites", "statusRequirement", "humanityCapFormula"];
 
 test("Vampire official and Homebrew power presentations cover existing fields and preserve numeric limits", () => {
   assert.deepEqual(selected.map(item => item.id).sort(), ["animalism", "auspex", "blood-tether", "cachexy", "celerity", "crochan", "dead-signal", "dominate", "interface", "lithopedia", "majesty", "nightmare", "obfuscate", "ortam", "praestantia", "protean", "resilience", "spiritus-sancti", "surge", "triadic-evolution", "truths-of-erebus", "vigor", "vitiate"]);
   assert.equal(selected.flatMap(item => item.levels).length, 110);
   assert.deepEqual(rituals.map(item => item.id).sort(), ["cruac", "gilded-cage", "kimiya", "theban", "therion"]);
+  assert.deepEqual(lashes.map(item => item.id).sort(), ["devotion-iron-joy", "devotion-shared-feast"]);
   const therion = rituals.find(item => item.id === "therion");
   assert.match(therion.effect, /^If Humanity is higher than the Sacrilege rating/);
   assert.equal(therion.minimumHumanityToCast, undefined);
   assert.match(rituals.find(item => item.id === "gilded-cage").effect, /in a Convergence, ritual rolls achieve exceptional success with three successes instead of five/);
-  for (const definition of [...selected, ...rituals]) {
+  for (const definition of [...selected, ...rituals, ...lashes]) {
     for (const item of [definition, ...(definition.levels ?? [])]) {
       assert.ok(item.presentationPt, `${definition.id}.${item.rating ?? "summary"}`);
       for (const field of fields.filter(key => item[key])) {
@@ -53,7 +55,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
     const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] }, plugins: [{ name: "power-locale-test-surfaces", enforce: "pre", transform(code, id) {
       const path = id.replaceAll("\\", "/");
       if (path.endsWith("/game-lines/vampire/sheet-view.tsx")) return `${code}\nexport { DisciplineCards, RitualDisciplines };`;
-      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return code.replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : "");');
+      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return code.replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : "");');
       if (path.endsWith("/components/ui/dialog.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Dialog, Wrapper as DialogTrigger, Wrapper as DialogPortal, Wrapper as DialogClose, Wrapper as DialogOverlay, Wrapper as DialogContent, Wrapper as DialogHeader, Wrapper as DialogFooter, Wrapper as DialogTitle, Wrapper as DialogDescription };';
       if (path.endsWith("/components/ui/select.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Select, Wrapper as SelectContent, Wrapper as SelectGroup, Wrapper as SelectItem, Wrapper as SelectLabel, Wrapper as SelectSeparator, Wrapper as SelectTrigger, Wrapper as SelectValue };';
       if (path.endsWith("/components/ui/tabs.tsx")) return code.replace("<TabsPrimitive.Content", "<TabsPrimitive.Content forceMount");
@@ -69,6 +71,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       const { vampireHomebrewSourceId } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
       const { vampireDisciplinePrerequisitesMet } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
       const { vampireExperienceLabel } = await vite.ssrLoadModule("/game-lines/vampire/experience-presentation.ts");
+      const { refundVampireAdvancement } = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
       const { VampireExperiencePanel } = await vite.ssrLoadModule("/game-lines/vampire/experience-panel.tsx");
       const { DisciplineCards, RitualDisciplines } = await vite.ssrLoadModule("/game-lines/vampire/sheet-view.tsx");
       const { vampireBuilder } = await vite.ssrLoadModule("/game-lines/vampire/builder.tsx");
@@ -199,6 +202,31 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       for (const miracle of catalog.thebanMiracles.filter(item => item.source === "Vampire: The Requiem Second Edition")) assert.equal(miraclePicker.includes(escape(locale === "pt-BR" ? miracle.translatedName : miracle.name)), miracle.rating <= 1);
       assert.equal(render(RitualDisciplines, { powers: catalog, bloodSorcery: {}, locale }), "");
       assert.equal(JSON.stringify(ritualCharacters), ritualCharactersBefore);
+      const lashCharacter = structuredClone(characters.find(item => item.line_data.bloodline_id === "adrestoi"));
+      lashCharacter.line_data.lash_ids = lashes.map(item => item.id);
+      const lashCharacterBefore = JSON.stringify(lashCharacter);
+      const lashSheet = render(DisciplineCards, { character: lashCharacter, updateSheet: noMutation, powers: catalog, disciplines: lashCharacter.line_data.disciplines, coilRatings: {}, locale, onRaiseFamiliar: noMutation });
+      const lashBuyer = structuredClone(lashCharacter);
+      lashBuyer.character.concept = "lash-test";
+      lashBuyer.line_data.lash_ids = [];
+      const lashBuyerBefore = JSON.stringify(lashBuyer);
+      const lashExperience = render(VampireExperiencePanel, { character: lashBuyer, updateSheet: noMutation, catalogs });
+      for (const definition of catalog.lashes) {
+        const presented = vampirePowerPresentation(definition, locale);
+        for (const field of fields.filter(key => presented[key])) for (const html of [lashSheet, lashExperience, homebrew]) assert.ok(html.includes(escape(presented[field])), `${locale}: lash ${definition.id}.${field}`);
+        const title = locale === "pt-BR" ? definition.translatedName : definition.name;
+        for (const html of [lashSheet, lashExperience, homebrew]) assert.ok(html.includes(escape(title)));
+        assert.equal(sheet.includes(`<strong>${escape(title)}</strong>`), false, "Unowned Lash stays off the sheet");
+        const receipt = { id: "old-lash-purchase", label: "Authored old label", cost: 1, undo: { kind: "lash", id: definition.id } };
+        const receiptBefore = JSON.stringify(receipt);
+        assert.equal(vampireExperienceLabel(receipt, lashCharacter, [], catalog, locale), title);
+        const refunded = structuredClone(lashCharacter);
+        assert.equal(refundVampireAdvancement(refunded, receipt.undo), true);
+        assert.deepEqual(refunded.line_data.lash_ids, lashes.filter(item => item.id !== definition.id).map(item => item.id));
+        assert.equal(JSON.stringify(receipt), receiptBefore);
+      }
+      assert.equal(JSON.stringify(lashCharacter), lashCharacterBefore);
+      assert.equal(JSON.stringify(lashBuyer), lashBuyerBefore);
       const custom = normalizeVampireCatalogHomebrew({ entryType: "discipline", id: "homebrew:vampire:authored", name: "Animalism", summary: "Authored English stays.", levels: [{ rating: 1, name: "Feral Whispers", summary: "Authored level stays.", effect: "Authored effect stays." }] });
       assert.equal(vampirePowerPresentation(custom, locale), custom);
       assert.equal(vampirePowerPresentation(custom.levels[0], locale), custom.levels[0]);
