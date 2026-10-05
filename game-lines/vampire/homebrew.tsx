@@ -89,7 +89,11 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
     const item = vampirePowerPresentation(definition, locale);
     add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.statusRequirement), ...detail(t("ui.humanityCap"), item.humanityCapFormula), ...mechanics(item)]);
   });
-  powers.devotions.forEach((item) => { const placement = item.category ? nestedDevotions[item.category] : undefined; add(item, placement?.kind ?? item.category ?? t("ui.devotions"), [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], placement?.parentId); });
+  powers.devotions.forEach((definition) => {
+    const item = vampirePowerPresentation(definition, locale);
+    const placement = item.category ? nestedDevotions[item.category] : undefined;
+    add(item, placement?.kind ?? item.category ?? t("ui.devotions"), [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], placement?.parentId);
+  });
   powers.lashes.forEach((definition) => {
     const item = vampirePowerPresentation(definition, locale);
     add(item, disciplines, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], "blood-tether");

@@ -261,9 +261,10 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     return [{ id: option.value, name: option.label, category, description: definition.summary, meta: `${definition.source} · p. ${definition.page || "—"}`, details: mechanicsDetails(definition), levels }];
   }) : [];
   const devotionPickerItems = purchase === "devotion" ? options.flatMap((option) => {
-    const item = powers.devotions.find((definition) => definition.id === option.value);
-    if (!item) return [];
-    const prerequisitesMet = vampireDisciplinePrerequisitesMet(item.prerequisites, disciplines, disciplineNames);
+    const definition = powers.devotions.find((item) => item.id === option.value);
+    if (!definition) return [];
+    const item = vampirePowerPresentation(definition, locale);
+    const prerequisitesMet = vampireDisciplinePrerequisitesMet(definition.prerequisites, disciplines, disciplineNames);
     const details: Array<{ label: string; value: string; warning?: boolean }> = [];
     const add = (label: string, value: unknown, warning = false) => { if (value !== undefined && value !== "" && String(value).trim().toLocaleLowerCase() !== "none") details.push({ label, value: String(value), warning }); };
     add(t("ui.prerequisites"), item.prerequisites, !prerequisitesMet);

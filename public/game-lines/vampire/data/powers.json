@@ -7611,7 +7611,17 @@
       "dicePool": "Stamina + Survival + Resilience",
       "action": "Reflexive",
       "duration": "One turn per success",
-      "effect": "For one turn per success, the character suffers no wound penalties. As well, during any turn where he takes damage, he does not need to spend Vitae to activate one effect of Vigor."
+      "effect": "For one turn per success, the character suffers no wound penalties. As well, during any turn where he takes damage, he does not need to spend Vitae to activate one effect of Vigor.",
+      "presentationPt": {
+        "name": "Corpo de Vontade",
+        "prerequisites": "Resiliência •••, Ímpeto •",
+        "summary": "Ignorar brevemente penalidades por ferimentos e transformar novas lesões em ativações gratuitas de Ímpeto.",
+        "cost": "1 Vitae",
+        "dicePool": "Vigor + Sobrevivência + Resiliência",
+        "action": "Reflexiva",
+        "duration": "Um turno por sucesso",
+        "effect": "Por um turno por sucesso, o personagem não sofre penalidades por ferimentos. Além disso, em qualquer turno em que sofra dano, ele não precisa gastar Vitae para ativar um efeito de Ímpeto."
+      }
     },
     {
       "id": "devotion-chain-of-command",
@@ -7626,7 +7636,16 @@
       "cost": "2 Vitae",
       "dicePool": "Intelligence + Persuasion + Dominate vs. Resolve + Blood Potency",
       "action": "Contested; resistance is reflexive",
-      "effect": "The victim does not have to resist if he so chooses. If successful, the vampire plants one of her Dominate effects deep within the victim. At the specified moment, he uses the Dominate command as directed. However, this uses the vampire’s dice pool, not the victim’s."
+      "effect": "The victim does not have to resist if he so chooses. If successful, the vampire plants one of her Dominate effects deep within the victim. At the specified moment, he uses the Dominate command as directed. However, this uses the vampire’s dice pool, not the victim’s.",
+      "presentationPt": {
+        "name": "Cadeia de Comando",
+        "prerequisites": "Dominação •••, Ímpeto •",
+        "summary": "Implantar um efeito de Dominação em uma vítima para uso posterior contra um sujeito designado.",
+        "cost": "2 Vitae",
+        "dicePool": "Inteligência + Persuasão + Dominação contra Perseverança + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "effect": "A vítima pode escolher não resistir. Em caso de sucesso, a vampira implanta um de seus efeitos de Dominação profundamente na vítima. No momento especificado, ela usa o comando de Dominação conforme instruído. Usa-se a parada da vampira, não a da vítima."
+      }
     },
     {
       "id": "devotion-cloak-the-gathering",
@@ -7641,7 +7660,16 @@
       "cost": "2 Vitae",
       "dicePool": "None",
       "action": "None",
-      "effect": "Cloak the Gathering enhances the effect of Touch of Shadow and Cloak of Night. By paying two extra points of Vitae, the vampire can expand the effect of Touch of Shadow to encompass a number of people equal to his Blood Potency, though subject to the normal Size modifiers of Touch of Shadow. He can also opt to activate Face in the Crowd at the same time. If he also pays the extra cost for Cloak of Night to vanish completely rather than fading into the background, the effect applies to everyone masked by Cloak the Gathering — so for four points of Vitae total he can vanish from sight along with a number of people equal to his Blood Potency. The vampire doesn’t have to touch everyone he takes with him, but they must be within his (Obfuscate + Blood Potency) yards (meters)."
+      "effect": "Cloak the Gathering enhances the effect of Touch of Shadow and Cloak of Night. By paying two extra points of Vitae, the vampire can expand the effect of Touch of Shadow to encompass a number of people equal to his Blood Potency, though subject to the normal Size modifiers of Touch of Shadow. He can also opt to activate Face in the Crowd at the same time. If he also pays the extra cost for Cloak of Night to vanish completely rather than fading into the background, the effect applies to everyone masked by Cloak the Gathering — so for four points of Vitae total he can vanish from sight along with a number of people equal to his Blood Potency. The vampire doesn’t have to touch everyone he takes with him, but they must be within his (Obfuscate + Blood Potency) yards (meters).",
+      "presentationPt": {
+        "name": "Manto da Reunião",
+        "prerequisites": "Ofuscação •••••",
+        "summary": "Estender Ofuscação a um grupo dentro da aura do vampiro.",
+        "cost": "2 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "effect": "Manto da Reunião aprimora os efeitos de Toque da Sombra e Manto da Noite. Ao pagar dois pontos extras de Vitae, o vampiro pode expandir Toque da Sombra para abranger um número de pessoas igual à sua Potência de Sangue, sujeito aos modificadores normais de Tamanho de Toque da Sombra. Ele também pode ativar Rosto na Multidão ao mesmo tempo. Se pagar ainda o custo extra de Manto da Noite para desaparecer por completo, em vez de se confundir com o ambiente, o efeito se aplica a todos ocultados por Manto da Reunião: por quatro pontos de Vitae no total, ele pode desaparecer de vista junto com um número de pessoas igual à sua Potência de Sangue. O vampiro não precisa tocar todos que leva consigo, mas eles devem estar a até (Ofuscação + Potência de Sangue) jardas (metros) dele."
+      }
     },
     {
       "id": "devotion-conditioning",
@@ -7662,6 +7690,21 @@
         "failure": "The vampire cannot get her victim to repeat exactly the same tasks for now.",
         "success": "The victim’s will bends before the vampire. He gains the Subservient Condition (p. 306).",
         "exceptionalSuccess": "The victim’s will bends like grass before the storm of the vampire’s commands. Mark an extra cross when applying the Subservient Condition. Each time the vampire inflicts the Subservient Condition on a character, his player should put a cross or other mark above one of his Willpower dots, starting from the left. Each dot can only have one mark. If the Subservient Condition is allowed to fade naturally, remove the rightmost cross. When each of the character’s Willpower dots has a mark above it, he exchanges the Subservient Condition for the Enslaved Condition (p. 303)."
+      },
+      "presentationPt": {
+        "name": "Condicionamento",
+        "prerequisites": "Dominação ••••",
+        "summary": "Corroer a vontade de uma vítima Mesmerizada ao longo de sessões repetidas.",
+        "cost": "Nenhum",
+        "requirement": "A vítima tem Mesmerizado; a mesma vítima só pode ser alvo uma vez a cada duas noites",
+        "dicePool": "Raciocínio + Subterfúgio + Dominação contra Perseverança + Potência de Sangue",
+        "action": "Instantânea",
+        "rollResults": {
+          "dramaticFailure": "A vítima reafirma sua vontade de forma dramática. Ela resolve a Condição Mesmerizado e conserva o bônus para resistir a novas tentativas de Hipnotizar durante a próxima semana.",
+          "failure": "Por enquanto, a vampira não consegue fazer a vítima repetir exatamente as mesmas tarefas.",
+          "success": "A vontade da vítima se curva diante da vampira. Ela recebe a Condição Subserviente (p. 306).",
+          "exceptionalSuccess": "A vontade da vítima se dobra como grama diante da tempestade de comandos da vampira. Marque uma cruz extra ao aplicar a Condição Subserviente. Sempre que a vampira impuser Subserviente a um personagem, seu jogador deve colocar uma cruz ou outra marca acima de um de seus pontos de Força de Vontade, começando pela esquerda. Cada ponto só pode ter uma marca. Se Subserviente desaparecer naturalmente, remova a cruz mais à direita. Quando todos os pontos de Força de Vontade do personagem tiverem uma marca, ele troca Subserviente pela Condição Escravizado (p. 303)."
+        }
       }
     },
     {
@@ -7677,7 +7720,16 @@
       "cost": "None",
       "dicePool": "Presence + Empathy + lower of Majesty or Nightmare",
       "action": "Instant",
-      "effect": "Once active, this Devotion confuses everyone in the vampire’s immediate presence, forcing their emotions to swing between adoration and disgust. This causes a handful of effects: • They become confused and disoriented, not sure what to think or feel. This reduces their effective Composure by one dot. • The vampire becomes a beacon for the crowd’s attention. Looking away from her requires a Composure + Blood Potency roll, contested against her successes. The victim must only meet the vampire’s successes. • Any rolls to resist Persuasion- or Intimidation-based Social maneuvers lose the 10-again quality. • A character may not have Awe or Dread Presence active at the same time as Cross-Contamination."
+      "effect": "Once active, this Devotion confuses everyone in the vampire’s immediate presence, forcing their emotions to swing between adoration and disgust. This causes a handful of effects: • They become confused and disoriented, not sure what to think or feel. This reduces their effective Composure by one dot. • The vampire becomes a beacon for the crowd’s attention. Looking away from her requires a Composure + Blood Potency roll, contested against her successes. The victim must only meet the vampire’s successes. • Any rolls to resist Persuasion- or Intimidation-based Social maneuvers lose the 10-again quality. • A character may not have Awe or Dread Presence active at the same time as Cross-Contamination.",
+      "presentationPt": {
+        "name": "Contaminação Cruzada",
+        "prerequisites": "Majestade •, Pesadelo •",
+        "summary": "Misturar fascínio e terror em uma aura emocional desorientadora.",
+        "cost": "Nenhum",
+        "dicePool": "Presença + Empatia + a menor pontuação entre Majestade e Pesadelo",
+        "action": "Instantânea",
+        "effect": "Uma vez ativa, esta Devoção confunde todos na presença imediata da vampira, fazendo suas emoções oscilarem entre adoração e repulsa. Isso causa vários efeitos: • As vítimas ficam confusas e desorientadas, sem saber o que pensar ou sentir. Isso reduz seu Autocontrole efetivo em um ponto. • A vampira torna-se o centro das atenções da multidão. Desviar o olhar exige um teste de Autocontrole + Potência de Sangue, disputado contra os sucessos dela. Basta a vítima igualar os sucessos da vampira. • Testes para resistir a manobras Sociais baseadas em Persuasão ou Intimidação perdem a qualidade de 10-novamente. • Um personagem não pode manter Fascínio ou Presença Aterradora ativos ao mesmo tempo que Contaminação Cruzada."
+      }
     },
     {
       "id": "devotion-cult-of-personality",
@@ -7692,7 +7744,16 @@
       "cost": "10 Vitae",
       "dicePool": "Presence + Socialize + Majesty",
       "action": "Instant",
-      "effect": "If successful, this Devotion washes the effects of Loyalty over the crowd. It affects any character with fewer Composure + Blood Potency dots than the vampire has successes. Those afflicted gain the Enthralled Condition."
+      "effect": "If successful, this Devotion washes the effects of Loyalty over the crowd. It affects any character with fewer Composure + Blood Potency dots than the vampire has successes. Those afflicted gain the Enthralled Condition.",
+      "presentationPt": {
+        "name": "Culto à Personalidade",
+        "prerequisites": "Majestade ••••, Ímpeto •••",
+        "summary": "Propagar Lealdade por uma multidão.",
+        "cost": "10 Vitae",
+        "dicePool": "Presença + Socialização + Majestade",
+        "action": "Instantânea",
+        "effect": "Em caso de sucesso, esta Devoção espalha os efeitos de Lealdade pela multidão. Ela afeta qualquer personagem cuja soma de Autocontrole + Potência de Sangue seja menor que os sucessos da vampira. Os afetados recebem a Condição Cativado."
+      }
     },
     {
       "id": "devotion-enchantment",
@@ -7707,7 +7768,16 @@
       "cost": "1 Vitae",
       "dicePool": "Manipulation + Empathy + Majesty vs. Composure + Blood Potency",
       "action": "Contested; resistance is reflexive",
-      "effect": "If successful, this Devotion works as Loyalty, but the vampire can designate a source for the Enthralled Condition instead of focusing it on herself. All the other parameters remain the same, but the victim insists on defending and cherishing a different person, place, or thing. She has to somehow communicate the desired subject of the Enchantment to the victim for this Devotion to work."
+      "effect": "If successful, this Devotion works as Loyalty, but the vampire can designate a source for the Enthralled Condition instead of focusing it on herself. All the other parameters remain the same, but the victim insists on defending and cherishing a different person, place, or thing. She has to somehow communicate the desired subject of the Enchantment to the victim for this Devotion to work.",
+      "presentationPt": {
+        "name": "Encantamento",
+        "prerequisites": "Majestade ••••, Ofuscação ••",
+        "summary": "Redirecionar Lealdade para outra pessoa, lugar ou objeto.",
+        "cost": "1 Vitae",
+        "dicePool": "Manipulação + Empatia + Majestade contra Autocontrole + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "effect": "Em caso de sucesso, esta Devoção funciona como Lealdade, mas a vampira pode designar um sujeito para a Condição Cativado em vez de concentrá-la em si mesma. Todos os outros parâmetros permanecem iguais, mas a vítima insiste em defender e estimar outra pessoa, lugar ou coisa. A vampira precisa comunicar de alguma forma à vítima o sujeito desejado do Encantamento para esta Devoção funcionar."
+      }
     },
     {
       "id": "devotion-enfeebling-aura",

@@ -20,6 +20,7 @@ const coils = powers.coils.filter(item => item.presentationPt);
 const scales = powers.scales.filter(item => item.presentationPt);
 const rites = powers.cruacRites.filter(item => item.presentationPt);
 const miracles = powers.thebanMiracles.filter(item => item.presentationPt);
+const devotions = powers.devotions.filter(item => item.presentationPt);
 const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#x27;");
 const fields = ["summary", "cost", "requirement", "condition", "dicePool", "action", "duration", "contestedBy", "resistedBy", "sacrament", "effect", "procedure", "outcome", "prerequisites", "statusRequirement", "humanityCapFormula"];
 
@@ -32,6 +33,7 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.deepEqual(sacrileges.map(item => item.id).sort(), ["therion-apotheosis", "therion-avatar-apollyon", "therion-curse-faithful", "therion-demons-tongue", "therion-morning-star", "therion-nine-choirs", "therion-profanity"]);
   assert.equal(invocations.length, 10);
   assert.equal(detournements.length, 5);
+  assert.deepEqual(devotions.map(item => item.id).sort(), ["devotion-body-of-will", "devotion-chain-of-command", "devotion-cloak-the-gathering", "devotion-conditioning", "devotion-cross-contamination", "devotion-cult-of-personality", "devotion-enchantment"]);
   assert.equal(rites.length, 10);
   assert.equal(miracles.length, 9);
   assert.ok(miracles.every(item => item.source === "Vampire: The Requiem Second Edition"));
@@ -54,7 +56,7 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.match(therion.effect, /^If Humanity is higher than the Sacrilege rating/);
   assert.equal(therion.minimumHumanityToCast, undefined);
   assert.match(rituals.find(item => item.id === "gilded-cage").effect, /in a Convergence, ritual rolls achieve exceptional success with three successes instead of five/);
-  for (const definition of [...selected, ...rituals, ...lashes, ...formulae, ...sacrileges, ...invocations, ...detournements, ...coils, ...scales, ...rites, ...miracles]) {
+  for (const definition of [...selected, ...rituals, ...lashes, ...formulae, ...sacrileges, ...invocations, ...detournements, ...coils, ...scales, ...rites, ...miracles, ...devotions]) {
     for (const item of [definition, ...(definition.levels ?? [])]) {
       assert.ok(item.presentationPt, `${definition.id}.${item.rating ?? "summary"}`);
       for (const field of fields.filter(key => item[key])) {
@@ -85,7 +87,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
     const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] }, plugins: [{ name: "power-locale-test-surfaces", enforce: "pre", transform(code, id) {
       const path = id.replaceAll("\\", "/");
       if (path.endsWith("/game-lines/vampire/sheet-view.tsx")) return `${code}\nexport { DisciplineCards, RitualDisciplines, PurchasedPowers };`;
-      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return code.replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "rite-test" ? "rite" : character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : character.character.concept === "formula-test" ? "formula" : character.character.concept === "invocation-test" ? "invocation" : character.character.concept === "detournement-test" ? "detournement" : character.character.concept === "scale-test" ? "scale" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : "");');
+      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return code.replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "devotion-test" ? "devotion" : character.character.concept === "rite-test" ? "rite" : character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : character.character.concept === "formula-test" ? "formula" : character.character.concept === "invocation-test" ? "invocation" : character.character.concept === "detournement-test" ? "detournement" : character.character.concept === "scale-test" ? "scale" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : "");');
       if (path.endsWith("/components/ui/dialog.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Dialog, Wrapper as DialogTrigger, Wrapper as DialogPortal, Wrapper as DialogClose, Wrapper as DialogOverlay, Wrapper as DialogContent, Wrapper as DialogHeader, Wrapper as DialogFooter, Wrapper as DialogTitle, Wrapper as DialogDescription };';
       if (path.endsWith("/components/ui/select.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Select, Wrapper as SelectContent, Wrapper as SelectGroup, Wrapper as SelectItem, Wrapper as SelectLabel, Wrapper as SelectSeparator, Wrapper as SelectTrigger, Wrapper as SelectValue };';
       if (path.endsWith("/components/ui/tabs.tsx")) return code.replace("<TabsPrimitive.Content", "<TabsPrimitive.Content forceMount");
@@ -290,6 +292,39 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         assert.equal(JSON.stringify(ritualCharacter), ritualCharacterBefore);
         assert.equal(JSON.stringify(ritualBuyer), ritualBuyerBefore);
       }
+      const devotionCharacter = blankPrintCharacter("VtR");
+      devotionCharacter.line_data = { ...devotionCharacter.line_data, clan_id: "gangrel", devotion_ids: devotions.map(item => item.id), disciplines: Object.fromEntries(catalog.disciplines.filter(item => item.source === "Vampire: The Requiem Second Edition").map(item => [item.name, 5])), notes: "Authored devotion research stays." };
+      const devotionCharacterBefore = JSON.stringify(devotionCharacter);
+      const devotionSheet = render(PurchasedPowers, { character: devotionCharacter, powers: catalog, locale });
+      const devotionBuyer = structuredClone(devotionCharacter);
+      devotionBuyer.character.concept = "devotion-test";
+      devotionBuyer.line_data.devotion_ids = [];
+      const devotionBuyerBefore = JSON.stringify(devotionBuyer);
+      const devotionExperience = render(VampireExperiencePanel, { character: devotionBuyer, updateSheet: noMutation, catalogs });
+      for (const definition of catalog.devotions.filter(item => item.presentationPt)) {
+        const presented = vampirePowerPresentation(definition, locale);
+        const title = locale === "pt-BR" ? definition.translatedName : definition.name;
+        assert.equal(vampireDisciplinePrerequisitesMet(definition.prerequisites, devotionCharacter.line_data.disciplines, catalog.disciplines.map(item => item.name)), true);
+        for (const field of fields.filter(key => presented[key])) {
+          assert.ok(devotionSheet.includes(escape(presented[field])), `${locale}: Devotion sheet ${definition.id}.${field}`);
+          if (!(field === "summary" && definition.effect) && definition[field].trim().toLowerCase() !== "none") assert.ok(devotionExperience.includes(escape(presented[field])), `${locale}: Devotion XP ${definition.id}.${field}`);
+        }
+        for (const result of Object.values(presented.rollResults ?? {})) for (const html of [devotionSheet, devotionExperience]) assert.ok(html.includes(escape(result)));
+        for (const html of [devotionSheet, devotionExperience]) assert.ok(html.includes(escape(title)));
+        const receipt = { id: "old-devotion-purchase", label: "Authored devotion receipt", cost: definition.experienceCost, undo: { kind: "devotion", id: definition.id } };
+        const receiptBefore = JSON.stringify(receipt);
+        assert.equal(vampireExperienceLabel(receipt, devotionCharacter, [], catalog, locale), title);
+        const refunded = structuredClone(devotionCharacter);
+        assert.equal(refundVampireAdvancement(refunded, receipt.undo), true);
+        assert.deepEqual(refunded.line_data.devotion_ids, devotions.filter(item => item.id !== definition.id).map(item => item.id));
+        assert.equal(JSON.stringify(receipt), receiptBefore);
+      }
+      const limitedDevotionBuyer = structuredClone(devotionBuyer);
+      limitedDevotionBuyer.line_data.disciplines = {};
+      const limitedDevotionExperience = render(VampireExperiencePanel, { character: limitedDevotionBuyer, updateSheet: noMutation, catalogs });
+      for (const definition of devotions) assert.equal(limitedDevotionExperience.includes(`<strong>${escape(locale === "pt-BR" ? definition.translatedName : definition.name)}</strong>`), false);
+      assert.equal(JSON.stringify(devotionCharacter), devotionCharacterBefore);
+      assert.equal(JSON.stringify(devotionBuyer), devotionBuyerBefore);
       const coilCharacter = blankPrintCharacter("VtR");
       coilCharacter.merits = [{ definitionId: "vtr-kindred-status", instanceId: "ordo-status", name: "Kindred Status", dots: 5, creationDots: 5, configuration: { group: "ordo-dracul" } }];
       coilCharacter.line_data = { ...coilCharacter.line_data, clan_id: "gangrel", covenant_ids: ["ordo-dracul"], ordo_dracul: { mystery_id: "zirnitra", coil_ratings: Object.fromEntries(coils.map(item => [item.id, 5])) }, notes: "Authored Coil research stays." };
