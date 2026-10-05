@@ -271,7 +271,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     add(t("ui.dicePool"), item.dicePool);
     add(t("ui.cost"), item.cost); add(t("ui.requirement"), item.requirement); add(t("ui.condition"), item.condition);
     add(t("ui.action"), item.action); add(t("ui.duration"), item.duration); add(t("ui.contestedBy"), item.contestedBy); add(t("ui.resistedBy"), item.resistedBy);
-    const footerDetails = mechanicsDetails(item).filter(({ label }) => [t("ui.dramaticFailure"), t("ui.failure"), t("ui.success"), t("ui.exceptionalSuccess")].includes(label));
+    const footerDetails = mechanicsDetails(item).filter(({ label }) => [t("ui.dramaticFailure"), t("ui.failure"), t("ui.success"), t("ui.exceptionalSuccess")].includes(label) || label.startsWith(`${t("ui.suggestedModifiers")} `));
     if (item.experienceCost !== undefined) footerDetails.push({ label: t("ui.experienceCost"), value: `${item.experienceCost} ${t("ui.xp")}` });
     return [{ id: item.id, name: option.label, category: item.bloodlineId ? t("sheet.bloodline") : t("ui.generalDevotions"), description: item.effect ?? item.summary, descriptionAfterDetails: true, meta: `${item.source} · p. ${item.page || "—"}`, disabled: !prerequisitesMet, details, footerDetails }];
   }) : [];

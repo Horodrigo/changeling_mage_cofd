@@ -8087,7 +8087,7 @@
       "id": "devotion-subsume-lesser-beast",
       "kind": "devotion",
       "name": "Subsume the Lesser Beast",
-      "translatedName": "Subsumir a Besta Menor",
+      "translatedName": "Subsumir a Fera Menor",
       "prerequisites": "Animalism ••••, Dominate ••",
       "experienceCost": 3,
       "summary": "Project the vampire's mind into a predatory or scavenging animal.",
@@ -8102,6 +8102,20 @@
         "failure": "The vampire cannot take total control of the animal yet.",
         "success": "The vampire takes over the animal’s body for one night per success. She uses the animal’s Physical Attributes and Skills in place of her own, and cannot use her own Physical or Combat Merits. She can stay awake during the day by spending a point of Willpower at dawn, and takes no damage from sunlight; if she does not spend the Willpower, she returns to her body. She cannot use any Disciplines or Blood Sorcery while in the animal’s body, but can use any of its senses, natural weapons, or forms of locomotion. While she commands the animal’s body, her own body lies in a torpor-like state, awaiting her return — though she must spend a point of Vitae every night to remain active. If the vampire remains in the animal’s body for so long that her body slips into torpor, she immediately snaps back into her body.",
         "exceptionalSuccess": "The vampire can still access some of the power of her blood even in the animal’s body. She keeps access to Auspex when in the animal’s body."
+      },
+      "presentationPt": {
+        "prerequisites": "Animalismo ••••, Dominação ••",
+        "summary": "Projete a mente do vampiro em um animal predador ou necrófago.",
+        "cost": "1 Vitae",
+        "requirement": "Alimentar o animal com 1 Vitae; incluído no custo",
+        "dicePool": "Manipulação + Empatia com Animais + Animalismo – Perseverança do animal",
+        "action": "Reflexiva",
+        "rollResults": {
+          "dramaticFailure": "O animal rejeita a tentativa de controle do vampiro. Pelo restante da noite, o vampiro manifesta tiques físicos semelhantes ao comportamento do animal. Todas as jogadas Sociais sofrem uma penalidade de –2.",
+          "failure": "O vampiro ainda não consegue assumir o controle total do animal.",
+          "success": "O vampiro assume o corpo do animal por uma noite por sucesso. Usa os Atributos e Perícias Físicos do animal no lugar dos seus e não pode usar seus próprios Méritos Físicos ou de Combate. Pode permanecer acordado durante o dia gastando um ponto de Força de Vontade ao amanhecer e não sofre dano da luz solar; se não gastar Força de Vontade, retorna ao próprio corpo. Não pode usar Disciplinas nem Feitiçaria de Sangue no corpo do animal, mas pode usar seus sentidos, armas naturais e formas de locomoção. Enquanto comanda o animal, seu próprio corpo permanece em um estado semelhante ao torpor, aguardando seu retorno; ainda assim, deve gastar um ponto de Vitae a cada noite para permanecer ativo. Se ficar no animal por tanto tempo que seu próprio corpo entre em torpor, retorna imediatamente a ele.",
+          "exceptionalSuccess": "O vampiro ainda consegue acessar parte do poder de seu sangue no corpo do animal. Conserva o acesso a Auspícios enquanto estiver nele."
+        }
       }
     },
     {
@@ -8126,12 +8140,64 @@
         "exceptionalSuccess": "The victim’s compulsion lasts throughout the day and for all of the next night as well, long enough for many international journeys — or at least for the victim to find a way to smuggle herself overseas."
       },
       "suggestedModifiers": [
-        { "modifier": "+1", "situation": "The vampire knows exactly where his victim is." },
-        { "modifier": "–1", "situation": "The vampire has no idea where his victim is, but knows that she is within the same domain." },
-        { "modifier": "–1", "situation": "The victim dislikes the vampire and resents being summoned." },
-        { "modifier": "–3", "situation": "The victim is over 500 miles away, or despises the vampire." },
-        { "modifier": "–5", "situation": "The victim is on the other side of the world." }
-      ]
+        {
+          "modifier": "+1",
+          "situation": "The vampire knows exactly where his victim is."
+        },
+        {
+          "modifier": "–1",
+          "situation": "The vampire has no idea where his victim is, but knows that she is within the same domain."
+        },
+        {
+          "modifier": "–1",
+          "situation": "The victim dislikes the vampire and resents being summoned."
+        },
+        {
+          "modifier": "–3",
+          "situation": "The victim is over 500 miles away, or despises the vampire."
+        },
+        {
+          "modifier": "–5",
+          "situation": "The victim is on the other side of the world."
+        }
+      ],
+      "presentationPt": {
+        "prerequisites": "Dominação ••••",
+        "summary": "Obrigue uma vítima previamente Mesmerizada a viajar até o vampiro.",
+        "cost": "1 Vitae",
+        "requirement": "Ter Mesmerizado a vítima no último ano",
+        "dicePool": "Manipulação + Persuasão + Dominação contra Compostura + Potência do Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Uma noite",
+        "rollResults": {
+          "dramaticFailure": "A vítima sabe que o vampiro quer que ela vá até ele e faz tudo ao seu alcance para evitá-lo ativamente, usando sua percepção da localização dele para ajudá-la.",
+          "failure": "Algo impede a vítima de ir até o vampiro.",
+          "success": "A vítima sabe onde o vampiro está e sente uma compulsão súbita de ir até ele. Ela viaja pelo meio mais direto disponível, parando apenas por necessidades. A compulsão dura pelo restante da noite na perspectiva do vampiro: se ele chamar alguém do outro lado do mundo, os efeitos duram até o nascer do sol no local onde ele está.",
+          "exceptionalSuccess": "A compulsão da vítima dura durante o dia e por toda a noite seguinte, tempo suficiente para muitas viagens internacionais ou, ao menos, para encontrar uma maneira de viajar clandestinamente para outro continente."
+        },
+        "suggestedModifiers": [
+          {
+            "modifier": "+1",
+            "situation": "O vampiro sabe exatamente onde sua vítima está."
+          },
+          {
+            "modifier": "–1",
+            "situation": "O vampiro não sabe onde sua vítima está, mas sabe que ela está no mesmo domínio."
+          },
+          {
+            "modifier": "–1",
+            "situation": "A vítima não gosta do vampiro e se ressente de ser convocada."
+          },
+          {
+            "modifier": "–3",
+            "situation": "A vítima está a mais de 500 milhas de distância ou despreza o vampiro."
+          },
+          {
+            "modifier": "–5",
+            "situation": "A vítima está do outro lado do mundo."
+          }
+        ]
+      }
     },
     {
       "id": "devotion-summoning-majesty",
@@ -8155,12 +8221,64 @@
         "exceptionalSuccess": "The victim’s compulsion lasts throughout the day and for all of the next night as well, long enough for many international journeys — or at least for the victim to find a way to smuggle herself overseas."
       },
       "suggestedModifiers": [
-        { "modifier": "+1", "situation": "The vampire knows exactly where his victim is." },
-        { "modifier": "–1", "situation": "The vampire has no idea where his victim is, but knows that she is within the same domain." },
-        { "modifier": "–1", "situation": "The victim dislikes the vampire and resents being summoned." },
-        { "modifier": "–3", "situation": "The victim is over 500 miles away, or despises the vampire." },
-        { "modifier": "–5", "situation": "The victim is on the other side of the world." }
-      ]
+        {
+          "modifier": "+1",
+          "situation": "The vampire knows exactly where his victim is."
+        },
+        {
+          "modifier": "–1",
+          "situation": "The vampire has no idea where his victim is, but knows that she is within the same domain."
+        },
+        {
+          "modifier": "–1",
+          "situation": "The victim dislikes the vampire and resents being summoned."
+        },
+        {
+          "modifier": "–3",
+          "situation": "The victim is over 500 miles away, or despises the vampire."
+        },
+        {
+          "modifier": "–5",
+          "situation": "The victim is on the other side of the world."
+        }
+      ],
+      "presentationPt": {
+        "prerequisites": "Majestade ••••",
+        "summary": "Obrigue uma vítima anteriormente afetada por Fascínio a viajar até o vampiro.",
+        "cost": "1 Vitae",
+        "requirement": "Ter usado Fascínio na vítima no último ano",
+        "dicePool": "Manipulação + Persuasão + Majestade contra Compostura + Potência do Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Uma noite",
+        "rollResults": {
+          "dramaticFailure": "A vítima sabe que o vampiro quer que ela vá até ele e faz tudo ao seu alcance para evitá-lo ativamente, usando sua percepção da localização dele para ajudá-la.",
+          "failure": "Algo impede a vítima de ir até o vampiro.",
+          "success": "A vítima sabe onde o vampiro está e sente uma compulsão súbita de ir até ele. Ela viaja pelo meio mais direto disponível, parando apenas por necessidades. A compulsão dura pelo restante da noite na perspectiva do vampiro: se ele chamar alguém do outro lado do mundo, os efeitos duram até o nascer do sol no local onde ele está.",
+          "exceptionalSuccess": "A compulsão da vítima dura durante o dia e por toda a noite seguinte, tempo suficiente para muitas viagens internacionais ou, ao menos, para encontrar uma maneira de viajar clandestinamente para outro continente."
+        },
+        "suggestedModifiers": [
+          {
+            "modifier": "+1",
+            "situation": "O vampiro sabe exatamente onde sua vítima está."
+          },
+          {
+            "modifier": "–1",
+            "situation": "O vampiro não sabe onde sua vítima está, mas sabe que ela está no mesmo domínio."
+          },
+          {
+            "modifier": "–1",
+            "situation": "A vítima não gosta do vampiro e se ressente de ser convocada."
+          },
+          {
+            "modifier": "–3",
+            "situation": "A vítima está a mais de 500 milhas de distância ou despreza o vampiro."
+          },
+          {
+            "modifier": "–5",
+            "situation": "A vítima está do outro lado do mundo."
+          }
+        ]
+      }
     },
     {
       "id": "devotion-suns-brutal-dreamscape",
