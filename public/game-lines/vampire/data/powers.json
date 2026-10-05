@@ -11495,13 +11495,19 @@
       "page": 143,
       "cost": "1 Vitae plus blood from two lethal wounds",
       "dicePool": "Intelligence + Science + Kimiya",
-      "effect": "Mix the Alchemist's sacrificed blood with corpse parts, mercury, and sulfur to create a loyal homunculus. It speaks simply and reads any language its creator can. It survives indefinitely but needs one Vitae each night to remain active; extra Vitae heals it as though its wounds were the Alchemist's. It dissolves if its final Health box fills or it is not fed by sunrise."
+      "effect": "Mix the Alchemist's sacrificed blood with corpse parts, mercury, and sulfur to create a loyal homunculus. It speaks simply and reads any language its creator can. It survives indefinitely but needs one Vitae each night to remain active; extra Vitae heals it as though its wounds were the Alchemist's. It dissolves if its final Health box fills or it is not fed by sunrise.",
+      "presentationPt": {
+        "summary": "Dar vida morta-viva a um homúnculo servil.",
+        "cost": "1 Vitae mais sangue de dois ferimentos letais",
+        "dicePool": "Inteligência + Ciência + Kimiya",
+        "effect": "Misture o sangue sacrificado do Alquimista com partes de cadáver, mercúrio e enxofre para criar um homúnculo leal. Ele fala de forma simples e lê qualquer idioma que seu criador possa ler. Sobrevive indefinidamente, mas precisa de uma Vitae a cada noite para permanecer ativo; Vitae adicional o cura como se seus ferimentos fossem do Alquimista. Ele se dissolve se sua última caixa de Vitalidade for preenchida ou se não for alimentado até o nascer do sol."
+      }
     },
     {
       "id": "kimiya-sayihs-khol",
       "kind": "kimiya-formula",
       "name": "Sayih's Khol",
-      "translatedName": "Sayih's Khol",
+      "translatedName": "Khol de Sayih",
       "rating": 2,
       "targetSuccesses": 5,
       "summary": "Protect a subject from underwater conditions for a night.",
@@ -11511,13 +11517,21 @@
       "dicePool": "Intelligence + Science + Kimiya",
       "duration": "Night",
       "requirement": "The subject must be present while bloody words of power are inscribed on their eyelids.",
-      "effect": "The subject cannot be harmed or impeded by currents, pressure, or waves in the ocean or another body of water. Living subjects can breathe underwater."
+      "effect": "The subject cannot be harmed or impeded by currents, pressure, or waves in the ocean or another body of water. Living subjects can breathe underwater.",
+      "presentationPt": {
+        "summary": "Proteger um alvo das condições subaquáticas por uma noite.",
+        "cost": "1 Vitae mais sangue de um ferimento letal",
+        "dicePool": "Inteligência + Ciência + Kimiya",
+        "duration": "Noite",
+        "requirement": "O alvo deve estar presente enquanto palavras de poder são inscritas com sangue em suas pálpebras.",
+        "effect": "O alvo não pode ser ferido nem impedido pelas correntes, pressão ou ondas do oceano ou de outro corpo de água. Alvos vivos podem respirar debaixo d’água."
+      }
     },
     {
       "id": "kimiya-spiders-hijra",
       "kind": "kimiya-formula",
       "name": "Spider's Hijra",
-      "translatedName": "Spider's Hijra",
+      "translatedName": "Hijra da Aranha",
       "rating": 1,
       "targetSuccesses": 6,
       "summary": "Weave a web of Vitae that penalizes others' Physical actions for a night.",
@@ -11526,13 +11540,20 @@
       "cost": "1 Vitae plus blood from one lethal wound",
       "dicePool": "Intelligence + Science + Kimiya",
       "duration": "Until sunrise",
-      "effect": "Spin the Alchemist's Vitae into webs across a radius of Potency × 10 meters. Everyone but the Alchemist suffers a penalty of half Blood Potency, rounded up, to Initiative, Defense, Speed, and Physical pools. A dramatic failure in the area causes Immobilized. The webs' Durability equals the penalty."
+      "effect": "Spin the Alchemist's Vitae into webs across a radius of Potency × 10 meters. Everyone but the Alchemist suffers a penalty of half Blood Potency, rounded up, to Initiative, Defense, Speed, and Physical pools. A dramatic failure in the area causes Immobilized. The webs' Durability equals the penalty.",
+      "presentationPt": {
+        "summary": "Tecer uma teia de Vitae que penaliza as ações Físicas de outras pessoas por uma noite.",
+        "cost": "1 Vitae mais sangue de um ferimento letal",
+        "dicePool": "Inteligência + Ciência + Kimiya",
+        "duration": "Até o nascer do sol",
+        "effect": "Transforme a Vitae do Alquimista em teias que cobrem um raio de Potência × 10 metros. Todos, exceto o Alquimista, sofrem uma penalidade de metade da Potência de Sangue, arredondada para cima, à Iniciativa, Defesa, Deslocamento e paradas Físicas. Uma falha dramática na área causa Imobilizado. A Durabilidade das teias é igual à penalidade."
+      }
     },
     {
       "id": "kimiya-curse-monkey-prince",
       "kind": "kimiya-formula",
       "name": "Curse of the Monkey Prince",
-      "translatedName": "Curse of the Monkey Prince",
+      "translatedName": "Maldição do Príncipe Macaco",
       "rating": 5,
       "targetSuccesses": 10,
       "contestedBy": "Stamina + Supernatural Tolerance",
@@ -11542,13 +11563,21 @@
       "cost": "1 Vitae plus blood from four lethal wounds",
       "dicePool": "Intelligence + Science + Kimiya",
       "duration": "Until sunrise",
-      "effect": "Mix the victim's blood with reagents, drink it, and name one discrete act the Alchemist sincerely considers an injustice. If the victim commits it before sunrise, he becomes a prey animal of Size 1–6 and takes 6 − Stamina bashing damage. He uses the animal's Physical traits, Skills, Speed, Defense, Health, movement, and senses. Other shapeshifting provokes a Clash; victory breaks the curse."
+      "effect": "Mix the victim's blood with reagents, drink it, and name one discrete act the Alchemist sincerely considers an injustice. If the victim commits it before sunrise, he becomes a prey animal of Size 1–6 and takes 6 − Stamina bashing damage. He uses the animal's Physical traits, Skills, Speed, Defense, Health, movement, and senses. Other shapeshifting provokes a Clash; victory breaks the curse.",
+      "presentationPt": {
+        "summary": "Amaldiçoar um alvo para que se transforme dolorosamente em um animal se cometer uma transgressão declarada.",
+        "cost": "1 Vitae mais sangue de quatro ferimentos letais",
+        "dicePool": "Inteligência + Ciência + Kimiya",
+        "duration": "Até o nascer do sol",
+        "contestedBy": "Vigor + Tolerância Sobrenatural",
+        "effect": "Misture o sangue da vítima com reagentes, beba-o e nomeie um ato específico que o Alquimista sinceramente considera uma injustiça. Se a vítima o cometer antes do nascer do sol, torna-se um animal de presa de Tamanho 1–6 e sofre 6 − Vigor de dano contundente. Ela usa os Atributos Físicos, Perícias, Deslocamento, Defesa, Vitalidade, movimento e sentidos do animal. Outra transformação de forma provoca um Confronto de Vontades; vencê-lo rompe a maldição."
+      }
     },
     {
       "id": "kimiya-ebony-horse",
       "kind": "kimiya-formula",
       "name": "Ebony Horse",
-      "translatedName": "Ebony Horse",
+      "translatedName": "Cavalo de Ébano",
       "rating": 4,
       "targetSuccesses": 8,
       "summary": "Animate an object up to Size 7 as a flying vehicle for a night.",
@@ -11557,7 +11586,14 @@
       "cost": "1 Vitae plus blood from three lethal wounds",
       "dicePool": "Intelligence + Science + Kimiya",
       "duration": "Until sunrise",
-      "effect": "Bloody runes awaken an inanimate object up to Size 7. It moves and flies at Speed equal to Potency × 2, carries passengers, obeys commands, and can navigate to any earthly location its creator knows how to find. The Alchemist may close his eyes and take an instant action to see through it, losing Defense while doing so."
+      "effect": "Bloody runes awaken an inanimate object up to Size 7. It moves and flies at Speed equal to Potency × 2, carries passengers, obeys commands, and can navigate to any earthly location its creator knows how to find. The Alchemist may close his eyes and take an instant action to see through it, losing Defense while doing so.",
+      "presentationPt": {
+        "summary": "Animar um objeto de até Tamanho 7 como veículo voador por uma noite.",
+        "cost": "1 Vitae mais sangue de três ferimentos letais",
+        "dicePool": "Inteligência + Ciência + Kimiya",
+        "duration": "Até o nascer do sol",
+        "effect": "Runas de sangue despertam um objeto inanimado de até Tamanho 7. Ele se move e voa com Deslocamento igual à Potência × 2, transporta passageiros, obedece a comandos e pode navegar até qualquer local terrestre que seu criador saiba encontrar. O Alquimista pode fechar os olhos e realizar uma ação instantânea para enxergar por meio dele, perdendo sua Defesa enquanto o faz."
+      }
     }
   ],
   "therionSacrileges": [

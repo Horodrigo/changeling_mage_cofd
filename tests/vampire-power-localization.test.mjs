@@ -12,6 +12,7 @@ const powers = read("public/game-lines/vampire/data/powers.json");
 const selected = powers.disciplines.filter(item => item.presentationPt);
 const rituals = powers.ritualDisciplines.filter(item => item.presentationPt);
 const lashes = powers.lashes.filter(item => item.presentationPt);
+const formulae = powers.kimiyaFormulae.filter(item => item.presentationPt);
 const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#x27;");
 const fields = ["summary", "cost", "requirement", "condition", "dicePool", "action", "duration", "contestedBy", "resistedBy", "sacrament", "effect", "procedure", "outcome", "prerequisites", "statusRequirement", "humanityCapFormula"];
 
@@ -20,11 +21,12 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.equal(selected.flatMap(item => item.levels).length, 110);
   assert.deepEqual(rituals.map(item => item.id).sort(), ["cruac", "gilded-cage", "kimiya", "theban", "therion"]);
   assert.deepEqual(lashes.map(item => item.id).sort(), ["devotion-iron-joy", "devotion-shared-feast"]);
+  assert.deepEqual(formulae.map(item => item.id).sort(), ["kimiya-al-ajsad", "kimiya-curse-monkey-prince", "kimiya-ebony-horse", "kimiya-sayihs-khol", "kimiya-spiders-hijra"]);
   const therion = rituals.find(item => item.id === "therion");
   assert.match(therion.effect, /^If Humanity is higher than the Sacrilege rating/);
   assert.equal(therion.minimumHumanityToCast, undefined);
   assert.match(rituals.find(item => item.id === "gilded-cage").effect, /in a Convergence, ritual rolls achieve exceptional success with three successes instead of five/);
-  for (const definition of [...selected, ...rituals, ...lashes]) {
+  for (const definition of [...selected, ...rituals, ...lashes, ...formulae]) {
     for (const item of [definition, ...(definition.levels ?? [])]) {
       assert.ok(item.presentationPt, `${definition.id}.${item.rating ?? "summary"}`);
       for (const field of fields.filter(key => item[key])) {
@@ -55,7 +57,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
     const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] }, plugins: [{ name: "power-locale-test-surfaces", enforce: "pre", transform(code, id) {
       const path = id.replaceAll("\\", "/");
       if (path.endsWith("/game-lines/vampire/sheet-view.tsx")) return `${code}\nexport { DisciplineCards, RitualDisciplines };`;
-      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return code.replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : "");');
+      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return code.replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : character.character.concept === "formula-test" ? "formula" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : "");');
       if (path.endsWith("/components/ui/dialog.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Dialog, Wrapper as DialogTrigger, Wrapper as DialogPortal, Wrapper as DialogClose, Wrapper as DialogOverlay, Wrapper as DialogContent, Wrapper as DialogHeader, Wrapper as DialogFooter, Wrapper as DialogTitle, Wrapper as DialogDescription };';
       if (path.endsWith("/components/ui/select.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Select, Wrapper as SelectContent, Wrapper as SelectGroup, Wrapper as SelectItem, Wrapper as SelectLabel, Wrapper as SelectSeparator, Wrapper as SelectTrigger, Wrapper as SelectValue };';
       if (path.endsWith("/components/ui/tabs.tsx")) return code.replace("<TabsPrimitive.Content", "<TabsPrimitive.Content forceMount");
@@ -227,6 +229,37 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       }
       assert.equal(JSON.stringify(lashCharacter), lashCharacterBefore);
       assert.equal(JSON.stringify(lashBuyer), lashBuyerBefore);
+      const formulaCharacter = structuredClone(ritualCharacters.kimiya);
+      formulaCharacter.line_data.blood_sorcery.kimiya_formula_ids = formulae.map(item => item.id);
+      const formulaCharacterBefore = JSON.stringify(formulaCharacter);
+      const formulaSheet = render(RitualDisciplines, { powers: catalog, bloodSorcery: formulaCharacter.line_data.blood_sorcery, locale });
+      const formulaBuyer = structuredClone(formulaCharacter);
+      formulaBuyer.character.concept = "formula-test";
+      formulaBuyer.line_data.blood_sorcery.kimiya_formula_ids = [];
+      const formulaBuyerBefore = JSON.stringify(formulaBuyer);
+      const formulaExperience = render(VampireExperiencePanel, { character: formulaBuyer, updateSheet: noMutation, catalogs });
+      for (const definition of catalog.kimiyaFormulae) {
+        const presented = vampirePowerPresentation(definition, locale);
+        const title = locale === "pt-BR" ? definition.translatedName : definition.name;
+        for (const field of fields.filter(key => presented[key])) for (const html of [formulaSheet, formulaExperience]) assert.ok(html.includes(escape(presented[field])), `${locale}: formula ${definition.id}.${field}`);
+        for (const html of [formulaSheet, formulaExperience]) {
+          assert.ok(html.includes(escape(title)));
+        }
+        const label = locale === "pt-BR" ? "Sucessos Alvo" : "Target Successes";
+        assert.ok(formulaSheet.includes(`<strong>${label}:</strong> ${definition.targetSuccesses}`));
+        assert.ok(formulaExperience.includes(`<strong>${label}:</strong> ${definition.targetSuccesses}`));
+        const receipt = { id: "formula-purchase", label: "Authored formula receipt", cost: 2, undo: { kind: "ritual", key: "kimiya_formula_ids", id: definition.id } };
+        const receiptBefore = JSON.stringify(receipt);
+        assert.equal(vampireExperienceLabel(receipt, formulaCharacter, [], catalog, locale), title);
+        const refunded = structuredClone(formulaCharacter);
+        assert.equal(refundVampireAdvancement(refunded, receipt.undo), true);
+        assert.deepEqual(refunded.line_data.blood_sorcery.kimiya_formula_ids, formulae.filter(item => item.id !== definition.id).map(item => item.id));
+        assert.equal(JSON.stringify(receipt), receiptBefore);
+      }
+      assert.equal(JSON.stringify(formulaCharacter), formulaCharacterBefore);
+      assert.equal(JSON.stringify(formulaBuyer), formulaBuyerBefore);
+      const authoredFormula = normalizeVampireCatalogHomebrew({ entryType: "power", kind: "kimiya-formula", id: "homebrew:vampire:authored-formula", name: "Ebony Horse", summary: "Authored formula stays.", effect: "Authored formula effect stays." });
+      assert.equal(vampirePowerPresentation(authoredFormula, locale), authoredFormula);
       const custom = normalizeVampireCatalogHomebrew({ entryType: "discipline", id: "homebrew:vampire:authored", name: "Animalism", summary: "Authored English stays.", levels: [{ rating: 1, name: "Feral Whispers", summary: "Authored level stays.", effect: "Authored effect stays." }] });
       assert.equal(vampirePowerPresentation(custom, locale), custom);
       assert.equal(vampirePowerPresentation(custom.levels[0], locale), custom.levels[0]);

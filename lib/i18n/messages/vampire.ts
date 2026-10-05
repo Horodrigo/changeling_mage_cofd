@@ -71,6 +71,8 @@ export const vampireMessages = {
       "therion": "Therion",
       "gildedCage": "Gaiola Dourada",
       "humanityCap": "Humanidade Máxima",
+      "selectRitual": "Selecionar Ritual",
+      "purchaseRitual": "Comprar Ritual",
       "detournement": "Detournement",
       "meritConfig": {
         "clanCovenantOrCity": "Clã, Coalizão ou cidade",
@@ -508,6 +510,8 @@ export const vampireMessages = {
       "therion": "Therion",
       "gildedCage": "Gilded Cage",
       "humanityCap": "Maximum Humanity",
+      "selectRitual": "Select Ritual",
+      "purchaseRitual": "Purchase Ritual",
       "detournement": "Detournement",
       "meritConfig": {
         "clanCovenantOrCity": "Clan, Covenant or city",

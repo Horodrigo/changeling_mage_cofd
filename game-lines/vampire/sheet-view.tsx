@@ -2155,7 +2155,7 @@ function RitualDisciplines({
               <div className="rule-power-details has-levels">
                 <PowerMechanics mechanics={item} />
                 <small>{t("ui.bloodSorceryFreeRitual")}</small>
-                {rituals.map((ritual) => (
+                {rituals.map((ritual) => vampirePowerPresentation(ritual, locale)).map((ritual) => (
                   <details
                     className="rule-power-card vampire-discipline-level"
                     key={ritual.id}
