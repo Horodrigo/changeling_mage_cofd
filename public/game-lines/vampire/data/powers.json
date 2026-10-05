@@ -12644,7 +12644,7 @@
       "id": "scale-beseech-sleeping",
       "kind": "scale",
       "name": "Beseech the Sleeping",
-      "translatedName": "Beseech the Sleeping",
+      "translatedName": "Suplicar aos Adormecidos",
       "prerequisites": "Spirit Tether; Expression ••",
       "experienceCost": 2,
       "summary": "Learn recent memories from sleeping mortals during Spirit Tether.",
@@ -12653,13 +12653,20 @@
       "manualOnly": true,
       "reversible": true,
       "procedure": "Sleep through the night and spend the entire following day under Blush of Life. Repeat this procedure for every use.",
-      "outcome": "While using Spirit Tether, reach into a sleeping mortal's recent memories and learn anything desired about their own experiences during the previous 24 hours. The memories are colored by the mortal's emotions."
+      "outcome": "While using Spirit Tether, reach into a sleeping mortal's recent memories and learn anything desired about their own experiences during the previous 24 hours. The memories are colored by the mortal's emotions.",
+      "presentationPt": {
+        "name": "Suplicar aos Adormecidos",
+        "prerequisites": "Vínculo Espiritual; Expressão ••",
+        "summary": "Conhecer as memórias recentes de mortais adormecidos durante Vínculo Espiritual.",
+        "procedure": "Durma durante a noite e passe todo o dia seguinte sob o Rubor da Vida. Repita esse procedimento a cada uso.",
+        "outcome": "Enquanto usa Vínculo Espiritual, alcance as memórias recentes de um mortal adormecido e descubra o que desejar sobre as experiências dele nas últimas 24 horas. As memórias são influenciadas pelas emoções do mortal."
+      }
     },
     {
       "id": "scale-command-mind",
       "kind": "scale",
       "name": "Command the Mind",
-      "translatedName": "Command the Mind",
+      "translatedName": "Comandar a Mente",
       "prerequisites": "Psychic Leech; Manipulation •••; Dominate •",
       "experienceCost": 2,
       "summary": "Spend a permanent Willpower dot to drain Willpower through Vitae.",
@@ -12668,13 +12675,20 @@
       "manualOnly": true,
       "reversible": true,
       "procedure": "While tethered, Embrace the vampire's own body by spending one permanent Willpower dot and one Vitae, imbuing it with the spirit's ability to absorb energy.",
-      "outcome": "While in direct skin-to-skin contact with a sapient being, spend Vitae to drain Willpower equal to half Blood Potency, rounded down, minimum one, per Vitae spent."
+      "outcome": "While in direct skin-to-skin contact with a sapient being, spend Vitae to drain Willpower equal to half Blood Potency, rounded down, minimum one, per Vitae spent.",
+      "presentationPt": {
+        "name": "Comandar a Mente",
+        "prerequisites": "Sanguessuga Psíquica; Manipulação •••; Dominação •",
+        "summary": "Gastar um ponto permanente de Força de Vontade para drenar Força de Vontade por meio de Vitae.",
+        "procedure": "Enquanto estiver sob Vínculo Espiritual, Abrace o próprio corpo do vampiro gastando um ponto permanente de Força de Vontade e um ponto de Vitae, imbuindo-o com a capacidade do espírito de absorver energia.",
+        "outcome": "Enquanto estiver em contato direto de pele com um ser sapiente, gaste Vitae para drenar Força de Vontade igual à metade da Potência de Sangue, arredondada para baixo, até o mínimo de um, por ponto de Vitae gasto."
+      }
     },
     {
       "id": "scale-psychic-leech",
       "kind": "scale",
       "name": "Psychic Leech",
-      "translatedName": "Psychic Leech",
+      "translatedName": "Sanguessuga Psíquica",
       "prerequisites": "Spirit Tether; Empathy •••",
       "experienceCost": 2,
       "summary": "Drain Vitae from attuned people and places while astrally projected.",
@@ -12683,13 +12697,20 @@
       "manualOnly": true,
       "reversible": true,
       "procedure": "Anoint at least one place or person per Blood Potency dot with the vampire's Vitae, then use Spirit Tether and revisit each point to draw the energy back. Vitae used for ghouls or blood bonds counts only if given on the same night.",
-      "outcome": "While tethered, Vitae glows red to the vampire's senses. Spend one Willpower to drain up to Blood Potency Vitae from a target and feed herself. A target driven into starvation must resist frenzy."
+      "outcome": "While tethered, Vitae glows red to the vampire's senses. Spend one Willpower to drain up to Blood Potency Vitae from a target and feed herself. A target driven into starvation must resist frenzy.",
+      "presentationPt": {
+        "name": "Sanguessuga Psíquica",
+        "prerequisites": "Vínculo Espiritual; Empatia •••",
+        "summary": "Drenar Vitae de pessoas e lugares sintonizados enquanto estiver em projeção astral.",
+        "procedure": "Unte com a Vitae do vampiro pelo menos um lugar ou uma pessoa por ponto de Potência de Sangue; depois, use Vínculo Espiritual e revisite cada ponto para absorver a energia. Vitae usada em carniçais ou Laços de Sangue só conta se tiver sido oferecida na mesma noite.",
+        "outcome": "Enquanto estiver sob Vínculo Espiritual, a Vitae brilha em vermelho para os sentidos do vampiro. Gaste um ponto de Força de Vontade para drenar até Potência de Sangue pontos de Vitae de um alvo e alimentar-se. Um alvo levado à inanição precisa resistir ao Frenesi."
+      }
     },
     {
       "id": "scale-spirit-tether",
       "kind": "scale",
       "name": "Spirit Tether",
-      "translatedName": "Spirit Tether",
+      "translatedName": "Vínculo Espiritual",
       "prerequisites": "Any coil 2; Resolve ••••",
       "experienceCost": 2,
       "summary": "Gain astral projection through a regimen of Vitae, hallucinogens, and near-torpor.",
@@ -12698,13 +12719,20 @@
       "manualOnly": true,
       "reversible": true,
       "procedure": "Concoct and ingest or inject a mixture of hallucinogens and Vitae, repeatedly entering a near-torpid state while keeping the mind aware.",
-      "outcome": "Gain the effects of Twilight Projection (Auspex •••••). While projected through Spirit Tether, the vampire may use the other Scales derived from it."
+      "outcome": "Gain the effects of Twilight Projection (Auspex •••••). While projected through Spirit Tether, the vampire may use the other Scales derived from it.",
+      "presentationPt": {
+        "name": "Vínculo Espiritual",
+        "prerequisites": "Qualquer Espiral 2; Perseverança ••••",
+        "summary": "Receber projeção astral por meio de um regime de Vitae, alucinógenos e quase torpor.",
+        "procedure": "Prepare e ingira ou injete uma mistura de alucinógenos e Vitae, entrando repetidamente em um estado próximo do torpor enquanto mantém a mente consciente.",
+        "outcome": "Receba os efeitos de Projeção Crepuscular (Auspícios •••••). Enquanto se projeta por Vínculo Espiritual, o vampiro pode usar as outras Escamas derivadas dele."
+      }
     },
     {
       "id": "scale-grafting-unholy-flesh",
       "kind": "scale",
       "name": "Grafting Unholy Flesh",
-      "translatedName": "Grafting Unholy Flesh",
+      "translatedName": "Enxertar Carne Profana",
       "prerequisites": "coil-zirnitra 4",
       "experienceCost": 2,
       "summary": "Graft a supernatural body part onto a vampire or ghoul to steal one power.",
@@ -12713,13 +12741,20 @@
       "procedure": "On a Wyrm's Nest, remove the supernatural organ and graft it into a vampire or ghoul with one Vitae.",
       "outcome": "The recipient can use the stolen power, paying one Vitae and one Willpower for each printed non-Vitae/Willpower cost; the donor loses the power while the graft survives.",
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "presentationPt": {
+        "name": "Enxertar Carne Profana",
+        "prerequisites": "Espiral de Zirnitra 4",
+        "summary": "Enxertar uma parte corporal sobrenatural em um vampiro ou carniçal para roubar um poder.",
+        "procedure": "Em um Ninho do Dragão, remova o órgão sobrenatural e enxerte-o em um vampiro ou carniçal com um ponto de Vitae.",
+        "outcome": "O receptor pode usar o poder roubado, pagando um ponto de Vitae e um ponto de Força de Vontade por cada custo impresso que não seja Vitae ou Força de Vontade; o doador perde o poder enquanto o enxerto sobreviver."
+      }
     },
     {
       "id": "scale-psychic-lobotomy",
       "kind": "scale",
       "name": "Psychic Lobotomy",
-      "translatedName": "Psychic Lobotomy",
+      "translatedName": "Lobotomia Psíquica",
       "prerequisites": "coil-zirnitra 1",
       "experienceCost": 2,
       "summary": "Surgically remove a subject's Supernatural Merits while hardening the damaged mind.",
@@ -12728,13 +12763,20 @@
       "procedure": "Remove and preserve part of the subject's brain through ritual surgery.",
       "outcome": "The subject loses a Mental or Social dot and all Supernatural Merits, but adds the Dragon's Zirnitra rating to resist mental probing or influence until the aggravated injury regenerates.",
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "presentationPt": {
+        "name": "Lobotomia Psíquica",
+        "prerequisites": "Espiral de Zirnitra 1",
+        "summary": "Remover cirurgicamente os Méritos Sobrenaturais de um sujeito enquanto fortalece a mente lesionada.",
+        "procedure": "Remova e preserve parte do cérebro do sujeito por meio de cirurgia ritual.",
+        "outcome": "O sujeito perde um ponto Mental ou Social e todos os Méritos Sobrenaturais, mas soma a pontuação de Zirnitra do Dragão para resistir a sondagem ou influência mental até a lesão agravada se regenerar."
+      }
     },
     {
       "id": "scale-bleed-sin",
       "kind": "scale",
       "name": "Bleed the Sin",
-      "translatedName": "Bleed the Sin",
+      "translatedName": "Sangrar o Pecado",
       "prerequisites": "coil-ziva 2",
       "experienceCost": 2,
       "summary": "Drain a subject so the next increase of Humanity or Integrity costs less.",
@@ -12743,13 +12785,20 @@
       "procedure": "Keep the subject drained of blood for ten minutes while conducting the Scale.",
       "outcome": "The subject receives a one-time Experience discount on the next dot of Humanity or another Integrity trait equal to the Dragon's Ziva rating.",
       "manualOnly": true,
-      "reversible": false
+      "reversible": false,
+      "presentationPt": {
+        "name": "Sangrar o Pecado",
+        "prerequisites": "Espiral de Ziva 2",
+        "summary": "Drenar um sujeito para reduzir o custo do próximo aumento de Humanidade ou Integridade.",
+        "procedure": "Mantenha o sujeito sem sangue por dez minutos enquanto realiza a Escama.",
+        "outcome": "O sujeito recebe um desconto único em Experiência no próximo ponto de Humanidade ou de outra característica de Integridade igual à pontuação de Ziva do Dragão."
+      }
     },
     {
       "id": "scale-siphon-soul",
       "kind": "scale",
       "name": "Siphon the Soul",
-      "translatedName": "Siphon the Soul",
+      "translatedName": "Drenar a Alma",
       "prerequisites": "coil-ziva 3",
       "experienceCost": 2,
       "summary": "Nearly diablerize a vampire to steal one dot of Humanity.",
@@ -12758,13 +12807,20 @@
       "procedure": "Drain the restrained vampire in a controlled imitation of diablerie and complete the prescribed contest.",
       "outcome": "Success steals one Humanity dot from that subject once, leaves the victim in torpor, and forces the Dragon to face a Humanity 1 breaking point and spiritual taint.",
       "manualOnly": true,
-      "reversible": false
+      "reversible": false,
+      "presentationPt": {
+        "name": "Drenar a Alma",
+        "prerequisites": "Espiral de Ziva 3",
+        "summary": "Quase diablerizar um vampiro para roubar um ponto de Humanidade.",
+        "procedure": "Drene o vampiro imobilizado em uma imitação controlada da Diablerie e conclua a disputa prescrita.",
+        "outcome": "O sucesso rouba um ponto de Humanidade daquele sujeito uma única vez, deixa a vítima em torpor e obriga o Dragão a enfrentar um Ponto de Ruptura de Humanidade 1 e corrupção espiritual."
+      }
     },
     {
       "id": "scale-cold-grave",
       "kind": "scale",
       "name": "Cold of the Grave",
-      "translatedName": "Cold of the Grave",
+      "translatedName": "Frio da Sepultura",
       "prerequisites": "coil-quintessence 3",
       "experienceCost": 2,
       "summary": "Share Smother with every vampire who calls the domain home.",
@@ -12773,7 +12829,14 @@
       "manualOnly": true,
       "reversible": true,
       "procedure": "Collect at least five Vitae from one vampire per large neighborhood or district. Mix it with the Dragon's entire full Vitae pool and ground bones and rotten flesh from at least one corpse exhumed from every cemetery in the domain. Build a pyre near the domain's geographic center and ritually extinguish it with the mixture.",
-      "outcome": "For one year, every vampire who calls the domain home benefits from Smother while within its borders."
+      "outcome": "For one year, every vampire who calls the domain home benefits from Smother while within its borders.",
+      "presentationPt": {
+        "name": "Frio da Sepultura",
+        "prerequisites": "Espiral da Quintessência 3",
+        "summary": "Compartilhar Abafar com todo vampiro que considere o domínio seu lar.",
+        "procedure": "Recolha pelo menos cinco pontos de Vitae de um vampiro por grande bairro ou distrito. Misture-os com toda a reserva de Vitae cheia do Dragão e com ossos triturados e carne apodrecida de pelo menos um cadáver exumado de cada cemitério do domínio. Construa uma pira perto do centro geográfico do domínio e apague-a ritualmente com a mistura.",
+        "outcome": "Por um ano, todo vampiro que considere o domínio seu lar recebe os benefícios de Abafar enquanto estiver dentro de seus limites."
+      }
     },
     {
       "id": "scale-day-wake-conditioning",

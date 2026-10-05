@@ -32,8 +32,14 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.equal(detournements.length, 5);
   assert.deepEqual(coils.map(item => item.id).sort(), ["coil-ascendant", "coil-quintessence", "coil-voivode", "coil-wyrm", "coil-zirnitra", "coil-ziva"]);
   assert.equal(coils.flatMap(item => item.levels).length, 30);
-  assert.equal(scales.length, 10);
-  assert.ok(scales.every(item => item.source === "Vampire: The Requiem Second Edition"));
+  assert.deepEqual(scales.map(item => item.id).sort(), powers.scales.map(item => item.id).sort());
+  assert.equal(scales.length, 19);
+  assert.deepEqual(Object.fromEntries([...new Set(scales.map(item => item.source))].map(source => [source, scales.filter(item => item.source === source).length])), {
+    "Night Horrors: Spilled Blood": 4,
+    "Secrets of the Covenants": 4,
+    "Thousand Years of Night": 1,
+    "Vampire: The Requiem Second Edition": 10,
+  });
   const zirnitra = coils.find(item => item.id === "coil-zirnitra");
   assert.match(zirnitra.levels[1].effect, /Drawbacks do not always occur/);
   assert.match(zirnitra.levels[2].effect, /Supernatural Merits cost one Experience less, to a minimum of one; already-owned Supernatural Merits refund one Experience each/);
