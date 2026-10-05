@@ -34,10 +34,10 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.equal(invocations.length, 10);
   assert.equal(detournements.length, 5);
   assert.deepEqual(devotions.map(item => item.id).sort(), ["devotion-body-of-will", "devotion-chain-of-command", "devotion-cloak-the-gathering", "devotion-conditioning", "devotion-cross-contamination", "devotion-cult-of-personality", "devotion-enchantment", "devotion-enfeebling-aura", "devotion-force-of-nature", "devotion-foul-grave", "devotion-gargoyles-vigilance", "devotion-hint-of-fear", "devotion-juggernauts-gait", "devotion-quicken-sight", "devotion-reasons-salon", "devotion-riot", "devotion-shared-sight", "devotion-shatter-the-shroud", "devotion-stalwart-servant", "devotion-subsume-lesser-beast", "devotion-summoning-dominate", "devotion-summoning-majesty", "devotion-suns-brutal-dreamscape", "devotion-the-wish", "devotion-touch-of-deprivation", "devotion-undying-familiar", "devotion-vermin-flood", "devotion-wet-dream", "devotion-wraiths-presence"]);
-  assert.equal(rites.length, 10);
+  assert.equal(rites.length, 24);
   assert.equal(miracles.length, 9);
   assert.ok(miracles.every(item => item.source === "Vampire: The Requiem Second Edition"));
-  assert.ok(rites.every(item => item.source === "Vampire: The Requiem Second Edition"));
+  assert.deepEqual(Object.fromEntries([...new Set(rites.map(item => item.source))].map(source => [source, rites.filter(item => item.source === source).length])), { "Vampire: The Requiem Second Edition": 10, "Secrets of the Covenants": 14 });
   assert.deepEqual(coils.map(item => item.id).sort(), ["coil-ascendant", "coil-quintessence", "coil-voivode", "coil-wyrm", "coil-zirnitra", "coil-ziva"]);
   assert.equal(coils.flatMap(item => item.levels).length, 30);
   assert.deepEqual(scales.map(item => item.id).sort(), powers.scales.map(item => item.id).sort());
@@ -48,6 +48,15 @@ test("Vampire official and Homebrew power presentations cover existing fields an
     "Thousand Years of Night": 1,
     "Vampire: The Requiem Second Edition": 10,
   });
+  const donning = rites.find(item => item.id === "cruac-donning-beasts-flesh");
+  assert.equal(donning.cost, "1 Vitae");
+  assert.equal(donning.action, "Three turns to transform");
+  assert.equal(donning.duration, undefined);
+  assert.match(rites.find(item => item.id === "cruac-mantle-amorous-fire").effect, /spends a point of Willpower to rise/);
+  for (const id of ["cruac-mantle-amorous-fire", "cruac-mantle-beasts-breath", "cruac-mantle-glorious-dervish", "cruac-mantle-crone", "cruac-mantle-predator-goddess"]) assert.equal(rites.find(item => item.id === id).cost, "1 Willpower to rise after the dance");
+  assert.match(rites.find(item => item.id === "cruac-curse-aphrodites-favor").requirement, /three separate nights/);
+  assert.match(rites.find(item => item.id === "cruac-gorgons-gaze").effect, /one limb per success.*one aggravated damage.*five lethal damage.*until they heal a single level/);
+  assert.match(rites.find(item => item.id === "cruac-bounty-storm").effect, /Cash equipment with Availability five.*Humanity 2 or lower/);
   const zirnitra = coils.find(item => item.id === "coil-zirnitra");
   assert.match(zirnitra.levels[1].effect, /Drawbacks do not always occur/);
   assert.match(zirnitra.levels[2].effect, /Supernatural Merits cost one Experience less, to a minimum of one; already-owned Supernatural Merits refund one Experience each/);

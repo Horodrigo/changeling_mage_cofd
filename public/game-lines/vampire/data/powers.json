@@ -10271,23 +10271,30 @@
       "id": "cruac-donning-beasts-flesh",
       "kind": "cruac-rite",
       "name": "Donning the Beast’s Flesh",
-      "translatedName": "Donning the Beast’s Flesh",
+      "translatedName": "Vestir a Carne da Fera",
       "rating": 3,
       "experienceCost": 2,
       "summary": "Wear a flayed animal skin to assume an approximation of that beast.",
       "source": "Secrets of the Covenants",
       "page": 184,
       "targetSuccesses": 7,
-      "cost": "1 Vitae per three turns transformed",
+      "cost": "1 Vitae",
       "requirement": "A garment made from a flayed animal",
-      "duration": "Three turns per Vitae",
-      "effect": "The wearer approximates the animal's form and retains only Auspex among Disciplines while transformed."
+      "effect": "The wearer approximates the animal's form and retains only Auspex among Disciplines while transformed.",
+      "action": "Three turns to transform",
+      "presentationPt": {
+        "summary": "Vestir a pele esfolada de um animal para assumir uma aproximação dessa fera.",
+        "cost": "1 Vitae",
+        "action": "Três turnos para se transformar",
+        "requirement": "Uma peça de vestuário feita de um animal esfolado",
+        "effect": "Quem a veste assume uma aproximação da forma do animal e conserva apenas Auspícios entre suas Disciplinas enquanto estiver transformado."
+      }
     },
     {
       "id": "cruac-mantle-amorous-fire",
       "kind": "cruac-rite",
       "name": "Mantle of Amorous Fire",
-      "translatedName": "Mantle of Amorous Fire",
+      "translatedName": "Manto do Fogo Amoroso",
       "rating": 1,
       "experienceCost": 2,
       "summary": "Dance to exhaustion and add Crúac as a Presence bonus for the night.",
@@ -10296,13 +10303,21 @@
       "targetSuccesses": 5,
       "requirement": "Dance and activate Blush of Life as part of casting",
       "duration": "Until sunrise",
-      "effect": "The ritualist becomes exhausted, regains Willpower as specified by the rite, and adds Crúac to Presence for the night."
+      "effect": "The ritualist becomes exhausted and spends a point of Willpower to rise, then adds Crúac to Presence for the night.",
+      "cost": "1 Willpower to rise after the dance",
+      "presentationPt": {
+        "summary": "Dançar até a exaustão e receber Crúac como bônus de Presença durante a noite.",
+        "requirement": "Dançar e ativar Rubor da Vida durante a conjuração",
+        "duration": "Até o nascer do sol",
+        "effect": "O ritualista fica exausto e gasta um ponto de Força de Vontade para levantar, depois soma Crúac à Presença durante a noite.",
+        "cost": "1 Força de Vontade para levantar após a dança"
+      }
     },
     {
       "id": "cruac-mantle-beasts-breath",
       "kind": "cruac-rite",
       "name": "Mantle of the Beast’s Breath",
-      "translatedName": "Mantle of the Beast’s Breath",
+      "translatedName": "Manto do Sopro da Fera",
       "rating": 2,
       "experienceCost": 2,
       "summary": "Dance to exhaustion, gain Raptured, and add Crúac when riding the wave.",
@@ -10311,13 +10326,21 @@
       "targetSuccesses": 5,
       "requirement": "Dance and activate Blush of Life as part of casting",
       "duration": "Until sunrise",
-      "effect": "The ritualist gains the Raptured Condition and adds Crúac to attempts to ride the wave for the night."
+      "effect": "The ritualist gains the Raptured Condition and adds Crúac to attempts to ride the wave for the night.",
+      "cost": "1 Willpower to rise after the dance",
+      "presentationPt": {
+        "summary": "Dançar até a exaustão, receber Arrebatado e somar Crúac ao Cavalgar a Onda.",
+        "requirement": "Dançar e ativar Rubor da Vida durante a conjuração",
+        "duration": "Até o nascer do sol",
+        "effect": "O ritualista recebe a Condição Arrebatado e soma Crúac às tentativas de Cavalgar a Onda durante a noite.",
+        "cost": "1 Força de Vontade para levantar após a dança"
+      }
     },
     {
       "id": "cruac-pool-forbidden-truths",
       "kind": "cruac-rite",
       "name": "Pool of Forbidden Truths",
-      "translatedName": "Pool of Forbidden Truths",
+      "translatedName": "Poça das Verdades Proibidas",
       "rating": 1,
       "experienceCost": 2,
       "summary": "Gain Primeval Truths and interpret a prophetic vision.",
@@ -10325,13 +10348,18 @@
       "page": 184,
       "targetSuccesses": 5,
       "dicePool": "Wits + Investigation + Crúac",
-      "effect": "The ritualist gains the Primeval Truths Condition and may ask for one truthful sentence from the vision per success on the interpretation roll."
+      "effect": "The ritualist gains the Primeval Truths Condition and may ask for one truthful sentence from the vision per success on the interpretation roll.",
+      "presentationPt": {
+        "summary": "Receber Verdades Primevas e interpretar uma visão profética.",
+        "dicePool": "Raciocínio + Investigação + Crúac",
+        "effect": "O ritualista recebe a Condição Verdades Primevas e pode obter uma frase verdadeira a partir da visão por sucesso no teste de interpretação."
+      }
     },
     {
       "id": "cruac-bounty-storm",
       "kind": "cruac-rite",
       "name": "Bounty of the Storm",
-      "translatedName": "Bounty of the Storm",
+      "translatedName": "Dádiva da Tempestade",
       "rating": 4,
       "experienceCost": 2,
       "summary": "Prepare a storm that strikes a future crowd, maims the target, and leaves immense wealth.",
@@ -10340,13 +10368,19 @@
       "targetSuccesses": 10,
       "requirement": "A personal or precious object connected to the target",
       "duration": "Triggers between one week and one lunar month after casting",
-      "effect": "The target suffers Crúac bashing damage, roughly one third of the surrounding crowd dies, and the aftermath provides Resources-equivalent wealth; casting risks detachment at Humanity 2."
+      "effect": "The target suffers Crúac bashing damage, roughly one third of the surrounding crowd dies, and the aftermath provides Cash equipment with Availability five; casting risks detachment at Humanity 2 or lower.",
+      "presentationPt": {
+        "summary": "Preparar uma tempestade que atinge uma multidão futura, mutila o alvo e deixa imensa riqueza.",
+        "requirement": "Um objeto pessoal ou precioso ligado ao alvo",
+        "duration": "É acionada entre uma semana e um mês lunar após a conjuração",
+        "effect": "O alvo sofre dano contundente igual a Crúac, aproximadamente um terço da multidão ao redor morre e as consequências fornecem equipamento Dinheiro com Disponibilidade cinco; conjurar o rito arrisca Desapego em Humanidade 2 ou menos."
+      }
     },
     {
       "id": "cruac-curse-aphrodites-favor",
       "kind": "cruac-rite",
       "name": "Curse of Aphrodite’s Favor",
-      "translatedName": "Curse of Aphrodite’s Favor",
+      "translatedName": "Maldição do Favor de Aphrodite",
       "rating": 3,
       "experienceCost": 2,
       "summary": "Create a three-dose potion that forces a full Vinculum to a chosen subject.",
@@ -10354,14 +10388,20 @@
       "page": 185,
       "targetSuccesses": 6,
       "contestedBy": "Composure + Blood Potency",
-      "requirement": "Feed the victim one drop on each of three consecutive nights",
-      "effect": "After the third dose, the victim suffers a full Vinculum to the chosen subject rather than to the ritualist."
+      "requirement": "Feed the victim one drop on each of three separate nights",
+      "effect": "After the third dose, the victim suffers a full Vinculum to the chosen subject rather than to the ritualist.",
+      "presentationPt": {
+        "summary": "Criar uma poção de três doses que impõe um Vinculum completo com um sujeito escolhido.",
+        "contestedBy": "Compostura + Potência do Sangue",
+        "requirement": "Dar à vítima uma gota em cada uma de três noites separadas",
+        "effect": "Após a terceira dose, a vítima sofre um Vinculum completo com o sujeito escolhido em vez de com o ritualista."
+      }
     },
     {
       "id": "cruac-curse-beloved-toy",
       "kind": "cruac-rite",
       "name": "Curse of the Beloved Toy",
-      "translatedName": "Curse of the Beloved Toy",
+      "translatedName": "Maldição do Brinquedo Amado",
       "rating": 3,
       "experienceCost": 2,
       "summary": "Bind a slain victim's soul into a cherished keepsake that curses later owners.",
@@ -10370,13 +10410,19 @@
       "targetSuccesses": 6,
       "requirement": "A beloved possession and the death of its owner",
       "duration": "Until its invested Vitae is exhausted or the spirit is exorcised",
-      "effect": "Each invested Vitae can turn one action by the item's owner into a dramatic failure; destroying the item only drives the spirit to another host."
+      "effect": "Each invested Vitae can turn one action by the item's owner into a dramatic failure; destroying the item only drives the spirit to another host.",
+      "presentationPt": {
+        "summary": "Prender a alma de uma vítima morta em um objeto estimado que amaldiçoa donos posteriores.",
+        "requirement": "Um pertence amado e a morte de seu dono",
+        "duration": "Até a Vitae investida acabar ou o espírito ser exorcizado",
+        "effect": "Cada ponto de Vitae investido pode transformar uma ação do dono do objeto em uma falha dramática; destruir o objeto apenas leva o espírito a outro receptáculo."
+      }
     },
     {
       "id": "cruac-gorgons-gaze",
       "kind": "cruac-rite",
       "name": "Gorgon’s Gaze",
-      "translatedName": "Gorgon’s Gaze",
+      "translatedName": "Olhar da Górgona",
       "rating": 4,
       "experienceCost": 2,
       "summary": "Prepare the ritualist's eyes to petrify the first person who sees them.",
@@ -10384,13 +10430,18 @@
       "page": 185,
       "targetSuccesses": 7,
       "dicePool": "Presence + Occult + Crúac − Stamina",
-      "effect": "Each success petrifies roughly one fifth of the victim and inflicts one aggravated damage; five successes petrify the whole body, killing mortals or placing Kindred in torpor."
+      "effect": "Partial petrification affects one limb per success and inflicts one aggravated damage per transformed limb. Five successes fully petrify the victim, killing mortals or inflicting five lethal damage on Kindred and placing them in torpor until they heal a single level.",
+      "presentationPt": {
+        "summary": "Preparar os olhos do ritualista para petrificar a primeira pessoa que os veja.",
+        "dicePool": "Presença + Ocultismo + Crúac − Vigor",
+        "effect": "A petrificação parcial afeta um membro por sucesso e causa um ponto de dano agravado por membro transformado. Cinco sucessos petrificam totalmente a vítima, matando mortais ou causando cinco pontos de dano letal aos Membros e colocando-os em torpor até curarem um único nível."
+      }
     },
     {
       "id": "cruac-mantle-glorious-dervish",
       "kind": "cruac-rite",
       "name": "Mantle of the Glorious Dervish",
-      "translatedName": "Mantle of the Glorious Dervish",
+      "translatedName": "Manto do Dervixe Glorioso",
       "rating": 3,
       "experienceCost": 2,
       "summary": "Dance to exhaustion and become an untiring supernatural combatant for the night.",
@@ -10399,13 +10450,21 @@
       "targetSuccesses": 5,
       "requirement": "Dance and activate Blush of Life as part of casting",
       "duration": "Until sunrise",
-      "effect": "Gain armor 1 against all attacks, deal +1 damage with attacks, and become immune to ambush and surprise."
+      "effect": "Gain armor 1 against all attacks, deal +1 damage with attacks, and become immune to ambush and surprise.",
+      "cost": "1 Willpower to rise after the dance",
+      "presentationPt": {
+        "summary": "Dançar até a exaustão e tornar-se um combatente sobrenatural incansável durante a noite.",
+        "requirement": "Dançar e ativar Rubor da Vida durante a conjuração",
+        "duration": "Até o nascer do sol",
+        "effect": "Receba armadura 1 contra todos os ataques, cause +1 de dano com ataques e torne-se imune a emboscadas e surpresas.",
+        "cost": "1 Força de Vontade para levantar após a dança"
+      }
     },
     {
       "id": "cruac-shed-virulent-bowels",
       "kind": "cruac-rite",
       "name": "Shed the Virulent Bowels",
-      "translatedName": "Shed the Virulent Bowels",
+      "translatedName": "Expelir as Entranhas Virulentas",
       "rating": 2,
       "experienceCost": 2,
       "summary": "Hang a lethal curse over a living victim for up to a lunar month.",
@@ -10415,13 +10474,20 @@
       "contestedBy": "Stamina + Blood Potency",
       "requirement": "A lock of hair or other sympathetic link",
       "duration": "Up to one lunar month",
-      "effect": "When triggered, the curse fills the living victim's Health track with lethal damage at one point per turn."
+      "effect": "When triggered, the curse fills the living victim's Health track with lethal damage at one point per turn.",
+      "presentationPt": {
+        "summary": "Lançar sobre uma vítima viva uma maldição letal que pode ser acionada em até um mês lunar.",
+        "contestedBy": "Vigor + Potência do Sangue",
+        "requirement": "Uma mecha de cabelo ou outro vínculo simpático",
+        "duration": "Até um mês lunar",
+        "effect": "Quando acionada, a maldição preenche a Vitalidade da vítima viva com dano letal, à razão de um ponto por turno."
+      }
     },
     {
       "id": "cruac-birthing-god",
       "kind": "cruac-rite",
       "name": "Birthing the God",
-      "translatedName": "Birthing the God",
+      "translatedName": "Dar à Luz o Deus",
       "rating": 5,
       "experienceCost": 2,
       "summary": "Assemble body parts and Vitae to violently birth an undead, flesh-eating god.",
@@ -10429,13 +10495,18 @@
       "page": 186,
       "targetSuccesses": 15,
       "requirement": "A coven, harvested body parts, and invested Vitae",
-      "effect": "Invested Vitae purchases Attributes and Disciplines, sets Size at one per five Vitae and Blood Potency at one per three Vitae, while celebrants contribute Skills and suffer the creature's violent birth."
+      "effect": "Invested Vitae purchases Attributes and Disciplines, sets Size at one per five Vitae and Blood Potency at one per three Vitae, while celebrants contribute Skills and suffer the creature's violent birth.",
+      "presentationPt": {
+        "summary": "Reunir partes de corpos e Vitae para dar à luz violentamente um deus morto-vivo que devora carne.",
+        "requirement": "Um grupo de ritualistas, partes de corpos coletadas e Vitae investida",
+        "effect": "A Vitae investida compra Atributos e Disciplinas, define Tamanho em um por cinco Vitae e Potência do Sangue em um por três Vitae; os celebrantes contribuem com Perícias e sofrem o nascimento violento da criatura."
+      }
     },
     {
       "id": "cruac-denying-hades",
       "kind": "cruac-rite",
       "name": "Denying Hades",
-      "translatedName": "Denying Hades",
+      "translatedName": "Negar Hades",
       "rating": 5,
       "experienceCost": 2,
       "summary": "Trap a recently deceased spirit in its corpse between life and death.",
@@ -10443,13 +10514,18 @@
       "page": 186,
       "targetSuccesses": 8,
       "requirement": "A corpse dead no longer than the ritualist's Blood Potency in days",
-      "effect": "The corpse returns conscious but decaying and sleepless; the ritualist suffers an unhealable aggravated wound until the corpse rests again."
+      "effect": "The corpse returns conscious but decaying and sleepless; the ritualist suffers an unhealable aggravated wound until the corpse rests again.",
+      "presentationPt": {
+        "summary": "Prender no cadáver um espírito recém-falecido entre a vida e a morte.",
+        "requirement": "Um cadáver morto há no máximo Potência do Sangue do ritualista dias",
+        "effect": "O cadáver volta consciente, mas continua apodrecendo e não consegue dormir; o ritualista sofre um ferimento agravado que não pode curar até o cadáver voltar a descansar."
+      }
     },
     {
       "id": "cruac-mantle-crone",
       "kind": "cruac-rite",
       "name": "Mantle of the Crone",
-      "translatedName": "Mantle of the Crone",
+      "translatedName": "Manto da Anciã",
       "rating": 5,
       "experienceCost": 2,
       "summary": "Assume the Crone's terrible mantle, revealing truths and transforming matter through touch.",
@@ -10458,13 +10534,21 @@
       "targetSuccesses": 10,
       "requirement": "Dance as part of casting",
       "duration": "Until sunrise",
-      "effect": "Witnesses gain Primeval Truths, the ritualist's touch deals aggravated damage, and Willpower can animate an object as a lizard-like animal for the night."
+      "effect": "Witnesses gain Primeval Truths, the ritualist's touch deals aggravated damage, and Willpower can animate an object as a lizard-like animal for the night.",
+      "cost": "1 Willpower to rise after the dance",
+      "presentationPt": {
+        "summary": "Assumir o terrível manto da Anciã, revelando verdades e transformando matéria pelo toque.",
+        "requirement": "Dançar durante a conjuração",
+        "duration": "Até o nascer do sol",
+        "effect": "Testemunhas recebem Verdades Primevas, o toque do ritualista causa dano agravado e Força de Vontade pode animar um objeto como um animal semelhante a um lagarto durante a noite.",
+        "cost": "1 Força de Vontade para levantar após a dança"
+      }
     },
     {
       "id": "cruac-mantle-predator-goddess",
       "kind": "cruac-rite",
       "name": "Mantle of the Predator Goddess",
-      "translatedName": "Mantle of the Predator Goddess",
+      "translatedName": "Manto da Deusa Predadora",
       "rating": 4,
       "experienceCost": 2,
       "summary": "Dance to exhaustion and become a divine predator for the night.",
@@ -10473,7 +10557,15 @@
       "targetSuccesses": 8,
       "requirement": "Dance and activate Blush of Life as part of casting",
       "duration": "Until sunrise",
-      "effect": "Add Crúac to feeding rolls and as temporary Herd dots; anyone fed from gains the Raptured Condition."
+      "effect": "Add Crúac to feeding rolls and as temporary Herd dots; anyone fed from gains the Raptured Condition.",
+      "cost": "1 Willpower to rise after the dance",
+      "presentationPt": {
+        "summary": "Dançar até a exaustão e tornar-se um predador divino durante a noite.",
+        "requirement": "Dançar e ativar Rubor da Vida durante a conjuração",
+        "duration": "Até o nascer do sol",
+        "effect": "Some Crúac aos testes para se alimentar e como pontos temporários de Rebanho; qualquer um de quem o ritualista se alimentar recebe a Condição Arrebatado.",
+        "cost": "1 Força de Vontade para levantar após a dança"
+      }
     },
     {
       "id": "sethite-cruac-maat-kauket",
