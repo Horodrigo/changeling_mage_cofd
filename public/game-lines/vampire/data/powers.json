@@ -923,7 +923,7 @@
             "dicePool": "Vigor + Ocultismo + Evolução Triádica",
             "action": "Estendida",
             "effect": "Mantém comunicação telepática com um alvo no campo de visão que tenha a Condição Bestial, enviando e recebendo pensamentos como imagens.",
-            "contestedBy": "Compostura + Potência do Sangue"
+            "contestedBy": "Compostura + Potência de Sangue"
           }
         },
         {
@@ -982,7 +982,7 @@
             "cost": "1 Força de Vontade",
             "dicePool": "Vigor + Ocultismo + Evolução Triádica",
             "action": "Estendida",
-            "effect": "Recebe os benefícios do frenesi sem entrar em frenesi: soma Potência do Sangue a testes e resistências de Força, Destreza e Vigor; ignora penalidades de ferimentos; e agarra e morde com uma única ação instantânea, causando os sucessos do agarrão como dano letal e recebendo imediatamente um Vitae.",
+            "effect": "Recebe os benefícios do frenesi sem entrar em frenesi: soma Potência de Sangue a testes e resistências de Força, Destreza e Vigor; ignora penalidades de ferimentos; e agarra e morde com uma única ação instantânea, causando os sucessos do agarrão como dano letal e recebendo imediatamente um Vitae.",
             "duration": "Cinco cenas ou uma hora, o que terminar primeiro"
           }
         },
@@ -1003,7 +1003,7 @@
             "dicePool": "Vigor + Ocultismo + Evolução Triádica",
             "action": "Estendida",
             "effect": "Rastreia pelo cheiro um alvo escolhido, independentemente de sua condição ou de ocultação sobrenatural, sem um Confronto de Vontades. O alvo deve ter estado na área nas últimas cinco noites.",
-            "contestedBy": "Compostura + Potência do Sangue"
+            "contestedBy": "Compostura + Potência de Sangue"
           }
         }
       ],
@@ -1571,7 +1571,7 @@
             "dicePool": "Nenhuma",
             "action": "Nenhuma (persistente) ou reflexiva (ativa)",
             "duration": "Permanente (persistente) ou um turno (ativo)",
-            "effect": "Soma um dado a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência do Sangue. Cada Vitae gasto soma um como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido. Uma falha dramática não pode ser substituída, a menos que outro efeito ativo primeiro a reduza a uma falha normal."
+            "effect": "Soma um dado a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma um como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido. Uma falha dramática não pode ser substituída, a menos que outro efeito ativo primeiro a reduza a uma falha normal."
           }
         },
         {
@@ -1590,7 +1590,7 @@
             "dicePool": "Nenhuma",
             "action": "Nenhuma (persistente) ou reflexiva (ativa)",
             "duration": "Permanente (persistente) ou um turno (ativo)",
-            "effect": "Soma dois dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência do Sangue. Cada Vitae gasto soma dois como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
+            "effect": "Soma dois dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma dois como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
           }
         },
         {
@@ -1609,7 +1609,7 @@
             "dicePool": "Nenhuma",
             "action": "Nenhuma (persistente) ou reflexiva (ativa)",
             "duration": "Permanente (persistente) ou um turno (ativo)",
-            "effect": "Soma três dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência do Sangue. Cada Vitae gasto soma três como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
+            "effect": "Soma três dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma três como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
           }
         },
         {
@@ -1628,7 +1628,7 @@
             "dicePool": "Nenhuma",
             "action": "Nenhuma (persistente) ou reflexiva (ativa)",
             "duration": "Permanente (persistente) ou um turno (ativo)",
-            "effect": "Soma quatro dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência do Sangue. Cada Vitae gasto soma quatro como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
+            "effect": "Soma quatro dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma quatro como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
           }
         },
         {
@@ -1647,7 +1647,7 @@
             "dicePool": "Nenhuma",
             "action": "Nenhuma (persistente) ou reflexiva (ativa)",
             "duration": "Permanente (persistente) ou um turno (ativo)",
-            "effect": "Soma cinco dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência do Sangue. Cada Vitae gasto soma cinco como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
+            "effect": "Soma cinco dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma cinco como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
           }
         }
       ],
@@ -2571,7 +2571,7 @@
             "requirement": "Marcar os limites, entradas, saídas e pontos de referência da área com Vitae e dormir ali por um dia inteiro",
             "dicePool": "Nenhuma",
             "action": "Instantânea",
-            "duration": "Uma semana por Potência do Sangue",
+            "duration": "Uma semana por Potência de Sangue",
             "effect": "Usa Toque da Sombra, Manto da Noite e O Estranho Familiar a qualquer distância dentro do Refúgio e afeta vários alvos com uma única ativação; os custos adicionais de Vitae associados são reduzidos conforme descrito pelo poder."
           }
         }
@@ -8166,7 +8166,7 @@
         "summary": "Obrigue uma vítima previamente Mesmerizada a viajar até o vampiro.",
         "cost": "1 Vitae",
         "requirement": "Ter Mesmerizado a vítima no último ano",
-        "dicePool": "Manipulação + Persuasão + Dominação contra Compostura + Potência do Sangue",
+        "dicePool": "Manipulação + Persuasão + Dominação contra Compostura + Potência de Sangue",
         "action": "Disputada; a resistência é reflexiva",
         "duration": "Uma noite",
         "rollResults": {
@@ -8247,7 +8247,7 @@
         "summary": "Obrigue uma vítima anteriormente afetada por Fascínio a viajar até o vampiro.",
         "cost": "1 Vitae",
         "requirement": "Ter usado Fascínio na vítima no último ano",
-        "dicePool": "Manipulação + Persuasão + Majestade contra Compostura + Potência do Sangue",
+        "dicePool": "Manipulação + Persuasão + Majestade contra Compostura + Potência de Sangue",
         "action": "Disputada; a resistência é reflexiva",
         "duration": "Uma noite",
         "rollResults": {
@@ -8299,7 +8299,7 @@
         "prerequisites": "Pesadelo •••••, Resiliência ••",
         "summary": "Faça uma vítima Membro adormecida sofrer os mesmos ferimentos de luz solar que o vampiro.",
         "cost": "1 Vitae",
-        "dicePool": "Manipulação + Empatia + Pesadelo contra Compostura + Potência do Sangue",
+        "dicePool": "Manipulação + Empatia + Pesadelo contra Compostura + Potência de Sangue",
         "action": "Disputada; a resistência é reflexiva",
         "duration": "Noites iguais aos sucessos",
         "effect": "Após ser usada com sucesso, esta Devoção permanece ativa por um número de noites igual aos sucessos obtidos. Enquanto estiver ativa, a vítima, escolhida pelo toque, sofre cada ferimento de luz solar que o vampiro receber, desde que esteja dormindo no momento do dano. O vampiro ainda sofre o dano. Esse dano pode despertar a vítima. Uma vítima despertada dessa maneira acorda com a Condição Assustado (veja p. 303)."
@@ -8353,7 +8353,7 @@
         "summary": "Prive temporariamente uma vítima tocada de um sentido ou de uma habilidade conhecida de Auspícios.",
         "cost": "1 Vitae",
         "requirement": "Tocar a vítima",
-        "dicePool": "Inteligência + Medicina + Auspícios contra Perseverança + Potência do Sangue",
+        "dicePool": "Inteligência + Medicina + Auspícios contra Perseverança + Potência de Sangue",
         "action": "Instantânea",
         "duration": "Cena",
         "effect": "Para ativar esta Devoção, o vampiro deve tocar a vítima (veja Tocar um Oponente na p. 177). Se tiver sucesso, priva a vítima do sentido escolhido pelo restante da cena. Esta Devoção pode privar a vítima de uma de suas habilidades de Auspícios, se conhecida."
@@ -8400,7 +8400,7 @@
         "prerequisites": "Majestade ••, Pesadelo ••",
         "summary": "Plante medo e desejo entrelaçados nos sonhos de uma vítima.",
         "cost": "1 Vitae",
-        "dicePool": "Manipulação + Empatia + Majestade contra Compostura + Potência do Sangue",
+        "dicePool": "Manipulação + Empatia + Majestade contra Compostura + Potência de Sangue",
         "action": "Disputada; a resistência é reflexiva",
         "effect": "Se tiver sucesso, esta Devoção faz efeito na próxima vez que a vítima dormir. Seus sonhos assustadores e excitantes causam as Condições Assombrado e Enamorado (veja p. 305 e p. 306). O vampiro escolhe o objeto de ambas as Condições. A vítima resolve cada uma individualmente. Porém, as duas Condições concedem apenas um Ato, e somente depois que ambas forem resolvidas."
       }
@@ -10392,7 +10392,7 @@
       "effect": "After the third dose, the victim suffers a full Vinculum to the chosen subject rather than to the ritualist.",
       "presentationPt": {
         "summary": "Criar uma poção de três doses que impõe um Vinculum completo com um sujeito escolhido.",
-        "contestedBy": "Compostura + Potência do Sangue",
+        "contestedBy": "Compostura + Potência de Sangue",
         "requirement": "Dar à vítima uma gota em cada uma de três noites separadas",
         "effect": "Após a terceira dose, a vítima sofre um Vinculum completo com o sujeito escolhido em vez de com o ritualista."
       }
@@ -10477,7 +10477,7 @@
       "effect": "When triggered, the curse fills the living victim's Health track with lethal damage at one point per turn.",
       "presentationPt": {
         "summary": "Lançar sobre uma vítima viva uma maldição letal que pode ser acionada em até um mês lunar.",
-        "contestedBy": "Vigor + Potência do Sangue",
+        "contestedBy": "Vigor + Potência de Sangue",
         "requirement": "Uma mecha de cabelo ou outro vínculo simpático",
         "duration": "Até um mês lunar",
         "effect": "Quando acionada, a maldição preenche a Vitalidade da vítima viva com dano letal, à razão de um ponto por turno."
@@ -10499,7 +10499,7 @@
       "presentationPt": {
         "summary": "Reunir partes de corpos e Vitae para dar à luz violentamente um deus morto-vivo que devora carne.",
         "requirement": "Um grupo de ritualistas, partes de corpos coletadas e Vitae investida",
-        "effect": "A Vitae investida compra Atributos e Disciplinas, define Tamanho em um por cinco Vitae e Potência do Sangue em um por três Vitae; os celebrantes contribuem com Perícias e sofrem o nascimento violento da criatura."
+        "effect": "A Vitae investida compra Atributos e Disciplinas, define Tamanho em um por cinco Vitae e Potência de Sangue em um por três Vitae; os celebrantes contribuem com Perícias e sofrem o nascimento violento da criatura."
       }
     },
     {
@@ -10517,7 +10517,7 @@
       "effect": "The corpse returns conscious but decaying and sleepless; the ritualist suffers an unhealable aggravated wound until the corpse rests again.",
       "presentationPt": {
         "summary": "Prender no cadáver um espírito recém-falecido entre a vida e a morte.",
-        "requirement": "Um cadáver morto há no máximo Potência do Sangue do ritualista dias",
+        "requirement": "Um cadáver morto há no máximo Potência de Sangue do ritualista dias",
         "effect": "O cadáver volta consciente, mas continua apodrecendo e não consegue dormir; o ritualista sofre um ferimento agravado que não pode curar até o cadáver voltar a descansar."
       }
     },
@@ -11626,7 +11626,7 @@
       "presentationPt": {
         "summary": "Abençoar um ramo que aterroriza uma vítima com aparições angelicais.",
         "sacrament": "Um ramo de azevinho",
-        "contestedBy": "Perseverança + Potência do Sangue",
+        "contestedBy": "Perseverança + Potência de Sangue",
         "duration": "O ramo permanece abençoado por um mês",
         "effect": "Quando o ramo é quebrado, o alvo recebe Assustado e os mortais espectadores recebem Assombrado; gastar Força de Vontade pode tornar a aparição visível apenas para a vítima."
       }
@@ -11712,7 +11712,7 @@
         "sacrament": "Um bastão",
         "cost": "1 Força de Vontade para ativar",
         "duration": "Cena",
-        "effect": "A serpente obedece a quem a empunha ou às instruções definidas durante a bênção; seu veneno destrói Vitae ou causa dano letal, com Toxicidade igual à Potência do Sangue."
+        "effect": "A serpente obedece a quem a empunha ou às instruções definidas durante a bênção; seu veneno destrói Vitae ou causa dano letal, com Toxicidade igual à Potência de Sangue."
       }
     },
     {

@@ -1921,7 +1921,7 @@
   "h-vtr-fire-revolution:birth-control": {
     "name": "Controle de Natalidade",
     "description": "Regula a criação de novos vampiros dentro da jurisdição do Movimento.",
-    "prerequisites": "Status no Movimento Carthiano •••; Potência do Sangue ••"
+    "prerequisites": "Status no Movimento Carthiano •••; Potência de Sangue ••"
   },
   "h-vtr-fire-revolution:enforce-elysium": {
     "name": "Impor a Paz de Elysium",
@@ -1954,7 +1954,7 @@
   "h-vtr-fire-revolution:legal-guardian": {
     "name": "Guardião Legal",
     "description": "Coloca outro vampiro sob a proteção legal do personagem.",
-    "prerequisites": "Potência do Sangue ••"
+    "prerequisites": "Potência de Sangue ••"
   },
   "h-vtr-fire-revolution:parlay": {
     "name": "Negociação",

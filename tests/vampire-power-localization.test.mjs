@@ -73,6 +73,7 @@ test("Vampire official and Homebrew power presentations cover existing fields an
     assert.match(level.effect, /half a square mile.*another half mile per Potency/);
     assert.match(level.presentationPt.effect, /meia milha quadrada.*outra meia milha por Potência/);
   }
+  assert.equal(JSON.stringify(powers).includes("Potência do Sangue"), false, "Approved Blood Potency terminology remains uniform");
   const zirnitra = coils.find(item => item.id === "coil-zirnitra");
   assert.match(zirnitra.levels[1].effect, /Drawbacks do not always occur/);
   assert.match(zirnitra.levels[2].effect, /Supernatural Merits cost one Experience less, to a minimum of one; already-owned Supernatural Merits refund one Experience each/);
