@@ -944,7 +944,7 @@
         {
           "rating": 1,
           "name": "Digital Whispers",
-          "translatedName": "Digital Whispers",
+          "translatedName": "Sussurros Digitais",
           "summary": "Digital Whispers, the 1-dot expression of Interface.",
           "cost": "None (or 1 Vitae, optional)",
           "requirement": "Touch the device.",
@@ -957,12 +957,26 @@
             "failure": "The device rejects the Beast.",
             "dramaticFailure": "Interface cannot affect the device for the night, and mundane use suffers its equipment bonus as a penalty."
           },
-          "manualOnly": true
+          "manualOnly": true,
+          "presentationPt": {
+            "summary": "Sussurros Digitais, a manifestação de 1 ponto de Interface.",
+            "cost": "Nenhum (ou 1 Vitae, opcional)",
+            "requirement": "Tocar o dispositivo.",
+            "dicePool": "Manipulação + Computação + Interface",
+            "action": "Instantânea",
+            "duration": "Cena; uma rotina dura até uma noite",
+            "rollResults": {
+              "success": "Comandar verbalmente um dispositivo para executar qualquer função de que seja capaz, contornando travas e senhas. Um grupo próximo de dispositivos de um mesmo tipo geral pode ser comandado em conjunto. O uso direto soma os pontos em Interface ao bônus do equipamento. Gastar uma Vitae e espalhá-la sobre o dispositivo cria uma rotina simples acionada por um gatilho durante a noite.",
+              "exceptionalSuccess": "O dispositivo segue os comandos exatamente e pode interpretá-los de forma criativa.",
+              "failure": "O dispositivo rejeita a Fera.",
+              "dramaticFailure": "Interface não pode afetar o dispositivo durante a noite, e seu uso mundano sofre o bônus de equipamento como penalidade."
+            }
+          }
         },
         {
           "rating": 2,
           "name": "Un-Brick",
-          "translatedName": "Un-Brick",
+          "translatedName": "Reativar",
           "summary": "Un-Brick, the 2-dot expression of Interface.",
           "cost": "1 Vitae",
           "requirement": "Smear the device with the Vitae spent.",
@@ -970,12 +984,21 @@
           "action": "Instant",
           "duration": "Blood Potency × object Durability nights",
           "effect": "A broken device returns to full function, including its stored data, for the duration. Spending another Vitae before expiration resets the duration. It gains half Blood Potency, rounded up, as additional Structure, and the vampire may use Digital Whispers on it at any distance. Anyone else using it suffers its equipment bonus as a penalty, and a failed action becomes a dramatic failure.",
-          "manualOnly": true
+          "manualOnly": true,
+          "presentationPt": {
+            "summary": "Reativar, a manifestação de 2 pontos de Interface.",
+            "cost": "1 Vitae",
+            "requirement": "Espalhar sobre o dispositivo a Vitae gasta.",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "duration": "Potência de Sangue × Durabilidade do objeto em noites",
+            "effect": "Um dispositivo quebrado volta a funcionar plenamente, incluindo seus dados armazenados, durante a duração. Gastar outra Vitae antes de o efeito terminar reinicia a duração. Ele recebe metade da Potência de Sangue, arredondada para cima, como Estrutura adicional, e o vampiro pode usar Sussurros Digitais nele a qualquer distância. Qualquer outra pessoa que o use sofre seu bônus de equipamento como penalidade, e uma ação malsucedida torna-se uma falha dramática."
+          }
         },
         {
           "rating": 3,
           "name": "Access Denied",
-          "translatedName": "Access Denied",
+          "translatedName": "Acesso Negado",
           "summary": "Access Denied, the 3-dot expression of Interface.",
           "cost": "2 Vitae",
           "requirement": "Mark the victim with one of the Vitae spent.",
@@ -988,12 +1011,26 @@
             "failure": "The link is not established.",
             "dramaticFailure": "The Beast uploads incriminating information about the vampire to one of the victim's devices."
           },
-          "manualOnly": true
+          "manualOnly": true,
+          "presentationPt": {
+            "summary": "Acesso Negado, a manifestação de 3 pontos de Interface.",
+            "cost": "2 Vitae",
+            "requirement": "Marcar a vítima com uma das Vitae gastas.",
+            "dicePool": "Presença + Computação + Interface − Vigor",
+            "action": "Instantânea",
+            "duration": "Noite ou até o sangue ser removido",
+            "rollResults": {
+              "success": "A vítima sofre os sucessos como penalidade ao usar qualquer tecnologia digital ou eletrônica, e falhas tornam-se falhas dramáticas. O vampiro também pode definir uma rotina que infecta dispositivos tocados pela vítima; ela dura uma noite por sucesso.",
+              "exceptionalSuccess": "A vítima também perde um ponto de Força de Vontade sempre que falha ao usar um dispositivo.",
+              "failure": "O vínculo não é estabelecido.",
+              "dramaticFailure": "A Fera envia informações incriminadoras sobre o vampiro para um dos dispositivos da vítima."
+            }
+          }
         },
         {
           "rating": 4,
           "name": "Going Viral",
-          "translatedName": "Going Viral",
+          "translatedName": "Viralizar",
           "summary": "Going Viral, the 4-dot expression of Interface.",
           "cost": "2 Vitae",
           "requirement": "Spill the Vitae on a breaker or electrical source.",
@@ -1006,12 +1043,26 @@
             "failure": "Nearby devices flicker or buzz, but nothing else happens.",
             "dramaticFailure": "The vampire gains Confused."
           },
-          "manualOnly": true
+          "manualOnly": true,
+          "presentationPt": {
+            "summary": "Viralizar, a manifestação de 4 pontos de Interface.",
+            "cost": "2 Vitae",
+            "requirement": "Derramar a Vitae sobre um disjuntor ou uma fonte elétrica.",
+            "dicePool": "Presença + Intimidação + Interface",
+            "action": "Instantânea",
+            "duration": "Cena",
+            "rollResults": {
+              "success": "Impor a Complicação Sobrecarga Elétrica em um raio de Interface × Potência de Sangue metros. Dispositivos móveis atacam vítimas próximas, dispositivos fixos deixam de funcionar e dispositivos de armazenamento apagam seus dados e superaquecem. O vampiro e os dispositivos que carrega nunca são alvos.",
+              "exceptionalSuccess": "O vampiro recebe Saciado.",
+              "failure": "Dispositivos próximos piscam ou zumbem, mas nada mais acontece.",
+              "dramaticFailure": "O vampiro recebe Confuso."
+            }
+          }
         },
         {
           "rating": 5,
           "name": "Domain Admin",
-          "translatedName": "Domain Admin",
+          "translatedName": "Administrador do Domínio",
           "summary": "Domain Admin, the 5-dot expression of Interface.",
           "cost": "3–9 Vitae and 1 Willpower",
           "requirement": "Mark three, six, or nine strategic digital hubs with Vitae, depending on the domain's size.",
@@ -1019,9 +1070,21 @@
           "action": "Instant",
           "duration": "One week per Blood Potency dot; longer while the vampire remains",
           "effect": "Within the marked domain, the vampire senses every digital device and may access it as though holding it; other Interface powers work remotely and last as long as Domain Admin. If the area has Wi-Fi or another network, spending one Willpower teleports her through it to any device in the domain over one turn. The effect persists while she remains and the marks survive, but ends after its normal duration once she leaves.",
-          "manualOnly": true
+          "manualOnly": true,
+          "presentationPt": {
+            "summary": "Administrador do Domínio, a manifestação de 5 pontos de Interface.",
+            "cost": "3–9 Vitae e 1 Força de Vontade",
+            "requirement": "Marcar três, seis ou nove centros digitais estratégicos com Vitae, conforme o tamanho do domínio.",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "duration": "Uma semana por ponto de Potência de Sangue; mais tempo enquanto o vampiro permanece",
+            "effect": "Dentro do domínio marcado, o vampiro sente cada dispositivo digital e pode acessá-lo como se o segurasse; outros poderes de Interface funcionam à distância e duram tanto quanto Administrador do Domínio. Se a área tiver Wi-Fi ou outra rede, gastar um ponto de Força de Vontade permite que ele se teleporte por ela até qualquer dispositivo do domínio ao longo de um turno. O efeito persiste enquanto ele permanece e as marcas sobrevivem, mas termina após sua duração normal quando ele sai."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "A Disciplina dos Conectados para perceber, acessar, proteger e controlar sistemas digitais."
+      }
     },
     {
       "id": "lithopedia",
@@ -1653,7 +1716,15 @@
           "dicePool": "None",
           "action": "Instant",
           "duration": "Scene",
-          "effect": "Ignore Social penalties from appearance or behavior, add Majesty to Presence rolls in normal interaction, and penalize others' attempts to notice anything else."
+          "effect": "Ignore Social penalties from appearance or behavior, add Majesty to Presence rolls in normal interaction, and penalize others' attempts to notice anything else.",
+          "presentationPt": {
+            "summary": "Tornar-se o centro incontestável das atenções.",
+            "cost": "Nenhum",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "duration": "Cena",
+            "effect": "Ignorar penalidades Sociais por aparência ou comportamento, somar Majestade a testes de Presença em interações normais e penalizar as tentativas de outras pessoas de perceber qualquer outra coisa."
+          }
         },
         {
           "rating": 2,
@@ -1670,6 +1741,20 @@
             "failure": "The victim is not Charmed.",
             "success": "The victim gains Charmed.",
             "exceptionalSuccess": "Charmed lasts nights rather than hours."
+          },
+          "presentationPt": {
+            "summary": "Criar confiança íntima em alguém já afetado por Fascínio.",
+            "cost": "Nenhum",
+            "requirement": "Usar Fascínio na vítima",
+            "dicePool": "Presença + Empatia + Majestade contra Perseverança + Potência de Sangue",
+            "action": "Disputada; a resistência é reflexiva",
+            "effect": "Impor Encantado(Membro).",
+            "rollResults": {
+              "dramaticFailure": "O vampiro recebe Enamorado em relação à vítima.",
+              "failure": "A vítima não recebe Encantado(Membro).",
+              "success": "A vítima recebe Encantado(Membro).",
+              "exceptionalSuccess": "Encantado(Membro) dura noites em vez de horas."
+            }
           }
         },
         {
@@ -1682,7 +1767,16 @@
           "dicePool": "None",
           "action": "Reflexive",
           "duration": "Scene",
-          "effect": "Shift affected victims into intense emotional states and leverage Charmed/Enthralled loyalty for requests. Charmed victims stop before lethal harm or breaking points; Enthralled victims tolerate far more."
+          "effect": "Shift affected victims into intense emotional states and leverage Charmed/Enthralled loyalty for requests. Charmed victims stop before lethal harm or breaking points; Enthralled victims tolerate far more.",
+          "presentationPt": {
+            "summary": "Manipular as emoções e a lealdade obsessiva de vítimas com Encantado(Membro) ou Cativado.",
+            "cost": "1 Vitae por mudança emocional",
+            "requirement": "A vítima tem Encantado(Membro) ou Cativado",
+            "dicePool": "Nenhuma",
+            "action": "Reflexiva",
+            "duration": "Cena",
+            "effect": "Levar as vítimas afetadas a estados emocionais intensos e usar a lealdade de Encantado(Membro) ou Cativado para fazer pedidos. Vítimas com Encantado(Membro) param antes de sofrer dano letal ou Pontos de Ruptura; vítimas com Cativado toleram muito mais."
+          }
         },
         {
           "rating": 4,
@@ -1699,6 +1793,20 @@
             "failure": "The victim remains Charmed but not Enthralled.",
             "success": "The victim gains Enthralled.",
             "exceptionalSuccess": "Enthralled lasts one week per Blood Potency."
+          },
+          "presentationPt": {
+            "summary": "Transformar afeição em devoção fanática.",
+            "cost": "2 Vitae",
+            "requirement": "A vítima tem Encantado(Membro)",
+            "dicePool": "Manipulação + Empatia + Majestade contra Perseverança + Potência de Sangue",
+            "action": "Disputada; a resistência é reflexiva",
+            "effect": "Impor Cativado.",
+            "rollResults": {
+              "dramaticFailure": "A vítima resolve Encantado(Membro).",
+              "failure": "A vítima permanece com Encantado(Membro), mas não recebe Cativado.",
+              "success": "A vítima recebe Cativado.",
+              "exceptionalSuccess": "Cativado dura uma semana por ponto de Potência de Sangue."
+            }
           }
         },
         {
@@ -1710,9 +1818,20 @@
           "dicePool": "None",
           "action": "Reflexive",
           "duration": "Scene",
-          "effect": "Enhance Awe. Affected people must overcome Resolve + Blood Potency minus Majesty to harm or embarrass the vampire; Charmed victims may become Enthralled for the scene."
+          "effect": "Enhance Awe. Affected people must overcome Resolve + Blood Potency minus Majesty to harm or embarrass the vampire; Charmed victims may become Enthralled for the scene.",
+          "presentationPt": {
+            "summary": "Elevar Fascínio a uma quase adoração durante uma cena.",
+            "cost": "2 Vitae e 1 Força de Vontade",
+            "dicePool": "Nenhuma",
+            "action": "Reflexiva",
+            "duration": "Cena",
+            "effect": "Aprimorar Fascínio. As pessoas afetadas devem superar Perseverança + Potência de Sangue menos Majestade para ferir ou constranger o vampiro; vítimas com Encantado(Membro) podem receber Cativado durante a cena."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "Transforma presença sobrenatural em fascínio, confiança, ciúme, lealdade e adoração."
+      }
     },
     {
       "id": "nightmare",
