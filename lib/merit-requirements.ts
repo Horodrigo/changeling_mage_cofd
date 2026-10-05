@@ -69,13 +69,25 @@ export type TextRequirementEvaluator = (clause: string) => boolean | undefined;
 export function textRequirementMet(text:string,context:RequirementContext,meritCatalog:readonly DefinitionIdentity[],evaluateClause?:TextRequirementEvaluator):boolean {
   const value=text.trim().replace(/^[,(\s]+|[,)\s]+$/g,"");
   if(!value||value==="-"||/^none$/i.test(value)) return true;
+  const maximum = value.match(/^(.+?)\s+(•+|\d+)\s+or\s+(?:less|lower)$/i);
+  if (maximum && (aliases[canonicalTrait(maximum[1])] || Object.keys(context.traits ?? {}).some(name => canonicalTrait(name) === canonicalTrait(maximum[1]))))
+    return requirementTrait(maximum[1], context) <= (maximum[2].startsWith("•") ? maximum[2].length : Number(maximum[2]));
+  // A printed name may itself contain a comma (Library, Advanced).
+  const exact = meritCatalog.filter(item => !item.sourceId.startsWith("homebrew:") && canonicalTrait(item.name) === canonicalTrait(value.replace(/\s*(?:•+|\d+\+?)\s*$/, "")));
+  if (exact.length) {
+    const dots = value.match(/(•+|\d+)\s*$/)?.[1];
+    return exact.length === 1 && requirementMet({ merit: exact[0].id, minimum: dots ? dots.startsWith("•") ? dots.length : Number(dots) : 1 }, context);
+  }
+  const specialized = /[,;]|\s+(?:and|or)\s+/i.test(value) ? undefined : evaluateClause?.(value);
+  if (specialized !== undefined) return specialized;
   const and=value.split(/\s*[,;]\s*|\s+and\s+/i);
   if(and.length>1) return and.every(part=>textRequirementMet(part,context,meritCatalog,evaluateClause));
-  if(/^(?:Cannot have|No)\s+/i.test(value)) return !textRequirementMet(value.replace(/^(?:Cannot have|No)\s+/i,""),context,meritCatalog,evaluateClause);
+  if(/^(?:Cannot (?:have|possess)|No(?: dots in)?)\s+/i.test(value)) return !textRequirementMet(value.replace(/^(?:Cannot (?:have|possess)|No(?: dots in)?)\s+/i,""),context,meritCatalog,evaluateClause);
   const or=value.split(/\s+or\s+/i);
   if(or.length>1){
     const trailing=value.match(/(•+|\d+\+?)\s*$/)?.[1];
-    return or.some(part=>textRequirementMet(trailing&&!/[•\d]/.test(part)?`${part} ${trailing}`:part,context,meritCatalog,evaluateClause));
+    const subject = or[0].replace(/\s*(?:•+|\d+\+?).*$/, "").trim();
+    return or.some(part=>textRequirementMet(/^(?:•+|\d+\+?)$/.test(part) ? `${subject} ${part}` : trailing&&!/[•\d]/.test(part)?`${part} ${trailing}`:part,context,meritCatalog,evaluateClause));
   }
   const rating=value.match(/•+|\d+/), minimum=rating?(rating[0].startsWith("•")?rating[0].length:Number(rating[0])):1;
   const name=value.replace(/\s*(?:•+|\d+\+?).*$/,"").trim();

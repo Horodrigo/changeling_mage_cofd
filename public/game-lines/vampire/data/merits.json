@@ -17,7 +17,6 @@
     "description": "Creates increasingly potent tools and weapons from solidified Vitae using a chosen Crafts Specialty.",
     "descriptionEn": "Creates increasingly potent tools and weapons from solidified Vitae using a chosen Crafts Specialty.",
     "prerequisites": "Acteius; Crafts •••; Crafts Specialty",
-    "descriptivePrerequisites": true,
     "page": 23,
     "homebrew": true
   },
@@ -36,9 +35,16 @@
     "description": "Grants Advanced Action on Perception rolls made in total darkness.",
     "descriptionEn": "Grants Advanced Action on Perception rolls made in total darkness.",
     "prerequisites": "Keeper of the Dark; Acute Senses",
-    "descriptivePrerequisites": true,
     "page": 46,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-acute-senses",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-better-feared:labyrinth",
@@ -59,9 +65,16 @@
     "description": "Creates a subterranean maze that confuses intruders and grants its keeper flexible movement and combat bonuses.",
     "descriptionEn": "Creates a subterranean maze that confuses intruders and grants its keeper flexible movement and combat bonuses.",
     "prerequisites": "Keeper of the Dark; Safe Place •",
-    "descriptivePrerequisites": true,
     "page": 46,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:safe-place",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-better-feared:a-nose-for-secrets",
@@ -78,7 +91,6 @@
     "description": "Reveals when a seen subject belongs to a cult or secret society without identifying it.",
     "descriptionEn": "Reveals when a seen subject belongs to a cult or secret society without identifying it.",
     "prerequisites": "Keeper of the Dark",
-    "descriptivePrerequisites": true,
     "page": 47,
     "homebrew": true
   },
@@ -100,10 +112,17 @@
     "translatedName": "Library, Advanced",
     "description": "Adds deeply secret supernatural topics to a sufficiently large Library and grants Informed when consulted.",
     "descriptionEn": "Adds deeply secret supernatural topics to a sufficiently large Library and grants Informed when consulted.",
-    "prerequisites": "Library •••; Safe Place equal to rating",
-    "descriptivePrerequisites": true,
+    "prerequisites": "Keeper of the Dark; Library •••; Safe Place equal to rating",
     "page": 47,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:library",
+          "minimum": 3
+        }
+      ]
+    }
   },
   {
     "id": "vtr-better-feared:ritual-buster",
@@ -121,8 +140,7 @@
     "translatedName": "Ritual Buster",
     "description": "Penalizes nearby ritual magic and can turn a failed casting into a dramatic failure at the cost of Defense.",
     "descriptionEn": "Penalizes nearby ritual magic and can turn a failed casting into a dramatic failure at the cost of Defense.",
-    "prerequisites": "Keeper of the Dark; Occult •••; Rituals Specialty",
-    "descriptivePrerequisites": true,
+    "prerequisites": "Keeper of the Dark; Occult •••; Rituals Specialty in Academics or Occult",
     "page": 47,
     "homebrew": true
   },
@@ -141,10 +159,17 @@
     "translatedName": "The Sealed Door",
     "description": "Fortifies natural barriers inside a Labyrinth with Vitae and makes them resist intrusion.",
     "descriptionEn": "Fortifies natural barriers inside a Labyrinth with Vitae and makes them resist intrusion.",
-    "prerequisites": "Labyrinth •",
-    "descriptivePrerequisites": true,
+    "prerequisites": "Keeper of the Dark; Labyrinth •",
     "page": 47,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-better-feared:labyrinth",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-better-feared:bleak-annals",
@@ -297,7 +322,6 @@
     "description": "Take double Vitae from animals, corpses, and stored blood until Blood Potency reaches 3.",
     "descriptionEn": "Take double Vitae from animals, corpses, and stored blood until Blood Potency reaches 3.",
     "prerequisites": "Nosferatu; Blood Potency •• or less",
-    "descriptivePrerequisites": true,
     "page": 101,
     "homebrew": true
   },
@@ -338,7 +362,6 @@
     "description": "Dampens the Nosferatu clan curse while Blood Potency remains low enough and Potent Curse is absent.",
     "descriptionEn": "Dampens the Nosferatu clan curse while Blood Potency remains low enough and Potent Curse is absent.",
     "prerequisites": "Nosferatu; Blood Potency 5 or less; no Potent Curse",
-    "descriptivePrerequisites": true,
     "page": 102,
     "homebrew": true
   },
@@ -375,7 +398,6 @@
     "description": "Once per night, turn a failed mundane Social roll into one success by playing to a Nosferatu stereotype; it does not work on other Nosferatu.",
     "descriptionEn": "Once per night, turn a failed mundane Social roll into one success by playing to a Nosferatu stereotype; it does not work on other Nosferatu.",
     "prerequisites": "Nosferatu",
-    "descriptivePrerequisites": true,
     "page": 102,
     "homebrew": true
   },
@@ -412,7 +434,6 @@
     "description": "Spend Willpower to suppress Charmed or Swooning for a scene, but lose 10-again on mundane Socialize rolls.",
     "descriptionEn": "Spend Willpower to suppress Charmed or Swooning for a scene, but lose 10-again on mundane Socialize rolls.",
     "prerequisites": "Nosferatu; Resolve ••••",
-    "descriptivePrerequisites": true,
     "page": 103,
     "homebrew": true
   },
@@ -431,7 +452,6 @@
     "description": "More than nine meters underground, resist Lethargic once per scene instead of daysleep; repeated scenes impose a cumulative penalty.",
     "descriptionEn": "More than nine meters underground, resist Lethargic once per scene instead of daysleep; repeated scenes impose a cumulative penalty.",
     "prerequisites": "Nosferatu; Survival •",
-    "descriptivePrerequisites": true,
     "page": 103,
     "homebrew": true
   },
@@ -452,7 +472,6 @@
     "description": "Develop an affinity with ghosts: improve direct dealings, empower nearby Manifestations and Numina, and call on ghostly Allies, Retainer, or Staff.",
     "descriptionEn": "Develop an affinity with ghosts: improve direct dealings, empower nearby Manifestations and Numina, and call on ghostly Allies, Retainer, or Staff.",
     "prerequisites": "Nosferatu; Occult ••",
-    "descriptivePrerequisites": true,
     "page": 103,
     "homebrew": true
   },
@@ -472,7 +491,6 @@
     "description": "Permanently affix a mask that improves one Social Skill and can resist Kindred coercion, at the cost of a conspicuous and damageable bodily feature.",
     "descriptionEn": "Permanently affix a mask that improves one Social Skill and can resist Kindred coercion, at the cost of a conspicuous and damageable bodily feature.",
     "prerequisites": "Nosferatu; Nightmare •",
-    "descriptivePrerequisites": true,
     "page": 103,
     "homebrew": true
   },
@@ -493,7 +511,6 @@
     "description": "Imitate a local ghost story or cryptid for +2 on suitable Social actions with believers, while investigators gain +2 to trace the vampire.",
     "descriptionEn": "Imitate a local ghost story or cryptid for +2 on suitable Social actions with believers, while investigators gain +2 to trace the vampire.",
     "prerequisites": "Nosferatu",
-    "descriptivePrerequisites": true,
     "page": 104,
     "homebrew": true
   },
@@ -512,7 +529,6 @@
     "description": "Vermin seek the vampire out and react favorably; add half Blood Potency, rounded up, to Animal Ken with them, at possible Social cost.",
     "descriptionEn": "Vermin seek the vampire out and react favorably; add half Blood Potency, rounded up, to Animal Ken with them, at possible Social cost.",
     "prerequisites": "Nosferatu or Animalism •",
-    "descriptivePrerequisites": true,
     "page": 104,
     "homebrew": true
   },
@@ -531,7 +547,6 @@
     "description": "Ignore the last two wound penalties while damage is only bashing and gain +1 on physical Intimidation.",
     "descriptionEn": "Ignore the last two wound penalties while damage is only bashing and gain +1 on physical Intimidation.",
     "prerequisites": "Nosferatu or Resilience •",
-    "descriptivePrerequisites": true,
     "page": 104,
     "homebrew": true
   },
@@ -591,7 +606,6 @@
     "description": "A Notary may preside over an Invictus Oath with a changeling vassal, establishing blood sympathy and making the liege a universal Contract loophole.",
     "descriptionEn": "A Notary may preside over an Invictus Oath with a changeling vassal, establishing blood sympathy and making the liege a universal Contract loophole.",
     "prerequisites": "Occult ••; Notary",
-    "descriptivePrerequisites": true,
     "page": 109
   },
   {
@@ -682,7 +696,16 @@
     "description": "Creates an increasingly capable insect familiar that carries the Melissid's senses and commands.",
     "descriptionEn": "Creates an increasingly capable insect familiar that carries the Melissid's senses and commands.",
     "page": 47,
-    "homebrew": true
+    "homebrew": true,
+    "prerequisites": "Melissidae; Hivemind ••; Animalism •",
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-false-gods:hivemind",
+          "minimum": 2
+        }
+      ]
+    }
   },
   {
     "id": "vtr-false-gods:hivemind",
@@ -703,7 +726,8 @@
     "description": "Builds a shared mental network among the Melissid's hive members.",
     "descriptionEn": "Builds a shared mental network among the Melissid's hive members.",
     "page": 48,
-    "homebrew": true
+    "homebrew": true,
+    "prerequisites": "Melissidae"
   },
   {
     "id": "vtr-false-gods:firefighter",
@@ -719,9 +743,8 @@
     "translatedName": "Firefighter",
     "description": "Improves action and composure amid fire, smoke, and burning structures.",
     "descriptionEn": "Improves action and composure amid fire, smoke, and burning structures.",
-    "prerequisites": "Rotgrafen",
-    "descriptivePrerequisites": true,
-    "page": 53,
+    "prerequisites": "Rotgrafen; Resolve •••; Weaponry •••; Resilience •",
+    "page": 54,
     "homebrew": true
   },
   {
@@ -738,9 +761,8 @@
     "translatedName": "Rime Salt",
     "description": "Uses blood and salt to ward a vessel or threshold against hostile intrusion.",
     "descriptionEn": "Uses blood and salt to ward a vessel or threshold against hostile intrusion.",
-    "prerequisites": "Rotgrafen",
-    "descriptivePrerequisites": true,
-    "page": 53,
+    "prerequisites": "Rotgrafen; Protean ••",
+    "page": 54,
     "homebrew": true
   },
   {
@@ -757,104 +779,8 @@
     "translatedName": "Sea Legs",
     "description": "Removes ordinary penalties from unstable decks, rough water, and life aboard a vessel.",
     "descriptionEn": "Removes ordinary penalties from unstable decks, rough water, and life aboard a vessel.",
-    "prerequisites": "Rotgrafen",
-    "descriptivePrerequisites": true,
-    "page": 53,
-    "homebrew": true
-  },
-  {
-    "id": "vtr-false-gods:mass-expansion",
-    "name": "Mass Expansion",
-    "ratings": [
-      2
-    ],
-    "line": "VtR",
-    "sourceId": "h-vtr-false-gods",
-    "source": "False Gods: Ventrue",
-    "category": "Typhos",
-    "priority": 10,
-    "translatedName": "Mass Expansion",
-    "description": "A mortal patient gains Giant and becomes easier for the Typhos doctor to read and harm.",
-    "descriptionEn": "A mortal patient gains Giant and becomes easier for the Typhos doctor to read and harm.",
-    "prerequisites": "Human patient; Typhos doctor with Surgeon",
-    "descriptivePrerequisites": true,
-    "page": 59,
-    "homebrew": true
-  },
-  {
-    "id": "vtr-false-gods:musculature-limiter-removal",
-    "name": "Musculature Limiter Removal",
-    "ratings": [
-      3
-    ],
-    "line": "VtR",
-    "sourceId": "h-vtr-false-gods",
-    "source": "False Gods: Ventrue",
-    "category": "Typhos",
-    "priority": 10,
-    "translatedName": "Musculature Limiter Removal",
-    "description": "A mortal patient can injure herself to imitate Physical Intensity and yields richer blood to her doctor.",
-    "descriptionEn": "A mortal patient can injure herself to imitate Physical Intensity and yields richer blood to her doctor.",
-    "prerequisites": "Human patient; Typhos doctor with Surgeon",
-    "descriptivePrerequisites": true,
-    "page": 59,
-    "homebrew": true
-  },
-  {
-    "id": "vtr-false-gods:necrobiological-transplant",
-    "name": "Necrobiological Transplant",
-    "ratings": [
-      3
-    ],
-    "line": "VtR",
-    "sourceId": "h-vtr-false-gods",
-    "source": "False Gods: Ventrue",
-    "category": "Typhos",
-    "priority": 10,
-    "translatedName": "Necrobiological Transplant",
-    "description": "A mortal patient gains a Physical Attribute dot beyond the human limit through implanted Kindred tissue.",
-    "descriptionEn": "A mortal patient gains a Physical Attribute dot beyond the human limit through implanted Kindred tissue.",
-    "prerequisites": "Human patient; Typhos doctor with Surgeon",
-    "descriptivePrerequisites": true,
-    "page": 59,
-    "homebrew": true
-  },
-  {
-    "id": "vtr-false-gods:parasensory-awakening",
-    "name": "Parasensory Awakening",
-    "ratings": [
-      2
-    ],
-    "line": "VtR",
-    "sourceId": "h-vtr-false-gods",
-    "source": "False Gods: Ventrue",
-    "category": "Typhos",
-    "priority": 10,
-    "translatedName": "Parasensory Awakening",
-    "description": "A mortal patient gains a Beast's Hackles-like psychic sense that the Typhos doctor may ride.",
-    "descriptionEn": "A mortal patient gains a Beast's Hackles-like psychic sense that the Typhos doctor may ride.",
-    "prerequisites": "Human patient; Typhos doctor with Surgeon; Auspex • (doctor)",
-    "descriptivePrerequisites": true,
-    "page": 59,
-    "homebrew": true
-  },
-  {
-    "id": "vtr-false-gods:predatory-pheromone",
-    "name": "Predatory Pheromone",
-    "ratings": [
-      1
-    ],
-    "line": "VtR",
-    "sourceId": "h-vtr-false-gods",
-    "source": "False Gods: Ventrue",
-    "category": "Typhos",
-    "priority": 10,
-    "translatedName": "Predatory Pheromone",
-    "description": "A mortal patient gains social bonuses with humans while becoming more susceptible to Kindred allure.",
-    "descriptionEn": "A mortal patient gains social bonuses with humans while becoming more susceptible to Kindred allure.",
-    "prerequisites": "Human patient; Typhos doctor with Surgeon",
-    "descriptivePrerequisites": true,
-    "page": 59,
+    "prerequisites": "Sailing Specialty in Athletics",
+    "page": 54,
     "homebrew": true
   },
   {
@@ -872,27 +798,7 @@
     "description": "Perform Arthmoic Surgery and gain 9-again whenever a Surgery Specialty applies. Patient-side Procedure Merits are intentionally not exposed to Vampire characters.",
     "descriptionEn": "Perform Arthmoic Surgery and gain 9-again whenever a Surgery Specialty applies. Patient-side Procedure Merits are intentionally not exposed to Vampire characters.",
     "prerequisites": "Typhos Status •; Medicine ••; Medicine Specialty (Surgery)",
-    "descriptivePrerequisites": true,
     "page": 59,
-    "homebrew": true
-  },
-  {
-    "id": "vtr-false-gods:sanguine-sensory-enhancement",
-    "name": "Sanguine Sensory Enhancement",
-    "ratings": [
-      1
-    ],
-    "line": "VtR",
-    "sourceId": "h-vtr-false-gods",
-    "source": "False Gods: Ventrue",
-    "category": "Typhos",
-    "priority": 10,
-    "translatedName": "Sanguine Sensory Enhancement",
-    "description": "A mortal patient gains Acute Senses scaled by the doctor's Blood Potency.",
-    "descriptionEn": "A mortal patient gains Acute Senses scaled by the doctor's Blood Potency.",
-    "prerequisites": "Human patient; Typhos doctor with Surgeon",
-    "descriptivePrerequisites": true,
-    "page": 60,
     "homebrew": true
   },
   {
@@ -913,8 +819,7 @@
     "translatedName": "Aggressive Path",
     "description": "A tattooed fighting path that rewards direct violence and forceful command.",
     "descriptionEn": "A tattooed fighting path that rewards direct violence and forceful command.",
-    "prerequisites": "Warumono",
-    "descriptivePrerequisites": true,
+    "prerequisites": "Warumono; Vigor •",
     "page": 64,
     "homebrew": true
   },
@@ -936,8 +841,7 @@
     "translatedName": "Dutiful Path",
     "description": "A tattooed path of loyalty, obligation, and strength drawn from service.",
     "descriptionEn": "A tattooed path of loyalty, obligation, and strength drawn from service.",
-    "prerequisites": "Warumono",
-    "descriptivePrerequisites": true,
+    "prerequisites": "Warumono; Resilience •",
     "page": 65,
     "homebrew": true
   },
@@ -959,8 +863,7 @@
     "translatedName": "Harmonious Path",
     "description": "A tattooed path balancing personal discipline with the needs of the gang.",
     "descriptionEn": "A tattooed path balancing personal discipline with the needs of the gang.",
-    "prerequisites": "Warumono",
-    "descriptivePrerequisites": true,
+    "prerequisites": "Warumono; Celerity •",
     "page": 66,
     "homebrew": true
   },
@@ -982,7 +885,10 @@
     "descriptionEn": "Turns an infamous lineage or sire into leverage among Kindred who fear the association.",
     "page": 111,
     "homebrew": true,
-    "prerequisites": "No dots in Good Breeding"
+    "prerequisites": "No dots in Good Breeding",
+    "excludes": [
+      "vtr-false-gods:good-breeding"
+    ]
   },
   {
     "id": "vtr-false-gods:best-fiend",
@@ -1015,8 +921,7 @@
     "translatedName": "Born Leader",
     "description": "Improves coordinated action and the resolve of followers who accept the character's command.",
     "descriptionEn": "Improves coordinated action and the resolve of followers who accept the character's command.",
-    "prerequisites": "Presence •••",
-    "descriptivePrerequisites": true,
+    "prerequisites": "Ventrue or Dominate •; Persuasion •••",
     "page": 111,
     "homebrew": true
   },
@@ -1035,9 +940,16 @@
     "description": "Extends Cutthroat by converting a rival's public failure into concrete social advantage.",
     "descriptionEn": "Extends Cutthroat by converting a rival's public failure into concrete social advantage.",
     "prerequisites": "Cutthroat",
-    "descriptivePrerequisites": true,
     "page": 112,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-cutthroat",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-false-gods:designer-suit",
@@ -1054,7 +966,6 @@
     "description": "A conspicuous, perfectly tailored wardrobe improves first impressions in elite settings.",
     "descriptionEn": "A conspicuous, perfectly tailored wardrobe improves first impressions in elite settings.",
     "prerequisites": "Resilience ••",
-    "descriptivePrerequisites": true,
     "page": 112,
     "homebrew": true
   },
@@ -1073,7 +984,8 @@
     "description": "Keeps composure under sudden violence and denies an aggressor the satisfaction of visible fear.",
     "descriptionEn": "Keeps composure under sudden violence and denies an aggressor the satisfaction of visible fear.",
     "page": 112,
-    "homebrew": true
+    "homebrew": true,
+    "prerequisites": "Ventrue"
   },
   {
     "id": "vtr-false-gods:ephor",
@@ -1094,7 +1006,8 @@
     "description": "Represents a Ventrue counselor's recognized authority and access within a dynasty.",
     "descriptionEn": "Represents a Ventrue counselor's recognized authority and access within a dynasty.",
     "page": 112,
-    "homebrew": true
+    "homebrew": true,
+    "prerequisites": "Ventrue; Clan Status ••"
   },
   {
     "id": "vtr-false-gods:eternal-predator",
@@ -1128,8 +1041,7 @@
     "translatedName": "Favored Servant",
     "description": "Marks a chosen retainer as the vampire's trusted instrument and improves service under pressure.",
     "descriptionEn": "Marks a chosen retainer as the vampire's trusted instrument and improves service under pressure.",
-    "prerequisites": "Retainer",
-    "descriptivePrerequisites": true,
+    "prerequisites": "Ghoul; Ventrue regnant with Status ••• or higher",
     "page": 112,
     "homebrew": true
   },
@@ -1165,7 +1077,10 @@
     "description": "A prestigious lineage improves first impressions among Kindred who value ancestry.",
     "descriptionEn": "A prestigious lineage improves first impressions among Kindred who value ancestry.",
     "page": 112,
-    "homebrew": true
+    "homebrew": true,
+    "excludes": [
+      "vtr-false-gods:bad-breeding"
+    ]
   },
   {
     "id": "vtr-false-gods:inherited-resistance",
@@ -1182,7 +1097,16 @@
     "description": "A lineage-trained Ventrue resists mental and social compulsion from equal or weaker blood.",
     "descriptionEn": "A lineage-trained Ventrue resists mental and social compulsion from equal or weaker blood.",
     "page": 113,
-    "homebrew": true
+    "homebrew": true,
+    "prerequisites": "Ventrue; Indomitable",
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:indomitable",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-false-gods:invisible-hand",
@@ -1201,7 +1125,6 @@
     "description": "A three-dot style for infiltrating and quietly redirecting a mortal organization.",
     "descriptionEn": "A three-dot style for infiltrating and quietly redirecting a mortal organization.",
     "prerequisites": "Manipulation ••; Subterfuge •••; no more than Status • in the organization",
-    "descriptivePrerequisites": true,
     "page": 113,
     "homebrew": true
   },
@@ -1219,8 +1142,7 @@
     "translatedName": "Kennel Master",
     "description": "Coordinates several animal servants as a disciplined extension of the vampire's will.",
     "descriptionEn": "Coordinates several animal servants as a disciplined extension of the vampire's will.",
-    "prerequisites": "Animalism ••",
-    "descriptivePrerequisites": true,
+    "prerequisites": "Ventrue or Animalism •; Animal Ken •••",
     "page": 113,
     "homebrew": true
   },
@@ -1256,9 +1178,16 @@
     "description": "Adds half Blood Potency to Taste of Blood rolls.",
     "descriptionEn": "Adds half Blood Potency to Taste of Blood rolls.",
     "prerequisites": "Distinguished Palate",
-    "descriptivePrerequisites": true,
     "page": 113,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-distinguished-palate",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-false-gods:money-talks",
@@ -1275,9 +1204,16 @@
     "description": "Once per chapter, substitutes Resources for Kindred Status when wealth is displayed to the target.",
     "descriptionEn": "Once per chapter, substitutes Resources for Kindred Status when wealth is displayed to the target.",
     "prerequisites": "Kindred; Resources •••",
-    "descriptivePrerequisites": true,
     "page": 113,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:resources",
+          "minimum": 3
+        }
+      ]
+    }
   },
   {
     "id": "vtr-false-gods:old-money",
@@ -1294,9 +1230,16 @@
     "description": "Improves social influence with wealthy Kindred and enhances relevant Status.",
     "descriptionEn": "Improves social influence with wealthy Kindred and enhances relevant Status.",
     "prerequisites": "Money Talks",
-    "descriptivePrerequisites": true,
     "page": 114,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-false-gods:money-talks",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-false-gods:pain-is-power",
@@ -1313,7 +1256,6 @@
     "description": "Converts wound penalties into bonuses while using Mesmerize.",
     "descriptionEn": "Converts wound penalties into bonuses while using Mesmerize.",
     "prerequisites": "Dominate •",
-    "descriptivePrerequisites": true,
     "page": 114,
     "homebrew": true
   },
@@ -1336,7 +1278,6 @@
     "description": "A five-dot oratory style that reinforces Status, contests, intimidation, and forced Doors.",
     "descriptionEn": "A five-dot oratory style that reinforces Status, contests, intimidation, and forced Doors.",
     "prerequisites": "Presence •••; Expression ••; Intimidation ••; Dominate •",
-    "descriptivePrerequisites": true,
     "page": 114,
     "homebrew": true
   },
@@ -1355,7 +1296,8 @@
     "description": "Improves detachment rolls caused by pursuing Aspirations at a permanent cost to Empathy.",
     "descriptionEn": "Improves detachment rolls caused by pursuing Aspirations at a permanent cost to Empathy.",
     "page": 114,
-    "homebrew": true
+    "homebrew": true,
+    "prerequisites": "Composure •••"
   },
   {
     "id": "vtr-false-gods:saving-face",
@@ -1372,7 +1314,6 @@
     "description": "Resists supernatural attempts to force retreat or submission when peers are watching.",
     "descriptionEn": "Resists supernatural attempts to force retreat or submission when peers are watching.",
     "prerequisites": "Composure •••",
-    "descriptivePrerequisites": true,
     "page": 114,
     "homebrew": true
   },
@@ -1391,9 +1332,16 @@
     "description": "Counts a powerful Mentor as additional Resources while the patron's demands are honored.",
     "descriptionEn": "Counts a powerful Mentor as additional Resources while the patron's demands are honored.",
     "prerequisites": "Mentor •••",
-    "descriptivePrerequisites": true,
     "page": 115,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:mentor",
+          "minimum": 3
+        }
+      ]
+    }
   },
   {
     "id": "vtr-false-gods:sommelier",
@@ -1410,9 +1358,16 @@
     "description": "Identifies ideal prey in a crowd and can grant Inspired to a vampire who feeds from the recommendation.",
     "descriptionEn": "Identifies ideal prey in a crowd and can grant Inspired to a vampire who feeds from the recommendation.",
     "prerequisites": "Ventrue; Bloodhound",
-    "descriptivePrerequisites": true,
     "page": 115,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-bloodhound",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-false-gods:survivor",
@@ -1429,7 +1384,6 @@
     "description": "Adds one Health box.",
     "descriptionEn": "Adds one Health box.",
     "prerequisites": "Resilience ••",
-    "descriptivePrerequisites": true,
     "page": 115,
     "homebrew": true
   },
@@ -1449,9 +1403,16 @@
     "description": "Provides controlled access to a torpid elder for feeding and, at four dots, an out-of-clan Discipline.",
     "descriptionEn": "Provides controlled access to a torpid elder for feeding and, at four dots, an out-of-clan Discipline.",
     "prerequisites": "Safe Place •",
-    "descriptivePrerequisites": true,
     "page": 115,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:safe-place",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-false-gods:comrade-card-index",
@@ -1468,7 +1429,6 @@
     "description": "Treat City Status as one higher when blocking Merits, even above five; each City Status dot grants one dot of Retainer or Staff.",
     "descriptionEn": "Treat City Status as one higher when blocking Merits, even above five; each City Status dot grants one dot of Retainer or Staff.",
     "prerequisites": "Architects of the Monolith; City Status •",
-    "descriptivePrerequisites": true,
     "page": 139,
     "homebrew": true
   },
@@ -1487,7 +1447,6 @@
     "description": "Sense ley lines automatically and identify their resonances with Wits + Occult; successes add to the first Gilded Cage casting roll, up to +5.",
     "descriptionEn": "Sense ley lines automatically and identify their resonances with Wits + Occult; successes add to the first Gilded Cage casting roll, up to +5.",
     "prerequisites": "Architects of the Monolith Status •",
-    "descriptivePrerequisites": true,
     "page": 139,
     "homebrew": true
   },
@@ -1542,7 +1501,10 @@
   {
     "id": "vtr-gttn:friends-in-low-places",
     "name": "Friends in Low Places",
-    "nameQualifier": { "en-US": "Kindred", "pt-BR": "Membro" },
+    "nameQualifier": {
+      "en-US": "Kindred",
+      "pt-BR": "Membro"
+    },
     "ratings": [
       1,
       2,
@@ -1677,7 +1639,6 @@
     "description": "Icelus techniques fueled by Willpower and dreams stolen from a hypnotic sleeper.",
     "descriptionEn": "Icelus techniques fueled by Willpower and dreams stolen from a hypnotic sleeper.",
     "prerequisites": "Icelus; Medicine Specialty (Psychology)",
-    "descriptivePrerequisites": true,
     "page": 15,
     "levels": [
       {
@@ -1722,7 +1683,6 @@
     "description": "Spend Willpower on an accusatory harangue and win a contested Social action to isolate the victim through scandal.",
     "descriptionEn": "Spend Willpower on an accusatory harangue and win a contested Social action to isolate the victim through scandal.",
     "prerequisites": "The Parliamentarians",
-    "descriptivePrerequisites": true,
     "page": 33
   },
   {
@@ -1740,7 +1700,6 @@
     "description": "Once per story, add Blood Potency as bonus successes to persuasion through argument, then suffer Competitive or Obsession.",
     "descriptionEn": "Once per story, add Blood Potency as bonus successes to persuasion through argument, then suffer Competitive or Obsession.",
     "prerequisites": "The Parliamentarians",
-    "descriptivePrerequisites": true,
     "page": 33
   },
   {
@@ -1854,7 +1813,6 @@
     "description": "Spend a turn broadcasting a message heard by every Nereid within Blood Potency × 10 miles while moving at no more than half Speed.",
     "descriptionEn": "Spend a turn broadcasting a message heard by every Nereid within Blood Potency × 10 miles while moving at no more than half Speed.",
     "prerequisites": "Nereid",
-    "descriptivePrerequisites": true,
     "page": 139
   },
   {
@@ -1873,7 +1831,6 @@
     "description": "Move and fight freely underwater; at three dots, sprint underwater at triple Speed for Blood Potency turns.",
     "descriptionEn": "Move and fight freely underwater; at three dots, sprint underwater at triple Speed for Blood Potency turns.",
     "prerequisites": "Nereid",
-    "descriptivePrerequisites": true,
     "page": 139
   },
   {
@@ -1895,7 +1852,6 @@
     "description": "Choose the competitive, monstrous, or seductive aspect; each aspect is purchased as a separate Style instance.",
     "descriptionEn": "Choose the competitive, monstrous, or seductive aspect; each aspect is purchased as a separate Style instance.",
     "prerequisites": "Kerberos",
-    "descriptivePrerequisites": true,
     "repeatable": true,
     "page": 0,
     "levels": [
@@ -2609,7 +2565,10 @@
   {
     "id": "vtr-sotc:noblesse-oblige",
     "name": "Noblesse Oblige",
-    "nameQualifier": { "en-US": "Kindred", "pt-BR": "Membro" },
+    "nameQualifier": {
+      "en-US": "Kindred",
+      "pt-BR": "Membro"
+    },
     "ratings": [
       3
     ],
@@ -3206,9 +3165,16 @@
     "description": "Calls on the Erzsébet dynasty's immense assets as temporary Resources.",
     "descriptionEn": "Calls on the Erzsébet dynasty's immense assets as temporary Resources.",
     "prerequisites": "Dynasty Membership (Erzsébet) •",
-    "descriptivePrerequisites": true,
     "page": 34,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-dynasty-membership",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-sin-again:guise",
@@ -3225,7 +3191,6 @@
     "description": "Lets a Daeva maintain a carefully cultivated mortal appearance tied to an attached Touchstone.",
     "descriptionEn": "Lets a Daeva maintain a carefully cultivated mortal appearance tied to an attached Touchstone.",
     "prerequisites": "Daeva; attached Touchstone",
-    "descriptivePrerequisites": true,
     "page": 34,
     "homebrew": true
   },
@@ -3244,7 +3209,6 @@
     "description": "Allows senior Fashionistas to repair or complete another Moda Mortale's failed contract.",
     "descriptionEn": "Allows senior Fashionistas to repair or complete another Moda Mortale's failed contract.",
     "prerequisites": "Moda Mortale Status •••",
-    "descriptivePrerequisites": true,
     "page": 46,
     "homebrew": true
   },
@@ -3263,7 +3227,6 @@
     "description": "Makes the intent of a Fashionista's contracted killing unmistakable to Kindred who encounter it.",
     "descriptionEn": "Makes the intent of a Fashionista's contracted killing unmistakable to Kindred who encounter it.",
     "prerequisites": "Moda Mortale Status •",
-    "descriptivePrerequisites": true,
     "page": 46,
     "homebrew": true
   },
@@ -3286,7 +3249,6 @@
     "description": "Turns supernatural notoriety into a fearsome extension of Fame among mortals and Kindred.",
     "descriptionEn": "Turns supernatural notoriety into a fearsome extension of Fame among mortals and Kindred.",
     "prerequisites": "Kindred; Fame of equal or higher rating",
-    "descriptivePrerequisites": true,
     "page": 50,
     "homebrew": true
   },
@@ -3305,7 +3267,6 @@
     "description": "Lets a Nelapsi temporarily count Blood Potency as higher when determining the limits of feeding.",
     "descriptionEn": "Lets a Nelapsi temporarily count Blood Potency as higher when determining the limits of feeding.",
     "prerequisites": "Nelapsi; Vigor •",
-    "descriptivePrerequisites": true,
     "page": 50,
     "homebrew": true
   },
@@ -3324,7 +3285,6 @@
     "description": "A second, shadowy heart helps a Nelapsi endure injuries that threaten the true heart.",
     "descriptionEn": "A second, shadowy heart helps a Nelapsi endure injuries that threaten the true heart.",
     "prerequisites": "Nelapsi; Resilience •",
-    "descriptivePrerequisites": true,
     "page": 51,
     "homebrew": true
   },
@@ -3343,7 +3303,6 @@
     "description": "Mix equal parts Vitae and Electrum into a sealed, week-long fuel for rituals, Disciplines, and Devotions that cannot nourish, addict, or create blood bonds.",
     "descriptionEn": "Mix equal parts Vitae and Electrum into a sealed, week-long fuel for rituals, Disciplines, and Devotions that cannot nourish, addict, or create blood bonds.",
     "prerequisites": "Star-Crossed",
-    "descriptivePrerequisites": true,
     "page": 56,
     "homebrew": true
   },
@@ -3362,7 +3321,6 @@
     "description": "Reduce five Electrum over 24 hours to produce a potion that raises Humanity by one for a night; only one dose can benefit a character at a time.",
     "descriptionEn": "Reduce five Electrum over 24 hours to produce a potion that raises Humanity by one for a night; only one dose can benefit a character at a time.",
     "prerequisites": "Star-Crossed",
-    "descriptivePrerequisites": true,
     "page": 56,
     "homebrew": true
   },
@@ -3381,7 +3339,6 @@
     "description": "Cure Electrum for an hour to restore one spent Willpower per two Electrum; the elixir expires at the end of the night.",
     "descriptionEn": "Cure Electrum for an hour to restore one spent Willpower per two Electrum; the elixir expires at the end of the night.",
     "prerequisites": "Star-Crossed",
-    "descriptivePrerequisites": true,
     "page": 56,
     "homebrew": true
   },
@@ -3400,7 +3357,6 @@
     "description": "Prepare, freeze, and consume Electrum at sunrise to add points used to the Stamina + Resolve roll, avoid Lethargic on success, and gain Steadfast on exceptional success.",
     "descriptionEn": "Prepare, freeze, and consume Electrum at sunrise to add points used to the Stamina + Resolve roll, avoid Lethargic on success, and gain Steadfast on exceptional success.",
     "prerequisites": "Star-Crossed",
-    "descriptivePrerequisites": true,
     "page": 56,
     "homebrew": true
   },
@@ -3423,7 +3379,6 @@
     "description": "Drain intense human emotion while feeding, turning stolen feelings into insight, Conditions, and temporary mastery over Majesty or Nightmare.",
     "descriptionEn": "Drain intense human emotion while feeding, turning stolen feelings into insight, Conditions, and temporary mastery over Majesty or Nightmare.",
     "prerequisites": "Xiao; Mystery Cult Initiation (The Sect) •; Majesty or Nightmare ••",
-    "descriptivePrerequisites": true,
     "page": 61,
     "homebrew": true,
     "levels": [
@@ -3452,7 +3407,15 @@
         "name": "Kiss of Oblivion",
         "description": "Feed through the victim's last Health box to suppress the Detached Curse for the night, risking addiction."
       }
-    ]
+    ],
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:mystery-cult-initiation",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-sin-again:braggart",
@@ -3469,7 +3432,6 @@
     "description": "Uses confident bluster to sell implausible claims and conceal a lack of expertise.",
     "descriptionEn": "Uses confident bluster to sell implausible claims and conceal a lack of expertise.",
     "prerequisites": "Manipulation •••; Persuasion ••",
-    "descriptivePrerequisites": true,
     "page": 99,
     "homebrew": true
   },
@@ -3488,7 +3450,6 @@
     "description": "Reads the methods and intentions of lesser social manipulators.",
     "descriptionEn": "Reads the methods and intentions of lesser social manipulators.",
     "prerequisites": "Majesty ••; Manipulation •••",
-    "descriptivePrerequisites": true,
     "page": 99,
     "homebrew": true
   },
@@ -3507,9 +3468,16 @@
     "description": "Turns the vampire's corpse-like nature into a disturbing source of attraction.",
     "descriptionEn": "Turns the vampire's corpse-like nature into a disturbing source of attraction.",
     "prerequisites": "Striking Looks ••; Humanity 5 or lower",
-    "descriptivePrerequisites": true,
     "page": 99,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:striking-looks",
+          "minimum": 2
+        }
+      ]
+    }
   },
   {
     "id": "vtr-sin-again:enticing-advanced",
@@ -3526,9 +3494,16 @@
     "description": "Extends Enticing by making the character broadly desirable, not merely conventionally attractive.",
     "descriptionEn": "Extends Enticing by making the character broadly desirable, not merely conventionally attractive.",
     "prerequisites": "Enticing",
-    "descriptivePrerequisites": true,
     "page": 99,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-enticing",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-sin-again:fake-it-till-you-make-it",
@@ -3545,9 +3520,16 @@
     "description": "Once per chapter, confident deception can stand in for missing practical competence.",
     "descriptionEn": "Once per chapter, confident deception can stand in for missing practical competence.",
     "prerequisites": "Braggart •; Subterfuge ••",
-    "descriptivePrerequisites": true,
     "page": 99,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-sin-again:braggart",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-sin-again:friends-abroad",
@@ -3564,9 +3546,16 @@
     "description": "Uses Cacophony knowledge to find useful local Kindred contacts while traveling.",
     "descriptionEn": "Uses Cacophony knowledge to find useful local Kindred contacts while traveling.",
     "prerequisites": "Cacophony Savvy •",
-    "descriptivePrerequisites": true,
     "page": 99,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-cacophony-savvy",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-sin-again:good-in-bed",
@@ -3583,7 +3572,6 @@
     "description": "Adds two dice when discerning another person's romantic or sexual desires.",
     "descriptionEn": "Adds two dice when discerning another person's romantic or sexual desires.",
     "prerequisites": "Empathy ••",
-    "descriptivePrerequisites": true,
     "page": 100,
     "homebrew": true
   },
@@ -3602,7 +3590,6 @@
     "description": "Once per story, calls on a Daeva family for three dots of Allies, Mentor, or Resources.",
     "descriptionEn": "Once per story, calls on a Daeva family for three dots of Allies, Mentor, or Resources.",
     "prerequisites": "Daeva",
-    "descriptivePrerequisites": true,
     "page": 100,
     "homebrew": true
   },
@@ -3621,7 +3608,6 @@
     "description": "Improves a primary actor's Social teamwork roll when the character contributes successfully.",
     "descriptionEn": "Improves a primary actor's Social teamwork roll when the character contributes successfully.",
     "prerequisites": "Socialize ••",
-    "descriptivePrerequisites": true,
     "page": 100,
     "homebrew": true
   },
@@ -3640,9 +3626,11 @@
     "description": "Once per night, feeding from a Dependent subject grants Inspired but makes that subject a frenzy priority.",
     "descriptionEn": "Once per night, feeding from a Dependent subject grants Inspired but makes that subject a frenzy priority.",
     "prerequisites": "Daeva; cannot possess Quantity Over Quality",
-    "descriptivePrerequisites": true,
     "page": 100,
-    "homebrew": true
+    "homebrew": true,
+    "excludes": [
+      "vtr-sin-again:quantity-over-quality"
+    ]
   },
   {
     "id": "vtr-sin-again:quantity-over-quality",
@@ -3659,9 +3647,11 @@
     "description": "Feeding deeply from several sources grants Inspired but worsens hunger-frenzy resistance.",
     "descriptionEn": "Feeding deeply from several sources grants Inspired but worsens hunger-frenzy resistance.",
     "prerequisites": "Daeva; cannot possess Quality Over Quantity",
-    "descriptivePrerequisites": true,
     "page": 100,
-    "homebrew": true
+    "homebrew": true,
+    "excludes": [
+      "vtr-sin-again:quality-over-quantity"
+    ]
   },
   {
     "id": "vtr-sin-again:resting-bitch-face",
@@ -3694,8 +3684,7 @@
     "translatedName": "Single Strike Individual",
     "description": "Adds half Initiative as bonus dice to an opening attack against a target who has not acted.",
     "descriptionEn": "Adds half Initiative as bonus dice to an opening attack against a target who has not acted.",
-    "prerequisites": "Brawl, Firearms, or Weaponry •••",
-    "descriptivePrerequisites": true,
+    "prerequisites": "Brawl or Firearms or Weaponry •••",
     "page": 100,
     "homebrew": true
   },
@@ -3714,9 +3703,16 @@
     "description": "Once per night, claims one temporary dot of Status in a non-hostile group.",
     "descriptionEn": "Once per night, claims one temporary dot of Status in a non-hostile group.",
     "prerequisites": "Fame •; Socialize ••; no Status Merit over ••",
-    "descriptivePrerequisites": true,
     "page": 100,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:fame",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-sin-again:social-chameleon",
@@ -3733,9 +3729,16 @@
     "description": "Once per chapter, using Barfly to enter a new group refreshes Willpower.",
     "descriptionEn": "Once per chapter, using Barfly to enter a new group refreshes Willpower.",
     "prerequisites": "Barfly; Empathy ••",
-    "descriptivePrerequisites": true,
     "page": 100,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:barfly",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-sin-again:sunglasses-at-night",
@@ -3752,7 +3755,6 @@
     "description": "Improves detachment rolls for harming unknown mortals, but brings the Daeva clan bane forward.",
     "descriptionEn": "Improves detachment rolls for harming unknown mortals, but brings the Daeva clan bane forward.",
     "prerequisites": "Daeva; Resolve •••; Humanity 6 or lower",
-    "descriptivePrerequisites": true,
     "page": 101,
     "homebrew": true
   },
@@ -3771,7 +3773,6 @@
     "description": "Remarkable feats of strength or endurance under Awe improve later social impact on witnesses.",
     "descriptionEn": "Remarkable feats of strength or endurance under Awe improve later social impact on witnesses.",
     "prerequisites": "Majesty •; Strength ••• or Stamina •••",
-    "descriptivePrerequisites": true,
     "page": 101,
     "homebrew": true
   },
@@ -3794,7 +3795,6 @@
     "description": "A five-dot combat style combining Celerity, Majesty, and Vigor into spectacular opening violence.",
     "descriptionEn": "A five-dot combat style combining Celerity, Majesty, and Vigor into spectacular opening violence.",
     "prerequisites": "Brawl or Weaponry ••; Celerity •; Majesty •; Vigor •",
-    "descriptivePrerequisites": true,
     "page": 101,
     "homebrew": true
   },
@@ -3813,9 +3813,16 @@
     "description": "Extends Kiss of the Succubus so a kiss can rouse another vampire from torpor.",
     "descriptionEn": "Extends Kiss of the Succubus so a kiss can rouse another vampire from torpor.",
     "prerequisites": "Kiss of the Succubus",
-    "descriptivePrerequisites": true,
     "page": 102,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-kiss-succubus",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-sin-again:voyeur",
@@ -3833,7 +3840,6 @@
     "description": "Regains Willpower by witnessing mortals fulfill desires, with the higher rating rewarding riskier observation.",
     "descriptionEn": "Regains Willpower by witnessing mortals fulfill desires, with the higher rating rewarding riskier observation.",
     "prerequisites": "Daeva",
-    "descriptivePrerequisites": true,
     "page": 102,
     "homebrew": true
   },
@@ -3856,7 +3862,6 @@
     "description": "A five-dot discipline of hunger through which ascetic self-denial produces escalating control over the Beast.",
     "descriptionEn": "A five-dot discipline of hunger through which ascetic self-denial produces escalating control over the Beast.",
     "prerequisites": "Kuufukuji; Composure •••; Resolve •••",
-    "descriptivePrerequisites": true,
     "page": 34,
     "homebrew": true
   },
@@ -3875,7 +3880,6 @@
     "description": "Adds the Whipping Boy Dirge, recovering Willpower through service followed by concealed resentment.",
     "descriptionEn": "Adds the Whipping Boy Dirge, recovering Willpower through service followed by concealed resentment.",
     "prerequisites": "Norvegi",
-    "descriptivePrerequisites": true,
     "page": 51,
     "homebrew": true
   },
@@ -3894,7 +3898,6 @@
     "description": "Extends Embrocation by letting a Qedeshah draw additional nourishment and protection through an anointed mortal.",
     "descriptionEn": "Extends Embrocation by letting a Qedeshah draw additional nourishment and protection through an anointed mortal.",
     "prerequisites": "Qedeshah",
-    "descriptivePrerequisites": true,
     "page": 58,
     "homebrew": true
   },
@@ -3917,7 +3920,6 @@
     "description": "Construct an indefinite alternate identity in service to the Masquerade; each dot is a discrete refinement purchased in order.",
     "descriptionEn": "Construct an indefinite alternate identity in service to the Masquerade; each dot is a discrete refinement purchased in order.",
     "prerequisites": "Kindred; Inconnu Initiation •",
-    "descriptivePrerequisites": true,
     "page": 73,
     "homebrew": true,
     "levels": [
@@ -3967,7 +3969,6 @@
     "description": "Extend Dream Visions through a mortal oracle. Five extra minutes of divination grant +1 die, cumulatively up to +3.",
     "descriptionEn": "Extend Dream Visions through a mortal oracle. Five extra minutes of divination grant +1 die, cumulatively up to +3.",
     "prerequisites": "Dream Visions; Moirai Initiation •",
-    "descriptivePrerequisites": true,
     "page": 76,
     "homebrew": true,
     "levels": [
@@ -3996,7 +3997,15 @@
         "name": "Self-Fulfilling Prophecy",
         "description": "Ask about the next lunar month and gain +5 once per night to aid or hinder the likely outcome."
       }
-    ]
+    ],
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-dream-visions",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-strange-shades:all-seeing",
@@ -4013,7 +4022,6 @@
     "description": "Once per night, spend Vitae to heighten observation beyond ordinary Mekhet perception.",
     "descriptionEn": "Once per night, spend Vitae to heighten observation beyond ordinary Mekhet perception.",
     "prerequisites": "Mekhet; Wits •••",
-    "descriptivePrerequisites": true,
     "page": 90,
     "homebrew": true
   },
@@ -4032,9 +4040,16 @@
     "description": "Uses practiced doubt and rhetoric to undermine another person's certainty.",
     "descriptionEn": "Uses practiced doubt and rhetoric to undermine another person's certainty.",
     "prerequisites": "Fast Talking •••",
-    "descriptivePrerequisites": true,
     "page": 90,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:fast-talking",
+          "minimum": 3
+        }
+      ]
+    }
   },
   {
     "id": "vtr-strange-shades:cocoon",
@@ -4051,9 +4066,16 @@
     "description": "Cultivates a spider-filled refuge that protects a Mekhet's resting place and secrets.",
     "descriptionEn": "Cultivates a spider-filled refuge that protects a Mekhet's resting place and secrets.",
     "prerequisites": "Mekhet; Animal Ken •; Safe Place •",
-    "descriptivePrerequisites": true,
     "page": 90,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:safe-place",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-strange-shades:conspiracy-savant",
@@ -4070,7 +4092,6 @@
     "description": "Finds meaningful patterns in fragmented information and apparent coincidence.",
     "descriptionEn": "Finds meaningful patterns in fragmented information and apparent coincidence.",
     "prerequisites": "Wits ••",
-    "descriptivePrerequisites": true,
     "page": 90,
     "homebrew": true
   },
@@ -4089,7 +4110,6 @@
     "description": "A Mekhet rises from daysleep with a corpse that remains unnaturally pristine.",
     "descriptionEn": "A Mekhet rises from daysleep with a corpse that remains unnaturally pristine.",
     "prerequisites": "Mekhet",
-    "descriptivePrerequisites": true,
     "page": 90,
     "homebrew": true
   },
@@ -4112,9 +4132,16 @@
     "description": "Extends the Shadow's obscurity to a Safe Place, making the haven difficult for outsiders to notice or recall.",
     "descriptionEn": "Extends the Shadow's obscurity to a Safe Place, making the haven difficult for outsiders to notice or recall.",
     "prerequisites": "Mekhet or Shadow Cult; Safe Place •",
-    "descriptivePrerequisites": true,
     "page": 90,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:safe-place",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-strange-shades:holistic-detective",
@@ -4131,7 +4158,6 @@
     "description": "Applies a chosen Mental Specialty broadly while reconstructing an investigation.",
     "descriptionEn": "Applies a chosen Mental Specialty broadly while reconstructing an investigation.",
     "prerequisites": "Investigation •••; a Mental Skill Specialty",
-    "descriptivePrerequisites": true,
     "page": 91,
     "homebrew": true
   },
@@ -4150,7 +4176,6 @@
     "description": "Uses mundane hypnotic technique to place a willing or vulnerable subject into a suggestible state.",
     "descriptionEn": "Uses mundane hypnotic technique to place a willing or vulnerable subject into a suggestible state.",
     "prerequisites": "Manipulation •••; Medicine •• or Occult ••",
-    "descriptivePrerequisites": true,
     "page": 91,
     "homebrew": true
   },
@@ -4169,14 +4194,16 @@
     "description": "Adopts convincing personae and draws strength from behaving consistently with the assumed role.",
     "descriptionEn": "Adopts convincing personae and draws strength from behaving consistently with the assumed role.",
     "prerequisites": "Mekhet; Subterfuge ••••",
-    "descriptivePrerequisites": true,
     "page": 92,
     "homebrew": true
   },
   {
     "id": "vtr-strange-shades:occultation",
     "name": "Occultation",
-    "nameQualifier": { "en-US": "Kindred", "pt-BR": "Membro" },
+    "nameQualifier": {
+      "en-US": "Kindred",
+      "pt-BR": "Membro"
+    },
     "ratings": [
       1
     ],
@@ -4189,7 +4216,6 @@
     "description": "Moves through society as a forgettable shadow, reducing attention and later recollection.",
     "descriptionEn": "Moves through society as a forgettable shadow, reducing attention and later recollection.",
     "prerequisites": "Mekhet; Stealth •",
-    "descriptivePrerequisites": true,
     "page": 92,
     "homebrew": true
   },
@@ -4208,7 +4234,6 @@
     "description": "Applies supernatural speed to rapid analysis and other Intelligence-driven mental work.",
     "descriptionEn": "Applies supernatural speed to rapid analysis and other Intelligence-driven mental work.",
     "prerequisites": "Mekhet; Intelligence •••",
-    "descriptivePrerequisites": true,
     "page": 92,
     "homebrew": true
   },
@@ -4227,7 +4252,6 @@
     "description": "Allows an unbloodlined Mekhet to exchange the usual clan curse for a distinct personal shadow curse.",
     "descriptionEn": "Allows an unbloodlined Mekhet to exchange the usual clan curse for a distinct personal shadow curse.",
     "prerequisites": "Mekhet; not part of a bloodline",
-    "descriptivePrerequisites": true,
     "page": 92,
     "homebrew": true
   },
@@ -4246,7 +4270,6 @@
     "description": "Once per scene, treats an inconspicuous failure as though the character had remained beneath notice.",
     "descriptionEn": "Once per scene, treats an inconspicuous failure as though the character had remained beneath notice.",
     "prerequisites": "Mekhet",
-    "descriptivePrerequisites": true,
     "page": 92,
     "homebrew": true
   },
@@ -4265,7 +4288,6 @@
     "description": "Ignore untrained Skill penalties.",
     "descriptionEn": "Ignore untrained Skill penalties.",
     "prerequisites": "Any Skill ••••••",
-    "descriptivePrerequisites": true,
     "page": 83
   },
   {
@@ -4299,7 +4321,6 @@
     "description": "Politics, Socialize, and Streetwise gain 9-again when the elder draws on accumulated experience.",
     "descriptionEn": "Politics, Socialize, and Streetwise gain 9-again when the elder draws on accumulated experience.",
     "prerequisites": "Intelligence ••• or Manipulation •••",
-    "descriptivePrerequisites": true,
     "page": 83
   },
   {
@@ -4425,7 +4446,6 @@
     "description": "Once per dot each story, spend Willpower to ignore soft leverage, end a Social Condition, exert Status one dot higher, or gain 8-again socially against a covenant.",
     "descriptionEn": "Once per dot each story, spend Willpower to ignore soft leverage, end a Social Condition, exert Status one dot higher, or gain 8-again socially against a covenant.",
     "prerequisites": "No Covenant Status",
-    "descriptivePrerequisites": true,
     "page": 84
   },
   {
@@ -4498,7 +4518,6 @@
     "description": "Once per story, anoint a mirror with three Vitae and contest Resolve + Composure + Auspex against Power + Resistance to trap the Ka or release it into Twilight.",
     "descriptionEn": "Once per story, anoint a mirror with three Vitae and contest Resolve + Composure + Auspex against Power + Resistance to trap the Ka or release it into Twilight.",
     "prerequisites": "Hollow Mekhet",
-    "descriptivePrerequisites": true,
     "page": 85
   },
   {
@@ -4516,7 +4535,6 @@
     "description": "Others must spend Willpower to oppose the elder when she speaks on breaches of law or Tradition; regain Willpower when authority rules in her favor.",
     "descriptionEn": "Others must spend Willpower to oppose the elder when she speaks on breaches of law or Tradition; regain Willpower when authority rules in her favor.",
     "prerequisites": "Elder; Covenant Status •••",
-    "descriptivePrerequisites": true,
     "page": 85
   },
   {
@@ -4534,7 +4552,6 @@
     "description": "Predatory Aura contests Resolve + Supernatural Tolerance to reduce the exceptional-success threshold of Social actions against the subject from five to three.",
     "descriptionEn": "Predatory Aura contests Resolve + Supernatural Tolerance to reduce the exceptional-success threshold of Social actions against the subject from five to three.",
     "prerequisites": "Atrocious, Cutthroat, or Enticing",
-    "descriptivePrerequisites": true,
     "page": 85
   },
   {
@@ -4561,7 +4578,10 @@
   {
     "id": "vtr-acute-senses",
     "name": "Acute Senses",
-    "nameQualifier": { "en-US": "Kindred", "pt-BR": "Membro" },
+    "nameQualifier": {
+      "en-US": "Kindred",
+      "pt-BR": "Membro"
+    },
     "ratings": [
       1
     ],
@@ -5038,7 +5058,6 @@
     "description": "Exerce domínio sobre animais ou uma matilha ligada ao vampiro.",
     "descriptionEn": "Exerts dominance over animals or a pack bound to the vampire.",
     "prerequisites": "Gangrel",
-    "descriptivePrerequisites": true,
     "page": 114
   },
   {
@@ -5149,7 +5168,10 @@
   {
     "id": "vtr-touchstone",
     "name": "Touchstone",
-    "nameQualifier": { "en-US": "Kindred", "pt-BR": "Membro" },
+    "nameQualifier": {
+      "en-US": "Kindred",
+      "pt-BR": "Membro"
+    },
     "ratings": [
       1,
       2,
@@ -5499,7 +5521,6 @@
     "description": "Standing in Tokyo's anti-vampire business conglomerate grants cumulative training and occult protections in addition to normal Status benefits.",
     "descriptionEn": "Standing in Tokyo's anti-vampire business conglomerate grants cumulative training and occult protections in addition to normal Status benefits.",
     "prerequisites": "Hototogisu membership",
-    "descriptivePrerequisites": true,
     "page": 267,
     "levels": [
       {
@@ -5548,7 +5569,6 @@
     "description": "A progressive counseling style for reading, calming, and redirecting another vampire's Beast.",
     "descriptionEn": "A progressive counseling style for reading, calming, and redirecting another vampire's Beast.",
     "prerequisites": "Daimonion; Manipulation •••; Composure •••; Animalism • or Auspex •",
-    "descriptivePrerequisites": true,
     "page": 38,
     "homebrew": true
   },
@@ -5571,7 +5591,6 @@
     "description": "Grants escalating lunar adaptations and lets a Dead Wolf redefine the moon phase that triggers the bloodline curse.",
     "descriptionEn": "Grants escalating lunar adaptations and lets a Dead Wolf redefine the moon phase that triggers the bloodline curse.",
     "prerequisites": "Dead Wolf",
-    "descriptivePrerequisites": true,
     "page": 44,
     "homebrew": true
   },
@@ -5590,7 +5609,6 @@
     "description": "Permits an Oberloch to learn an additional out-of-clan Discipline through family blood and isolation.",
     "descriptionEn": "Permits an Oberloch to learn an additional out-of-clan Discipline through family blood and isolation.",
     "prerequisites": "Oberloch",
-    "descriptivePrerequisites": true,
     "page": 55,
     "homebrew": true
   },
@@ -5609,7 +5627,6 @@
     "description": "Conceals a bonded Ride in plain sight and frustrates attempts to recognize it as a haven.",
     "descriptionEn": "Conceals a bonded Ride in plain sight and frustrates attempts to recognize it as a haven.",
     "prerequisites": "Verlice",
-    "descriptivePrerequisites": true,
     "page": 61,
     "homebrew": true
   },
@@ -5628,9 +5645,16 @@
     "description": "Splits a Wicker's awareness across portions of a swarm form.",
     "descriptionEn": "Splits a Wicker's awareness across portions of a swarm form.",
     "prerequisites": "Wicker; Swarm Form",
-    "descriptivePrerequisites": true,
     "page": 66,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-swarm-form",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-wild-hunt:mystery-cult-initiation-council-of-talons",
@@ -5651,7 +5675,8 @@
     "description": "Represents initiation and rank within the Wickers' Council of Talons.",
     "descriptionEn": "Represents initiation and rank within the Wickers' Council of Talons.",
     "page": 66,
-    "homebrew": true
+    "homebrew": true,
+    "prerequisites": "Kindred"
   },
   {
     "id": "vtr-wild-hunt:wisdom-of-crowds",
@@ -5670,7 +5695,6 @@
     "description": "Draws occult insight from the movement and reactions of a gathered flock.",
     "descriptionEn": "Draws occult insight from the movement and reactions of a gathered flock.",
     "prerequisites": "Wicker",
-    "descriptivePrerequisites": true,
     "page": 67,
     "homebrew": true
   },
@@ -5692,7 +5716,6 @@
     "description": "Binds a Yarilo to a sacred tree, deepening perception, shelter, and control within its territory.",
     "descriptionEn": "Binds a Yarilo to a sacred tree, deepening perception, shelter, and control within its territory.",
     "prerequisites": "Yarilo; Protean •",
-    "descriptivePrerequisites": true,
     "page": 71,
     "homebrew": true
   },
@@ -5714,7 +5737,7 @@
     "translatedName": "Alien Limbs",
     "description": "A Protean fighting Style built around flexible reach, impossible balance, constricting grapples, armor-piercing strikes, and an explosive grapple attack.",
     "descriptionEn": "A Protean fighting Style built around flexible reach, impossible balance, constricting grapples, armor-piercing strikes, and an explosive grapple attack.",
-    "prerequisites": "Protean ••; Athletics ••; Brawl ••; Survival ••",
+    "prerequisites": "Gangrel; Protean ••; Athletics ••; Brawl ••; Survival ••",
     "page": 107,
     "homebrew": true,
     "levels": [
@@ -5760,7 +5783,6 @@
     "description": "Treat Blood Potency as one higher when lashing out, but losing to a stronger predator forces a doubled Bestial Triad Condition.",
     "descriptionEn": "Treat Blood Potency as one higher when lashing out, but losing to a stronger predator forces a doubled Bestial Triad Condition.",
     "prerequisites": "Gangrel",
-    "descriptivePrerequisites": true,
     "page": 107,
     "homebrew": true
   },
@@ -5779,9 +5801,16 @@
     "description": "Once per chapter, turns the legendary ferocity of Atrocious into a stronger Bestial manifestation.",
     "descriptionEn": "Once per chapter, turns the legendary ferocity of Atrocious into a stronger Bestial manifestation.",
     "prerequisites": "Atrocious",
-    "descriptivePrerequisites": true,
     "page": 108,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-atrocious",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-wild-hunt:beast-meld",
@@ -5797,7 +5826,7 @@
     "translatedName": "Beast Meld",
     "description": "Use Unmarked Grave inside another creature by spending Vitae equal to its Stamina; an unwilling sapient host can eject the vampire with Willpower.",
     "descriptionEn": "Use Unmarked Grave inside another creature by spending Vitae equal to its Stamina; an unwilling sapient host can eject the vampire with Willpower.",
-    "prerequisites": "Protean •",
+    "prerequisites": "Gangrel; Protean •",
     "page": 108,
     "homebrew": true
   },
@@ -5817,7 +5846,7 @@
     "translatedName": "Feral Combatant",
     "description": "Buy animal-form combat techniques such as camouflage ambushes, reactive attacks, mobile actions, high- or low-ground advantage, clinging grapples, and darkness defense.",
     "descriptionEn": "Buy animal-form combat techniques such as camouflage ambushes, reactive attacks, mobile actions, high- or low-ground advantage, clinging grapples, and darkness defense.",
-    "prerequisites": "Athletics ••; Brawl ••; Protean •••",
+    "prerequisites": "Gangrel; Athletics ••; Brawl ••; Protean •••",
     "repeatable": true,
     "page": 108,
     "homebrew": true
@@ -5838,7 +5867,8 @@
     "description": "At one dot memorize a fourth Predatory Aspect adaptation; at three dots spend extra Vitae to assume a second Unnatural Aspect trait.",
     "descriptionEn": "At one dot memorize a fourth Predatory Aspect adaptation; at three dots spend extra Vitae to assume a second Unnatural Aspect trait.",
     "page": 108,
-    "homebrew": true
+    "homebrew": true,
+    "prerequisites": "Gangrel"
   },
   {
     "id": "vtr-wild-hunt:harts-blood",
@@ -5855,7 +5885,6 @@
     "description": "Personally hunted animals provide Vitae equal to Size at Blood Potency 1–2 and one Vitae at 3–5; the Merit is lost at Blood Potency 6.",
     "descriptionEn": "Personally hunted animals provide Vitae equal to Size at Blood Potency 1–2 and one Vitae at 3–5; the Merit is lost at Blood Potency 6.",
     "prerequisites": "Gangrel; Animalism •; Blood Potency 5 or less",
-    "descriptivePrerequisites": true,
     "page": 108,
     "homebrew": true
   },
@@ -5873,7 +5902,7 @@
     "translatedName": "Head of a Pin",
     "description": "Use Unmarked Grave within objects as small as Size 1.",
     "descriptionEn": "Use Unmarked Grave within objects as small as Size 1.",
-    "prerequisites": "Protean •",
+    "prerequisites": "Gangrel; Protean •",
     "page": 108,
     "homebrew": true
   },
@@ -5892,7 +5921,6 @@
     "description": "Against a lower-Blood-Potency predator, gain 9-again when resisting mental or social compulsion and strip 10-again from resisted use; failure costs Willpower.",
     "descriptionEn": "Against a lower-Blood-Potency predator, gain 9-again when resisting mental or social compulsion and strip 10-again from resisted use; failure costs Willpower.",
     "prerequisites": "Gangrel; Blood Potency ••",
-    "descriptivePrerequisites": true,
     "page": 108,
     "homebrew": true
   },
@@ -5912,7 +5940,7 @@
     "translatedName": "Iron Heart",
     "description": "Each dot adds one damage needed to stake the vampire.",
     "descriptionEn": "Each dot adds one damage needed to stake the vampire.",
-    "prerequisites": "Resilience •",
+    "prerequisites": "Gangrel; Resilience •",
     "page": 109,
     "homebrew": true
   },
@@ -5930,7 +5958,7 @@
     "translatedName": "Mutable Psyche",
     "description": "After a failed breaking point, choose a new Dirge that has not already been used during the story.",
     "descriptionEn": "After a failed breaking point, choose a new Dirge that has not already been used during the story.",
-    "prerequisites": "Protean ••; Resolve •••",
+    "prerequisites": "Gangrel; Protean ••; Resolve •••",
     "page": 109,
     "homebrew": true
   },
@@ -5949,7 +5977,8 @@
     "description": "Extend Animalism to plants, including communication, commands, undead revival, area control, hostile animation, and familiar vectors.",
     "descriptionEn": "Extend Animalism to plants, including communication, commands, undead revival, area control, hostile animation, and familiar vectors.",
     "page": 109,
-    "homebrew": true
+    "homebrew": true,
+    "prerequisites": "Gangrel"
   },
   {
     "id": "vtr-wild-hunt:pack-blooded",
@@ -5966,7 +5995,6 @@
     "description": "With another packmate who owns this Merit, gain +1 Initiative, Defense, and Speed in combat and add Animal Ken to action-scene teamwork; defending packmates worsens breaking points.",
     "descriptionEn": "With another packmate who owns this Merit, gain +1 Initiative, Defense, and Speed in combat and add Animal Ken to action-scene teamwork; defending packmates worsens breaking points.",
     "prerequisites": "Gangrel",
-    "descriptivePrerequisites": true,
     "page": 109,
     "homebrew": true
   },
@@ -5985,9 +6013,16 @@
     "description": "Count the highest Kindred Status as an additional unattached Touchstone while another Touchstone remains.",
     "descriptionEn": "Count the highest Kindred Status as an additional unattached Touchstone while another Touchstone remains.",
     "prerequisites": "Gangrel; Kindred Status •",
-    "descriptivePrerequisites": true,
     "page": 109,
-    "homebrew": true
+    "homebrew": true,
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-kindred-status",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "vtr-wild-hunt:preys-trail",
@@ -6003,7 +6038,7 @@
     "translatedName": "Prey's Trail",
     "description": "Track anyone whose blood the vampire tasted with hourly Intelligence + Survival rolls until Blood Potency nights pass.",
     "descriptionEn": "Track anyone whose blood the vampire tasted with hourly Intelligence + Survival rolls until Blood Potency nights pass.",
-    "prerequisites": "Survival ••",
+    "prerequisites": "Gangrel; Survival ••",
     "page": 109,
     "homebrew": true
   },
@@ -6021,7 +6056,7 @@
     "translatedName": "Roughin' It",
     "description": "Halve penalties on Crafts and Survival caused by improper or improvised tools.",
     "descriptionEn": "Halve penalties on Crafts and Survival caused by improper or improvised tools.",
-    "prerequisites": "Crafts ••; Survival ••",
+    "prerequisites": "Gangrel; Crafts ••; Survival ••",
     "page": 110,
     "homebrew": true
   },
@@ -6040,7 +6075,6 @@
     "description": "Gain a free animal-group Specialty, exceptional success on three successes with it, and generally favorable reactions from animals.",
     "descriptionEn": "Gain a free animal-group Specialty, exceptional success on three successes with it, and generally favorable reactions from animals.",
     "prerequisites": "Gangrel; Animal Ken •••",
-    "descriptivePrerequisites": true,
     "page": 110,
     "homebrew": true
   },
@@ -6059,7 +6093,6 @@
     "description": "Detect past vessels at twice the normal Kindred Senses distance and exceptionally succeed on three successes when finding them.",
     "descriptionEn": "Detect past vessels at twice the normal Kindred Senses distance and exceptionally succeed on three successes when finding them.",
     "prerequisites": "Gangrel; Survival ••",
-    "descriptivePrerequisites": true,
     "page": 110,
     "homebrew": true
   },
@@ -6078,7 +6111,6 @@
     "description": "Lets a Gangrel deliberately loosen the Beast's leash for short, dangerous advantages.",
     "descriptionEn": "Lets a Gangrel deliberately loosen the Beast's leash for short, dangerous advantages.",
     "prerequisites": "Gangrel; Beast is not Risen",
-    "descriptivePrerequisites": true,
     "page": 110,
     "homebrew": true
   },
@@ -6098,7 +6130,7 @@
     "translatedName": "Tireless Pursuit",
     "description": "A pursuit Style that combines full-speed movement with Mental actions, substitutes Stamina into Speed, and powers through barriers or seizes the Edge.",
     "descriptionEn": "A pursuit Style that combines full-speed movement with Mental actions, substitutes Stamina into Speed, and powers through barriers or seizes the Edge.",
-    "prerequisites": "Stamina ••; Athletics ••",
+    "prerequisites": "Gangrel; Stamina ••; Athletics ••",
     "page": 110,
     "homebrew": true
   },
@@ -6116,7 +6148,7 @@
     "translatedName": "Top Dog",
     "description": "Read a group's hierarchy after observing it, then once per chapter exceptionally succeed on three successes when dealing with its leaders.",
     "descriptionEn": "Read a group's hierarchy after observing it, then once per chapter exceptionally succeed on three successes when dealing with its leaders.",
-    "prerequisites": "Empathy •• or Intimidation ••",
+    "prerequisites": "Gangrel; Empathy •• or Intimidation ••",
     "page": 111,
     "homebrew": true
   },
@@ -6134,7 +6166,7 @@
     "translatedName": "Unbound Form",
     "description": "Manifest Primeval Miasma as another substance that inflicts one appropriate Environmental Tilt each scene.",
     "descriptionEn": "Manifest Primeval Miasma as another substance that inflicts one appropriate Environmental Tilt each scene.",
-    "prerequisites": "Protean •••••",
+    "prerequisites": "Gangrel; Protean •••••",
     "page": 111,
     "homebrew": true
   },
@@ -6156,7 +6188,7 @@
     "translatedName": "Unstoppable",
     "description": "A durability Style that ignores bashing wound penalties, uses Stamina for Defense, traps blades, hurts unarmed attackers, and delays torpor for one turn.",
     "descriptionEn": "A durability Style that ignores bashing wound penalties, uses Stamina for Defense, traps blades, hurts unarmed attackers, and delays torpor for one turn.",
-    "prerequisites": "Athletics ••; Brawl ••• or Weaponry •••; Stamina •••; Protean •; Resilience •",
+    "prerequisites": "Gangrel; Athletics ••; Brawl ••• or Weaponry •••; Stamina •••; Protean •; Resilience •",
     "page": 111,
     "homebrew": true
   },
@@ -6174,7 +6206,7 @@
     "translatedName": "Urban Hunter",
     "description": "Gain 9-again on Investigation, Streetwise, and Survival to find or track a known person in a city.",
     "descriptionEn": "Gain 9-again on Investigation, Streetwise, and Survival to find or track a known person in a city.",
-    "prerequisites": "Streetwise ••",
+    "prerequisites": "Gangrel; Streetwise ••",
     "page": 111,
     "homebrew": true
   },
@@ -6192,7 +6224,7 @@
     "translatedName": "Veil of Invulnerability",
     "description": "Damage fully resisted with Resilience leaves no visible wound, and mortal attackers take −1 Composure against the vampire for the scene.",
     "descriptionEn": "Damage fully resisted with Resilience leaves no visible wound, and mortal attackers take −1 Composure against the vampire for the scene.",
-    "prerequisites": "Resilience •",
+    "prerequisites": "Gangrel; Resilience •",
     "page": 111,
     "homebrew": true
   },
@@ -6216,7 +6248,6 @@
     "descriptionEn": "A Clíodhna Crúac Style that fast-casts and consumes rites, absorbs hostile ritual magic, and ultimately devours other supernatural sorcery.",
     "page": 67,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Circle of the Crone Status ••; Occult ••"
   },
   {
@@ -6239,7 +6270,6 @@
     "descriptionEn": "A Jiju Crúac Style that replaces outward ceremony with inner alchemy, poisons victims through rites, and makes the ritualist's Vitae toxic.",
     "page": 70,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Circle of the Crone Status ••; Crafts ••"
   },
   {
@@ -6262,7 +6292,6 @@
     "descriptionEn": "A Maenad Crúac Style that turns communal excess, hunger, and frenzy into ritual power while leaving the caster Tempted.",
     "page": 72,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Circle of the Crone Status ••; Expression ••"
   },
   {
@@ -6285,7 +6314,6 @@
     "descriptionEn": "A Syzygist Crúac Style that aligns rites with dreams and celestial omens to alter timing, targeting, and prophetic insight.",
     "page": 74,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Circle of the Crone Status ••; Academics ••"
   },
   {
@@ -6304,8 +6332,7 @@
     "description": "Turns the Acolyte's bite into a more fearsome predatory and ritual instrument.",
     "descriptionEn": "Turns the Acolyte's bite into a more fearsome predatory and ritual instrument.",
     "page": 90,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-agony-ecstasy:apothecary",
@@ -6327,8 +6354,15 @@
     "descriptionEn": "A Style for distilling Crúac rites into potions, improving their storage, sharing, potency, and sympathetic reach.",
     "page": 90,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Witch's Brew; Crafts or Science •••"
+    "prerequisites": "Witch's Brew; Crafts or Science •••",
+    "requirements": {
+      "all": [
+        {
+          "merit": "h-vtr-agony-ecstasy:witch-s-brew",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-agony-ecstasy:athame",
@@ -6345,8 +6379,7 @@
     "description": "Consecrates a ritual blade that assists blood sorcery and retains the significance of its sacrifices.",
     "descriptionEn": "Consecrates a ritual blade that assists blood sorcery and retains the significance of its sacrifices.",
     "page": 91,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-agony-ecstasy:banshee",
@@ -6364,7 +6397,6 @@
     "descriptionEn": "Allows dangerous fast casting of Crúac with a keening ritual cry.",
     "page": 91,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Occult •••; Crúac ••"
   },
   {
@@ -6383,7 +6415,6 @@
     "descriptionEn": "Represents a mortal cult that supplies combined Retainer and Staff dots equal to twice the vampire's Herd.",
     "page": 92,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Circle of the Crone Status ••"
   },
   {
@@ -6402,8 +6433,15 @@
     "descriptionEn": "Deepens the supernatural connection created by Close Family through Crúac.",
     "page": 92,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Close Family; Crúac ••"
+    "prerequisites": "Close Family; Crúac ••",
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-close-family",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-agony-ecstasy:conflict-of-faith",
@@ -6420,8 +6458,7 @@
     "description": "Lets an Acolyte uphold a second religious vow when facing relevant breaking points.",
     "descriptionEn": "Lets an Acolyte uphold a second religious vow when facing relevant breaking points.",
     "page": 92,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-agony-ecstasy:hag-blood",
@@ -6439,7 +6476,6 @@
     "descriptionEn": "Lets a ghoul spill lethal blood in place of Vitae for Crúac rites, although a leading ritualist must still supply the first Vitae normally.",
     "page": 92,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Ghoul"
   },
   {
@@ -6458,7 +6494,6 @@
     "descriptionEn": "Coordinates group feeding so participating vampires hunt more effectively and share the resulting benefits.",
     "page": 92,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Circle of the Crone Status ••"
   },
   {
@@ -6478,7 +6513,6 @@
     "descriptionEn": "Makes the vampire's predatory aura contagious, leaving a supernatural emotional link to affected victims.",
     "page": 92,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Occult •••; Humanity 6 or lower"
   },
   {
@@ -6497,7 +6531,6 @@
     "descriptionEn": "Strengthens a Warden's supernatural bond with a chosen beast or charge.",
     "page": 92,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Warden or Animal Ken •••"
   },
   {
@@ -6516,8 +6549,15 @@
     "descriptionEn": "Extends Mythologist so practical knowledge of myth improves Crúac work.",
     "page": 92,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Mythologist; Crúac •"
+    "prerequisites": "Mythologist; Crúac •; cannot have a Crúac Style Merit",
+    "requirements": {
+      "all": [
+        {
+          "merit": "h-vtr-agony-ecstasy:mythologist",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-agony-ecstasy:older-than-i-look",
@@ -6535,7 +6575,6 @@
     "descriptionEn": "An Embraced child or teenager leverages the unsettling contrast between apparent and actual age.",
     "page": 93,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Intimidation ••; Embraced as a child or teenager"
   },
   {
@@ -6554,7 +6593,6 @@
     "descriptionEn": "Reduces the emotional and mechanical burden of repeated ritual sacrifice.",
     "page": 93,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Resolve •••; Humanity 6 or lower"
   },
   {
@@ -6573,7 +6611,6 @@
     "descriptionEn": "Supports a coordinated pack through shared hunting and blood.",
     "page": 93,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Animal Ken •••"
   },
   {
@@ -6596,8 +6633,19 @@
     "descriptionEn": "Establishes a shared Acolyte temple whose rating supports covenant rites and contributors.",
     "page": 93,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Altar; Circle of the Crone Status ••; Safe Place •"
+    "prerequisites": "Altar; Circle of the Crone Status ••; Safe Place •",
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-altar",
+          "minimum": 1
+        },
+        {
+          "merit": "core-2ed:safe-place",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-agony-ecstasy:red-vein-of-fate",
@@ -6615,7 +6663,6 @@
     "descriptionEn": "Reads the occult course of blood and fate through Crúac.",
     "page": 93,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Crúac ••"
   },
   {
@@ -6638,8 +6685,7 @@
     "descriptionEn": "Turns a chosen group's hatred into notoriety and leverage, but forbids Status with that group.",
     "page": 93,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Cannot have Kindred Status in the chosen group",
+    "prerequisites": "Cannot have Kindred Status in the chosen covenant",
     "repeatable": true
   },
   {
@@ -6659,8 +6705,7 @@
     "descriptionEn": "Builds a hidden network that helps Acolytes move and operate between domains.",
     "page": 94,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Circle of the Crone Status •••; Streetwise"
+    "prerequisites": "Circle of the Crone Status •••; Streetwise or Survival ••"
   },
   {
     "id": "h-vtr-agony-ecstasy:witch-s-brew",
@@ -6678,8 +6723,15 @@
     "descriptionEn": "Stores a successfully cast Crúac rite in a prepared potion for later use.",
     "page": 94,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Resources •; Occult •••; Crúac •"
+    "prerequisites": "Resources •; Occult •••; Crúac •",
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:resources",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-agony-ecstasy:unmasked-devil",
@@ -6699,7 +6751,6 @@
     "descriptionEn": "A Style for openly embodying the Beast and gaining progressively stronger predatory benefits.",
     "page": 94,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Intimidation •••; Humanity 6 or lower"
   },
   {
@@ -6721,8 +6772,7 @@
     "description": "Opens Crúac to the emptiness beyond the world, escalating from void-touched casting to a shadow familiar.",
     "descriptionEn": "Opens Crúac to the emptiness beyond the world, escalating from void-touched casting to a shadow familiar.",
     "page": 95,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-agony-ecstasy:omen-plague",
@@ -6743,8 +6793,7 @@
     "description": "Makes Crúac omens contagious and increasingly dangerous to those caught in them.",
     "descriptionEn": "Makes Crúac omens contagious and increasingly dangerous to those caught in them.",
     "page": 95,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-agony-ecstasy:primal-creation",
@@ -6765,8 +6814,7 @@
     "description": "Channels sacrifice into fecund, monstrous creation and permanent transformations.",
     "descriptionEn": "Channels sacrifice into fecund, monstrous creation and permanent transformations.",
     "page": 96,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-agony-ecstasy:shadow-calling",
@@ -6787,8 +6835,7 @@
     "description": "Calls and bargains with ephemeral beings through Crúac.",
     "descriptionEn": "Calls and bargains with ephemeral beings through Crúac.",
     "page": 96,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-agony-ecstasy:sating-the-crone",
@@ -6809,8 +6856,7 @@
     "description": "Draws greater power from increasingly costly and significant sacrifices.",
     "descriptionEn": "Draws greater power from increasingly costly and significant sacrifices.",
     "page": 97,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-agony-ecstasy:storm-herald",
@@ -6831,8 +6877,7 @@
     "description": "Adds weather, movement, and storm effects to Crúac rites.",
     "descriptionEn": "Adds weather, movement, and storm effects to Crúac rites.",
     "page": 97,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-agony-ecstasy:void-familiar",
@@ -6854,7 +6899,6 @@
     "descriptionEn": "Develops the familiar created through Opening the Void.",
     "page": 98,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Opening the Void"
   },
   {
@@ -6876,8 +6920,7 @@
     "description": "Injects escalating supernatural instability into rites and their subjects.",
     "descriptionEn": "Injects escalating supernatural instability into rites and their subjects.",
     "page": 98,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-agony-ecstasy:mandragora-garden",
@@ -6899,8 +6942,15 @@
     "descriptionEn": "Maintains a blood-fed garden of ghoul plants that yields Vitae each month and can dispose of helpless prey.",
     "page": 105,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Kindred; Safe Place •"
+    "prerequisites": "Kindred; Safe Place •",
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:safe-place",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-agony-ecstasy:sorcerer-s-harvest",
@@ -6918,7 +6968,6 @@
     "descriptionEn": "Uses a personally cultivated Mandragora Garden as an extension of the ritualist's body and prolongs rites cast within it.",
     "page": 106,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Mandragora Garden •; Crúac •"
   },
   {
@@ -6940,7 +6989,6 @@
     "descriptionEn": "Makes mandragora hardier and cheaper to cultivate, even allowing delicate plants to survive the transformation.",
     "page": 106,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Mandragora Garden •; Occult ••"
   },
   {
@@ -6960,8 +7008,15 @@
     "descriptionEn": "Enhances newly created mandragora with a clan Discipline or scene-long mobility; at four dots they gain both.",
     "page": 107,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Red Thumb; Blood Potency 2"
+    "prerequisites": "Red Thumb; Blood Potency 2",
+    "requirements": {
+      "all": [
+        {
+          "merit": "h-vtr-agony-ecstasy:red-thumb",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-agony-ecstasy:what-you-ve-done-for-her-lately",
@@ -6978,8 +7033,7 @@
     "description": "Extends its witnessed Acolyte ritual benefit from a scene to a night.",
     "descriptionEn": "Extends its witnessed Acolyte ritual benefit from a scene to a night.",
     "page": 107,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-fire-revolution:bloodroots-associate",
@@ -6997,7 +7051,6 @@
     "descriptionEn": "Connects the character to the Bloodroots faction and grants its political and grassroots benefits.",
     "page": 72,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
   },
   {
@@ -7016,7 +7069,6 @@
     "descriptionEn": "Grants 9-again to agenda-related Streetwise and Survival and limited access to Rule of One, while capping Carthian Status at three.",
     "page": 73,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
   },
   {
@@ -7035,7 +7087,6 @@
     "descriptionEn": "Grants 9-again to agenda-related Computer and Subterfuge and lets I Know a Guy call on Resources.",
     "page": 75,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
   },
   {
@@ -7054,7 +7105,6 @@
     "descriptionEn": "Grants 9-again to agenda-related Academics and Occult and improves the first purchase of Coda Against Sorcery.",
     "page": 75,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
   },
   {
@@ -7073,7 +7123,6 @@
     "descriptionEn": "Grants 9-again to agenda-related Athletics and Survival and calls on Army of One through faction solidarity.",
     "page": 76,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
   },
   {
@@ -7092,7 +7141,6 @@
     "descriptionEn": "Grants 9-again to agenda-related Larceny and Stealth and expands I Know a Guy while undermining another covenant.",
     "page": 76,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
   },
   {
@@ -7111,7 +7159,6 @@
     "descriptionEn": "Grants 9-again to agenda-related Academics and Science and substitutes knowledge for Status on low-dot nonphysical Carthian Merits.",
     "page": 76,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
   },
   {
@@ -7130,7 +7177,6 @@
     "descriptionEn": "Grants 9-again to agenda-related Occult and Politics and supplies supernatural Contacts and a related Politics Specialty.",
     "page": 76,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
   },
   {
@@ -7149,7 +7195,6 @@
     "descriptionEn": "Provokes Kindred into following or confronting the character in social scenes.",
     "page": 93,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Presence •••"
   },
   {
@@ -7172,7 +7217,6 @@
     "descriptionEn": "Coordinates a colony's Beasts through progressively stronger communal benefits.",
     "page": 93,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Member of a colony"
   },
   {
@@ -7191,7 +7235,6 @@
     "descriptionEn": "Uses performance and deception to provoke political action.",
     "page": 93,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Expression •••; Subterfuge •••"
   },
   {
@@ -7210,7 +7253,6 @@
     "descriptionEn": "Applies legal expertise to Carthian disputes and Law.",
     "page": 94,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••; Academics •••"
   },
   {
@@ -7231,7 +7273,6 @@
     "descriptionEn": "Grants a Carthian regnant's ghoul effective Carthian Status and access to Carthian Laws up to the Merit rating.",
     "page": 94,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Politics •••; Ghoul with a Carthian regnant"
   },
   {
@@ -7250,8 +7291,15 @@
     "descriptionEn": "Expands Devotion Experimenter with more reliable and productive experimentation.",
     "page": 94,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Devotion Experimenter; at least three Devotions using the signature Discipline of the chosen clan"
+    "prerequisites": "Devotion Experimenter; at least three Devotions using the signature Discipline of the chosen clan",
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-sotc:devotion-experimenter",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-fire-revolution:cultural-artifact",
@@ -7269,7 +7317,6 @@
     "descriptionEn": "Owns an object of cultural significance that lends authority and leverage.",
     "page": 94,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
   },
   {
@@ -7292,8 +7339,7 @@
     "descriptionEn": "A progressive Style for enforcing Movement decisions through escalating physical pressure.",
     "page": 94,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Carthian Movement Status •; Resolve ••; Brawl ••; Firearms •• or Weaponry ••"
+    "prerequisites": "Carthian Movement Status •; Resolve ••; Brawl or Firearms or Weaponry ••"
   },
   {
     "id": "h-vtr-fire-revolution:firebomber",
@@ -7311,7 +7357,6 @@
     "descriptionEn": "Uses fire as a revolutionary weapon while controlling panic and collateral risk.",
     "page": 95,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Athletics ••; Resolve •••; Vigor •"
   },
   {
@@ -7330,7 +7375,6 @@
     "descriptionEn": "Endures and weaponizes the symbolism and terror of fire.",
     "page": 96,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Composure •••; Resilience ••"
   },
   {
@@ -7349,8 +7393,19 @@
     "descriptionEn": "Once per chapter, rolls Intelligence + Manipulation + Contacts to obtain an available item or service through someone who owes a favor.",
     "page": 96,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Contacts ••; I Know a Guy"
+    "prerequisites": "Contacts ••; I Know a Guy",
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:contacts",
+          "minimum": 2
+        },
+        {
+          "merit": "vtr-i-know-a-guy",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-fire-revolution:janus",
@@ -7368,7 +7423,6 @@
     "descriptionEn": "Maintains opposed political faces and loyalties without easily revealing the contradiction.",
     "page": 96,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Subterfuge ••"
   },
   {
@@ -7389,8 +7443,19 @@
     "descriptionEn": "Builds a mutual-aid network that supplies favors, resistance to coercion, and practical credit.",
     "page": 96,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Carthian Movement Status ••; Contacts •• or Allies ••"
+    "prerequisites": "Carthian Movement Status ••; Contacts •• or Allies ••",
+    "requirements": {
+      "any": [
+        {
+          "merit": "core-2ed:contacts",
+          "minimum": 2
+        },
+        {
+          "merit": "core-2ed:allies",
+          "minimum": 2
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-fire-revolution:laissez-faire-predator",
@@ -7408,7 +7473,6 @@
     "descriptionEn": "Feeds opportunistically from accessible vessels and rejects territorial ownership.",
     "page": 96,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Streetwise •• or Survival ••"
   },
   {
@@ -7427,8 +7491,10 @@
     "descriptionEn": "Turns a shallow performance of rebellion into social advantage, but cannot coexist with Punk Rock.",
     "page": 96,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Cannot have Punk Rock"
+    "prerequisites": "Cannot have Punk Rock",
+    "excludes": [
+      "h-vtr-fire-revolution:punk-rock"
+    ]
   },
   {
     "id": "h-vtr-fire-revolution:hobbyist-clique-advanced",
@@ -7446,8 +7512,15 @@
     "descriptionEn": "Strengthens a Hobbyist Clique through exceptional expertise in its chosen Skill.",
     "page": 96,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Hobbyist Clique; chosen Skill •••"
+    "prerequisites": "Hobbyist Clique; chosen Skill •••",
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:hobbyist-clique",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-fire-revolution:punk-rock",
@@ -7465,8 +7538,13 @@
     "descriptionEn": "Rewards genuine rejection of authority, but cannot coexist with Poser.",
     "page": 97,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Cannot have Poser"
+    "prerequisites": "Cannot have Poser",
+    "excludes": [
+      "h-vtr-fire-revolution:poser",
+      "vtr-atrocious",
+      "vtr-cutthroat",
+      "vtr-enticing"
+    ]
   },
   {
     "id": "h-vtr-fire-revolution:strange-laws",
@@ -7484,7 +7562,6 @@
     "descriptionEn": "Adapts Carthian Law to unusual communities and supernatural social structures.",
     "page": 97,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Two dots in a Social Merit"
   },
   {
@@ -7503,7 +7580,6 @@
     "descriptionEn": "Lets a self-reliant Firebrand stand alone against group pressure at a cost.",
     "page": 97,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Resolve •••"
   },
   {
@@ -7522,7 +7598,6 @@
     "descriptionEn": "Shares a Carthian Law's benefits with others while accepting part of their burden.",
     "page": 97,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Occult ••; one Carthian Law"
   },
   {
@@ -7540,8 +7615,7 @@
     "description": "Makes ideological commitment a source of resolve and influence.",
     "descriptionEn": "Makes ideological commitment a source of resolve and influence.",
     "page": 97,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-fire-revolution:show-the-belly",
@@ -7560,7 +7634,6 @@
     "descriptionEn": "Uses deliberate submission to control the terms of a predatory confrontation.",
     "page": 97,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Composure •••"
   },
   {
@@ -7579,8 +7652,15 @@
     "descriptionEn": "Maintains focused observation under supernatural or political pressure.",
     "page": 97,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Acute Senses; Resolve •••"
+    "prerequisites": "Acute Senses; Resolve •••",
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-acute-senses",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-fire-revolution:beast-of-law",
@@ -7597,8 +7677,7 @@
     "description": "The character's Beast recognizes and responds to Carthian Law.",
     "descriptionEn": "The character's Beast recognizes and responds to Carthian Law.",
     "page": 99,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-fire-revolution:breaking-bread",
@@ -7615,8 +7694,7 @@
     "description": "A shared meal establishes supernatural hospitality and its consequences.",
     "descriptionEn": "A shared meal establishes supernatural hospitality and its consequences.",
     "page": 100,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-fire-revolution:birth-control",
@@ -7634,7 +7712,7 @@
     "descriptionEn": "Regulates the creation of new vampires within the Movement's jurisdiction.",
     "page": 100,
     "homebrew": true,
-    "descriptivePrerequisites": true
+    "prerequisites": "Carthian Movement Status •••; Blood Potency ••"
   },
   {
     "id": "h-vtr-fire-revolution:enforce-elysium",
@@ -7652,7 +7730,7 @@
     "descriptionEn": "Makes the peace of Elysium carry the supernatural force of Law.",
     "page": 101,
     "homebrew": true,
-    "descriptivePrerequisites": true
+    "prerequisites": "Carthian Movement Status ••"
   },
   {
     "id": "h-vtr-fire-revolution:i-do-not-recognize-your-authority",
@@ -7669,8 +7747,7 @@
     "description": "Rejects an outside claimant's supernatural authority.",
     "descriptionEn": "Rejects an outside claimant's supernatural authority.",
     "page": 101,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-fire-revolution:the-judas-gambit",
@@ -7687,8 +7764,7 @@
     "description": "Turns a willing sacrifice or betrayal into legal leverage.",
     "descriptionEn": "Turns a willing sacrifice or betrayal into legal leverage.",
     "page": 101,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-fire-revolution:full-transparency",
@@ -7706,7 +7782,7 @@
     "descriptionEn": "Compels disclosure and punishes concealed dealings under Carthian authority.",
     "page": 101,
     "homebrew": true,
-    "descriptivePrerequisites": true
+    "prerequisites": "Carthian Movement Status •••"
   },
   {
     "id": "h-vtr-fire-revolution:private-property",
@@ -7724,7 +7800,15 @@
     "descriptionEn": "Makes a Haven and its boundaries legally and supernaturally protected.",
     "page": 102,
     "homebrew": true,
-    "descriptivePrerequisites": true
+    "prerequisites": "Haven •",
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-haven",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-fire-revolution:retroactive-continuity",
@@ -7742,7 +7826,7 @@
     "descriptionEn": "Rewrites the legal continuity of a prior event with permanent consequences.",
     "page": 102,
     "homebrew": true,
-    "descriptivePrerequisites": true
+    "prerequisites": "Carthian Movement Status •••••"
   },
   {
     "id": "h-vtr-fire-revolution:legal-guardian",
@@ -7760,7 +7844,7 @@
     "descriptionEn": "Places another vampire under the character's legal protection.",
     "page": 102,
     "homebrew": true,
-    "descriptivePrerequisites": true
+    "prerequisites": "Blood Potency ••"
   },
   {
     "id": "h-vtr-fire-revolution:parlay",
@@ -7778,7 +7862,7 @@
     "descriptionEn": "Creates protected space for negotiation under Carthian Law.",
     "page": 102,
     "homebrew": true,
-    "descriptivePrerequisites": true
+    "prerequisites": "Carthian Movement Status ••"
   },
   {
     "id": "h-vtr-fire-revolution:rules-of-engagement",
@@ -7796,7 +7880,7 @@
     "descriptionEn": "Defines and enforces lawful limits on violence.",
     "page": 103,
     "homebrew": true,
-    "descriptivePrerequisites": true
+    "prerequisites": "Carthian Movement Status ••"
   },
   {
     "id": "h-vtr-fire-revolution:special-reserve",
@@ -7814,7 +7898,19 @@
     "descriptionEn": "Protects a designated feeding reserve through Lex Terrae.",
     "page": 103,
     "homebrew": true,
-    "descriptivePrerequisites": true
+    "prerequisites": "Lex Terrae; Herd •",
+    "requirements": {
+      "all": [
+        {
+          "merit": "vtr-lex-terrae",
+          "minimum": 1
+        },
+        {
+          "merit": "vtr-herd",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-fire-revolution:stake-your-claim",
@@ -7831,8 +7927,7 @@
     "description": "Alerts the character when another vampire intrudes on claimed territory.",
     "descriptionEn": "Alerts the character when another vampire intrudes on claimed territory.",
     "page": 103,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-fire-revolution:working-to-rule",
@@ -7850,7 +7945,7 @@
     "descriptionEn": "Turns strict compliance into organized resistance.",
     "page": 103,
     "homebrew": true,
-    "descriptivePrerequisites": true
+    "prerequisites": "Carthian Movement Status •••"
   },
   {
     "id": "h-vtr-fire-revolution:those-responsible",
@@ -7867,8 +7962,7 @@
     "description": "Makes leaders answer for the conduct of the institutions they control.",
     "descriptionEn": "Makes leaders answer for the conduct of the institutions they control.",
     "page": 103,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-agony-ecstasy:chorister-errata",
@@ -7886,7 +7980,6 @@
     "descriptionEn": "Removes automatic access to Crúac and Circle Merits; Acolytes may still teach Crúac at their own risk.",
     "page": 107,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "defaultDisabled": true,
     "errataFor": "vtr-sotc:chorister",
     "errataForName": "Chorister",
@@ -7910,7 +8003,6 @@
     "descriptionEn": "Enyo's Defense applies once per turn; Eris's Glory grants Inspired once per chapter and its Crúac bonuses last until sunrise.",
     "page": 107,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "defaultDisabled": true,
     "errataFor": "vtr-sotc:temple-guardian",
     "errataForName": "Temple Guardian"
@@ -7931,7 +8023,6 @@
     "descriptionEn": "Uses the revised Seed of Her Divinity Condition supplied by this source.",
     "page": 107,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "defaultDisabled": true,
     "errataFor": "vtr-sotc:viral-mythology",
     "errataForName": "Viral Mythology"
@@ -7956,7 +8047,6 @@
     "descriptionEn": "The rating measures one backup group's quality; it assists teamwork and creates the Carthian Backup Tilt in violence.",
     "page": 114,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "defaultDisabled": true,
     "errataFor": "vtr-sotc:army-of-one",
     "errataForName": "Army of One"
@@ -7977,7 +8067,6 @@
     "descriptionEn": "Optional historical interpretation: Carthian Law may reconstruct powers of the Camarilla from Ancient Roman texts.",
     "page": 114,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "defaultDisabled": true,
     "errataForName": "Origin of Carthian Law",
     "catalogOnly": true
@@ -7998,7 +8087,6 @@
     "descriptionEn": "Documents optional strengthening and limiting adjustments for the excluded improvised-Law framework.",
     "page": 114,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "defaultDisabled": true,
     "errataForName": "Optional Carthian Law framework",
     "catalogOnly": true
@@ -8019,7 +8107,6 @@
     "descriptionEn": "Applies in prepared debate or any setting where the character has a right to make a case; the Storyteller may continue the scene by granting full Willpower and an Experience.",
     "page": 115,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "defaultDisabled": true,
     "errataFor": "vtr-sotc:smooth-criminal",
     "errataForName": "Smooth Criminal"
@@ -8040,7 +8127,6 @@
     "descriptionEn": "Treat Court Jester as a Carthian Law.",
     "page": 115,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "defaultDisabled": true,
     "errataFor": "vtr-sotc:court-jester",
     "errataForName": "Court Jester",
@@ -8062,7 +8148,6 @@
     "descriptionEn": "Only affects invested citizens in good standing, not outsiders or outlaws outside the domain's political structure.",
     "page": 115,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "defaultDisabled": true,
     "errataFor": "vtr-sotc:jack-booted-thug",
     "errataForName": "Jack-Booted Thug"
@@ -8087,7 +8172,6 @@
     "descriptionEn": "For vampires, applies only to blood sorcery and associated rituals, not ordinary clan or bloodline Disciplines unless they are Ritual Disciplines.",
     "page": 115,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "defaultDisabled": true,
     "errataFor": "vtr-sotc:coda-against-sorcery",
     "errataForName": "Coda Against Sorcery"
@@ -8110,7 +8194,6 @@
     "descriptionEn": "Unbreakable must be declared before the combat turn and commits the next instant action to physical violence against the aggressor.",
     "page": 115,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "defaultDisabled": true,
     "errataFor": "vtr-sotc:mobilize-outrage",
     "errataForName": "Mobilize Outrage"

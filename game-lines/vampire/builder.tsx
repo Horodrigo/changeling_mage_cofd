@@ -27,9 +27,9 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { GameLineBuilderModule, GameLineBuilderProps } from "@/lib/game-line-contracts/game-line-ui";
 import { translate, useLanguage, type Locale } from "@/lib/i18n";
-import { commonMeritSpecializations } from "@/lib/core/character/synchronize-merit-grants";
+import { synchronizeCommonMeritGrants } from "@/lib/core/character/synchronize-merit-grants";
 import { mergeCreationMerits } from "@/lib/merit-progression";
-import { meritSelectionProblems, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
+import { meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
 import { VampireExperiencePanel } from "./experience-panel";
 import { systemTerm } from "@/lib/system-terms";
@@ -37,7 +37,7 @@ import type { VampireAnchorDefinition, VampireClanDefinition, VampireCovenantDef
 import { BLOOD_TETHER_PACK_GRANT, hollowKaLimits, hollowKaRank, ORDO_MYSTERIES, recordRatings, simplifiedHollowKaPool, stringArray, synchronizeAutomaticBloodlineDevotions, synchronizeBloodTetherPack, VAMPIRE_CREATION_DISCIPLINES, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName, vampireEditableCreationAttributes } from "./creation-rules";
 import { SHADOW_CULT_SOURCE, isShadowCultId, reconcileVampireCreationMeritGrants, synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { isVampireInlineMeritConfiguration, VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
-import { vampireMeritEligible, vampireMeritFilterCategory, zirnitraMortalMeritCount, zirnitraMortalMeritLimit } from "./merit-eligibility";
+import { vampireMeritEligible, vampireMeritFilterCategory, vampireMeritTraits, zirnitraMortalMeritCount, zirnitraMortalMeritLimit, type VampireMeritContext } from "./merit-eligibility";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
@@ -243,12 +243,37 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   const affiliationDots = vampireCovenantAffiliationDots({ merits: common.merits }, reference.covenants);
   const simplifiedHollowAvailable = Boolean(initialKa.simplified) || vampireHomebrewContentActive(homebrewPreferences, { id: SIMPLIFIED_HOLLOW_ID, source: "Strange Shades: Mekhet" });
 
-  const meritContext: MeritPrerequisiteContext = {
+  const composedTraits = (source: CharacterSheet | null | undefined) => {
+    const advancement = disciplineAdvancement(source, disciplineNames);
+    const finalDisciplines = Object.fromEntries(disciplineNames.map((name) => [name, creationDisciplineNames.includes(name) ? (disciplines[name] ?? 0) + (advancement[name] ?? 0) : advancement[name] ?? 0]));
+    const bpAdvancement = Math.max(0, Number(source?.line_data.blood_potency ?? 1) - Number(source?.line_data.creation_blood_potency ?? source?.line_data.blood_potency ?? 1));
+    const finalBloodPotency = Math.min(10, bloodPotency + bpAdvancement);
+    const finalAttributes = { ...common.attributes };
+    const favoredAttributes = selectedClan?.favoredAttributeMode === "both" ? selectedClan.favoredAttributes : favoredAttribute ? [favoredAttribute] : [];
+    const bloodlineFavored = String(source?.line_data.bloodline_favored_attribute ?? "");
+    const activeFavoredAttributes = source?.line_data.bloodline_id && bloodlineFavored ? [bloodlineFavored] : favoredAttributes;
+    for (const name of activeFavoredAttributes) finalAttributes[name] = Math.min(5, Number(common.attributes[name] ?? 1) + 1);
+    for (const [name, dots] of Object.entries(experienceTraitDots(source, "attributes", "vampire_experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
+    const finalSkills = { ...common.skills };
+    for (const [name, dots] of Object.entries(experienceTraitDots(source, "skills", "vampire_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
+    return { finalDisciplines, finalBloodPotency, finalAttributes, favoredAttributes, finalSkills };
+  };
+  const previewTraits = composedTraits(initial);
+  const previewGrants = { merits: structuredClone(mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved)), specializations: [...common.specializations, ...experienceSpecialties(initial)], line_data: {} };
+  const skillBonuses = synchronizeCommonMeritGrants(previewGrants, source => source === SHADOW_CULT_SOURCE);
+  const effectiveSkills = { ...previewTraits.finalSkills };
+  for (const [name, dots] of Object.entries(skillBonuses)) effectiveSkills[name] = Number(effectiveSkills[name] ?? 0) + dots;
+  const meritContext: VampireMeritContext = {
     statusMeritIds: ["vtr-kindred-status"],
-    gameLine: "VtR", archetypes: ["vampire", clanId, String(initial?.line_data.bloodline_id ?? ""), ...covenantIds], attributes: common.attributes,
+    gameLine: "VtR", archetypes: ["vampire", clanId, String(initial?.line_data.bloodline_id ?? ""), ...covenantIds], attributes: previewTraits.finalAttributes,
     mortalMeritsAllowed: zirnitraRating > 0,
-    skills: common.skills, merits: mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved), meritCatalog,
-    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved), source => source === SHADOW_CULT_SOURCE),
+    traits: vampireMeritTraits({ ...initial?.line_data, disciplines: previewTraits.finalDisciplines, blood_potency: previewTraits.finalBloodPotency, humanity: kaHumanity, blood_sorcery: covenantPower.bloodSorcery }),
+    bloodlineId: String(initial?.line_data.bloodline_id ?? ""), hasTouchstone: Boolean(touchstone.trim()),
+    creation: true, clanId, covenants: reference.covenants, devotionCatalog: powers.devotions,
+    devotionIds: Array.isArray(initial?.line_data.devotion_ids) ? initial.line_data.devotion_ids.map(String) : [],
+    conditionIds: Array.isArray(initial?.current_state.conditions) ? initial.current_state.conditions.map(item => String(item?.id ?? "")) : [],
+    skills: effectiveSkills, merits: previewGrants.merits, meritCatalog,
+    specializations: previewGrants.specializations,
   };
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {
@@ -274,7 +299,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     if (zirnitraMortalMeritCount(meritContext) > zirnitraMortalMeritLimit(zirnitraRating)) add("merits", t("ui.coilOfZirnitra"));
     for (const merit of common.merits) {
       const definition = resolveMeritDefinition(merit, meritCatalog);
-      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext)) add("merits", `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`);
+      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext, (item, context) => vampireMeritEligible(item, context, zirnitraRating))) add("merits", `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`);
       if (definition?.id === "vtr-kindred-status" && !String(merit.configuration?.group ?? "").trim()) add("merits", t("ui.kindredStatusRequiresAClanCovenantOrCity"));
     }
     if (clanId === "hollow-mekhet") {
@@ -350,18 +375,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   };
 
   const buildCharacter = (source: CharacterSheet | null | undefined, draft: boolean) => {
-    const advancement = disciplineAdvancement(source, disciplineNames);
-    const finalDisciplines = Object.fromEntries(disciplineNames.map((name) => [name, creationDisciplineNames.includes(name) ? (disciplines[name] ?? 0) + (advancement[name] ?? 0) : advancement[name] ?? 0]));
-    const bpAdvancement = Math.max(0, Number(source?.line_data.blood_potency ?? 1) - Number(source?.line_data.creation_blood_potency ?? source?.line_data.blood_potency ?? 1));
-    const finalBloodPotency = Math.min(10, bloodPotency + bpAdvancement);
-    const finalAttributes = { ...common.attributes };
-    const favoredAttributes = selectedClan?.favoredAttributeMode === "both" ? selectedClan.favoredAttributes : favoredAttribute ? [favoredAttribute] : [];
-    const bloodlineFavored = String(source?.line_data.bloodline_favored_attribute ?? "");
-    const activeFavoredAttributes = source?.line_data.bloodline_id && bloodlineFavored ? [bloodlineFavored] : favoredAttributes;
-    for (const name of activeFavoredAttributes) finalAttributes[name] = Math.min(5, Number(common.attributes[name] ?? 1) + 1);
-    for (const [name, dots] of Object.entries(experienceTraitDots(source, "attributes", "vampire_experience_history"))) finalAttributes[name] = Number(finalAttributes[name] ?? 1) + dots;
-    const finalSkills = { ...common.skills };
-    for (const [name, dots] of Object.entries(experienceTraitDots(source, "skills", "vampire_experience_history"))) finalSkills[name] = Number(finalSkills[name] ?? 0) + dots;
+    const { finalDisciplines, finalBloodPotency, finalAttributes, favoredAttributes, finalSkills } = composedTraits(source);
     const now = new Date().toISOString();
     const touchstoneSlot = clanId === "ventrue" ? 7 : 6;
     const bloodSorcery = covenantPower.bloodSorcery;

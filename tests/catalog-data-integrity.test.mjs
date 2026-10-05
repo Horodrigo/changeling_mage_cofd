@@ -167,7 +167,7 @@ test("approved Agony & Ecstasy prerequisites match the visually reviewed source 
     assert.equal(merit.sourceId, "h-vtr-agony-ecstasy");
     assert.equal(merit.prerequisites, `Circle of the Crone Status ••; ${skill} ••`);
     assert.equal(merit.page, page);
-    assert.equal(merit.descriptivePrerequisites, true);
+    assert.equal(merit.descriptivePrerequisites, undefined);
   }
 });
 

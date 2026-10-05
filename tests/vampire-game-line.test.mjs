@@ -326,7 +326,7 @@ test("Coil of Zirnitra unlocks one mortal Supernatural Merit per dot and removes
   const context = { gameLine: "VtR", archetypes: ["vampire"], meritCatalog: catalog, merits: [] };
   const mortalSupernatural = catalog.filter((item) => item.mortalOnly);
 
-  assert.equal(mortalSupernatural.length, 48);
+  assert.equal(mortalSupernatural.length, 54);
   assert.equal(mortalSupernatural.filter((item) => item.sourceId === "core-2ed").length, 17);
   assert.equal(mortalSupernatural.filter((item) => item.sourceId === "hurt-locker").length, 30);
   assert.equal(mortalSupernatural.filter((item) => item.sourceId === "dark-eras").length, 1);

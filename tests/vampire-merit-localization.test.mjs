@@ -13,8 +13,8 @@ const portuguese = read("public/game-lines/vampire/data/merits-pt.json");
 const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#x27;");
 
 test("Vampire Portuguese Merits cover applicable fields, level identities and numeric limits in both official and Homebrew records", () => {
-  assert.equal(canonical.length, 403);
-  assert.equal(Object.keys(portuguese).length, 403);
+  assert.equal(canonical.length, 397);
+  assert.equal(Object.keys(portuguese).length, 397);
   for (const [id, presented] of Object.entries(portuguese)) {
     const definition = canonical.find(item => item.id === id);
     assert.ok(definition, id);
@@ -31,7 +31,7 @@ test("Vampire Portuguese Merits cover applicable fields, level identities and nu
     }
   }
   const localized = canonical.filter(item => portuguese[item.id]);
-  assert.equal(localized.filter(item => item.homebrew).length, 249);
+  assert.equal(localized.filter(item => item.homebrew).length, 243);
   assert.equal(localized.filter(item => !item.homebrew).length, 154);
 });
 

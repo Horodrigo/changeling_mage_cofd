@@ -7,6 +7,7 @@ const MENTOR_TRAITS = [
 ].map((label) => ({ value: label, label: label === "Resources" ? "ui.meritConfig.resources" : label }));
 
 export const COMMON_MERIT_CONFIGURATIONS: MeritConfigDefinition[] = [
+  { id: "core-2ed:hobbyist-clique", name: "Hobbyist Clique", fields: [{ key: "skill", label: "ui.skill", kind: "select", options: MENTOR_TRAITS.filter(item => item.value !== "Resources") }] },
   { id:"core-2ed:contacts", name:"Contacts", fields: [{ key: "groups", label: "ui.meritConfig.groupsOrganizationsOrContactName", kind: "list" }] },
   { id:"core-2ed:staff", name:"Staff", fields: [{ key: "skills", label: "ui.meritConfig.staffSkills", kind: "list" }] },
   { id:"core-2ed:allies", name:"Allies", fields: [{ key: "subject", label: "ui.meritConfig.alliedGroup", kind: "text" }] },

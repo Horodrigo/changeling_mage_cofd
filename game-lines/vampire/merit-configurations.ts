@@ -7,6 +7,12 @@ import type { MeritConfigDefinition } from "@/lib/core/character/merit-configura
 
 export const VAMPIRE_MERIT_CONFIGURATIONS: readonly MeritConfigDefinition[] = [
   ...COMMON_MERIT_CONFIGURATIONS,
+  { id: "h-vtr-fire-revolution:hobbyist-clique-advanced", name: "Hobbyist Clique (Advanced)", line: "VtR", fields: [{ key: "skill", label: "ui.skill", kind: "text" }] },
+  { id: "h-vtr-fire-revolution:devotion-experimenter-advanced", name: "Devotion Experimenter (Advanced)", line: "VtR", fields: [{ key: "clan", label: "ui.clan", kind: "select", options: ["daeva", "gangrel", "mekhet", "nosferatu", "ventrue"].map(value => ({ value, label: value[0].toUpperCase() + value.slice(1) })) }] },
+  { id: "h-vtr-agony-ecstasy:reviled", name: "Reviled", line: "VtR", fields: [{ key: "group", label: "ui.meritConfig.clanCovenantOrCity", kind: "text" }] },
+  { id: "vtr-false-gods:invisible-hand", name: "Invisible Hand", line: "VtR", fields: [{ key: "group", label: "ui.meritConfig.group", kind: "text" }] },
+  { id: "vtr-dynasty-membership", name: "Dynasty Membership", line: "VtR", fields: [{ key: "dynasty", label: "ui.meritConfig.group", kind: "text" }] },
+  { id: "vtr-strange-shades:speed-of-thought", name: "Speed of Thought", line: "VtR", fields: [{ key: "skill", label: "ui.skill", kind: "select", options: ["Academics", "Computer", "Crafts", "Investigation", "Medicine", "Occult", "Politics", "Science"].map(value => ({ value, label: value })) }] },
 
   {
     id:"vtr-kindred-status", name:"Kindred Status",

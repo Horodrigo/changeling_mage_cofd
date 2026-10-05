@@ -5494,5 +5494,95 @@
     "translatedName": "Rules Lawyer",
     "page": 99,
     "shard": "core"
+  },
+  {
+    "id": "vtr-false-gods:mass-expansion",
+    "name": "Mass Expansion",
+    "ratings": [
+      2
+    ],
+    "line": "Core",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "category": "Typhos",
+    "priority": 10,
+    "translatedName": "Mass Expansion",
+    "page": 59,
+    "shard": "core"
+  },
+  {
+    "id": "vtr-false-gods:musculature-limiter-removal",
+    "name": "Musculature Limiter Removal",
+    "ratings": [
+      3
+    ],
+    "line": "Core",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "category": "Typhos",
+    "priority": 10,
+    "translatedName": "Musculature Limiter Removal",
+    "page": 59,
+    "shard": "core"
+  },
+  {
+    "id": "vtr-false-gods:necrobiological-transplant",
+    "name": "Necrobiological Transplant",
+    "ratings": [
+      3
+    ],
+    "line": "Core",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "category": "Typhos",
+    "priority": 10,
+    "translatedName": "Necrobiological Transplant",
+    "page": 59,
+    "shard": "core"
+  },
+  {
+    "id": "vtr-false-gods:parasensory-awakening",
+    "name": "Parasensory Awakening",
+    "ratings": [
+      2
+    ],
+    "line": "Core",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "category": "Typhos",
+    "priority": 10,
+    "translatedName": "Parasensory Awakening",
+    "page": 59,
+    "shard": "core"
+  },
+  {
+    "id": "vtr-false-gods:predatory-pheromone",
+    "name": "Predatory Pheromone",
+    "ratings": [
+      1
+    ],
+    "line": "Core",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "category": "Typhos",
+    "priority": 10,
+    "translatedName": "Predatory Pheromone",
+    "page": 59,
+    "shard": "core"
+  },
+  {
+    "id": "vtr-false-gods:sanguine-sensory-enhancement",
+    "name": "Sanguine Sensory Enhancement",
+    "ratings": [
+      1
+    ],
+    "line": "Core",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "category": "Typhos",
+    "priority": 10,
+    "translatedName": "Sanguine Sensory Enhancement",
+    "page": 60,
+    "shard": "core"
   }
 ]

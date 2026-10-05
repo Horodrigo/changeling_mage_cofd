@@ -1868,5 +1868,35 @@
         "description": "Trata o escudo como cobertura protetora com Durabilidade igual ao Tamanho dele, +1 para cada aliado adjacente com escudo."
       }
     ]
+  },
+  "vtr-false-gods:mass-expansion": {
+    "name": "Expansão de Massa",
+    "description": "Um paciente mortal recebe Gigante e se torna mais fácil de interpretar e ferir para o médico Typhos.",
+    "prerequisites": "Somente mortais; Paciente humano; médico Typhos com Cirurgião"
+  },
+  "vtr-false-gods:musculature-limiter-removal": {
+    "name": "Remoção dos Limitadores Musculares",
+    "description": "Um paciente mortal pode se ferir para imitar Intensidade Física e fornece sangue mais rico ao seu médico.",
+    "prerequisites": "Somente mortais; Paciente humano; médico Typhos com Cirurgião"
+  },
+  "vtr-false-gods:necrobiological-transplant": {
+    "name": "Transplante Necrobiológico",
+    "description": "Um paciente mortal recebe um ponto de Atributo Físico além do limite humano por meio de tecido de Membro implantado.",
+    "prerequisites": "Somente mortais; Paciente humano; médico Typhos com Cirurgião"
+  },
+  "vtr-false-gods:parasensory-awakening": {
+    "name": "Despertar Parassensorial",
+    "description": "Um paciente mortal recebe um sentido psíquico semelhante a Arrepio da Besta, que o médico Typhos pode acessar.",
+    "prerequisites": "Somente mortais; Paciente humano; médico Typhos com Cirurgião; Auspex • (médico)"
+  },
+  "vtr-false-gods:predatory-pheromone": {
+    "name": "Feromônio Predatório",
+    "description": "Um paciente mortal recebe bônus sociais com humanos, mas se torna mais suscetível ao fascínio dos vampiros.",
+    "prerequisites": "Somente mortais; Paciente humano; médico Typhos com Cirurgião"
+  },
+  "vtr-false-gods:sanguine-sensory-enhancement": {
+    "name": "Aprimoramento Sensorial Sanguíneo",
+    "description": "Um paciente mortal recebe Sentidos Aguçados em proporção à Potência de Sangue do médico.",
+    "prerequisites": "Somente mortais; Paciente humano; médico Typhos com Cirurgião"
   }
 }

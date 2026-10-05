@@ -13,9 +13,12 @@ const slug = (name) => name.toLowerCase().normalize("NFD").replace(/[\u0300-\u03
 
 const AE = { sourceId: "h-vtr-agony-ecstasy", source: "Agony & Ecstasy: Circle of the Crone" };
 const FR = { sourceId: "h-vtr-fire-revolution", source: "Fire & Revolution: Carthians" };
+const existingMerits = new Map([...read("public/shared/data/merits.json"), ...read("public/game-lines/vampire/data/merits.json")].map(item => [item.id, item]));
 const merit = (book, name, ratings, page, description, extra = {}) => ({
   id: `${book.sourceId}:${slug(name)}`, name, ratings, line: "VtR", ...book, category: "Vampire", priority: 10,
-  translatedName: name, description, descriptionEn: description, page, homebrew: true, descriptivePrerequisites: true, ...extra,
+  translatedName: name, description, descriptionEn: description, page, homebrew: true, ...extra,
+  ...(existingMerits.get(`${book.sourceId}:${slug(name)}`)?.requirements ? { requirements: existingMerits.get(`${book.sourceId}:${slug(name)}`).requirements } : {}),
+  ...(existingMerits.get(`${book.sourceId}:${slug(name)}`)?.excludes ? { excludes: existingMerits.get(`${book.sourceId}:${slug(name)}`).excludes } : {}),
 });
 const humanMerit = (book, name, ratings, page, description, category, prerequisites) => merit(book, name, ratings, page, description, { line: "Core", category, ...(prerequisites ? { prerequisites } : {}) });
 const devotion = (book, name, page, prerequisites, experienceCost, summary, extra = {}) => ({
@@ -33,8 +36,8 @@ const errataMerit = (book, name, page, errataFor, errataForName, description, ex
 const vampireMerits = [
   merit(AE, "Spell Swallowing", dots(1, 5), 67, "A Clíodhna Crúac Style that fast-casts and consumes rites, absorbs hostile ritual magic, and ultimately devours other supernatural sorcery.", { category: "Tradition", prerequisites: "Circle of the Crone Status ••; Occult ••" }),
   merit(AE, "Neidan Gu", dots(1, 5), 70, "A Jiju Crúac Style that replaces outward ceremony with inner alchemy, poisons victims through rites, and makes the ritualist's Vitae toxic.", { category: "Tradition", prerequisites: "Circle of the Crone Status ••; Crafts ••" }),
-  merit(AE, "Uncaged Indulgence", dots(1, 5), 73, "A Maenad Crúac Style that turns communal excess, hunger, and frenzy into ritual power while leaving the caster Tempted.", { category: "Tradition", prerequisites: "Circle of the Crone Status ••; Socialize ••" }),
-  merit(AE, "Unconscious Alignment", dots(1, 5), 75, "A Syzygist Crúac Style that aligns rites with dreams and celestial omens to alter timing, targeting, and prophetic insight.", { category: "Tradition", prerequisites: "Circle of the Crone Status ••; Occult ••" }),
+  merit(AE, "Uncaged Indulgence", dots(1, 5), 73, "A Maenad Crúac Style that turns communal excess, hunger, and frenzy into ritual power while leaving the caster Tempted.", { category: "Tradition", prerequisites: "Circle of the Crone Status ••; Expression ••" }),
+  merit(AE, "Unconscious Alignment", dots(1, 5), 75, "A Syzygist Crúac Style that aligns rites with dreams and celestial omens to alter timing, targeting, and prophetic insight.", { category: "Tradition", prerequisites: "Circle of the Crone Status ••; Academics ••" }),
 
   merit(AE, "Annis Bite", [2, 3], 90, "Turns the Acolyte's bite into a more fearsome predatory and ritual instrument.", { category: "Circle of the Crone" }),
   merit(AE, "Apothecary", dots(1, 5), 90, "A Style for distilling Crúac rites into potions, improving their storage, sharing, potency, and sympathetic reach.", { category: "Circle of the Crone", prerequisites: "Witch's Brew; Crafts or Science •••" }),
@@ -47,14 +50,14 @@ const vampireMerits = [
   merit(AE, "Hunting Party", [2], 92, "Coordinates group feeding so participating vampires hunt more effectively and share the resulting benefits.", { category: "Circle of the Crone", prerequisites: "Circle of the Crone Status ••" }),
   merit(AE, "Infectious Aura", [2, 3], 92, "Makes the vampire's predatory aura contagious, leaving a supernatural emotional link to affected victims.", { category: "Circle of the Crone", prerequisites: "Occult •••; Humanity 6 or lower" }),
   merit(AE, "Master's Shadow", [1], 92, "Strengthens a Warden's supernatural bond with a chosen beast or charge.", { category: "Circle of the Crone", prerequisites: "Warden or Animal Ken •••" }),
-  merit(AE, "Mythologist (Advanced)", [2], 92, "Extends Mythologist so practical knowledge of myth improves Crúac work.", { category: "Circle of the Crone", prerequisites: "Mythologist; Crúac •" }),
+  merit(AE, "Mythologist (Advanced)", [2], 92, "Extends Mythologist so practical knowledge of myth improves Crúac work.", { category: "Circle of the Crone", prerequisites: "Mythologist; Crúac •; cannot have a Crúac Style Merit" }),
   merit(AE, "Older Than I Look", [2], 93, "An Embraced child or teenager leverages the unsettling contrast between apparent and actual age.", { category: "Circle of the Crone", prerequisites: "Intimidation ••; Embraced as a child or teenager" }),
   merit(AE, "Sacrificial Inurement", [3], 93, "Reduces the emotional and mechanical burden of repeated ritual sacrifice.", { category: "Circle of the Crone", prerequisites: "Resolve •••; Humanity 6 or lower" }),
   merit(AE, "Sustaining the Pack", [2], 93, "Supports a coordinated pack through shared hunting and blood.", { category: "Circle of the Crone", prerequisites: "Animal Ken •••" }),
   merit(AE, "Temple", dots(1, 5), 93, "Establishes a shared Acolyte temple whose rating supports covenant rites and contributors.", { category: "Circle of the Crone", prerequisites: "Altar; Circle of the Crone Status ••; Safe Place •" }),
   merit(AE, "Red Vein of Fate", [3], 93, "Reads the occult course of blood and fate through Crúac.", { category: "Circle of the Crone", prerequisites: "Crúac ••" }),
-  merit(AE, "Reviled", dots(1, 5), 93, "Turns a chosen group's hatred into notoriety and leverage, but forbids Status with that group.", { category: "Circle of the Crone", prerequisites: "Cannot have Kindred Status in the chosen group", repeatable: true }),
-  merit(AE, "Underground Matron", [1, 2], 94, "Builds a hidden network that helps Acolytes move and operate between domains.", { category: "Circle of the Crone", prerequisites: "Circle of the Crone Status •••; Streetwise" }),
+  merit(AE, "Reviled", dots(1, 5), 93, "Turns a chosen group's hatred into notoriety and leverage, but forbids Status with that group.", { category: "Circle of the Crone", prerequisites: "Cannot have Kindred Status in the chosen covenant", repeatable: true }),
+  merit(AE, "Underground Matron", [1, 2], 94, "Builds a hidden network that helps Acolytes move and operate between domains.", { category: "Circle of the Crone", prerequisites: "Circle of the Crone Status •••; Streetwise or Survival ••" }),
   merit(AE, "Witch's Brew", [2], 94, "Stores a successfully cast Crúac rite in a prepared potion for later use.", { category: "Circle of the Crone", prerequisites: "Resources •; Occult •••; Crúac •" }),
   merit(AE, "Unmasked Devil", dots(1, 3), 94, "A Style for openly embodying the Beast and gaining progressively stronger predatory benefits.", { category: "Circle of the Crone", prerequisites: "Intimidation •••; Humanity 6 or lower" }),
 
@@ -92,10 +95,10 @@ const vampireMerits = [
     ["Agent Provocateur", [2], 93, "Uses performance and deception to provoke political action.", "Expression •••; Subterfuge •••"],
     ["Carthian Lawyer", [2], 94, "Applies legal expertise to Carthian disputes and Law.", "Carthian Movement Status ••; Academics •••"],
     ["Constituent", dots(1, 3), 94, "Grants a Carthian regnant's ghoul effective Carthian Status and access to Carthian Laws up to the Merit rating.", "Politics •••; Ghoul with a Carthian regnant"],
-    ["Devotion Experimenter (Advanced)", [3], 94, "Expands Devotion Experimenter with more reliable and productive experimentation.", "Devotion Experimenter"],
-    ["Cultural Artifact", [2], 94, "Owns an object of cultural significance that lends authority and leverage.", ""],
-    ["Enforcement", dots(1, 5), 94, "A progressive Style for enforcing Movement decisions through escalating physical pressure.", "Carthian Movement Status •; Resolve ••; Brawl ••"],
-    ["Firebomber", [2], 95, "Uses fire as a revolutionary weapon while controlling panic and collateral risk.", "Athletics ••; Resolve •••"],
+    ["Devotion Experimenter (Advanced)", [3], 94, "Expands Devotion Experimenter with more reliable and productive experimentation.", "Devotion Experimenter; at least three Devotions using the signature Discipline of the chosen clan"],
+    ["Cultural Artifact", [2], 94, "Owns an object of cultural significance that lends authority and leverage.", "Carthian Movement Status ••"],
+    ["Enforcement", dots(1, 5), 94, "A progressive Style for enforcing Movement decisions through escalating physical pressure.", "Carthian Movement Status •; Resolve ••; Brawl or Firearms or Weaponry ••"],
+    ["Firebomber", [2], 95, "Uses fire as a revolutionary weapon while controlling panic and collateral risk.", "Athletics ••; Resolve •••; Vigor •"],
     ["Fire-Branded", [3], 96, "Endures and weaponizes the symbolism and terror of fire.", "Composure •••; Resilience ••"],
     ["I Know a Guy (Advanced)", [2], 96, "Once per chapter, rolls Intelligence + Manipulation + Contacts to obtain an available item or service through someone who owes a favor.", "Contacts ••; I Know a Guy"],
     ["Janus", [3], 96, "Maintains opposed political faces and loyalties without easily revealing the contradiction.", "Subterfuge ••"],
@@ -115,21 +118,21 @@ const vampireMerits = [
   ...[
     ["Beast of Law", 2, 99, "The character's Beast recognizes and responds to Carthian Law."],
     ["Breaking Bread", 3, 100, "A shared meal establishes supernatural hospitality and its consequences."],
-    ["Birth Control", 3, 100, "Regulates the creation of new vampires within the Movement's jurisdiction."],
-    ["Enforce Elysium", 3, 101, "Makes the peace of Elysium carry the supernatural force of Law."],
+    ["Birth Control", 3, 100, "Regulates the creation of new vampires within the Movement's jurisdiction.", "Carthian Movement Status •••; Blood Potency ••"],
+    ["Enforce Elysium", 3, 101, "Makes the peace of Elysium carry the supernatural force of Law.", "Carthian Movement Status ••"],
     ["I Do Not Recognize Your Authority", 2, 101, "Rejects an outside claimant's supernatural authority."],
     ["The Judas Gambit", 1, 101, "Turns a willing sacrifice or betrayal into legal leverage."],
-    ["Full Transparency", 3, 101, "Compels disclosure and punishes concealed dealings under Carthian authority."],
-    ["Private Property", 3, 102, "Makes a Haven and its boundaries legally and supernaturally protected."],
-    ["Retroactive Continuity", 5, 102, "Rewrites the legal continuity of a prior event with permanent consequences."],
-    ["Legal Guardian", 1, 102, "Places another vampire under the character's legal protection."],
-    ["Parlay", 3, 102, "Creates protected space for negotiation under Carthian Law."],
-    ["Rules of Engagement", 3, 103, "Defines and enforces lawful limits on violence."],
-    ["Special Reserve", 1, 103, "Protects a designated feeding reserve through Lex Terrae."],
+    ["Full Transparency", 3, 101, "Compels disclosure and punishes concealed dealings under Carthian authority.", "Carthian Movement Status •••"],
+    ["Private Property", 3, 102, "Makes a Haven and its boundaries legally and supernaturally protected.", "Haven •"],
+    ["Retroactive Continuity", 5, 102, "Rewrites the legal continuity of a prior event with permanent consequences.", "Carthian Movement Status •••••"],
+    ["Legal Guardian", 1, 102, "Places another vampire under the character's legal protection.", "Blood Potency ••"],
+    ["Parlay", 3, 102, "Creates protected space for negotiation under Carthian Law.", "Carthian Movement Status ••"],
+    ["Rules of Engagement", 3, 103, "Defines and enforces lawful limits on violence.", "Carthian Movement Status ••"],
+    ["Special Reserve", 1, 103, "Protects a designated feeding reserve through Lex Terrae.", "Lex Terrae; Herd •"],
     ["Stake Your Claim", 1, 103, "Alerts the character when another vampire intrudes on claimed territory."],
-    ["Working to Rule", 2, 103, "Turns strict compliance into organized resistance."],
+    ["Working to Rule", 2, 103, "Turns strict compliance into organized resistance.", "Carthian Movement Status •••"],
     ["Those Responsible", 1, 103, "Makes leaders answer for the conduct of the institutions they control."],
-  ].map(([name, rating, page, description]) => merit(FR, name, [rating], page, description, { category: "Carthian Law" })),
+  ].map(([name, rating, page, description, prerequisites]) => merit(FR, name, [rating], page, description, { category: "Carthian Law", ...(prerequisites ? { prerequisites } : {}) })),
 
   errataMerit(AE, "Chorister", 107, "vtr-sotc:chorister", "Chorister", "Removes automatic access to Crúac and Circle Merits; Acolytes may still teach Crúac at their own risk.", { ratings: [2], prerequisites: "Not a member of the Circle of the Crone" }),
   errataMerit(AE, "Temple Guardian", 107, "vtr-sotc:temple-guardian", "Temple Guardian", "Enyo's Defense applies once per turn; Eris's Glory grants Inspired once per chapter and its Crúac bonuses last until sunrise.", { ratings: dots(1, 3) }),

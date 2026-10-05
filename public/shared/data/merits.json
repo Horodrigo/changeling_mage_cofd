@@ -3775,7 +3775,6 @@
     "descriptionEn": "Studies multiple mythic traditions deeply enough to identify patterns, symbols, and ritual correspondences.",
     "page": 99,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Occult •• with two mythological Specialties"
   },
   {
@@ -3792,13 +3791,18 @@
     "descriptionEn": "A progressive Social Style for starting, sustaining, and exploiting a party.",
     "page": 99,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Presence •••; Socialize ••"
   },
   {
     "id": "h-vtr-agony-ecstasy:poisoner-s-garden",
     "name": "Poisoner's Garden",
-    "ratings": [1, 2, 3, 4, 5],
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "line": "Core",
     "sourceId": "h-vtr-agony-ecstasy",
     "source": "Agony & Ecstasy: Circle of the Crone",
@@ -3809,8 +3813,15 @@
     "descriptionEn": "Cultivates increasingly dangerous toxic plants in a Safe Place.",
     "page": 99,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Science or Survival •••; Safe Place •"
+    "prerequisites": "Science or Survival •••; Safe Place •",
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:safe-place",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-agony-ecstasy:roughing-it",
@@ -3826,7 +3837,6 @@
     "descriptionEn": "Endures extended exposure and deprivation through practiced outdoor living.",
     "page": 99,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Stamina •••; Survival •• with an outdoor Specialty"
   },
   {
@@ -3842,13 +3852,14 @@
     "description": "Approaches uncertain problems through controlled experiments and learns from failed attempts.",
     "descriptionEn": "Approaches uncertain problems through controlled experiments and learns from failed attempts.",
     "page": 98,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-fire-revolution:the-fix-is-in",
     "name": "The Fix Is In",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "Core",
     "sourceId": "h-vtr-fire-revolution",
     "source": "Fire & Revolution: Carthians",
@@ -3859,13 +3870,26 @@
     "descriptionEn": "Uses advance preparation, influence, and resources to manipulate an election.",
     "page": 98,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Subterfuge ••; Larceny ••; Electioneer •"
+    "prerequisites": "Subterfuge ••; Larceny ••; Electioneer •",
+    "requirements": {
+      "all": [
+        {
+          "merit": "h-vtr-fire-revolution:electioneer",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-fire-revolution:electioneer",
     "name": "Electioneer",
-    "ratings": [1, 2, 3, 4, 5],
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "line": "Core",
     "sourceId": "h-vtr-fire-revolution",
     "source": "Fire & Revolution: Carthians",
@@ -3876,8 +3900,15 @@
     "descriptionEn": "A progressive Social Style for canvassing, advertising, negative campaigning, fundraising, and demanding a recount.",
     "page": 98,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Politics ••; Resources •"
+    "prerequisites": "Politics ••; Resources •",
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:resources",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-fire-revolution:flexible-loyalties",
@@ -3892,8 +3923,7 @@
     "description": "Changes sides without surrendering all standing or credibility.",
     "descriptionEn": "Changes sides without surrendering all standing or credibility.",
     "page": 98,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-fire-revolution:objection",
@@ -3909,7 +3939,6 @@
     "descriptionEn": "Interrupts and redirects an argument through practiced rhetorical procedure.",
     "page": 98,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Expression ••"
   },
   {
@@ -3926,13 +3955,14 @@
     "descriptionEn": "Spots irregularities, manipulation, and procedural problems in an election.",
     "page": 99,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Wits •••; Politics ••"
   },
   {
     "id": "h-vtr-fire-revolution:rabblerouser",
     "name": "Rabblerouser",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "Core",
     "sourceId": "h-vtr-fire-revolution",
     "source": "Fire & Revolution: Carthians",
@@ -3943,8 +3973,15 @@
     "descriptionEn": "Mobilizes a crowd through provocative public speech.",
     "page": 99,
     "homebrew": true,
-    "descriptivePrerequisites": true,
-    "prerequisites": "Inspiring; Expression ••"
+    "prerequisites": "Inspiring; Expression ••",
+    "requirements": {
+      "all": [
+        {
+          "merit": "core-2ed:inspiring",
+          "minimum": 1
+        }
+      ]
+    }
   },
   {
     "id": "h-vtr-fire-revolution:turnabout",
@@ -3959,8 +3996,7 @@
     "description": "Reverses an opponent's rhetorical advantage during debate.",
     "descriptionEn": "Reverses an opponent's rhetorical advantage during debate.",
     "page": 99,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-fire-revolution:ratfucker",
@@ -3975,8 +4011,7 @@
     "description": "Uses dirty tricks to disrupt a political opponent or campaign.",
     "descriptionEn": "Uses dirty tricks to disrupt a political opponent or campaign.",
     "page": 99,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-fire-revolution:you-ll-be-first-against-the-wall",
@@ -3991,8 +4026,7 @@
     "description": "Uses revolutionary menace to intimidate mundane targets more decisively.",
     "descriptionEn": "Uses revolutionary menace to intimidate mundane targets more decisively.",
     "page": 99,
-    "homebrew": true,
-    "descriptivePrerequisites": true
+    "homebrew": true
   },
   {
     "id": "h-vtr-fire-revolution:rules-lawyer",
@@ -4008,7 +4042,120 @@
     "descriptionEn": "A progressive Mental Style for exploiting literal wording, technical arguments, procedural delay, and repeated review.",
     "page": 99,
     "homebrew": true,
-    "descriptivePrerequisites": true,
     "prerequisites": "Resolve •••; Academics ••"
+  },
+  {
+    "id": "vtr-false-gods:mass-expansion",
+    "name": "Mass Expansion",
+    "ratings": [
+      2
+    ],
+    "line": "Core",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "category": "Typhos",
+    "priority": 10,
+    "translatedName": "Mass Expansion",
+    "description": "A mortal patient gains Giant and becomes easier for the Typhos doctor to read and harm.",
+    "descriptionEn": "A mortal patient gains Giant and becomes easier for the Typhos doctor to read and harm.",
+    "prerequisites": "Mortal only; Human patient; Typhos doctor with Surgeon",
+    "page": 59,
+    "homebrew": true,
+    "mortalOnly": true
+  },
+  {
+    "id": "vtr-false-gods:musculature-limiter-removal",
+    "name": "Musculature Limiter Removal",
+    "ratings": [
+      3
+    ],
+    "line": "Core",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "category": "Typhos",
+    "priority": 10,
+    "translatedName": "Musculature Limiter Removal",
+    "description": "A mortal patient can injure herself to imitate Physical Intensity and yields richer blood to her doctor.",
+    "descriptionEn": "A mortal patient can injure herself to imitate Physical Intensity and yields richer blood to her doctor.",
+    "prerequisites": "Mortal only; Human patient; Typhos doctor with Surgeon",
+    "page": 59,
+    "homebrew": true,
+    "mortalOnly": true
+  },
+  {
+    "id": "vtr-false-gods:necrobiological-transplant",
+    "name": "Necrobiological Transplant",
+    "ratings": [
+      3
+    ],
+    "line": "Core",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "category": "Typhos",
+    "priority": 10,
+    "translatedName": "Necrobiological Transplant",
+    "description": "A mortal patient gains a Physical Attribute dot beyond the human limit through implanted Kindred tissue.",
+    "descriptionEn": "A mortal patient gains a Physical Attribute dot beyond the human limit through implanted Kindred tissue.",
+    "prerequisites": "Mortal only; Human patient; Typhos doctor with Surgeon",
+    "page": 59,
+    "homebrew": true,
+    "mortalOnly": true
+  },
+  {
+    "id": "vtr-false-gods:parasensory-awakening",
+    "name": "Parasensory Awakening",
+    "ratings": [
+      2
+    ],
+    "line": "Core",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "category": "Typhos",
+    "priority": 10,
+    "translatedName": "Parasensory Awakening",
+    "description": "A mortal patient gains a Beast's Hackles-like psychic sense that the Typhos doctor may ride.",
+    "descriptionEn": "A mortal patient gains a Beast's Hackles-like psychic sense that the Typhos doctor may ride.",
+    "prerequisites": "Mortal only; Human patient; Typhos doctor with Surgeon; Doctor's Auspex •",
+    "page": 59,
+    "homebrew": true,
+    "mortalOnly": true
+  },
+  {
+    "id": "vtr-false-gods:predatory-pheromone",
+    "name": "Predatory Pheromone",
+    "ratings": [
+      1
+    ],
+    "line": "Core",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "category": "Typhos",
+    "priority": 10,
+    "translatedName": "Predatory Pheromone",
+    "description": "A mortal patient gains social bonuses with humans while becoming more susceptible to Kindred allure.",
+    "descriptionEn": "A mortal patient gains social bonuses with humans while becoming more susceptible to Kindred allure.",
+    "prerequisites": "Mortal only; Human patient; Typhos doctor with Surgeon",
+    "page": 59,
+    "homebrew": true,
+    "mortalOnly": true
+  },
+  {
+    "id": "vtr-false-gods:sanguine-sensory-enhancement",
+    "name": "Sanguine Sensory Enhancement",
+    "ratings": [
+      1
+    ],
+    "line": "Core",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "category": "Typhos",
+    "priority": 10,
+    "translatedName": "Sanguine Sensory Enhancement",
+    "description": "A mortal patient gains Acute Senses scaled by the doctor's Blood Potency.",
+    "descriptionEn": "A mortal patient gains Acute Senses scaled by the doctor's Blood Potency.",
+    "prerequisites": "Mortal only; Human patient; Typhos doctor with Surgeon",
+    "page": 60,
+    "homebrew": true,
+    "mortalOnly": true
   }
 ]

@@ -117,7 +117,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const ordo = character.line_data.ordo_dracul && typeof character.line_data.ordo_dracul === "object" ? character.line_data.ordo_dracul as Record<string, unknown> : {};
   const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" ? ordo.coil_ratings as Record<string, number> : {};
   const zirnitraRating = Number(coilRatings["coil-zirnitra"] ?? 0);
-  const meritContext = vampireMeritContextForSheet(character, meritCatalog, ["vampire", String(character.line_data.clan_id ?? ""), bloodlineId, ...covenantIds]);
+  const meritContext = vampireMeritContextForSheet(character, meritCatalog, ["vampire", String(character.line_data.clan_id ?? ""), bloodlineId, ...covenantIds], { devotionCatalog: powers.devotions, covenants: reference.covenants });
   const knownDevotions = new Set(Array.isArray(character.line_data.devotion_ids) ? character.line_data.devotion_ids.map(String) : []);
   const synchronizedCharacter = synchronizeBloodTetherPack(synchronizeAutomaticBloodlineDevotions(character, powers));
   useEffect(() => {
@@ -401,7 +401,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     // selection instead of leaving a stale purchase locked in the dialog.
     if (purchase === "merit" && selectedMerit && purchasedMeritIndex >= 0) {
       const purchasedMerit = next.merits[purchasedMeritIndex];
-      const nextMeritContext = vampireMeritContextForSheet(next, meritCatalog, ["vampire", String(next.line_data.clan_id ?? ""), ...vampireCovenantIds(next.line_data)]);
+      const nextMeritContext = vampireMeritContextForSheet(next, meritCatalog, ["vampire", String(next.line_data.clan_id ?? ""), String(next.line_data.bloodline_id ?? ""), ...vampireCovenantIds(next.line_data)], { devotionCatalog: powers.devotions, covenants: reference.covenants });
       const remainingRatings = meritRatingsFor(selectedMerit).filter((dot) =>
         dot > Number(purchasedMerit?.dots ?? 0) &&
         vampireMeritEligible(selectedMerit, {

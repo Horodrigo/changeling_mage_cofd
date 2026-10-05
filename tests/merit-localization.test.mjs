@@ -22,7 +22,7 @@ test("mortal-only Merits are blocked in supernatural builders and experience, in
   const { meritProblemMessage } = await vite.ssrLoadModule("/lib/merit-ui.ts");
   const catalog = withMeritPresentation(core, corePt);
   const restricted = catalog.filter((item) => item.mortalOnly);
-  assert.equal(restricted.length, 48);
+  assert.equal(restricted.length, 54);
   for (const definition of restricted) {
     assert.match(meritPresentation(definition, "pt-BR").prerequisites, /^Somente mortais\b/);
     for (const gameLine of ["CtL", "MtA", "VtR"]) {
@@ -41,7 +41,7 @@ test("mortal-only Merits are blocked in supernatural builders and experience, in
 });
 
 test("pt-BR Merit records reference canonical IDs and cover every translated field and level", () => {
-  assert.equal(Object.keys(corePt).length, 202);
+  assert.equal(Object.keys(corePt).length, 208);
   assert.deepEqual(Object.keys(corePt).sort(), core.map((item) => item.id).sort());
   assert.equal(Object.keys(changelingPt).length, 154);
   assert.deepEqual(Object.keys(changelingPt).sort(), changeling.map((item) => item.id).sort());
@@ -116,7 +116,7 @@ test("missing pt-BR Merit entries explicitly retain English and user-authored te
 });
 
 test("Changeling-accessible Mage and Vampire merits are translated as shared Core content", () => {
-  const shared = core.filter((item) => item.sourceId === "mta-2ed" || item.sourceId.startsWith("h-vtr-"));
+  const shared = core.filter((item) => !item.mortalOnly && (item.sourceId === "mta-2ed" || item.sourceId.startsWith("h-vtr-")));
   assert.equal(shared.length, 16);
   for (const item of shared) {
     assert.equal(item.line, "Core");

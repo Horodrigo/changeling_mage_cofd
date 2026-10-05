@@ -36,7 +36,7 @@ test("merit index and game-line shards preserve all catalog rows", async () => {
   const index = await readJson("public/shared/data/merits-index.json");
   const paths = ["shared/data/merits.json", "game-lines/changeling/data/merits.json", "game-lines/mage/data/merits.json"];
   const records = (await Promise.all(paths.map(path => readJson(`public/${path}`)))).flat();
-  assert.equal(records.length, 417);
+  assert.equal(records.length, 423);
   assert.deepEqual(new Set(records.map((item) => item.id)), new Set(index.map((item) => item.id)));
 });
 

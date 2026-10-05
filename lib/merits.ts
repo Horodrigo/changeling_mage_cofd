@@ -1,4 +1,4 @@
-import { requirementMet, textRequirementMet, type Requirement, type RequirementContext, type TextRequirementEvaluator } from "./merit-requirements";
+import { requirementMet, requirementTrait, textRequirementMet, type Requirement, type RequirementContext, type TextRequirementEvaluator } from "./merit-requirements";
 import type { Specialty } from "./core/character/character-types";
 import type { PersistedGameLineId } from "./core/character/game-line-ids";
 import type { MessageKey, TranslationParams } from "./i18n";
@@ -108,7 +108,20 @@ export function meritTextPrerequisitesMet(value:string|undefined,context:MeritPr
   // Parse ordinary comma-separated trait and Merit clauses independently.
   // Keep the legacy narrative/group helpers below for general-purpose special wording.
   if(!/one (?:Mental|Physical|Social) Attribute|any Social Skill|≤|maximum|or lower/i.test(value))
-    return textRequirementMet(value,context,context.meritCatalog??[],evaluateClause);
+    return textRequirementMet(value,context,context.meritCatalog??[],clause => {
+      const specialized = evaluateClause?.(clause);
+      if (specialized !== undefined) return specialized;
+      const anySkill = clause.match(/^Any Skill (•+|\d+)$/i);
+      if (anySkill) {
+        const minimum = anySkill[1].startsWith("•") ? anySkill[1].length : Number(anySkill[1]);
+        const selected = String(context.configuration?.skill ?? "");
+        return selected ? SKILL_NAMES.includes(selected) && requirementTrait(selected, context) >= minimum : Object.values(context.skills ?? {}).some(rating => rating >= minimum);
+      }
+      const specialty = clause.match(/^(.+?) (•+|\d+) with (?:at least )?(two|a|an) .+?Specialt(?:y|ies)$/i);
+      if (specialty) return requirementTrait(specialty[1], context) >= (specialty[2].startsWith("•") ? specialty[2].length : Number(specialty[2])) &&
+        (context.specializations ?? []).filter(item => item.skill === specialty[1] && item.name.trim()).length >= (specialty[3] === "two" ? 2 : 1);
+      return undefined;
+    });
   return meritGroupedPrerequisitesMet(value,context);
 }
 

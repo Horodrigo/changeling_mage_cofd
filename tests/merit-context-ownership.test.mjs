@@ -193,7 +193,7 @@ test("each line supplies only its own prerequisite fields and preserves purchase
     ["MtA", mageMeritContextForSheet, { path: "Moros", order: "Free Council", gnosis: 3, arcana: { Death: 2 } }, { path: "Moros", order: "Free Council", gnosis: 3, arcana: { Death: 2 } }],
     ["CtL", changelingMeritContextForSheet, { seeming: "Wizened", kith: "Artist", court: "autumn", wyrd: 3, contracts: [{ originalName: "Contract One", name: "Stored label" }], learned_contracts: [{ name: "Contract Two" }] }, { seeming: "Wizened", kith: "Artist", court: "autumn", wyrd: 3, mantle: 0, powers: ["Contract One", "Contract Two"] }],
     ["CofD", mortalMeritContextForSheet, {}, {}],
-    ["VtR", (sheet, catalog) => vampireMeritContextForSheet(sheet, catalog, ["vampire", "mekhet"]), {}, {}],
+    ["VtR", (sheet, catalog) => vampireMeritContextForSheet(sheet, catalog, ["vampire", "mekhet"]), { clan_id: "mekhet", bloodline_id: "", blood_potency: 2, humanity: 7, disciplines: { Auspex: 2 }, blood_sorcery: { cruac_rating: 1 }, touchstones: [], devotion_ids: [] }, { clanId: "mekhet", bloodlineId: "", hasTouchstone: false, creation: false, devotionIds: [] }],
   ]) {
     const sheet = blankPrintCharacter(line);
     sheet.skills.Occult = 2;
