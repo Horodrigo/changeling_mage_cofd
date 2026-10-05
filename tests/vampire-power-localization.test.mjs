@@ -14,8 +14,8 @@ const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").r
 const fields = ["summary", "cost", "requirement", "condition", "dicePool", "action", "duration", "contestedBy", "resistedBy", "sacrament", "effect", "procedure", "outcome"];
 
 test("Vampire official and Homebrew power presentations cover existing fields and preserve numeric limits", () => {
-  assert.deepEqual(selected.map(item => item.id).sort(), ["animalism", "auspex", "blood-tether", "cachexy", "celerity", "crochan", "dead-signal", "dominate", "interface", "lithopedia", "majesty", "nightmare", "obfuscate", "ortam", "praestantia", "protean", "resilience", "spiritus-sancti", "surge", "truths-of-erebus", "vigor", "vitiate"]);
-  assert.equal(selected.flatMap(item => item.levels).length, 95);
+  assert.deepEqual(selected.map(item => item.id).sort(), ["animalism", "auspex", "blood-tether", "cachexy", "celerity", "crochan", "dead-signal", "dominate", "interface", "lithopedia", "majesty", "nightmare", "obfuscate", "ortam", "praestantia", "protean", "resilience", "spiritus-sancti", "surge", "triadic-evolution", "truths-of-erebus", "vigor", "vitiate"]);
+  assert.equal(selected.flatMap(item => item.levels).length, 110);
   for (const definition of selected) {
     for (const item of [definition, ...definition.levels]) {
       assert.ok(item.presentationPt, `${definition.id}.${item.rating ?? "summary"}`);
@@ -74,11 +74,12 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       const backgrounds = [
         ...[...new Set(selected.map(item => item.bloodlineId).filter(Boolean))].map(bloodlineId => ({ bloodlineId, clanId: reference.bloodlines.find(item => item.id === bloodlineId).parentClanIds[0] })),
         ...[...new Set(selected.flatMap(item => item.clanIds ?? []))].map(clanId => ({ clanId, bloodlineId: "" })),
+        ...[...new Set(selected.flatMap(item => item.covenantIds ?? []))].map(covenantId => ({ clanId: "gangrel", bloodlineId: "", covenantIds: [covenantId] })),
       ];
-      const characters = backgrounds.map(({ bloodlineId, clanId }) => {
+      const characters = backgrounds.map(({ bloodlineId, clanId, covenantIds = [] }) => {
         const character = blankPrintCharacter("VtR");
-        const ratings = Object.fromEntries(selected.filter(item => (!item.bloodlineId || item.bloodlineId === bloodlineId) && (!item.clanIds || item.clanIds.includes(clanId))).map(item => [item.name, 5]));
-        character.line_data = { ...character.line_data, clan_id: clanId, bloodline_id: bloodlineId, disciplines: ratings, notes: "Authored English stays." };
+        const ratings = Object.fromEntries(selected.filter(item => (!item.bloodlineId || item.bloodlineId === bloodlineId) && (!item.clanIds || item.clanIds.includes(clanId)) && (!item.covenantIds || item.covenantIds.some(id => covenantIds.includes(id)))).map(item => [item.name, 5]));
+        character.line_data = { ...character.line_data, clan_id: clanId, bloodline_id: bloodlineId, covenant_ids: covenantIds, disciplines: ratings, notes: "Authored English stays." };
         character.current_state = { ...character.current_state, experience_available: 4, experience_spent: 9, creation_draft: true, creation_draft_step: 3 };
         return character;
       });
@@ -123,6 +124,13 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
           const title = `<strong>${"•".repeat(level.rating)} ${escape(locale === "pt-BR" ? level.translatedName : level.name)}</strong>`;
           assert.ok(sheet.includes(title));
           assert.equal(partial.includes(title), level.rating <= 3);
+          if (level.targetSuccesses !== undefined) {
+            assert.equal(text.targetSuccesses, level.targetSuccesses);
+            const label = locale === "pt-BR" ? "Sucessos Alvo" : "Target Successes";
+            const detail = sheet.slice(sheet.indexOf(title), sheet.indexOf("</details>", sheet.indexOf(title)));
+            assert.ok(detail.includes(`<strong>${label}:</strong> ${level.targetSuccesses}`));
+            assert.ok(experience.includes(`${label}: ${level.targetSuccesses}`));
+          }
         }
         const character = characters.find(item => item.line_data.disciplines[definition.name]);
         assert.equal(vampireDisciplinePrerequisitesMet(`${definition.name} 5`, character.line_data.disciplines, catalog.disciplines.map(item => item.name)), true);

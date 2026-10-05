@@ -698,7 +698,7 @@
     {
       "id": "triadic-evolution",
       "name": "Triadic Evolution",
-      "translatedName": "Triadic Evolution",
+      "translatedName": "Evolução Triádica",
       "covenantIds": [
         "belials-brood"
       ],
@@ -709,184 +709,307 @@
         {
           "rating": 1,
           "name": "Animal Magnetism",
-          "translatedName": "Animal Magnetism",
+          "translatedName": "Magnetismo Animal",
           "summary": "Add Triadic Evolution to mundane Expression, Persuasion, and Socialize for an hour.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended (maximum rolls equal to unmodified pool; 30 minutes per roll)",
           "targetSuccesses": 5,
           "duration": "One hour",
-          "effect": "Add Triadic Evolution dots to mundane Expression, Persuasion, and Socialize actions."
+          "effect": "Add Triadic Evolution dots to mundane Expression, Persuasion, and Socialize actions.",
+          "presentationPt": {
+            "summary": "Soma Evolução Triádica a Expressão, Persuasão e Socialização mundanas por uma hora.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida (máximo de testes igual à parada sem modificadores; 30 minutos por teste)",
+            "effect": "Soma os pontos de Evolução Triádica a ações mundanas de Expressão, Persuasão e Socialização.",
+            "duration": "Uma hora"
+          }
         },
         {
           "rating": 1,
           "name": "Don't Look It in the Eye",
-          "translatedName": "Don't Look It in the Eye",
+          "translatedName": "Não Olhe nos Olhos",
           "summary": "Add Triadic Evolution to mundane Animal Ken, Intimidation, and Streetwise for an hour.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 5,
           "duration": "One hour",
-          "effect": "Add Triadic Evolution dots to mundane Animal Ken, Intimidation, and Streetwise actions."
+          "effect": "Add Triadic Evolution dots to mundane Animal Ken, Intimidation, and Streetwise actions.",
+          "presentationPt": {
+            "summary": "Soma Evolução Triádica a Empatia com Animais, Intimidação e Manha mundanas por uma hora.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "Soma os pontos de Evolução Triádica a ações mundanas de Empatia com Animais, Intimidação e Manha.",
+            "duration": "Uma hora"
+          }
         },
         {
           "rating": 2,
           "name": "Camouflage",
-          "translatedName": "Camouflage",
+          "translatedName": "Camuflagem",
           "summary": "Become invisible while motionless for an hour.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 6,
           "duration": "One hour",
-          "effect": "While perfectly still and taking no actions, blend into the surroundings and cannot be seen."
+          "effect": "While perfectly still and taking no actions, blend into the surroundings and cannot be seen.",
+          "presentationPt": {
+            "summary": "Torna-se invisível enquanto permanecer imóvel, por uma hora.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "Enquanto estiver perfeitamente imóvel e não realizar ações, mistura-se ao ambiente e não pode ser visto.",
+            "duration": "Uma hora"
+          }
         },
         {
           "rating": 2,
           "name": "Cover Your Tracks",
-          "translatedName": "Cover Your Tracks",
+          "translatedName": "Apagar os Rastros",
           "summary": "Leave no scent for several nights.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 5,
           "duration": "Nights equal to Triadic Evolution",
-          "effect": "The Claimed leaves no scent."
+          "effect": "The Claimed leaves no scent.",
+          "presentationPt": {
+            "summary": "Não deixa cheiro por várias noites.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "O Reivindicado não deixa cheiro.",
+            "duration": "Tantas noites quanto os pontos de Evolução Triádica"
+          }
         },
         {
           "rating": 2,
           "name": "Merely a Flesh Wound",
-          "translatedName": "Merely a Flesh Wound",
+          "translatedName": "É Só um Arranhão",
           "summary": "Ignore wound penalties for several scenes.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 6,
           "duration": "Scenes equal to Triadic Evolution",
-          "effect": "Ignore all wound penalties."
+          "effect": "Ignore all wound penalties.",
+          "presentationPt": {
+            "summary": "Ignora penalidades de ferimentos por várias cenas.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "Ignora todas as penalidades de ferimentos.",
+            "duration": "Tantas cenas quanto os pontos de Evolução Triádica"
+          }
         },
         {
           "rating": 2,
           "name": "Sprint",
-          "translatedName": "Sprint",
+          "translatedName": "Arrancada",
           "summary": "Add Triadic Evolution to Speed and noncombat Athletics for an hour.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 6,
           "duration": "One hour",
-          "effect": "Add Triadic Evolution dots to running Speed and noncombat physical maneuvers using Athletics. This never adds to Defense."
+          "effect": "Add Triadic Evolution dots to running Speed and noncombat physical maneuvers using Athletics. This never adds to Defense.",
+          "presentationPt": {
+            "summary": "Soma Evolução Triádica ao Deslocamento e a Esportes fora de combate por uma hora.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "Soma os pontos de Evolução Triádica ao Deslocamento de corrida e a manobras físicas fora de combate que usem Esportes. Isso nunca aumenta a Defesa.",
+            "duration": "Uma hora"
+          }
         },
         {
           "rating": 3,
           "name": "Acidic Blood",
-          "translatedName": "Acidic Blood",
+          "translatedName": "Sangue Ácido",
           "summary": "Your blood grants no Vitae and inflicts lethal damage until sunrise.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 7,
           "duration": "Until sunrise",
-          "effect": "Vampires and Strix drinking the Claimed's blood gain no Vitae and take one lethal damage per Vitae consumed. Mortals and ghouls who drink it take two lethal damage. Blood outside the Claimed's body is not venomous."
+          "effect": "Vampires and Strix drinking the Claimed's blood gain no Vitae and take one lethal damage per Vitae consumed. Mortals and ghouls who drink it take two lethal damage. Blood outside the Claimed's body is not venomous.",
+          "presentationPt": {
+            "summary": "Seu sangue não concede Vitae e causa dano letal até o nascer do sol.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "Vampiros e Strix que beberem o sangue do Reivindicado não recebem Vitae e sofrem um ponto de dano letal por Vitae consumido. Mortais e carniçais que o beberem sofrem dois pontos de dano letal. Sangue fora do corpo do Reivindicado não é venenoso.",
+            "duration": "Até o nascer do sol"
+          }
         },
         {
           "rating": 3,
           "name": "Fight or Flight",
-          "translatedName": "Fight or Flight",
+          "translatedName": "Lutar ou Fugir",
           "summary": "Become immune to ambush for an hour.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 7,
           "duration": "One hour",
-          "effect": "The Claimed cannot be surprised; actions initiated against him otherwise function normally."
+          "effect": "The Claimed cannot be surprised; actions initiated against him otherwise function normally.",
+          "presentationPt": {
+            "summary": "Torna-se imune a emboscadas por uma hora.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "O Reivindicado não pode ser surpreendido; ações iniciadas contra ele funcionam normalmente nos demais aspectos.",
+            "duration": "Uma hora"
+          }
         },
         {
           "rating": 3,
           "name": "Perfect Ambush",
-          "translatedName": "Perfect Ambush",
+          "translatedName": "Emboscada Perfeita",
           "summary": "Add Triadic Evolution to establish surprise for an hour.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 7,
           "duration": "One hour",
-          "effect": "Add Triadic Evolution dots to Dexterity + Stealth rolls made to establish surprise."
+          "effect": "Add Triadic Evolution dots to Dexterity + Stealth rolls made to establish surprise.",
+          "presentationPt": {
+            "summary": "Soma Evolução Triádica para estabelecer surpresa por uma hora.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "Soma os pontos de Evolução Triádica a testes de Destreza + Furtividade feitos para estabelecer surpresa.",
+            "duration": "Uma hora"
+          }
         },
         {
           "rating": 3,
           "name": "Trophy",
-          "translatedName": "Trophy",
+          "translatedName": "Troféu",
           "summary": "Preserve a body part from a destroyed vampire for years.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 7,
           "duration": "Years equal to Triadic Evolution",
-          "effect": "Preserve one Size 1 body part from a destroyed Kindred instead of allowing it to crumble to ash."
+          "effect": "Preserve one Size 1 body part from a destroyed Kindred instead of allowing it to crumble to ash.",
+          "presentationPt": {
+            "summary": "Preserva por anos uma parte do corpo de um vampiro destruído.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "Preserva uma parte do corpo de Tamanho 1 de um Membro destruído, impedindo que se desfaça em cinzas.",
+            "duration": "Tantos anos quanto os pontos de Evolução Triádica"
+          }
         },
         {
           "rating": 4,
           "name": "Instinctual Conversation",
-          "translatedName": "Instinctual Conversation",
+          "translatedName": "Conversa Instintiva",
           "summary": "Telepathically communicate with anyone bearing a Bestial Condition.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 8,
           "contestedBy": "Composure + Blood Potency",
-          "effect": "Maintain line-of-sight telepathy with a target who currently has a Bestial Condition, sending and receiving thoughts as images."
+          "effect": "Maintain line-of-sight telepathy with a target who currently has a Bestial Condition, sending and receiving thoughts as images.",
+          "presentationPt": {
+            "summary": "Comunica-se telepaticamente com alguém que tenha a Condição Bestial.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "Mantém comunicação telepática com um alvo no campo de visão que tenha a Condição Bestial, enviando e recebendo pensamentos como imagens.",
+            "contestedBy": "Compostura + Potência do Sangue"
+          }
         },
         {
           "rating": 4,
           "name": "Riding the Man",
-          "translatedName": "Riding the Man",
+          "translatedName": "Cavalgando o Homem",
           "summary": "Add Triadic Evolution to one Intelligence or Wits roll.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 8,
           "duration": "One hour",
-          "effect": "Add Triadic Evolution dots to one Intelligence or Wits roll. This never adds to Defense."
+          "effect": "Add Triadic Evolution dots to one Intelligence or Wits roll. This never adds to Defense.",
+          "presentationPt": {
+            "summary": "Soma Evolução Triádica a um teste de Inteligência ou Raciocínio.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "Soma os pontos de Evolução Triádica a um teste de Inteligência ou Raciocínio. Isso nunca aumenta a Defesa.",
+            "duration": "Uma hora"
+          }
         },
         {
           "rating": 4,
           "name": "Survive",
-          "translatedName": "Survive",
+          "translatedName": "Sobreviver",
           "summary": "Add Triadic Evolution to Defense while taking no offensive action.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 8,
           "duration": "Scenes equal to Triadic Evolution",
-          "effect": "Add Triadic Evolution dots to Defense as long as the Claimed takes no offensive action against anyone."
+          "effect": "Add Triadic Evolution dots to Defense as long as the Claimed takes no offensive action against anyone.",
+          "presentationPt": {
+            "summary": "Soma Evolução Triádica à Defesa enquanto não realizar ações ofensivas.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "Soma os pontos de Evolução Triádica à Defesa enquanto o Reivindicado não realizar nenhuma ação ofensiva contra ninguém.",
+            "duration": "Tantas cenas quanto os pontos de Evolução Triádica"
+          }
         },
         {
           "rating": 5,
           "name": "Enter the Zone",
-          "translatedName": "Enter the Zone",
+          "translatedName": "Entrar na Zona",
           "summary": "Gain the benefits of frenzy for up to an hour.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 10,
           "duration": "Five scenes or one hour, whichever ends first",
-          "effect": "Gain the benefits of frenzy without frenzying: add Blood Potency to Strength, Dexterity, and Stamina rolls and resistances; ignore wound penalties; and grapple and bite as one instant action, dealing the grapple successes as lethal damage and immediately taking one Vitae."
+          "effect": "Gain the benefits of frenzy without frenzying: add Blood Potency to Strength, Dexterity, and Stamina rolls and resistances; ignore wound penalties; and grapple and bite as one instant action, dealing the grapple successes as lethal damage and immediately taking one Vitae.",
+          "presentationPt": {
+            "summary": "Recebe os benefícios do frenesi por até uma hora.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "Recebe os benefícios do frenesi sem entrar em frenesi: soma Potência do Sangue a testes e resistências de Força, Destreza e Vigor; ignora penalidades de ferimentos; e agarra e morde com uma única ação instantânea, causando os sucessos do agarrão como dano letal e recebendo imediatamente um Vitae.",
+            "duration": "Cinco cenas ou uma hora, o que terminar primeiro"
+          }
         },
         {
           "rating": 5,
           "name": "Hounds to the Hunters",
-          "translatedName": "Hounds to the Hunters",
+          "translatedName": "Sabujos dos Caçadores",
           "summary": "Track a recent scent trail through supernatural concealment.",
           "cost": "1 Willpower",
           "dicePool": "Stamina + Occult + Triadic Evolution",
           "action": "Extended",
           "targetSuccesses": 10,
           "contestedBy": "Composure + Blood Potency",
-          "effect": "Track a chosen target by scent regardless of condition or supernatural concealment, without a Clash of Wills. The target must have been in the area within five nights."
+          "effect": "Track a chosen target by scent regardless of condition or supernatural concealment, without a Clash of Wills. The target must have been in the area within five nights.",
+          "presentationPt": {
+            "summary": "Rastreia uma trilha de cheiro recente apesar de ocultação sobrenatural.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Vigor + Ocultismo + Evolução Triádica",
+            "action": "Estendida",
+            "effect": "Rastreia pelo cheiro um alvo escolhido, independentemente de sua condição ou de ocultação sobrenatural, sem um Confronto de Vontades. O alvo deve ter estado na área nas últimas cinco noites.",
+            "contestedBy": "Compostura + Potência do Sangue"
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "Manifestações usadas pela Prole de Belial para aprimorar o instinto predatório."
+      }
     },
     {
       "id": "vitiate",
