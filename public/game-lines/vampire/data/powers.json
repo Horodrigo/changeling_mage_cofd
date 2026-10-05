@@ -202,7 +202,7 @@
     {
       "id": "cachexy",
       "name": "Cachexy",
-      "translatedName": "Cachexy",
+      "translatedName": "Caquexia",
       "bloodlineId": "morbus",
       "summary": "The Morbus Discipline of sensing, spreading, and accelerating disease.",
       "source": "Dark Eras Companion",
@@ -211,7 +211,7 @@
         {
           "rating": 1,
           "name": "Diagnose",
-          "translatedName": "Diagnose",
+          "translatedName": "Diagnosticar",
           "summary": "Sense carriers of disease.",
           "cost": "None",
           "dicePool": "Intelligence + Medicine + Cachexy",
@@ -222,24 +222,46 @@
             "exceptionalSuccess": "Also identify the diseases present.",
             "failure": "Receive no impression.",
             "dramaticFailure": "Receive a completely false or misleading impression."
+          },
+          "presentationPt": {
+            "summary": "Detecta portadores de doenças.",
+            "cost": "Nenhum",
+            "dicePool": "Inteligência + Medicina + Caquexia",
+            "action": "Instantânea",
+            "duration": "Cena",
+            "rollResults": {
+              "success": "Detecta todas as pessoas e animais no campo de visão que carreguem uma infecção, incluindo Membros portadores; Ofuscação provoca um Confronto de Vontades.",
+              "exceptionalSuccess": "Também identifica as doenças presentes.",
+              "failure": "Não recebe nenhuma impressão.",
+              "dramaticFailure": "Recebe uma impressão completamente falsa ou enganosa."
+            }
           }
         },
         {
           "rating": 2,
           "name": "Contaminate",
-          "translatedName": "Contaminate",
+          "translatedName": "Contaminar",
           "summary": "Render a space a contagion vector for a disease.",
           "cost": "1 Vitae",
           "requirement": "Spill the Vitae on an object or area no larger than one square meter.",
           "dicePool": "None",
           "action": "Instant",
           "duration": "One night",
-          "effect": "Anyone touching the contaminated surface with bare skin reflexively rolls Stamina. Failure infects them with the chosen disease; success resists, and exceptional success grants immunity to supernatural attempts to inflict that same disease. Kindred suffer no symptoms but may carry it."
+          "effect": "Anyone touching the contaminated surface with bare skin reflexively rolls Stamina. Failure infects them with the chosen disease; success resists, and exceptional success grants immunity to supernatural attempts to inflict that same disease. Kindred suffer no symptoms but may carry it.",
+          "presentationPt": {
+            "summary": "Transforma um espaço em vetor de contágio de uma doença.",
+            "cost": "1 Vitae",
+            "requirement": "Derramar a Vitae em um objeto ou área de no máximo um metro quadrado.",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "duration": "Uma noite",
+            "effect": "Quem tocar a superfície contaminada com a pele nua faz um teste reflexivo de Vigor. Uma falha infecta o alvo com a doença escolhida; um sucesso permite resistir, e um sucesso excepcional concede imunidade a tentativas sobrenaturais de causar essa mesma doença. Membros não apresentam sintomas, mas podem carregá-la."
+          }
         },
         {
           "rating": 3,
           "name": "Inflame",
-          "translatedName": "Inflame",
+          "translatedName": "Inflamar",
           "summary": "Exacerbate a disease's symptoms.",
           "cost": "1 Vitae",
           "dicePool": "Wits + Survival + Cachexy − Stamina",
@@ -249,12 +271,24 @@
             "exceptionalSuccess": "The victim also collapses on the first turn and cannot act or defend.",
             "failure": "No effect.",
             "dramaticFailure": "Cure the disease or send it into remission for the story; this result cannot be chosen voluntarily."
+          },
+          "presentationPt": {
+            "summary": "Agrava os sintomas de uma doença.",
+            "cost": "1 Vitae",
+            "dicePool": "Raciocínio + Sobrevivência + Caquexia − Vigor",
+            "action": "Instantânea",
+            "rollResults": {
+              "success": "A doença existente de um mortal se agrava, impondo −2 a todos os testes por tantos turnos quanto os sucessos, além da Complicação normal da doença. Apenas uma aplicação pode afetar a vítima por vez, mas usos posteriores podem prolongar o efeito.",
+              "exceptionalSuccess": "A vítima também desaba no primeiro turno e não pode agir nem se defender.",
+              "failure": "Nenhum efeito.",
+              "dramaticFailure": "Cura a doença ou a faz entrar em remissão pelo restante da história; esse resultado não pode ser escolhido voluntariamente."
+            }
           }
         },
         {
           "rating": 4,
           "name": "Plague-Bearer",
-          "translatedName": "Plague-Bearer",
+          "translatedName": "Portador da Peste",
           "summary": "Quickly infect nearby victims with a disease.",
           "cost": "1 Vitae per turn",
           "dicePool": "Intelligence + Medicine + Cachexy",
@@ -264,12 +298,24 @@
             "exceptionalSuccess": "No additional effect beyond the increased number of targets.",
             "failure": "Infect no one and cannot use Plague-Bearer again until the next sunset.",
             "dramaticFailure": "Infect no one and cannot use any Cachexy power until the next sunset."
+          },
+          "presentationPt": {
+            "summary": "Infecta rapidamente vítimas próximas com uma doença.",
+            "cost": "1 Vitae por turno",
+            "dicePool": "Inteligência + Medicina + Caquexia",
+            "action": "Instantânea",
+            "rollResults": {
+              "success": "Por sucesso, infecta até três mortais ou um vampiro com a doença escolhida, a até 10 metros por ponto de Vigor. Nos turnos seguintes, o vampiro pode continuar infectando o mesmo número de novos alvos enquanto se move até seu Deslocamento, mas não pode falar nem realizar ações complexas.",
+              "exceptionalSuccess": "Nenhum efeito adicional além do aumento no número de alvos.",
+              "failure": "Não infecta ninguém e não pode usar Portador da Peste novamente até o próximo pôr do sol.",
+              "dramaticFailure": "Não infecta ninguém e não pode usar nenhum poder de Caquexia até o próximo pôr do sol."
+            }
           }
         },
         {
           "rating": 5,
           "name": "Accelerate Disease",
-          "translatedName": "Accelerate Disease",
+          "translatedName": "Acelerar a Doença",
           "summary": "Worsen even mild sickness to inflict lethal damage.",
           "cost": "1 Willpower",
           "dicePool": "Wits + Survival + Cachexy − Stamina",
@@ -280,9 +326,25 @@
             "exceptionalSuccess": "The victim also collapses on the first turn and cannot act or defend.",
             "failure": "No effect.",
             "dramaticFailure": "Cure the disease or send it into remission for the story; this result cannot be chosen voluntarily."
+          },
+          "presentationPt": {
+            "summary": "Agrava até doenças leves para causar dano letal.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Raciocínio + Sobrevivência + Caquexia − Vigor",
+            "action": "Instantânea",
+            "requirement": "O alvo deve estar infectado e não pode ser um Membro.",
+            "rollResults": {
+              "success": "A doença causa um ponto de dano letal por sucesso, de maneira apropriada a seus sintomas.",
+              "exceptionalSuccess": "A vítima também desaba no primeiro turno e não pode agir nem se defender.",
+              "failure": "Nenhum efeito.",
+              "dramaticFailure": "Cura a doença ou a faz entrar em remissão pelo restante da história; esse resultado não pode ser escolhido voluntariamente."
+            }
           }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "A Disciplina dos Morbus para detectar, disseminar e acelerar doenças."
+      }
     },
     {
       "id": "blood-tether",
@@ -477,7 +539,7 @@
     {
       "id": "dead-signal",
       "name": "Dead Signal",
-      "translatedName": "Dead Signal",
+      "translatedName": "Sinal Morto",
       "bloodlineId": "jharana",
       "summary": "Reads transmissions of the God-Machine and temporarily reconfigures living receivers.",
       "source": "Night Horrors: Spilled Blood",
@@ -486,7 +548,7 @@
         {
           "rating": 1,
           "name": "Analyze Signal",
-          "translatedName": "Analyze Signal",
+          "translatedName": "Analisar Sinal",
           "summary": "Identify Radio Sickness or a Stigmata and, with exceptional insight, learn how it arose.",
           "cost": "None",
           "dicePool": "Wits + Composure + Dead Signal",
@@ -497,12 +559,25 @@
             "failure": "The signal is unreadable and may be mistaken for something else.",
             "success": "Learn whether the target has Radio Sickness or a Stigmata.",
             "exceptionalSuccess": "Also learn the sickness's progress and triggering omen, or receive a broad vision of how the Stigmata arose."
+          },
+          "presentationPt": {
+            "summary": "Identifica Doença Radiofônica ou um Estigma e, com percepção excepcional, descobre sua origem.",
+            "cost": "Nenhum",
+            "dicePool": "Raciocínio + Compostura + Sinal Morto",
+            "action": "Instantânea",
+            "duration": "Instantânea",
+            "rollResults": {
+              "dramaticFailure": "Uma rajada de estática causa 2 pontos de dano contundente ao vampiro.",
+              "failure": "O sinal é ilegível e pode ser confundido com outra coisa.",
+              "success": "Descobre se o alvo tem Doença Radiofônica ou um Estigma.",
+              "exceptionalSuccess": "Também descobre o avanço da doença e o presságio que a causou, ou recebe uma visão geral de como o Estigma surgiu."
+            }
           }
         },
         {
           "rating": 2,
           "name": "Minor Repairs",
-          "translatedName": "Minor Repairs",
+          "translatedName": "Pequenos Reparos",
           "summary": "Repair non-persistent Conditions or bashing damage with Vitae.",
           "cost": "1 Vitae per Condition or bashing damage healed",
           "dicePool": "Wits + Medicine + Dead Signal",
@@ -513,12 +588,25 @@
             "failure": "The target is not healed.",
             "success": "Each Vitae heals one non-persistent Condition or one bashing damage.",
             "exceptionalSuccess": "One Vitae heals one Condition, including a persistent one, and two bashing damage."
+          },
+          "presentationPt": {
+            "summary": "Cura Condições não persistentes ou dano contundente com Vitae.",
+            "cost": "1 Vitae por Condição ou ponto de dano contundente curado",
+            "dicePool": "Raciocínio + Medicina + Sinal Morto",
+            "action": "Padrão",
+            "duration": "Instantânea",
+            "rollResults": {
+              "dramaticFailure": "O alvo recebe Abalado.",
+              "failure": "O alvo não é curado.",
+              "success": "Cada Vitae cura uma Condição não persistente ou um ponto de dano contundente.",
+              "exceptionalSuccess": "Um Vitae cura uma Condição, incluindo uma persistente, e dois pontos de dano contundente."
+            }
           }
         },
         {
           "rating": 3,
           "name": "Receive Transmission",
-          "translatedName": "Receive Transmission",
+          "translatedName": "Receber Transmissão",
           "summary": "Take another character's Radio Sickness for one night to give them time to interpret the omen.",
           "cost": "1 Willpower",
           "dicePool": "Intelligence + Occult + Dead Signal",
@@ -529,12 +617,25 @@
             "failure": "The transfer fails.",
             "success": "The vampire suffers the target's current Radio Sickness for one night while the target is temporarily cured.",
             "exceptionalSuccess": "When the sickness returns to the target, it returns at its first stage."
+          },
+          "presentationPt": {
+            "summary": "Assume a Doença Radiofônica de outro personagem por uma noite, dando-lhe tempo para interpretar o presságio.",
+            "cost": "1 Força de Vontade",
+            "dicePool": "Inteligência + Ocultismo + Sinal Morto",
+            "action": "Padrão",
+            "duration": "Uma noite",
+            "rollResults": {
+              "dramaticFailure": "O vampiro assume a doença até resolver o presságio, outra pessoa recebê-la ou ele encontrar a Morte Final.",
+              "failure": "A transferência falha.",
+              "success": "O vampiro sofre a Doença Radiofônica atual do alvo por uma noite, enquanto o alvo fica temporariamente curado.",
+              "exceptionalSuccess": "Quando a doença retorna ao alvo, volta em seu primeiro estágio."
+            }
           }
         },
         {
           "rating": 4,
           "name": "Configure Receiver",
-          "translatedName": "Configure Receiver",
+          "translatedName": "Configurar Receptor",
           "summary": "Temporarily raise a target's Skills and, on an exceptional success, one Attribute.",
           "cost": "1 Willpower + 2 Vitae per trait raised",
           "dicePool": "Intelligence + Medicine + Dead Signal",
@@ -545,12 +646,25 @@
             "failure": "The target's traits remain unchanged.",
             "success": "Every 2 Vitae raises one Skill by one dot, to a maximum of 5.",
             "exceptionalSuccess": "The vampire may raise one Attribute under the same cost as well as Skills."
+          },
+          "presentationPt": {
+            "summary": "Eleva temporariamente as Habilidades de um alvo e, com um sucesso excepcional, um Atributo.",
+            "cost": "1 Força de Vontade + 2 Vitae por característica elevada",
+            "dicePool": "Inteligência + Medicina + Sinal Morto",
+            "action": "Padrão",
+            "duration": "Uma noite",
+            "rollResults": {
+              "dramaticFailure": "Nenhuma característica muda e o vampiro recebe Doença Radiofônica.",
+              "failure": "As características do alvo permanecem inalteradas.",
+              "success": "Cada 2 Vitae eleva uma Habilidade em um ponto, até o máximo de 5.",
+              "exceptionalSuccess": "O vampiro também pode elevar um Atributo pelo mesmo custo, além das Habilidades."
+            }
           }
         },
         {
           "rating": 5,
           "name": "Broadcast",
-          "translatedName": "Broadcast",
+          "translatedName": "Transmitir",
           "summary": "Broadcast a summons to nearby servants of the God-Machine.",
           "cost": "1 Vitae",
           "dicePool": "Manipulation + Persuasion + Dead Signal",
@@ -561,9 +675,25 @@
             "failure": "No broadcast is sent.",
             "success": "Nearby Jharana, Holy Engineers, Stigmatics, and other servants hear the call and arrive at least initially friendly.",
             "exceptionalSuccess": "An angel arrives with a message and answers questions as well as it can."
+          },
+          "presentationPt": {
+            "summary": "Transmite um chamado aos servos próximos do Deus-Máquina.",
+            "cost": "1 Vitae",
+            "dicePool": "Manipulação + Persuasão + Sinal Morto",
+            "action": "Estendida",
+            "duration": "1 hora por Vitae",
+            "rollResults": {
+              "dramaticFailure": "Demônios próximos ficam enfurecidos e procuram a origem da transmissão.",
+              "failure": "Nenhuma transmissão é enviada.",
+              "success": "Jharana, Engenheiros Sagrados, Estigmatizados e outros servos próximos ouvem o chamado e chegam amistosos, ao menos inicialmente.",
+              "exceptionalSuccess": "Um anjo chega com uma mensagem e responde a perguntas da melhor maneira que puder."
+            }
           }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "Lê transmissões do Deus-Máquina e reconfigura temporariamente receptores vivos."
+      }
     },
     {
       "id": "triadic-evolution",

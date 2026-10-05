@@ -112,7 +112,7 @@
     "presentationPt": {
       "summary": "Vampiros sintonizados com transmissões e presságios do Deus-Máquina que podem examinar e reconfigurar sinais vivos.",
       "baneName": "A Maldição do Presságio",
-      "baneSummary": "Quando um Jharana se alimenta da mesma pessoa mais de uma vez em um capítulo, faça um teste de Humanidade. Uma falha causa uma Obsessão Persistente ligada a essa pessoa e aos sinais que a cercam.",
+      "baneSummary": "Quando um Jharana se alimenta da mesma pessoa mais de uma vez em uma sessão, faça um teste de Humanidade. Uma falha causa uma Obsessão Persistente ligada a essa pessoa e aos sinais que a cercam.",
       "nicknames": [
         "Reparadores",
         "Maquinistas"
@@ -689,7 +689,7 @@
       "giftName": "Quase Humano",
       "giftSummary": "Cabelos e unhas crescem à vontade, mudanças físicas persistem durante o sono diurno sem Força de Vontade, e um Rubor da Vida permanente pode ser intensificado com Vitae para obter cura mortal, ocultar a aura e ter Empatia excepcional.",
       "baneName": "A Maldição da Decomposição",
-      "baneSummary": "Com Humanidade 6 ou menos, o vampiro envelhece a um quarto da velocidade humana. Uma vez por capítulo, após um Ponto de Ruptura, uma falha em um teste de Humanidade faz com que envelheça um ano durante o sono diurno; passar o mesmo tempo em torpor reverte isso apenas até a idade que tinha no Abraço.",
+      "baneSummary": "Com Humanidade 6 ou menos, o vampiro envelhece a um quarto da velocidade humana. Uma vez por sessão, após um Ponto de Ruptura, uma falha em um teste de Humanidade faz com que envelheça um ano durante o sono diurno; passar o mesmo tempo em torpor reverte isso apenas até a idade que tinha no Abraço.",
       "nicknames": [
         "Cavalheiros",
         "Os Definhados",
@@ -2400,7 +2400,7 @@
     "presentationPt": {
       "summary": "Videntes atormentados que percebem verdades impossíveis por meio de Malkavia e Dementação.",
       "baneName": "A Maldição do Balbucio",
-      "baneSummary": "A cada capítulo, o Narrador recebe 10 menos Humanidade dados para se opor a tentativas Sociais bem-sucedidas de comunicar verdades. Se os sucessos forem reduzidos a uma falha, ela se torna dramática, e essa verdade não pode ser comunicada novamente até a noite seguinte; Touchstones estão isentos.",
+      "baneSummary": "A cada sessão, o Narrador recebe 10 menos Humanidade dados para se opor a tentativas Sociais bem-sucedidas de comunicar verdades. Se os sucessos forem reduzidos a uma falha, ela se torna dramática, e essa verdade não pode ser comunicada novamente até a noite seguinte; Touchstones estão isentos.",
       "giftName": "Apofenia",
       "giftSummary": "O vampiro lê padrões significativos em coincidências aparentes, obtendo percepção profética enquanto corre o risco de receber a Condição Pareidolia.",
       "nicknames": [

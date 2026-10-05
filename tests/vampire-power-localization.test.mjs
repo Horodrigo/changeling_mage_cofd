@@ -14,8 +14,8 @@ const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").r
 const fields = ["summary", "cost", "requirement", "condition", "dicePool", "action", "duration", "contestedBy", "resistedBy", "sacrament", "effect", "procedure", "outcome"];
 
 test("Vampire official and Homebrew power presentations cover existing fields and preserve numeric limits", () => {
-  assert.deepEqual(selected.map(item => item.id).sort(), ["animalism", "auspex", "blood-tether", "celerity", "crochan", "dominate", "interface", "majesty", "nightmare", "obfuscate", "protean", "resilience", "spiritus-sancti", "surge", "truths-of-erebus", "vigor"]);
-  assert.equal(selected.flatMap(item => item.levels).length, 65);
+  assert.deepEqual(selected.map(item => item.id).sort(), ["animalism", "auspex", "blood-tether", "cachexy", "celerity", "crochan", "dead-signal", "dominate", "interface", "majesty", "nightmare", "obfuscate", "protean", "resilience", "spiritus-sancti", "surge", "truths-of-erebus", "vigor"]);
+  assert.equal(selected.flatMap(item => item.levels).length, 75);
   for (const definition of selected) {
     for (const item of [definition, ...definition.levels]) {
       assert.ok(item.presentationPt, `${definition.id}.${item.rating ?? "summary"}`);
