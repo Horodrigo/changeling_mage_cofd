@@ -85,7 +85,10 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
       ...detail(`${"•".repeat(level.rating)} ${locale === "pt-BR" ? level.translatedName : level.name}`, level.summary), ...mechanics(level),
     ])]);
   });
-  powers.ritualDisciplines.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.statusRequirement), ...mechanics(item)]));
+  powers.ritualDisciplines.forEach((definition) => {
+    const item = vampirePowerPresentation(definition, locale);
+    add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.statusRequirement), ...detail(t("ui.humanityCap"), item.humanityCapFormula), ...mechanics(item)]);
+  });
   powers.devotions.forEach((item) => { const placement = item.category ? nestedDevotions[item.category] : undefined; add(item, placement?.kind ?? item.category ?? t("ui.devotions"), [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], placement?.parentId); });
   powers.lashes.forEach((item) => add(item, disciplines, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], "blood-tether"));
   powers.cruacRites.forEach((item) => add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.level"), item.rating), ...mechanics(item)]));

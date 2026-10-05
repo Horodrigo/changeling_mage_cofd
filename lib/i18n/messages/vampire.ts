@@ -70,6 +70,7 @@ export const vampireMessages = {
       "kimiya": "Kimiya",
       "therion": "Therion",
       "gildedCage": "Gaiola Dourada",
+      "humanityCap": "Humanidade Máxima",
       "detournement": "Detournement",
       "meritConfig": {
         "clanCovenantOrCity": "Clã, Coalizão ou cidade",
@@ -506,6 +507,7 @@ export const vampireMessages = {
       "kimiya": "Kimiya",
       "therion": "Therion",
       "gildedCage": "Gilded Cage",
+      "humanityCap": "Maximum Humanity",
       "detournement": "Detournement",
       "meritConfig": {
         "clanCovenantOrCity": "Clan, Covenant or city",

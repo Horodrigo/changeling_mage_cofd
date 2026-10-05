@@ -1,6 +1,6 @@
 # Auditoria de tradução — Mortal, Vampire e Mage
 
-Atualização: **2026-10-05**. **Meta pausada a pedido do usuário:** prioridade 0, localização das etapas 1–2 e correções aprovadas de Méritos Core implementadas e verificadas; etapas 3–4 ainda têm o backlog abaixo.
+Atualização: **2026-10-05**. **Meta ativa:** prioridade 0, localização das etapas 1–2 e correções aprovadas de Méritos Core implementadas e verificadas; etapa 3 em execução; etapa 4 pendente.
 
 ## Escopo e ordem
 
@@ -25,7 +25,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
 | V04 — Méritos | 403 (154 não Homebrew, 249 Homebrew), 80 níveis; nove erratas incluídas | Apresentações completas, nove erratas ativadas e correções de fonte aprovadas verificadas |
-| V05 — Poderes | 546 registros, 140 níveis internos | 23/23 Disciplinas e seus 110 níveis com PT verificado. Restam 523 registros e os 30 níveis de Espirais |
+| V05 — Poderes | 546 registros, 140 níveis internos | 23/23 Disciplinas, seus 110 níveis e 5/5 Disciplinas Rituais com PT. Restam 518 registros e os 30 níveis de Espirais |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
 | G01 — Spells | 360 | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
@@ -58,6 +58,8 @@ Méritos: `merits-vampire-pt` em `merits-pt.json` é carregado junto do catálog
 Poderes e níveis usam `presentationPt` estático e a visão de leitura própria `power-presentation.ts`; regras continuam recebendo os campos canônicos. Todas as 23 Disciplinas e os 110 níveis têm apresentação PT, com revisão visual dos PDFs locais e fontes/páginas mantidas em seus registros. Evolução Triádica inclui suas 15 Manifestações (Spilled Blood pp. 59–61) e Sucessos Alvo na ficha e no seletor de XP. Nomes descritivos acompanham as referências de Bloodlines já apresentadas; nomes próprios e Spiritus Sancti permanecem originais. Arrepio/Face da Fera corrigem antigas ocorrências de Besta; O Grande Delírio distingue a crença falsa de uma ilusão sensorial. Ímpeto continua distinto de Vigor; Graduação, Numina e Fraqueza de entidades efêmeras seguem o léxico vigente. Pele da Fera e Aspecto Sobrenatural reutilizam o léxico vigente; Oubliette recebe o título descritivo Masmorra do Esquecimento, conservando sua entrada canônica. Vitiate recebe o título descritivo Debilitação; Praestantia permanece original. Armas Brancas corresponde a Weaponry/Melee da ficha; Braço Lesionado, Cego, Surdo, Perna Lesionada e Mudo seguem o Core. Os três modificadores de Toque da Sombra aparecem também no seletor de XP; a referência Homebrew dispõe do mesmo campo.
 
 Referências para Conditions: Sated → **Saciado**, Ecstatic → **Extático**, Confused → **Confuso**, Dominated → **Dominado**, Mesmerized → **Mesmerizado**, Enthralled → **Cativado**, Delusional → **Delirante**, Frightened → **Assustado**, Scarred → **Marcado por Cicatrizes**, Materialized → **Materializado**. Steadfast/Broken usam **Resoluto/Quebrado** do Core; False Memories conserva **Falsas Memórias**; Charmed usa **Encantado(Membro)** e Swooning/Swooned, **Enamorado**. Radio Sickness recebe a referência **Doença Radiofônica**; Shaken conserva **Abalado** do Core. Power Surge é apresentado como **Sobrecarga Elétrica** na referência de Interface; não há entrada desse Tilt nos catálogos atuais e nenhuma regra/ID foi acrescentada.
+
+As cinco Disciplinas Rituais usam a mesma apresentação nos cards Desktop/Mobile, seletor de XP e referência Homebrew. Status exigido e Humanidade Máxima de Crúac aparecem nos detalhes. Fontes revisadas visualmente: Vampire 2e pp. 150–152, Dark Eras 2 pp. 143 e 344–345, e False Gods: Ventrue pp. 136–137. Gaiola Dourada conserva sua origem Homebrew; Meios e Recursos traduz Ways and Means. Referências de Conditions: Jaded → **Calejado**, Humbled → **Humilhado(Membro)**, Stumbled → **Vacilante**, Raptured → **Arrebatado**; Inspired conserva **Inspirado** do Core. Convergência é um local, não uma Condition recebida. O catálogo de Conditions permanece no seu próprio backlog.
 
 Traduzir resumo, efeito, custo, parada, ação, duração, resultados, modificadores, procedimento, Sacrament, requisitos e opções **quando existentes**; não inventar conteúdo ausente. Breaking Points estão em `game-lines/vampire/catalog-data/detachment.json` (41 entradas e `vastDynastyEmbrace`); presets em `shadow-cults.json`.
 
@@ -140,7 +142,7 @@ Os cinco pares com efeitos distintos já aprovados recebem qualificadores de lin
 - Bloodlines: Cavaleiros sem Terra traduz Hedge Knights no contexto medieval de Bron; Purezas traduz Purities. Electrum, Udjat, Namus-Ur, Lobos de Sangre, Morrigans, Mystikos, Spiritus Sancti, Sublunario, Családtag, Lithopedia, Strix e draugr preservados.
 - Numina do Familiar já apresentada: Fascínio, Rajada, Enlouquecer, Drenar, Aura Emocional, Decadência Entrópica, Incendiário, Alucinação, Implantar Missão, Chave Canhota, Mascara Mortal, Desbravador, Regenerar, Buscar, Velocidade, Sinal, Inabalável e Telecinese. Propostas posteriores à confirmação histórica, já aplicadas; não equivalem à aprovação de nomes homônimos em outras linhas.
 
-## Decisões respondidas pelo usuário — 2026-10-04
+## Decisões respondidas pelo usuário — 2026-10-04 e 2026-10-05
 
 Estes pontos **já receberam resposta e estão aplicados ou conservados conforme indicado**. Permanecem aqui como decisões para os próximos catálogos, não como perguntas abertas. As correções mecânicas solicitadas pelo usuário são trabalho adicional autorizado; a tradução isolada continua preservando as demais regras.
 
@@ -182,6 +184,8 @@ Estes pontos **já receberam resposta e estão aplicados ou conservados conforme
 | Curse Effigy — Hurt Locker p. 73 | **Sucessos de criação formam uma reserva**, conforme interpretação detalhada pelo usuário. | EN/PT explicitam amostra pessoal, noite inteira, gasto por turno de Complicação sem dano, um sucesso reservado por ataque letal ou dado de sorte Social, dano igual aos sucessos do ataque e descarte da reserva. A fórmula conserva − Vigor da vítima + Tolerância Sobrenatural da vítima. O título PT **Éfige Amaldiçoada** foi editado e confirmado pelo usuário; 24/24 testes dirigidos aprovados após a inclusão. |
 | Swarm Form — Vampire p. 114 | **Usar os valores do livro**. | Requisito corrigido para Metamorfose 3; o resumo EN/PT referencia Beast's Skin/Pele da Fera. Nome, ID e demais valores preservados. |
 | Fire & Revolution — facções e Méritos pp. 72–76, 94–95 | **Usar os valores do livro**. | Oito páginas corrigidas para 72/73/75/75/76/76/76/76. Artefato Cultural exige Status Carthiano 2; Experimentador de Devoções (Avançado) exige três Devoções que usem a Disciplina característica do Clan escolhido; Imposição exige Armas de Fogo 2 ou Armas Brancas 2; Bombista Incendiário exige Ímpeto 1. Requisitos e apresentação EN/PT alinhados; nenhuma compra ou escolha persistida é reescrita. |
+| Therion — Dark Eras 2 p. 344 | **Corrigir conforme o PDF**, confirmado em 2026-10-05. | EN/PT agora causam Ponto de Ruptura quando a Humanidade é maior que a pontuação do Sacrilégio. Removidos o falso requisito mínimo e o limite de Humanidade nas escolhas de Sacrilégios pagos/gratuitos; pontuação de Therion, acesso e escolhas existentes preservados. |
+| Gilded Cage — False Gods: Ventrue pp. 136–137 | **Corrigir conforme o PDF**, confirmado em 2026-10-05. | EN/PT descrevem Convergências como locais onde os testes do ritual obtêm sucesso excepcional com três sucessos em vez de cinco. Não se recebe uma Condition Convergência. |
 
 ## Esclarecimento ainda pendente
 
@@ -196,9 +200,9 @@ Conteúdo de origem Vampire/Mage distribuído como Core conserva a classificaç�
 ## Verificação atual
 
 - **403/403 Méritos Vampire**, incluindo os 80 níveis, e **56 Bloodlines** com apresentação PT completa. As nove erratas ativadas conservam identidades e campos herdados; conteúdo autoral não é traduzido automaticamente.
-- **23/23 Disciplinas Vampire e 110 níveis** apresentados em PT. Restam os 523 registros dos demais grupos e os 30 níveis de Espirais; Conditions, Breaking Points, presets e Mage permanecem no backlog inicial.
+- **23/23 Disciplinas Vampire, 110 níveis e 5/5 Disciplinas Rituais** apresentados em PT. Restam os 518 registros dos demais grupos e os 30 níveis de Espirais; Conditions, Breaking Points, presets e Mage permanecem no backlog inicial.
 - As quatro decisões finais estão aplicadas: Choke Hold e Curse Effigy em EN/PT; Swarm Form com Metamorfose 3/Pele da Fera; Fire & Revolution com oito páginas e quatro requisitos corrigidos conforme o PDF. Apenas os campos autorizados foram alterados; IDs, compras, XP, estornos e textos autorais permanecem preservados.
-- Manifesto `catalogVersion` **94**; recursos Core de Méritos **16/18**, Changeling **6/8**, `merits-vampire` **14**, `merits-vampire-pt` **22**, `vampire-bloodlines` **14**, `vampire-powers` **37**.
+- Manifesto `catalogVersion` **95**; recursos Core de Méritos **16/18**, Changeling **6/8**, `merits-vampire` **14**, `merits-vampire-pt` **22**, `vampire-bloodlines` **14**, `vampire-powers` **38**.
 - Encerramento do dia: **579/579 testes da suíte completa**, lint, TypeScript e build final aprovados. Integração EN/PT/EN cobre criação, XP, cards compartilhados Desktop/Mobile e Homebrew, incluindo Clans/Bloodlines/Coalizões exclusivos, Sucessos Alvo, modificadores e níveis ainda não adquiridos.
-- Fechamento de 2026-10-05: alterações autorais preservadas nos commits `a6a28a1` e `7268e69`; **37/37 testes dirigidos** de Méritos, dicionários e integridade dos catálogos aprovados. Referências antigas a decisões ainda não aplicadas foram corrigidas; nenhuma nova família de poderes foi iniciada.
-- Sem smoke de navegador. Ponto de parada solicitado pelo usuário em 2026-10-04: lotes verificados e registrados em commits locais. Retomar pelo backlog inicial; a meta integral ainda não está concluída.
+- Lote de Disciplinas Rituais: **94/94 testes dirigidos**, lint, TypeScript e build aprovados. EN/PT/EN cobre resumos, Status, teto de Humanidade, paradas, resultados e modificadores; opções pagas/gratuitas de Therion verificadas com Humanidade 0/1/3/7. O limite próprio de Feitiçaria Tebana continua ativo. Recibos, fichas e notas autorais permanecem intactos.
+- Alterações autorais dos commits `a6a28a1` e `7268e69` preservadas. Meta retomada pelo usuário em 2026-10-05; continuar pelo backlog inicial. Sem smoke de navegador; a meta integral ainda não está concluída.

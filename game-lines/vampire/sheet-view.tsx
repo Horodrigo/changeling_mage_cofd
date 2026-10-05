@@ -2022,12 +2022,14 @@ function PowerMechanics({
   mechanics: definition,
   compact = false,
 }: {
-  mechanics: VampireMechanics;
+  mechanics: VampireMechanics & Partial<Pick<VampireRitualDisciplineDefinition, "statusRequirement" | "humanityCapFormula">>;
   compact?: boolean;
 }) {
   const { locale, t } = useLanguage();
   const mechanics = vampirePowerPresentation(definition, locale);
   const rows: Array<[string, string | number | undefined]> = [
+    [t("ui.prerequisites"), mechanics.statusRequirement],
+    [t("ui.humanityCap"), mechanics.humanityCapFormula],
     [t("ui.cost"), mechanics.cost],
     [t("ui.requirement"), mechanics.requirement],
     [t("ui.condition"), mechanics.condition],
@@ -2131,7 +2133,8 @@ function RitualDisciplines({
     <>
       <SheetHeading>{t("ui.bloodSorceryDisciplines")}</SheetHeading>
       <div className="vampire-power-grid">
-        {selected.map((item: VampireRitualDisciplineDefinition) => {
+        {selected.map((definition: VampireRitualDisciplineDefinition) => {
+          const item = vampirePowerPresentation(definition, locale);
           const [ratingKey, idsKey] = ritualFields[item.id];
           const rating = Number(bloodSorcery[ratingKey] ?? 0);
           const rituals = ownedVampireRituals(

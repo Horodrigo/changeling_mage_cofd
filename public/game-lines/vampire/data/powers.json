@@ -2897,6 +2897,18 @@
         "dramaticFailure": "The ritualist gains Jaded.",
         "success": "The formula takes effect.",
         "exceptionalSuccess": "The ritualist gains Inspired."
+      },
+      "presentationPt": {
+        "statusRequirement": "Status Jaliniyya • ou mais",
+        "summary": "Alquimia do sangue dos Jaliniyya; cada ponto concede uma fórmula gratuita, e fórmulas adicionais custam dois pontos de Experiência.",
+        "cost": "1 Vitae mais um sacrifício de sangue igual à pontuação da fórmula − 1, mínimo 1",
+        "dicePool": "Inteligência + Ciência + Kimiya",
+        "action": "Estendida",
+        "rollResults": {
+          "dramaticFailure": "O ritualista recebe Calejado.",
+          "success": "A fórmula produz seu efeito.",
+          "exceptionalSuccess": "O ritualista recebe Inspirado."
+        }
       }
     },
     {
@@ -2908,19 +2920,26 @@
       "freeRitualPerDot": true,
       "maximumRitualRating": "discipline-rating",
       "statusRequirement": "Tenth Choir membership in good standing",
-      "minimumHumanityToCast": "ritual-rating",
       "summary": "Tenth Choir blood sorcery; each dot grants one free Sacrilege and additional Sacrileges cost two Experiences.",
       "source": "Dark Eras 2",
       "page": 344,
       "cost": "Vitae equal to Sacrilege rating, acquired by feeding from a Grigor",
       "dicePool": "Presence + Intimidation + Therion",
       "action": "Extended",
-      "effect": "If Humanity is not higher than the Sacrilege rating, committing it causes a breaking point with dice equal to the ritual rating."
+      "effect": "If Humanity is higher than the Sacrilege rating, committing it causes a breaking point with dice equal to the ritual rating.",
+      "presentationPt": {
+        "statusRequirement": "Ser um membro em boa situação no Décimo Coro",
+        "summary": "Feitiçaria de sangue do Décimo Coro; cada ponto concede um Sacrilégio gratuito, e Sacrilégios adicionais custam dois pontos de Experiência.",
+        "cost": "Vitae igual à pontuação do Sacrilégio, obtida ao se alimentar de um Grigor",
+        "dicePool": "Presença + Intimidação + Therion",
+        "action": "Estendida",
+        "effect": "Se a Humanidade for maior que a pontuação do Sacrilégio, cometê-lo causa um Ponto de Ruptura com um número de dados igual à pontuação do ritual."
+      }
     },
     {
       "id": "gilded-cage",
       "name": "Gilded Cage",
-      "translatedName": "Gilded Cage",
+      "translatedName": "Gaiola Dourada",
       "ritualKind": "gilded-invocation",
       "experienceCostPerDot": 4,
       "freeRitualPerDot": true,
@@ -2932,7 +2951,15 @@
       "cost": "The Invocation's Ways and Means must be present but are not consumed",
       "dicePool": "Intelligence + Occult + Gilded Cage",
       "action": "Extended",
-      "effect": "Invocations affect defined urban areas. A dramatic failure inflicts Competitive instead of Humbled; an exceptional success on three successes also grants Convergence."
+      "effect": "Invocations affect defined urban areas. A dramatic failure inflicts Competitive instead of Humbled; in a Convergence, ritual rolls achieve exceptional success with three successes instead of five.",
+      "presentationPt": {
+        "statusRequirement": "Status nos Arquitetos do Monólito •",
+        "summary": "Feitiçaria de sangue dos Arquitetos que altera fluxos urbanos por meio de Meios e Recursos preparados. Cada ponto concede uma Invocação gratuita; Invocações adicionais custam dois pontos de Experiência.",
+        "cost": "Os Meios e Recursos da Invocação devem estar presentes, mas não são consumidos",
+        "dicePool": "Inteligência + Ocultismo + Gaiola Dourada",
+        "action": "Estendida",
+        "effect": "Invocações afetam áreas urbanas delimitadas. Uma falha dramática impõe Competitivo em vez de Humilhado(Membro); em uma Convergência, os testes do ritual obtêm sucesso excepcional com três sucessos em vez de cinco."
+      }
     },
     {
       "id": "cruac",
@@ -2978,7 +3005,44 @@
           "modifier": "0 to +3",
           "situation": "Crúac only: extra Vitae sacrificed beyond the requirement; bonus equals excess Vitae."
         }
-      ]
+      ],
+      "presentationPt": {
+        "statusRequirement": "Status no Círculo da Anciã • para aprender Crúac ou ritos novos",
+        "humanityCapFormula": "10 − pontos em Crúac",
+        "summary": "Disciplina Ritual do Círculo da Anciã. Cada ponto comprado normalmente concede um rito gratuito, e os ritos conhecidos não podem superar a pontuação de Crúac.",
+        "cost": "Os ritos custam Vitae igual à pontuação do rito, antes do teste de conjuração",
+        "dicePool": "Manipulação + Ocultismo + Crúac",
+        "action": "Estendida; intervalo básico de 30 minutos por teste, 15 minutos quando Crúac supera a pontuação do rito",
+        "effect": "A parada de conjuração sem modificadores determina o número máximo de testes. Rituais falham se forem interrompidos. Aplicam-se os resultados padrão de feitiçaria de sangue e as defesas de disputa ou resistência específicas de cada ritual.",
+        "rollResults": {
+          "dramaticFailure": "O ritual falha completamente e o sacrifício é perdido. Crúac concede Tentado; Feitiçaria Tebana concede Humilhado(Membro). O próximo ritual tentado sofre uma penalidade de –2 dados.",
+          "failure": "Nenhum sucesso é acumulado. O ritualista pode abandonar o ritual ou continuar; continuar impõe a Condição Vacilante.",
+          "success": "Acumule sucessos. Quando o número de sucessos alvo do ritual é alcançado, seu efeito ocorre imediatamente.",
+          "exceptionalSuccess": "Além de acumular sucessos, escolha uma opção: reduzir os sucessos alvo pelos pontos na Disciplina Ritual; reduzir o intervalo para 15 minutos (ou 5 minutos se a Disciplina superar a pontuação do ritual); ou receber Extático (Crúac) / Arrebatado (Feitiçaria Tebana) se o ritual for bem-sucedido."
+        },
+        "suggestedModifiers": [
+          {
+            "modifier": "+1 a +3",
+            "situation": "O poder tem como alvo ou se aplica a um vampiro com quem já existe simpatia de sangue; Crúac dobra este modificador."
+          },
+          {
+            "modifier": "–1 a –3",
+            "situation": "O ritualista está com pressa ou distraído; várias distrações são cumulativas."
+          },
+          {
+            "modifier": "0 a +3",
+            "situation": "O ritualista prepara um ritual elaborado além do sacrifício mínimo."
+          },
+          {
+            "modifier": "0 a +3",
+            "situation": "Somente Feitiçaria Tebana: meditação bem-sucedida; o bônus é igual aos sucessos na meditação."
+          },
+          {
+            "modifier": "0 a +3",
+            "situation": "Somente Crúac: Vitae adicional sacrificada além do requisito; o bônus é igual à Vitae excedente."
+          }
+        ]
+      }
     },
     {
       "id": "theban",
@@ -3024,7 +3088,43 @@
           "modifier": "0 to +3",
           "situation": "Crúac only: extra Vitae sacrificed beyond the requirement; bonus equals excess Vitae."
         }
-      ]
+      ],
+      "presentationPt": {
+        "statusRequirement": "Status na Lancea et Sanctum • para aprender Feitiçaria Tebana ou milagres novos",
+        "summary": "Disciplina Ritual da Lancea et Sanctum. Cada ponto comprado normalmente concede um milagre gratuito, e os milagres conhecidos não podem superar a pontuação de Feitiçaria Tebana.",
+        "cost": "1 Força de Vontade mais o sacramento do milagre, antes do teste de conjuração",
+        "dicePool": "Inteligência + Erudição + Feitiçaria Tebana",
+        "action": "Estendida; intervalo básico de 30 minutos por teste, 15 minutos quando Feitiçaria Tebana supera a pontuação do milagre",
+        "effect": "A parada de conjuração sem modificadores determina o número máximo de testes. Rituais falham se forem interrompidos. A Humanidade do conjurador deve ser igual ou superior à pontuação do milagre.",
+        "rollResults": {
+          "dramaticFailure": "O ritual falha completamente e o sacrifício é perdido. Crúac concede Tentado; Feitiçaria Tebana concede Humilhado(Membro). O próximo ritual tentado sofre uma penalidade de –2 dados.",
+          "failure": "Nenhum sucesso é acumulado. O ritualista pode abandonar o ritual ou continuar; continuar impõe a Condição Vacilante.",
+          "success": "Acumule sucessos. Quando o número de sucessos alvo do ritual é alcançado, seu efeito ocorre imediatamente.",
+          "exceptionalSuccess": "Além de acumular sucessos, escolha uma opção: reduzir os sucessos alvo pelos pontos na Disciplina Ritual; reduzir o intervalo para 15 minutos (ou 5 minutos se a Disciplina superar a pontuação do ritual); ou receber Extático (Crúac) / Arrebatado (Feitiçaria Tebana) se o ritual for bem-sucedido."
+        },
+        "suggestedModifiers": [
+          {
+            "modifier": "+1 a +3",
+            "situation": "O poder tem como alvo ou se aplica a um vampiro com quem já existe simpatia de sangue; Crúac dobra este modificador."
+          },
+          {
+            "modifier": "–1 a –3",
+            "situation": "O ritualista está com pressa ou distraído; várias distrações são cumulativas."
+          },
+          {
+            "modifier": "0 a +3",
+            "situation": "O ritualista prepara um ritual elaborado além do sacrifício mínimo."
+          },
+          {
+            "modifier": "0 a +3",
+            "situation": "Somente Feitiçaria Tebana: meditação bem-sucedida; o bônus é igual aos sucessos na meditação."
+          },
+          {
+            "modifier": "0 a +3",
+            "situation": "Somente Crúac: Vitae adicional sacrificada além do requisito; o bônus é igual à Vitae excedente."
+          }
+        ]
+      }
     }
   ],
   "devotions": [
