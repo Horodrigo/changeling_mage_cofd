@@ -1071,7 +1071,7 @@
     "description": "Ao iniciar uma emboscada, nega 10-novamente aos testes para percebê-la e recebe +3 de Iniciativa no primeiro turno."
   },
   "hurt-locker:curse-effigy": {
-    "name": "Amaldiçoar Efígie",
+    "name": "Éfige Amaldiçoada",
     "prerequisites": "Somente mortais",
     "description": "Gasta um ponto de Força de Vontade e uma noite inteira confeccionando uma efígie com uma amostra pessoal de cabelo ou sangue, então testa Raciocínio + Ocultismo − Perseverança da vítima. Os sucessos formam uma reserva. Como ações instantâneas, gasta sucessos para impor uma Complicação Pessoal sem causar dano, com duração de um turno por sucesso gasto; gasta um sucesso da reserva para atacar órgãos vitais com Inteligência + Medicina − Vigor da vítima + Tolerância Sobrenatural da vítima, causando dano letal igual aos sucessos desse ataque; ou gasta um sucesso da reserva para reduzir a próxima ação Social da vítima a um dado de sorte. Quando a reserva se esgota, a efígie se desfaz e uma nova exige uma amostra fresca. A destruição da efígie ou sua posse pela vítima desperdiça todos os sucessos restantes."
   },
