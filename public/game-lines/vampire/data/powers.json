@@ -1850,12 +1850,20 @@
           "dicePool": "None",
           "action": "Instant",
           "duration": "Scene",
-          "effect": "Add Nightmare to mundane Intimidation, prevent affected victims from spending Willpower offensively, and create small short-lived illusions affecting up to two senses."
+          "effect": "Add Nightmare to mundane Intimidation, prevent affected victims from spending Willpower offensively, and create small short-lived illusions affecting up to two senses.",
+          "presentationPt": {
+            "summary": "Irradiar uma aura perturbadora e conjurar ilusões breves e assustadoras.",
+            "cost": "Nenhum",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "duration": "Cena",
+            "effect": "Somar Pesadelo à Intimidação mundana, impedir vítimas afetadas de gastar Força de Vontade de forma ofensiva e criar pequenas ilusões breves que afetam até dois sentidos."
+          }
         },
         {
           "rating": 2,
           "name": "Face of the Beast",
-          "translatedName": "Face da Besta",
+          "translatedName": "Face da Fera",
           "summary": "Magnify a victim's fear until they flee.",
           "cost": "1 Vitae",
           "dicePool": "Presence + Empathy + Nightmare vs. Composure + Blood Potency",
@@ -1866,12 +1874,25 @@
             "failure": "Fear troubles the victim but does not drive them away.",
             "success": "The victim gains Frightened.",
             "exceptionalSuccess": "The vampire learns precisely what the victim fears."
+          },
+          "presentationPt": {
+            "summary": "Ampliar o medo de uma vítima até ela fugir.",
+            "cost": "1 Vitae",
+            "dicePool": "Presença + Empatia + Pesadelo contra Compostura + Potência de Sangue",
+            "action": "Disputada; a resistência é reflexiva",
+            "effect": "Impor Assustado.",
+            "rollResults": {
+              "dramaticFailure": "A vítima enfrenta o medo e recupera Força de Vontade.",
+              "failure": "O medo perturba a vítima, mas não a faz fugir.",
+              "success": "A vítima recebe Assustado.",
+              "exceptionalSuccess": "O vampiro descobre exatamente o que a vítima teme."
+            }
           }
         },
         {
           "rating": 3,
           "name": "The Grand Delusion",
-          "translatedName": "A Grande Ilusão",
+          "translatedName": "O Grande Delírio",
           "summary": "Implant a frightening false belief.",
           "cost": "2 Vitae",
           "dicePool": "Manipulation + Empathy + Nightmare vs. Composure + Blood Potency",
@@ -1883,6 +1904,20 @@
             "failure": "The delusion fails.",
             "success": "The victim gains Delusional for the normal duration; Dread Presence extends it by Blood Potency.",
             "exceptionalSuccess": "The delusion lasts three nights, or longer with Dread Presence."
+          },
+          "presentationPt": {
+            "summary": "Implantar uma crença falsa e assustadora.",
+            "cost": "2 Vitae",
+            "dicePool": "Manipulação + Empatia + Pesadelo contra Compostura + Potência de Sangue",
+            "action": "Disputada; a resistência é reflexiva",
+            "duration": "Uma noite",
+            "effect": "Impor Delirante com uma crença definida pelo vampiro, dentro dos limites.",
+            "rollResults": {
+              "dramaticFailure": "O vampiro recebe Delirante com base na crença falsa pretendida.",
+              "failure": "O delírio falha.",
+              "success": "A vítima recebe Delirante pela duração normal; Presença Aterradora estende essa duração conforme a Potência de Sangue.",
+              "exceptionalSuccess": "O delírio dura três noites ou mais com Presença Aterradora."
+            }
           }
         },
         {
@@ -1900,6 +1935,20 @@
             "failure": "Victims are unaffected.",
             "success": "The hallucination lasts a scene.",
             "exceptionalSuccess": "The hallucination lasts a full night."
+          },
+          "presentationPt": {
+            "summary": "Criar uma alucinação de pesadelo que afeta vários sentidos.",
+            "cost": "1 Vitae",
+            "dicePool": "Presença + Empatia + Pesadelo contra a maior Compostura + Potência de Sangue do grupo",
+            "action": "Disputada; a resistência é reflexiva",
+            "duration": "Cena",
+            "effect": "Criar uma alteração ou adição aterrorizante percebida por todos os sentidos. Com Presença Aterradora, pode afetar todos os presentes.",
+            "rollResults": {
+              "dramaticFailure": "O vampiro tem alucinações e deve resistir ao frenesi.",
+              "failure": "As vítimas não são afetadas.",
+              "success": "A alucinação dura uma cena.",
+              "exceptionalSuccess": "A alucinação dura uma noite inteira."
+            }
           }
         },
         {
@@ -1917,9 +1966,26 @@
             "failure": "The victim suffers fear but no mechanical harm.",
             "success": "Deal one lethal damage per success and inflict Broken if the victim survives.",
             "exceptionalSuccess": "If the victim dies, the vampire regains Willpower."
+          },
+          "presentationPt": {
+            "summary": "Transformar um medo existente em terror sobrenatural letal.",
+            "cost": "1 Vitae e 1 Força de Vontade",
+            "condition": "A vítima tem Assustado ou Delirante",
+            "dicePool": "Presença + Intimidação + Pesadelo – Compostura da vítima",
+            "action": "Instantânea",
+            "effect": "Causar dano letal por sucesso e impor Quebrado se a vítima sobreviver. Presença Aterradora também pode remover Compostura temporariamente.",
+            "rollResults": {
+              "dramaticFailure": "A vítima recebe um grande bônus para resistir a Pesadelo durante a semana seguinte.",
+              "failure": "A vítima sente medo, mas não sofre dano mecânico.",
+              "success": "Causar um ponto de dano letal por sucesso e impor Quebrado se a vítima sobreviver.",
+              "exceptionalSuccess": "Se a vítima morrer, o vampiro recupera Força de Vontade."
+            }
           }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "Usa como arma o terror sobrenatural inspirado pela Fera."
+      }
     },
     {
       "id": "obfuscate",
@@ -2129,19 +2195,27 @@
         {
           "rating": 1,
           "name": "Cast Off the Scales",
-          "translatedName": "Cast Off the Scales",
+          "translatedName": "Remover as Escamas",
           "summary": "Cast Off the Scales, the 1-dot expression of Spiritus Sancti.",
           "cost": "None",
           "dicePool": "None",
           "action": "Instant",
           "duration": "Scene",
           "effect": "The vampire perceives beings in Twilight, even through supernatural concealment while they remain in his presence, and Kindred Senses can track ephemera as though tracking blood. He may use Disciplines on ephemera that can perceive him, except powers requiring the target to smell Vitae unless Step on the Path is active.",
-          "manualOnly": true
+          "manualOnly": true,
+          "presentationPt": {
+            "summary": "Remover as Escamas, a manifestação de 1 ponto de Spiritus Sancti.",
+            "cost": "Nenhum",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "duration": "Cena",
+            "effect": "O vampiro percebe seres no Crepúsculo, mesmo através de ocultação sobrenatural enquanto permanecem em sua presença, e os Sentidos dos Membros podem rastrear entidades efêmeras como se rastreassem sangue. Ele pode usar Disciplinas em entidades efêmeras capazes de percebê-lo, exceto poderes que exigem que o alvo sinta o cheiro de Vitae, salvo se Dar um Passo no Caminho estiver ativo."
+          }
         },
         {
           "rating": 2,
           "name": "Step on the Path",
-          "translatedName": "Step on the Path",
+          "translatedName": "Dar um Passo no Caminho",
           "summary": "Step on the Path, the 2-dot expression of Spiritus Sancti.",
           "cost": "None",
           "requirement": "Cast Off the Scales must be active.",
@@ -2154,12 +2228,26 @@
             "failure": "The vampire remains limited to the material world.",
             "dramaticFailure": "Ephemera can affect the vampire, but she cannot affect them."
           },
-          "manualOnly": true
+          "manualOnly": true,
+          "presentationPt": {
+            "summary": "Dar um Passo no Caminho, a manifestação de 2 pontos de Spiritus Sancti.",
+            "cost": "Nenhum",
+            "requirement": "Remover as Escamas deve estar ativo.",
+            "dicePool": "Raciocínio + Ocultismo + Spiritus Sancti",
+            "action": "Instantânea",
+            "duration": "Cena",
+            "rollResults": {
+              "success": "Interagir com seres no Crepúsculo como se fossem físicos, inclusive alimentar-se deles. O vampiro deve gastar Força de Vontade para impor Marcado por Cicatrizes ou Enamorado. As entidades efêmeras podem afetá-lo igualmente; apenas seu corpo cruza a fronteira, portanto armas e armaduras carregadas não a atravessam.",
+              "exceptionalSuccess": "O efeito dura a noite ou até ser encerrado voluntariamente.",
+              "failure": "O vampiro permanece limitado ao mundo material.",
+              "dramaticFailure": "Entidades efêmeras podem afetar o vampiro, mas ele não pode afetá-las."
+            }
+          }
         },
         {
           "rating": 3,
           "name": "Shape the Divine",
-          "translatedName": "Shape the Divine",
+          "translatedName": "Moldar o Divino",
           "summary": "Shape the Divine, the 3-dot expression of Spiritus Sancti.",
           "cost": "1 Vitae",
           "requirement": "Step on the Path must be active.",
@@ -2167,12 +2255,21 @@
           "action": "Reflexive",
           "duration": "Scene",
           "effect": "Gain access to Numina equal to Spiritus Sancti dots. Spend Vitae in place of Essence and use Blood Potency where Rank determines potency. The vampire learns one Numen when gaining this power and learns others by feeding an ephemeral being to discorporation. Replacing a known Numen requires a full day and night before using the new one.",
-          "manualOnly": true
+          "manualOnly": true,
+          "presentationPt": {
+            "summary": "Moldar o Divino, a manifestação de 3 pontos de Spiritus Sancti.",
+            "cost": "1 Vitae",
+            "requirement": "Dar um Passo no Caminho deve estar ativo.",
+            "dicePool": "Inteligência + Ocultismo + Spiritus Sancti (quando um Numen exige um teste)",
+            "action": "Reflexiva",
+            "duration": "Cena",
+            "effect": "Receber acesso a um número de Numina igual aos pontos em Spiritus Sancti. Gastar Vitae no lugar de Essência e usar Potência de Sangue quando a Graduação determina a potência. O vampiro aprende um Numen ao receber este poder e aprende outros ao alimentar-se de um ser efêmero até sua descorporação. Substituir um Numen conhecido exige um dia e uma noite completos antes de usar o novo."
+          }
         },
         {
           "rating": 4,
           "name": "Consecration of the Self",
-          "translatedName": "Consecration of the Self",
+          "translatedName": "Consagração de Si",
           "summary": "Consecration of the Self, the 4-dot expression of Spiritus Sancti.",
           "cost": "1 Willpower",
           "requirement": "Fill an ephemeral being's Corpus with lethal damage, then activate the power; a spirit with no Essence cannot resist.",
@@ -2185,12 +2282,26 @@
             "failure": "The spirit's Essence does not merge with the vampire.",
             "dramaticFailure": "The spirit possesses the vampire for the scene."
           },
-          "manualOnly": true
+          "manualOnly": true,
+          "presentationPt": {
+            "summary": "Consagração de Si, a manifestação de 4 pontos de Spiritus Sancti.",
+            "cost": "1 Força de Vontade",
+            "requirement": "Preencher o Corpus de um ser efêmero com dano letal e então ativar o poder; um espírito sem Essência não pode resistir.",
+            "dicePool": "Perseverança + Ocultismo + Spiritus Sancti contra Resistência + Graduação",
+            "action": "Disputada; a resistência é reflexiva",
+            "duration": "Noite",
+            "rollResults": {
+              "success": "Devorar o espírito e assumir seus traços. O vampiro pode trocar Vitae por Essência de outra entidade efêmera na proporção de um para um; suas presas tornam-se uma Fraqueza para entidades efêmeras; ele pode escolher a própria direção da gravidade e mover-se com Deslocamento normal; e pode atravessar seres e objetos sólidos como ação instantânea, salvo se o Crepúsculo estiver obstruído. Usar o último benefício ao Esquivar soma os pontos em Spiritus Sancti.",
+              "exceptionalSuccess": "A transformação dura um número de noites igual à Potência de Sangue.",
+              "failure": "A Essência do espírito não se funde ao vampiro.",
+              "dramaticFailure": "O espírito possui o vampiro durante a cena."
+            }
+          }
         },
         {
           "rating": 5,
           "name": "The Kingdom of Heaven",
-          "translatedName": "The Kingdom of Heaven",
+          "translatedName": "Reino dos Céus",
           "summary": "The Kingdom of Heaven, the 5-dot expression of Spiritus Sancti.",
           "cost": "3–9 Vitae and 1 Willpower",
           "requirement": "Scribe holy sigils in Vitae around the perimeter: three for a house or garden, six for a city block or cemetery, and nine for a megamall or city park.",
@@ -2198,9 +2309,21 @@
           "action": "Instant",
           "duration": "One week per Blood Potency dot; longer while the vampire remains",
           "effect": "Ephemera within the Kingdom gain Materialized. Entities in Twilight approaching within 10 − Blood Potency meters roll Resistance + Rank penalized by Spiritus Sancti; failure compels entry. Leaving without permission costs one Willpower and requires Power + Rank contested by Presence + Intimidation + Spiritus Sancti. The vampire always senses ephemera inside, pays no initial Vitae for Shape of the Divine there, and multiplies Cast Off the Scales' Kindred Senses range by Spiritus Sancti dots. After the duration, the effect ends only when the vampire leaves.",
-          "manualOnly": true
+          "manualOnly": true,
+          "presentationPt": {
+            "summary": "Reino dos Céus, a manifestação de 5 pontos de Spiritus Sancti.",
+            "cost": "3–9 Vitae e 1 Força de Vontade",
+            "requirement": "Inscrever sigilos sagrados com Vitae ao redor do perímetro: três para uma casa ou jardim, seis para um quarteirão ou cemitério e nove para um grande centro comercial ou parque urbano.",
+            "dicePool": "Nenhuma",
+            "action": "Instantânea",
+            "duration": "Uma semana por ponto de Potência de Sangue; mais tempo enquanto o vampiro permanece",
+            "effect": "Entidades efêmeras dentro do Reino recebem Materializado. Entidades no Crepúsculo que se aproximam a menos de 10 − Potência de Sangue metros testam Resistência + Graduação com penalidade de Spiritus Sancti; uma falha as obriga a entrar. Sair sem permissão custa um ponto de Força de Vontade e exige Poder + Graduação disputado por Presença + Intimidação + Spiritus Sancti. O vampiro sempre sente entidades efêmeras no interior, não paga a Vitae inicial de Moldar o Divino ali e multiplica o alcance dos Sentidos dos Membros de Remover as Escamas pelos pontos em Spiritus Sancti. Após a duração, o efeito só termina quando o vampiro sai."
+          }
         }
-      ]
+      ],
+      "presentationPt": {
+        "summary": "A Disciplina dos Mystikoi para consumir essência sobrenatural e remodelar a si mesmos rumo à divindade."
+      }
     }
   ],
   "ritualDisciplines": [
