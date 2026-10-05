@@ -377,8 +377,8 @@
   },
   "vtr-swarm-form": {
     "name": "Forma de Enxame",
-    "description": "Expande Forma da Fera para uma forma composta por muitos animais pequenos.",
-    "prerequisites": "Metamorfose ••••"
+    "description": "Expande Pele da Fera para uma forma composta por muitos animais pequenos.",
+    "prerequisites": "Metamorfose •••"
   },
   "vtr-unnatural-affinity": {
     "name": "Afinidade Sobrenatural",
@@ -1845,21 +1845,22 @@
   "h-vtr-fire-revolution:devotion-experimenter-advanced": {
     "name": "Experimentador de Devoções (Avançado)",
     "description": "Amplia Experimentador de Devoções com experimentação mais confiável e produtiva.",
-    "prerequisites": "Experimentador de Devoções"
+    "prerequisites": "Experimentador de Devoções; pelo menos três Devoções que usem a Disciplina característica do Clan escolhido"
   },
   "h-vtr-fire-revolution:cultural-artifact": {
     "name": "Artefato Cultural",
-    "description": "Possui um objeto de significado cultural que confere autoridade e influência."
+    "description": "Possui um objeto de significado cultural que confere autoridade e influência.",
+    "prerequisites": "Status no Movimento Carthiano ••"
   },
   "h-vtr-fire-revolution:enforcement": {
     "name": "Imposição",
     "description": "Um Estilo progressivo para impor as decisões do Movimento por meio de pressão física crescente.",
-    "prerequisites": "Status no Movimento Carthiano •; Perseverança ••; Briga ••"
+    "prerequisites": "Status no Movimento Carthiano •; Perseverança ••; Briga ••; Armas de Fogo •• ou Armas Brancas ••"
   },
   "h-vtr-fire-revolution:firebomber": {
     "name": "Bombista Incendiário",
     "description": "Usa o fogo como arma revolucionária enquanto controla o pânico e o risco de danos colaterais.",
-    "prerequisites": "Atletismo ••; Perseverança •••"
+    "prerequisites": "Esportes ••; Perseverança •••; Ímpeto •"
   },
   "h-vtr-fire-revolution:fire-branded": {
     "name": "Marcado pelo Fogo",

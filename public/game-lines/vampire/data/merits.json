@@ -5086,9 +5086,9 @@
     "category": "Kindred",
     "priority": 10,
     "translatedName": "Forma de Enxame",
-    "description": "Expande Shape of the Beast para uma forma composta por muitos animais pequenos.",
-    "descriptionEn": "Expands Shape of the Beast into a form composed of many small animals.",
-    "prerequisites": "Protean ••••",
+    "description": "Expands Beast's Skin into a form composed of many small animals.",
+    "descriptionEn": "Expands Beast's Skin into a form composed of many small animals.",
+    "prerequisites": "Protean •••",
     "page": 114
   },
   {
@@ -6995,7 +6995,7 @@
     "translatedName": "Bloodroots Associate",
     "description": "Connects the character to the Bloodroots faction and grants its political and grassroots benefits.",
     "descriptionEn": "Connects the character to the Bloodroots faction and grants its political and grassroots benefits.",
-    "page": 70,
+    "page": 72,
     "homebrew": true,
     "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
@@ -7014,7 +7014,7 @@
     "translatedName": "Cultist of Self",
     "description": "Grants 9-again to agenda-related Streetwise and Survival and limited access to Rule of One, while capping Carthian Status at three.",
     "descriptionEn": "Grants 9-again to agenda-related Streetwise and Survival and limited access to Rule of One, while capping Carthian Status at three.",
-    "page": 70,
+    "page": 73,
     "homebrew": true,
     "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
@@ -7033,7 +7033,7 @@
     "translatedName": "Digital Upriser",
     "description": "Grants 9-again to agenda-related Computer and Subterfuge and lets I Know a Guy call on Resources.",
     "descriptionEn": "Grants 9-again to agenda-related Computer and Subterfuge and lets I Know a Guy call on Resources.",
-    "page": 71,
+    "page": 75,
     "homebrew": true,
     "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
@@ -7052,7 +7052,7 @@
     "translatedName": "Carthian Atheist",
     "description": "Grants 9-again to agenda-related Academics and Occult and improves the first purchase of Coda Against Sorcery.",
     "descriptionEn": "Grants 9-again to agenda-related Academics and Occult and improves the first purchase of Coda Against Sorcery.",
-    "page": 71,
+    "page": 75,
     "homebrew": true,
     "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
@@ -7071,7 +7071,7 @@
     "translatedName": "Oppositionist",
     "description": "Grants 9-again to agenda-related Athletics and Survival and calls on Army of One through faction solidarity.",
     "descriptionEn": "Grants 9-again to agenda-related Athletics and Survival and calls on Army of One through faction solidarity.",
-    "page": 72,
+    "page": 76,
     "homebrew": true,
     "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
@@ -7090,7 +7090,7 @@
     "translatedName": "Sabotage Artist",
     "description": "Grants 9-again to agenda-related Larceny and Stealth and expands I Know a Guy while undermining another covenant.",
     "descriptionEn": "Grants 9-again to agenda-related Larceny and Stealth and expands I Know a Guy while undermining another covenant.",
-    "page": 72,
+    "page": 76,
     "homebrew": true,
     "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
@@ -7109,7 +7109,7 @@
     "translatedName": "Sophocrat",
     "description": "Grants 9-again to agenda-related Academics and Science and substitutes knowledge for Status on low-dot nonphysical Carthian Merits.",
     "descriptionEn": "Grants 9-again to agenda-related Academics and Science and substitutes knowledge for Status on low-dot nonphysical Carthian Merits.",
-    "page": 73,
+    "page": 76,
     "homebrew": true,
     "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
@@ -7128,7 +7128,7 @@
     "translatedName": "PPI Cadreman",
     "description": "Grants 9-again to agenda-related Occult and Politics and supplies supernatural Contacts and a related Politics Specialty.",
     "descriptionEn": "Grants 9-again to agenda-related Occult and Politics and supplies supernatural Contacts and a related Politics Specialty.",
-    "page": 73,
+    "page": 76,
     "homebrew": true,
     "descriptivePrerequisites": true,
     "prerequisites": "Carthian Movement Status ••"
@@ -7251,7 +7251,7 @@
     "page": 94,
     "homebrew": true,
     "descriptivePrerequisites": true,
-    "prerequisites": "Devotion Experimenter"
+    "prerequisites": "Devotion Experimenter; at least three Devotions using the signature Discipline of the chosen clan"
   },
   {
     "id": "h-vtr-fire-revolution:cultural-artifact",
@@ -7269,7 +7269,8 @@
     "descriptionEn": "Owns an object of cultural significance that lends authority and leverage.",
     "page": 94,
     "homebrew": true,
-    "descriptivePrerequisites": true
+    "descriptivePrerequisites": true,
+    "prerequisites": "Carthian Movement Status ••"
   },
   {
     "id": "h-vtr-fire-revolution:enforcement",
@@ -7292,7 +7293,7 @@
     "page": 94,
     "homebrew": true,
     "descriptivePrerequisites": true,
-    "prerequisites": "Carthian Movement Status •; Resolve ••; Brawl ••"
+    "prerequisites": "Carthian Movement Status •; Resolve ••; Brawl ••; Firearms •• or Weaponry ••"
   },
   {
     "id": "h-vtr-fire-revolution:firebomber",
@@ -7311,7 +7312,7 @@
     "page": 95,
     "homebrew": true,
     "descriptivePrerequisites": true,
-    "prerequisites": "Athletics ••; Resolve •••"
+    "prerequisites": "Athletics ••; Resolve •••; Vigor •"
   },
   {
     "id": "h-vtr-fire-revolution:fire-branded",
