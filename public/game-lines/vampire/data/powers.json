@@ -11637,7 +11637,7 @@
       "id": "theban-trials-job",
       "kind": "theban-miracle",
       "name": "Trials of Job",
-      "translatedName": "Trials of Job",
+      "translatedName": "Provações de Job",
       "rating": 4,
       "experienceCost": 2,
       "targetSuccesses": 10,
@@ -11648,7 +11648,15 @@
       "sacrament": "Horn of an ox or sheep",
       "duration": "Potency nights",
       "requirement": "The victim must be present.",
-      "effect": "Every failure on the victim's non-reflexive mundane actions becomes dramatic. The Storyteller also removes Potency total dots from Allies, Contacts, Feeding Ground, Haven, Herd, Mentor, Resources, Retainer, Safe Place, Staff, Status, or Touchstone and detaches unpurchased Touchstones. Successful frenzy resistance, breaking points, or riding the wave inflict moderate Sick for the miracle's duration. If the victim neither frenzies nor fails a breaking point before it ends, her next successful Social action involving the Lancea et Sanctum is exceptional."
+      "effect": "Every failure on the victim's non-reflexive mundane actions becomes dramatic. The Storyteller also removes Potency total dots from Allies, Contacts, Feeding Ground, Haven, Herd, Mentor, Resources, Retainer, Safe Place, Staff, Status, or Touchstone and detaches unpurchased Touchstones. Successful frenzy resistance, breaking points, or riding the wave inflict moderate Sick for the miracle's duration. If the victim neither frenzies nor fails a breaking point before it ends, her next successful Social action involving the Lancea et Sanctum is exceptional.",
+      "presentationPt": {
+        "summary": "Imponha ao alvo uma sequência de provações bíblicas cada vez mais severas.",
+        "resistedBy": "Perseverança",
+        "sacrament": "Chifre de boi ou ovelha",
+        "duration": "Noites iguais à Potência",
+        "requirement": "A vítima deve estar presente.",
+        "effect": "Toda falha da vítima em ações mundanas não reflexivas torna-se uma falha dramática. O Narrador também remove um total de pontos igual à Potência de Aliados, Contatos, Campo de Caça, Refúgio, Rebanho, Mentor, Recursos, Lacaio, Local Seguro, Funcionários, Status ou Touchstone e desfaz os vínculos com Touchstones não comprados. Sucessos ao resistir a frenesi ou em Pontos de Ruptura, ou ao Cavalgar a Onda, impõem Doente moderada pela duração do milagre. Se a vítima não entrar em frenesi nem falhar em um Ponto de Ruptura antes do fim do efeito, sua próxima ação Social bem-sucedida envolvendo a Lancea et Sanctum é excepcional."
+      }
     },
     {
       "id": "theban-apparition-host",
