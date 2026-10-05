@@ -10696,7 +10696,7 @@
       "id": "cruac-manananggals-working",
       "kind": "cruac-rite",
       "name": "Manananggal's Working",
-      "translatedName": "Manananggal's Working",
+      "translatedName": "Obra de Manananggal",
       "rating": 4,
       "experienceCost": 2,
       "targetSuccesses": 8,
@@ -10704,13 +10704,18 @@
       "source": "Thousand Years of Night",
       "page": 78,
       "duration": "Until sunrise",
-      "effect": "The ritualist cuts off any number of body parts, which move independently and perform tasks. All sacrificed Vitae must be her own. At sunrise the parts return and reattach; a part unable to return bursts, dealing one bashing for a small part, two for a limb, or three for a vital part, then regrows within an hour. Missing useful parts impose appropriate Tilts, and removing much of the body may divide the Vitae pool among the pieces."
+      "effect": "The ritualist cuts off any number of body parts, which move independently and perform tasks. All sacrificed Vitae must be her own. At sunrise the parts return and reattach; a part unable to return bursts, dealing one bashing for a small part, two for a limb, or three for a vital part, then regrows within an hour. Missing useful parts impose appropriate Tilts, and removing much of the body may divide the Vitae pool among the pieces.",
+      "presentationPt": {
+        "summary": "Desmembre o próprio corpo e anime as partes separadas de forma independente até o nascer do sol.",
+        "duration": "Até o nascer do sol",
+        "effect": "O ritualista corta quantas partes do corpo desejar; elas se movem de forma independente e executam tarefas. Toda a Vitae sacrificada deve ser sua. Ao nascer do sol, as partes retornam e se reencaixam. Uma parte que não consiga voltar explode, causando um ponto de dano contundente para uma parte pequena, dois para um membro ou três para uma parte vital; ela então volta a crescer em uma hora. A ausência de partes úteis impõe as Complicações apropriadas, e remover grande parte do corpo pode dividir a reserva de Vitae entre os pedaços."
+      }
     },
     {
       "id": "cruac-scapegoat",
       "kind": "cruac-rite",
       "name": "Scapegoat",
-      "translatedName": "Scapegoat",
+      "translatedName": "Bode Expiatório",
       "rating": 5,
       "experienceCost": 2,
       "targetSuccesses": 12,
@@ -10719,7 +10724,13 @@
       "source": "Thousand Years of Night",
       "page": 78,
       "duration": "Until sunrise",
-      "effect": "Feed the rite's Vitae to a mortal. The ritualist cannot risk detachment, suffer acquired banes, or gain Willpower from Touchstones; the mortal instead suffers those banes and rolls the breaking points with a one-die penalty. When the rite ends, the vampire gains Wanton and suffers −3 to breaking points until it resolves. The rite cannot be performed if the vampire is still immune to a repeated Wanton Condition gained from it that month."
+      "effect": "Feed the rite's Vitae to a mortal. The ritualist cannot risk detachment, suffer acquired banes, or gain Willpower from Touchstones; the mortal instead suffers those banes and rolls the breaking points with a one-die penalty. When the rite ends, the vampire gains Wanton and suffers −3 to breaking points until it resolves. The rite cannot be performed if the vampire is still immune to a repeated Wanton Condition gained from it that month.",
+      "presentationPt": {
+        "contestedBy": "Perseverança",
+        "summary": "Transfira Pontos de Ruptura e Maldições adquiridas a um receptáculo mortal durante a noite.",
+        "duration": "Até o nascer do sol",
+        "effect": "Dê a Vitae do rito a um mortal. O ritualista não pode arriscar Desapego, sofrer Maldições adquiridas nem receber Força de Vontade por seus Touchstones. O mortal sofre essas Maldições e faz os testes de Pontos de Ruptura com penalidade de um dado. Quando o rito termina, o vampiro recebe Lascivo e sofre −3 nos Pontos de Ruptura até resolver a Condição. O rito não pode ser realizado se o vampiro ainda estiver imune à repetição de Lascivo recebido por ele naquele mês."
+      }
     },
     {
       "id": "cruac-cheval",
@@ -11908,7 +11919,7 @@
       "id": "theban-curse-isolation",
       "kind": "theban-miracle",
       "name": "Curse of Isolation",
-      "translatedName": "Curse of Isolation",
+      "translatedName": "Maldição do Isolamento",
       "rating": 4,
       "experienceCost": 2,
       "targetSuccesses": 15,
@@ -11918,7 +11929,14 @@
       "source": "Thousand Years of Night",
       "page": 79,
       "duration": "Seven nights unless the Touchstone Merit is purchased",
-      "effect": "The subject must be present and be another vampire's Touchstone. Success severs that relationship with all normal consequences and makes the subject the ritualist's Touchstone at her current Humanity. The original vampire must rebuild the relationship from the beginning after the effect ends."
+      "effect": "The subject must be present and be another vampire's Touchstone. Success severs that relationship with all normal consequences and makes the subject the ritualist's Touchstone at her current Humanity. The original vampire must rebuild the relationship from the beginning after the effect ends.",
+      "presentationPt": {
+        "contestedBy": "Perseverança + Potência de Sangue",
+        "sacrament": "Qualquer arma de lâmina",
+        "summary": "Separe um vampiro de um Touchstone presente e roube temporariamente esse vínculo.",
+        "duration": "Sete noites, a menos que o Mérito Touchstone seja comprado",
+        "effect": "O alvo deve estar presente e ser Touchstone de outro vampiro. Um sucesso rompe essa relação com todas as consequências normais e torna o alvo Touchstone do ritualista na Humanidade atual dele. O vampiro original precisa reconstruir a relação desde o início após o fim do efeito."
+      }
     },
     {
       "id": "theban-orison-voices",
