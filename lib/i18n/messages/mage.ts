@@ -118,7 +118,7 @@ export const mageMessages = {
         "hallucination": "Alucinação",
         "implantMission": "Implantar Missão",
         "leftHandedSpanner": "Chave Canhota",
-        "mortalMask": "Mascarilha Mortal",
+        "mortalMask": "Mascara Mortal",
         "pathfinder": "Desbravador",
         "regenerate": "Regenerar",
         "seek": "Buscar",

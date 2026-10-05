@@ -217,7 +217,7 @@ test("Familiar Numina localize labels while preserving canonical selections and 
   const expected=["Awe","Blast","Dement","Drain","Emotional Aura","Entropic Decay","Firestarter","Hallucination","Implant Mission","Left-Handed Spanner","Mortal Mask","Pathfinder","Regenerate","Seek","Speed","Sign","Stalwart","Telekinesis"];
   assert.deepEqual(Object.values(messages["en-US"].ui.familiarNumina),expected);
   for(const key of Object.keys(messages["en-US"].ui.familiarNumina)) assert.doesNotMatch(translate("pt-BR",`ui.familiarNumina.${key}`),/missing translation/);
-  assert.equal(translate("pt-BR","ui.familiarNumina.mortalMask"),"Mascarilha Mortal");
+  assert.equal(translate("pt-BR","ui.familiarNumina.mortalMask"),"Mascara Mortal");
   const { CompanionPage } = await vite.ssrLoadModule("/game-lines/mage/companion-page.tsx");
   const catalog=JSON.parse(readFileSync(new URL("../public/game-lines/mage/data/merits.json",import.meta.url),"utf8"));
   const character={merits:[{definitionId:"mta-2ed:familiar",name:"Familiar",dots:2,configuration:{name:"My familiar",entity:"Ghost",numina:["Awe"]}}]};

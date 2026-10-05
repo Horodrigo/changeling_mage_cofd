@@ -200,7 +200,7 @@
     }
   },
   "ctl-core:spinning-wheel": {
-    "name": "Roca",
+    "name": "Roca de Fiar",
     "description": "Nomeie uma experiência razoavelmente provável e não excessivamente específica que o alvo viverá no próximo mês lunar. O changeling pode manter até Fado destinos pendentes.",
     "dicePool": "Inteligência + Ocultismo + Fado − Perseverança",
     "action": "Prolongada; cada teste leva 10 minutos; o alvo é o maior valor entre Fado e Perseverança",
