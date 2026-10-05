@@ -7971,7 +7971,17 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Evening",
-      "effect": "The vampire must spread his Vitae about the location (usually a building or clearing) he wishes to calm. Throughout the evening, vampires within suffer the user’s Resilience dots as a penalty to all predatory aura rolls. As well, they add the same number to any rolls to resist frenzy."
+      "effect": "The vampire must spread his Vitae about the location (usually a building or clearing) he wishes to calm. Throughout the evening, vampires within suffer the user’s Resilience dots as a penalty to all predatory aura rolls. As well, they add the same number to any rolls to resist frenzy.",
+      "presentationPt": {
+        "name": "Salão da Razão",
+        "prerequisites": "Animalismo ••••, Resiliência ••",
+        "summary": "Suprimir a agressividade predatória em um local de reunião preparado.",
+        "cost": "5 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "effect": "O vampiro deve espalhar sua Vitae pelo local que deseja acalmar, geralmente um prédio ou uma clareira. Durante a noite, os vampiros no local sofrem os pontos de Resiliência do usuário como penalidade em todos os testes de aura predatória. Além disso, somam o mesmo número a quaisquer testes para resistir ao Frenesi."
+      }
     },
     {
       "id": "devotion-riot",
@@ -7986,7 +7996,16 @@
       "cost": "10 Vitae",
       "dicePool": "Presence + Animal Ken + Majesty",
       "action": "Instant",
-      "effect": "When activated, Riot overwhelms a wide area (a city block, or half mile), and everyone within it. Anyone with a lower Composure + Blood Potency than the vampire’s successes suffers from the Bestial, Competitive, and Wanton Conditions. The victims burst into aggressive, base behaviors. This is not animalistic behavior; it’s destructive, short-sighted, and selfish. It causes a bloodbath of massive proportions. Use of this Devotion is considered a Humanity 1 breaking point."
+      "effect": "When activated, Riot overwhelms a wide area (a city block, or half mile), and everyone within it. Anyone with a lower Composure + Blood Potency than the vampire’s successes suffers from the Bestial, Competitive, and Wanton Conditions. The victims burst into aggressive, base behaviors. This is not animalistic behavior; it’s destructive, short-sighted, and selfish. It causes a bloodbath of massive proportions. Use of this Devotion is considered a Humanity 1 breaking point.",
+      "presentationPt": {
+        "name": "Motim",
+        "prerequisites": "Animalismo ••••, Majestade •••••",
+        "summary": "Levar uma área ampla a um caos egoísta e destrutivo.",
+        "cost": "10 Vitae",
+        "dicePool": "Presença + Empatia com Animais + Majestade",
+        "action": "Instantânea",
+        "effect": "Quando ativado, Motim afeta uma área ampla, como um quarteirão ou meia milha, e todos nela. Quem tiver Autocontrole + Potência de Sangue menor que os sucessos da vampira recebe as Condições Bestial, Competitivo e Lascivo. As vítimas passam a agir de maneira agressiva e primitiva. Esse comportamento é destrutivo, imediatista e egoísta, em vez de animalístico, e causa uma carnificina de grandes proporções. Usar esta Devoção é considerado um Ponto de Ruptura de Humanidade 1."
+      }
     },
     {
       "id": "devotion-shared-sight",
@@ -8002,7 +8021,17 @@
       "dicePool": "Intelligence + Empathy + Auspex",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "When activating this Devotion, your character may impart to another a number of dots of her Auspex equal to or less than the successes rolled. The recipient has full access to the abilities granted, but cannot use the lender’s dice for activation. to the borrower must make rolls with just Attributes, Skills, and any Auspex dots he may have. The imparted dots last for the remainder of the scene. During this time, the lender loses that many dice from all Auspex rolls."
+      "effect": "When activating this Devotion, your character may impart to another a number of dots of her Auspex equal to or less than the successes rolled. The recipient has full access to the abilities granted, but cannot use the lender’s dice for activation. to the borrower must make rolls with just Attributes, Skills, and any Auspex dots he may have. The imparted dots last for the remainder of the scene. During this time, the lender loses that many dice from all Auspex rolls.",
+      "presentationPt": {
+        "name": "Visão Compartilhada",
+        "prerequisites": "Auspícios ••••, Dominação •",
+        "summary": "Emprestar temporariamente pontos de Auspícios a outra pessoa.",
+        "cost": "2 Vitae",
+        "dicePool": "Inteligência + Empatia + Auspícios",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "Ao ativar esta Devoção, sua personagem pode conceder a outra pessoa um número de pontos de Auspícios igual ou menor que os sucessos obtidos. O receptor tem acesso completo às habilidades concedidas, mas não pode usar os dados de quem as emprestou para ativá-las. Deve fazer os testes apenas com seus próprios Atributos, Perícias e quaisquer pontos de Auspícios que possua. Os pontos concedidos duram o restante da cena. Durante esse período, quem os emprestou perde essa quantidade de dados em todos os testes de Auspícios."
+      }
     },
     {
       "id": "devotion-shatter-the-shroud",
@@ -8017,7 +8046,16 @@
       "cost": "2 Vitae",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "Activate this Devotion any time your character wins in a Clash of Wills roll (see p. 125) to pierce a hiding ability. Not only does your character win the Clash of Wills, but the victim’s hiding effect ends immediately. He can re-activate it normally on the next turn, if applicable."
+      "effect": "Activate this Devotion any time your character wins in a Clash of Wills roll (see p. 125) to pierce a hiding ability. Not only does your character win the Clash of Wills, but the victim’s hiding effect ends immediately. He can re-activate it normally on the next turn, if applicable.",
+      "presentationPt": {
+        "name": "Rasgar o Véu",
+        "prerequisites": "Auspícios ••, Ímpeto •",
+        "summary": "Destruir um efeito de ocultação após vencer um Confronto de Vontades.",
+        "cost": "2 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Ative esta Devoção quando seu personagem vencer um Confronto de Vontades (ver p. 125) para superar uma habilidade de ocultação. Além de vencer o Confronto, o efeito de ocultação da vítima termina imediatamente. Ela pode reativá-lo normalmente no próximo turno, se aplicável."
+      }
     },
     {
       "id": "devotion-stalwart-servant",
@@ -8033,7 +8071,17 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "One night",
-      "effect": "Once the subject feeds, the vampire imparts her own Resilience dots onto him. He still needs to spend Vitae to activate the Resilience, but he receives one as part of the invocation. He cannot benefit from this Devotion if he already has Resilience at an equal or higher level than the vampire. This Devotion lasts one night. The vampire may maintain a number of subjects equal to her Blood Potency. The drinker gains the passive benefits of Resilience, and the vampire does not lose access to the Discipline."
+      "effect": "Once the subject feeds, the vampire imparts her own Resilience dots onto him. He still needs to spend Vitae to activate the Resilience, but he receives one as part of the invocation. He cannot benefit from this Devotion if he already has Resilience at an equal or higher level than the vampire. This Devotion lasts one night. The vampire may maintain a number of subjects equal to her Blood Potency. The drinker gains the passive benefits of Resilience, and the vampire does not lose access to the Discipline.",
+      "presentationPt": {
+        "name": "Servo Resistente",
+        "prerequisites": "Dominação •••, Resiliência •",
+        "summary": "Emprestar Resiliência a um servo por meio da Vitae.",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Uma noite",
+        "effect": "Depois que o sujeito se alimenta, a vampira lhe concede seus próprios pontos de Resiliência. Ele ainda precisa gastar Vitae para ativá-la, mas recebe um ponto ao invocar a Devoção. Não pode se beneficiar dela se já tiver Resiliência em nível igual ou superior ao da vampira. Esta Devoção dura uma noite. A vampira pode manter um número de sujeitos igual à sua Potência de Sangue. Quem bebe recebe os benefícios passivos de Resiliência, e a vampira não perde acesso à Disciplina."
+      }
     },
     {
       "id": "devotion-subsume-lesser-beast",
