@@ -12788,7 +12788,13 @@
       "procedure": "Force a vampire to resist daysleep until resistance falls to a chance die, then allow sleep only at dusk in a brightly lit chamber.",
       "outcome": "The subject wakes at dawn and sleeps at night indefinitely while continuing to sleep in bright light each night; more than two consecutive nights without doing so ends the effect.",
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "presentationPt": {
+        "prerequisites": "Espiral do Ascendente 1",
+        "summary": "Inverter o ciclo de sono de um sujeito vampiro enquanto o condicionamento for mantido.",
+        "procedure": "Force um vampiro a resistir ao Sono Diurno até a resistência cair para um dado de sorte; depois, permita que durma apenas ao anoitecer, em um aposento bem iluminado.",
+        "outcome": "O sujeito acorda ao amanhecer e dorme à noite indefinidamente enquanto continuar dormindo sob luz intensa todas as noites; mais de duas noites consecutivas sem fazê-lo encerram o efeito."
+      }
     },
     {
       "id": "scale-epidermal-shielding-bath",
@@ -12803,7 +12809,13 @@
       "procedure": "Submerge a Kindred in an alchemical bath for one hour while Vitae is bled into the mixture.",
       "outcome": "For 24 hours, each Vitae invested increases effective Humanity by one for sunlight damage only.",
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "presentationPt": {
+        "prerequisites": "Espiral do Ascendente 5",
+        "summary": "Melhorar temporariamente a Humanidade efetiva de um sujeito Membro contra a luz solar.",
+        "procedure": "Mergulhe um Membro em um banho alquímico por uma hora enquanto Vitae é sangrada para a mistura.",
+        "outcome": "Por 24 horas, cada ponto de Vitae investido aumenta a Humanidade efetiva em um apenas para o dano por luz solar."
+      }
     },
     {
       "id": "scale-flesh-graft-treatment",
@@ -12818,7 +12830,13 @@
       "procedure": "Prepare mortal skin grafts in fresh human blood, bind them over damaged areas, and inject very fresh human blood.",
       "outcome": "Kindred can heal aggravated damage with Vitae as though it were lethal. Mortals can heal lethal with Vitae supplied in the treatment; this may create a blood bond/ghoul.",
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "presentationPt": {
+        "prerequisites": "Espiral do Ascendente 4",
+        "summary": "Facilitar temporariamente a cura de ferimentos graves.",
+        "procedure": "Prepare enxertos de pele mortal em sangue humano fresco, fixe-os sobre as áreas lesionadas e injete sangue humano muito fresco.",
+        "outcome": "Membros podem curar dano agravado com Vitae como se fosse letal. Mortais podem curar dano letal com a Vitae fornecida no tratamento; isso pode criar um Laço de Sangue ou um carniçal."
+      }
     },
     {
       "id": "scale-augmented-vitae-draught",
@@ -12833,13 +12851,19 @@
       "procedure": "Use sterilized needles and tubing, then trigger Physical Intensity so the spent Vitae drains into a sealed vessel.",
       "outcome": "The stored Vitae remains potent for Blood Potency hours. A mortal drinking it gains the physical augmentation for a scene, then takes bashing damage equal to twice the Vitae invested and develops blood addiction.",
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "presentationPt": {
+        "prerequisites": "Espiral da Serpente 4",
+        "summary": "Engarrafar um aprimoramento de Intensidade Física para um mortal.",
+        "procedure": "Use agulhas e tubos esterilizados; depois, ative Intensidade Física para que a Vitae gasta escoe para um recipiente selado.",
+        "outcome": "A Vitae armazenada permanece potente por um número de horas igual à Potência de Sangue. Um mortal que a beber recebe o aprimoramento físico por uma cena; depois, sofre dano contundente igual ao dobro da Vitae investida e desenvolve vício em sangue."
+      }
     },
     {
       "id": "scale-kindred-sense-endowment",
       "kind": "scale",
       "name": "Kindred Sense Endowment",
-      "translatedName": "Concessão dos Sentidos Kindred",
+      "translatedName": "Concessão dos Sentidos dos Membros",
       "prerequisites": "coil-wyrm 2",
       "experienceCost": 2,
       "summary": "Grant a mortal temporary vampire-like blood senses.",
@@ -12848,7 +12872,13 @@
       "procedure": "Prepare and distill a blood-and-bone mixture, apply it to the subject's eyes and nose, and have the subject ingest the remainder.",
       "outcome": "For about 24 hours the mortal senses blood as though Blood Potency 2 and develops a dangerous hunger for human blood.",
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "presentationPt": {
+        "prerequisites": "Espiral da Serpente 2",
+        "summary": "Conceder temporariamente a um mortal sentidos de sangue semelhantes aos de um vampiro.",
+        "procedure": "Prepare e destile uma mistura de sangue e ossos, aplique-a nos olhos e no nariz do sujeito e faça-o ingerir o restante.",
+        "outcome": "Por cerca de 24 horas, o mortal percebe sangue como se tivesse Potência de Sangue 2 e desenvolve uma fome perigosa por sangue humano."
+      }
     },
     {
       "id": "scale-blood-cleansing-ritual",
@@ -12863,7 +12893,13 @@
       "procedure": "Prepare an animal-blood and viscera wash mixed with several Vitae and repeatedly force it through the restrained subject's nose and mouth.",
       "outcome": "For each Vitae invested, roll Dragon Blood Potency minus the bond creator's Blood Potency; any success permanently removes the bond. The Dragon's Vitae in the wash does not create a new bond.",
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "presentationPt": {
+        "prerequisites": "Espiral do Voivoda 1",
+        "summary": "Tentar remover um Laço de Sangue existente.",
+        "procedure": "Prepare uma lavagem de sangue animal e vísceras misturada com vários pontos de Vitae e force-a repetidamente pelo nariz e pela boca do sujeito imobilizado.",
+        "outcome": "Para cada ponto de Vitae investido, teste a Potência de Sangue do Dragão menos a Potência de Sangue do criador do Laço; qualquer sucesso remove o Laço permanentemente. A Vitae do Dragão na lavagem não cria um novo Laço."
+      }
     },
     {
       "id": "scale-surgical-heart-removal",
@@ -12886,6 +12922,20 @@
         "failure": "The subject falls into torpor as if staked until the heart is restored.",
         "success": "Heart removal succeeds with the listed consequences.",
         "exceptionalSuccess": "Normal extended-action exceptional-success benefit only."
+      },
+      "presentationPt": {
+        "prerequisites": "Espiral da Serpente 5",
+        "summary": "Remover o coração de um sujeito Membro por meio de uma operação reversível, mas perigosa.",
+        "procedure": "Realize uma cirurgia de seis horas: Inteligência + Medicina em ação estendida, 10 sucessos, intervalo de uma hora. A reversão usa o mesmo teste.",
+        "outcome": "Com sucesso, o sujeito não pode ser estaqueado nem receber Vitae pela alimentação, mas ainda pode gastar Vitae armazenada ou recebê-la por Feitiçaria de Sangue. Destruir o corpo faz com que ele se regenere a partir do coração após algum tempo; destruir o coração mata o sujeito.",
+        "dicePool": "Inteligência + Medicina",
+        "action": "Estendida; 10 sucessos; 1 hora por teste",
+        "rollResults": {
+          "dramaticFailure": "O coração é destruído; o sujeito entra em Frenesi e sofre a Morte Final no fim da cena.",
+          "failure": "O sujeito entra em torpor como se estivesse estaqueado até o coração ser devolvido.",
+          "success": "A remoção do coração tem sucesso, com as consequências listadas.",
+          "exceptionalSuccess": "Apenas o benefício normal de sucesso excepcional em ação estendida."
+        }
       }
     },
     {
@@ -12901,7 +12951,13 @@
       "procedure": "Drain a stage-three blood-bound mortal to the last Health box, collect the Dragon's gained Vitae, have the subject drink it, then rest 48 hours.",
       "outcome": "The subject becomes a ghoul for one year rather than one month, renewable only by the Dragon. If the state expires, the ghoul dies and later rises as a draugr.",
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "presentationPt": {
+        "prerequisites": "Espiral do Voivoda 3",
+        "summary": "Criar um carniçal com duração excepcional a partir de um mortal sob Laço de Sangue de terceiro estágio.",
+        "procedure": "Drene um mortal sob Laço de Sangue de terceiro estágio até a última caixa de Vitalidade, recolha a Vitae obtida pelo Dragão, faça o sujeito bebê-la e depois deixe-o descansar por 48 horas.",
+        "outcome": "O sujeito torna-se carniçal por um ano em vez de um mês, e apenas o Dragão pode renovar esse estado. Se ele expirar, o carniçal morre e depois se levanta como um draugr."
+      }
     },
     {
       "id": "scale-mass-embrace",
@@ -12916,7 +12972,13 @@
       "procedure": "Gather mortals in a basin-like space, bleed out the Dragon's Vitae, drain the subjects into the pool, drink from the pooled blood, and inject it into the corpses.",
       "outcome": "Subjects rise at Blood Potency 1 with one Vitae. Each makes a chance die: success = control, failure = immediate frenzy, dramatic failure = draugr. The Dragon loses Humanity as with an ordinary Embrace.",
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "presentationPt": {
+        "prerequisites": "Espiral do Voivoda 5",
+        "summary": "Abraçar um grupo preparado por meio de um único procedimento coletivo.",
+        "procedure": "Reúna mortais em um espaço semelhante a uma bacia, sangre a Vitae do Dragão, drene os sujeitos para a poça, beba do sangue acumulado e injete-o nos cadáveres.",
+        "outcome": "Os sujeitos se levantam com Potência de Sangue 1 e um ponto de Vitae. Cada um rola um dado de sorte: sucesso = controle, falha = Frenesi imediato, falha dramática = draugr. O Dragão perde Humanidade como em um Abraço comum."
+      }
     },
     {
       "id": "scale-sanguinary-invigoration",
@@ -12931,7 +12993,13 @@
       "procedure": "Mix one extracted Vitae with arcane ingredients and inject the fresh preparation into a living human or animal within ten minutes.",
       "outcome": "For one week, the Dragon treats Blood Potency as four lower when checking whether she can feed from the subject and four higher for smelling the subject's blood. The subject is not blood-bound or addicted by the injection itself.",
       "manualOnly": true,
-      "reversible": true
+      "reversible": true,
+      "presentationPt": {
+        "prerequisites": "Espiral do Voivoda 2",
+        "summary": "Preparar um receptáculo vivo para que vampiros com Potência de Sangue muito maior possam se alimentar dele.",
+        "procedure": "Misture um ponto de Vitae extraída com ingredientes arcanos e injete a preparação fresca em um humano ou animal vivo em até dez minutos.",
+        "outcome": "Por uma semana, o Dragão trata a Potência de Sangue como quatro pontos menor ao verificar se pode se alimentar do sujeito e quatro pontos maior para farejar seu sangue. A injeção por si só não cria Laço de Sangue nem vício no sujeito."
+      }
     }
   ]
 }
