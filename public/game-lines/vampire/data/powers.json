@@ -11523,7 +11523,7 @@
       "id": "h-vtr-agony-ecstasy:rite:bounty-of-the-false-god",
       "kind": "cruac-rite",
       "name": "Bounty of the False God",
-      "translatedName": "Bounty of the False God",
+      "translatedName": "Dádiva do Falso Deus",
       "rating": 5,
       "experienceCost": 2,
       "targetSuccesses": 10,
@@ -11534,13 +11534,18 @@
       "duration": "One chapter",
       "effect": "Coat an emblem of a favored goddess in blood. In the presence of an active Theban miracle, brandish it and Clash with the Theban Sorcerer using Potency as a bonus. Victory ends the miracle and empowers the next rite cast this chapter or the next with rote, doubled range, and duration as though cast on a subject with a third-stage Vinculum toward the Acolyte.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Invoca a dádiva de um falso deus, com benefícios poderosos e consequências perigosas.",
+        "duration": "Uma sessão",
+        "effect": "Cubra um emblema de uma deusa preferida com sangue. Na presença de um milagre Tebano ativo, exiba-o e dispute um Confronto de Vontades com o Feiticeiro Tebano, usando a Potência como bônus. Vencer encerra o milagre e fortalece o próximo rito conjurado nesta sessão ou na próxima com a qualidade de Rotina, o dobro do alcance e duração como se fosse conjurado sobre um alvo com Vinculum de terceiro estágio em relação à Acólita."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:gift-of-guabancex",
       "kind": "cruac-rite",
       "name": "Gift of Guabancex",
-      "translatedName": "Gift of Guabancex",
+      "translatedName": "Dádiva de Guabancex",
       "rating": 5,
       "experienceCost": 2,
       "targetSuccesses": 6,
@@ -11551,13 +11556,18 @@
       "duration": "Until the sorcerous Vitae is spent",
       "effect": "During extreme weather, invoke a storm or chaos deity and take eight unavoidable bashing damage from lightning. If the ritualist survives, gain a separate Vitae pool equal to Potency that ignores normal capacity but may only awaken the vampire, activate Disciplines, or fuel Physical Intensity. The rite cannot be repeated until the pool is empty.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Sobrevive ao raio de uma divindade da tempestade para receber uma reserva separada de Vitae ritual.",
+        "duration": "Até o Vitae mágico ser gasto",
+        "effect": "Durante clima extremo, invoque uma divindade da tempestade ou do caos e sofra oito pontos inevitáveis de dano contusivo de um raio. Se o ritualista sobreviver, receba uma reserva separada de Vitae igual à Potência, que ignora a capacidade normal, mas só pode despertar o vampiro, ativar Disciplinas ou alimentar Intensidade Física. O rito não pode ser repetido até a reserva esvaziar."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:curse-of-the-circle",
       "kind": "cruac-rite",
       "name": "Curse of the Circle",
-      "translatedName": "Curse of the Circle",
+      "translatedName": "Maldição do Círculo",
       "rating": 5,
       "experienceCost": 2,
       "targetSuccesses": 15,
@@ -11569,13 +11579,19 @@
       "effect": "Build a token from a sympathetic link to the victim and one blood point from each wronged Acolyte. Success creates one-way blood sympathy from every contributor with a pool equal to their number. Once per scene, a contributor may use it without Willpower to curse the victim's next important action by −1 per success, making failure dramatic, or treat successes as Status solely to block the victim's Social Merits.",
       "homebrew": true,
       "manualOnly": true,
-      "contestedBy": "Composure + Blood Potency"
+      "contestedBy": "Composure + Blood Potency",
+      "presentationPt": {
+        "summary": "Permite que vários Acólitos combinem poderes distintos em uma maldição duradoura sobre uma vítima com vínculo simpático.",
+        "duration": "Até a reparação, ou até todos os participantes entrarem em torpor ou sofrerem a Morte Final",
+        "contestedBy": "Compostura + Potência de Sangue",
+        "effect": "Crie um amuleto a partir de um vínculo simpático com a vítima e um ponto de sangue de cada Acólito prejudicado. O sucesso cria uma Simpatia de Sangue unilateral de cada participante com uma parada igual ao número deles. Uma vez por cena, um participante pode usá-la sem Força de Vontade para amaldiçoar a próxima ação importante da vítima com −1 por sucesso, tornando a falha dramática, ou tratar os sucessos como Status exclusivamente para bloquear os Méritos Sociais da vítima."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:walk-the-depths",
       "kind": "cruac-rite",
       "name": "Walk the Depths",
-      "translatedName": "Walk the Depths",
+      "translatedName": "Percorrer as Profundezas",
       "rating": 5,
       "experienceCost": 2,
       "targetSuccesses": 13,
@@ -11586,7 +11602,12 @@
       "duration": "Night",
       "effect": "Target a dark place untouched by mortals since the last new moon. The caster and everyone touching him may step through shadow to any other mundane place meeting those conditions. Once that night, each traveler may reflexively enter any shadow and return to the origin.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Transporta instantaneamente o ritualista e seus companheiros entre dois lugares escuros e intocados.",
+        "duration": "Noite",
+        "effect": "Escolha um lugar escuro intocado por mortais desde a última lua nova. O conjurador e todos que o estiverem tocando podem atravessar as sombras até qualquer outro lugar mundano que atenda a essas condições. Uma vez naquela noite, cada viajante pode entrar reflexivamente em qualquer sombra e retornar à origem."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:your-goddess-listens",
