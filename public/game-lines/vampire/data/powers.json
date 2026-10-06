@@ -9403,8 +9403,8 @@
       "id": "devotion-blood-eye-gaze",
       "kind": "devotion",
       "name": "Blood-Eye Gaze",
-      "translatedName": "Blood-Eye Gaze",
-      "summary": "Reads lunar and predatory truths in blood.",
+      "translatedName": "Olhar de Sangue",
+      "summary": "See the local Shadow and spirits through one or both eyes.",
       "source": "Wild Hunt: Gangrel",
       "page": 44,
       "manualOnly": true,
@@ -9415,7 +9415,16 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "A bloody haze covers the Dead Wolf’s eyes, and his vision gives way to what lies in the Hisil. The vampire now sees the shape of the local Shadow, as well as any spirits in his vicinity. When he activates this power, the Namus-Ur can choose to have it apply to both eyes or only one. Using both eyes leaves him completely blind to the physical world, whereas using one allows for vision in both worlds at once, but imposes a –2 on all sight-based actions due to conflicting imagery. The vampire may deactivate the power as a reflexive action at any time."
+      "effect": "A bloody haze covers the Dead Wolf’s eyes, and his vision gives way to what lies in the Hisil. The vampire now sees the shape of the local Shadow, as well as any spirits in his vicinity. When he activates this power, the Namus-Ur can choose to have it apply to both eyes or only one. Using both eyes leaves him completely blind to the physical world, whereas using one allows for vision in both worlds at once, but imposes a –2 on all sight-based actions due to conflicting imagery. The vampire may deactivate the power as a reflexive action at any time.",
+      "presentationPt": {
+        "summary": "Vê a Sombra local e os espíritos por um ou ambos os olhos.",
+        "prerequisites": "Auspícios •",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "Uma névoa sangrenta cobre os olhos do Lobo Morto, e sua visão dá lugar ao que existe no Hisil. O vampiro passa a ver a forma da Sombra local e quaisquer espíritos nas proximidades. Ao ativar o poder, o Namus-Ur pode escolher aplicá-lo aos dois olhos ou a apenas um. Usar os dois o deixa completamente cego para o mundo físico; usar um permite ver os dois mundos ao mesmo tempo, mas impõe –2 a todas as ações baseadas na visão devido às imagens conflitantes. O vampiro pode desativar o poder como uma ação reflexiva a qualquer momento."
+      }
     },
     {
       "id": "devotion-hunter-s-true-form",
@@ -9446,10 +9455,10 @@
       "id": "devotion-vessel-of-bone-and-blood",
       "kind": "devotion",
       "name": "Vessel of Bone and Blood",
-      "translatedName": "Vessel of Bone and Blood",
-      "summary": "Takes on a werewolf-like vessel without importing werewolf rules.",
+      "translatedName": "Receptáculo de Osso e Sangue",
+      "summary": "Craft an effigy through which spirits can communicate with the material world.",
       "source": "Wild Hunt: Gangrel",
-      "page": 45,
+      "page": 44,
       "manualOnly": true,
       "bloodlineId": "dead-wolves",
       "experienceCost": 2,
@@ -9463,7 +9472,22 @@
         "success": "The Dead Wolf successfully crafts a crude effigy that invites a nearby spirit in Twilight to use it as a mouthpiece into the material world. If the vampire knows the name of the spirit he wishes to speak to, he can incorporate it into the crafting of the totem, and only that spirit may speak through it. Otherwise, any spirit in the vicinity can use the totem to communicate. This effigy lasts a single night before crumbling into a pile of rotting offal unless the vampire invests a point of Willpower into its creation, in which case, the item retains its properties until it’s destroyed. Note that while the totem allows communication between the Namus-Ur and spirits, it does nothing to bridge understanding. That said, Dead Wolves have their own ways of interpreting spirits (see Sublunario, above).",
         "exceptionalSuccess": "The totem is especially well crafted and allows clear communication between spirit and vampire, even if they would not normally share a language.",
         "failure": "The vampire creates nothing but failed taxidermy.",
-        "dramaticFailure": "Something about the vampire’s creation deeply offends the local spirits, and he suffers bouts of mis fortune for the rest of the night as they torment him from behind the veil."
+        "dramaticFailure": "Something about the vampire’s creation deeply offends the local spirits, and he suffers bouts of misfortune for the rest of the night as they torment him from behind the veil."
+      },
+      "presentationPt": {
+        "summary": "Cria uma éfige pela qual espíritos podem se comunicar com o mundo material.",
+        "prerequisites": "Animalismo ••, Auspícios ••",
+        "cost": "1 Vitae (e 1 de Força de Vontade, opcional)",
+        "requirement": "O cadáver praticamente intacto de uma criatura de Tamanho 2 ou maior, ou vários cadáveres menores de massa equivalente.",
+        "dicePool": "Destreza + Ofícios + Animalismo",
+        "action": "Estendida (o alvo é cinco sucessos, e cada teste representa dez minutos de modelagem, entalhe e ajustes)",
+        "duration": "Noite ou permanente",
+        "rollResults": {
+          "success": "O Lobo Morto cria uma éfige rudimentar que convida um espírito próximo no Crepúsculo a usá-la como porta-voz no mundo material. Se souber o nome do espírito com quem deseja falar, pode incorporá-lo à criação do totem, e somente aquele espírito poderá falar por ele. Caso contrário, qualquer espírito nas proximidades pode usar o totem para se comunicar. A éfige dura uma única noite antes de se desfazer em um monte de restos apodrecidos, a menos que o vampiro invista um ponto de Força de Vontade na criação; nesse caso, o objeto mantém suas propriedades até ser destruído. O totem permite comunicação entre o Namus-Ur e os espíritos, mas não garante compreensão. Lobos Mortos têm seus próprios meios de interpretar espíritos, conforme Sublunario.",
+          "exceptionalSuccess": "O totem é especialmente bem feito e permite comunicação clara entre espírito e vampiro, mesmo se normalmente não compartilhassem uma língua.",
+          "failure": "O vampiro só produz uma tentativa fracassada de taxidermia.",
+          "dramaticFailure": "Algo na criação do vampiro ofende profundamente os espíritos locais, que o atormentam por trás do véu e lhe causam episódios de má sorte pelo resto da noite."
+        }
       }
     },
     {
