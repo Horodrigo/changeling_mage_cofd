@@ -583,7 +583,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   const merits = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/merits.json`, "utf8"));
   const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
   const { homebrewContentActive } = await vite.ssrLoadModule("/lib/homebrew.ts");
-  const { activeVampireItems, activeVampirePowers, SIMPLIFIED_HOLLOW_ID, vampireHomebrewSourceId } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
+  const { activeVampireItems, activeVampirePowers, SIMPLIFIED_HOLLOW_ID, vampireHomebrewSourceId, vampireHomebrewContentActive } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
   const items = [
     ...bloodlines, ...covenants, ...conditions, ...coreMerits, ...merits, ...powers.disciplines, ...powers.ritualDisciplines, ...powers.devotions, ...powers.lashes,
     ...powers.cruacRites, ...powers.thebanMiracles, ...powers.gildedInvocations, ...powers.detournements,
@@ -632,6 +632,17 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   const amorousErrata = powers.cruacRites.find((item) => item.errataFor === "cruac-mantle-amorous-fire");
   assert.equal(activeVampirePowers(powers, { disabledIds: [] }).cruacRites.find((item) => item.id === "cruac-mantle-amorous-fire").targetSuccesses, 5);
   assert.equal(activeVampirePowers(powers, { disabledIds: [], enabledIds: [amorousErrata.id] }).cruacRites.find((item) => item.id === "cruac-mantle-amorous-fire").targetSuccesses, 4);
+  const originalAmorous = powers.cruacRites.find(item => item.id === amorousErrata.errataFor);
+  const activeAmorous = activeVampirePowers(powers, { disabledIds: [], enabledIds: [amorousErrata.id] }).cruacRites.find(item => item.id === originalAmorous.id);
+  assert.equal(activeAmorous.cost, "", "Agony & Ecstasy p. 107 removes this Willpower cost");
+  assert.equal(vampireHomebrewContentActive({ disabledIds: [], enabledIds: [amorousErrata.id] }, activeAmorous), true, "Active errata keeps the original identity available on downstream pickers");
+  assert.equal(activeAmorous.presentationPt.duration, originalAmorous.presentationPt.duration);
+  const original = { id: "test-rite", name: "Canonical rite", source: "Test", effect: "Original effect", duration: "Night", presentationPt: { effect: "Efeito original", duration: "Noite" } };
+  const correction = { id: "test-errata", source: "Test", errataFor: original.id, effect: "Changed effect" };
+  assert.equal(activeVampireItems([original, correction], { disabledIds: [] })[0].presentationPt, undefined, "Untranslated replacement cannot reuse the original translation");
+  const translatedCorrection = { ...correction, presentationPt: { summary: "Resumo corrigido" } };
+  assert.deepEqual(activeVampireItems([original, translatedCorrection], { disabledIds: [] })[0].presentationPt, { duration: "Noite", summary: "Resumo corrigido" }, "Only unchanged fields inherit localized presentation");
+  assert.equal(original.presentationPt.effect, "Efeito original");
   const seedErrata = conditions.find((item) => item.errataFor === "vtr-sotc:seed-of-her-divinity");
   assert.equal(activeVampireItems(conditions, { disabledIds: [] }).some((item) => item.id === "vtr-sotc:seed-of-her-divinity"), false);
   assert.equal(activeVampireItems(conditions, { disabledIds: [], enabledIds: [seedErrata.id] }).some((item) => item.id === "vtr-sotc:seed-of-her-divinity"), true);

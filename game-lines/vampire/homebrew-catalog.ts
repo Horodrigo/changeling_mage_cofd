@@ -13,7 +13,7 @@ export const VAMPIRE_HOMEBREW_SOURCES = {
 
 export const SIMPLIFIED_HOLLOW_ID = "vtr-strange-shades:simplified-hollow";
 
-type VampireCatalogItem = { id: string; source: string; sourceId?: string; defaultDisabled?: boolean; errataFor?: string };
+type VampireCatalogItem = { id: string; source: string; sourceId?: string; defaultDisabled?: boolean; errataFor?: string; presentationPt?: object };
 
 export function vampireHomebrewSourceId(item: Pick<VampireCatalogItem, "source" | "sourceId">) {
   return VAMPIRE_HOMEBREW_SOURCES[item.source as keyof typeof VAMPIRE_HOMEBREW_SOURCES] ?? item.sourceId;
@@ -29,14 +29,21 @@ export function activeVampireItems<T extends VampireCatalogItem>(items: readonly
     .filter((item) => !item.errataFor && vampireHomebrewContentActive(preferences, item))
     .map((item) => {
       const replacement = errata.get(item.id), identity = item as T & { name?: string; translatedName?: string; originalName?: string };
-      return replacement ? { ...item, ...replacement, id: item.id, ...(identity.name ? { name: identity.name } : {}), ...(identity.translatedName ? { translatedName: identity.translatedName } : {}), ...(identity.originalName ? { originalName: identity.originalName } : {}) } : item;
+      return replacement ? {
+        ...item, ...replacement, id: item.id, defaultDisabled: item.defaultDisabled,
+        ...(identity.name ? { name: identity.name } : {}), ...(identity.translatedName ? { translatedName: identity.translatedName } : {}), ...(identity.originalName ? { originalName: identity.originalName } : {}),
+        presentationPt: replacement.presentationPt ? {
+          ...Object.fromEntries(Object.entries(item.presentationPt ?? {}).filter(([field]) => !(field in replacement))),
+          ...replacement.presentationPt,
+        } : undefined,
+      } : item;
     });
   const existing = new Set(normal.map((item) => item.id));
   return [...normal, ...[...errata.entries()].flatMap(([id, item]) => {
     if (existing.has(id)) return [];
     const errataItem = item as T & { name?: string; translatedName?: string; originalName?: string; errataForName?: string };
     const name = errataItem.errataForName ?? errataItem.name;
-    return [{ ...item, id, ...(name ? { name, translatedName: name, originalName: name } : {}) } as T];
+    return [{ ...item, id, defaultDisabled: false, ...(name ? { name, translatedName: name, originalName: name } : {}) } as T];
   })];
 }
 

@@ -34,10 +34,10 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.equal(invocations.length, 10);
   assert.equal(detournements.length, 5);
   assert.deepEqual(devotions.map(item => item.id).sort(), ["devotion-body-of-will", "devotion-chain-of-command", "devotion-cloak-the-gathering", "devotion-conditioning", "devotion-cross-contamination", "devotion-cult-of-personality", "devotion-enchantment", "devotion-enfeebling-aura", "devotion-force-of-nature", "devotion-foul-grave", "devotion-gargoyles-vigilance", "devotion-hint-of-fear", "devotion-juggernauts-gait", "devotion-quicken-sight", "devotion-reasons-salon", "devotion-riot", "devotion-shared-sight", "devotion-shatter-the-shroud", "devotion-stalwart-servant", "devotion-subsume-lesser-beast", "devotion-summoning-dominate", "devotion-summoning-majesty", "devotion-suns-brutal-dreamscape", "devotion-the-wish", "devotion-touch-of-deprivation", "devotion-undying-familiar", "devotion-vermin-flood", "devotion-wet-dream", "devotion-wraiths-presence"]);
-  assert.equal(rites.length, 59);
+  assert.equal(rites.length, 62);
   assert.equal(miracles.length, 30);
   assert.deepEqual(Object.fromEntries([...new Set(miracles.map(item => item.source))].map(source => [source, miracles.filter(item => item.source === source).length])), { "Better Feared: Nosferatu": 5, "Secrets of the Covenants": 14, "Vampire: The Requiem Second Edition": 9, "Thousand Years of Night": 1, "Dark Eras 2": 1 });
-  assert.deepEqual(Object.fromEntries([...new Set(rites.map(item => item.source))].map(source => [source, rites.filter(item => item.source === source).length])), { "Agony & Ecstasy: Circle of the Crone": 14, "Better Feared: Nosferatu": 6, "Vampire: The Requiem Second Edition": 10, "Changeling: The Lost Second Edition — The Hedge": 1, "Night Horrors: Spilled Blood": 1, "Secrets of the Covenants": 14, "Strange Shades: Mekhet": 6, "Thousand Years of Night": 2, "Wild Hunt: Gangrel": 5 });
+  assert.deepEqual(Object.fromEntries([...new Set(rites.map(item => item.source))].map(source => [source, rites.filter(item => item.source === source).length])), { "Agony & Ecstasy: Circle of the Crone": 17, "Better Feared: Nosferatu": 6, "Vampire: The Requiem Second Edition": 10, "Changeling: The Lost Second Edition — The Hedge": 1, "Night Horrors: Spilled Blood": 1, "Secrets of the Covenants": 14, "Strange Shades: Mekhet": 6, "Thousand Years of Night": 2, "Wild Hunt: Gangrel": 5 });
   assert.deepEqual(coils.map(item => item.id).sort(), ["coil-ascendant", "coil-quintessence", "coil-voivode", "coil-wyrm", "coil-zirnitra", "coil-ziva"]);
   assert.equal(coils.flatMap(item => item.levels).length, 30);
   assert.deepEqual(scales.map(item => item.id).sort(), powers.scales.map(item => item.id).sort());
@@ -112,6 +112,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
   for (const locale of ["en-US", "pt-BR", "en-US"]) {
     const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] }, plugins: [{ name: "power-locale-test-surfaces", enforce: "pre", transform(code, id) {
       const path = id.replaceAll("\\", "/");
+      if (path.endsWith("/app/use-homebrew.ts")) return 'let preferences = { disabledIds: [] }; export const useHomebrewPreferences = () => preferences; export const setTestHomebrewPreferences = value => { preferences = value; };';
       if (path.endsWith("/game-lines/vampire/sheet-view.tsx")) return `${code}\nexport { DisciplineCards, RitualDisciplines, PurchasedPowers };`;
       if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return code.replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "devotion-test" ? "devotion" : character.character.concept === "rite-test" ? "rite" : character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : character.character.concept === "formula-test" ? "formula" : character.character.concept === "invocation-test" ? "invocation" : character.character.concept === "detournement-test" ? "detournement" : character.character.concept === "scale-test" ? "scale" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : "");');
       if (path.endsWith("/components/ui/dialog.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Dialog, Wrapper as DialogTrigger, Wrapper as DialogPortal, Wrapper as DialogClose, Wrapper as DialogOverlay, Wrapper as DialogContent, Wrapper as DialogHeader, Wrapper as DialogFooter, Wrapper as DialogTitle, Wrapper as DialogDescription };';
@@ -126,7 +127,8 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       const catalog = freezeCatalogData(await vampirePowersCatalogGroup.load({ getCatalog: async id => { requests.push(id); return powers; } }));
       assert.deepEqual(requests, ["vampire-powers"]);
       const { vampirePowerPresentation } = await vite.ssrLoadModule("/game-lines/vampire/power-presentation.ts");
-      const { vampireHomebrewSourceId } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
+      const { vampireHomebrewSourceId, activeVampirePowers } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
+      const { setTestHomebrewPreferences } = await vite.ssrLoadModule("/app/use-homebrew.ts");
       const { vampireDisciplinePrerequisitesMet } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
       const { vampireExperienceLabel } = await vite.ssrLoadModule("/game-lines/vampire/experience-presentation.ts");
       const { refundVampireAdvancement } = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
@@ -287,7 +289,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       assert.equal(JSON.stringify(lashCharacter), lashCharacterBefore);
       assert.equal(JSON.stringify(lashBuyer), lashBuyerBefore);
       for (const [ritualId, group, purchase, idsKey] of [["theban", "thebanMiracles", "miracle", "theban_miracle_ids"], ["cruac", "cruacRites", "rite", "cruac_rite_ids"], ["kimiya", "kimiyaFormulae", "formula", "kimiya_formula_ids"], ["therion", "therionSacrileges", "sacrilege", "therion_sacrilege_ids"], ["gilded-cage", "gildedInvocations", "invocation", "gilded_invocation_ids"]]) {
-        const definitions = catalog[group].filter(item => item.presentationPt);
+        const definitions = catalog[group].filter(item => item.presentationPt && !item.errataFor);
         const ritualCharacter = structuredClone(ritualCharacters[ritualId]);
         ritualCharacter.line_data.blood_sorcery[idsKey] = definitions.map(item => item.id);
         const ritualCharacterBefore = JSON.stringify(ritualCharacter);
@@ -337,6 +339,48 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         }
         assert.equal(JSON.stringify(ritualCharacter), ritualCharacterBefore);
         assert.equal(JSON.stringify(ritualBuyer), ritualBuyerBefore);
+      }
+      for (const errata of catalog.cruacRites.filter(item => item.errataFor && item.presentationPt)) {
+        const preferences = { disabledIds: [], enabledIds: [errata.id] };
+        setTestHomebrewPreferences(preferences);
+        const active = activeVampirePowers(catalog, preferences);
+        const original = catalog.cruacRites.find(item => item.id === errata.errataFor);
+        const definition = active.cruacRites.find(item => item.id === original.id);
+        assert.equal(definition.name, original.name);
+        assert.equal(definition.translatedName, original.translatedName);
+        assert.equal(active.cruacRites.some(item => item.id === errata.id), false);
+        const character = structuredClone(ritualCharacters.cruac);
+        character.line_data.blood_sorcery.cruac_rite_ids = [original.id, "unchanged-sibling"];
+        const before = JSON.stringify(character);
+        const html = render(RitualDisciplines, { powers: active, bloodSorcery: character.line_data.blood_sorcery, locale });
+        const buyer = structuredClone(character);
+        buyer.character.concept = "rite-test";
+        buyer.line_data.blood_sorcery.cruac_rite_ids = [];
+        const buyerBefore = JSON.stringify(buyer);
+        const xp = render(VampireExperiencePanel, { character: buyer, updateSheet: noMutation, catalogs });
+        const presented = vampirePowerPresentation(definition, locale);
+        for (const field of fields.filter(key => presented[key])) for (const surface of [html, xp]) assert.ok(surface.includes(escape(presented[field])), `${locale}: enabled errata ${original.id}.${field}`);
+        const label = locale === "pt-BR" ? "Sucessos Alvo" : "Target Successes";
+        for (const surface of [html, xp]) assert.ok(surface.includes(`<strong>${label}:</strong> ${errata.targetSuccesses}`));
+        const record = vampirePowerPresentation(errata, locale);
+        for (const field of fields.filter(key => record[key])) assert.ok(homebrew.includes(escape(record[field])));
+        assert.ok(homebrew.includes(escape(locale === "pt-BR" ? errata.translatedName : errata.name)));
+        if (errata.id === "h-vtr-agony-ecstasy:errata:mantle-amorous-fire") {
+          assert.equal(presented.cost, "");
+          assert.equal(html.includes(escape(locale === "pt-BR" ? original.presentationPt.cost : original.cost)), false);
+        }
+        const receipt = { id: "original-rite-receipt", label: "Authored receipt before errata", cost: 2, undo: { kind: "ritual", key: "cruac_rite_ids", id: original.id } };
+        const receiptBefore = JSON.stringify(receipt);
+        assert.equal(vampireExperienceLabel(receipt, character, [], active, locale), locale === "pt-BR" ? original.translatedName : original.name);
+        const refunded = structuredClone(character);
+        assert.equal(refundVampireAdvancement(refunded, receipt.undo), true);
+        assert.deepEqual(refunded.line_data.blood_sorcery.cruac_rite_ids, ["unchanged-sibling"]);
+        assert.equal(JSON.stringify(receipt), receiptBefore);
+        assert.equal(JSON.stringify(character), before);
+        assert.equal(JSON.stringify(buyer), buyerBefore);
+        setTestHomebrewPreferences({ disabledIds: [] });
+        const disabled = activeVampirePowers(catalog, { disabledIds: [] });
+        assert.equal(disabled.cruacRites.find(item => item.id === original.id), original);
       }
       const devotionCharacter = blankPrintCharacter("VtR");
       devotionCharacter.line_data = { ...devotionCharacter.line_data, clan_id: "gangrel", devotion_ids: devotions.map(item => item.id), disciplines: Object.fromEntries(catalog.disciplines.filter(item => item.source === "Vampire: The Requiem Second Edition").map(item => [item.name, 5])), notes: "Authored devotion research stays." };

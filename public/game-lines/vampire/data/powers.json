@@ -11630,7 +11630,7 @@
       "id": "h-vtr-agony-ecstasy:errata:mantle-amorous-fire",
       "kind": "cruac-rite",
       "name": "Mantle of Amorous Fire — Errata",
-      "translatedName": "Mantle of Amorous Fire — Errata",
+      "translatedName": "Manto do Fogo Amoroso — Errata",
       "rating": 1,
       "experienceCost": 2,
       "targetSuccesses": 4,
@@ -11643,13 +11643,19 @@
       "manualOnly": true,
       "errataFor": "cruac-mantle-amorous-fire",
       "errataForName": "Mantle of Amorous Fire",
-      "defaultDisabled": true
+      "defaultDisabled": true,
+      "presentationPt": {
+        "summary": "Concede o Vício temporário Amoroso em vez de um bônus de Presença e remove o custo de Força de Vontade.",
+        "effect": "Substitua o bônus de Presença do rito original pelo Vício temporário Amoroso e remova seu custo de Força de Vontade. Outros ritos de Manto mantêm seus custos normais.",
+        "cost": ""
+      },
+      "cost": ""
     },
     {
       "id": "h-vtr-agony-ecstasy:errata:pangs-proserpina",
       "kind": "cruac-rite",
       "name": "Pangs of Proserpina — Errata",
-      "translatedName": "Pangs of Proserpina — Errata",
+      "translatedName": "Dores de Prosérpina — Errata",
       "rating": 1,
       "experienceCost": 2,
       "targetSuccesses": 8,
@@ -11663,13 +11669,18 @@
       "errataFor": "cruac-pangs-proserpina",
       "errataForName": "Pangs of Proserpina",
       "defaultDisabled": true,
-      "duration": "Scene"
+      "duration": "Scene",
+      "presentationPt": {
+        "summary": "Pode ser preparado e aplicado à vítima mais tarde naquela noite; o efeito dura uma cena.",
+        "effect": "O rito pode ser conjurado antecipadamente e aplicado à vítima a qualquer momento antes do fim da noite. Uma vez aplicado, seu efeito dura uma cena.",
+        "duration": "Cena"
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:errata:pool-forbidden-truths",
       "kind": "cruac-rite",
       "name": "Pool of Forbidden Truths — Errata",
-      "translatedName": "Pool of Forbidden Truths — Errata",
+      "translatedName": "Poça das Verdades Proibidas — Errata",
       "rating": 1,
       "experienceCost": 2,
       "targetSuccesses": 4,
@@ -11682,7 +11693,11 @@
       "manualOnly": true,
       "errataFor": "cruac-pool-forbidden-truths",
       "errataForName": "Pool of Forbidden Truths",
-      "defaultDisabled": true
+      "defaultDisabled": true,
+      "presentationPt": {
+        "summary": "A Potência define o número de perguntas; o Narrador define o tema da visão, e as perguntas devem tratar dele.",
+        "effect": "A Potência, em vez dos sucessos, determina quantas perguntas podem ser feitas. O Narrador escolhe o tema da visão, e toda pergunta deve tratar desse assunto."
+      }
     }
   ],
   "thebanMiracles": [

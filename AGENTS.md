@@ -123,6 +123,8 @@ Static RPG content should remain data under `public/shared/data/**` for common/C
 
 `game-lines/<line>/` contains bundled executable source; `public/game-lines/<line>/` contains static files served unchanged. Keep public images and fonts with their owning line instead of creating global line-specific folders. Only application/PWA entry points, installation icons, and generated runtime metadata belong directly in `public/`. Asset/catalog generators, CSS URLs, registrations, tests, and the service-worker template must follow the layout documented in `README.md`; do not leave duplicate legacy public paths. Moving unchanged catalogs must preserve resource IDs and content versions so IndexedDB cache entries and persisted character choices remain valid.
 
+Vampire composes optional power and Condition errata in its own `homebrew-catalog.ts`. An enabled replacement retains the original catalog identity and activation default; the optional errata's disabled-by-default marker must not hide that identity from downstream pickers. Localized replacements inherit presentation only for canonical fields they leave unchanged; untranslated replacements never inherit the old translation. An explicit empty field clears an obsolete inherited value, such as the Willpower cost removed by the Amorous Fire errata. Toggling errata changes the active catalog view, never saved choices or Experience receipts.
+
 Required invariants:
 
 - Each runtime requests only Core and its selected game line's JSON; CofD, CtL, MtA, VtR, and WtF catalogs remain isolated from one another.
