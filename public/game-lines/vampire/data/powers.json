@@ -6543,8 +6543,8 @@
       "id": "devotion-as-i-do",
       "kind": "devotion",
       "name": "As I Do",
-      "translatedName": "As I Do",
-      "summary": "Compels observers to mirror the vampire's poised behavior.",
+      "translatedName": "Como Eu Faço",
+      "summary": "Grant a Blood Potency bonus to anyone repeating the observed physical action on their next turn.",
       "source": "Sin Again: Daeva",
       "page": 94,
       "manualOnly": true,
@@ -6553,7 +6553,15 @@
       "cost": "1 Vitae",
       "requirement": "The vampire must perform the same action (i.e., with the same dice pool) that the subject is about to attempt.",
       "action": "Reflexive",
-      "effect": "The vampire can activate this Devotion during any physical action. Doing so grants a bonus equal to Blood Potency to anyone attempting the same action in the scene on their next turn, provided they saw the vampire’s original action."
+      "effect": "The vampire can activate this Devotion during any physical action. Doing so grants a bonus equal to Blood Potency to anyone attempting the same action in the scene on their next turn, provided they saw the vampire’s original action.",
+      "presentationPt": {
+        "summary": "Concede bônus igual à Potência de Sangue a quem repetir, no próximo turno, a ação Física que viu o vampiro executar.",
+        "prerequisites": "Majestade •, Ímpeto ••",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro deve executar a mesma ação, com a mesma parada de dados, que o sujeito está prestes a tentar.",
+        "action": "Reflexiva",
+        "effect": "O vampiro pode ativar esta Devoção durante qualquer ação Física. Isso concede um bônus igual à Potência de Sangue a quem tentar a mesma ação na cena em seu próximo turno, desde que tenha visto a ação original do vampiro."
+      }
     },
     {
       "id": "devotion-beautiful-but-deadly",
@@ -6909,8 +6917,8 @@
       "id": "devotion-potence",
       "kind": "devotion",
       "name": "Potence",
-      "translatedName": "Potence",
-      "summary": "Combines strength and allure into an overwhelming show of dominance.",
+      "translatedName": "Potência",
+      "summary": "Ignore Durability and armor; attacks against unarmored body parts deal lethal damage, including to Kindred.",
       "source": "Sin Again: Daeva",
       "page": 98,
       "manualOnly": true,
@@ -6920,7 +6928,16 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "For the duration, the vampire ignores Durability when attacking objects, or armor if she’s attacking an individual. If the target of the vampire’s attack has no armor on the relevant body part, she deals lethal damage with her attacks, including to other Kindred. This armor-busting effect even applies to the first-listed active effect of Resilience. However, this provokes a Clash of Wills."
+      "effect": "For the duration, the vampire ignores Durability when attacking objects, or armor if she’s attacking an individual. If the target of the vampire’s attack has no armor on the relevant body part, she deals lethal damage with her attacks, including to other Kindred. This armor-busting effect even applies to the first-listed active effect of Resilience. However, this provokes a Clash of Wills.",
+      "presentationPt": {
+        "summary": "Ignora Durabilidade e armadura; ataques contra partes sem armadura causam dano letal, inclusive a Membros.",
+        "prerequisites": "Ímpeto •••••",
+        "cost": "3 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "Durante a duração, o vampiro ignora Durabilidade ao atacar objetos ou armadura ao atacar um indivíduo. Se o alvo não tiver armadura na parte do corpo atingida, os ataques do vampiro causam dano letal, inclusive contra outros Membros. Esse efeito de romper armaduras se aplica até ao primeiro efeito ativo listado de Resiliência, mas provoca um Confronto de Vontades."
+      }
     },
     {
       "id": "devotion-ring-the-bell",
@@ -6978,8 +6995,8 @@
       "id": "devotion-speak-of-the-devil",
       "kind": "devotion",
       "name": "Speak of the Devil",
-      "translatedName": "Speak of the Devil",
-      "summary": "Draws a named subject into the scene through gossip and social gravity.",
+      "translatedName": "Falando no Diabo",
+      "summary": "Teleport the vampire near a victim affected by Awe, just out of sight.",
       "source": "Sin Again: Daeva",
       "page": 98,
       "manualOnly": true,
@@ -6990,10 +7007,24 @@
       "dicePool": "Presence + Stealth + Celerity",
       "action": "Instant",
       "rollResults": {
-        "success": "The vampire appears somewhere within the vicin ity of the victim, just out of sight. If the victim speaks the vampire’s name aloud within the time period noted above, she’ll be aware of it, and can use this Devotion without spending a Willpower.",
+        "success": "The vampire appears somewhere within the vicinity of the victim, just out of sight. If the victim speaks the vampire’s name aloud within the time period noted above, she’ll be aware of it, and can use this Devotion without spending a Willpower.",
         "exceptionalSuccess": "The vampire is mystically aware of the surroundings she’s about to appear in, and can pick up the flow of a conversation in progress, or insert herself into the scene in an otherwise dramatic fashion.",
         "failure": "The Blood lies still in the veins. The Devotion has no effect.",
         "dramaticFailure": "The vampire teleports… somewhere."
+      },
+      "presentationPt": {
+        "summary": "Teleporta o vampiro para perto de uma vítima afetada por Fascínio, fora de sua vista.",
+        "prerequisites": "Celeridade •••••, Majestade ••••",
+        "cost": "1 de Força de Vontade",
+        "requirement": "A vítima deve ter sido afetada pelo Fascínio do vampiro dentro de um número de noites igual à Potência de Sangue.",
+        "dicePool": "Presença + Furtividade + Celeridade",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "O vampiro aparece em algum lugar nas proximidades da vítima, fora de sua vista. Se a vítima disser o nome do vampiro em voz alta dentro do período indicado acima, ele percebe isso e pode usar esta Devoção sem gastar Força de Vontade.",
+          "exceptionalSuccess": "O vampiro tem consciência mística do ambiente em que está prestes a aparecer e pode acompanhar o andamento de uma conversa ou entrar na cena de outra maneira dramática.",
+          "failure": "O Sangue permanece imóvel nas veias. A Devoção não tem efeito.",
+          "dramaticFailure": "O vampiro se teleporta… para algum lugar."
+        }
       }
     },
     {
