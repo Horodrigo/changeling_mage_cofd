@@ -9494,8 +9494,8 @@
       "id": "devotion-barn-raising",
       "kind": "devotion",
       "name": "Barn Raising",
-      "translatedName": "Barn Raising",
-      "summary": "Turns family cooperation into supernaturally efficient collective labor.",
+      "translatedName": "Mutirão",
+      "summary": "Draw helpers to a Dominated victim’s task and make those accepting the reward more vulnerable to Dominate.",
       "source": "Wild Hunt: Gangrel",
       "page": 56,
       "manualOnly": true,
@@ -9507,14 +9507,24 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "As with Entombed Command",
-      "effect": "The vampire’s victim becomes a vector for her commands. Others won’t carry out her orders with the same single-mindedness, but they’ll feel an urge to help. If the victim undertakes a task while under the effect of the Dominated Condition, up to (Blood Potency × 2) people within the vicinity will find their way over to check things out. Anyone who helps the victim gains a Willpower for their effort. Those who accept this Willpower suffer a –3 modifier to resist the vampire’s Dominate powers for the rest of the night."
+      "effect": "The vampire’s victim becomes a vector for her commands. Others won’t carry out her orders with the same single-mindedness, but they’ll feel an urge to help. If the victim undertakes a task while under the effect of the Dominated Condition, up to (Blood Potency × 2) people within the vicinity will find their way over to check things out. Anyone who helps the victim gains a Willpower for their effort. Those who accept this Willpower suffer a –3 modifier to resist the vampire’s Dominate powers for the rest of the night.",
+      "presentationPt": {
+        "summary": "Atrai ajudantes para a tarefa de uma vítima Dominada e torna quem aceita a recompensa mais vulnerável a Dominação.",
+        "prerequisites": "Animalismo •••, Dominação •••",
+        "cost": "2 Vitae",
+        "requirement": "A vítima deve ter a Condição Mesmerizado quando o vampiro ativa esta Devoção. Em seguida, ele deve implantar um gatilho de Édito de Ferro usando Comando Sepultado, pagando todos os custos necessários.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Como em Comando Sepultado",
+        "effect": "A vítima do vampiro se torna um vetor de seus comandos. Os outros não executam suas ordens com a mesma determinação, mas sentem vontade de ajudar. Se a vítima realizar uma tarefa sob o efeito da Condição Dominado, até (Potência de Sangue × 2) pessoas nas proximidades se aproximam para ver o que está acontecendo. Quem ajudar a vítima recebe um ponto de Força de Vontade pelo esforço. Quem aceitar esse ponto sofre –3 para resistir aos poderes de Dominação do vampiro pelo resto da noite."
+      }
     },
     {
       "id": "devotion-interloper",
       "kind": "devotion",
       "name": "Interloper",
-      "translatedName": "Interloper",
-      "summary": "Marks and punishes an outsider intruding on family ground.",
+      "translatedName": "Intruso",
+      "summary": "Mark a victim so mortal strangers attack them under Feral Infection.",
       "source": "Wild Hunt: Gangrel",
       "page": 56,
       "manualOnly": true,
@@ -9531,6 +9541,21 @@
         "exceptionalSuccess": "Bystanders will attack the victim until he’s dead or the end of the night.",
         "failure": "People might look at the victim a little funny, but they won’t bother him unless he bothers them.",
         "dramaticFailure": "The victim takes on an aura of innocence, and the vampire suffers a 5-die penalty on all actions to turn people against him, including Disciplines. He cannot be the subject of this Devotion for the rest of the night, and he cannot be made the target of a normal use of Feral Infection."
+      },
+      "presentationPt": {
+        "summary": "Marca uma vítima para que mortais desconhecidos a ataquem sob Infecção Feral.",
+        "prerequisites": "Animalismo ••••, Dominação •••",
+        "cost": "2 Vitae",
+        "requirement": "O vampiro deve espalhar um ponto de Vitae sobre o sujeito, incluído no custo. Oberlochs costumam cuspir em suas vítimas.",
+        "dicePool": "Manipulação + Intimidação + Animalismo – Compostura",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "rollResults": {
+          "success": "Qualquer mortal desconhecido que veja, ouça ou sinta o cheiro da vítima deve resistir ao efeito de Infecção Feral (Vampire, p. 127), aplicando os sucessos do vampiro como penalidade. Se falhar, o sujeito desta Devoção se torna o alvo da fúria do observador até morrer ou a cena terminar, o que ocorrer primeiro. Quem sofrer esse efeito de frenesi não se lembra bem do que aconteceu ao sair da fúria e desconsidera os sinais de violência até ter a oportunidade de se limpar. Depois disso, simplesmente não pensa mais no assunto.",
+          "exceptionalSuccess": "Os observadores atacam a vítima até ela morrer ou a noite terminar.",
+          "failure": "As pessoas podem olhar para a vítima de modo um pouco estranho, mas não a incomodam, a menos que ela as incomode.",
+          "dramaticFailure": "A vítima adquire uma aura de inocência, e o vampiro sofre uma penalidade de 5 dados em todas as ações para colocar pessoas contra ela, incluindo Disciplinas. A vítima não pode ser alvo desta Devoção pelo resto da noite nem se tornar alvo de um uso normal de Infecção Feral."
+        }
       }
     },
     {
@@ -9538,9 +9563,9 @@
       "kind": "devotion",
       "name": "Christine",
       "translatedName": "Christine",
-      "summary": "Awakens the Ride to act in defense of its owner.",
+      "summary": "Control the Ride from within by merging into it with Unmarked Grave.",
       "source": "Wild Hunt: Gangrel",
-      "page": 62,
+      "page": 61,
       "manualOnly": true,
       "bloodlineId": "verlice",
       "experienceCost": 1,
@@ -9549,7 +9574,16 @@
       "requirement": "The vampire merges into her vehicle using Unmarked Grave.",
       "dicePool": "None",
       "action": "Night",
-      "effect": "As long as she benefits from Unmarked Grave or until the next sunset (whichever comes first), the Verlice can control the vehicle she resides in, allowing her to perceive her surroundings and operate the vehicle as if they were in the passenger seat. This allows her the added protection of a metal frame, as well as the ability to move about in the daylight, provided she can remain awake."
+      "effect": "As long as she benefits from Unmarked Grave or until the next sunset (whichever comes first), the Verlice can control the vehicle she resides in, allowing her to perceive her surroundings and operate the vehicle as if they were in the passenger seat. This allows her the added protection of a metal frame, as well as the ability to move about in the daylight, provided she can remain awake.",
+      "presentationPt": {
+        "summary": "Controla o Veículo por dentro ao se fundir com ele usando Túmulo Sem Marca.",
+        "prerequisites": "Auspícios •, Metamorfose •",
+        "cost": "1 de Força de Vontade",
+        "requirement": "O vampiro se funde com seu veículo usando Túmulo Sem Marca.",
+        "dicePool": "Nenhuma",
+        "action": "Noite",
+        "effect": "Enquanto se beneficiar de Túmulo Sem Marca ou até o próximo pôr do sol, o que ocorrer primeiro, o Verlice pode controlar o veículo em que está, percebendo os arredores e operando o veículo como se estivesse no banco do passageiro. Isso lhe proporciona a proteção adicional de uma estrutura de metal e a possibilidade de se deslocar à luz do dia, desde que consiga permanecer acordado."
+      }
     },
     {
       "id": "devotion-know-the-road",
@@ -9571,10 +9605,10 @@
       "id": "devotion-scavenge",
       "kind": "devotion",
       "name": "Scavenge",
-      "translatedName": "Scavenge",
-      "summary": "Cannibalizes nearby wreckage to repair the Ride.",
+      "translatedName": "Aproveitar Sucata",
+      "summary": "Replace a damaged Ride component with a scavenged part regardless of its size or type.",
       "source": "Wild Hunt: Gangrel",
-      "page": 62,
+      "page": 61,
       "manualOnly": true,
       "bloodlineId": "verlice",
       "experienceCost": 1,
@@ -9584,7 +9618,17 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Night",
-      "effect": "The vampire replaces a damaged component of her Ride with a scavenged part that fits and functions regardless of its normal size or type. Mundane repairs are still required, but Protean adds to relevant Crafts rolls. The improvised component works until sunrise, when another Vitae or a proper replacement is required."
+      "effect": "The vampire replaces a damaged component of her Ride with a scavenged part that fits and functions regardless of its normal size or type. Mundane repairs are still required, but Protean adds to relevant Crafts rolls. The improvised component works until sunrise, when another Vitae or a proper replacement is required.",
+      "presentationPt": {
+        "summary": "Substitui um componente danificado do Veículo por uma peça reaproveitada, independentemente do tamanho ou tipo.",
+        "prerequisites": "Metamorfose ••",
+        "cost": "1 Vitae",
+        "requirement": "Unja a peça de reposição com o sangue do vampiro.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "effect": "O vampiro substitui um componente danificado de seu Veículo por uma peça reaproveitada que se encaixa e funciona, independentemente de seu tamanho ou tipo normal. Os reparos mundanos ainda são necessários, mas Metamorfose é somada aos testes pertinentes de Ofícios. O componente improvisado funciona até o nascer do sol, quando é preciso gastar outra Vitae ou encontrar uma peça de reposição adequada."
+      }
     },
     {
       "id": "devotion-hold-together",
