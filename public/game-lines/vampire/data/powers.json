@@ -10484,7 +10484,7 @@
       "id": "h-vtr-fire-revolution:devotion:knockout",
       "kind": "devotion",
       "name": "Knockout",
-      "translatedName": "Knockout",
+      "translatedName": "Nocaute",
       "prerequisites": "Vigor ••",
       "experienceCost": 1,
       "summary": "Drops a witness without leaving a corpse.",
@@ -10496,13 +10496,21 @@
       "cost": "1 Vitae",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "The vampire activates this Devotion on the same turn he successfully attacks a mortal with Brawl. Instead of the usual injuries, he deals a single point of bashing damage, and the victim falls unconscious for hours equal to the Carthian’s Vigor dots."
+      "effect": "The vampire activates this Devotion on the same turn he successfully attacks a mortal with Brawl. Instead of the usual injuries, he deals a single point of bashing damage, and the victim falls unconscious for hours equal to the Carthian’s Vigor dots.",
+      "presentationPt": {
+        "prerequisites": "Ímpeto ••",
+        "cost": "1 Vitae",
+        "summary": "Derruba uma testemunha sem deixar um cadáver.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "O vampiro ativa esta Devoção no mesmo turno em que ataca um mortal com Briga e obtém sucesso. Em vez dos ferimentos habituais, inflige um único ponto de dano contusivo, e a vítima fica inconsciente por um número de horas igual aos pontos de Ímpeto do Carthiano."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:last-man-standing",
       "kind": "devotion",
       "name": "Last Man Standing",
-      "translatedName": "Last Man Standing",
+      "translatedName": "Último de Pé",
       "prerequisites": "Celerity ••••; Resilience ••••",
       "experienceCost": 4,
       "summary": "Removes cumulative Defense loss and permits one reflexive Dodge per turn while cornered.",
@@ -10514,13 +10522,21 @@
       "cost": "3 Vitae and 1 Willpower",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "The vampire steels himself against difficult odds. He no longer takes a penalty to his Defense each time he is attacked in a turn, and he can dodge one attack per turn as a reflexive action. He applies his Resilience as a bonus to riding the wave, and if he does fall into frenzy, his Beast can’t be goaded to flee under any circumstances. He will fight to the Final Death."
+      "effect": "The vampire steels himself against difficult odds. He no longer takes a penalty to his Defense each time he is attacked in a turn, and he can dodge one attack per turn as a reflexive action. He applies his Resilience as a bonus to riding the wave, and if he does fall into frenzy, his Beast can’t be goaded to flee under any circumstances. He will fight to the Final Death.",
+      "presentationPt": {
+        "prerequisites": "Celeridade ••••; Resiliência ••••",
+        "cost": "3 Vitae e 1 de Força de Vontade",
+        "summary": "Remove a perda cumulativa de Defesa e permite uma Esquiva reflexiva por turno enquanto está encurralado.",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "O vampiro se prepara para enfrentar condições adversas. Ele deixa de sofrer penalidade à Defesa a cada vez que é atacado em um turno e pode Esquivar de um ataque por turno como ação reflexiva. Aplica Resiliência como bônus para Cavalgar a Onda e, se entrar em frenesi, sua Fera não pode ser incitada a fugir em circunstância alguma. Ele lutará até a Morte Final."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:mutation",
       "kind": "devotion",
       "name": "Mutation",
-      "translatedName": "Mutation",
+      "translatedName": "Mutação",
       "prerequisites": "Celerity ••; Resilience ••; Vigor ••",
       "experienceCost": 4,
       "summary": "Redistributes dots among the three physical Disciplines for the scene.",
@@ -10532,7 +10548,15 @@
       "cost": "3 Vitae and 1 Willpower",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "The vampire can redistribute up to (Blood Potency) dots of her physical Disciplines between each other, though none can be reduced lower than one dot or exceed five."
+      "effect": "The vampire can redistribute up to (Blood Potency) dots of her physical Disciplines between each other, though none can be reduced lower than one dot or exceed five.",
+      "presentationPt": {
+        "prerequisites": "Celeridade ••; Resiliência ••; Ímpeto ••",
+        "cost": "3 Vitae e 1 de Força de Vontade",
+        "summary": "Redistribui pontos entre as três Disciplinas Físicas durante a cena.",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "O vampiro pode redistribuir entre suas Disciplinas Físicas até um número de pontos igual à Potência de Sangue, mas nenhuma pode ficar abaixo de um ponto ou acima de cinco."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:lying-eyes",
@@ -10650,7 +10674,7 @@
       "id": "h-vtr-fire-revolution:devotion:sawbones",
       "kind": "devotion",
       "name": "Sawbones",
-      "translatedName": "Sawbones",
+      "translatedName": "Serra-Ossos",
       "prerequisites": "Resilience •••••",
       "experienceCost": 3,
       "summary": "Uses supernatural endurance to survive and repair otherwise catastrophic bodily harm.",
@@ -10663,7 +10687,16 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "The healing capacity of the Blood kicks into overdrive. Any Medicine rolls to treat the vampire’s wounds add his Resilience as a modifier, and he can heal aggravated damage not caused by sunlight as though it were lethal damage."
+      "effect": "The healing capacity of the Blood kicks into overdrive. Any Medicine rolls to treat the vampire’s wounds add his Resilience as a modifier, and he can heal aggravated damage not caused by sunlight as though it were lethal damage.",
+      "presentationPt": {
+        "prerequisites": "Resiliência •••••",
+        "cost": "3 Vitae e 1 de Força de Vontade",
+        "summary": "Usa resistência sobrenatural para sobreviver e reparar danos corporais que normalmente seriam catastróficos.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "A capacidade de cura do Sangue entra em potência máxima. Quaisquer testes de Medicina para tratar os ferimentos do vampiro somam sua Resiliência como modificador, e ele pode curar dano agravado que não tenha sido causado por luz solar como se fosse dano letal."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:skulk",
