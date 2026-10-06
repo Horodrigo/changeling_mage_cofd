@@ -6171,13 +6171,18 @@
       "bloodlineId": "gulikan",
       "category": "Ortam Recipes",
       "duration": "Scene",
-      "effect": "The essential Ortam ability can be crafted with Vitae from any vampire, creating an intoxicating scent that ensnares minds as it delights them. Smelling Essence Vitale Absolue is the same as having tasted the donor vampire’s blood. It can establish a Vinculum, though it can’t increase an extant one, and it provides no sustenance. Any mortals taking in the scent are helpless against it, but Kindred reflexively resist with Resolve + Blood Potency – Ortam, shaking off the would-be bond with a successful roll. Essence Vitale Absolue is the only Ortam recipe that can be combined with others; this requires the vampire to spend an additional Vitae per dose, but he still only needs to make one roll."
+      "effect": "The essential Ortam ability can be crafted with Vitae from any vampire, creating an intoxicating scent that ensnares minds as it delights them. Smelling Essence Vitale Absolue is the same as having tasted the donor vampire’s blood. It can establish a Vinculum, though it can’t increase an extant one, and it provides no sustenance. Any mortals taking in the scent are helpless against it, but Kindred reflexively resist with Resolve + Blood Potency – Ortam, shaking off the would-be bond with a successful roll. Essence Vitale Absolue is the only Ortam recipe that can be combined with others; this requires the vampire to spend an additional Vitae per dose, but he still only needs to make one roll.",
+      "presentationPt": {
+        "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
+        "duration": "Cena",
+        "effect": "A capacidade essencial de Ortam pode ser produzida com Vitae de qualquer vampiro, criando um aroma inebriante que enreda as mentes enquanto as deleita. Sentir o cheiro de Essence Vitale Absolue equivale a provar o sangue do vampiro doador. Pode estabelecer um Vinculum, mas não aumentar um já existente, e não fornece sustento. Mortais que sentem o aroma ficam indefesos contra ele, mas Membros resistem reflexivamente com Perseverança + Potência de Sangue – Ortam, livrando-se do vínculo iminente com um teste bem-sucedido. Essence Vitale Absolue é a única receita Ortam que pode ser combinada com outras; isso exige que o vampiro gaste uma Vitae adicional por dose, mas ainda precisa fazer apenas um teste."
+      }
     },
     {
       "id": "devotion-quicksilver-grace",
       "kind": "devotion",
       "name": "Quicksilver Grace",
-      "translatedName": "Quicksilver Grace",
+      "translatedName": "Graça Mercurial",
       "summary": "An Ortam recipe distilling a Discipline's resonance into supernatural perfume.",
       "source": "Sin Again: Daeva",
       "page": 40,
@@ -6185,13 +6190,18 @@
       "bloodlineId": "gulikan",
       "category": "Ortam Recipes",
       "duration": "Night",
-      "effect": "A subtle, promising scent that builds anticipation, keeping the wearer on a knife’s edge of awareness — and dis tracting everyone else. Anyone wearing this scent gains a +5 on Initiative results, and dodge actions gain the 8-again quality."
+      "effect": "A subtle, promising scent that builds anticipation, keeping the wearer on a knife’s edge of awareness — and distracting everyone else. Anyone wearing this scent gains a +5 on Initiative results, and dodge actions gain the 8-again quality.",
+      "presentationPt": {
+        "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
+        "duration": "Noite",
+        "effect": "Um aroma sutil e promissor que desperta expectativa, mantendo quem o usa no limite da atenção — e distraindo todos os demais. Quem usa esse aroma recebe +5 nos resultados de Iniciativa, e suas ações de Esquiva recebem a qualidade 8-novamente."
+      }
     },
     {
       "id": "devotion-shadow-s-eyes",
       "kind": "devotion",
       "name": "Shadow's Eyes",
-      "translatedName": "Shadow's Eyes",
+      "translatedName": "Olhos da Sombra",
       "summary": "An Ortam recipe distilling a Discipline's resonance into supernatural perfume.",
       "source": "Sin Again: Daeva",
       "page": 40,
@@ -6199,13 +6209,18 @@
       "bloodlineId": "gulikan",
       "category": "Ortam Recipes",
       "duration": "Night",
-      "effect": "This recipe creates a sharp, arresting fragrance that awakens the mind to all the little details it might otherwise miss. Anyone wearing the scent enjoys the benefits of the Trained Observer Merit at three dots and can pierce supernatural powers of stealth if they achieve an exceptional success on a Perception roll. Characters who already have Trained Observer at three dots gain a further 2-die bonus."
+      "effect": "This recipe creates a sharp, arresting fragrance that awakens the mind to all the little details it might otherwise miss. Anyone wearing the scent enjoys the benefits of the Trained Observer Merit at three dots and can pierce supernatural powers of stealth if they achieve an exceptional success on a Perception roll. Characters who already have Trained Observer at three dots gain a further 2-die bonus.",
+      "presentationPt": {
+        "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
+        "duration": "Noite",
+        "effect": "Esta receita cria uma fragrância penetrante e marcante que desperta a mente para os pequenos detalhes que de outra forma passariam despercebidos. Quem usa o aroma recebe os benefícios do Mérito Observador Treinado em três pontos e pode penetrar poderes sobrenaturais de furtividade se obtiver sucesso excepcional em um teste de Percepção. Personagens que já possuem Observador Treinado em três pontos recebem um bônus adicional de 2 dados."
+      }
     },
     {
       "id": "devotion-tiger-musk",
       "kind": "devotion",
       "name": "Tiger Musk",
-      "translatedName": "Tiger Musk",
+      "translatedName": "Almíscar do Tigre",
       "summary": "An Ortam recipe distilling a Discipline's resonance into supernatural perfume.",
       "source": "Sin Again: Daeva",
       "page": 40,
@@ -6213,7 +6228,12 @@
       "bloodlineId": "gulikan",
       "category": "Ortam Recipes",
       "duration": "Scene",
-      "effect": "A thick, intimidating odor that tells man and beast alike a predator is in their midst. Anyone wearing this scent enjoys the rote quality on all rolls involving the Animal Ken and Intimidation Skills, as long as the target of these actions can smell them."
+      "effect": "A thick, intimidating odor that tells man and beast alike a predator is in their midst. Anyone wearing this scent enjoys the rote quality on all rolls involving the Animal Ken and Intimidation Skills, as long as the target of these actions can smell them.",
+      "presentationPt": {
+        "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
+        "duration": "Cena",
+        "effect": "Um odor intenso e intimidador que avisa tanto a humanos quanto a animais que há um predador entre eles. Quem usa esse aroma recebe a qualidade de Rotina em todos os testes que envolvam as Perícias Empatia com Animais e Intimidação, desde que o alvo dessas ações possa sentir seu cheiro."
+      }
     },
     {
       "id": "devotion-authority-for-lords",
