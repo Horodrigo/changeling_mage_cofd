@@ -1,7 +1,7 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { refundMeritDots, subtractDots } from "@/lib/experience-refunds";
 import type { VampirePowers } from "./catalog-types";
-import { stringArray, vampireDevotionPrerequisitesMet } from "./creation-rules";
+import { stringArray, vampireDevotionPrerequisitesMet, vampirePaidDevotionIds } from "./creation-rules";
 
 export type VampireAdvancementUndo =
   | { kind: "trait"; group: "attributes" | "skills"; name: string; amount?: number }
@@ -29,7 +29,9 @@ export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdv
   const next = structuredClone(sheet);
   if (!applyVampireAdvancementUndo(next, undo)) return false;
   const retained = stringArray(next.line_data.devotion_ids);
-  if (powers?.devotions.some((item) => Number(item.experienceCost ?? 0) > 0 && retained.includes(item.id)
+  const paid = vampirePaidDevotionIds(sheet);
+  const automatic = new Set(stringArray(sheet.line_data.automatic_devotion_ids));
+  if (powers?.devotions.some((item) => (paid.has(item.id) || Number(item.experienceCost ?? 0) > 0 && !automatic.has(item.id)) && retained.includes(item.id)
     && vampireDevotionPrerequisitesMet(item, sheet, powers) && !vampireDevotionPrerequisitesMet(item, next, powers))) return false;
   Object.assign(sheet, next);
   return true;

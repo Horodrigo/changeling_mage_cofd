@@ -84,6 +84,7 @@ import {
   vampireCovenantIds,
   vampireDerived,
   vampireDisciplineDisplayName,
+  vampireDevotionExperienceCost,
   vampireSunlightSummary,
 } from "./creation-rules";
 import { VampireExperiencePanel } from "./experience-panel";
@@ -2430,6 +2431,7 @@ function PurchasedPowers({
       <div className="vampire-power-grid">
         {selected.map((item) => {
           const rating = item.rating;
+          const experienceCost = item.kind === "devotion" ? vampireDevotionExperienceCost(item, character, powers) : item.experienceCost;
           return (
             <details
               className="rule-power-card vampire-discipline-card"
@@ -2450,10 +2452,10 @@ function PurchasedPowers({
                     {item.prerequisites}
                   </p>
                 )}
-                {item.experienceCost !== undefined && (
+                {experienceCost !== undefined && (
                   <p>
                     <strong>{t("ui.experienceCost")}:</strong>{" "}
-                    {item.experienceCost} {t("ui.xp")}
+                    {experienceCost} {t("ui.xp")}
                   </p>
                 )}
                 <PowerMechanics mechanics={item} />

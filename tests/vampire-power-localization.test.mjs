@@ -33,7 +33,7 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.deepEqual(sacrileges.map(item => item.id).sort(), ["therion-apotheosis", "therion-avatar-apollyon", "therion-curse-faithful", "therion-demons-tongue", "therion-morning-star", "therion-nine-choirs", "therion-profanity"]);
   assert.equal(invocations.length, 10);
   assert.equal(detournements.length, 5);
-  assert.deepEqual(devotions.map(item => item.id).sort(), ["devotion-body-of-will", "devotion-chain-of-command", "devotion-cloak-the-gathering", "devotion-conditioning", "devotion-cross-contamination", "devotion-cult-of-personality", "devotion-enchantment", "devotion-enfeebling-aura", "devotion-force-of-nature", "devotion-foul-grave", "devotion-gargoyles-vigilance", "devotion-hint-of-fear", "devotion-juggernauts-gait", "devotion-quicken-sight", "devotion-reasons-salon", "devotion-riot", "devotion-shared-sight", "devotion-shatter-the-shroud", "devotion-stalwart-servant", "devotion-subsume-lesser-beast", "devotion-summoning-dominate", "devotion-summoning-majesty", "devotion-suns-brutal-dreamscape", "devotion-the-wish", "devotion-touch-of-deprivation", "devotion-undying-familiar", "devotion-vermin-flood", "devotion-wet-dream", "devotion-wraiths-presence", "devotion-aerial-cocoon", "devotion-bend-space", "devotion-memetic-menace", "devotion-best-served-cold", "devotion-distant-control", "devotion-wrack-mind", "devotion-between-walls", "devotion-blood-scenting", "devotion-flush-out", "devotion-vile-blood", "devotion-give-take", "devotion-look", "devotion-one-got-away", "devotion-pledge", "devotion-infectious-bite", "devotion-plague-doctors-mask", "devotion-tiny-guardian", "devotion-ghost-skin", "devotion-pierce-veil", "devotion-seance", "devotion-water-hibernation", "devotion-not-so-special", "devotion-city-attunement", "devotion-incriminating-evidence", "devotion-sea-witch-gift", "devotion-malignant-smog", "devotion-unbridled-force", "devotion-bones-mountain", "devotion-celebrity", "devotion-crush-years", "devotion-legion", "devotion-shapeshifting", "devotion-flesh-form", "devotion-sirens-sweet-visage", "devotion-preternatural-instinct", "devotion-spontaneous-ignition", "devotion-kin-maker", "devotion-dead-mans-reprieve", "devotion-nightmare-journey", "h-vtr-agony-ecstasy:devotion:aura-of-the-crone", "h-vtr-agony-ecstasy:devotion:betrayal-of-medea", "h-vtr-agony-ecstasy:devotion:dance-of-the-swarm", "h-vtr-agony-ecstasy:devotion:hekau", "h-vtr-agony-ecstasy:devotion:bitch-hammer", "h-vtr-agony-ecstasy:devotion:folly-of-theseus", "h-vtr-agony-ecstasy:devotion:grounded-sorcery", "h-vtr-agony-ecstasy:devotion:instrument-of-blood", "h-vtr-agony-ecstasy:devotion:invigorating-draft", "h-vtr-agony-ecstasy:devotion:maiden-s-innocence", "h-vtr-agony-ecstasy:devotion:mark-of-betrayal", "h-vtr-agony-ecstasy:devotion:mother-s-dance", "h-vtr-agony-ecstasy:devotion:sharing-the-familiar-s-form", "h-vtr-agony-ecstasy:devotion:soul-scab", "h-vtr-agony-ecstasy:devotion:spiritual-journey", "h-vtr-agony-ecstasy:devotion:taweret-s-protection", "h-vtr-agony-ecstasy:devotion:unshakable-advance", "h-vtr-fire-revolution:devotion:blur", "h-vtr-fire-revolution:devotion:bluster", "h-vtr-fire-revolution:devotion:guardian-vigil", "h-vtr-fire-revolution:devotion:it-s-who-you-know", "h-vtr-fire-revolution:devotion:knockout", "h-vtr-fire-revolution:devotion:last-man-standing", "h-vtr-fire-revolution:devotion:mutation", "h-vtr-fire-revolution:devotion:sawbones", "h-vtr-fire-revolution:devotion:got-my-back", "h-vtr-fire-revolution:devotion:trick-shot", "h-vtr-fire-revolution:devotion:uplift", "devotion-drain", "devotion-haymaker", "devotion-hurts-so-good", "devotion-the-hook", "devotion-hysterical-strength", "devotion-instant-superstar", "devotion-kingfisher", "devotion-ring-the-bell", "devotion-snap-punch", "devotion-subliminal-message", "devotion-whisper-campaign", "devotion-bitter-blossom", "devotion-face-lift", "devotion-cursed-fiefdom", "devotion-silence-depths", "devotion-essence-vitale-absolue", "devotion-quicksilver-grace", "devotion-shadow-s-eyes", "devotion-tiger-musk", "devotion-authority-for-lords", "devotion-fond-absence", "devotion-haunt-s-spite", "devotion-serpent-s-enticement", "devotion-bold-statement", "devotion-marble-confidence", "devotion-savage-exemplar", "devotion-induce", "devotion-beautiful-but-deadly", "devotion-battering-ram", "devotion-body-of-steel", "devotion-brood-mother", "devotion-consume", "devotion-earthen-insight", "devotion-elastic-visage", "devotion-endow-familiar", "devotion-flesh-crafting", "devotion-forced-march", "devotion-gorge", "devotion-frog-prince", "devotion-graft", "devotion-inner-rage", "devotion-it-will-not-die", "devotion-regeneration", "devotion-sheeps-clothing", "devotion-bezoar-thorns", "devotion-wisdom-of-stones", "devotion-hunter-s-true-form", "devotion-chimera", "devotion-stone-specter", "devotion-fata-morgana", "devotion-song-of-myself", "devotion-siren-s-lure", "devotion-fated-strike", "devotion-paths-of-blood", "devotion-therian-excision", "devotion-blood-eye-gaze", "devotion-vessel-of-bone-and-blood", "devotion-barn-raising", "devotion-interloper", "devotion-christine", "devotion-scavenge", "devotion-bloom", "devotion-spore", "devotion-harvest", "devotion-sprout", "devotion-know-the-road", "devotion-wisdom-of-crowds", "devotion-flesh-sculpting", "devotion-love-bomb", "devotion-one-night-stand", "devotion-picture-perfect", "devotion-as-i-do", "devotion-potence", "devotion-speak-of-the-devil", "devotion-sense-the-sin", "devotion-tearstained-vision", "devotion-the-yawning-void", "devotion-taking-the-measure", "devotion-dressed-to-kill", "devotion-purification"].sort());
+  assert.deepEqual(devotions.map(item => item.id).sort(), ["devotion-body-of-will", "devotion-chain-of-command", "devotion-cloak-the-gathering", "devotion-conditioning", "devotion-cross-contamination", "devotion-cult-of-personality", "devotion-enchantment", "devotion-enfeebling-aura", "devotion-force-of-nature", "devotion-foul-grave", "devotion-gargoyles-vigilance", "devotion-hint-of-fear", "devotion-juggernauts-gait", "devotion-quicken-sight", "devotion-reasons-salon", "devotion-riot", "devotion-shared-sight", "devotion-shatter-the-shroud", "devotion-stalwart-servant", "devotion-subsume-lesser-beast", "devotion-summoning-dominate", "devotion-summoning-majesty", "devotion-suns-brutal-dreamscape", "devotion-the-wish", "devotion-touch-of-deprivation", "devotion-undying-familiar", "devotion-vermin-flood", "devotion-wet-dream", "devotion-wraiths-presence", "devotion-aerial-cocoon", "devotion-bend-space", "devotion-memetic-menace", "devotion-best-served-cold", "devotion-distant-control", "devotion-wrack-mind", "devotion-between-walls", "devotion-blood-scenting", "devotion-flush-out", "devotion-vile-blood", "devotion-give-take", "devotion-look", "devotion-one-got-away", "devotion-pledge", "devotion-infectious-bite", "devotion-plague-doctors-mask", "devotion-tiny-guardian", "devotion-ghost-skin", "devotion-pierce-veil", "devotion-seance", "devotion-water-hibernation", "devotion-not-so-special", "devotion-city-attunement", "devotion-incriminating-evidence", "devotion-sea-witch-gift", "devotion-malignant-smog", "devotion-unbridled-force", "devotion-bones-mountain", "devotion-celebrity", "devotion-crush-years", "devotion-legion", "devotion-shapeshifting", "devotion-flesh-form", "devotion-sirens-sweet-visage", "devotion-preternatural-instinct", "devotion-spontaneous-ignition", "devotion-kin-maker", "devotion-dead-mans-reprieve", "devotion-nightmare-journey", "h-vtr-agony-ecstasy:devotion:aura-of-the-crone", "h-vtr-agony-ecstasy:devotion:betrayal-of-medea", "h-vtr-agony-ecstasy:devotion:dance-of-the-swarm", "h-vtr-agony-ecstasy:devotion:hekau", "h-vtr-agony-ecstasy:devotion:bitch-hammer", "h-vtr-agony-ecstasy:devotion:folly-of-theseus", "h-vtr-agony-ecstasy:devotion:grounded-sorcery", "h-vtr-agony-ecstasy:devotion:instrument-of-blood", "h-vtr-agony-ecstasy:devotion:invigorating-draft", "h-vtr-agony-ecstasy:devotion:maiden-s-innocence", "h-vtr-agony-ecstasy:devotion:mark-of-betrayal", "h-vtr-agony-ecstasy:devotion:mother-s-dance", "h-vtr-agony-ecstasy:devotion:sharing-the-familiar-s-form", "h-vtr-agony-ecstasy:devotion:soul-scab", "h-vtr-agony-ecstasy:devotion:spiritual-journey", "h-vtr-agony-ecstasy:devotion:taweret-s-protection", "h-vtr-agony-ecstasy:devotion:unshakable-advance", "h-vtr-fire-revolution:devotion:blur", "h-vtr-fire-revolution:devotion:bluster", "h-vtr-fire-revolution:devotion:guardian-vigil", "h-vtr-fire-revolution:devotion:it-s-who-you-know", "h-vtr-fire-revolution:devotion:knockout", "h-vtr-fire-revolution:devotion:last-man-standing", "h-vtr-fire-revolution:devotion:mutation", "h-vtr-fire-revolution:devotion:sawbones", "h-vtr-fire-revolution:devotion:got-my-back", "h-vtr-fire-revolution:devotion:trick-shot", "h-vtr-fire-revolution:devotion:uplift", "devotion-drain", "devotion-haymaker", "devotion-hurts-so-good", "devotion-the-hook", "devotion-hysterical-strength", "devotion-instant-superstar", "devotion-kingfisher", "devotion-ring-the-bell", "devotion-snap-punch", "devotion-subliminal-message", "devotion-whisper-campaign", "devotion-bitter-blossom", "devotion-face-lift", "devotion-cursed-fiefdom", "devotion-silence-depths", "devotion-essence-vitale-absolue", "devotion-quicksilver-grace", "devotion-shadow-s-eyes", "devotion-tiger-musk", "devotion-authority-for-lords", "devotion-fond-absence", "devotion-haunt-s-spite", "devotion-serpent-s-enticement", "devotion-bold-statement", "devotion-marble-confidence", "devotion-savage-exemplar", "devotion-induce", "devotion-beautiful-but-deadly", "devotion-battering-ram", "devotion-body-of-steel", "devotion-brood-mother", "devotion-consume", "devotion-earthen-insight", "devotion-elastic-visage", "devotion-endow-familiar", "devotion-flesh-crafting", "devotion-forced-march", "devotion-gorge", "devotion-frog-prince", "devotion-graft", "devotion-inner-rage", "devotion-it-will-not-die", "devotion-regeneration", "devotion-sheeps-clothing", "devotion-bezoar-thorns", "devotion-wisdom-of-stones", "devotion-hunter-s-true-form", "devotion-chimera", "devotion-stone-specter", "devotion-fata-morgana", "devotion-song-of-myself", "devotion-siren-s-lure", "devotion-fated-strike", "devotion-paths-of-blood", "devotion-therian-excision", "devotion-blood-eye-gaze", "devotion-vessel-of-bone-and-blood", "devotion-barn-raising", "devotion-interloper", "devotion-christine", "devotion-scavenge", "devotion-bloom", "devotion-spore", "devotion-harvest", "devotion-sprout", "devotion-know-the-road", "devotion-wisdom-of-crowds", "devotion-flesh-sculpting", "devotion-love-bomb", "devotion-one-night-stand", "devotion-picture-perfect", "devotion-as-i-do", "devotion-potence", "devotion-speak-of-the-devil", "devotion-sense-the-sin", "devotion-tearstained-vision", "devotion-the-yawning-void", "devotion-taking-the-measure", "devotion-dressed-to-kill", "devotion-purification", "devotion-incite", "devotion-night-life", "devotion-kiss-of-death", "devotion-form-of-the-trickster"].sort());
   assert.equal(rites.length, 62);
   assert.equal(miracles.length, 30);
   assert.deepEqual(Object.fromEntries([...new Set(miracles.map(item => item.source))].map(source => [source, miracles.filter(item => item.source === source).length])), { "Better Feared: Nosferatu": 5, "Secrets of the Covenants": 14, "Vampire: The Requiem Second Edition": 9, "Thousand Years of Night": 1, "Dark Eras 2": 1 });
@@ -142,7 +142,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       const { vampirePowerPresentation } = await vite.ssrLoadModule("/game-lines/vampire/power-presentation.ts");
       const { vampireHomebrewSourceId, activeVampirePowers } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
       const { setTestHomebrewPreferences } = await vite.ssrLoadModule("/app/use-homebrew.ts");
-      const { vampireDisciplinePrerequisitesMet, synchronizeAutomaticBloodlineDevotions } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+      const { vampireDisciplinePrerequisitesMet, synchronizeAutomaticBloodlineDevotions, vampireDevotionAvailable, vampireDevotionExperienceCost } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
       const { vampireExperienceLabel } = await vite.ssrLoadModule("/game-lines/vampire/experience-presentation.ts");
       const { refundVampireAdvancement } = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
       const experienceModule = await vite.ssrLoadModule("/game-lines/vampire/experience-panel.tsx");
@@ -419,8 +419,11 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         const devotionExperience = bloodlineDevotionExperiences.get(definition.bloodlineId) ?? generalDevotionExperience;
         const presented = vampirePowerPresentation(definition, locale);
         const title = locale === "pt-BR" ? definition.translatedName : definition.name;
-        if (definition.bloodlineId) assert.equal(generalDevotionExperience.includes(`<strong>${escape(title)}</strong>`), false, "Bloodline Devotion stays off an unrelated character's picker");
-        const purchasable = Number(definition.experienceCost ?? 0) > 0;
+        if (!vampireDevotionAvailable(definition, devotionBuyer)) assert.equal(generalDevotionExperience.includes(`<strong>${escape(title)}</strong>`), false, "Exclusive Devotion stays off an unrelated character's picker");
+        const quoteBuyer = structuredClone(devotionBuyer);
+        quoteBuyer.line_data.bloodline_id = definition.bloodlineId;
+        const quote = vampireDevotionExperienceCost(definition, quoteBuyer, catalog);
+        const purchasable = Number(quote ?? 0) > 0;
         const surfaces = purchasable ? [devotionSheet, devotionExperience] : [devotionSheet];
         assert.equal(vampireDisciplinePrerequisitesMet(definition.prerequisites, devotionCharacter.line_data.disciplines, catalog.disciplines.map(item => item.name)), true);
         for (const field of fields.filter(key => presented[key])) {
@@ -439,7 +442,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
           freeBuyer.line_data.bloodline_id = definition.bloodlineId;
           const before = JSON.stringify(freeBuyer);
           const granted = synchronizeAutomaticBloodlineDevotions(freeBuyer, catalog);
-          assert.equal(granted.line_data.devotion_ids.includes(definition.id), definition.experienceCost === 0, "Only an explicit zero learning cost declares an automatic grant");
+          assert.equal(granted.line_data.devotion_ids.includes(definition.id), quote === 0, "Only an explicit zero quote declares an automatic grant");
           assert.deepEqual(granted.current_state, freeBuyer.current_state, "Free grant preserves XP and history");
           assert.equal(JSON.stringify(freeBuyer), before);
           continue;
@@ -461,7 +464,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         return html.slice(html.lastIndexOf("<article", start), start).includes('aria-disabled="true"');
       };
       for (const definition of devotions) {
-        if (definition.bloodlineId || !definition.experienceCost) assert.equal(limitedDevotionExperience.includes(`<strong>${escape(locale === "pt-BR" ? definition.translatedName : definition.name)}</strong>`), false);
+        if (!vampireDevotionAvailable(definition, limitedDevotionBuyer) || !definition.experienceCost) assert.equal(limitedDevotionExperience.includes(`<strong>${escape(locale === "pt-BR" ? definition.translatedName : definition.name)}</strong>`), false);
         else assert.equal(locked(limitedDevotionExperience, definition), true, definition.id);
       }
       const aura = catalog.devotions.find(item => item.id === "h-vtr-agony-ecstasy:devotion:aura-of-the-crone");
@@ -540,6 +543,78 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
           assert.equal(JSON.stringify(buyer), before);
         }
       }
+      for (const [id, condition, expectedCost] of [
+        ["devotion-kiss-of-death", { bloodline_id: "moda-mortale" }, 1],
+        ["devotion-form-of-the-trickster", { bloodline_id: "rotgrafen" }, 1],
+        ["devotion-form-of-the-trickster", {}, 2],
+        ["devotion-body-of-steel", { devotion_ids: ["devotion-battering-ram"] }, 1],
+        ["devotion-body-of-steel", { devotion_ids: ["homebrew:vampire:devotion-battering-ram"] }, 2],
+        ["devotion-flesh-crafting", { devotion_ids: ["devotion-elastic-visage"] }, 1],
+        ["devotion-forced-march", { covenant_ids: ["carthian-movement"] }, 1],
+        ["devotion-sheeps-clothing", { devotion_ids: ["devotion-elastic-visage"] }, 1],
+        ["devotion-night-life", { clan_id: "daeva" }, 1],
+      ]) {
+        const buyer = structuredClone(devotionBuyer);
+        buyer.character.name = id;
+        buyer.line_data = { ...buyer.line_data, ...condition };
+        buyer.current_state = { ...buyer.current_state, experience_available: 10, experience_spent: 4, experience_total: 14, vampire_experience_history: [{ id: "authored", label: "Authored receipt", cost: 4 }] };
+        const before = JSON.stringify(buyer);
+        const updates = [];
+        const html = render(VampireExperiencePanel, { character: buyer, updateSheet: value => updates.push(value), catalogs });
+        const definition = catalog.devotions.find(item => item.id === id);
+        const title = escape(locale === "pt-BR" ? definition.translatedName : definition.name);
+        const start = html.indexOf(`<strong>${title}</strong>`);
+        assert.ok(start >= 0, `${locale}: accessible ${id}`);
+        const card = html.slice(start, html.indexOf("</article>", start));
+        assert.ok(card.includes(`${expectedCost} ${translate(locale, "ui.xp")}`), `${locale}: quoted price ${id}`);
+        experienceModule.testBuy();
+        assert.equal(updates.length, 1, `${locale}: buy ${id}`);
+        const purchased = updates[0];
+        const receipt = purchased.current_state.vampire_experience_history.at(-1);
+        assert.equal(receipt.cost, expectedCost);
+        assert.deepEqual(receipt.undo, { kind: "devotion", id });
+        assert.equal(purchased.current_state.experience_available, 10 - expectedCost);
+        assert.equal(purchased.current_state.experience_spent, 4 + expectedCost);
+        assert.deepEqual(purchased.current_state.vampire_experience_history[0], buyer.current_state.vampire_experience_history[0]);
+        const refundSheet = structuredClone(purchased);
+        refundSheet.line_data = { ...refundSheet.line_data, clan_id: "gangrel", bloodline_id: "", covenant_ids: [], devotion_ids: [id] };
+        const receiptBefore = JSON.stringify(receipt);
+        const refunds = [];
+        render(VampireExperiencePanel, { character: refundSheet, updateSheet: value => refunds.push(value), catalogs });
+        experienceModule.testRevert(receipt);
+        assert.equal(refunds.length, 1);
+        assert.equal(refunds[0].current_state.experience_available, 10, "Refund uses recorded price after discount eligibility changes");
+        assert.equal(refunds[0].current_state.experience_spent, 4);
+        assert.deepEqual(refunds[0].current_state.vampire_experience_history, buyer.current_state.vampire_experience_history);
+        assert.equal(refunds[0].line_data.devotion_ids.includes(id), false);
+        assert.equal(JSON.stringify(receipt), receiptBefore);
+        assert.equal(JSON.stringify(buyer), before);
+      }
+      for (const condition of [{ clan_id: "gangrel" }, { clan_id: "daeva", bloodline_id: "erzsebet" }]) {
+        const buyer = structuredClone(devotionBuyer);
+        buyer.character.name = "devotion-night-life";
+        buyer.line_data = { ...buyer.line_data, ...condition };
+        const before = JSON.stringify(buyer);
+        const updates = [];
+        const html = render(VampireExperiencePanel, { character: buyer, updateSheet: value => updates.push(value), catalogs });
+        assert.equal(html.includes(`<strong>${escape(locale === "pt-BR" ? "Vida Noturna" : "Night Life")}</strong>`), false);
+        experienceModule.testBuy();
+        assert.equal(updates.length, 0, "Inaccessible or free Devotions cannot charge XP");
+        assert.equal(JSON.stringify(buyer), before);
+      }
+      const older = structuredClone(devotionBuyer);
+      older.line_data = { ...older.line_data, clan_id: "daeva", bloodline_id: "erzsebet", devotion_ids: ["devotion-night-life"] };
+      const oldReceipt = { id: "old-night-life", label: "Original paid title", cost: 1, undo: { kind: "devotion", id: "devotion-night-life" } };
+      older.current_state = { ...older.current_state, experience_available: 9, experience_spent: 1, experience_total: 10, vampire_experience_history: [oldReceipt] };
+      const oldRefunds = [];
+      render(VampireExperiencePanel, { character: older, updateSheet: value => oldRefunds.push(value), catalogs });
+      experienceModule.testRevert(oldReceipt);
+      assert.equal(oldRefunds.length, 1);
+      assert.equal(oldRefunds[0].current_state.experience_available, 10);
+      assert.equal(oldRefunds[0].current_state.experience_spent, 0);
+      assert.deepEqual(oldRefunds[0].current_state.vampire_experience_history, []);
+      assert.ok(oldRefunds[0].line_data.devotion_ids.includes("devotion-night-life"), "After refunding the old payment, the eligible new free grant remains available");
+      assert.deepEqual(oldRefunds[0].line_data.automatic_devotion_ids, ["devotion-night-life"]);
       assert.equal(JSON.stringify(devotionCharacter), devotionCharacterBefore);
       assert.equal(JSON.stringify(devotionBuyer), devotionBuyerBefore);
       const coilCharacter = blankPrintCharacter("VtR");

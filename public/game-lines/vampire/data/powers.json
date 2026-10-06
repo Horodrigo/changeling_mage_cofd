@@ -4727,8 +4727,8 @@
       "id": "devotion-form-of-the-trickster",
       "kind": "devotion",
       "name": "Form of the Trickster",
-      "translatedName": "Form of the Trickster",
-      "summary": "Assumes the bloodline's elusive animal shape for flight, sabotage, or escape.",
+      "translatedName": "Forma do Trapaceiro",
+      "summary": "Assume the appearance of another real or imaginary person within human limits.",
       "source": "False Gods: Ventrue",
       "page": 54,
       "manualOnly": true,
@@ -4739,7 +4739,23 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Indefinite",
-      "effect": "Once a night, the vampire can transform into another person. They can be real or imaginary and of any gender, but they can’t have any qualities beyond the human limit. To create a flawless imitation of a real individual, the Rotgrafen must consume their blood within the same night. Otherwise, she takes circumstantial penalties on any Social rolls to fool those familiar with the original, as defined by the Storyteller. This Devotion can bestow Giant and Small-Framed (Chronicles of Darkness, pp. 47 and 49), and either level of Striking Looks, but Sanctity of Merits does not apply. However, it can also temporarily remove these Merits, in which case it does apply if the vampire permanently redefines her form. Transformation lasts until the vampire chooses to revert to her default, but she can only take on one new face per night. She can also spend a Willpower while resting in her Unmarked Grave to redefine her default body. Note that the vampire’s Physical Attributes and Skills remain the same, so she should be careful to play into her altered physique if she’s undercover."
+      "effect": "Once a night, the vampire can transform into another person. They can be real or imaginary and of any gender, but they can’t have any qualities beyond the human limit. To create a flawless imitation of a real individual, the Rotgrafen must consume their blood within the same night. Otherwise, she takes circumstantial penalties on any Social rolls to fool those familiar with the original, as defined by the Storyteller. This Devotion can bestow Giant and Small-Framed (Chronicles of Darkness, pp. 47 and 49), and either level of Striking Looks, but Sanctity of Merits does not apply. However, it can also temporarily remove these Merits, in which case it does apply if the vampire permanently redefines her form. Transformation lasts until the vampire chooses to revert to her default, but she can only take on one new face per night. She can also spend a Willpower while resting in her Unmarked Grave to redefine her default body. Note that the vampire’s Physical Attributes and Skills remain the same, so she should be careful to play into her altered physique if she’s undercover.",
+      "presentationPt": {
+        "summary": "Assume a aparência de outra pessoa real ou imaginária, dentro dos limites humanos.",
+        "prerequisites": "Metamorfose •••",
+        "cost": "2 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Indefinida",
+        "effect": "Uma vez por noite, o vampiro pode se transformar em outra pessoa. Ela pode ser real ou imaginária e de qualquer gênero, mas não pode ter qualidades além do limite humano. Para criar uma imitação perfeita de um indivíduo real, o Rotgrafen deve consumir seu sangue na mesma noite. Caso contrário, sofre penalidades circunstanciais em quaisquer testes Sociais para enganar quem conhece o original, definidas pelo Narrador. Esta Devoção pode conceder Gigante e Pequeno Porte (Chronicles of Darkness, pp. 47 e 49), e qualquer nível de Aparência Marcante, mas a Santidade dos Méritos não se aplica. Contudo, também pode remover esses Méritos temporariamente; nesse caso, ela se aplica se o vampiro redefinir sua forma permanentemente. A transformação dura até que o vampiro escolha voltar à sua forma padrão, mas ele só pode assumir um novo rosto por noite. Também pode gastar uma Força de Vontade enquanto descansa em seu Túmulo Sem Marca para redefinir seu corpo padrão. Os Atributos e Perícias Físicos do vampiro permanecem iguais, portanto ele deve representar seu novo porte com cuidado se estiver disfarçado."
+      },
+      "bloodlineExclusive": false,
+      "experienceDiscounts": [
+        {
+          "cost": 1,
+          "bloodlineId": "rotgrafen"
+        }
+      ]
     },
     {
       "id": "devotion-doctors-orders",
@@ -6340,10 +6356,10 @@
       "id": "devotion-incite",
       "kind": "devotion",
       "name": "Incite",
-      "translatedName": "Incite",
-      "summary": "Intensifies a chosen sensation until it becomes impossible to ignore.",
+      "translatedName": "Incitar",
+      "summary": "Inflict Inflamed and gain an additional Vitae when feeding from an Inflamed mortal.",
       "source": "Sin Again: Daeva",
-      "page": 29,
+      "page": 30,
       "manualOnly": true,
       "bloodlineId": "duchagne",
       "experienceCost": 2,
@@ -6356,6 +6372,19 @@
         "exceptionalSuccess": "Inflamed lasts the rest of the night.",
         "failure": "The victim feels a slight tingling.",
         "dramaticFailure": "The victim is immune to les arts licencieux for the rest of the night."
+      },
+      "presentationPt": {
+        "summary": "Impõe Inflamado à vítima e permite obter uma Vitae adicional ao se alimentar de um mortal Inflamado.",
+        "prerequisites": "Celeridade ••",
+        "cost": "Varia; o primeiro uso na noite é gratuito, mas os usos seguintes custam 1 Vitae cada.",
+        "dicePool": "Presença + Medicina + Celeridade contra Vigor + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "rollResults": {
+          "success": "A vítima recebe a Condição Inflamado. Se o vampiro se alimentar de um personagem mortal com Inflamado, ganha uma Vitae adicional sem causar dano letal.",
+          "exceptionalSuccess": "Inflamado dura o resto da noite.",
+          "failure": "A vítima sente um leve formigamento.",
+          "dramaticFailure": "A vítima fica imune a les arts licencieux pelo resto da noite."
+        }
       }
     },
     {
@@ -6419,8 +6448,8 @@
       "id": "devotion-night-life",
       "kind": "devotion",
       "name": "Night Life",
-      "translatedName": "Night Life",
-      "summary": "Temporarily restores living vigor and social warmth to the corpse.",
+      "translatedName": "Vida Noturna",
+      "summary": "Control normally involuntary physical responses to imitate a living person.",
       "source": "Sin Again: Daeva",
       "page": 35,
       "manualOnly": true,
@@ -6432,7 +6461,26 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "The vampire gains fine control over normally involuntary physical responses. She can cry, blush, sneeze, give herself goosebumps, dilate her pupils, experience orgasm, or even turn blue from a seeming lack of oxygen. The list goes on. This reaction requires only a thought, and the vampire’s body will follow through. If this is intended to deceive or add depth to a performance, any related Expression or Subterfuge rolls gain the 9-again quality."
+      "effect": "The vampire gains fine control over normally involuntary physical responses. She can cry, blush, sneeze, give herself goosebumps, dilate her pupils, experience orgasm, or even turn blue from a seeming lack of oxygen. The list goes on. This reaction requires only a thought, and the vampire’s body will follow through. If this is intended to deceive or add depth to a performance, any related Expression or Subterfuge rolls gain the 9-again quality.",
+      "presentationPt": {
+        "summary": "Controla respostas físicas normalmente involuntárias para imitar uma pessoa viva.",
+        "prerequisites": "Majestade •, Ímpeto •",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro ativa o Rubor da Vida e gasta uma Vitae adicional, incluída no custo.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "O vampiro ganha controle preciso sobre respostas físicas normalmente involuntárias. Pode chorar, corar, espirrar, arrepiar a pele, dilatar as pupilas, ter um orgasmo ou até ficar azulado por uma aparente falta de oxigênio. A lista continua. Essa reação exige apenas um pensamento, e o corpo do vampiro o acompanha. Se a intenção for enganar ou dar profundidade a uma atuação, qualquer teste relacionado de Expressão ou Subterfúgio recebe a qualidade 9-de-novo."
+      },
+      "additionalClanIds": [
+        "daeva"
+      ],
+      "experienceDiscounts": [
+        {
+          "cost": 0,
+          "bloodlineId": "erzsebet"
+        }
+      ]
     },
     {
       "id": "devotion-taking-the-measure",
@@ -7111,8 +7159,8 @@
       "id": "devotion-kiss-of-death",
       "kind": "devotion",
       "name": "Kiss of Death",
-      "translatedName": "Kiss of Death",
-      "summary": "Turns the Kiss into a lethal predatory weapon.",
+      "translatedName": "Beijo da Morte",
+      "summary": "Inflict Drugged on a bitten victim in combat, or Intoxicated outside combat.",
       "source": "Sin Again: Daeva",
       "page": 97,
       "manualOnly": true,
@@ -7121,7 +7169,21 @@
       "cost": "1 Vitae",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "If the vampire bites a victim, she can spend a Vitae to impose the Drugged Tilt ( Chronicles of Darkness , p. 281) or the Intoxicated Condition if this is outside of combat."
+      "effect": "If the vampire bites a victim, she can spend a Vitae to impose the Drugged Tilt ( Chronicles of Darkness , p. 281) or the Intoxicated Condition if this is outside of combat.",
+      "presentationPt": {
+        "summary": "Impõe Drogado a uma vítima mordida em combate, ou Intoxicado fora de combate.",
+        "prerequisites": "Majestade ••, Metamorfose ••",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Se o vampiro morder uma vítima, pode gastar uma Vitae para impor a Complicação Drogado (Chronicles of Darkness, p. 281), ou a Condição Intoxicado se estiver fora de combate."
+      },
+      "experienceDiscounts": [
+        {
+          "cost": 1,
+          "bloodlineId": "moda-mortale"
+        }
+      ]
     },
     {
       "id": "devotion-love-bomb",
@@ -10250,7 +10312,15 @@
         "dicePool": "Nenhuma",
         "action": "Reflexiva",
         "effect": "O vampiro gasta uma Vitae se for atingido por um ataque, e quaisquer níveis de Vitalidade absorvidos por sua Resiliência são infligidos à arma branca que o atingiu, causando dano à Estrutura dela. Uma arma destruída dessa maneira causa dados de dano contusivo iguais à Resiliência ao portador ao se estilhaçar na mão dele. Personagens que fazem ataques desarmados contra o vampiro sofrem esse dano diretamente se ele usar o efeito."
-      }
+      },
+      "experienceDiscounts": [
+        {
+          "cost": 1,
+          "devotionIds": [
+            "devotion-battering-ram"
+          ]
+        }
+      ]
     },
     {
       "id": "devotion-brood-mother",
@@ -10414,7 +10484,15 @@
         "action": "Instantânea",
         "duration": "Indefinida em humanos; uma noite em vampiros",
         "effect": "O sistema funciona como Semblante Elástico, mas o vampiro só pode usar esta Devoção em outros personagens. Alterações criadas com Modelagem da Carne podem ser preservadas com Força de Vontade durante o Sono Diurno, como outras mudanças na forma de um vampiro. Em humanos, são permanentes até que o vampiro alimente o sujeito ou o unja com outra Vitae. Cada mudança significativa em uma parte do corpo exige um turno de contato para ser efetuada."
-      }
+      },
+      "experienceDiscounts": [
+        {
+          "cost": 1,
+          "devotionIds": [
+            "devotion-elastic-visage"
+          ]
+        }
+      ]
     },
     {
       "id": "devotion-flesh-sculpting",
@@ -10481,7 +10559,13 @@
         "action": "Instantânea",
         "duration": "Horas iguais à Resiliência",
         "effect": "O vampiro pode se mover à Velocidade máxima permitida por Celeridade durante a duração. Exceto por ações reflexivas, como Percepção, só pode se mover nesse período. Se parar por qualquer motivo, deve reativar esta Devoção. Possíveis agressores precisam igualar sua Velocidade ou terão poucas chances de alcançá-lo."
-      }
+      },
+      "experienceDiscounts": [
+        {
+          "cost": 1,
+          "covenantId": "carthian-movement"
+        }
+      ]
     },
     {
       "id": "devotion-frog-prince",
@@ -10669,7 +10753,15 @@
         "action": "Nenhuma",
         "duration": "Permanente",
         "effect": "Quando o vampiro drena um mortal até a morte, pode memorizar sua forma. Como ao se transformar em um animal, assume as características Físicas da pessoa que copia — Atributos, Perícias, Tamanho, Velocidade e Vitalidade —, mas nenhuma de suas lembranças ou personalidade. Pele de Cordeiro não pode reproduzir mudanças cosméticas, como piercings, tatuagens ou outras modificações corporais. Fora essa restrição, a forma assumida é uma réplica perfeita da vítima no momento da morte. Formas obtidas com Pele de Cordeiro contam para o número de formas de Pele da Fera que o vampiro pode conhecer ao mesmo tempo."
-      }
+      },
+      "experienceDiscounts": [
+        {
+          "cost": 1,
+          "devotionIds": [
+            "devotion-elastic-visage"
+          ]
+        }
+      ]
     },
     {
       "id": "devotion-walk-it-off",

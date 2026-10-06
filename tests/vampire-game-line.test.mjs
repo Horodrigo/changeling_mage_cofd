@@ -795,3 +795,81 @@ test("Sin Again Ortam recipes with no learning cost are not automatic free Devot
   }
   assert.equal(JSON.stringify(character), before);
 });
+
+test("Devotion access and learning discounts use canonical affiliations and known power IDs", async () => {
+  const { vampireDevotionAvailable, vampireDevotionExperienceCost } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const sheet = { line_data: { clan_id: "gangrel", bloodline_id: "", covenant_ids: [], devotion_ids: [] } };
+  for (const [id, condition, cost] of [
+    ["devotion-night-life", { clan_id: "daeva", bloodline_id: "erzsebet" }, 0],
+    ["devotion-kiss-of-death", { bloodline_id: "moda-mortale" }, 1],
+    ["devotion-form-of-the-trickster", { bloodline_id: "rotgrafen" }, 1],
+    ["devotion-body-of-steel", { devotion_ids: ["devotion-battering-ram"] }, 1],
+    ["devotion-flesh-crafting", { devotion_ids: ["devotion-elastic-visage"] }, 1],
+    ["devotion-forced-march", { covenant_ids: ["carthian-movement"] }, 1],
+    ["devotion-sheeps-clothing", { devotion_ids: ["devotion-elastic-visage"] }, 1],
+  ]) {
+    const definition = powers.devotions.find(item => item.id === id);
+    const buyer = { line_data: { ...sheet.line_data, ...condition } };
+    assert.equal(vampireDevotionExperienceCost(definition, sheet, powers), definition.experienceCost);
+    assert.equal(vampireDevotionExperienceCost(definition, buyer, powers), cost);
+    const renamed = { ...powers, devotions: powers.devotions.map(item => ({ ...item, name: "Edited name", translatedName: "Título alterado" })) };
+    assert.equal(vampireDevotionExperienceCost(renamed.devotions.find(item => item.id === id), buyer, renamed), cost);
+    if (condition.devotion_ids) {
+      const missing = { ...powers, devotions: powers.devotions.filter(item => !condition.devotion_ids.includes(item.id)) };
+      assert.equal(vampireDevotionExperienceCost(definition, buyer, missing), definition.experienceCost);
+      buyer.line_data.devotion_ids = condition.devotion_ids.map(id => `homebrew:vampire:${id}`);
+      assert.equal(vampireDevotionExperienceCost(definition, buyer, powers), definition.experienceCost);
+    }
+  }
+  const night = powers.devotions.find(item => item.id === "devotion-night-life");
+  const trickster = powers.devotions.find(item => item.id === "devotion-form-of-the-trickster");
+  assert.equal(vampireDevotionAvailable(night, sheet), false);
+  assert.equal(vampireDevotionAvailable(night, { line_data: { ...sheet.line_data, clan_id: "daeva" } }), true);
+  assert.equal(vampireDevotionAvailable(trickster, sheet), true);
+  assert.equal(vampireDevotionExperienceCost(undefined, sheet, powers), undefined);
+  assert.equal(vampireDevotionExperienceCost({ id: "unknown" }, sheet, powers), undefined);
+});
+
+test("conditional free Devotions track only new grants and preserve paid or opaque older choices", async () => {
+  const { synchronizeAutomaticBloodlineDevotions } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const { refundVampireAdvancement } = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
+  const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
+  const { removeVampireBloodline } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const bloodlines = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/bloodlines.json`, "utf8"));
+  const id = "devotion-night-life";
+  const buyer = blankPrintCharacter("VtR");
+  buyer.line_data = { ...buyer.line_data, clan_id: "daeva", bloodline_id: "erzsebet", disciplines: { Majesty: 1, Vigor: 1 }, devotion_ids: ["authored-choice"] };
+  buyer.current_state = { ...buyer.current_state, experience_available: 10, experience_spent: 4, experience_total: 14, vampire_experience_history: [{ id: "authored", label: "Authored receipt", cost: 4 }] };
+  const before = JSON.stringify(buyer);
+  const granted = synchronizeAutomaticBloodlineDevotions(buyer, powers);
+  assert.deepEqual(granted.line_data.devotion_ids, ["authored-choice", id]);
+  assert.deepEqual(granted.line_data.automatic_devotion_ids, [id]);
+  assert.equal(synchronizeAutomaticBloodlineDevotions(granted, powers), granted);
+  assert.deepEqual(granted.current_state, buyer.current_state);
+  assert.equal(JSON.stringify(buyer), before);
+  const removed = removeVampireBloodline(granted, bloodlines.find(item => item.id === "erzsebet"), powers);
+  assert.deepEqual(removed.line_data.devotion_ids, ["authored-choice"]);
+  assert.deepEqual(removed.line_data.automatic_devotion_ids, []);
+  assert.deepEqual(removed.current_state, buyer.current_state);
+  const freeRefund = structuredClone(granted);
+  assert.equal(refundVampireAdvancement(freeRefund, { kind: "discipline", name: "Majesty" }, powers), true);
+  assert.deepEqual(synchronizeAutomaticBloodlineDevotions(freeRefund, powers).line_data.devotion_ids, ["authored-choice"]);
+  const unavailable = { ...powers, devotions: powers.devotions.filter(item => item.id !== id) };
+  assert.equal(synchronizeAutomaticBloodlineDevotions(granted, unavailable), granted, "An unavailable definition never authorizes deleting its saved choice");
+  for (const paid of [false, true]) {
+    const legacy = structuredClone(buyer);
+    legacy.line_data.devotion_ids.push(id);
+    if (paid) {
+      legacy.line_data.automatic_devotion_ids = [id]; // A stale marker cannot turn a recorded purchase into a free grant.
+      legacy.current_state.vampire_experience_history.push({ id: "old-paid", label: "Original title", cost: 1, undo: { kind: "devotion", id } });
+    }
+    const legacyBefore = JSON.stringify(legacy);
+    assert.equal(refundVampireAdvancement(legacy, { kind: "discipline", name: "Majesty" }, powers), false);
+    assert.equal(JSON.stringify(legacy), legacyBefore);
+    const left = removeVampireBloodline(legacy, bloodlines.find(item => item.id === "erzsebet"), powers);
+    assert.deepEqual(left.line_data.devotion_ids, legacy.line_data.devotion_ids);
+    assert.deepEqual(left.current_state, legacy.current_state);
+  }
+});

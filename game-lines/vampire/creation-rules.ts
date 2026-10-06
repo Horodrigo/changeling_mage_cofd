@@ -180,17 +180,55 @@ export function vampireDevotionPrerequisitesMet(definition: VampirePurchasablePo
     && (definition.requiredDevotionIds ?? []).every((id) => known.includes(id) && powers.devotions.some((item) => item.id === id));
 }
 
-export function synchronizeAutomaticBloodlineDevotions(character: CharacterSheet, powers: Pick<VampirePowers, "disciplines" | "devotions">) {
-  const automatic = powers.devotions.filter((item) => item.bloodlineId && item.experienceCost === 0);
-  const automaticIds = new Set(automatic.map((item) => item.id));
-  const current = stringArray(character.line_data.devotion_ids);
-  const next = current.filter((id) => !automaticIds.has(id));
+export function vampireDevotionAvailable(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "line_data">) {
+  if (!definition) return false;
   const bloodlineId = String(character.line_data.bloodline_id ?? "");
-  for (const item of automatic)
-    if (item.bloodlineId === bloodlineId && vampireDevotionPrerequisitesMet(item, character, powers)) next.push(item.id);
+  const clanId = String(character.line_data.clan_id ?? "");
+  return (!definition.bloodlineId || definition.bloodlineExclusive === false || definition.bloodlineId === bloodlineId || Boolean(definition.additionalClanIds?.includes(clanId)))
+    && (!definition.covenantIds?.length || definition.covenantIds.some((id) => vampireCovenantIds(character.line_data).includes(id)));
+}
+
+export function vampireDevotionExperienceCost(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "line_data">, powers: Pick<VampirePowers, "devotions">) {
+  const base = definition?.experienceCost;
+  if (typeof base !== "number" || !Number.isFinite(base) || base < 0) return undefined;
+  const known = stringArray(character.line_data.devotion_ids);
+  const discounts = definition?.experienceDiscounts?.filter((item) => Number.isFinite(item.cost) && item.cost >= 0 && (
+    "bloodlineId" in item ? item.bloodlineId === character.line_data.bloodline_id
+      : "covenantId" in item ? vampireCovenantIds(character.line_data).includes(item.covenantId)
+        : item.devotionIds.some((id) => known.includes(id) && powers.devotions.some((power) => power.id === id))
+  )).map((item) => item.cost) ?? [];
+  return Math.min(base, ...discounts);
+}
+
+export function vampirePaidDevotionIds(character: Pick<CharacterSheet, "current_state">) {
+  const history = Array.isArray(character.current_state?.vampire_experience_history) ? character.current_state.vampire_experience_history as Array<Record<string, unknown>> : [];
+  return new Set(history.flatMap((entry) => {
+    const undo = entry?.undo as Record<string, unknown> | undefined;
+    return Number(entry?.cost) > 0 && undo?.kind === "devotion" && typeof undo.id === "string" ? [undo.id] : [];
+  }));
+}
+
+export function synchronizeAutomaticBloodlineDevotions(character: CharacterSheet, powers: Pick<VampirePowers, "disciplines" | "devotions">) {
+  const automatic = powers.devotions.filter((item) => item.bloodlineId && (item.experienceCost === 0 || item.experienceDiscounts?.some((discount) => discount.cost === 0)));
+  const current = stringArray(character.line_data.devotion_ids);
+  const tracked = stringArray(character.line_data.automatic_devotion_ids);
+  const paid = vampirePaidDevotionIds(character);
+  // Existing explicit-zero grants keep their schema-2 bridge. Conditional
+  // grants remove only IDs this synchronizer actually granted; old purchases
+  // and opaque, untracked choices never become free just from today's quote.
+  const automaticIds = new Set(automatic.filter((item) => item.experienceCost === 0 || tracked.includes(item.id)).map((item) => item.id));
+  const next = current.filter((id) => !automaticIds.has(id) || paid.has(id));
+  const nextTracked = tracked.filter((id) => next.includes(id) && !paid.has(id));
+  const bloodlineId = String(character.line_data.bloodline_id ?? "");
+  for (const item of automatic) {
+    if (item.bloodlineId !== bloodlineId || vampireDevotionExperienceCost(item, character, powers) !== 0 || !vampireDevotionPrerequisitesMet(item, character, powers) || next.includes(item.id)) continue;
+    next.push(item.id);
+    if (item.experienceCost !== 0) nextTracked.push(item.id);
+  }
   const devotionIds = [...new Set(next)];
-  if (JSON.stringify(devotionIds) === JSON.stringify(current)) return character;
-  return { ...character, line_data: { ...character.line_data, devotion_ids: devotionIds } };
+  const trackedIds = [...new Set(nextTracked)];
+  if (JSON.stringify(devotionIds) === JSON.stringify(current) && JSON.stringify(trackedIds) === JSON.stringify(tracked)) return character;
+  return { ...character, line_data: { ...character.line_data, devotion_ids: devotionIds, ...(tracked.length || trackedIds.length ? { automatic_devotion_ids: trackedIds } : {}) } };
 }
 
 export const BLOOD_POTENCY_ROWS: readonly BloodPotencyRow[] = [
