@@ -5984,22 +5984,82 @@
         "summary": "Transforma o remorso da vítima em uma aflição sobrenatural imediata.",
         "prerequisites": "Pesadelo ••",
         "cost": "1 Vitae",
-        "dicePool": "Manipulação + Empatia + Pesadelo contra Autocontrole + Potência de Sangue",
+        "dicePool": "Manipulação + Empatia + Pesadelo contra Compostura + Potência de Sangue",
         "action": "Disputada; a resistência é reflexiva.",
         "rollResults": {
           "success": "O vampiro impõe a Condição Deprimido à vítima. Se tiver se alimentado dela usando o dom de sua Bloodline, ou souber por meios mundanos de suas falhas, crimes e pecados passados, pode concentrar esse estado emocional em qualquer desses acontecimentos que conheça. Caso contrário, a vítima se fixa em um incidente plausível do passado recente que possa ser a causa de seu estado de espírito. O vampiro também pode usar este efeito junto de Abrir a Mente, vinculando a Condição a uma lembrança que a vítima consideraria neutra ou positiva e contaminando-a com uma negatividade que antes não existia. Como alternativa, pode buscar uma lembrança infeliz, trazendo à tona a Condição Culpado junto de Deprimido.",
           "exceptionalSuccess": "Deprimido dura noites em vez de horas.",
           "failure": "O vampiro não consegue tornar a vítima mais infeliz do que já está.",
           "dramaticFailure": "O poder se volta contra o vampiro, que recebe a Condição Deprimido."
+        },
+        "suggestedModifiers": [
+          {
+            "modifier": "+1",
+            "situation": "O vampiro se alimentou da vítima na noite anterior."
+          },
+          {
+            "modifier": "+1",
+            "situation": "O vampiro conhece a Máscara e/ou o Lamento da vítima, ou seus equivalentes."
+          },
+          {
+            "modifier": "+2",
+            "situation": "A vítima não tem Força de Vontade restante."
+          },
+          {
+            "modifier": "+2",
+            "situation": "A vítima está sob os efeitos das Condições Culpado ou Deprimido."
+          },
+          {
+            "modifier": "+3",
+            "situation": "O vampiro presenciou a vítima passar por um Ponto de Ruptura na mesma noite."
+          },
+          {
+            "modifier": "–2",
+            "situation": "A vítima recuperou Força de Vontade por meio de uma ou mais Âncoras nas últimas 24 horas."
+          },
+          {
+            "modifier": "–3",
+            "situation": "O vampiro tem a Condição Dependente em relação à vítima."
+          }
+        ]
+      },
+      "suggestedModifiers": [
+        {
+          "modifier": "+1",
+          "situation": "The vampire has fed from the victim in the past night."
+        },
+        {
+          "modifier": "+1",
+          "situation": "The vampire knows the victim’s Mask and/or Dirge (or equivalent)."
+        },
+        {
+          "modifier": "+2",
+          "situation": "The victim has no remaining Willpower."
+        },
+        {
+          "modifier": "+2",
+          "situation": "The victim is under the effects of the Guilty or Depressed Conditions."
+        },
+        {
+          "modifier": "+3",
+          "situation": "The vampire witnessed the victim enduring a breaking point in the same night."
+        },
+        {
+          "modifier": "–2",
+          "situation": "The victim has regained Willpower through the use of one or more Anchors in the past 24 hours."
+        },
+        {
+          "modifier": "–3",
+          "situation": "The vampire has the Dependent Condition toward the victim."
         }
-      }
+      ]
     },
     {
       "id": "devotion-sense-the-sin",
       "kind": "devotion",
       "name": "Sense the Sin",
-      "translatedName": "Sense the Sin",
-      "summary": "Reads the grief and guilt carried by a target.",
+      "translatedName": "Perceber o Pecado",
+      "summary": "Sense how much Humanity or Integrity a subject retains.",
       "source": "Sin Again: Daeva",
       "page": 24,
       "manualOnly": true,
@@ -6011,17 +6071,90 @@
       "action": "Instant",
       "rollResults": {
         "success": "The vampire can tell how much Humanity or Integrity a victim retains. Activated alone, this power can only target a single subject at a time, but if the vampire knows Dread Presence, he can use that Discipline to bring his victims’ worst sides closer to the surface, then use this effect to pick out the person with the highest or lowest trait in a crowd. Each Suicide King experiences this information differently. One might see his subject being slowly covered in an amount of bile proportionate to their misdeeds; another may catch a whiff or brimstone or have to watch as her subject’s flesh begins to rot. At Storyteller discretion, Sense the Sin can be used on other supernatural denizens of the night, but successfully interpreting things like a werewolf’s Harmony or a changeling’s Clarity may require a successful Intelligence + Occult roll.",
-        "exceptionalSuccess": "The vampire’s insight is acute. He gains a symbolic vision of his subject’s most recent breaking point. Situation Modifier The vampire has fed from the victim in the past night. +1 The vampire knows the victim’s Mask and/ or Dirge (or equivalent). +1 The victim has no remaining Willpower. +2 The victim is under the effects of the Guilty or Depressed Conditions. +2 The vampire witnessed the victim enduring a breaking point in the same night. +3 The victim has regained Willpower through the use of one or more Anchors in the past 24 hours. –2 The vampire has the Dependent Condition toward the victim. –3",
+        "exceptionalSuccess": "The vampire’s insight is acute. He gains a symbolic vision of his subject’s most recent breaking point.",
         "failure": "The vampire fails to see how the subject transgressed.",
         "dramaticFailure": "No one could be that innocent. The vampire gains the Obsession Condition for the rest of the night, focused on uncovering the subject’s (real or imagined) misdeeds."
-      }
+      },
+      "presentationPt": {
+        "summary": "Percebe quanto de Humanidade ou Integridade o sujeito conserva.",
+        "prerequisites": "Auspícios ••",
+        "cost": "Variável; o primeiro uso em uma cena é gratuito, mas cada uso seguinte na mesma cena custa 1 Vitae.",
+        "dicePool": "Raciocínio + Empatia + Auspícios",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "O vampiro percebe quanto de Humanidade ou Integridade a vítima conserva. Ativado sozinho, este poder só pode ter um sujeito como alvo por vez. Se o vampiro conhecer Presença Aterradora, pode usar essa Disciplina para trazer à tona os piores aspectos de suas vítimas e então usar este efeito para identificar quem tem a maior ou menor pontuação dessa característica em uma multidão. Cada Rei do Suicídio percebe essa informação de modo diferente. Um pode ver o sujeito sendo coberto lentamente por uma quantidade de bile proporcional às suas transgressões; outro pode sentir cheiro de enxofre ou ver a carne do sujeito começar a apodrecer. A critério do Narrador, Perceber o Pecado pode ser usado em outros habitantes sobrenaturais da noite, mas interpretar corretamente características como a Harmonia de um lobisomem ou a Clareza de um changeling pode exigir um teste bem-sucedido de Inteligência + Ocultismo.",
+          "exceptionalSuccess": "A percepção do vampiro é aguçada. Ele recebe uma visão simbólica do Ponto de Ruptura mais recente do sujeito.",
+          "failure": "O vampiro não consegue perceber como o sujeito transgrediu.",
+          "dramaticFailure": "Ninguém pode ser tão inocente. O vampiro recebe a Condição Obsessão pelo resto da noite, concentrada em descobrir as transgressões reais ou imaginadas do sujeito."
+        },
+        "suggestedModifiers": [
+          {
+            "modifier": "+1",
+            "situation": "O vampiro se alimentou da vítima na noite anterior."
+          },
+          {
+            "modifier": "+1",
+            "situation": "O vampiro conhece a Máscara e/ou o Lamento da vítima, ou seus equivalentes."
+          },
+          {
+            "modifier": "+2",
+            "situation": "A vítima não tem Força de Vontade restante."
+          },
+          {
+            "modifier": "+2",
+            "situation": "A vítima está sob os efeitos das Condições Culpado ou Deprimido."
+          },
+          {
+            "modifier": "+3",
+            "situation": "O vampiro presenciou a vítima passar por um Ponto de Ruptura na mesma noite."
+          },
+          {
+            "modifier": "–2",
+            "situation": "A vítima recuperou Força de Vontade por meio de uma ou mais Âncoras nas últimas 24 horas."
+          },
+          {
+            "modifier": "–3",
+            "situation": "O vampiro tem a Condição Dependente em relação à vítima."
+          }
+        ]
+      },
+      "suggestedModifiers": [
+        {
+          "modifier": "+1",
+          "situation": "The vampire has fed from the victim in the past night."
+        },
+        {
+          "modifier": "+1",
+          "situation": "The vampire knows the victim’s Mask and/or Dirge (or equivalent)."
+        },
+        {
+          "modifier": "+2",
+          "situation": "The victim has no remaining Willpower."
+        },
+        {
+          "modifier": "+2",
+          "situation": "The victim is under the effects of the Guilty or Depressed Conditions."
+        },
+        {
+          "modifier": "+3",
+          "situation": "The vampire witnessed the victim enduring a breaking point in the same night."
+        },
+        {
+          "modifier": "–2",
+          "situation": "The victim has regained Willpower through the use of one or more Anchors in the past 24 hours."
+        },
+        {
+          "modifier": "–3",
+          "situation": "The vampire has the Dependent Condition toward the victim."
+        }
+      ]
     },
     {
       "id": "devotion-tearstained-vision",
       "kind": "devotion",
       "name": "Tearstained Vision",
-      "translatedName": "Tearstained Vision",
-      "summary": "Draws prophetic insight from sorrow and tears.",
+      "translatedName": "Visão Lacrimosa",
+      "summary": "See traces of negative emotions or acts in objects without revealing their causes by itself.",
       "source": "Sin Again: Daeva",
       "page": 25,
       "manualOnly": true,
@@ -6032,20 +6165,89 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "For the duration, the vampire can see a lingering aura of negativity inherent to the objects around her. She might perceive certain objects bleeding in a room where someone experienced a nasty break up, or see black flames dancing over everything touched by a murderer in a crime scene. The more negative the associated emotion or act, the more intense the imagery. The vampire gains no insight into what caused this aura unless she uses The Spirit’s Touch, but she gains the 8-again quality on that Discipline if the object was associated with a breaking point."
+      "effect": "For the duration, the vampire can see a lingering aura of negativity inherent to the objects around her. She might perceive certain objects bleeding in a room where someone experienced a nasty break up, or see black flames dancing over everything touched by a murderer in a crime scene. The more negative the associated emotion or act, the more intense the imagery. The vampire gains no insight into what caused this aura unless she uses The Spirit’s Touch, but she gains the 8-again quality on that Discipline if the object was associated with a breaking point.",
+      "presentationPt": {
+        "summary": "Vê marcas de emoções ou atos negativos nos objetos, sem identificar suas causas por si só.",
+        "prerequisites": "Auspícios •••",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "Durante a duração, o vampiro vê uma aura persistente de negatividade nos objetos ao seu redor. Pode perceber certos objetos sangrando em um cômodo onde alguém passou por um rompimento doloroso ou ver chamas negras sobre tudo que um assassino tocou em uma cena de crime. Quanto mais negativa a emoção ou o ato associado, mais intensa é a imagem. O vampiro não descobre o que causou essa aura sem usar Toque do Espírito, mas recebe 8-novamente nessa Disciplina se o objeto estiver associado a um Ponto de Ruptura.",
+        "suggestedModifiers": [
+          {
+            "modifier": "+1",
+            "situation": "O vampiro se alimentou da vítima na noite anterior."
+          },
+          {
+            "modifier": "+1",
+            "situation": "O vampiro conhece a Máscara e/ou o Lamento da vítima, ou seus equivalentes."
+          },
+          {
+            "modifier": "+2",
+            "situation": "A vítima não tem Força de Vontade restante."
+          },
+          {
+            "modifier": "+2",
+            "situation": "A vítima está sob os efeitos das Condições Culpado ou Deprimido."
+          },
+          {
+            "modifier": "+3",
+            "situation": "O vampiro presenciou a vítima passar por um Ponto de Ruptura na mesma noite."
+          },
+          {
+            "modifier": "–2",
+            "situation": "A vítima recuperou Força de Vontade por meio de uma ou mais Âncoras nas últimas 24 horas."
+          },
+          {
+            "modifier": "–3",
+            "situation": "O vampiro tem a Condição Dependente em relação à vítima."
+          }
+        ]
+      },
+      "suggestedModifiers": [
+        {
+          "modifier": "+1",
+          "situation": "The vampire has fed from the victim in the past night."
+        },
+        {
+          "modifier": "+1",
+          "situation": "The vampire knows the victim’s Mask and/or Dirge (or equivalent)."
+        },
+        {
+          "modifier": "+2",
+          "situation": "The victim has no remaining Willpower."
+        },
+        {
+          "modifier": "+2",
+          "situation": "The victim is under the effects of the Guilty or Depressed Conditions."
+        },
+        {
+          "modifier": "+3",
+          "situation": "The vampire witnessed the victim enduring a breaking point in the same night."
+        },
+        {
+          "modifier": "–2",
+          "situation": "The victim has regained Willpower through the use of one or more Anchors in the past 24 hours."
+        },
+        {
+          "modifier": "–3",
+          "situation": "The vampire has the Dependent Condition toward the victim."
+        }
+      ]
     },
     {
       "id": "devotion-the-yawning-void",
       "kind": "devotion",
       "name": "The Yawning Void",
-      "translatedName": "The Yawning Void",
+      "translatedName": "O Vazio Escancarado",
       "summary": "Overwhelms a target with the emptiness behind unresolved grief.",
       "source": "Sin Again: Daeva",
       "page": 25,
       "manualOnly": true,
       "bloodlineId": "children-of-judas",
       "experienceCost": 2,
-      "prerequisites": "Nightmare ••••",
+      "prerequisites": "Nightmare ••••; Bitter Blossom",
       "cost": "1 Willpower",
       "requirement": "The victim must have the Depressed or Guilty Conditions.",
       "dicePool": "Presence + Intimidation + Nightmare vs. Resolve + Blood Potency",
@@ -6055,7 +6257,84 @@
         "exceptionalSuccess": "The victim is so devastated that they also gain the Broken Condition for the rest of the night.",
         "failure": "The vampire doesn’t invoke the victim’s self-hatred.",
         "dramaticFailure": "The vampire’s victim instead feels a deep sense of self-satisfaction over having endured past trials. They regain a point of spent Willpower."
-      }
+      },
+      "presentationPt": {
+        "summary": "Esmaga a vítima com o vazio por trás de seu pesar não resolvido.",
+        "prerequisites": "Pesadelo ••••; Flor Amarga",
+        "cost": "1 de Força de Vontade",
+        "requirement": "A vítima deve ter as Condições Deprimido ou Culpado.",
+        "dicePool": "Presença + Intimidação + Pesadelo contra Perseverança + Potência de Sangue",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "A vítima mergulha em profundo desespero e recebe a Condição Autodesprezo.",
+          "exceptionalSuccess": "A vítima fica tão devastada que também recebe a Condição Quebrado pelo resto da noite.",
+          "failure": "O vampiro não consegue despertar o ódio que a vítima sente de si mesma.",
+          "dramaticFailure": "A vítima sente, em vez disso, uma profunda satisfação consigo mesma por ter superado as provações passadas. Ela recupera um ponto de Força de Vontade gasto."
+        },
+        "suggestedModifiers": [
+          {
+            "modifier": "+1",
+            "situation": "O vampiro se alimentou da vítima na noite anterior."
+          },
+          {
+            "modifier": "+1",
+            "situation": "O vampiro conhece a Máscara e/ou o Lamento da vítima, ou seus equivalentes."
+          },
+          {
+            "modifier": "+2",
+            "situation": "A vítima não tem Força de Vontade restante."
+          },
+          {
+            "modifier": "+2",
+            "situation": "A vítima está sob os efeitos das Condições Culpado ou Deprimido."
+          },
+          {
+            "modifier": "+3",
+            "situation": "O vampiro presenciou a vítima passar por um Ponto de Ruptura na mesma noite."
+          },
+          {
+            "modifier": "–2",
+            "situation": "A vítima recuperou Força de Vontade por meio de uma ou mais Âncoras nas últimas 24 horas."
+          },
+          {
+            "modifier": "–3",
+            "situation": "O vampiro tem a Condição Dependente em relação à vítima."
+          }
+        ]
+      },
+      "requiredDevotionIds": [
+        "devotion-bitter-blossom"
+      ],
+      "suggestedModifiers": [
+        {
+          "modifier": "+1",
+          "situation": "The vampire has fed from the victim in the past night."
+        },
+        {
+          "modifier": "+1",
+          "situation": "The vampire knows the victim’s Mask and/or Dirge (or equivalent)."
+        },
+        {
+          "modifier": "+2",
+          "situation": "The victim has no remaining Willpower."
+        },
+        {
+          "modifier": "+2",
+          "situation": "The victim is under the effects of the Guilty or Depressed Conditions."
+        },
+        {
+          "modifier": "+3",
+          "situation": "The vampire witnessed the victim enduring a breaking point in the same night."
+        },
+        {
+          "modifier": "–2",
+          "situation": "The victim has regained Willpower through the use of one or more Anchors in the past 24 hours."
+        },
+        {
+          "modifier": "–3",
+          "situation": "The vampire has the Dependent Condition toward the victim."
+        }
+      ]
     },
     {
       "id": "devotion-incite",
