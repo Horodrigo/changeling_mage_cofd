@@ -9228,7 +9228,7 @@
       "id": "devotion-siren-s-lure",
       "kind": "devotion",
       "name": "Siren's Lure",
-      "translatedName": "Siren's Lure",
+      "translatedName": "Atração da Sereia",
       "summary": "Draws listeners toward the Cerrid's song.",
       "source": "Wild Hunt: Gangrel",
       "page": 28,
@@ -9245,6 +9245,20 @@
         "exceptionalSuccess": "The victims also gain the Swooning Condition toward the vampire.",
         "failure": "Yeah, they’re not falling for that one.",
         "dramaticFailure": "The vampire’s music takes on a sinister edge she didn’t intend, and passersby will be sure to keep as far away as possible."
+      },
+      "presentationPt": {
+        "summary": "Atrai ouvintes para a canção do Cerrid.",
+        "prerequisites": "Majestade ••",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro deve tocar música ou declamar poesia como uma apresentação.",
+        "dicePool": "Presença + Expressão + Majestade contra Autocontrole + Potência de Sangue (o maior valor do grupo)",
+        "action": "Disputada; a resistência é reflexiva",
+        "rollResults": {
+          "success": "Quem ouve a música do vampiro é atraído até ele, deslocando-se por qualquer meio disponível até alcançar a origem da melodia. Se o vampiro parar de tocar, o efeito termina.",
+          "exceptionalSuccess": "As vítimas também recebem a Condição Enamorado em relação ao vampiro.",
+          "failure": "Não vão cair nessa.",
+          "dramaticFailure": "A música do vampiro adquire um tom sinistro que ele não pretendia, e os transeuntes procuram ficar o mais longe possível."
+        }
       }
     },
     {
@@ -9290,8 +9304,8 @@
       "id": "devotion-fated-strike",
       "kind": "devotion",
       "name": "Fated Strike",
-      "translatedName": "Fated Strike",
-      "summary": "Invokes a Crúac-charged attack at the moment fate opens.",
+      "translatedName": "Golpe Predestinado",
+      "summary": "Ignore part of the target’s Defense with an unarmed or small melee-weapon attack.",
       "source": "Wild Hunt: Gangrel",
       "page": 34,
       "manualOnly": true,
@@ -9302,14 +9316,23 @@
       "requirement": "This Devotion can only be used with unarmed attacks, or when attacking with melee weapons no larger than Size 1. Natural attacks granted by Protean count as unarmed.",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "Before an appropriate attack, the vampire can activate this power to ignore an amount of her victim’s Defense equal to her Protean dots. If she does, she cannot use the active effect of Vigor to add damage to the attack if it’s successful, as she’s modifying her limbs for flexibility rather than strength."
+      "effect": "Before an appropriate attack, the vampire can activate this power to ignore an amount of her victim’s Defense equal to her Protean dots. If she does, she cannot use the active effect of Vigor to add damage to the attack if it’s successful, as she’s modifying her limbs for flexibility rather than strength.",
+      "presentationPt": {
+        "summary": "Ignora parte da Defesa do alvo com um ataque desarmado ou uma arma branca pequena.",
+        "prerequisites": "Metamorfose ••, Ímpeto •",
+        "cost": "1 Vitae",
+        "requirement": "Esta Devoção só pode ser usada com ataques desarmados ou com armas brancas de no máximo Tamanho 1. Ataques naturais concedidos por Metamorfose contam como desarmados.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Antes de um ataque apropriado, o vampiro pode ativar este poder para ignorar uma quantidade da Defesa da vítima igual a seus pontos de Metamorfose. Se fizer isso, não pode usar o efeito ativo de Ímpeto para acrescentar dano ao ataque bem-sucedido, pois está modificando os membros para obter flexibilidade em vez de força."
+      }
     },
     {
       "id": "devotion-paths-of-blood",
       "kind": "devotion",
       "name": "Paths of Blood",
-      "translatedName": "Paths of Blood",
-      "summary": "Reads possible routes through violence and sacrifice.",
+      "translatedName": "Caminhos de Sangue",
+      "summary": "Travel through a visible animal matching a stored Beast’s Skin form.",
       "source": "Wild Hunt: Gangrel",
       "page": 34,
       "manualOnly": true,
@@ -9325,14 +9348,28 @@
         "exceptionalSuccess": "The vampire finds traversing the paths of blood and bone particularly natural. Her next use of this power on the same type of animal costs no Vitae.",
         "failure": "The vampire stays exactly where she is.",
         "dramaticFailure": "The animal emerges from the vampire’s body, with disastrous results. The Stormcrow takes unavoidable aggravated damage equal to the creature’s Size as something tries to claw its way out of her from the inside."
+      },
+      "presentationPt": {
+        "summary": "Viaja através de um animal visível cujo tipo corresponda a uma forma conhecida de Pele da Fera.",
+        "prerequisites": "Animalismo •••, Metamorfose •••",
+        "cost": "1 Vitae",
+        "requirement": "O animal deve ter pelo menos Tamanho 1 e corresponder a uma das formas conhecidas do vampiro concedidas por Pele da Fera.",
+        "dicePool": "Destreza + Empatia com Animais + Animalismo – Vigor do animal",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "O vampiro rapidamente se dissolve no nada e então irrompe do corpo de um animal próximo em uma explosão de sangue e vísceras. Deve ter uma linha de visão ininterrupta até o sujeito e conseguir vê-lo a olho nu; essas são as únicas restrições à distância que pode percorrer com o poder. O vampiro não sofre dano, mas o animal sempre morre.",
+          "exceptionalSuccess": "Percorrer os caminhos de sangue e osso parece especialmente natural ao vampiro. O próximo uso deste poder no mesmo tipo de animal não custa Vitae.",
+          "failure": "O vampiro permanece exatamente onde está.",
+          "dramaticFailure": "O animal emerge do corpo do vampiro, com resultados desastrosos. O Corvo da Tempestade sofre dano agravado inevitável igual ao Tamanho da criatura, enquanto algo tenta abrir caminho de dentro para fora."
+        }
       }
     },
     {
       "id": "devotion-therian-excision",
       "kind": "devotion",
       "name": "Therian Excision",
-      "translatedName": "Therian Excision",
-      "summary": "Cuts a destructive impulse away from another vampire's Beast.",
+      "translatedName": "Excisão da Fera",
+      "summary": "Temporarily deprive another vampire of the Beast.",
       "source": "Wild Hunt: Gangrel",
       "page": 39,
       "manualOnly": true,
@@ -9346,7 +9383,20 @@
         "success": "The victim loses access to her feral nature; she gains the Beastless Condition.",
         "exceptionalSuccess": "The victim becomes Beaten Down until his Beast returns. This applies to social interactions as well as violence.",
         "failure": "The other Beast proves more persistent than expected.",
-        "dramaticFailure": "The Daimonion’s Beast howls in frustration as it fails to tear out its supposed lesser. The Daimonion immediately falls to frenzy with a goal appropriate to the cir cumstances, usually trying to prove its dominance in other ways."
+        "dramaticFailure": "The Daimonion’s Beast howls in frustration as it fails to tear out its supposed lesser. The Daimonion immediately falls to frenzy with a goal appropriate to the circumstances, usually trying to prove its dominance in other ways."
+      },
+      "presentationPt": {
+        "summary": "Priva temporariamente outro vampiro de sua Fera.",
+        "prerequisites": "Animalismo ••••, Ímpeto •••",
+        "cost": "1 de Força de Vontade",
+        "dicePool": "Presença + Intimidação + Animalismo contra Perseverança + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "rollResults": {
+          "success": "A vítima perde acesso à sua natureza feral e recebe a Condição Sem Fera.",
+          "exceptionalSuccess": "A vítima fica Derrotada até que sua Fera retorne. Isso se aplica tanto a interações sociais quanto à violência.",
+          "failure": "A outra Fera se mostra mais persistente que o esperado.",
+          "dramaticFailure": "A Fera do Daimonion uiva de frustração ao não conseguir arrancar a suposta inferior. O Daimonion entra imediatamente em frenesi com um objetivo apropriado às circunstâncias, geralmente tentando provar sua dominância de outras maneiras."
+        }
       }
     },
     {
