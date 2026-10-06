@@ -5963,7 +5963,7 @@
       "id": "devotion-bitter-blossom",
       "kind": "devotion",
       "name": "Bitter Blossom",
-      "translatedName": "Bitter Blossom",
+      "translatedName": "Flor Amarga",
       "summary": "Turns a victim's regret into an immediate supernatural affliction.",
       "source": "Sin Again: Daeva",
       "page": 24,
@@ -5979,6 +5979,19 @@
         "exceptionalSuccess": "Depressed lasts for nights instead of hours.",
         "failure": "The vampire fails to make the victim any more miserable than he already is.",
         "dramaticFailure": "The vampire’s power backfires. She gains the Depressed Condition."
+      },
+      "presentationPt": {
+        "summary": "Transforma o remorso da vítima em uma aflição sobrenatural imediata.",
+        "prerequisites": "Pesadelo ••",
+        "cost": "1 Vitae",
+        "dicePool": "Manipulação + Empatia + Pesadelo contra Autocontrole + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva.",
+        "rollResults": {
+          "success": "O vampiro impõe a Condição Deprimido à vítima. Se tiver se alimentado dela usando o dom de sua Bloodline, ou souber por meios mundanos de suas falhas, crimes e pecados passados, pode concentrar esse estado emocional em qualquer desses acontecimentos que conheça. Caso contrário, a vítima se fixa em um incidente plausível do passado recente que possa ser a causa de seu estado de espírito. O vampiro também pode usar este efeito junto de Abrir a Mente, vinculando a Condição a uma lembrança que a vítima consideraria neutra ou positiva e contaminando-a com uma negatividade que antes não existia. Como alternativa, pode buscar uma lembrança infeliz, trazendo à tona a Condição Culpado junto de Deprimido.",
+          "exceptionalSuccess": "Deprimido dura noites em vez de horas.",
+          "failure": "O vampiro não consegue tornar a vítima mais infeliz do que já está.",
+          "dramaticFailure": "O poder se volta contra o vampiro, que recebe a Condição Deprimido."
+        }
       }
     },
     {
@@ -6304,7 +6317,7 @@
       "id": "devotion-face-lift",
       "kind": "devotion",
       "name": "Face Lift",
-      "translatedName": "Face Lift",
+      "translatedName": "Retoque Facial",
       "summary": "Reshapes appearance with predatory precision.",
       "source": "Sin Again: Daeva",
       "page": 46,
@@ -6316,7 +6329,16 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Night",
-      "effect": "The vampire can superficially alter her face and limbs. She can smooth out asymmetry, mold her hair into a style that won’t shift, render her features softer or brighter or more lifelike, or even alter colors. Some Widows create more avant garde alterations outside the human baseline, like fingers with no nails, feathers instead of hair, or skin tones that would be impossible without extensive tattooing. As long as this effect lasts, the vampire adds her Protean dots on any Presence action to establish a first impression and exceptionally succeeds on three successes instead of five. Fashionistas can also bestow this effect on clothing, spilling the cost above on a garment or garments. In this way, they can bestow their fashion sense on allies — and sometimes, victims. Note that the vampire can’t use this Devotion to alter herself so much that this effect would serve as a disguise; she’ll always be somewhat recognizable to those who know her, though creative use of Face Lift might convince someone she has a sibling or an uncanny double."
+      "effect": "The vampire can superficially alter her face and limbs. She can smooth out asymmetry, mold her hair into a style that won’t shift, render her features softer or brighter or more lifelike, or even alter colors. Some Widows create more avant garde alterations outside the human baseline, like fingers with no nails, feathers instead of hair, or skin tones that would be impossible without extensive tattooing. As long as this effect lasts, the vampire adds her Protean dots on any Presence action to establish a first impression and exceptionally succeeds on three successes instead of five. Fashionistas can also bestow this effect on clothing, spilling the cost above on a garment or garments. In this way, they can bestow their fashion sense on allies — and sometimes, victims. Note that the vampire can’t use this Devotion to alter herself so much that this effect would serve as a disguise; she’ll always be somewhat recognizable to those who know her, though creative use of Face Lift might convince someone she has a sibling or an uncanny double.",
+      "presentationPt": {
+        "summary": "Remodela a aparência com precisão predatória.",
+        "prerequisites": "Majestade •, Metamorfose ••",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "effect": "O vampiro pode alterar superficialmente o rosto e os membros. Pode suavizar assimetrias, moldar o cabelo em um penteado que não se desfaz, tornar os traços mais suaves, luminosos ou vivos, ou até alterar cores. Algumas Viúvas fazem alterações de vanguarda além da aparência humana, como dedos sem unhas, penas em vez de cabelo ou tons de pele impossíveis sem tatuagens extensas. Enquanto o efeito durar, o vampiro acrescenta seus pontos de Metamorfose a qualquer ação de Presença para causar uma primeira impressão e obtém sucesso excepcional com três sucessos em vez de cinco. Fashionistas também podem aplicar o efeito a roupas, derramando o custo acima sobre uma ou mais peças. Assim, podem transmitir seu senso de moda a aliados — e, às vezes, a vítimas. O vampiro não pode usar esta Devoção para se alterar a ponto de criar um disfarce: sempre será reconhecível em alguma medida por quem o conhece, embora o uso criativo de Retoque Facial possa convencer alguém de que tem um irmão ou um sósia inquietante."
+      }
     },
     {
       "id": "devotion-dressed-to-kill",
@@ -6345,7 +6367,7 @@
       "id": "devotion-cursed-fiefdom",
       "kind": "devotion",
       "name": "Cursed Fiefdom",
-      "translatedName": "Cursed Fiefdom",
+      "translatedName": "Feudo Amaldiçoado",
       "summary": "Makes the Nelapsi's feeding territory itself carry the weight of her legend.",
       "source": "Sin Again: Daeva",
       "page": 51,
@@ -6357,8 +6379,18 @@
       "requirement": "The vampire must spread Vitae around the area she wishes to claim, marking gateways, exits, and major landmarks. Six Vitae can mark a condominium or apartment building, nine can mark a mansion or large estate, and twelve can mark a small town or downtown center. This marking can be spread over multiple nights, but the vampire must spend every day asleep in the location until the work is complete. The Vitae is absorbed into the areas marked, becoming invisible to Kindred senses.",
       "dicePool": "None",
       "action": "Instant",
-      "duration": "One week per dot of Blood Potency, but the effects",
-      "effect": "of this Devotion only end when the vampire leaves her territory after the duration expires. Once complete, denizens within the bounds of the Cursed Fiefdom find their surroundings imbued with the glorious allure of Majesty. All residents gain the Delusional Condition, believing they live in perfect harmony and peace despite any evidence to the contrary, be it scenes of horrific violence or macabre scenery. They can resolve this Condition the usual way or by moving away from the Fiefdom, but this requires spending a point of Willpower and succeeding on a Resolve + Blood Potency roll, penalized by the vampire’s Majesty dots. On a failure, each subsequent attempt to leave takes a further cumulative –1 modifier, to a limit of –5. Interlopers perceive the Fiefdom through the lens of Nightmare’s otherworldly terror. Any niceties or luxuries are ignored or forgotten: Unwelcome guests gain the Frightened Condition if they step foot in the territory, unless they succeed on a Composure + Blood Potency roll penalized by the vampire’s Nightmare dots. Each success grants an hour of time before they must roll again. On an exceptional success, they can remain for the rest of the night without fear. The Nelapsi can use Majesty and Nightmare powers reflex ively and at any distance while within her Fiefdom. If another vampire resides in this area already, she can attempt to lash out and break this effect before it forms, taking any bonus she might have from Feeding Grounds. For this reason, Nelapsi are careful where they put down roots, or purge undesirable Licks from their preferred territories."
+      "duration": "One week per dot of Blood Potency, but the effects of this Devotion only end when the vampire leaves her territory after the duration expires.",
+      "effect": "Once complete, denizens within the bounds of the Cursed Fiefdom find their surroundings imbued with the glorious allure of Majesty. All residents gain the Delusional Condition, believing they live in perfect harmony and peace despite any evidence to the contrary, be it scenes of horrific violence or macabre scenery. They can resolve this Condition the usual way or by moving away from the Fiefdom, but this requires spending a point of Willpower and succeeding on a Resolve + Blood Potency roll, penalized by the vampire’s Majesty dots. On a failure, each subsequent attempt to leave takes a further cumulative –1 modifier, to a limit of –5. Interlopers perceive the Fiefdom through the lens of Nightmare’s otherworldly terror. Any niceties or luxuries are ignored or forgotten: Unwelcome guests gain the Frightened Condition if they step foot in the territory, unless they succeed on a Composure + Blood Potency roll penalized by the vampire’s Nightmare dots. Each success grants an hour of time before they must roll again. On an exceptional success, they can remain for the rest of the night without fear. The Nelapsi can use Majesty and Nightmare powers reflexively and at any distance while within her Fiefdom. If another vampire resides in this area already, she can attempt to lash out and break this effect before it forms, taking any bonus she might have from Feeding Grounds. For this reason, Nelapsi are careful where they put down roots, or purge undesirable Licks from their preferred territories.",
+      "presentationPt": {
+        "summary": "Faz o próprio território de alimentação do Nelapsi carregar o peso de sua lenda.",
+        "prerequisites": "Majestade •••••, Pesadelo ••••",
+        "cost": "6–12 Vitae e 1 de Força de Vontade",
+        "requirement": "O vampiro deve espalhar Vitae pela área que deseja reivindicar, marcando acessos, saídas e pontos de referência importantes. Seis Vitae podem marcar um condomínio ou prédio de apartamentos, nove podem marcar uma mansão ou grande propriedade e doze podem marcar uma pequena cidade ou o centro de uma cidade. A marcação pode ser distribuída por várias noites, mas o vampiro deve passar todos os dias dormindo no local até concluir o trabalho. A Vitae é absorvida pelas áreas marcadas, tornando-se invisível aos sentidos dos Membros.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Uma semana por ponto de Potência de Sangue, mas os efeitos desta Devoção só terminam quando o vampiro deixa o território depois que a duração expira.",
+        "effect": "Após a conclusão, os habitantes dentro dos limites do Feudo Amaldiçoado encontram o ambiente imbuído do glorioso fascínio de Majestade. Todos os moradores recebem a Condição Delirante, acreditando viver em perfeita harmonia e paz apesar de qualquer evidência em contrário, sejam cenas de violência horrenda ou paisagens macabras. Podem resolver a Condição da maneira habitual ou se mudando para fora do Feudo, mas isso exige gastar um ponto de Força de Vontade e obter sucesso em um teste de Perseverança + Potência de Sangue, penalizado pelos pontos de Majestade do vampiro. Após uma falha, cada tentativa posterior de partir sofre um modificador adicional cumulativo de –1, até o limite de –5. Intrusos percebem o Feudo pelo terror sobrenatural de Pesadelo. Gentilezas ou luxos são ignorados ou esquecidos: visitantes indesejados recebem a Condição Assustado ao entrar no território, a menos que obtenham sucesso em um teste de Autocontrole + Potência de Sangue penalizado pelos pontos de Pesadelo do vampiro. Cada sucesso concede uma hora antes de precisarem testar novamente. Com sucesso excepcional, podem permanecer pelo resto da noite sem medo. O Nelapsi pode usar poderes de Majestade e Pesadelo reflexivamente e a qualquer distância enquanto estiver em seu Feudo. Se outro vampiro já residir na área, pode tentar Incitar a Fera para quebrar o efeito antes que se forme, recebendo qualquer bônus que tenha de Campo de Caça. Por isso, Nelapsi escolhem com cuidado onde se estabelecer ou expulsam Membros indesejáveis de seus territórios preferidos."
+      }
     },
     {
       "id": "devotion-purification",
@@ -6416,7 +6448,7 @@
       "id": "devotion-silence-depths",
       "kind": "devotion",
       "name": "Silence of Depths",
-      "translatedName": "Silence of Depths",
+      "translatedName": "Silêncio das Profundezas",
       "bloodlineId": "xiao",
       "prerequisites": "Celerity ••; Majesty •• or Nightmare ••",
       "experienceCost": 2,
@@ -6427,7 +6459,15 @@
       "action": "Reflexive",
       "manualOnly": true,
       "dicePool": "None",
-      "effect": "Whenever the vampire is the victim of a supernatural power that would alter her emotional state, she can activate this Devotion to add Majesty or Nightmare to the resistance roll, assuming she’s aware of the attempt. Alternatively, she can add this Discipline as a bonus to lashing out to break effects like Awe or Dread Presence."
+      "effect": "Whenever the vampire is the victim of a supernatural power that would alter her emotional state, she can activate this Devotion to add Majesty or Nightmare to the resistance roll, assuming she’s aware of the attempt. Alternatively, she can add this Discipline as a bonus to lashing out to break effects like Awe or Dread Presence.",
+      "presentationPt": {
+        "summary": "Acrescenta Majestade ou Pesadelo à resistência contra poderes sobrenaturais que alteram emoções e às tentativas de quebrar Fascínio ou Presença Aterradora.",
+        "prerequisites": "Celeridade ••; Majestade •• ou Pesadelo ••",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Sempre que o vampiro for vítima de um poder sobrenatural que alteraria seu estado emocional, pode ativar esta Devoção para acrescentar Majestade ou Pesadelo ao teste de resistência, desde que perceba a tentativa. Como alternativa, pode acrescentar essa Disciplina como bônus ao Incitar a Fera para quebrar efeitos como Fascínio ou Presença Aterradora."
+      }
     },
     {
       "id": "devotion-as-i-do",
