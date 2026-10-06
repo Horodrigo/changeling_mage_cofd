@@ -5563,7 +5563,7 @@
       "id": "devotion-city-attunement",
       "kind": "devotion",
       "name": "City Attunement",
-      "translatedName": "City Attunement",
+      "translatedName": "Sintonia com a Cidade",
       "bloodlineId": "scions-of-the-first-city",
       "experienceCost": 0,
       "cost": "1 Vitae",
@@ -5572,13 +5572,20 @@
       "page": 44,
       "prerequisites": "Auspex •",
       "action": "Instant",
-      "effect": "By spending a Vitae and resting one or both hands on a building exterior or paved street within the city, the Harbinger renews his link to Her. Most Harbingers do this upon exiting their havens nightly. Harbingers may not be linked to more than one city at a time. In the case of a metropolis, the Harbinger is linked to the greater metropolis and not a given neighborhood: She is not Fishtown, She is Philadelphia. All Scions of the First City may learn this ability at no cost."
+      "effect": "By spending a Vitae and resting one or both hands on a building exterior or paved street within the city, the Harbinger renews his link to Her. Most Harbingers do this upon exiting their havens nightly. Harbingers may not be linked to more than one city at a time. In the case of a metropolis, the Harbinger is linked to the greater metropolis and not a given neighborhood: She is not Fishtown, She is Philadelphia. All Scions of the First City may learn this ability at no cost.",
+      "presentationPt": {
+        "prerequisites": "Auspícios •",
+        "cost": "1 Vitae",
+        "summary": "Toca a cidade para ver por seus olhos e permitir outras Devoções dos Descendentes.",
+        "action": "Instantânea",
+        "effect": "Ao gastar uma Vitae e apoiar uma ou ambas as mãos na parte externa de um edifício ou em uma rua pavimentada dentro da cidade, o Arauto renova seu vínculo com Ela. A maioria dos Arautos faz isso ao sair de seus refúgios a cada noite. Arautos não podem estar vinculados a mais de uma cidade por vez. No caso de uma metrópole, o Arauto se vincula à metrópole inteira, e não a um bairro específico: Ela não é Fishtown, Ela é Philadelphia. Todos os Scions of the First City podem aprender esta habilidade sem custo."
+      }
     },
     {
       "id": "devotion-incriminating-evidence",
       "kind": "devotion",
       "name": "Incriminating Evidence",
-      "translatedName": "Incriminating Evidence",
+      "translatedName": "Provas Incriminadoras",
       "prerequisites": "Auspex •••",
       "bloodlineId": "scions-of-the-first-city",
       "experienceCost": 1,
@@ -5588,7 +5595,15 @@
       "cost": "Varies; use of this devotion is tiring. The first use within a scene is free; additional uses cost 1 Vitae each.",
       "dicePool": "Wits + Empathy + Auspex",
       "action": "Instant",
-      "effect": "After touching a subject that night, the Harbinger uses Spirit's Touch outdoors and lets the city guide him toward physical evidence of that subject's wrongdoing. Each activation success provides one environmental clue. The power locates evidence rather than explaining the secret, bypassing locks, or identifying an exact door; Obfuscate causes a Clash of Wills. Repeated uses may narrow the destination but still incur their normal costs and risks."
+      "effect": "After touching a subject that night, the Harbinger uses Spirit's Touch outdoors and lets the city guide him toward physical evidence of that subject's wrongdoing. Each activation success provides one environmental clue. The power locates evidence rather than explaining the secret, bypassing locks, or identifying an exact door; Obfuscate causes a Clash of Wills. Repeated uses may narrow the destination but still incur their normal costs and risks.",
+      "presentationPt": {
+        "prerequisites": "Auspícios •••",
+        "summary": "Busca em sua cidade provas dos delitos de um sujeito que tenha tocado.",
+        "cost": "Variável; usar esta Devoção é cansativo. O primeiro uso em uma cena é gratuito; usos adicionais custam 1 Vitae cada.",
+        "dicePool": "Raciocínio + Empatia + Auspícios",
+        "action": "Instantânea",
+        "effect": "Após tocar um sujeito naquela noite, o Arauto usa Toque do Espírito ao ar livre e deixa a cidade guiá-lo até provas físicas dos delitos desse sujeito. Cada sucesso na ativação fornece uma pista do ambiente. O poder localiza provas, sem explicar o segredo, superar fechaduras ou identificar uma porta exata; Ofuscação provoca um Confronto de Vontades. Usos repetidos podem delimitar melhor o destino, mas continuam sujeitos aos custos e riscos normais."
+      }
     },
     {
       "id": "devotion-our-mothers-mind",
@@ -5791,7 +5806,7 @@
       "id": "devotion-sea-witch-gift",
       "kind": "devotion",
       "name": "Sea Witch's Gift",
-      "translatedName": "Sea Witch's Gift",
+      "translatedName": "Dádiva da Bruxa Marinha",
       "prerequisites": "Nereid; Protean ••",
       "experienceCost": 1,
       "cost": "1 Vitae",
@@ -5800,7 +5815,15 @@
       "page": 139,
       "dicePool": "None",
       "action": "Instant",
-      "effect": "By spending a Vitae, a Nereid using this devotion sheds her tail for an hour and regains her lost legs. She may spend additional Vitae to continue the effect without being compelled to return to the water. Sirens are deeply uncomfortable on land, and the expenditures necessary for prolonged time ashore make it likely that, if forced to stay two-legged, she will become ravenously hungry."
+      "effect": "By spending a Vitae, a Nereid using this devotion sheds her tail for an hour and regains her lost legs. She may spend additional Vitae to continue the effect without being compelled to return to the water. Sirens are deeply uncomfortable on land, and the expenditures necessary for prolonged time ashore make it likely that, if forced to stay two-legged, she will become ravenously hungry.",
+      "presentationPt": {
+        "prerequisites": "Nereid; Metamorfose ••",
+        "cost": "1 Vitae",
+        "summary": "Recupera as pernas por uma hora enquanto ignora a Maldição Nereid.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "Ao gastar uma Vitae, uma Nereid usando esta Devoção perde sua cauda por uma hora e recupera as pernas perdidas. Ela pode gastar Vitae adicional para prolongar o efeito sem ser compelida a retornar à água. Sereias ficam profundamente desconfortáveis em terra, e os gastos necessários para permanecer por muito tempo fora da água tornam provável que, se forem forçadas a manter as duas pernas, fiquem famintas."
+      }
     },
     {
       "id": "devotion-sirens-sweet-visage",
