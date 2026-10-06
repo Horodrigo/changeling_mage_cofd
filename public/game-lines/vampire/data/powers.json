@@ -6497,7 +6497,7 @@
         "action": "Disputada; a resistência é reflexiva",
         "duration": "Cena",
         "rollResults": {
-          "success": "O vampiro reduz os Atributos Sociais da vítima em um ponto por Vitae tomada, até o máximo de seus próprios pontos de Majestade. Os Atributos não podem ser reduzidos abaixo de um. Reduzir Compostura não remove pontos de Força de Vontade, mas reduz a capacidade máxima da vítima durante o efeito. O vampiro também ganha um dos pontos drenados pela cena, mas só pode possuir um ponto roubado por vez, independentemente de quantas pessoas tenha drenado.",
+          "success": "O vampiro reduz os Atributos Sociais da vítima em um ponto por Vitae tomada, até o máximo de seus próprios pontos de Majestade. Os Atributos não podem ser reduzidos abaixo de um. Reduzir Compostura não remove pontos de Força de Vontade, mas reduz a Força de Vontade máxima da vítima durante o efeito. O vampiro também ganha um dos pontos drenados pela cena, mas só pode possuir um ponto roubado por vez, independentemente de quantas pessoas tenha drenado.",
           "exceptionalSuccess": "O efeito dura a noite.",
           "failure": "O vampiro não é forte o bastante para drenar a essência da vítima.",
           "dramaticFailure": "A alma da vítima se volta contra o vampiro. Ela ganha o ponto de Força de Vontade gasto para ativar esta Devoção, e o vampiro recebe a Condição Distraído."
@@ -6659,7 +6659,7 @@
         "dicePool": "Presença + Persuasão + Majestade",
         "action": "Instantânea",
         "rollResults": {
-          "success": "O vampiro especifica um tipo de pessoa, que se apresentará ou encontrará com ele antes do fim da cena. Use as perguntas de exemplo de Arrepio da Fera como guia para o tipo de pessoa que pode chamar. Alguém que corresponda a essa descrição precisa estar presente na cena, ou a Devoção simplesmente falha.",
+          "success": "O vampiro especifica um tipo de pessoa, que se apresentará ou encontrará o vampiro antes do fim da cena. Use as perguntas de exemplo de Arrepio da Fera como guia para o tipo de pessoa que pode chamar. Alguém que corresponda a essa descrição precisa estar presente na cena, ou a Devoção simplesmente falha.",
           "exceptionalSuccess": "A vítima se sente irresistivelmente atraída pelo vampiro; ele recebe seus pontos de Auspícios como dados de bônus na primeira ação Social que realizar com ela na cena.",
           "failure": "A vítima está ocupada demais para notar o vampiro, ou não há nenhuma vítima adequada presente.",
           "dramaticFailure": "Em vez de atrair a atenção de alguém que deseja, o vampiro se perde na cacofonia de seus sentidos aguçados. Ele sofre −2 nas ações Sociais pelo resto da cena."
@@ -6765,7 +6765,7 @@
       "id": "devotion-ring-the-bell",
       "kind": "devotion",
       "name": "Ring the Bell",
-      "translatedName": "Ring the Bell",
+      "translatedName": "Tocar o Sino",
       "summary": "A precise strike leaves the victim dazed and disoriented.",
       "source": "Sin Again: Daeva",
       "page": 98,
@@ -6777,13 +6777,23 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "Scene",
-      "effect": "The victim goes reeling from a successful attack, taking a penalty to their Initiative score equal to damage dealt for the rest of the scene. This Devotion can only be successfully applied to a victim once per scene."
+      "effect": "The victim goes reeling from a successful attack, taking a penalty to their Initiative score equal to damage dealt for the rest of the scene. This Devotion can only be successfully applied to a victim once per scene.",
+      "presentationPt": {
+        "summary": "Um golpe preciso deixa a vítima atônita e desorientada.",
+        "prerequisites": "Ímpeto ••, Majestade • ou Pesadelo •",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro ativa esta Devoção ao realizar um ataque bem-sucedido de Briga ou Armas Brancas.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Cena",
+        "effect": "A vítima cambaleia após um ataque bem-sucedido, sofrendo uma penalidade em sua Iniciativa igual ao dano causado pelo resto da cena. Esta Devoção só pode ser aplicada com sucesso a uma vítima uma vez por cena."
+      }
     },
     {
       "id": "devotion-snap-punch",
       "kind": "devotion",
       "name": "Snap Punch",
-      "translatedName": "Snap Punch",
+      "translatedName": "Soco Relâmpago",
       "summary": "Delivers a startling attack before the victim can react.",
       "source": "Sin Again: Daeva",
       "page": 98,
@@ -6793,7 +6803,15 @@
       "cost": "1 Willpower",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "Before the vampire’s player rolls for Initiative, activate this Devotion. The vampire can take a single physical action before any regular actions take place, which does not sacrifice the vampire’s regular action in the first round of combat. If another character also has a power that allows them to pre-empt Initiative (e.g., the active effect of Celerity), a Clash of Wills occurs to determine the first actor."
+      "effect": "Before the vampire’s player rolls for Initiative, activate this Devotion. The vampire can take a single physical action before any regular actions take place, which does not sacrifice the vampire’s regular action in the first round of combat. If another character also has a power that allows them to pre-empt Initiative (e.g., the active effect of Celerity), a Clash of Wills occurs to determine the first actor.",
+      "presentationPt": {
+        "summary": "Desfere um ataque repentino antes que a vítima possa reagir.",
+        "prerequisites": "Celeridade ••••",
+        "cost": "1 de Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Ative esta Devoção antes que o jogador do vampiro faça a jogada de Iniciativa. O vampiro pode realizar uma única ação Física antes de quaisquer ações normais, sem sacrificar sua ação normal na primeira rodada de combate. Se outro personagem também tiver um poder que permita agir antes da Iniciativa (como o efeito ativo de Celeridade), ocorre um Confronto de Vontades para determinar quem age primeiro."
+      }
     },
     {
       "id": "devotion-speak-of-the-devil",
@@ -6821,7 +6839,7 @@
       "id": "devotion-subliminal-message",
       "kind": "devotion",
       "name": "Subliminal Message",
-      "translatedName": "Subliminal Message",
+      "translatedName": "Mensagem Subliminar",
       "summary": "Hides a suggestion inside an apparently ordinary communication.",
       "source": "Sin Again: Daeva",
       "page": 98,
@@ -6833,17 +6851,31 @@
       "dicePool": "Wits + Subterfuge + Obfuscate",
       "action": "Instant",
       "rollResults": {
-        "success": "The vampire hides a secret meaning within a the matically related sentence. For example, if she wanted to convey that the Prince seems upset, she might say, “Her Majesty’s outfit is quite… confronting.” Anyone who hears the vampire’s statement will know the hidden meaning, but only if they are under the effect of the vampire’s Awe. The vampire can also choose to convey this message only to certain people.",
+        "success": "The vampire hides a secret meaning within a thematically related sentence. For example, if she wanted to convey that the Prince seems upset, she might say, “Her Majesty’s outfit is quite… confronting.” Anyone who hears the vampire’s statement will know the hidden meaning, but only if they are under the effect of the vampire’s Awe. The vampire can also choose to convey this message only to certain people.",
         "exceptionalSuccess": "The vampire’s message is clear as day to anyone listening. They gain her Obfuscate dots as a bonus to conveying this idea subtly for the rest of the scene.",
         "failure": "The noise overwhelms the signal.",
         "dramaticFailure": "The vampire’s message is garbled and she doesn’t know it, but her listeners think they got it. The Storyteller decides what that means."
+      },
+      "presentationPt": {
+        "summary": "Oculta uma sugestão em uma comunicação aparentemente comum.",
+        "prerequisites": "Majestade •, Ofuscação •",
+        "cost": "Nenhum",
+        "requirement": "O vampiro precisa ativar Fascínio.",
+        "dicePool": "Raciocínio + Subterfúgio + Ofuscação",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "O vampiro oculta um significado secreto em uma frase com um tema relacionado. Por exemplo, se quiser transmitir que o Príncipe parece contrariado, pode dizer: “O traje de Sua Majestade é um tanto… perturbador.” Quem ouvir a declaração do vampiro compreenderá o significado oculto, mas apenas se estiver sob o efeito de seu Fascínio. O vampiro também pode escolher transmitir essa mensagem somente a determinadas pessoas.",
+          "exceptionalSuccess": "A mensagem do vampiro é cristalina para quem estiver ouvindo. Essas pessoas recebem os pontos de Ofuscação do vampiro como bônus para transmitir essa ideia de forma sutil pelo resto da cena.",
+          "failure": "O ruído sobrepuja o sinal.",
+          "dramaticFailure": "A mensagem do vampiro sai distorcida e ele não percebe, mas os ouvintes acreditam tê-la compreendido. O Narrador decide o que isso significa."
+        }
       }
     },
     {
       "id": "devotion-whisper-campaign",
       "kind": "devotion",
       "name": "Whisper Campaign",
-      "translatedName": "Whisper Campaign",
+      "translatedName": "Campanha de Sussurros",
       "summary": "Spreads a supernatural rumor through a social network.",
       "source": "Sin Again: Daeva",
       "page": 99,
@@ -6860,6 +6892,21 @@
         "exceptionalSuccess": "The effect lasts for weeks instead of nights.",
         "failure": "Who?",
         "dramaticFailure": "A nasty rumor forms about the vampire herself, which lasts for the duration above. She gains the Notoriety Condition."
+      },
+      "presentationPt": {
+        "summary": "Espalha um boato sobrenatural por uma rede de relações sociais.",
+        "prerequisites": "Majestade ••••, Pesadelo ••••",
+        "cost": "3 Vitae",
+        "requirement": "O vampiro precisa espalhar o boato entre pelo menos cinco pessoas antes de fazer a jogada.",
+        "dicePool": "Manipulação + Socialização + Majestade contra Compostura + Potência de Sangue",
+        "action": "Instantânea",
+        "duration": "Noites iguais à Potência de Sangue",
+        "rollResults": {
+          "success": "O vampiro espalha pelo mundo um boato sobre sua vítima, para o bem ou para o mal. Durante o efeito, o sujeito recebe um ponto do Mérito Fama ou a Condição Notoriedade (Chronicles of Darkness, p. 290), dependendo do contexto. Quem observar bem a vítima saberá quem ela é e o que fez.",
+          "exceptionalSuccess": "O efeito dura semanas em vez de noites.",
+          "failure": "Quem?",
+          "dramaticFailure": "Surge um boato maldoso sobre o próprio vampiro, que dura o período indicado acima. Ele recebe a Condição Notoriedade."
+        }
       }
     },
     {
