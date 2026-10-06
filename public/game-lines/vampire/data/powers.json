@@ -3918,7 +3918,7 @@
       "id": "devotion-nightmare-journey",
       "kind": "devotion",
       "name": "Nightmare Journey",
-      "translatedName": "Nightmare Journey",
+      "translatedName": "Jornada de Pesadelo",
       "prerequisites": "Auspex •••••",
       "experienceCost": 3,
       "cost": "1 Vitae and 1 Willpower",
@@ -3927,7 +3927,15 @@
       "page": 143,
       "dicePool": "None",
       "action": "Instant",
-      "effect": "While using Twilight Projection, the div enters an unclaimed Chamber in the local Hive and gains a Dream Form capable of using Disciplines and physically interacting in Astral realms. Her body falls into true torpor and loses Blood Potency normally over time, but reaching Blood Potency 0 does not cause Final Death. In Dream Form she may feed from Dreamborn, Horrors, and other Dream Form travelers at one Vitae per two damage, travel through Astral realms normally, and return by reaching the entry Chamber and ending the Devotion, which also ends the torpor."
+      "effect": "While using Twilight Projection, the div enters an unclaimed Chamber in the local Hive and gains a Dream Form capable of using Disciplines and physically interacting in Astral realms. Her body falls into true torpor and loses Blood Potency normally over time, but reaching Blood Potency 0 does not cause Final Death. In Dream Form she may feed from Dreamborn, Horrors, and other Dream Form travelers at one Vitae per two damage, travel through Astral realms normally, and return by reaching the entry Chamber and ending the Devotion, which also ends the torpor.",
+      "presentationPt": {
+        "prerequisites": "Auspícios •••••",
+        "cost": "1 Vitae e 1 de Força de Vontade",
+        "summary": "Projeta-se no Sonho Primordial e se alimenta de formas oníricas.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "Enquanto usa Projeção Crepuscular, o div entra em uma Câmara não reivindicada na Colmeia local e recebe uma Forma Onírica capaz de usar Disciplinas e interagir fisicamente nos reinos Astrais. Seu corpo entra em torpor verdadeiro e perde Potência de Sangue normalmente com o passar do tempo, mas chegar a Potência de Sangue 0 não causa a Morte Final. Em Forma Onírica, ela pode se alimentar de Nascidos do Sonho, Horrores e outros viajantes em Forma Onírica, recebendo uma Vitae a cada dois pontos de dano; pode viajar normalmente pelos reinos Astrais e retornar ao alcançar a Câmara de entrada e encerrar a Devoção, o que também encerra o torpor."
+      }
     },
     {
       "id": "devotion-22-solid",
@@ -7935,7 +7943,7 @@
       "id": "devotion-kin-maker",
       "kind": "devotion",
       "name": "Kin Maker",
-      "translatedName": "Kin Maker",
+      "translatedName": "Criador de Descendentes",
       "prerequisites": "Dominate •••••, Protean •••",
       "experienceCost": 4,
       "cost": "10 Vitae + 1 Willpower",
@@ -7944,13 +7952,21 @@
       "page": 120,
       "dicePool": "Resolve + Occult",
       "action": "Instant",
-      "effect": "If successful, this Devotion causes the Kindred to erode from the inside, leaving only a shell with a new Pijavica inside. This process takes 4 days, and if the cocoon is disrupted or destroyed before the gestation period is over, the vampire dies. This Devotion can only be used on a willing Kindred with a Blood Potency rating lower than the user’s."
+      "effect": "If successful, this Devotion causes the Kindred to erode from the inside, leaving only a shell with a new Pijavica inside. This process takes 4 days, and if the cocoon is disrupted or destroyed before the gestation period is over, the vampire dies. This Devotion can only be used on a willing Kindred with a Blood Potency rating lower than the user’s.",
+      "presentationPt": {
+        "prerequisites": "Dominação •••••, Metamorfose •••",
+        "cost": "10 Vitae + 1 de Força de Vontade",
+        "summary": "Magia Pijavica que infecta outro vampiro com um descendente em gestação.",
+        "dicePool": "Perseverança + Ocultismo",
+        "action": "Instantânea",
+        "effect": "Se obtiver sucesso, esta Devoção faz o Membro se deteriorar por dentro, deixando apenas uma casca com um novo Pijavica em seu interior. O processo leva 4 dias; se o casulo for perturbado ou destruído antes de terminar a gestação, o vampiro morre. Esta Devoção só pode ser usada em um Membro que consinta e cuja Potência de Sangue seja menor que a de quem a utiliza."
+      }
     },
     {
       "id": "devotion-dead-mans-reprieve",
       "kind": "devotion",
       "name": "Dead Man's Reprieve",
-      "translatedName": "Dead Man's Reprieve",
+      "translatedName": "Trégua do Morto",
       "prerequisites": "Obfuscate •",
       "experienceCost": 1,
       "cost": "1 Vitae",
@@ -7959,7 +7975,15 @@
       "page": 128,
       "dicePool": "Resolve + Occult",
       "action": "Extended; each roll takes 15 minutes",
-      "effect": "The vampire prepares a rare plant in a boiling ritual bath. On success, each success grants one bather Cloak of Night for four hours. Exceptional success instead grants every bather Cloak of Night and Resilience •• for six hours. Failure produces an impure mixture; dramatic failure destroys part of the plant supply, kills one bather, penalizes the next attempt made within a week, and inflicts Fugue on the ritualist."
+      "effect": "The vampire prepares a rare plant in a boiling ritual bath. On success, each success grants one bather Cloak of Night for four hours. Exceptional success instead grants every bather Cloak of Night and Resilience •• for six hours. Failure produces an impure mixture; dramatic failure destroys part of the plant supply, kills one bather, penalizes the next attempt made within a week, and inflicts Fugue on the ritualist.",
+      "presentationPt": {
+        "prerequisites": "Ofuscação •",
+        "cost": "1 Vitae",
+        "summary": "Prepara um banho que oculta a presença de seus ocupantes.",
+        "dicePool": "Perseverança + Ocultismo",
+        "action": "Prolongada; cada teste leva 15 minutos",
+        "effect": "O vampiro prepara uma planta rara em um banho ritual fervente. Em um sucesso, cada sucesso concede Manto da Noite a uma pessoa no banho por quatro horas. Um sucesso excepcional concede Manto da Noite e Resiliência •• a todos no banho por seis horas. Uma falha produz uma mistura impura; uma falha dramática destrói parte do estoque de plantas, mata uma pessoa no banho, penaliza a próxima tentativa feita em até uma semana e inflige Fuga ao ritualista."
+      }
     },
     {
       "id": "devotion-body-of-will",
