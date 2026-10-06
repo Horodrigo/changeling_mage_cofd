@@ -10056,7 +10056,7 @@
       "id": "h-vtr-agony-ecstasy:devotion:sharing-the-familiar-s-form",
       "kind": "devotion",
       "name": "Sharing the Familiar's Form",
-      "translatedName": "Sharing the Familiar's Form",
+      "translatedName": "Compartilhar a Forma do Familiar",
       "prerequisites": "Animalism •, Protean •••",
       "experienceCost": 2,
       "summary": "Memorizes an animal ghoul's shape without killing it and expands the forms available to Beast's Skin.",
@@ -10069,13 +10069,22 @@
       "cost": "None",
       "dicePool": "None",
       "action": "None",
-      "effect": "The vampire memorizes the shape of any animal ghoul she creates without draining it and may immediately replace a Beast's Skin form by spending the usual Vitae. Existing animal ghouls can be memorized when next fed. The learned forms may be prey animals or reach Size 10. With Sheep's Clothing, one additional Experience upgrades the Devotion to human ghouls, whose forms also require one Willpower to memorize."
+      "effect": "The vampire memorizes the shape of any animal ghoul she creates without draining it and may immediately replace a Beast's Skin form by spending the usual Vitae. Existing animal ghouls can be memorized when next fed. The learned forms may be prey animals or reach Size 10. With Sheep's Clothing, one additional Experience upgrades the Devotion to human ghouls, whose forms also require one Willpower to memorize.",
+      "presentationPt": {
+        "prerequisites": "Animalismo •, Metamorfose •••",
+        "cost": "Nenhum",
+        "summary": "Memoriza a forma de um ghoul animal sem matá-lo e amplia as formas disponíveis para Pele da Fera.",
+        "duration": "Permanente",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "effect": "O vampiro memoriza a forma de qualquer ghoul animal que criar sem drená-lo e pode substituir imediatamente uma forma de Pele da Fera gastando a Vitae habitual. As formas de ghouls animais já existentes podem ser memorizadas na próxima vez que forem alimentados. As formas aprendidas podem ser de animais que servem de presa ou alcançar Tamanho 10. Com Pele de Cordeiro, uma Experiência adicional aprimora a Devoção para incluir ghouls humanos, cujas formas também exigem um ponto de Força de Vontade para memorizar."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:soul-scab",
       "kind": "devotion",
       "name": "Soul Scab",
-      "translatedName": "Soul Scab",
+      "translatedName": "Crosta da Alma",
       "prerequisites": "Nightmare •••; Resilience •",
       "experienceCost": 2,
       "summary": "Sacrifices part of the vampire's emotional self to resist the Crone's consuming influence.",
@@ -10089,13 +10098,23 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "Month",
-      "effect": "Reaching deep into her soul, the vampire embraces a shard of her monstrous divinity, accepting a bane to ignore the kind of breaking point that provoked her Humanity loss. This curse doesn’t count toward her total for obviating certain breaking points, doesn’t inflict a penalty on future detachment rolls, and doesn’t grant a Beat. A vampire can only have one bane granted by this Devotion at a time."
+      "effect": "Reaching deep into her soul, the vampire embraces a shard of her monstrous divinity, accepting a bane to ignore the kind of breaking point that provoked her Humanity loss. This curse doesn’t count toward her total for obviating certain breaking points, doesn’t inflict a penalty on future detachment rolls, and doesn’t grant a Beat. A vampire can only have one bane granted by this Devotion at a time.",
+      "presentationPt": {
+        "prerequisites": "Pesadelo •••; Resiliência •",
+        "cost": "1 de Força de Vontade",
+        "summary": "Sacrifica parte do eu emocional do vampiro para resistir à influência consumidora da Anciã.",
+        "requirement": "O vampiro falha em um teste de Desapego sem perder seu último ponto de Humanidade no processo.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Mês",
+        "effect": "Buscando no fundo de sua alma, o vampiro abraça um fragmento de sua divindade monstruosa, aceitando uma Maldição para ignorar o tipo de Ponto de Ruptura que provocou sua perda de Humanidade. Essa maldição não conta para o total usado para evitar determinados Pontos de Ruptura, não impõe penalidade a testes futuros de Desapego e não concede um Ato. Um vampiro só pode ter uma Maldição concedida por esta Devoção por vez."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:spiritual-journey",
       "kind": "devotion",
       "name": "Spiritual Journey",
-      "translatedName": "Spiritual Journey",
+      "translatedName": "Jornada Espiritual",
       "prerequisites": "Auspex •••••; Dominate •••••",
       "experienceCost": 5,
       "summary": "Projects a vampire subject's consciousness beyond the limits of the body.",
@@ -10114,13 +10133,28 @@
         "exceptionalSuccess": "Per the exceptional success effect of Twilight Projection.",
         "failure": "The subject is too bound to the here and now.",
         "dramaticFailure": "The vampire using this Devotion suffers the dramatic failure effect of Twilight Projection."
+      },
+      "presentationPt": {
+        "prerequisites": "Auspícios •••••; Dominação •••••",
+        "cost": "2 Vitae",
+        "summary": "Projeta a consciência de um sujeito vampiro além dos limites do corpo.",
+        "requirement": "O sujeito precisa ser um vampiro e consentir com o efeito.",
+        "dicePool": "Presença + Ocultismo + Auspícios",
+        "action": "Instantânea",
+        "duration": "Conforme Projeção Crepuscular",
+        "rollResults": {
+          "success": "O vampiro concede ao sujeito o efeito de Projeção Crepuscular. Isso funciona segundo todas as regras habituais.",
+          "exceptionalSuccess": "Conforme o efeito de sucesso excepcional de Projeção Crepuscular.",
+          "failure": "O sujeito está preso demais ao aqui e agora.",
+          "dramaticFailure": "O vampiro que usa esta Devoção sofre o efeito de falha dramática de Projeção Crepuscular."
+        }
       }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:taweret-s-protection",
       "kind": "devotion",
       "name": "Taweret's Protection",
-      "translatedName": "Taweret's Protection",
+      "translatedName": "Proteção de Taweret",
       "prerequisites": "Dominate •••; Resilience ••",
       "experienceCost": 2,
       "summary": "Protects a chosen subject with a ward carried in the Blood.",
@@ -10134,13 +10168,23 @@
       "duration": "One week per Blood Potency dot",
       "requirement": "The subject must be anointed with a point of the vampire’s Vitae (included in the cost).",
       "dicePool": "None",
-      "effect": "The Acolyte can spend Vitae up to her Dominate or Resilience dots (whichever is higher) while painting another character with her blood; the subject can be living, dead, or otherwise. For each point spent, she “stores” an active use of Resilience in the subject and can set a trigger that activates it as if the other character had used it. This needn’t be a condition the subject is aware of. For instance, it might activate if he’s cursed from afar with a harmful ritual. If the duration expires before all uses are triggered, they are lost. By spending a Willpower, the Acolyte can choose one trigger that she imbued in the subject that will also provide the passive benefits of Resilience for the rest of the night. A vampire can only use this Devotion on a subject once before it expires."
+      "effect": "The Acolyte can spend Vitae up to her Dominate or Resilience dots (whichever is higher) while painting another character with her blood; the subject can be living, dead, or otherwise. For each point spent, she “stores” an active use of Resilience in the subject and can set a trigger that activates it as if the other character had used it. This needn’t be a condition the subject is aware of. For instance, it might activate if he’s cursed from afar with a harmful ritual. If the duration expires before all uses are triggered, they are lost. By spending a Willpower, the Acolyte can choose one trigger that she imbued in the subject that will also provide the passive benefits of Resilience for the rest of the night. A vampire can only use this Devotion on a subject once before it expires.",
+      "presentationPt": {
+        "prerequisites": "Dominação •••; Resiliência ••",
+        "cost": "1+ Vitae; 1 de Força de Vontade opcional",
+        "summary": "Imbui um sujeito escolhido com uma proteção carregada pelo Sangue.",
+        "action": "Instantânea",
+        "duration": "Uma semana por ponto de Potência de Sangue",
+        "requirement": "O sujeito precisa ser ungido com um ponto de Vitae do vampiro (incluído no custo).",
+        "dicePool": "Nenhuma",
+        "effect": "A Acólita pode gastar Vitae até seus pontos de Dominação ou Resiliência (o que for maior) enquanto pinta outro personagem com seu sangue; o sujeito pode estar vivo, morto ou em outro estado. Para cada ponto gasto, ela “armazena” um uso ativo de Resiliência no sujeito e pode definir um gatilho que o ativa como se o outro personagem tivesse usado a Disciplina. O sujeito não precisa estar ciente dessa circunstância. Por exemplo, ela pode se ativar se ele for amaldiçoado à distância por um ritual nocivo. Se a duração terminar antes que todos os usos sejam ativados, eles são perdidos. Gastando um ponto de Força de Vontade, a Acólita pode escolher um gatilho imbuído no sujeito que também fornecerá os benefícios passivos de Resiliência pelo resto da noite. Um vampiro só pode usar esta Devoção em um sujeito uma vez antes de ela expirar."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:unshakable-advance",
       "kind": "devotion",
       "name": "Unshakable Advance",
-      "translatedName": "Unshakable Advance",
+      "translatedName": "Avanço Inabalável",
       "prerequisites": "Resilience •••••",
       "experienceCost": 3,
       "summary": "Keeps a war-Witch advancing through injury and supernatural opposition.",
@@ -10159,6 +10203,21 @@
         "exceptionalSuccess": "The vampire resolves the Condition if he (and only he) kills/incapacitates the character who inflicted it, gaining a Beat.",
         "failure": "The vampire’s will is overcome despite his struggling.",
         "dramaticFailure": "The vampire’s mental fortitude is feebler than he thought. Conditions that resolve after suffering damage require twice as much to do so, and other Conditions must be resolved twice before the vampire is rid of them."
+      },
+      "presentationPt": {
+        "prerequisites": "Resiliência •••••",
+        "cost": "1 de Força de Vontade",
+        "summary": "Mantém uma Bruxa de guerra avançando apesar de ferimentos e oposição sobrenatural.",
+        "requirement": "O vampiro precisa estar lutando ativamente contra um inimigo e falhar em resistir a Dominação, Majestade, Pesadelo ou um efeito mental/social semelhante que inflija uma Condição.",
+        "dicePool": "Perseverança + Socialização + Resiliência – pontos de Disciplina do outro vampiro (ou equivalente)",
+        "action": "Reflexiva",
+        "duration": "Turnos iguais aos sucessos",
+        "rollResults": {
+          "success": "O vampiro consegue adiar o início da Condição infligida durante a duração; ele fica imune a novas tentativas de aplicá-la enquanto esse período de tolerância durar. Se ele ou outro personagem conseguir matar ou incapacitar quem infligiu a Condição suspensa antes que sua proteção termine, ela desaparece sem ser resolvida.",
+          "exceptionalSuccess": "O vampiro resolve a Condição se ele (e somente ele) matar ou incapacitar o personagem que a infligiu, recebendo um Ato.",
+          "failure": "A vontade do vampiro é vencida apesar de sua luta.",
+          "dramaticFailure": "A fortaleza mental do vampiro é mais fraca do que ele pensava. Condições resolvidas após sofrer dano exigem o dobro de dano, e outras Condições precisam ser resolvidas duas vezes antes que o vampiro se livre delas."
+        }
       }
     },
     {
