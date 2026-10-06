@@ -10130,7 +10130,7 @@
       "id": "cruac-rite-boyar-s-caul",
       "kind": "cruac-rite",
       "name": "Boyar's Caul",
-      "translatedName": "Boyar's Caul",
+      "translatedName": "Membrana do Boiardo",
       "summary": "A 1-dot Yagnatia Crúac rite bargaining with the gods and spirits of the land.",
       "source": "Better Feared: Nosferatu",
       "page": 63,
@@ -10138,13 +10138,17 @@
       "rating": 1,
       "bloodlineId": "yagnatia",
       "targetSuccesses": 4,
-      "effect": "The ritualist spreads the sacrifice over her face and enters daysleep. At the next dusk it has become an ectoplasmic mask resembling someone important to her current schemes. Intelligence + Occult interprets the omen; on success she may ask yes/no/maybe questions equal to the rite's Potency. If she knows Auspex, she may use The Spirit's Touch once that night to ask questions from Uncanny Perception. Wearing the caul grants +3 to Investigation rolls to identify or locate its subject. It turns to ash at night's end."
+      "effect": "The ritualist spreads the sacrifice over her face and enters daysleep. At the next dusk it has become an ectoplasmic mask resembling someone important to her current schemes. Intelligence + Occult interprets the omen; on success she may ask yes/no/maybe questions equal to the rite's Potency. If she knows Auspex, she may use The Spirit's Touch once that night to ask questions from Uncanny Perception. Wearing the caul grants +3 to Investigation rolls to identify or locate its subject. It turns to ash at night's end.",
+      "presentationPt": {
+        "summary": "Um rito Yagnatia de Crúac de 1 ponto que negocia com os deuses e espíritos da terra.",
+        "effect": "O ritualista espalha o sacrifício sobre o rosto e entra em Sono Diurno. No crepúsculo seguinte, ele se torna uma máscara ectoplásmica semelhante a alguém importante para seus planos atuais. Inteligência + Ocultismo interpreta o presságio; com sucesso, pode fazer perguntas de sim, não ou talvez em quantidade igual à Potência do rito. Se conhecer Auspícios, pode usar Toque do Espírito uma vez naquela noite para fazer perguntas de Percepção Sobrenatural. Usar a membrana concede +3 em testes de Investigação para identificar ou localizar a pessoa representada. Ela vira cinzas ao fim da noite."
+      }
     },
     {
       "id": "cruac-rite-awaken-the-dukh",
       "kind": "cruac-rite",
       "name": "Awaken the Dukh",
-      "translatedName": "Awaken the Dukh",
+      "translatedName": "Despertar o Dukh",
       "summary": "A 4-dot Yagnatia Crúac rite bargaining with the gods and spirits of the land.",
       "source": "Better Feared: Nosferatu",
       "page": 64,
@@ -10153,13 +10157,18 @@
       "bloodlineId": "yagnatia",
       "targetSuccesses": 9,
       "duration": "One week",
-      "effect": "The vampire bargains with the spirit of an object no larger than Size 5. The spirit gains limited control of its physical form, allowing simple tasks and movement, with a dice pool of Crúac + Size + Potency. The Storyteller decides which actions are possible. An appropriate oblation renews the pact before it expires. The spirit is not compelled to obey, but spattering the object with Vitae ends the rite early and returns it to the Shadow."
+      "effect": "The vampire bargains with the spirit of an object no larger than Size 5. The spirit gains limited control of its physical form, allowing simple tasks and movement, with a dice pool of Crúac + Size + Potency. The Storyteller decides which actions are possible. An appropriate oblation renews the pact before it expires. The spirit is not compelled to obey, but spattering the object with Vitae ends the rite early and returns it to the Shadow.",
+      "presentationPt": {
+        "summary": "Um rito Yagnatia de Crúac de 4 pontos que negocia com os deuses e espíritos da terra.",
+        "duration": "Uma semana",
+        "effect": "O vampiro negocia com o espírito de um objeto que não seja maior que Tamanho 5. O espírito recebe controle limitado da forma física, permitindo tarefas e movimentos simples, com uma parada de Crúac + Tamanho + Potência. O Narrador decide quais ações são possíveis. Uma oferenda apropriada renova o pacto antes de ele expirar. O espírito não é obrigado a obedecer, mas respingar Vitae no objeto encerra o rito antecipadamente e o devolve à Sombra."
+      }
     },
     {
       "id": "cruac-rite-divine-right",
       "kind": "cruac-rite",
       "name": "Divine Right",
-      "translatedName": "Divine Right",
+      "translatedName": "Direito Divino",
       "summary": "A 2-dot Yagnatia Crúac rite bargaining with the gods and spirits of the land.",
       "source": "Better Feared: Nosferatu",
       "page": 64,
@@ -10167,13 +10176,17 @@
       "rating": 2,
       "bloodlineId": "yagnatia",
       "targetSuccesses": 5,
-      "effect": "Before the end of the night, the vampire may invoke this blessing when someone openly questions or defies her authority. That action automatically fails and the challenger gains the Guilty Condition. The rite applies a number of times equal to Potency, then ends."
+      "effect": "Before the end of the night, the vampire may invoke this blessing when someone openly questions or defies her authority. That action automatically fails and the challenger gains the Guilty Condition. The rite applies a number of times equal to Potency, then ends.",
+      "presentationPt": {
+        "summary": "Um rito Yagnatia de Crúac de 2 pontos que negocia com os deuses e espíritos da terra.",
+        "effect": "Antes do fim da noite, o vampiro pode invocar esta bênção quando alguém questionar ou desafiar abertamente sua autoridade. A ação falha automaticamente e o desafiante recebe a Condição Culpado. O rito aplica-se um número de vezes igual à Potência e então termina."
+      }
     },
     {
       "id": "cruac-rite-hawthorn-barrier",
       "kind": "cruac-rite",
       "name": "Hawthorn Barrier",
-      "translatedName": "Hawthorn Barrier",
+      "translatedName": "Barreira de Espinheiro",
       "summary": "A 3-dot Yagnatia Crúac rite bargaining with the gods and spirits of the land.",
       "source": "Better Feared: Nosferatu",
       "page": 64,
@@ -10182,13 +10195,18 @@
       "bloodlineId": "yagnatia",
       "targetSuccesses": 7,
       "duration": "24 hours",
-      "effect": "Hawthorn branches placed across an aperture create an invisible Essence ward. Without the vampire's permission, mortals cannot cross; Kindred must roll Resolve + Blood Potency, penalized by the rite's Potency. Failure requires resisting fear frenzy. A Kindred who succeeds and crosses without permission takes lethal damage equal to the Boyar's Crúac dots. One casting can ward multiple apertures within line of sight if enough branches are available. Branches from mandragora grant 9-again to the casting roll."
+      "effect": "Hawthorn branches placed across an aperture create an invisible Essence ward. Without the vampire's permission, mortals cannot cross; Kindred must roll Resolve + Blood Potency, penalized by the rite's Potency. Failure requires resisting fear frenzy. A Kindred who succeeds and crosses without permission takes lethal damage equal to the Boyar's Crúac dots. One casting can ward multiple apertures within line of sight if enough branches are available. Branches from mandragora grant 9-again to the casting roll.",
+      "presentationPt": {
+        "summary": "Um rito Yagnatia de Crúac de 3 pontos que negocia com os deuses e espíritos da terra.",
+        "duration": "24 horas",
+        "effect": "Ramos de espinheiro colocados sobre uma abertura criam uma barreira invisível de Essência. Sem a permissão do vampiro, mortais não podem atravessá-la. Membros devem fazer um teste de Perseverança + Potência de Sangue, com penalidade igual à Potência do rito. Uma falha exige resistir ao frenesi de medo. Um Membro que tiver sucesso e atravessar sem permissão sofre dano letal igual aos pontos de Crúac do Boiardo. Uma conjuração pode proteger várias aberturas na linha de visão se houver ramos suficientes. Ramos de mandrágora concedem 9-novamente à jogada de conjuração."
+      }
     },
     {
       "id": "cruac-rite-the-mother-s-blessing",
       "kind": "cruac-rite",
       "name": "The Mother's Blessing",
-      "translatedName": "The Mother's Blessing",
+      "translatedName": "A Bênção da Mãe",
       "summary": "A 3-dot Yagnatia Crúac rite bargaining with the gods and spirits of the land.",
       "source": "Better Feared: Nosferatu",
       "page": 64,
@@ -10197,13 +10215,18 @@
       "bloodlineId": "yagnatia",
       "targetSuccesses": 8,
       "duration": "24 hours or one Embrace",
-      "effect": "The subject's next childe begins with a first-stage blood bond to the sire that lasts until the sire releases her, but remains immune to the sire's full Vinculum and to any other Yagnatia's blood bond during that tutelage. The childe gains 8-again to rolls to initiate or detect blood sympathy with Yagnatia. The blessing applies to one Embrace, can affect a vampire only once per lunar month, cannot be cast on oneself, and only works on Boyars."
+      "effect": "The subject's next childe begins with a first-stage blood bond to the sire that lasts until the sire releases her, but remains immune to the sire's full Vinculum and to any other Yagnatia's blood bond during that tutelage. The childe gains 8-again to rolls to initiate or detect blood sympathy with Yagnatia. The blessing applies to one Embrace, can affect a vampire only once per lunar month, cannot be cast on oneself, and only works on Boyars.",
+      "presentationPt": {
+        "summary": "Um rito Yagnatia de Crúac de 3 pontos que negocia com os deuses e espíritos da terra.",
+        "duration": "24 horas ou um Abraço",
+        "effect": "A próxima cria do alvo começa com um vínculo de sangue de primeiro estágio com o progenitor, que dura até ele libertá-la. Durante essa tutela, a cria permanece imune ao Vinculum completo do progenitor e ao vínculo de sangue de qualquer outro Yagnatia. Recebe 8-novamente em testes para iniciar ou detectar Simpatia de Sangue com Yagnatia. A bênção aplica-se a um Abraço, pode afetar um vampiro somente uma vez por mês lunar, não pode ser conjurada sobre si mesmo e funciona apenas em Boiardos."
+      }
     },
     {
       "id": "cruac-rite-vessel-of-the-dukh",
       "kind": "cruac-rite",
       "name": "Vessel of the Dukh",
-      "translatedName": "Vessel of the Dukh",
+      "translatedName": "Receptáculo do Dukh",
       "summary": "A 5-dot Yagnatia Crúac rite bargaining with the gods and spirits of the land.",
       "source": "Better Feared: Nosferatu",
       "page": 64,
@@ -10212,7 +10235,12 @@
       "bloodlineId": "yagnatia",
       "targetSuccesses": 9,
       "duration": "One month",
-      "effect": "Using a human corpse no more than one night dead, the ritualist creates a Brief Nightmare. A Minion needs no extra successes, a Horde needs three, and a Lone Terror needs five; the extended action's normal roll limit still applies. The Storyteller chooses suitable Dread Powers, excluding Firestarter. The Horror is vulnerable to fire like a Kindred, animalistic but loyal, and regains Willpower by drinking Vitae or human blood. Recasting before expiration and paying all costs renews it. Creating a new Horror is a breaking point at Humanity 2 or higher."
+      "effect": "Using a human corpse no more than one night dead, the ritualist creates a Brief Nightmare. A Minion needs no extra successes, a Horde needs three, and a Lone Terror needs five; the extended action's normal roll limit still applies. The Storyteller chooses suitable Dread Powers, excluding Firestarter. The Horror is vulnerable to fire like a Kindred, animalistic but loyal, and regains Willpower by drinking Vitae or human blood. Recasting before expiration and paying all costs renews it. Creating a new Horror is a breaking point at Humanity 2 or higher.",
+      "presentationPt": {
+        "summary": "Um rito Yagnatia de Crúac de 5 pontos que negocia com os deuses e espíritos da terra.",
+        "duration": "Um mês",
+        "effect": "Usando um cadáver humano morto há no máximo uma noite, o ritualista cria um Pesadelo Breve. Um Lacaio não exige sucessos adicionais, uma Horda exige três e um Terror Solitário exige cinco; o limite normal de jogadas da ação prolongada continua válido. O Narrador escolhe Poderes Terríveis apropriados, excluindo Incendiário. O Horror é vulnerável ao fogo como um Membro, animalesco, mas leal, e recupera Força de Vontade bebendo Vitae ou sangue humano. Conjurar novamente antes do prazo e pagar todos os custos renova o efeito. Criar um novo Horror é um Ponto de Ruptura em Humanidade 2 ou maior."
+      }
     },
     {
       "id": "cruac-red-blossoms",
@@ -10258,14 +10286,18 @@
       "id": "cruac-wisdom-blood",
       "kind": "cruac-rite",
       "name": "Wisdom of the Blood",
-      "translatedName": "Wisdom of the Blood",
+      "translatedName": "Sabedoria do Sangue",
       "rating": 3,
       "experienceCost": 2,
       "targetSuccesses": 6,
       "summary": "Read prophecies about a subject in a torpid vampire's dreams.",
       "source": "Night Horrors: Spilled Blood",
       "page": 40,
-      "effect": "Using a torpid vampire as a medium, ask one question per Vitae spent and receive a brief, truthful prophecy through the target's dreams. Answers remain fleeting and symbolic and may reflect the target's biases; yes-or-no wording does not make them clearer."
+      "effect": "Using a torpid vampire as a medium, ask one question per Vitae spent and receive a brief, truthful prophecy through the target's dreams. Answers remain fleeting and symbolic and may reflect the target's biases; yes-or-no wording does not make them clearer.",
+      "presentationPt": {
+        "summary": "Leia profecias sobre um alvo nos sonhos de um vampiro em torpor.",
+        "effect": "Usando um vampiro em torpor como médium, faça uma pergunta por Vitae gasto e receba uma profecia breve e verdadeira pelos sonhos do alvo. As respostas são fugazes e simbólicas e podem refletir os preconceitos do alvo; formular perguntas de sim ou não não as torna mais claras."
+      }
     },
     {
       "id": "cruac-donning-beasts-flesh",
