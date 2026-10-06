@@ -11133,7 +11133,7 @@
       "id": "h-vtr-agony-ecstasy:rite:twisting-the-id",
       "kind": "cruac-rite",
       "name": "Twisting the Id",
-      "translatedName": "Twisting the Id",
+      "translatedName": "Torção do Id",
       "rating": 1,
       "experienceCost": 2,
       "targetSuccesses": 5,
@@ -11144,13 +11144,18 @@
       "duration": "Night",
       "effect": "Carve an unwanted emotion into a subject, inflicting one lethal damage, and choose a mundane nonpersistent emotional or mental Condition. If the subject would suffer it that night, they instead gain Inspired, Steadfast, or Sated. At Crúac ••• with two additional successes, this can replace any Condition, though supernatural Conditions require a Clash of Wills.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Entalha no alvo uma Condição emocional ou mental mundana indesejada durante a noite, ao custo de dano letal.",
+        "duration": "Noite",
+        "effect": "Entalhe uma emoção indesejada no alvo, causando um dano letal, e escolha uma Condição emocional ou mental mundana não persistente. Se o alvo fosse sofrê-la naquela noite, receberia Inspirado, Resoluto ou Saciado em seu lugar. Com Crúac ••• e dois sucessos adicionais, isso pode substituir qualquer Condição, embora Condições sobrenaturais exijam um Confronto de Vontades."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:fires-of-inspiration",
       "kind": "cruac-rite",
       "name": "Fires of Inspiration",
-      "translatedName": "Fires of Inspiration",
+      "translatedName": "Fogos da Inspiração",
       "rating": 1,
       "experienceCost": 2,
       "targetSuccesses": 4,
@@ -11161,7 +11166,12 @@
       "duration": "Night",
       "effect": "After approaching frenzy while immersed in a creative muse, gain the rite's Potency as bonus dice to one later Crafts action before night's end; that action may be extended.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Soma a Potência a uma ação posterior de Ofícios antes do amanhecer.",
+        "duration": "Noite",
+        "effect": "Após se aproximar do frenesi enquanto imerso em inspiração criativa, receba a Potência do rito como dados de bônus em uma ação posterior de Ofícios antes do fim da noite; essa ação pode ser prolongada."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:witch-s-locus",
@@ -11184,7 +11194,7 @@
       "id": "h-vtr-agony-ecstasy:rite:mantle-of-the-predator-s-eye",
       "kind": "cruac-rite",
       "name": "Mantle of the Predator's Eye",
-      "translatedName": "Mantle of the Predator's Eye",
+      "translatedName": "Manto do Olhar do Predador",
       "rating": 1,
       "experienceCost": 2,
       "targetSuccesses": 4,
@@ -11195,7 +11205,12 @@
       "duration": "Night",
       "effect": "After dancing through the ritual and collapsing from exhaustion, gain Acute Senses and add Crúac dots to Blood Potency for the Merit and Kindred Senses.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Concede Sentidos Aguçados e soma Crúac à Potência de Sangue para a percepção predatória pertinente.",
+        "duration": "Noite",
+        "effect": "Após dançar durante o ritual e desabar de exaustão, receba Sentidos Aguçados e some os pontos de Crúac à Potência de Sangue para o Mérito e os Sentidos Vampíricos."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:mark-of-the-praecursor",
@@ -11235,7 +11250,7 @@
       "id": "h-vtr-agony-ecstasy:rite:painted-fears",
       "kind": "cruac-rite",
       "name": "Painted Fears",
-      "translatedName": "Painted Fears",
+      "translatedName": "Medos Pintados",
       "rating": 2,
       "experienceCost": 2,
       "targetSuccesses": 7,
@@ -11246,13 +11261,18 @@
       "duration": "One month",
       "effect": "Create visual art with an obvious subject. Once per night, any viewer, including the creator, gains Spooked toward the depicted subject until it resolves; no one can be made to fear themselves. At Crúac ••• with one more success, Resolve + Composure − Potency must succeed or the viewer gains Frightened instead.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Cria uma obra de arte que impõe Assombrado em relação ao que representa.",
+        "duration": "Um mês",
+        "effect": "Crie uma obra de arte visual com um tema evidente. Uma vez por noite, qualquer observador, inclusive o criador, recebe Assombrado em relação ao tema representado até resolver a Condição; ninguém pode ser levado a temer a si mesmo. Com Crúac ••• e mais um sucesso, o observador precisa obter sucesso em Perseverança + Compostura − Potência ou receber Assustado em seu lugar."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:path-of-thorns",
       "kind": "cruac-rite",
       "name": "Path of Thorns",
-      "translatedName": "Path of Thorns",
+      "translatedName": "Caminho de Espinhos",
       "rating": 2,
       "experienceCost": 2,
       "targetSuccesses": 5,
@@ -11263,13 +11283,18 @@
       "duration": "Night; activated for one scene",
       "effect": "Seed the ground with blood, then trigger invisible brambles in a Potency-meter radius. Anyone moving through suffers lethal damage equal to Crúac per turn unless armor fully covers the skin. The caster is rooted and loses Defense but may reflexively end the effect. At Crúac •••• with two more successes, damage becomes aggravated and ending early requires Strength + Stamina.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Envolve o ritualista em espinheiros invisíveis que causam dano letal quando ativados.",
+        "duration": "Noite; ativado durante uma cena",
+        "effect": "Semeie o solo com sangue e depois ative espinheiros invisíveis em um raio de metros igual à Potência. Qualquer um que atravesse a área sofre dano letal igual a Crúac por turno, a menos que a armadura cubra completamente a pele. O conjurador fica enraizado e perde a Defesa, mas pode encerrar o efeito reflexivamente. Com Crúac •••• e mais dois sucessos, o dano se torna agravado e encerrar antes do tempo exige Força + Vigor."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:rivers-run-dry",
       "kind": "cruac-rite",
       "name": "Rivers Run Dry",
-      "translatedName": "Rivers Run Dry",
+      "translatedName": "Rios Secam",
       "rating": 2,
       "experienceCost": 2,
       "targetSuccesses": 11,
@@ -11280,13 +11305,18 @@
       "duration": "One month",
       "effect": "Circle an area the size of a large house with blood and remnants from arid flora and fauna. Water cannot reliably enter or remain: it flows backward, spills from containers, or evaporates, generally in conspicuous ways.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Amaldiçoa uma área do tamanho de uma casa grande, fazendo a água escapar, evaporar ou impedir seu armazenamento.",
+        "duration": "Um mês",
+        "effect": "Circunde uma área do tamanho de uma casa grande com sangue e restos da flora e fauna de climas áridos. Não é possível fazer a água entrar ou permanecer de maneira confiável: ela flui para trás, derrama-se dos recipientes ou evapora, geralmente de modo evidente."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:succulent-buboes",
       "kind": "cruac-rite",
       "name": "Succulent Buboes",
-      "translatedName": "Succulent Buboes",
+      "translatedName": "Bubões Suculentos",
       "rating": 2,
       "experienceCost": 2,
       "targetSuccesses": 7,
@@ -11297,7 +11327,12 @@
       "duration": "One month",
       "effect": "Mark a subject's lymph nodes. Their Vitae capacity rises by Crúac + 1, but each Vitae above the normal maximum creates a visible bloody pustule. At Crúac ••••, non-Kindred subjects may spend one stored Vitae per turn on Physical Intensity.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Aumenta temporariamente a capacidade de Vitae do alvo, com sinais físicos grotescos.",
+        "duration": "Um mês",
+        "effect": "Marque os gânglios linfáticos do alvo. Sua capacidade de Vitae aumenta em Crúac + 1, mas cada Vitae acima do máximo normal cria uma pústula sangrenta visível. Com Crúac ••••, alvos que não são Membros podem gastar um Vitae armazenado por turno em Intensidade Física."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:bleeding-the-tarantula",
@@ -11320,7 +11355,7 @@
       "id": "h-vtr-agony-ecstasy:rite:mantle-of-the-mother-s-army",
       "kind": "cruac-rite",
       "name": "Mantle of the Mother's Army",
-      "translatedName": "Mantle of the Mother's Army",
+      "translatedName": "Manto do Exército da Mãe",
       "rating": 3,
       "experienceCost": 2,
       "targetSuccesses": 6,
@@ -11331,7 +11366,12 @@
       "duration": "Night",
       "effect": "The ritualist and participants physically exert themselves and each spend Willpower. Once per turn in combat, each participant may reflexively assist another's instant action using teamwork even when such assistance would normally be unreasonable. At Crúac •••• with one more success, the Acolyte may replace an ally's pool with her own dice and grant 9-again instead.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Sincroniza um grupo de guerra ritual para que os participantes auxiliem reflexivamente as ações uns dos outros; acrescente um Sucesso Alvo por participante.",
+        "duration": "Noite",
+        "effect": "O ritualista e os participantes se esforçam fisicamente e cada um gasta Força de Vontade. Uma vez por turno em combate, cada participante pode auxiliar reflexivamente a ação instantânea de outro usando trabalho em equipe, mesmo quando essa ajuda normalmente não seria razoável. Com Crúac •••• e mais um sucesso, a Acólita pode substituir a parada de um aliado pelos próprios dados e conceder 9-novamente em seu lugar."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:soul-wisdom",
