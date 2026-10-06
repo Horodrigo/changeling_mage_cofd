@@ -9630,7 +9630,7 @@
       "id": "h-vtr-agony-ecstasy:devotion:aura-of-the-crone",
       "kind": "devotion",
       "name": "Aura of the Crone",
-      "translatedName": "Aura of the Crone",
+      "translatedName": "Aura da Anciã",
       "prerequisites": "Majesty •••; Occult ••",
       "experienceCost": 2,
       "summary": "Lets nearby blood sorcerers use the vampire's Majesty as ritual Potency, or increase equal Potency by one.",
@@ -9643,13 +9643,22 @@
       "action": "Instant",
       "duration": "Scene",
       "dicePool": "None",
-      "effect": "Anyone casting a blood sorcery ritual within the vampire’s presence while this Devotion is active can use her Majesty dots as the ritual’s Potency instead of the usual system. If these numbers are equal or Potency would be higher, increase it by 1. (If you’re using the Ritual Discipline system from Vampire: The Requiem, on an exceptional success, the bonus to Potency adds to the result rather than replacing it.)"
+      "effect": "Anyone casting a blood sorcery ritual within the vampire’s presence while this Devotion is active can use her Majesty dots as the ritual’s Potency instead of the usual system. If these numbers are equal or Potency would be higher, increase it by 1. (If you’re using the Ritual Discipline system from Vampire: The Requiem, on an exceptional success, the bonus to Potency adds to the result rather than replacing it.)",
+      "presentationPt": {
+        "prerequisites": "Majestade •••; Ocultismo ••",
+        "cost": "2 Vitae",
+        "summary": "Permite que feiticeiros de sangue próximos usem a Majestade do vampiro como Potência do ritual, ou aumentem em um uma Potência igual.",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "dicePool": "Nenhuma",
+        "effect": "Qualquer pessoa que conjure um ritual de feitiçaria de sangue na presença do vampiro enquanto esta Devoção estiver ativa pode usar os pontos de Majestade dele como a Potência do ritual em vez do sistema habitual. Se esses valores forem iguais ou a Potência já fosse maior, aumente-a em 1. (Se estiver usando o sistema de Disciplinas Rituais de Vampire: The Requiem, em um sucesso excepcional, o bônus de Potência é somado ao resultado em vez de substituí-lo.)"
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:betrayal-of-medea",
       "kind": "devotion",
       "name": "Betrayal of Medea",
-      "translatedName": "Betrayal of Medea",
+      "translatedName": "Traição de Medea",
       "prerequisites": "Nightmare •; Obfuscate •••",
       "experienceCost": 2,
       "summary": "While hidden, makes a touched scapegoat appear responsible for the vampire's suspicious actions.",
@@ -9663,7 +9672,17 @@
       "duration": "Scene",
       "requirement": "The vampire must be using Face in the Crowd and be touching the scapegoat.",
       "dicePool": "None",
-      "effect": "The vampire casts suspicion on another for her own activities, creating an aura of misbehavior. Add her Nightmare dots to her Obfuscate for the purposes of penalties to notice or track her, and use the higher of the two in any Clash of Wills against supernatural attempts to spot her. Any failure on a penalized action becomes a dramatic failure, which inevitably makes the victim appear to be the culprit instead."
+      "effect": "The vampire casts suspicion on another for her own activities, creating an aura of misbehavior. Add her Nightmare dots to her Obfuscate for the purposes of penalties to notice or track her, and use the higher of the two in any Clash of Wills against supernatural attempts to spot her. Any failure on a penalized action becomes a dramatic failure, which inevitably makes the victim appear to be the culprit instead.",
+      "presentationPt": {
+        "prerequisites": "Pesadelo •; Ofuscação •••",
+        "cost": "1 Vitae",
+        "summary": "Enquanto está oculto, faz um bode expiatório que esteja tocando parecer responsável pelas ações suspeitas do vampiro.",
+        "action": "Reflexiva",
+        "duration": "Cena",
+        "dicePool": "Nenhuma",
+        "requirement": "O vampiro precisa estar usando Rosto na Multidão e tocando o bode expiatório.",
+        "effect": "O vampiro lança sobre outra pessoa a suspeita por suas próprias atividades, criando uma aura de má conduta. Some seus pontos de Pesadelo aos de Ofuscação para determinar as penalidades para percebê-lo ou rastreá-lo, e use a maior das duas pontuações em qualquer Confronto de Vontades contra tentativas sobrenaturais de detectá-lo. Qualquer falha em uma ação penalizada torna-se uma falha dramática, que inevitavelmente faz a vítima parecer ser a culpada."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:bitch-hammer",
@@ -9689,7 +9708,7 @@
       "id": "h-vtr-agony-ecstasy:devotion:dance-of-the-swarm",
       "kind": "devotion",
       "name": "Dance of the Swarm",
-      "translatedName": "Dance of the Swarm",
+      "translatedName": "Dança do Enxame",
       "prerequisites": "Animalism •••",
       "experienceCost": 1,
       "summary": "Questions a local insect swarm to map a neighborhood and improve navigation, searching, and danger detection.",
@@ -9707,6 +9726,20 @@
         "exceptionalSuccess": "The insects convey more intricate details, revealing secret compartments, hidden predators, and perhaps hints of the supernatural that prickle their instincts.",
         "failure": "The swarm ignores the vampire.",
         "dramaticFailure": "The Acolyte comes off as a threat. The insects are likely to attack her (see the Swarm Tilt on p. XX), or at least cause a distraction."
+      },
+      "presentationPt": {
+        "prerequisites": "Animalismo •••",
+        "cost": "1 Vitae",
+        "summary": "Interroga um enxame de insetos local para mapear uma vizinhança e melhorar a navegação, as buscas e a detecção de perigos.",
+        "dicePool": "Manipulação + Empatia com Animais + Animalismo",
+        "action": "Instantânea",
+        "requirement": "O vampiro precisa estar na presença de um enxame de insetos.",
+        "rollResults": {
+          "success": "O enxame responde ao vampiro e voa ou rasteja em todas as direções. Os insetos retornam em minutos, usando feromônios, danças ou outros meios simples para lhe comunicar um mapa geral da área. Isso fornece à Acólita a disposição de uma área de aproximadamente uma vizinhança, incluindo qualquer coisa que possa ser relevante para aquele tipo de inseto — abelhas revelam plantas com flores, por exemplo. Pelo resto da noite, some Animalismo a qualquer teste para se orientar, procurar algo ou perceber perigo na área.",
+          "exceptionalSuccess": "Os insetos comunicam detalhes mais complexos, revelando compartimentos secretos, predadores escondidos e talvez indícios do sobrenatural que alertem seus instintos.",
+          "failure": "O enxame ignora o vampiro.",
+          "dramaticFailure": "A Acólita parece uma ameaça. É provável que os insetos a ataquem (veja a Complicação Enxame na p. XX) ou, pelo menos, causem uma distração."
+        }
       }
     },
     {
@@ -9773,6 +9806,20 @@
         "exceptionalSuccess": "The vampire can ask two questions.",
         "failure": "Too much noise, not enough signal.",
         "dramaticFailure": "The Storyteller doesn’t have to answer the question truthfully, but she also doesn’t have to lie."
+      },
+      "presentationPt": {
+        "prerequisites": "Auspícios ••••",
+        "cost": "1 de Força de Vontade",
+        "summary": "Lê os pensamentos coletivos de uma multidão para responder a uma pergunta sobre a cena com sim, não ou talvez.",
+        "dicePool": "Raciocínio + Ocultismo + Auspícios",
+        "action": "Instantânea",
+        "requirement": "O vampiro precisa estar na presença de pelo menos 100 pessoas vivas em uma área do tamanho de um pequeno quarteirão.",
+        "rollResults": {
+          "success": "O vampiro abre a mente aos pensamentos de todos os personagens nas imediações. Ele não pode escutar indivíduos, mas pode filtrar a massa em busca de informações. Pode fazer uma pergunta de sim, não ou talvez sobre a cena atual, inclusive sobre personagens presentes. Se o Narrador responder “talvez”, o vampiro recebe um Ato, mas apenas uma vez por sessão. O vampiro só pode usar esta Devoção uma vez por cena.",
+          "exceptionalSuccess": "O vampiro pode fazer duas perguntas.",
+          "failure": "Ruído demais, sinal insuficiente.",
+          "dramaticFailure": "O Narrador não precisa responder à pergunta de forma verdadeira, mas também não precisa mentir."
+        }
       }
     },
     {
