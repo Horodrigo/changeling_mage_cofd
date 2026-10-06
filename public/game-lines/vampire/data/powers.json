@@ -6562,7 +6562,7 @@
       "id": "devotion-hysterical-strength",
       "kind": "devotion",
       "name": "Hysterical Strength",
-      "translatedName": "Hysterical Strength",
+      "translatedName": "Força Histérica",
       "summary": "Grants a brief free active use of Vigor in mortal peril.",
       "source": "Sin Again: Daeva",
       "page": 96,
@@ -6573,13 +6573,22 @@
       "dicePool": "None",
       "action": "None",
       "duration": "Permanent",
-      "effect": "Whenever the vampire finds herself in a life-or-death situ ation, for turns equal to Blood Potency, she can use a single active effect of Vigor for free. As a rule of thumb, situations that might invoke this Devotion could be those that provoke fear frenzy with a severe penalty, or that could cause detachment through inaction. The Storyteller is the final arbiter of when this Devotion can come into play."
+      "effect": "Whenever the vampire finds herself in a life-or-death situation, for turns equal to Blood Potency, she can use a single active effect of Vigor for free. As a rule of thumb, situations that might invoke this Devotion could be those that provoke fear frenzy with a severe penalty, or that could cause detachment through inaction. The Storyteller is the final arbiter of when this Devotion can come into play.",
+      "presentationPt": {
+        "summary": "Concede um breve uso ativo gratuito de Ímpeto em perigo de morte.",
+        "prerequisites": "Celeridade ••, Ímpeto •••",
+        "cost": "Nenhum",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Permanente",
+        "effect": "Quando o vampiro se encontra em uma situação de vida ou morte, durante um número de turnos igual à Potência de Sangue, pode usar gratuitamente um único efeito ativo de Ímpeto. Como referência, situações que poderiam acionar esta Devoção incluem aquelas que provocariam frenesi de medo com uma penalidade severa ou que poderiam causar Desapego por inação. O Narrador tem a palavra final sobre quando esta Devoção pode entrar em ação."
+      }
     },
     {
       "id": "devotion-instant-superstar",
       "kind": "devotion",
       "name": "Instant Superstar",
-      "translatedName": "Instant Superstar",
+      "translatedName": "Superestrela Instantânea",
       "summary": "Inflicts Charmed through eye contact without a roll.",
       "source": "Sin Again: Daeva",
       "page": 96,
@@ -6589,13 +6598,21 @@
       "cost": "1 Willpower",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "If the vampire establishes eye contact with a victim, she can use the effect of Confidant on him without rolling. It simply works, and there’s nothing the mark can do about it. However, the Charmed Condition ends in an hour, and the victim will feel a bit disgruntled about anything untoward that might have happened, even if he doesn’t resolve the Condition."
+      "effect": "If the vampire establishes eye contact with a victim, she can use the effect of Confidant on him without rolling. It simply works, and there’s nothing the mark can do about it. However, the Charmed Condition ends in an hour, and the victim will feel a bit disgruntled about anything untoward that might have happened, even if he doesn’t resolve the Condition.",
+      "presentationPt": {
+        "summary": "Impõe Encantado(Membro) por contato visual, sem uma jogada.",
+        "prerequisites": "Majestade •••••",
+        "cost": "1 de Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Se o vampiro estabelecer contato visual com uma vítima, pode usar nela o efeito de Confidente sem uma jogada. Simplesmente funciona, e o alvo não pode fazer nada a respeito. Porém, a Condição Encantado(Membro) termina em uma hora, e a vítima fica um pouco contrariada com qualquer coisa indevida que tenha acontecido, mesmo que não resolva a Condição."
+      }
     },
     {
       "id": "devotion-kingfisher",
       "kind": "devotion",
       "name": "Kingfisher",
-      "translatedName": "Kingfisher",
+      "translatedName": "Martim-Pescador",
       "summary": "Snatches a victim from above and retreats before observers can react.",
       "source": "Sin Again: Daeva",
       "page": 96,
@@ -6605,13 +6622,21 @@
       "cost": "2 Vitae",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "The vampire dives off a high place, grabbing a victim and bouncing back up to another high point, faster than the eye can follow. If numbers are required, this Devotion allows the vampire to fall up to (Vigor * 3.5) meters without taking damage and move back up the same distance she fell while carrying her victim with her."
+      "effect": "The vampire dives off a high place, grabbing a victim and bouncing back up to another high point, faster than the eye can follow. If numbers are required, this Devotion allows the vampire to fall up to (Vigor * 3.5) meters without taking damage and move back up the same distance she fell while carrying her victim with her.",
+      "presentationPt": {
+        "summary": "Arrebata uma vítima de cima e recua antes que os observadores possam reagir.",
+        "prerequisites": "Celeridade •••, Ímpeto •••",
+        "cost": "2 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "O vampiro mergulha de um lugar alto, agarra uma vítima e salta de volta para outro ponto elevado, mais rápido do que os olhos conseguem acompanhar. Se for necessário quantificar, esta Devoção permite cair até (Ímpeto × 3,5) metros sem sofrer dano e subir de volta a mesma distância da queda, carregando a vítima consigo."
+      }
     },
     {
       "id": "devotion-the-hook",
       "kind": "devotion",
       "name": "The Hook",
-      "translatedName": "The Hook",
+      "translatedName": "O Anzol",
       "summary": "Finds and draws in exactly the kind of person the vampire needs.",
       "source": "Sin Again: Daeva",
       "page": 96,
@@ -6626,6 +6651,19 @@
         "exceptionalSuccess": "The victim feels uncontrollably drawn to the vampire; she gains her Auspex dots as bonus dice on the first Social action she makes with him in the scene.",
         "failure": "Either the victim is too preoccupied to notice the vampire, or no appropriate victim is present.",
         "dramaticFailure": "Rather than attracting the attention of someone the vampire desires, she becomes lost in the cacophony of her heightened senses. The vampire suffers –2 to Social actions for the rest of the scene."
+      },
+      "presentationPt": {
+        "summary": "Encontra e atrai exatamente o tipo de pessoa de que o vampiro precisa.",
+        "prerequisites": "Auspícios ••, Majestade ••",
+        "cost": "1 Vitae",
+        "dicePool": "Presença + Persuasão + Majestade",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "O vampiro especifica um tipo de pessoa, que se apresentará ou encontrará com ele antes do fim da cena. Use as perguntas de exemplo de Arrepio da Fera como guia para o tipo de pessoa que pode chamar. Alguém que corresponda a essa descrição precisa estar presente na cena, ou a Devoção simplesmente falha.",
+          "exceptionalSuccess": "A vítima se sente irresistivelmente atraída pelo vampiro; ele recebe seus pontos de Auspícios como dados de bônus na primeira ação Social que realizar com ela na cena.",
+          "failure": "A vítima está ocupada demais para notar o vampiro, ou não há nenhuma vítima adequada presente.",
+          "dramaticFailure": "Em vez de atrair a atenção de alguém que deseja, o vampiro se perde na cacofonia de seus sentidos aguçados. Ele sofre −2 nas ações Sociais pelo resto da cena."
+        }
       }
     },
     {
