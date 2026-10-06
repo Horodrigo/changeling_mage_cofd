@@ -17,7 +17,7 @@ import { meritRatingsFor, meritSelectionProblems, type MeritDefinition } from "@
 import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampireMechanics, VampirePowers, VampireReference, VampirePurchasablePower, VampireRitualDisciplineDefinition } from "./catalog-types";
-import { recordRatings, synchronizeAutomaticBloodlineDevotions, synchronizeBloodTetherPack, vampireBloodTetherLashes, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName, vampireDisciplinePrerequisitesMet } from "./creation-rules";
+import { recordRatings, synchronizeAutomaticBloodlineDevotions, synchronizeBloodTetherPack, vampireBloodTetherLashes, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName, vampireDevotionPrerequisitesMet } from "./creation-rules";
 import { refundVampireAdvancement, type VampireAdvancementUndo } from "./experience-refunds";
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
@@ -163,7 +163,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
       ...powers.ritualDisciplines.filter((item) => activePower(item) && ritualDisciplineAvailable(item.id)).map((item) => ({ value: item.id, label: powerName(item, locale), localized: true })),
       ...(hasStatus("ordo-dracul") ? powers.coils.filter(activePower).map((item) => ({ value: item.id, label: powerName(item, locale), localized: true })) : []),
     ];
-    if (purchase === "devotion") return powers.devotions.filter((item) => activePower(item) && !knownDevotions.has(item.id) && (!item.bloodlineId || item.bloodlineId === bloodlineId) && (!item.covenantIds || item.covenantIds.some((id) => covenantIds.includes(id))) && Number(item.experienceCost ?? 0) > 0 && (item.bloodlineId || Boolean(item.prerequisites) && vampireDisciplinePrerequisitesMet(item.prerequisites, disciplines, disciplineNames))).map((item) => ({ value: item.id, label: powerName(item, locale), localized: true }));
+    if (purchase === "devotion") return powers.devotions.filter((item) => activePower(item) && !knownDevotions.has(item.id) && (!item.bloodlineId || item.bloodlineId === bloodlineId) && (!item.covenantIds || item.covenantIds.some((id) => covenantIds.includes(id))) && Number(item.experienceCost ?? 0) > 0 && (item.bloodlineId || Boolean(item.prerequisites))).map((item) => ({ value: item.id, label: powerName(item, locale), localized: true }));
     if (purchase === "lash") return bloodlineId === "adrestoi" && bloodTetherRating >= 1 ? bloodTetherLashes.filter((item) => activePower(item) && !knownLashes.has(item.id) && !knownScales.has(item.id)).map((item) => ({ value: item.id, label: powerName(item, locale), localized: true })) : [];
     const cruacCatalog = powers.cruacRites.filter((item) => activePower(item) && (!item.bloodlineId || item.bloodlineId === bloodlineId) && (!item.covenantIds || item.covenantIds.some((id) => covenantIds.includes(id))));
     if (purchase === "cruac") return covenantIds.some((id) => ["circle-of-the-crone", "followers-of-seth"].includes(id)) ? bloodSorceryOptions(cruacCatalog, cruacRating + 1).map((item) => ({ ...item, label: `${item.label} (${t("ui.freeRite")})` })) : [];
@@ -264,7 +264,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     const definition = powers.devotions.find((item) => item.id === option.value);
     if (!definition) return [];
     const item = vampirePowerPresentation(definition, locale);
-    const prerequisitesMet = vampireDisciplinePrerequisitesMet(definition.prerequisites, disciplines, disciplineNames);
+    const prerequisitesMet = vampireDevotionPrerequisitesMet(definition, character, powers);
     const details: Array<{ label: string; value: string; warning?: boolean }> = [];
     const add = (label: string, value: unknown, warning = false) => { if (value !== undefined && value !== "" && String(value).trim().toLocaleLowerCase() !== "none") details.push({ label, value: String(value), warning }); };
     add(t("ui.prerequisites"), item.prerequisites, !prerequisitesMet);
@@ -323,7 +323,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     || purchase === "invocation" && (!gildedCageAvailable || !hasStatus("architects-of-the-monolith") || gildedRating < 1)
     || purchase === "detournement" && !hasStatus("moulding-room")
     || purchase === "scale" && (!hasStatus("ordo-dracul") || Math.max(0, ...Object.values(coilRatings)) < 1);
-  const unavailable = !chosen || cost < 1 || meritUnavailable || lacksPowerAccess || (purchase === "devotion" && !vampireDisciplinePrerequisitesMet(selectedPower?.prerequisites, disciplines, disciplineNames)) || (ritualPurchase && freePowerSelections.some((id) => !id)) || (purchase === "attribute" && ratedCurrent >= limit) || (purchase === "skill" && ratedCurrent >= limit) || (purchase === "discipline" && ratedCurrent >= ratedMaximum) || (purchase === "blood-potency" && ratedCurrent >= 10) || (purchase === "humanity" && ratedCurrent >= humanityMaximum) || (purchase === "willpower" && Number(state.willpower_lost_dots ?? 0) <= packWillpowerInvestment) || (purchase === "specialty" && !specialtyName.trim());
+  const unavailable = !chosen || cost < 1 || meritUnavailable || lacksPowerAccess || (purchase === "devotion" && !vampireDevotionPrerequisitesMet(selectedPower, character, powers)) || (ritualPurchase && freePowerSelections.some((id) => !id)) || (purchase === "attribute" && ratedCurrent >= limit) || (purchase === "skill" && ratedCurrent >= limit) || (purchase === "discipline" && ratedCurrent >= ratedMaximum) || (purchase === "blood-potency" && ratedCurrent >= 10) || (purchase === "humanity" && ratedCurrent >= humanityMaximum) || (purchase === "willpower" && Number(state.willpower_lost_dots ?? 0) <= packWillpowerInvestment) || (purchase === "specialty" && !specialtyName.trim());
   const saveState = (patch: Record<string, unknown>) => { const next = structuredClone(character); next.current_state = { ...next.current_state, ...patch }; updateSheet(next); };
   const buy = () => {
     if (unavailable || (!builderMode && available < cost)) return setFeedback(t("ui.purchaseUnavailableOrInsufficientExperience"));
@@ -452,7 +452,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     if (!history.some((item) => item.id === entry.id)) return;
     if (!entry.undo || !Number.isInteger(entry.cost) || entry.cost < 0 || (entry.undo.kind === "merit" && entry.cost !== entry.undo.dots)) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
     const next = structuredClone(character);
-    if (!refundVampireAdvancement(next, entry.undo)) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
+    if (!refundVampireAdvancement(next, entry.undo, powers)) return setFeedback(t("ui.refundVampirePurchaseUnavailable"));
     next.derived = vampireDerived(next.attributes, next.skills, recordRatings(next.line_data.disciplines, disciplineNames, 10), Number(next.line_data.blood_potency ?? 1), reference);
     next.current_state = {
       ...next.current_state,

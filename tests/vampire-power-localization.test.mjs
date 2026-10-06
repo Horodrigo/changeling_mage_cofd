@@ -115,7 +115,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       const path = id.replaceAll("\\", "/");
       if (path.endsWith("/app/use-homebrew.ts")) return 'let preferences = { disabledIds: [] }; export const useHomebrewPreferences = () => preferences; export const setTestHomebrewPreferences = value => { preferences = value; };';
       if (path.endsWith("/game-lines/vampire/sheet-view.tsx")) return `${code}\nexport { DisciplineCards, RitualDisciplines, PurchasedPowers };`;
-      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return code.replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "devotion-test" ? "devotion" : character.character.concept === "rite-test" ? "rite" : character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : character.character.concept === "formula-test" ? "formula" : character.character.concept === "invocation-test" ? "invocation" : character.character.concept === "detournement-test" ? "detournement" : character.character.concept === "scale-test" ? "scale" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : "");');
+      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return ("export let testBuy, testRevert;\n" + code).replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "devotion-test" ? "devotion" : character.character.concept === "rite-test" ? "rite" : character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : character.character.concept === "formula-test" ? "formula" : character.character.concept === "invocation-test" ? "invocation" : character.character.concept === "detournement-test" ? "detournement" : character.character.concept === "scale-test" ? "scale" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : character.character.concept === "devotion-test" ? character.character.name : "");').replace("  return <", "  testBuy = buy; testRevert = revert;\n  return <");
       if (path.endsWith("/components/ui/dialog.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Dialog, Wrapper as DialogTrigger, Wrapper as DialogPortal, Wrapper as DialogClose, Wrapper as DialogOverlay, Wrapper as DialogContent, Wrapper as DialogHeader, Wrapper as DialogFooter, Wrapper as DialogTitle, Wrapper as DialogDescription };';
       if (path.endsWith("/components/ui/select.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Select, Wrapper as SelectContent, Wrapper as SelectGroup, Wrapper as SelectItem, Wrapper as SelectLabel, Wrapper as SelectSeparator, Wrapper as SelectTrigger, Wrapper as SelectValue };';
       if (path.endsWith("/components/ui/tabs.tsx")) return code.replace("<TabsPrimitive.Content", "<TabsPrimitive.Content forceMount");
@@ -133,7 +133,8 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       const { vampireDisciplinePrerequisitesMet, synchronizeAutomaticBloodlineDevotions } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
       const { vampireExperienceLabel } = await vite.ssrLoadModule("/game-lines/vampire/experience-presentation.ts");
       const { refundVampireAdvancement } = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
-      const { VampireExperiencePanel } = await vite.ssrLoadModule("/game-lines/vampire/experience-panel.tsx");
+      const experienceModule = await vite.ssrLoadModule("/game-lines/vampire/experience-panel.tsx");
+      const { VampireExperiencePanel } = experienceModule;
       const { DisciplineCards, RitualDisciplines, PurchasedPowers } = await vite.ssrLoadModule("/game-lines/vampire/sheet-view.tsx");
       const { vampireBuilder } = await vite.ssrLoadModule("/game-lines/vampire/builder.tsx");
       const { vampireHomebrew } = await vite.ssrLoadModule("/game-lines/vampire/homebrew.tsx");
@@ -384,6 +385,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         assert.equal(disabled.cruacRites.find(item => item.id === original.id), original);
       }
       const devotionCharacter = blankPrintCharacter("VtR");
+      devotionCharacter.skills.Occult = 2;
       devotionCharacter.line_data = { ...devotionCharacter.line_data, clan_id: "gangrel", devotion_ids: devotions.map(item => item.id), disciplines: Object.fromEntries(catalog.disciplines.filter(item => item.source === "Vampire: The Requiem Second Edition").map(item => [item.name, 5])), notes: "Authored devotion research stays." };
       const devotionCharacterBefore = JSON.stringify(devotionCharacter);
       const devotionSheet = render(PurchasedPowers, { character: devotionCharacter, powers: catalog, locale });
@@ -441,7 +443,60 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       const limitedDevotionBuyer = structuredClone(devotionBuyer);
       limitedDevotionBuyer.line_data.disciplines = {};
       const limitedDevotionExperience = render(VampireExperiencePanel, { character: limitedDevotionBuyer, updateSheet: noMutation, catalogs });
-      for (const definition of devotions) assert.equal(limitedDevotionExperience.includes(`<strong>${escape(locale === "pt-BR" ? definition.translatedName : definition.name)}</strong>`), false);
+      const locked = (html, definition) => {
+        const start = html.indexOf(`<strong>${escape(locale === "pt-BR" ? definition.translatedName : definition.name)}</strong>`);
+        assert.ok(start >= 0, definition.id);
+        return html.slice(html.lastIndexOf("<article", start), start).includes('aria-disabled="true"');
+      };
+      for (const definition of devotions) {
+        if (definition.bloodlineId || !definition.experienceCost) assert.equal(limitedDevotionExperience.includes(`<strong>${escape(locale === "pt-BR" ? definition.translatedName : definition.name)}</strong>`), false);
+        else assert.equal(locked(limitedDevotionExperience, definition), true, definition.id);
+      }
+      const aura = catalog.devotions.find(item => item.id === "h-vtr-agony-ecstasy:devotion:aura-of-the-crone");
+      const trick = catalog.devotions.find(item => item.id === "h-vtr-fire-revolution:devotion:trick-shot");
+      for (const definition of [aura, trick]) {
+        for (const eligible of [false, true]) {
+          const buyer = structuredClone(devotionBuyer);
+          buyer.character.name = definition.id;
+          buyer.current_state.experience_available = 10;
+          buyer.current_state.experience_spent = 4;
+          buyer.current_state.experience_total = 14;
+          buyer.current_state.vampire_experience_history = [{ id: "authored", label: "Authored receipt", cost: 4 }];
+          if (definition === aura) buyer.skills.Occult = eligible ? 2 : 1;
+          else buyer.line_data.devotion_ids = eligible ? ["devotion-quicken-sight"] : [];
+          const before = JSON.stringify(buyer);
+          const updates = [];
+          const html = render(VampireExperiencePanel, { character: buyer, updateSheet: value => updates.push(value), catalogs });
+          assert.equal(locked(html, definition), !eligible);
+          experienceModule.testBuy();
+          assert.equal(updates.length, eligible ? 1 : 0, `${locale}: purchase ${definition.id}`);
+          if (eligible) {
+            const purchased = updates[0];
+            assert.ok(purchased.line_data.devotion_ids.includes(definition.id));
+            assert.equal(purchased.current_state.experience_available, 10 - definition.experienceCost);
+            assert.equal(purchased.current_state.experience_spent, 4 + definition.experienceCost);
+            assert.deepEqual(purchased.current_state.vampire_experience_history[0], buyer.current_state.vampire_experience_history[0]);
+            assert.deepEqual(purchased.current_state.vampire_experience_history.at(-1).undo, { kind: "devotion", id: definition.id });
+            const prerequisiteReceipt = { id: "prerequisite", cost: 2, undo: definition === aura ? { kind: "trait", group: "skills", name: "Occult", amount: 1 } : { kind: "devotion", id: "devotion-quicken-sight" } };
+            const refundSheet = structuredClone(purchased);
+            refundSheet.current_state.vampire_experience_history.push(prerequisiteReceipt);
+            const refundBefore = JSON.stringify(refundSheet);
+            const refunds = [];
+            render(VampireExperiencePanel, { character: refundSheet, updateSheet: value => refunds.push(value), catalogs });
+            experienceModule.testRevert(prerequisiteReceipt);
+            assert.equal(refunds.length, 0, `${locale}: prerequisite refund is atomic`);
+            assert.equal(JSON.stringify(refundSheet), refundBefore);
+            refundSheet.line_data.devotion_ids = refundSheet.line_data.devotion_ids.filter(id => id !== definition.id);
+            render(VampireExperiencePanel, { character: refundSheet, updateSheet: value => refunds.push(value), catalogs });
+            experienceModule.testRevert(prerequisiteReceipt);
+            assert.equal(refunds.length, 1);
+            assert.equal(refunds[0].current_state.experience_available, refundSheet.current_state.experience_available + 2);
+            assert.equal(refunds[0].current_state.vampire_experience_history.some(item => item.id === prerequisiteReceipt.id), false);
+            assert.deepEqual(refunds[0].current_state.vampire_experience_history[0], buyer.current_state.vampire_experience_history[0]);
+          }
+          assert.equal(JSON.stringify(buyer), before);
+        }
+      }
       assert.equal(JSON.stringify(devotionCharacter), devotionCharacterBefore);
       assert.equal(JSON.stringify(devotionBuyer), devotionBuyerBefore);
       const coilCharacter = blankPrintCharacter("VtR");

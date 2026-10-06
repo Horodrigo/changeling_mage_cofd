@@ -1,5 +1,7 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { refundMeritDots, subtractDots } from "@/lib/experience-refunds";
+import type { VampirePowers } from "./catalog-types";
+import { stringArray, vampireDevotionPrerequisitesMet } from "./creation-rules";
 
 export type VampireAdvancementUndo =
   | { kind: "trait"; group: "attributes" | "skills"; name: string; amount?: number }
@@ -23,7 +25,17 @@ const withoutMany = (value: unknown, ids: readonly string[]) =>
   Array.isArray(value) ? value.map(String).filter((item) => !ids.includes(item)) : [];
 
 /** Undo only one purchase delta so later Vampire purchases remain intact. */
-export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdvancementUndo) {
+export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdvancementUndo, powers?: Pick<VampirePowers, "disciplines" | "devotions">) {
+  const next = structuredClone(sheet);
+  if (!applyVampireAdvancementUndo(next, undo)) return false;
+  const retained = stringArray(next.line_data.devotion_ids);
+  if (powers?.devotions.some((item) => Number(item.experienceCost ?? 0) > 0 && retained.includes(item.id)
+    && vampireDevotionPrerequisitesMet(item, sheet, powers) && !vampireDevotionPrerequisitesMet(item, next, powers))) return false;
+  Object.assign(sheet, next);
+  return true;
+}
+
+function applyVampireAdvancementUndo(sheet: CharacterSheet, undo: VampireAdvancementUndo) {
   if (undo.kind === "trait") sheet[undo.group][undo.name] = subtractDots(sheet[undo.group][undo.name], undo.amount ?? 1, undo.group === "attributes" ? 1 : 0);
   else if (undo.kind === "specialty") {
     const index = sheet.specializations.findLastIndex((item) => item.skill === undo.skill && item.name === undo.name);

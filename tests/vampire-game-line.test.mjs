@@ -523,7 +523,7 @@ test("Vampire Experience separates Rites from Miracles and orders free rituals b
   assert.match(source, /value === "rite" && cruacRating >= 1[\s\S]*value === "scale" && Math\.max/);
   assert.match(source, /levels: mechanicsDetails|details: mechanicsDetails\(definition\), levels/);
   assert.match(source, /add\(t\("ui\.prerequisites"\), item\.prerequisites/);
-  assert.match(source, /Boolean\(item\.prerequisites\) && vampireDisciplinePrerequisitesMet/);
+  assert.match(source, /vampireDevotionPrerequisitesMet\(definition, character, powers\)/);
   assert.match(source, /category: item\.bloodlineId \? t\("sheet\.bloodline"\) : t\("ui\.generalDevotions"\)/);
   assert.match(source, /categoryOptions=\{\[t\("ui\.generalDevotions"\), t\("sheet\.bloodline"\)\]\}/);
   assert.match(source, /description: item\.effect \?\? item\.summary, descriptionAfterDetails: true/);
@@ -717,4 +717,56 @@ test("Vampire exposes its print surface lazily", async () => {
   assert.match(registration, /loadSheet:\s*\(\)\s*=>\s*import\("\.\/sheet"\)/);
   assert.match(registration, /loadPrintSheet:\s*\(\)\s*=>\s*import\("\.\/print"\)/);
   assert.match(registration, /print:\s*\[/);
+});
+
+
+test("canonical additional Devotion prerequisites and refunds preserve paid dependencies atomically", async () => {
+  const { vampireDevotionPrerequisitesMet, synchronizeAutomaticBloodlineDevotions } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const { refundVampireAdvancement } = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
+  const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const aura = powers.devotions.find(item => item.id === "h-vtr-agony-ecstasy:devotion:aura-of-the-crone");
+  const trick = powers.devotions.find(item => item.id === "h-vtr-fire-revolution:devotion:trick-shot");
+  assert.deepEqual(aura.requiredSkills, { Occult: 2 });
+  assert.deepEqual(trick.requiredDevotionIds, ["devotion-quicken-sight"]);
+  const sheet = blankPrintCharacter("VtR");
+  sheet.skills.Occult = 2;
+  sheet.skills.Academics = 1;
+  sheet.line_data.disciplines = { Majesty: 3, Celerity: 3, Auspex: 1 };
+  sheet.line_data.devotion_ids = [aura.id, trick.id, "devotion-quicken-sight"];
+  sheet.current_state.vampire_experience_history = [{ id: "authored", label: "Authored receipt", cost: 2 }];
+  sheet.current_state.experience_available = 7;
+  sheet.current_state.experience_spent = 2;
+  const before = JSON.stringify(sheet);
+  assert.equal(vampireDevotionPrerequisitesMet(aura, sheet, powers), true);
+  assert.equal(vampireDevotionPrerequisitesMet(trick, sheet, powers), true);
+  assert.equal(vampireDevotionPrerequisitesMet(undefined, sheet, powers), false);
+  const renamed = { ...powers, devotions: powers.devotions.map(item => ({ ...item, name: "Authored display name", translatedName: "Título alterado" })) };
+  assert.equal(vampireDevotionPrerequisitesMet(trick, sheet, renamed), true);
+  const unavailable = { ...powers, devotions: powers.devotions.filter(item => item.id !== "devotion-quicken-sight") };
+  assert.equal(vampireDevotionPrerequisitesMet(trick, sheet, unavailable), false);
+  const namesake = structuredClone(sheet);
+  namesake.line_data.devotion_ids = ["homebrew:vampire:quicken-sight"];
+  assert.equal(vampireDevotionPrerequisitesMet(trick, namesake, powers), false);
+  const lowSkill = structuredClone(sheet);
+  lowSkill.skills.Occult = 1;
+  assert.equal(vampireDevotionPrerequisitesMet(aura, lowSkill, powers), false);
+  for (const undo of [{ kind: "trait", group: "skills", name: "Occult" }, { kind: "discipline", name: "Majesty" }, { kind: "devotion", id: "devotion-quicken-sight" }]) {
+    assert.equal(refundVampireAdvancement(sheet, undo, powers), false);
+    assert.equal(JSON.stringify(sheet), before, "Failed refund leaves purchases, resources and receipts untouched");
+  }
+  assert.equal(refundVampireAdvancement(lowSkill, { kind: "trait", group: "skills", name: "Academics" }, powers), true, "An existing invalid Devotion does not block unrelated refunds");
+  assert.equal(refundVampireAdvancement(sheet, { kind: "devotion", id: trick.id }, powers), true);
+  assert.equal(refundVampireAdvancement(sheet, { kind: "devotion", id: "devotion-quicken-sight" }, powers), true);
+  assert.equal(refundVampireAdvancement(sheet, { kind: "devotion", id: aura.id }, powers), true);
+  assert.equal(refundVampireAdvancement(sheet, { kind: "trait", group: "skills", name: "Occult" }, powers), true);
+  assert.deepEqual(sheet.current_state, JSON.parse(before).current_state, "Only the Experience transaction credits XP and removes history");
+  const free = { ...aura, id: "free", bloodlineId: "test", experienceCost: 0 };
+  const freePowers = { ...powers, devotions: [free] };
+  const freeSheet = structuredClone(sheet);
+  freeSheet.skills.Occult = 2;
+  freeSheet.line_data.bloodline_id = "test";
+  freeSheet.line_data.devotion_ids = ["free"];
+  assert.equal(refundVampireAdvancement(freeSheet, { kind: "trait", group: "skills", name: "Occult" }, freePowers), true);
+  assert.deepEqual(synchronizeAutomaticBloodlineDevotions(freeSheet, freePowers).line_data.devotion_ids, [], "Free Bloodline grants can be recomposed after a refund");
 });

@@ -170,16 +170,24 @@ export function vampireDisciplinePrerequisitesMet(prerequisites: string | undefi
   });
 }
 
+export function vampireDevotionPrerequisitesMet(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "skills" | "line_data">, powers: Pick<VampirePowers, "disciplines" | "devotions">) {
+  if (!definition) return false;
+  const names = powers.disciplines.map((item) => item.name);
+  const disciplines = recordRatings(character.line_data.disciplines, names, 10);
+  const known = stringArray(character.line_data.devotion_ids);
+  return vampireDisciplinePrerequisitesMet(definition.prerequisites, disciplines, names)
+    && Object.entries(definition.requiredSkills ?? {}).every(([skill, rating]) => Number(character.skills?.[skill] ?? 0) >= rating)
+    && (definition.requiredDevotionIds ?? []).every((id) => known.includes(id) && powers.devotions.some((item) => item.id === id));
+}
+
 export function synchronizeAutomaticBloodlineDevotions(character: CharacterSheet, powers: Pick<VampirePowers, "disciplines" | "devotions">) {
   const automatic = powers.devotions.filter((item) => item.bloodlineId && Number(item.experienceCost ?? 0) === 0);
   const automaticIds = new Set(automatic.map((item) => item.id));
   const current = stringArray(character.line_data.devotion_ids);
   const next = current.filter((id) => !automaticIds.has(id));
   const bloodlineId = String(character.line_data.bloodline_id ?? "");
-  const disciplineNames = powers.disciplines.map((item) => item.name);
-  const disciplines = recordRatings(character.line_data.disciplines, disciplineNames, 10);
   for (const item of automatic)
-    if (item.bloodlineId === bloodlineId && vampireDisciplinePrerequisitesMet(item.prerequisites, disciplines, disciplineNames)) next.push(item.id);
+    if (item.bloodlineId === bloodlineId && vampireDevotionPrerequisitesMet(item, character, powers)) next.push(item.id);
   const devotionIds = [...new Set(next)];
   if (JSON.stringify(devotionIds) === JSON.stringify(current)) return character;
   return { ...character, line_data: { ...character.line_data, devotion_ids: devotionIds } };
