@@ -6239,21 +6239,26 @@
       "id": "devotion-authority-for-lords",
       "kind": "devotion",
       "name": "Authority for Lords",
-      "translatedName": "Authority for Lords",
+      "translatedName": "Autoridade para Senhores",
       "summary": "An Ortam recipe distilling a Discipline's resonance into supernatural perfume.",
       "source": "Sin Again: Daeva",
-      "page": 41,
+      "page": 40,
       "manualOnly": true,
       "bloodlineId": "gulikan",
       "category": "Ortam Recipes",
       "duration": "Night",
-      "effect": "A powerful, domineering scent that’s impossible not to notice. This fragrance overpowers minds, making them subservient to the bearer. Reduce the number of Doors the wearer needs to bypass during Social maneuvering by two for anyone who can smell her, and increase her impression level by one, as even the most demanding requests seem reasonable to those under the influence of this scent."
+      "effect": "A powerful, domineering scent that’s impossible not to notice. This fragrance overpowers minds, making them subservient to the bearer. Reduce the number of Doors the wearer needs to bypass during Social maneuvering by two for anyone who can smell her, and increase her impression level by one, as even the most demanding requests seem reasonable to those under the influence of this scent.",
+      "presentationPt": {
+        "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
+        "duration": "Noite",
+        "effect": "Um aroma poderoso e dominador, impossível de ignorar. Esta fragrância subjuga as mentes, tornando-as subservientes a quem a usa. Reduza em duas as Portas que o portador precisa superar durante manobras sociais com qualquer pessoa que possa sentir seu cheiro e aumente seu nível de impressão em um, pois até as exigências mais difíceis parecem razoáveis a quem está sob a influência desse aroma."
+      }
     },
     {
       "id": "devotion-fond-absence",
       "kind": "devotion",
       "name": "Fond Absence",
-      "translatedName": "Fond Absence",
+      "translatedName": "Saudosa Ausência",
       "summary": "An Ortam recipe distilling a Discipline's resonance into supernatural perfume.",
       "source": "Sin Again: Daeva",
       "page": 41,
@@ -6261,13 +6266,18 @@
       "bloodlineId": "gulikan",
       "category": "Ortam Recipes",
       "duration": "Scene",
-      "effect": "Barely smelling like anything at all (perhaps a hint of poppies), this fragrance isn’t meant to be worn, but rather to be deployed like a weapon. Any mortal who breathes in Fond Absence for more than a few seconds will enter a fugue state, completely forgetting they ever saw the wearer over the course of the scene, filling in the blanks as best they can. This inflicts the Amnesia Condition. Exposed Kindred characters must make a successful Wits + Composure roll to detect the threat and cease breathing before it can affect them; otherwise, they are affected as a human would be."
+      "effect": "Barely smelling like anything at all (perhaps a hint of poppies), this fragrance isn’t meant to be worn, but rather to be deployed like a weapon. Any mortal who breathes in Fond Absence for more than a few seconds will enter a fugue state, completely forgetting they ever saw the wearer over the course of the scene, filling in the blanks as best they can. This inflicts the Amnesia Condition. Exposed Kindred characters must make a successful Wits + Composure roll to detect the threat and cease breathing before it can affect them; otherwise, they are affected as a human would be.",
+      "presentationPt": {
+        "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
+        "duration": "Cena",
+        "effect": "Quase sem cheiro algum, talvez com um toque de papoulas, esta fragrância foi feita para ser empregada como arma. Qualquer mortal que respire Saudosa Ausência por mais de alguns segundos entra em um estado de fuga, esquecendo completamente que viu o portador ao longo da cena e preenchendo as lacunas da melhor maneira possível. Isso impõe a Condição Amnésia. Membros expostos precisam obter sucesso em um teste de Raciocínio + Autocontrole para detectar a ameaça e parar de respirar antes que ela os afete; caso contrário, são afetados como um humano."
+      }
     },
     {
       "id": "devotion-haunt-s-spite",
       "kind": "devotion",
       "name": "Haunt's Spite",
-      "translatedName": "Haunt's Spite",
+      "translatedName": "Despeito da Assombração",
       "summary": "An Ortam recipe distilling a Discipline's resonance into supernatural perfume.",
       "source": "Sin Again: Daeva",
       "page": 41,
@@ -6275,13 +6285,18 @@
       "bloodlineId": "gulikan",
       "category": "Ortam Recipes",
       "duration": "Scene",
-      "effect": "This noxious, cloying odor is meant not to attract, but rather to repel. Anyone except the wearer who is exposed to Haunt’s Spite gains the Shaken Condition, centered on the person or area that’s the source of the scent. Kindred characters can resist with Composure + Blood Potency – Ortam to control themselves, but will still suffer a –1 to resist fear frenzy while they remain in the scent’s presence."
+      "effect": "This noxious, cloying odor is meant not to attract, but rather to repel. Anyone except the wearer who is exposed to Haunt’s Spite gains the Shaken Condition, centered on the person or area that’s the source of the scent. Kindred characters can resist with Composure + Blood Potency – Ortam to control themselves, but will still suffer a –1 to resist fear frenzy while they remain in the scent’s presence.",
+      "presentationPt": {
+        "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
+        "duration": "Cena",
+        "effect": "Este odor nocivo e enjoativo serve para repelir. Qualquer pessoa exposta a Despeito da Assombração, exceto o portador, recebe a Condição Abalado, centrada na pessoa ou área de onde vem o aroma. Membros podem resistir com Autocontrole + Potência de Sangue – Ortam para se controlar, mas ainda sofrem –1 para resistir ao frenesi de medo enquanto permanecerem na presença do aroma."
+      }
     },
     {
       "id": "devotion-serpent-s-enticement",
       "kind": "devotion",
       "name": "Serpent's Enticement",
-      "translatedName": "Serpent's Enticement",
+      "translatedName": "Sedução da Serpente",
       "summary": "An Ortam recipe distilling a Discipline's resonance into supernatural perfume.",
       "source": "Sin Again: Daeva",
       "page": 41,
@@ -6289,7 +6304,12 @@
       "bloodlineId": "gulikan",
       "category": "Ortam Recipes",
       "duration": "Scene",
-      "effect": "One of the Perfumers’ most popular creations, this sweet, enticing scent lingers behind the wearer, beckoning those who smell it to follow in their wake. Serpent’s Enticement inflicts the Swooning Condition on anyone exposed to it for more than a few seconds. This lasts the rest of the night. Kindred characters can resist with Composure + Blood Potency to shake off the effects, but still suffer a –1 to all further Composure-based rolls while exposed, even if the resistance roll is successful."
+      "effect": "One of the Perfumers’ most popular creations, this sweet, enticing scent lingers behind the wearer, beckoning those who smell it to follow in their wake. Serpent’s Enticement inflicts the Swooning Condition on anyone exposed to it for more than a few seconds. This lasts the rest of the night. Kindred characters can resist with Composure + Blood Potency to shake off the effects, but still suffer a –1 to all further Composure-based rolls while exposed, even if the resistance roll is successful.",
+      "presentationPt": {
+        "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
+        "duration": "Cena",
+        "effect": "Uma das criações mais populares dos Perfumistas, este aroma doce e sedutor permanece no caminho de quem o usa, convidando quem o sente a segui-lo. Sedução da Serpente impõe a Condição Enamorado a qualquer pessoa exposta por mais de alguns segundos. Ela dura pelo resto da noite. Membros podem resistir com Autocontrole + Potência de Sangue para se livrar dos efeitos, mas ainda sofrem –1 em todos os testes posteriores baseados em Autocontrole enquanto estiverem expostos, mesmo se o teste de resistência tiver sucesso."
+      }
     },
     {
       "id": "devotion-bold-statement",
