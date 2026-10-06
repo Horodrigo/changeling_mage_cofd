@@ -9884,7 +9884,7 @@
       "id": "h-vtr-agony-ecstasy:devotion:invigorating-draft",
       "kind": "devotion",
       "name": "Invigorating Draft",
-      "translatedName": "Invigorating Draft",
+      "translatedName": "Gole Revigorante",
       "prerequisites": "Celerity •; Resilience •; Vigor •",
       "experienceCost": 2,
       "summary": "While feeding from a living victim, converts filled Health boxes into healing even when the blood provides no Vitae.",
@@ -9898,7 +9898,17 @@
       "dicePool": "None",
       "action": "None",
       "duration": "Permanent",
-      "effect": "When feeding from a living victim, the vampire heals 2 bashing or 1 lethal damage for every two Health boxes she fills, regardless of whether she gains Vitae or not. This applies whether the victim is human or animal, as long as it’s alive. Even a hoary elder can find warm libations tapped from beasts and men restorative, should she deign to stomach them. When healing this way, bashing damage is always healed before lethal. If the vampire heals any damage, she always inflicts the Drained Condition in addition to Scarred."
+      "effect": "When feeding from a living victim, the vampire heals 2 bashing or 1 lethal damage for every two Health boxes she fills, regardless of whether she gains Vitae or not. This applies whether the victim is human or animal, as long as it’s alive. Even a hoary elder can find warm libations tapped from beasts and men restorative, should she deign to stomach them. When healing this way, bashing damage is always healed before lethal. If the vampire heals any damage, she always inflicts the Drained Condition in addition to Scarred.",
+      "presentationPt": {
+        "prerequisites": "Celeridade •; Resiliência •; Ímpeto •",
+        "cost": "Nenhum",
+        "summary": "Ao se alimentar de uma vítima viva, converte quadrados de Vitalidade preenchidos em cura mesmo quando o sangue não fornece Vitae.",
+        "requirement": "Esta Devoção precisa ser usada junto da manobra Alimentar-se.",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Permanente",
+        "effect": "Ao se alimentar de uma vítima viva, o vampiro cura 2 de dano contusivo ou 1 de dano letal a cada dois quadrados de Vitalidade que preenche, independentemente de ganhar Vitae. Isso se aplica tanto a vítimas humanas quanto animais, desde que estejam vivas. Até uma anciã muito antiga pode encontrar alívio em libações quentes extraídas de animais e humanos, se aceitar ingeri-las. Ao se curar dessa forma, o dano contusivo sempre é curado antes do letal. Se o vampiro curar qualquer dano, sempre inflige a Condição Drenado além de Marcado por Cicatrizes."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:lost-in-hindsight",
@@ -9922,7 +9932,7 @@
       "id": "h-vtr-agony-ecstasy:devotion:maiden-s-innocence",
       "kind": "devotion",
       "name": "Maiden's Innocence",
-      "translatedName": "Maiden's Innocence",
+      "translatedName": "Inocência da Donzela",
       "prerequisites": "Celerity •••••; Dominate ••",
       "experienceCost": 3,
       "summary": "Rewrites the preceding scene so the vampire physically chose another plausible course, without undoing spent traits or Conditions.",
@@ -9940,13 +9950,27 @@
         "exceptionalSuccess": "The vampire fools even herself. Any damage she took during the scene is removed, as well as any nonpersistent mundane Conditions gained in that time.",
         "failure": "The Witch has already chosen her destiny.",
         "dramaticFailure": "The vampire makes things worse. The Storyteller decides where she ends up instead, inevitably relying upon bad choices being made. Perhaps she dropped her weapons before heading into the ambush from another direction or didn’t arrive for her important speech at all."
+      },
+      "presentationPt": {
+        "prerequisites": "Celeridade •••••; Dominação ••",
+        "cost": "3 Vitae e 1 de Força de Vontade",
+        "summary": "Reescreve a cena anterior para que o vampiro tenha escolhido fisicamente outro caminho plausível, sem desfazer gastos de características ou Condições.",
+        "dicePool": "Raciocínio + Ocultismo + Celeridade",
+        "action": "Reflexiva",
+        "duration": "Cena",
+        "rollResults": {
+          "success": "A Acólita se retira fisicamente de uma situação, alterando as mentes de todos os presentes e até o próprio fluxo do destino. Ela reaparece em algum lugar onde poderia razoavelmente estar se tivesse feito algo diferente na cena anterior que não exigisse outras ações com testes: em vez de entrar em uma emboscada, poderia ter escolhido outro beco; em vez de passar vergonha com um discurso mal escrito, acabou passando mais tempo se preparando em seu quarto. Porém, isso não desfaz alterações temporárias em sua forma (como dano, Condições ou perda de Força de Vontade). Um vampiro só pode invocar esta Devoção com sucesso uma vez por noite. Usar esta Devoção (ou, pelo menos, usá-la com frequência excessiva) é um Ponto de Ruptura em Humanidade 2 a critério do Narrador; não há nada de humano em roubar o Destino.",
+          "exceptionalSuccess": "O vampiro engana até a si mesmo. Qualquer dano sofrido durante a cena é removido, assim como quaisquer Condições mundanas não persistentes recebidas nesse período.",
+          "failure": "A Bruxa já escolheu seu destino.",
+          "dramaticFailure": "O vampiro piora as coisas. O Narrador decide onde ele vai parar, inevitavelmente com base em escolhas ruins. Talvez tenha largado as armas antes de entrar na emboscada por outra direção ou nem tenha chegado para seu discurso importante."
+        }
       }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:mark-of-betrayal",
       "kind": "devotion",
       "name": "Mark of Betrayal",
-      "translatedName": "Mark of Betrayal",
+      "translatedName": "Marca da Traição",
       "prerequisites": "Nightmare •••; Obfuscate ••",
       "experienceCost": 2,
       "summary": "Marks a touched victim so others perceive a fearful or disgusting false narrative about him.",
@@ -9965,13 +9989,28 @@
         "exceptionalSuccess": "The Condition lasts for additional nights equal to Blood Potency.",
         "failure": "Seems fine to me.",
         "dramaticFailure": "The victim shrugs off the false narrative. He’s immune to this Devotion and the vampire’s Nightmare for the rest of the night."
+      },
+      "presentationPt": {
+        "prerequisites": "Pesadelo •••; Ofuscação ••",
+        "cost": "1 Vitae",
+        "summary": "Marca uma vítima que esteja tocando para que os outros percebam uma narrativa falsa e assustadora ou repugnante sobre ela.",
+        "dicePool": "Manipulação + Subterfúgio + Pesadelo contra Compostura + Potência de Sangue",
+        "action": "Disputada",
+        "duration": "Noite",
+        "requirement": "O vampiro precisa estar tocando a vítima.",
+        "rollResults": {
+          "success": "Aplique a Condição Delirante à vítima, mas, em vez de afetar sua percepção do mundo, ela muda a forma como os outros a veem. Isso sempre deve envolver medo, paranoia, repulsa ou emoções semelhantes, mas os detalhes podem ser quaisquer que se adequem à Condição: talvez os outros acreditem que a vítima mantém pessoas amarradas em seu porão. Assim como em O Grande Delírio, isso não pode definir como alguém reage à crença.",
+          "exceptionalSuccess": "A Condição dura um número de noites adicionais igual à Potência de Sangue.",
+          "failure": "Para mim, parece tudo bem.",
+          "dramaticFailure": "A vítima se livra da narrativa falsa. Ela fica imune a esta Devoção e ao Pesadelo do vampiro pelo resto da noite."
+        }
       }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:mother-s-dance",
       "kind": "devotion",
       "name": "Mother's Dance",
-      "translatedName": "Mother's Dance",
+      "translatedName": "Dança da Mãe",
       "prerequisites": "Celerity ••••",
       "experienceCost": 2,
       "summary": "A defensive Celerity interruption used to Dodge or move no longer consumes the vampire's instant action.",
@@ -9983,7 +10022,15 @@
       "cost": "1 Willpower",
       "action": "Reflexive",
       "dicePool": "None",
-      "effect": "When using Celerity to interrupt an opponent’s action, the vampire can activate this Devotion. If she does, and if the action is to Dodge, move, or take another purely defensive act (at the Storyteller’s discretion), it does not use up her instant action for the turn. This Devotion can never be used to inflict harm, such as Fighting Styles that apply weapon damage to Dodge or that create danger in a character’s wake."
+      "effect": "When using Celerity to interrupt an opponent’s action, the vampire can activate this Devotion. If she does, and if the action is to Dodge, move, or take another purely defensive act (at the Storyteller’s discretion), it does not use up her instant action for the turn. This Devotion can never be used to inflict harm, such as Fighting Styles that apply weapon damage to Dodge or that create danger in a character’s wake.",
+      "presentationPt": {
+        "prerequisites": "Celeridade ••••",
+        "cost": "1 de Força de Vontade",
+        "summary": "Uma interrupção defensiva com Celeridade usada para Esquivar ou se mover deixa de consumir a ação instantânea do vampiro.",
+        "action": "Reflexiva",
+        "dicePool": "Nenhuma",
+        "effect": "Ao usar Celeridade para interromper a ação de um oponente, o vampiro pode ativar esta Devoção. Se fizer isso e a ação for Esquivar, mover-se ou realizar outra ação puramente defensiva (a critério do Narrador), ela não consome sua ação instantânea do turno. Esta Devoção nunca pode ser usada para infligir dano, como Estilos de Combate que aplicam dano de arma ao Esquivar ou que criam perigo por onde o personagem passa."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:raise-the-witch-s-familiar",
