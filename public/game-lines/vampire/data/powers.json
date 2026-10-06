@@ -6470,7 +6470,7 @@
       "id": "devotion-drain",
       "kind": "devotion",
       "name": "Drain",
-      "translatedName": "Drain",
+      "translatedName": "Drenar",
       "summary": "Steals Social Attribute dots while feeding.",
       "source": "Sin Again: Daeva",
       "page": 95,
@@ -6487,13 +6487,28 @@
         "exceptionalSuccess": "The effect lasts the night.",
         "failure": "The vampire isn’t strong enough drain the victim’s essence.",
         "dramaticFailure": "The victim’s soul turns the tables on the vampire. He gains the point of Willpower spent to activate this Devotion and the vampire gains the Distracted Condition."
+      },
+      "presentationPt": {
+        "summary": "Rouba pontos de Atributos Sociais enquanto se alimenta.",
+        "prerequisites": "Majestade •••, Ímpeto •••",
+        "cost": "1 de Força de Vontade",
+        "requirement": "O vampiro precisa estar se alimentando da vítima.",
+        "dicePool": "Manipulação + Empatia + Majestade contra Compostura + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Cena",
+        "rollResults": {
+          "success": "O vampiro reduz os Atributos Sociais da vítima em um ponto por Vitae tomada, até o máximo de seus próprios pontos de Majestade. Os Atributos não podem ser reduzidos abaixo de um. Reduzir Compostura não remove pontos de Força de Vontade, mas reduz a capacidade máxima da vítima durante o efeito. O vampiro também ganha um dos pontos drenados pela cena, mas só pode possuir um ponto roubado por vez, independentemente de quantas pessoas tenha drenado.",
+          "exceptionalSuccess": "O efeito dura a noite.",
+          "failure": "O vampiro não é forte o bastante para drenar a essência da vítima.",
+          "dramaticFailure": "A alma da vítima se volta contra o vampiro. Ela ganha o ponto de Força de Vontade gasto para ativar esta Devoção, e o vampiro recebe a Condição Distraído."
+        }
       }
     },
     {
       "id": "devotion-haymaker",
       "kind": "devotion",
       "name": "Haymaker",
-      "translatedName": "Haymaker",
+      "translatedName": "Soco Brutal",
       "summary": "Launches a struck opponent backward with Vigor.",
       "source": "Sin Again: Daeva",
       "page": 95,
@@ -6504,13 +6519,22 @@
       "requirement": "The vampire must have successfully attacked the victim with a Strength + Brawl action.",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "The vampire hits her opponent with such intense concussive force that he goes flying. For each success on the attack roll, the victim is thrown back a meter. He takes an additional (Vigor) dice of damage if he hits something hard: bashing if it would break and absorb some of the force and lethal if it wouldn’t. The victim is considered Knocked Down if this damage exceeds his total Stamina (Chronicles of Darkness, p. 285). If the vampire doesn’t have enough Blood Potency to use this Devotion in a turn, she must spend a Vitae the turn before."
+      "effect": "The vampire hits her opponent with such intense concussive force that he goes flying. For each success on the attack roll, the victim is thrown back a meter. He takes an additional (Vigor) dice of damage if he hits something hard: bashing if it would break and absorb some of the force and lethal if it wouldn’t. The victim is considered Knocked Down if this damage exceeds his total Stamina (Chronicles of Darkness, p. 285). If the vampire doesn’t have enough Blood Potency to use this Devotion in a turn, she must spend a Vitae the turn before.",
+      "presentationPt": {
+        "summary": "Arremessa para trás um oponente atingido usando Ímpeto.",
+        "prerequisites": "Ímpeto ••••",
+        "cost": "2 Vitae",
+        "requirement": "O vampiro precisa ter atingido a vítima com uma ação de Força + Briga.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "O vampiro atinge seu oponente com tanta força de impacto que o lança pelos ares. Para cada sucesso na jogada de ataque, a vítima é arremessada um metro para trás. Ela sofre mais (Ímpeto) dados de dano se atingir algo duro: contusivo se o objeto se quebrar e absorver parte da força, ou letal se não se quebrar. A vítima recebe Derrubado se esse dano exceder seu Vigor total (Chronicles of Darkness, p. 285). Se o vampiro não tiver Potência de Sangue suficiente para usar esta Devoção em um turno, precisa gastar uma Vitae no turno anterior."
+      }
     },
     {
       "id": "devotion-hurts-so-good",
       "kind": "devotion",
       "name": "Hurts So Good",
-      "translatedName": "Hurts So Good",
+      "translatedName": "Dói Que É Uma Beleza",
       "summary": "Converts nearby pain into a Majesty bonus.",
       "source": "Sin Again: Daeva",
       "page": 96,
@@ -6522,7 +6546,17 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "Scene",
-      "effect": "The vampire draws on the pain around him, using it to boost his supernatural power. Apply the highest wound penalty or modifier resulting from pain (such as a Tilt) present in the scene as a bonus to uses of Majesty. This does not apply to the vampire’s own wounds."
+      "effect": "The vampire draws on the pain around him, using it to boost his supernatural power. Apply the highest wound penalty or modifier resulting from pain (such as a Tilt) present in the scene as a bonus to uses of Majesty. This does not apply to the vampire’s own wounds.",
+      "presentationPt": {
+        "summary": "Converte a dor próxima em um bônus de Majestade.",
+        "prerequisites": "Majestade •, Ímpeto •",
+        "cost": "1 Vitae",
+        "requirement": "Alguém na cena precisa estar sofrendo penalidades por ferimentos.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Cena",
+        "effect": "O vampiro se vale da dor ao redor para intensificar seu poder sobrenatural. Aplique a maior penalidade por ferimentos ou modificador decorrente de dor (como um Tilt) presente na cena como bônus aos usos de Majestade. Isso não se aplica aos próprios ferimentos do vampiro."
+      }
     },
     {
       "id": "devotion-hysterical-strength",
