@@ -11377,7 +11377,7 @@
       "id": "h-vtr-agony-ecstasy:rite:soul-wisdom",
       "kind": "cruac-rite",
       "name": "Soul Wisdom",
-      "translatedName": "Soul Wisdom",
+      "translatedName": "Sabedoria da Alma",
       "rating": 3,
       "experienceCost": 2,
       "targetSuccesses": 9,
@@ -11388,13 +11388,18 @@
       "duration": "Indefinite until emptied",
       "effect": "Create an artwork holding the ritualist's Willpower up to Potency. Touching it transfers one stored point back. Once per scene after studying it for a few minutes, spend a stored point remotely to reroll an action without the +3 bonus and keep the second result. The piece cracks when empty, counts as part of the creator for supernatural scrutiny, and only one may exist. At Crúac ••••• with two more successes, it may be refilled and similar pieces made for others.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Armazena Força de Vontade em uma obra de arte e oferece ao ritualista vislumbres do futuro por meio dela.",
+        "duration": "Indefinida até esvaziar",
+        "effect": "Crie uma obra de arte que armazena a Força de Vontade do ritualista até o limite da Potência. Tocá-la transfere um ponto armazenado de volta. Uma vez por cena, após estudá-la por alguns minutos, gaste um ponto armazenado à distância para repetir o teste de uma ação sem o bônus de +3 e ficar com o segundo resultado. A peça racha ao esvaziar, conta como parte de seu criador para investigação sobrenatural e só uma pode existir. Com Crúac ••••• e mais dois sucessos, ela pode ser recarregada e peças semelhantes podem ser feitas para outros."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:spirit-s-gambol",
       "kind": "cruac-rite",
       "name": "Spirit's Gambol",
-      "translatedName": "Spirit's Gambol",
+      "translatedName": "Folguedo do Espírito",
       "rating": 3,
       "experienceCost": 2,
       "targetSuccesses": 10,
@@ -11405,7 +11410,12 @@
       "duration": "One month",
       "effect": "Paint symbols inviting one spirit type. A nearby spirit may Fetter itself to the Acolyte and possess her whenever she frenzies, bypassing the normal restriction against controlling a frenzying Beast. It is encouraged to protect her but may pursue its own nature, granting her a Beat when it does. Using ephemeral rules, it gains Fetter and imposes Possession during frenzy; helping the Beast or protecting her restores one Essence.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Convida um ser efêmero a entrar no ritualista para auxiliar a Fera durante o frenesi.",
+        "duration": "Um mês",
+        "effect": "Pinte símbolos que convidam um tipo de espírito. Um espírito próximo pode se Agrilhoar à Acólita e possuí-la sempre que entrar em frenesi, ignorando a restrição normal contra controlar uma Fera em frenesi. Ele é incentivado a protegê-la, mas pode seguir sua própria natureza, concedendo-lhe um Ato quando o faz. Usando as regras efêmeras, recebe Agrilhoar e impõe Possuído durante o frenesi; ajudar a Fera ou protegê-la restaura uma Essência."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:suborn-the-outer-realms",
