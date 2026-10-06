@@ -5624,7 +5624,7 @@
       "id": "devotion-shapeshifting",
       "kind": "devotion",
       "name": "Shapeshifting",
-      "translatedName": "Shapeshifting",
+      "translatedName": "Mudança de Forma",
       "prerequisites": "Protean ••, Obfuscate •",
       "bloodlineId": "vardyvle",
       "experienceCost": 1,
@@ -5635,7 +5635,16 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "1 Night",
-      "effect": "The Kindred can copy one small feature (e.g., facial features, hair color, birthmarks, voice, etc.) from a victim from whom they’ve fed. Each Vitae spent when activating the devotion allows the vampire to alter an additional feature. The Vardyvle cannot change their size to become taller or smaller to match the look of the victim. If they attempt to recreate or modify a body part which they don’t have, they can make it appears as if they have the organ. However, they cannot use it. After one night, the effect fades, and the vampire looks like her usual self. The Vardyvle does not immediately know how to act or talk like the person she is mimicking, and anyone who knows the person well will suspect there is something wrong. They might not know they are dealing with a doppelgänger, but the Vardyvle suffers –2 to Social rolls against people with close ties to the victim."
+      "effect": "The Kindred can copy one small feature (e.g., facial features, hair color, birthmarks, voice, etc.) from a victim from whom they’ve fed. Each Vitae spent when activating the devotion allows the vampire to alter an additional feature. The Vardyvle cannot change their size to become taller or smaller to match the look of the victim. If they attempt to recreate or modify a body part which they don’t have, they can make it appears as if they have the organ. However, they cannot use it. After one night, the effect fades, and the vampire looks like her usual self. The Vardyvle does not immediately know how to act or talk like the person she is mimicking, and anyone who knows the person well will suspect there is something wrong. They might not know they are dealing with a doppelgänger, but the Vardyvle suffers –2 to Social rolls against people with close ties to the victim.",
+      "presentationPt": {
+        "prerequisites": "Metamorfose ••, Ofuscação •",
+        "summary": "Copia traços físicos de uma fonte por uma noite.",
+        "cost": "1 Vitae por traço copiado",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "1 noite",
+        "effect": "O Membro pode copiar um pequeno traço, como feições, cor do cabelo, marcas de nascença ou voz, de uma vítima da qual tenha se alimentado. Cada Vitae gasta na ativação permite alterar um traço adicional. O Vardyvle não pode mudar seu Tamanho para ficar mais alto ou menor e combinar com a aparência da vítima. Se tentar recriar ou modificar uma parte do corpo que não possui, pode aparentar ter o órgão, mas não pode usá-lo. Após uma noite, o efeito termina e o vampiro recupera sua aparência habitual. O Vardyvle não aprende imediatamente a agir ou falar como a pessoa que imita, e quem a conhece bem suspeitará de que algo está errado. Talvez não perceba que está diante de um sósia, mas o Vardyvle sofre −2 em testes Sociais contra pessoas com laços próximos à vítima."
+      }
     },
     {
       "id": "devotion-ghost-skin",
@@ -5738,7 +5747,7 @@
       "id": "devotion-flesh-form",
       "kind": "devotion",
       "name": "Flesh Form",
-      "translatedName": "Flesh Form",
+      "translatedName": "Forma de Carne",
       "prerequisites": "Protean ••, Resilience •",
       "experienceCost": 1,
       "cost": "3 Vitae per day",
@@ -5748,7 +5757,16 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Indefinite",
-      "effect": "The Nhang becomes identical to her victim in both look and sound but does not necessarily gain the ability to adopt the person’s demeanor or attitudes without prior study. The Nhang’s transformation lasts until she decides to return to her original form. The Nhang must spend the Vitae cost to maintain the shape each night when she awakens or otherwise revert to her normal state. For each week the Nhang remains in her stolen form, the body ages by a decade. There is nothing she can do to prevent this, as the flesh she consumed decays inside her. The Water Serpent may retain the form long after it would naturally die based on the rate of aging, but she soon begins to look like a shambling corpse."
+      "effect": "The Nhang becomes identical to her victim in both look and sound but does not necessarily gain the ability to adopt the person’s demeanor or attitudes without prior study. The Nhang’s transformation lasts until she decides to return to her original form. The Nhang must spend the Vitae cost to maintain the shape each night when she awakens or otherwise revert to her normal state. For each week the Nhang remains in her stolen form, the body ages by a decade. There is nothing she can do to prevent this, as the flesh she consumed decays inside her. The Water Serpent may retain the form long after it would naturally die based on the rate of aging, but she soon begins to look like a shambling corpse.",
+      "presentationPt": {
+        "prerequisites": "Metamorfose ••, Resiliência •",
+        "cost": "3 Vitae por dia",
+        "summary": "Consome um corpo humano para imitar sua aparência e voz.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Indefinida",
+        "effect": "A Nhang fica idêntica à vítima em aparência e voz, mas não necessariamente consegue adotar seus modos ou atitudes sem estudo prévio. A transformação dura até que ela decida retornar à forma original. A Nhang precisa gastar o custo de Vitae para manter a forma a cada noite quando desperta; caso contrário, volta ao estado normal. A cada semana em que permanece na forma roubada, o corpo envelhece uma década. Ela não pode impedir isso, pois a carne consumida se decompõe dentro dela. A Serpente Aquática pode conservar a forma muito depois de ela morrer naturalmente nesse ritmo de envelhecimento, mas logo começa a parecer um cadáver cambaleante."
+      }
     },
     {
       "id": "devotion-water-hibernation",
@@ -5829,7 +5847,7 @@
       "id": "devotion-sirens-sweet-visage",
       "kind": "devotion",
       "name": "Siren's Sweet Visage",
-      "translatedName": "Siren's Sweet Visage",
+      "translatedName": "Doce Semblante da Sereia",
       "prerequisites": "Nereid; Obfuscate ••••, Majesty •",
       "experienceCost": 2,
       "cost": "1 Vitae",
@@ -5838,7 +5856,15 @@
       "page": 140,
       "dicePool": "Presence + Empathy + Majesty vs. Blood Potency + Composure",
       "action": "Instant",
-      "effect": "No matter how distended her body might be from human norms — jellied flesh no longer being pushed inward by deepsea pressure, skin so pale that even other vampires gasp — this devotion hides her abnormalities completely, functioning similarly to Familiar Stranger, except the Siren does not need to take on a visage other than her own. While using this Devotion, the Nereid also becomes strangely compelling, drawing attention to herself wherever she goes. Those affected by Siren’s Sweet Visage suffer a die penalty equal to her successes when resisting her Persuasionor Intimidation-based Social maneuvers."
+      "effect": "No matter how distended her body might be from human norms — jellied flesh no longer being pushed inward by deepsea pressure, skin so pale that even other vampires gasp — this devotion hides her abnormalities completely, functioning similarly to Familiar Stranger, except the Siren does not need to take on a visage other than her own. While using this Devotion, the Nereid also becomes strangely compelling, drawing attention to herself wherever she goes. Those affected by Siren’s Sweet Visage suffer a die penalty equal to her successes when resisting her Persuasionor Intimidation-based Social maneuvers.",
+      "presentationPt": {
+        "prerequisites": "Nereid; Ofuscação ••••, Majestade •",
+        "cost": "1 Vitae",
+        "summary": "Oculta anormalidades e enfraquece a resistência à persuasão ou intimidação.",
+        "dicePool": "Presença + Empatia + Majestade contra Potência de Sangue + Compostura",
+        "action": "Instantânea",
+        "effect": "Por mais que seu corpo se afaste dos padrões humanos — carne gelatinosa sem a pressão das profundezas do mar, pele tão pálida que até outros vampiros ficam espantados — esta Devoção oculta completamente suas anormalidades. Funciona de modo semelhante a Estranho Familiar, mas a Sereia não precisa assumir uma aparência diferente da sua própria. Enquanto usa esta Devoção, a Nereid também se torna estranhamente cativante, atraindo atenção por onde passa. Quem for afetado por Doce Semblante da Sereia sofre uma penalidade em dados igual aos sucessos dela ao resistir a suas Manobras Sociais baseadas em Persuasão ou Intimidação."
+      }
     },
     {
       "id": "devotion-hounds-hell",
@@ -7824,7 +7850,7 @@
       "id": "devotion-preternatural-instinct",
       "kind": "devotion",
       "name": "Preternatural Instinct",
-      "translatedName": "Preternatural Instinct",
+      "translatedName": "Instinto Preternatural",
       "prerequisites": "Auspex ••••, Celerity •",
       "experienceCost": 2,
       "cost": "1 Vitae",
@@ -7834,13 +7860,22 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "One turn",
-      "effect": "For the duration of this Devotion, the vampire may apply her Defense against attacks she can’t see coming, as long as she’s still able to physically react. Additionally, if she spends a Vitae to move to the head of the Initiative queue, she automatically wins any Clash of Wills that contests her ability to act first unless her foe also uses this Devotion, in which case the Clash occurs as normal."
+      "effect": "For the duration of this Devotion, the vampire may apply her Defense against attacks she can’t see coming, as long as she’s still able to physically react. Additionally, if she spends a Vitae to move to the head of the Initiative queue, she automatically wins any Clash of Wills that contests her ability to act first unless her foe also uses this Devotion, in which case the Clash occurs as normal.",
+      "presentationPt": {
+        "prerequisites": "Auspícios ••••, Celeridade •",
+        "cost": "1 Vitae",
+        "summary": "Sente o perigo antes que aconteça e percebe traços de intenção hostil.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Um turno",
+        "effect": "Durante esta Devoção, o vampiro pode aplicar sua Defesa contra ataques que não vê chegar, desde que ainda consiga reagir fisicamente. Além disso, se gastar uma Vitae para ir ao início da ordem de Iniciativa, vence automaticamente qualquer Confronto de Vontades que conteste sua capacidade de agir primeiro, a menos que o adversário também use esta Devoção; nesse caso, o Confronto ocorre normalmente."
+      }
     },
     {
       "id": "devotion-spontaneous-ignition",
       "kind": "devotion",
       "name": "Spontaneous Ignition",
-      "translatedName": "Spontaneous Ignition",
+      "translatedName": "Combustão Espontânea",
       "prerequisites": "Celerity •••••, Resilience •",
       "experienceCost": 4,
       "cost": "6 Vitae",
@@ -7855,6 +7890,20 @@
         "failure": "The vampire’s victim feels an uncomfortable heat, but does not combust.",
         "success": "The vampire’s victim catches fire at the torch level for both size and heat (see Vampire: The Requiem Second Edition, p. 103). For each success rolled beyond the result of the victim’s resistance roll, move either the size or intensity of the flame up on the chart by one. The flames burn for a number of turns equal to the vampire’s Blood Potency, but the victim can try to extinguish them sooner by taking instant actions to smother them or put them out with water or a fire extinguisher. Each instant action spent combating the fire reduces it in size by one level on the chart. If it burns for more than one turn, it can ignite flammable objects in the victim’s vicinity.",
         "exceptionalSuccess": "The vampire enjoys the benefits of a larger and/or hotter flame, as above."
+      },
+      "presentationPt": {
+        "prerequisites": "Celeridade •••••, Resiliência •",
+        "cost": "6 Vitae",
+        "summary": "Incendeia um alvo que tenha tocado.",
+        "requirement": "O vampiro precisa tocar seu alvo.",
+        "dicePool": "Destreza + Atletismo + Celeridade − Vigor",
+        "action": "Disputada; a resistência é Reflexiva",
+        "rollResults": {
+          "dramaticFailure": "O vampiro incendeia a si mesmo.",
+          "failure": "A vítima sente um calor desconfortável, mas não entra em combustão.",
+          "success": "A vítima do vampiro pega fogo no nível de uma tocha, tanto em tamanho quanto em calor (Vampire: The Requiem Second Edition, p. 103). Para cada sucesso além do resultado do teste de resistência da vítima, aumente o tamanho ou a intensidade da chama em um nível na tabela. As chamas queimam por um número de turnos igual à Potência de Sangue do vampiro, mas a vítima pode tentar apagá-las antes com ações instantâneas para abafá-las ou usar água ou um extintor. Cada ação instantânea dedicada a combater o fogo reduz seu tamanho em um nível na tabela. Se queimar por mais de um turno, pode incendiar objetos inflamáveis nas proximidades da vítima.",
+          "exceptionalSuccess": "O vampiro desfruta dos benefícios de uma chama maior e/ou mais quente, conforme descrito acima."
+        }
       }
     },
     {
