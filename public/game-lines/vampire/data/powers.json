@@ -6083,7 +6083,7 @@
       "id": "devotion-induce",
       "kind": "devotion",
       "name": "Induce",
-      "translatedName": "Induce",
+      "translatedName": "Induzir",
       "summary": "Creates an intense sensation without an ordinary physical cause.",
       "source": "Sin Again: Daeva",
       "page": 30,
@@ -6101,6 +6101,21 @@
         "exceptionalSuccess": "The cost of the Devotion is refunded.",
         "failure": "Was that a breeze?",
         "dramaticFailure": "The vampire suffers one of the above Conditions herself."
+      },
+      "presentationPt": {
+        "summary": "Cria uma sensação intensa sem uma causa física comum.",
+        "prerequisites": "Ímpeto ••",
+        "cost": "1 de Força de Vontade",
+        "requirement": "O vampiro deve ter imposto a Condição Inflamado à vítima.",
+        "dicePool": "Manipulação + Medicina + Majestade contra Vigor + Potência de Sangue",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "rollResults": {
+          "success": "O vampiro transforma a sobrecarga geral de sensações da vítima em uma única sensação intensa: náusea, excitação, dor, coceira, um sabor etc. Isso impõe a Condição Distraído, que desaparece quando o personagem encerra ou resolve Inflamado. Enquanto Distraído durar, o vampiro obtém o dobro de Vitae de uma vítima mortal sem causar dano adicional. Se os pontos de Ímpeto do vampiro forem maiores que os de Celeridade, a Condição Inflamado usa aquela Disciplina como referência.",
+          "exceptionalSuccess": "O custo de ativação da Devoção é devolvido.",
+          "failure": "Foi uma brisa?",
+          "dramaticFailure": "O próprio vampiro sofre uma das Condições acima."
+        }
       }
     },
     {
@@ -6544,7 +6559,7 @@
       "id": "devotion-beautiful-but-deadly",
       "kind": "devotion",
       "name": "Beautiful but Deadly",
-      "translatedName": "Beautiful but Deadly",
+      "translatedName": "Belo, mas Mortal",
       "summary": "Uses supernatural beauty to disrupt an opponent's next physical action.",
       "source": "Sin Again: Daeva",
       "page": 94,
@@ -6559,6 +6574,19 @@
         "exceptionalSuccess": "The penalty applies for two actions.",
         "failure": "The victim appreciates the vampire’s beauty but isn’t dissuaded.",
         "dramaticFailure": "The vampire’s perfection misfires and sends her subject into a destructive rage. He takes the 8-again quality on his next violent action."
+      },
+      "presentationPt": {
+        "summary": "Usa beleza sobrenatural para atrapalhar a próxima ação Física de um oponente.",
+        "prerequisites": "Celeridade ••, Majestade ••",
+        "cost": "2 Vitae",
+        "dicePool": "Presença + Expressão + Majestade – Autocontrole",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "A concentração da vítima é abalada. Ela sofre uma penalidade igual aos sucessos na próxima ação Física.",
+          "exceptionalSuccess": "A penalidade se aplica a duas ações.",
+          "failure": "A vítima aprecia a beleza do vampiro, mas não é dissuadida.",
+          "dramaticFailure": "A perfeição do vampiro provoca uma fúria destrutiva no sujeito. Ele recebe a qualidade 8-novamente na próxima ação violenta."
+        }
       }
     },
     {
