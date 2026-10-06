@@ -9687,7 +9687,7 @@
       "id": "devotion-elastic-visage",
       "kind": "devotion",
       "name": "Elastic Visage",
-      "translatedName": "Elastic Visage",
+      "translatedName": "Semblante Elástico",
       "prerequisites": "Protean ••",
       "experienceCost": 1,
       "summary": "Freely reshape cosmetic features and redefine the vampire's default form.",
@@ -9698,13 +9698,22 @@
       "duration": "Indefinite",
       "effect": "The vampire can take fine control over her physical form: facial features, hair length/color, irises, skin tone, voice, fat, musculature, sexual characteristics, and so on. Changes don’t have to be particularly human, and the vampire can add bizarre flourishes (extra eyes, spare fingers, unnatural skin tones, etc.), though these alterations offer no benefit beyond aesthetic. As a rule of thumb, she can gain or subtract about a foot of height and 50 lbs from her frame, but these changes aren’t enough to affect traits. This Devotion can bestow Striking Looks 1 or 2, but this costs a Willpower. Sanctity of Merits does not apply. It can also temporarily remove Striking Looks, in which case, Sanctity of Merits does apply if the vampire permanently redefines her form. Transformation lasts until the vampire chooses to revert to her default. She can also spend a Willpower while resting in her Unmarked Grave to redefine her default form.",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "summary": "Remodela livremente traços cosméticos e redefine a forma padrão do vampiro.",
+        "prerequisites": "Metamorfose ••",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Indefinida",
+        "effect": "O vampiro pode controlar minuciosamente sua forma física: traços do rosto, comprimento e cor do cabelo, íris, tom de pele, voz, gordura, musculatura, características sexuais e assim por diante. As mudanças não precisam ser humanas, e ele pode acrescentar detalhes bizarros, como olhos ou dedos extras e tons de pele antinaturais, mas essas alterações oferecem apenas benefícios estéticos. Como regra geral, pode aumentar ou reduzir cerca de um pé de altura e 50 libras de peso, mas essas mudanças não alteram características. Esta Devoção pode conceder Aparência Marcante 1 ou 2, ao custo de um ponto de Força de Vontade. A Santidade dos Méritos não se aplica. Também pode remover temporariamente Aparência Marcante; nesse caso, a Santidade dos Méritos se aplica se o vampiro redefinir permanentemente sua forma. A transformação dura até que ele escolha voltar à forma padrão. Também pode gastar um ponto de Força de Vontade enquanto repousa em Túmulo Sem Marca para redefinir sua forma padrão."
+      }
     },
     {
       "id": "devotion-endow-familiar",
       "kind": "devotion",
       "name": "Endow the Familiar",
-      "translatedName": "Endow the Familiar",
+      "translatedName": "Dotar o Familiar",
       "prerequisites": "Animalism ••; Protean ••",
       "experienceCost": 2,
       "summary": "Grant a raised animal familiar limited Protean transformations.",
@@ -9716,13 +9725,23 @@
       "effect": "The familiar’s body warps, gaining two dots of Protean. The creature cannot raise this Discipline, but it can change adaptations as Kindred can. The vampire can also use this Devotion in conjunction with Undying Familiar (Vampire, p. 148), imbuing a ghoul with this effect when and if it dies.",
       "manualOnly": true,
       "requirement": "The vampire spends an additional Vitae when uplifting an animal with Raise the Familiar (included in the cost).",
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "summary": "Concede transformações limitadas de Metamorfose a um familiar animal erguido.",
+        "prerequisites": "Animalismo ••; Metamorfose ••",
+        "cost": "1 Vitae adicional junto de Erguer o Familiar",
+        "requirement": "O vampiro gasta uma Vitae adicional ao erguer um animal com Erguer o Familiar, já incluída no custo.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Indefinida",
+        "effect": "O corpo do familiar se deforma, recebendo dois pontos de Metamorfose. A criatura não pode aumentar essa Disciplina, mas pode mudar de adaptações como os Membros. O vampiro também pode usar esta Devoção junto de Familiar Imortal (Vampire, p. 148), concedendo esse efeito a um carniçal quando e se ele morrer."
+      }
     },
     {
       "id": "devotion-flesh-crafting",
       "kind": "devotion",
       "name": "Flesh Crafting",
-      "translatedName": "Flesh Crafting",
+      "translatedName": "Modelagem da Carne",
       "prerequisites": "Dominate •; Protean ••",
       "experienceCost": 2,
       "summary": "Command a Mesmerized subject's flesh into a new appearance.",
@@ -9734,7 +9753,17 @@
       "effect": "The system works the same as Elastic Visage, but the vampire can only use this Devotion on other characters. Alterations created with Flesh Crafting can be preserved with Willpower during daysleep, as with other changes to a vampire’s form. On humans, they’re permanent until the vampire feeds or anoints the subject with another Vitae. Each notable change to a body part takes a turn of contact to effect.",
       "manualOnly": true,
       "requirement": "The vampire must inflict the Mesmerized Condition on the subject, who must also consume or be anointed by a Vitae (included in cost).",
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "summary": "Comanda a carne de um sujeito Mesmerizado para lhe dar uma nova aparência.",
+        "prerequisites": "Dominação •; Metamorfose ••",
+        "cost": "2 Vitae",
+        "requirement": "O vampiro deve impor a Condição Mesmerizado ao sujeito, que também precisa consumir uma Vitae ou ser ungido com ela, já incluída no custo.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Indefinida em humanos; uma noite em vampiros",
+        "effect": "O sistema funciona como Semblante Elástico, mas o vampiro só pode usar esta Devoção em outros personagens. Alterações criadas com Modelagem da Carne podem ser preservadas com Força de Vontade durante o Sono Diurno, como outras mudanças na forma de um vampiro. Em humanos, são permanentes até que o vampiro alimente o sujeito ou o unja com outra Vitae. Cada mudança significativa em uma parte do corpo exige um turno de contato para ser efetuada."
+      }
     },
     {
       "id": "devotion-flesh-sculpting",
@@ -9763,7 +9792,7 @@
       "id": "devotion-forced-march",
       "kind": "devotion",
       "name": "Forced March",
-      "translatedName": "Forced March",
+      "translatedName": "Marcha Forçada",
       "prerequisites": "Celerity ••; Resilience ••",
       "experienceCost": 2,
       "summary": "Maintain Celerity's maximum running speed for hours.",
@@ -9774,7 +9803,16 @@
       "duration": "Resilience hours",
       "effect": "The vampire can move at the maximum Speed allowed by Celerity for the duration. Except for reflexive actions such as Perception, she can do nothing but move in this time. If the vampire stops for any reason, she must reactivate this Devotion. However, any potential assailants must match her Speed or else they have little chance of catching up to her.",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "summary": "Mantém por horas a Velocidade máxima de corrida de Celeridade.",
+        "prerequisites": "Celeridade ••; Resiliência ••",
+        "cost": "3 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Horas iguais à Resiliência",
+        "effect": "O vampiro pode se mover à Velocidade máxima permitida por Celeridade durante a duração. Exceto por ações reflexivas, como Percepção, só pode se mover nesse período. Se parar por qualquer motivo, deve reativar esta Devoção. Possíveis agressores precisam igualar sua Velocidade ou terão poucas chances de alcançá-lo."
+      }
     },
     {
       "id": "devotion-frog-prince",
@@ -9803,7 +9841,7 @@
       "id": "devotion-gorge",
       "kind": "devotion",
       "name": "Gorge",
-      "translatedName": "Gorge",
+      "translatedName": "Empanturrar",
       "prerequisites": "Protean ••; Resilience •",
       "experienceCost": 1,
       "summary": "Swell the body with a temporary reserve of Vitae.",
@@ -9814,7 +9852,16 @@
       "duration": "Blood Potency nights",
       "effect": "The Gangrel floods her flesh with Vitae, bulging like a wellfed tick. Swollen with blood, she can store up to her Resilience dots in extra Vitae. While swollen, her skin takes on a crimson hue and a taut appearance that’s unsettling to look upon. This Devotion cannot be used again until the vampire’s Vitae pool contains fewer points than her normal limit.",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "summary": "Incha o corpo com uma reserva temporária de Vitae.",
+        "prerequisites": "Metamorfose ••; Resiliência •",
+        "cost": "1 de Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noites iguais à Potência de Sangue",
+        "effect": "O Gangrel inunda a própria carne com Vitae, inchando como um carrapato bem alimentado. Cheio de sangue, pode armazenar Vitae adicional até o número de seus pontos de Resiliência. Enquanto está inchado, sua pele adquire um tom carmesim e uma aparência esticada que causa desconforto a quem a vê. Esta Devoção não pode ser usada novamente até que a reserva de Vitae do vampiro tenha menos pontos que seu limite normal."
+      }
     },
     {
       "id": "devotion-graft",
