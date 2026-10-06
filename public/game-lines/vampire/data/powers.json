@@ -5383,7 +5383,7 @@
       "id": "devotion-give-take",
       "kind": "devotion",
       "name": "The Give-and-Take",
-      "translatedName": "The Give-and-Take",
+      "translatedName": "A Troca",
       "prerequisites": "Celerity ••• or Vigor •••",
       "bloodlineId": "liderc",
       "experienceCost": 1,
@@ -5395,13 +5395,23 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "One night",
-      "effect": "As she feeds (with The Look or otherwise), the vampire recycles power back into her vessel. The victim gains two dots of the vampire’s physical Disciplines for the rest of the night, spending Willpower instead of Vitae when needed. However, for the same period, the vampire automatically steals any Willpower the victim might gain for fulfilling a Vice. The vampire does not have to be present to gain the Willpower."
+      "effect": "As she feeds (with The Look or otherwise), the vampire recycles power back into her vessel. The victim gains two dots of the vampire’s physical Disciplines for the rest of the night, spending Willpower instead of Vitae when needed. However, for the same period, the vampire automatically steals any Willpower the victim might gain for fulfilling a Vice. The vampire does not have to be present to gain the Willpower.",
+      "presentationPt": {
+        "prerequisites": "Celeridade ••• ou Ímpeto •••",
+        "cost": "2 Vitae",
+        "summary": "Concede pontos de Disciplinas Físicas a uma fonte enquanto rouba sua recuperação por Vício.",
+        "requirement": "O vampiro precisa se alimentar da vítima.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Uma noite",
+        "effect": "Enquanto se alimenta (com O Olhar ou de outra forma), o vampiro devolve poder à sua fonte. A vítima recebe dois pontos das Disciplinas Físicas do vampiro pelo resto da noite, gastando Força de Vontade em vez de Vitae quando necessário. Porém, durante o mesmo período, o vampiro rouba automaticamente qualquer Força de Vontade que a vítima ganharia ao satisfazer um Vício. O vampiro não precisa estar presente para receber a Força de Vontade."
+      }
     },
     {
       "id": "devotion-look",
       "kind": "devotion",
       "name": "The Look",
-      "translatedName": "The Look",
+      "translatedName": "O Olhar",
       "prerequisites": "Majesty ••",
       "bloodlineId": "liderc",
       "experienceCost": 1,
@@ -5412,13 +5422,22 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "Once per subject in a scene, if the vampire exceptionally succeeds on a mundane roll to provoke emotion, whether positive or negative, she steals a point of Willpower from the victim and converts it to Vitae. If the victim has no Willpower to lose, he takes a point of lethal damage instead. If using this Devotion fulfills a Mask or Dirge, the vampire may choose to gain another point of Vitae instead of Willpower. Beloved with Blood Potency high enough to require Kindred blood for sustenance can use this Devotion to feed on humans, but only Vitae taken from Willpower is palatable."
+      "effect": "Once per subject in a scene, if the vampire exceptionally succeeds on a mundane roll to provoke emotion, whether positive or negative, she steals a point of Willpower from the victim and converts it to Vitae. If the victim has no Willpower to lose, he takes a point of lethal damage instead. If using this Devotion fulfills a Mask or Dirge, the vampire may choose to gain another point of Vitae instead of Willpower. Beloved with Blood Potency high enough to require Kindred blood for sustenance can use this Devotion to feed on humans, but only Vitae taken from Willpower is palatable.",
+      "presentationPt": {
+        "prerequisites": "Majestade ••",
+        "cost": "1 de Força de Vontade",
+        "summary": "Transforma influência emocional excepcional em alimentação psíquica.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "Uma vez por sujeito em uma cena, se o vampiro obtiver sucesso excepcional em um teste mundano para provocar uma emoção, positiva ou negativa, ela rouba um ponto de Força de Vontade da vítima e o converte em Vitae. Se a vítima não tiver Força de Vontade para perder, sofre um ponto de dano letal. Se usar esta Devoção satisfizer uma Máscara ou um Lamento, o vampiro pode escolher receber outro ponto de Vitae em vez de Força de Vontade. Amados com Potência de Sangue alta o bastante para exigir sangue dos Membros como sustento podem usar esta Devoção para se alimentar de humanos, mas apenas a Vitae obtida de Força de Vontade é aceitável."
+      }
     },
     {
       "id": "devotion-one-got-away",
       "kind": "devotion",
       "name": "The One That Got Away",
-      "translatedName": "The One That Got Away",
+      "translatedName": "O Amor Perdido",
       "prerequisites": "Obfuscate ••••",
       "bloodlineId": "liderc",
       "experienceCost": 2,
@@ -5430,13 +5449,23 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "One night per dot of Blood Potency",
-      "effect": "When the victim wakes, he’s convinced the vampire bears a physical or personal resemblance to the person of his dreams. The victim gains a new Vice of sacrificing (work, money, favors, etc.). In addition, the vampire has Exceptional Success on three successes instead of five on actions to incite the victim’s emotions."
+      "effect": "When the victim wakes, he’s convinced the vampire bears a physical or personal resemblance to the person of his dreams. The victim gains a new Vice of sacrificing (work, money, favors, etc.). In addition, the vampire has Exceptional Success on three successes instead of five on actions to incite the victim’s emotions.",
+      "presentationPt": {
+        "prerequisites": "Ofuscação ••••",
+        "cost": "1 Vitae",
+        "summary": "Torna-se o ideal temporário e o Vício de uma vítima adormecida.",
+        "requirement": "O vampiro precisa se alimentar da vítima enquanto ela dorme.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Uma noite por ponto de Potência de Sangue",
+        "effect": "Quando a vítima acorda, está convencida de que o vampiro tem uma semelhança física ou pessoal com a pessoa de seus sonhos. A vítima recebe um novo Vício de sacrificar (trabalho, dinheiro, favores etc.). Além disso, o vampiro obtém sucesso excepcional com três sucessos em vez de cinco nas ações para incitar as emoções da vítima."
+      }
     },
     {
       "id": "devotion-pledge",
       "kind": "devotion",
       "name": "The Pledge",
-      "translatedName": "The Pledge",
+      "translatedName": "A Promessa",
       "prerequisites": "Majesty ••",
       "bloodlineId": "liderc",
       "experienceCost": 1,
@@ -5447,7 +5476,16 @@
       "requirement": "The vampire must feed on the victim.",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "If the mortal consents (e.g., she can’t be blood bound or subject to Dominate, Majesty, or other forms of coercion), the vampire feeds, paying the activation cost as he does. Both characters gain the Promised Condition."
+      "effect": "If the mortal consents (e.g., she can’t be blood bound or subject to Dominate, Majesty, or other forms of coercion), the vampire feeds, paying the activation cost as he does. Both characters gain the Promised Condition.",
+      "presentationPt": {
+        "prerequisites": "Majestade ••",
+        "cost": "1 de Força de Vontade",
+        "summary": "Faz uma promessa a uma fonte, concedendo Méritos Sociais e recuperando Força de Vontade por meio da paixão.",
+        "requirement": "O vampiro precisa se alimentar da vítima.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "Se a mortal consentir (por exemplo, ela não pode estar vinculada pelo sangue nem sujeita a Dominação, Majestade ou outras formas de coerção), o vampiro se alimenta, pagando o custo de ativação ao fazê-lo. Ambos os personagens recebem a Condição Prometido."
+      }
     },
     {
       "id": "devotion-infectious-bite",
