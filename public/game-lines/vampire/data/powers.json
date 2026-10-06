@@ -7627,7 +7627,7 @@
       "id": "devotion-bones-mountain",
       "kind": "devotion",
       "name": "Bones of the Mountain",
-      "translatedName": "Bones of the Mountain",
+      "translatedName": "Ossos da Montanha",
       "prerequisites": "Protean ••••, Resilience •••, Vigor •••",
       "experienceCost": 5,
       "cost": "3 Vitae",
@@ -7641,13 +7641,26 @@
         "failure": "No transformation takes place.",
         "success": "The vampire transforms her body into animate stone, which lasts until she stops paying 3 Vitae per turn. For the duration, she benefits from all active effects of Resilience and Vigor each turn without additional Vitae expenditure, and adds her Protean dots to her effective Resilience. All her unarmed attacks deal lethal damage. If she takes lethal damage in her rightmost Health box, she may reflexively activate Unmarked Grave at no cost regardless of the material’s Durability.",
         "exceptionalSuccess": "The vampire also becomes immune to the Knocked Down Tilt for the duration."
+      },
+      "presentationPt": {
+        "prerequisites": "Metamorfose ••••, Resiliência •••, Ímpeto •••",
+        "cost": "3 Vitae",
+        "summary": "Torna-se pedra viva e combina poderosas Disciplinas Físicas.",
+        "dicePool": "Vigor + Sobrevivência + Metamorfose",
+        "action": "Instantânea",
+        "rollResults": {
+          "dramaticFailure": "O vampiro se contorce com a dor de uma mudança descontrolada, transformando-se em uma estátua imóvel numa pose retorcida. Ela não pode se mover, agir ou falar até seu próximo turno e precisa fazer um teste para resistir ao frenesi quando o efeito terminar.",
+          "failure": "Nenhuma transformação ocorre.",
+          "success": "O vampiro transforma seu corpo em pedra animada, permanecendo assim até parar de pagar 3 Vitae por turno. Durante o efeito, recebe todos os efeitos ativos de Resiliência e Ímpeto a cada turno sem gastar Vitae adicional e soma seus pontos de Metamorfose à Resiliência efetiva. Todos os seus ataques desarmados causam dano letal. Se sofrer dano letal na caixa de Vitalidade mais à direita, pode ativar reflexivamente Túmulo Sem Marca sem custo, independentemente da Durabilidade do material.",
+          "exceptionalSuccess": "O vampiro também fica imune à Complicação Derrubado durante o efeito."
+        }
       }
     },
     {
       "id": "devotion-celebrity",
       "kind": "devotion",
       "name": "Celebrity",
-      "translatedName": "Celebrity",
+      "translatedName": "Celebridade",
       "prerequisites": "Majesty ••",
       "experienceCost": 2,
       "cost": "3 Vitae",
@@ -7662,6 +7675,20 @@
         "failure": "The vampire’s insinuations are too subtle to kindle his victim’s fanaticism.",
         "success": "The elder fans the flame of his victim’s enthusiasm for him, prompting her to rave about her new best friend at every opportunity and spread his influence. At the end of every scene while the victim is still Charmed or Enthralled, as long as she had reasonable opportunity to engage in conversation with someone, the vampire gains a temporary dot of one of the following Merits: Allies, Fame, Herd, Retainer, Staff, or Status. The effects of this Devotion end when the victim no longer has the prerequisite Condition. Attempts to use the Majesty Discipline on anyone in the general location where the victim lives or spends most of her time gain the 9-again quality, or 8-again if the duration lasts longer than a week (e.g. as the result of The Wish, Vampire: The Requiem Second Edition, p. 148).",
         "exceptionalSuccess": "Attempts to use the Majesty Discipline on anyone in the general location where the victim lives or spends most of her time gain the 8-again quality right away."
+      },
+      "presentationPt": {
+        "prerequisites": "Majestade ••",
+        "cost": "3 Vitae",
+        "summary": "Transforma os elogios de um fã em um Mérito Social temporário.",
+        "requirement": "O vampiro precisa ter infligido Encantado(Membro) ou Cativado ao alvo.",
+        "dicePool": "Presença + Empatia + Majestade contra Perseverança + Tolerância Sobrenatural",
+        "action": "Disputada; a resistência é Reflexiva",
+        "rollResults": {
+          "dramaticFailure": "Os esforços do vampiro saem pela culatra, fazendo o entusiasmo desenfreado da vítima afastar as pessoas. Qualquer tentativa de usar Majestade em alguém na região onde a vítima mora ou passa a maior parte do tempo perde 10-novamente até que a Condição exigida termine; novas tentativas de influenciá-la depois disso sofrem −2 até obter sucesso.",
+          "failure": "As insinuações do vampiro são sutis demais para despertar o fanatismo da vítima.",
+          "success": "O ancião alimenta o entusiasmo da vítima por ele, levando-a a falar maravilhas de seu novo melhor amigo sempre que puder e a espalhar sua influência. Ao fim de cada cena enquanto a vítima ainda estiver Encantado(Membro) ou Cativado, desde que tenha tido uma oportunidade razoável de conversar com alguém, o vampiro recebe um ponto temporário de um dos seguintes Méritos: Aliados, Fama, Rebanho, Lacaio, Funcionários ou Status. Os efeitos desta Devoção terminam quando a vítima deixa de ter a Condição exigida. Tentativas de usar Majestade em alguém na região onde a vítima mora ou passa a maior parte do tempo recebem 9-novamente, ou 8-novamente se a duração ultrapassar uma semana, por exemplo como resultado de O Desejo (Vampire: The Requiem Second Edition, p. 148).",
+          "exceptionalSuccess": "Tentativas de usar Majestade em alguém na região onde a vítima mora ou passa a maior parte do tempo recebem 8-novamente imediatamente."
+        }
       }
     },
     {
@@ -7689,7 +7716,7 @@
       "id": "devotion-crush-years",
       "kind": "devotion",
       "name": "Crush of Years",
-      "translatedName": "Crush of Years",
+      "translatedName": "Peso dos Anos",
       "prerequisites": "Nightmare ••••, Majesty •••",
       "experienceCost": 3,
       "cost": "4 Vitae + 1 Willpower",
@@ -7703,13 +7730,26 @@
         "failure": "The vampire’s efforts don’t impress her audience.",
         "success": "Anyone who fails to overcome the vampire’s roll succumbs to the full forbidden knowledge of eternity, and suffers the Crushed Condition.",
         "exceptionalSuccess": "The vampire regains a Willpower point, having stared immortality full in the face and come to terms with it."
+      },
+      "presentationPt": {
+        "prerequisites": "Pesadelo ••••, Majestade •••",
+        "cost": "4 Vitae + 1 de Força de Vontade",
+        "summary": "Impõe o peso dos séculos sobre um alvo.",
+        "dicePool": "Presença + Expressão + Pesadelo contra Compostura + Tolerância Sobrenatural",
+        "action": "Disputada; a resistência é Reflexiva",
+        "rollResults": {
+          "dramaticFailure": "O domínio desta Devoção pelo ancião vem de séculos suportando a lenta compreensão do que a imortalidade realmente significa, e ela faz tudo isso desabar sobre si mesma. Ela própria recebe a Condição Esmagado.",
+          "failure": "Os esforços do vampiro não impressionam seu público.",
+          "success": "Quem não superar o teste do vampiro sucumbe ao pleno conhecimento proibido da eternidade e recebe a Condição Esmagado.",
+          "exceptionalSuccess": "O vampiro recupera um ponto de Força de Vontade, tendo encarado a imortalidade de frente e aceitado o que ela significa."
+        }
       }
     },
     {
       "id": "devotion-legion",
       "kind": "devotion",
       "name": "Legion",
-      "translatedName": "Legion",
+      "translatedName": "Legião",
       "prerequisites": "Animalism •••••, Auspex •••",
       "experienceCost": 4,
       "cost": "1+ Vitae",
@@ -7725,6 +7765,21 @@
         "failure": "The animal blood fails to take hold and the vampire forges no connection, or the area doesn’t contain enough animals of that type.",
         "success": "The animal blood within the vampire’s veins forges a connection between himself and all animals of the type she consumed within (Blood Potency) miles. For the duration, he receives passive sensory input from them as vague impressions and flashes, gaining +5 dice to all Perception rolls and rolls to search out or investigate anything in range, as long as the animals have an opportunity to perceive it. In addition, the vampire can spend a Vitae to take an active glimpse, taking over one animal’s senses as an instant action. He chooses a location within range and shuts down his own senses for as long as he likes to ride along with an animal there. By default, he has no control over its actions but can sense anything it can, including things he wouldn’t normally pick up like pheromones or sounds only audible to canine ears. He can switch animals at any time with another Vitae and an instant action. The vampire can use Feral Whispers on any animal he’s currently using for an active glimpse.",
         "exceptionalSuccess": "Once per active glimpse, the vampire may make his presence behind the animal’s eyes known to someone in its vicinity. If he succeeds on a Presence + Intimidation roll, resisted by the target’s Composure, the target gains the Spooked Condition without quite realizing why the creature is so unsettling."
+      },
+      "presentationPt": {
+        "prerequisites": "Animalismo •••••, Auspícios •••",
+        "cost": "1+ Vitae",
+        "summary": "Usa os sentidos de todos os animais próximos de um tipo escolhido.",
+        "requirement": "Consumir sangue de um único tipo de animal equivalente a 10 Vitae antes de usar esta Devoção.",
+        "dicePool": "Compostura + Empatia com Animais + Animalismo",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "rollResults": {
+          "dramaticFailure": "O vampiro estabelece um vínculo, mas sua própria Fera se sobrepõe às suas intenções, provocando uma reação de luta ou fuga. Todos os animais afetados fogem de uma vez de maneira incrivelmente chamativa — enormes bandos de corvos encobrindo a lua, hordas antinaturais de gatos enchendo a rua — ou convergem para o local do vampiro e atacam em massa, conforme a natureza do animal.",
+          "failure": "O sangue animal não surte efeito e o vampiro não estabelece vínculo algum, ou a área não contém animais suficientes daquele tipo.",
+          "success": "O sangue animal nas veias do vampiro estabelece um vínculo entre ele e todos os animais do tipo cujo sangue consumiu em um raio de (Potência de Sangue) milhas. Durante o efeito, recebe informações sensoriais passivas deles na forma de impressões vagas e lampejos, ganhando +5 dados em todos os testes de Percepção e nos testes para procurar ou investigar algo no alcance, desde que os animais tenham oportunidade de percebê-lo. Além disso, o vampiro pode gastar uma Vitae para obter um vislumbre ativo, assumindo os sentidos de um animal como ação instantânea. Ele escolhe um local no alcance e desliga seus próprios sentidos pelo tempo que desejar para acompanhar um animal ali. Normalmente, não controla suas ações, mas pode sentir tudo que ele sente, incluindo coisas que não perceberia normalmente, como feromônios ou sons audíveis apenas a ouvidos caninos. Pode trocar de animal a qualquer momento com outra Vitae e uma ação instantânea. O vampiro pode usar Sussurros Ferozes em qualquer animal cujos sentidos esteja usando para um vislumbre ativo.",
+          "exceptionalSuccess": "Uma vez por vislumbre ativo, o vampiro pode revelar sua presença por trás dos olhos do animal a alguém nas proximidades. Se obtiver sucesso em um teste de Presença + Intimidação, resistido pela Compostura do alvo, o alvo recebe Assombrado sem perceber exatamente por que a criatura é tão perturbadora."
+        }
       }
     },
     {
