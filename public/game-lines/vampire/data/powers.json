@@ -10224,7 +10224,7 @@
       "id": "h-vtr-fire-revolution:devotion:blur",
       "kind": "devotion",
       "name": "Blur",
-      "translatedName": "Blur",
+      "translatedName": "Borrão",
       "prerequisites": "Obfuscate ••",
       "experienceCost": 1,
       "summary": "Conceals a blood-bound human operative with the vampire's Obfuscate.",
@@ -10238,7 +10238,17 @@
       "duration": "Night",
       "requirement": "The vampire can only use this Devotion on humans she has a blood bond with. She must touch them to use this effect.",
       "dicePool": "None",
-      "effect": "The subject benefits from the Lost Visage in reflections and video recordings like a vampire but is otherwise visible to direct sensory detection."
+      "effect": "The subject benefits from the Lost Visage in reflections and video recordings like a vampire but is otherwise visible to direct sensory detection.",
+      "presentationPt": {
+        "prerequisites": "Ofuscação ••",
+        "cost": "2 Vitae",
+        "summary": "Oculta um agente humano vinculado pelo sangue com a Ofuscação do vampiro.",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "dicePool": "Nenhuma",
+        "requirement": "O vampiro só pode usar esta Devoção em humanos com quem tenha um vínculo de sangue. Ele precisa tocá-los para usar esse efeito.",
+        "effect": "O sujeito recebe o benefício de Semblante Perdido em reflexos e gravações de vídeo, como um vampiro, mas continua visível à detecção sensorial direta."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:almost-human",
@@ -10264,7 +10274,7 @@
       "id": "h-vtr-fire-revolution:devotion:bluster",
       "kind": "devotion",
       "name": "Bluster",
-      "translatedName": "Bluster",
+      "translatedName": "Bravata",
       "prerequisites": "Obfuscate •••; Resilience ••",
       "experienceCost": 3,
       "summary": "Prevents supernatural powers from uncovering the vampire's weaknesses.",
@@ -10277,7 +10287,16 @@
       "action": "Instant",
       "duration": "Scene",
       "dicePool": "None",
-      "effect": "Any attempts to use supernatural powers to uncover the vampire’s weakness, whether her greatest fear, her banes, or anything that would otherwise be used to exploit her, fail automatically; this includes Auspex. Note that this effect can’t prevent good old-fashioned footwork from uncovering any cracks in the armor — it’s pure puffery on the part of the Beast. The fact that the vampire seems to have no weakness is certain to seem suspicious, but it’s very annoying in the short term."
+      "effect": "Any attempts to use supernatural powers to uncover the vampire’s weakness, whether her greatest fear, her banes, or anything that would otherwise be used to exploit her, fail automatically; this includes Auspex. Note that this effect can’t prevent good old-fashioned footwork from uncovering any cracks in the armor — it’s pure puffery on the part of the Beast. The fact that the vampire seems to have no weakness is certain to seem suspicious, but it’s very annoying in the short term.",
+      "presentationPt": {
+        "prerequisites": "Ofuscação •••; Resiliência ••",
+        "cost": "2 Vitae",
+        "summary": "Impede que poderes sobrenaturais descubram as fraquezas do vampiro.",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "dicePool": "Nenhuma",
+        "effect": "Quaisquer tentativas de usar poderes sobrenaturais para descobrir uma fraqueza do vampiro, seja seu maior medo, suas Maldições ou qualquer coisa que possa ser usada para explorá-lo, falham automaticamente; isso inclui Auspícios. Esse efeito não pode impedir que uma investigação tradicional descubra brechas na armadura — é pura bravata da Fera. O fato de o vampiro parecer não ter fraquezas certamente parecerá suspeito, mas é muito irritante no curto prazo."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:apex-predator",
@@ -10322,7 +10341,7 @@
       "id": "h-vtr-fire-revolution:devotion:guardian-vigil",
       "kind": "devotion",
       "name": "Guardian Vigil",
-      "translatedName": "Guardian Vigil",
+      "translatedName": "Vigília do Guardião",
       "prerequisites": "Auspex •; Celerity •",
       "experienceCost": 1,
       "summary": "Makes ambush detection a rote action and rewards a failed ambush with a free Celerity effect.",
@@ -10335,7 +10354,16 @@
       "action": "Instant",
       "duration": "Scene",
       "dicePool": "None",
-      "effect": "The vampire treats any Perception action to detect an ambush as a rote action. If someone fails to ambush him, he can use an effect of Celerity that would normally cost Vitae for free."
+      "effect": "The vampire treats any Perception action to detect an ambush as a rote action. If someone fails to ambush him, he can use an effect of Celerity that would normally cost Vitae for free.",
+      "presentationPt": {
+        "prerequisites": "Auspícios •; Celeridade •",
+        "cost": "1 Vitae",
+        "summary": "Dá a qualidade de Rotina à detecção de emboscadas e concede um efeito gratuito de Celeridade quando uma emboscada falha.",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "dicePool": "Nenhuma",
+        "effect": "O vampiro trata qualquer ação de Percepção para detectar uma emboscada como uma ação com qualidade de Rotina. Se alguém falhar ao emboscá-lo, ele pode usar gratuitamente um efeito de Celeridade que normalmente custaria Vitae."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:death-mask",
@@ -10400,7 +10428,7 @@
       "id": "h-vtr-fire-revolution:devotion:it-s-who-you-know",
       "kind": "devotion",
       "name": "It's Who You Know",
-      "translatedName": "It's Who You Know",
+      "translatedName": "É Quem Você Conhece",
       "prerequisites": "Auspex ••",
       "experienceCost": 2,
       "summary": "Reads a subject's aliases, Contacts, Allies, and potentially damaging social connections.",
@@ -10418,6 +10446,20 @@
         "exceptionalSuccess": "The vampire learns a damaging piece of information about one of the subject’s Social Merits, if applicable. If not, she learns it about her prey.",
         "failure": "This guy’s clean. Too clean.",
         "dramaticFailure": "The vampire’s information is entirely, dangerously false: a political alliance that doesn’t exist, a trusted confidant allying with a hated enemy, etc."
+      },
+      "presentationPt": {
+        "prerequisites": "Auspícios ••",
+        "cost": "1 Vitae",
+        "summary": "Lê os pseudônimos, Contatos, Aliados e conexões sociais potencialmente comprometedoras de um sujeito.",
+        "requirement": "A vítima precisa ser humana.",
+        "dicePool": "Raciocínio + Política + Auspícios – Compostura",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "Para cada sucesso, o vampiro descobre nomes ou pseudônimos usados pelo sujeito, junto com quaisquer Contatos ou Aliados que ele tenha. Esse efeito não é penalizado por Anonimato.",
+          "exceptionalSuccess": "O vampiro descobre uma informação comprometedora sobre um dos Méritos Sociais do sujeito, se aplicável. Caso contrário, descobre essa informação sobre sua presa.",
+          "failure": "Esse cara está limpo. Limpo demais.",
+          "dramaticFailure": "As informações do vampiro são completamente e perigosamente falsas: uma aliança política inexistente, um confidente de confiança se aliando a um inimigo odiado etc."
+        }
       }
     },
     {
