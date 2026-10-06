@@ -11033,7 +11033,7 @@
       "id": "cruac-preys-blood",
       "kind": "cruac-rite",
       "name": "Prey's Blood",
-      "translatedName": "Prey's Blood",
+      "translatedName": "Sangue da Presa",
       "rating": 1,
       "experienceCost": 2,
       "targetSuccesses": 3,
@@ -11043,13 +11043,19 @@
       "page": 111,
       "duration": "Potency nights",
       "effect": "Sense the subject's direction and add Crúac to Investigation, Survival, and Kindred Senses rolls to track them.",
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "contestedBy": "Compostura + Potência de Sangue",
+        "summary": "Rastreia uma fonte recente de sangue pelos pontos cardeais e fortalece as tentativas de seguir seu rastro.",
+        "duration": "Noites iguais à Potência",
+        "effect": "Perceba a direção do alvo e some Crúac aos testes de Investigação, Sobrevivência e Sentidos Vampíricos para rastreá-lo."
+      }
     },
     {
       "id": "cruac-balancing-four-humors",
       "kind": "cruac-rite",
       "name": "Balancing the Four Humors",
-      "translatedName": "Balancing the Four Humors",
+      "translatedName": "Equilíbrio dos Quatro Humores",
       "rating": 3,
       "experienceCost": 2,
       "targetSuccesses": 6,
@@ -11058,13 +11064,18 @@
       "page": 112,
       "duration": "Night",
       "effect": "Consumers add the ritualist's Crúac to rolls penalized by extreme environments or Environmental Tilts, except fire and sunlight.",
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Prepara doses que protegem contra ambientes extremos e Complicações Ambientais.",
+        "duration": "Noite",
+        "effect": "Quem consumir a mistura soma o Crúac do ritualista aos testes penalizados por ambientes extremos ou Complicações Ambientais, exceto fogo e luz solar."
+      }
     },
     {
       "id": "cruac-curse-ahasverus",
       "kind": "cruac-rite",
       "name": "Curse of Ahasverus",
-      "translatedName": "Curse of Ahasverus",
+      "translatedName": "Maldição de Ahasverus",
       "rating": 5,
       "experienceCost": 2,
       "targetSuccesses": 10,
@@ -11072,13 +11083,17 @@
       "source": "Wild Hunt: Gangrel",
       "page": 112,
       "effect": "Kindred must spend Willpower not to lash out at the victim, and frenzy resistance near them is penalized by Potency.",
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Faz uma vítima parecer um intruso hostil a todo vampiro que encontrar.",
+        "effect": "Membros precisam gastar Força de Vontade para não investir contra a vítima com a Aura Predatória; testes para resistir ao frenesi perto dela sofrem uma penalidade igual à Potência."
+      }
     },
     {
       "id": "cruac-sacrifice-odin",
       "kind": "cruac-rite",
       "name": "Sacrifice of Odin",
-      "translatedName": "Sacrifice of Odin",
+      "translatedName": "Sacrifício de Odin",
       "rating": 4,
       "experienceCost": 2,
       "targetSuccesses": 8,
@@ -11086,13 +11101,17 @@
       "source": "Wild Hunt: Gangrel",
       "page": 112,
       "effect": "An aggravated self-mutilation grants +5 from Willpower on actions, +3 to Resistance Attributes, and a chance to recover Willpower spent on mundane actions.",
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Mutila o ritualista para fortalecer a Força de Vontade e a resistência enquanto o ferimento permanecer.",
+        "effect": "Uma automutilação agravada concede +5 ao usar Força de Vontade em ações, +3 nos Atributos de Resistência e uma chance de recuperar Força de Vontade gasta em ações mundanas."
+      }
     },
     {
       "id": "cruac-tickblood",
       "kind": "cruac-rite",
       "name": "Tickblood",
-      "translatedName": "Tickblood",
+      "translatedName": "Sangue de Carrapato",
       "rating": 2,
       "experienceCost": 2,
       "targetSuccesses": 7,
@@ -11102,7 +11121,13 @@
       "page": 112,
       "duration": "Potency nights",
       "effect": "Feeding from the subject yields two Vitae per lethal damage and the swollen body gains two general armor except against bites.",
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "resistedBy": "Vigor",
+        "summary": "Dobra a capacidade de Vitae de uma vítima e torna seu sangue sobrenaturalmente nutritivo.",
+        "duration": "Noites iguais à Potência",
+        "effect": "Alimentar-se do alvo fornece dois Vitae por dano letal; o corpo inchado recebe dois pontos de armadura geral, exceto contra mordidas."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:twisting-the-id",
