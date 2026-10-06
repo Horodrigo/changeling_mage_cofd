@@ -6809,8 +6809,8 @@
       "id": "devotion-love-bomb",
       "kind": "devotion",
       "name": "Love Bomb",
-      "translatedName": "Love Bomb",
-      "summary": "Floods a subject with sudden, overwhelming affection.",
+      "translatedName": "Bomba de Amor",
+      "summary": "Implant a Majesty effect activated by a trigger the subject perceives.",
       "source": "Sin Again: Daeva",
       "page": 97,
       "manualOnly": true,
@@ -6825,14 +6825,28 @@
         "exceptionalSuccess": "The charge implanted into the subject is particularly potent and can affect a second victim before expiring.",
         "failure": "The vampire’s influence fails to take root.",
         "dramaticFailure": "The victim’s blood sours against the vampire, granting 9-again to resist his Majesty for the scene."
+      },
+      "presentationPt": {
+        "summary": "Implanta um efeito de Majestade que será ativado por um gatilho percebido pelo sujeito.",
+        "prerequisites": "Dominação •••, Majestade •••",
+        "cost": "1 Vitae, além de qualquer custo do efeito de Majestade implantado.",
+        "dicePool": "Presença + Empatia + Majestade contra Compostura + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Noites iguais à Potência de Sangue",
+        "rollResults": {
+          "success": "O vampiro implanta um efeito de Majestade no sujeito, ativado quando as condições corretas forem atendidas. O sujeito deve perceber o gatilho: “Na próxima vez que encontrar um vampiro” não funciona se não souber da Mascarada, mas “Quando alguém disser a palavra ‘Membro’ para você” funciona. Quando o gatilho ocorre, o jogador do vampiro testa normalmente para ativar o efeito de Majestade implantado contra o personagem que acionou o gatilho, ignorando a necessidade de ter imposto Fascínio. Para os efeitos de Majestade, o vampiro que ativou esta Devoção continua sendo o usuário do poder.",
+          "exceptionalSuccess": "A carga implantada no sujeito é especialmente potente e pode afetar uma segunda vítima antes de expirar.",
+          "failure": "A influência do vampiro não consegue se estabelecer.",
+          "dramaticFailure": "O sangue da vítima se volta contra o vampiro, concedendo 9-novamente para resistir à Majestade dele durante a cena."
+        }
       }
     },
     {
       "id": "devotion-one-night-stand",
       "kind": "devotion",
       "name": "One Night Stand",
-      "translatedName": "One Night Stand",
-      "summary": "Creates an intense but deliberately short-lived emotional attachment.",
+      "translatedName": "Caso de Uma Noite",
+      "summary": "Hinder recalling or describing the vampire after Charmed ends.",
       "source": "Sin Again: Daeva",
       "page": 97,
       "manualOnly": true,
@@ -6842,14 +6856,23 @@
       "requirement": "The vampire must have inflicted the Charmed Condition on the victim.",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "When the victim resolves or ends Charmed, he won’t quite remember who he’s been serving. He’ll know someone beguiled him, but he wouldn’t be able to pull her out of a lineup, or even a fantasy. Most characters will think of this in the same way as getting blackout drunk, and may just forget about the incident entirely. If they don’t, apply the vampire’s Dominate/Obfuscate dots as a penalty on all Mental actions to recall or describe her."
+      "effect": "When the victim resolves or ends Charmed, he won’t quite remember who he’s been serving. He’ll know someone beguiled him, but he wouldn’t be able to pull her out of a lineup, or even a fantasy. Most characters will think of this in the same way as getting blackout drunk, and may just forget about the incident entirely. If they don’t, apply the vampire’s Dominate/Obfuscate dots as a penalty on all Mental actions to recall or describe her.",
+      "presentationPt": {
+        "summary": "Dificulta lembrar ou descrever o vampiro depois que Encantado(Membro) termina.",
+        "prerequisites": "Majestade ••, Dominação • ou Ofuscação •",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro deve ter imposto a Condição Encantado(Membro) à vítima.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Quando a vítima resolve ou encerra Encantado(Membro), não se lembra bem de quem estava servindo. Sabe que alguém a encantou, mas não conseguiria identificar essa pessoa entre suspeitos, nem mesmo em uma fantasia. A maioria dos personagens encara isso como uma bebedeira da qual não se lembra e pode esquecer completamente o incidente. Caso não esqueça, aplique os pontos de Dominação/Ofuscação do vampiro como penalidade em todas as ações Mentais para se lembrar dele ou descrevê-lo."
+      }
     },
     {
       "id": "devotion-picture-perfect",
       "kind": "devotion",
       "name": "Picture Perfect",
-      "translatedName": "Picture Perfect",
-      "summary": "Controls how the vampire appears in captured images.",
+      "translatedName": "Retrato Perfeito",
+      "summary": "Enchant physical art depicting the vampire to cause Swooning when viewers later meet them.",
       "source": "Sin Again: Daeva",
       "page": 97,
       "manualOnly": true,
@@ -6865,6 +6888,21 @@
         "exceptionalSuccess": "The duration is weeks instead of nights.",
         "failure": "It’s nice, but is it perfect?",
         "dramaticFailure": "The art provokes revulsion in its viewers and the vampire is blissfully unaware. She suffers her own Majesty rating as a penalty on Social rolls with anyone who sees the work in a night, and these characters are immune to her Awe. This penalty lasts a scene."
+      },
+      "presentationPt": {
+        "summary": "Encanta uma obra física que retrata o vampiro para despertar Enamorado em quem depois o encontrar.",
+        "prerequisites": "Majestade •••, Ofuscação ••",
+        "cost": "2 Vitae",
+        "requirement": "O vampiro deve derramar uma Vitae sobre uma obra de arte que o retrate, incluída no custo. O objeto deve ser físico, como uma Polaroid, uma pintura ou mesmo uma escultura.",
+        "dicePool": "Presença + Expressão + Majestade",
+        "action": "Instantânea",
+        "duration": "Noites iguais à Potência de Sangue",
+        "rollResults": {
+          "success": "O Daeva impregna a obra com um fragmento de seu carisma. Quem a encontrar e tiver um total de pontos de Perseverança + Potência de Sangue igual ou menor que os sucessos do vampiro guarda a lembrança de uma obra de profunda beleza. Se depois encontrar o vampiro, recebe a Condição Enamorado em relação a ele. O vampiro só pode criar um objeto assim por vez. Se criar outro, o efeito sobre o objeto anterior termina.",
+          "exceptionalSuccess": "A duração passa a ser em semanas em vez de noites.",
+          "failure": "É bonito, mas será perfeito?",
+          "dramaticFailure": "A obra provoca repulsa em quem a vê, e o vampiro não percebe nada. Ele sofre uma penalidade igual à sua pontuação de Majestade nos testes Sociais com quem vir a obra naquela noite, e esses personagens ficam imunes ao seu Fascínio. Essa penalidade dura uma cena."
+        }
       }
     },
     {
