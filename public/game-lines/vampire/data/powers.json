@@ -9670,25 +9670,37 @@
       "id": "devotion-bloom",
       "kind": "devotion",
       "name": "Bloom",
-      "translatedName": "Bloom",
-      "summary": "Forces rapid plant growth through blood and spores.",
+      "translatedName": "Florescer",
+      "summary": "Survive a death blow by returning in a fully blood-bound mortal infected with Spore.",
       "source": "Wild Hunt: Gangrel",
       "page": 72,
       "manualOnly": true,
       "bloodlineId": "yarilo",
       "experienceCost": 3,
-      "prerequisites": "Dominate •••••, Protean •••••",
+      "prerequisites": "Dominate •••••, Protean •••••, Spore",
       "cost": "None",
       "requirement": "The vampire must have infected at least one fully blood-bound mortal with her spores within the last month.",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "If the vampire suffers a death blow, she can activate this Devotion to — for lack of a better term — explode, caking the area in viscera. For all intents and purposes, she’s dead. However, over the next night, one of her thralls will experience an agonizing transformation as his body mutates into a facsimile of his master’s, replacing his mind with hers. Once she comes to herself, she regains all traits. For all intents and purposes, she’s undead. Once the transformation is complete, the vampire suffers a Humanity 1 breaking point. Each time she uses Bloom again in a story, the detachment roll suffers a cumulative –1 modifier."
+      "effect": "If the vampire suffers a death blow, she can activate this Devotion to — for lack of a better term — explode, caking the area in viscera. For all intents and purposes, she’s dead. However, over the next night, one of her thralls will experience an agonizing transformation as his body mutates into a facsimile of his master’s, replacing his mind with hers. Once she comes to herself, she regains all traits. For all intents and purposes, she’s undead. Once the transformation is complete, the vampire suffers a Humanity 1 breaking point. Each time she uses Bloom again in a story, the detachment roll suffers a cumulative –1 modifier.",
+      "presentationPt": {
+        "summary": "Sobrevive a um golpe fatal renascendo no corpo de um mortal plenamente vinculado pelo sangue e infectado por Esporo.",
+        "prerequisites": "Dominação •••••, Metamorfose •••••, Esporo",
+        "cost": "Nenhum",
+        "requirement": "O vampiro deve ter infectado pelo menos um mortal plenamente vinculado pelo sangue com seus esporos no último mês.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Se o vampiro sofrer um golpe fatal, pode ativar esta Devoção para explodir, por falta de termo melhor, cobrindo a área de vísceras. Para todos os efeitos, está morto. Porém, ao longo da noite seguinte, um de seus servos passa por uma transformação agonizante: seu corpo sofre mutações até se tornar uma cópia do corpo do mestre, e sua mente é substituída pela dele. Ao voltar a si, o vampiro recupera todas as características. Para todos os efeitos, é um morto-vivo. Quando a transformação termina, o vampiro sofre um Ponto de Ruptura de Humanidade 1. Cada vez que usa Florescer novamente na mesma história, o teste de degeneração sofre um modificador cumulativo de –1."
+      },
+      "requiredDevotionIds": [
+        "devotion-spore"
+      ]
     },
     {
       "id": "devotion-spore",
       "kind": "devotion",
       "name": "Spore",
-      "translatedName": "Spore",
+      "translatedName": "Esporo",
       "summary": "Releases the Yarilo's controlling spores; this basic expression is free to the bloodline.",
       "source": "Wild Hunt: Gangrel",
       "page": 72,
@@ -9701,43 +9713,77 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "Once per scene, the Yarilo can spew out a continuous cloud of microscopic spores as she breathes and speaks. Any mortal who inhales theses spores over the course of the scene becomes trivially susceptible to the vampire’s Dominate effects, applying half her Protean dots as a penalty on all rolls to resist. The vampire can affect a number of individuals in a scene equal to her Blood Potency plus one."
+      "effect": "Once per scene, the Yarilo can spew out a continuous cloud of microscopic spores as she breathes and speaks. Any mortal who inhales these spores over the course of the scene becomes trivially susceptible to the vampire’s Dominate effects, applying half her Protean dots as a penalty on all rolls to resist. The vampire can affect a number of individuals in a scene equal to her Blood Potency plus one.",
+      "presentationPt": {
+        "summary": "Libera os esporos controladores dos Yarilo; essa manifestação básica é gratuita para a Bloodline.",
+        "prerequisites": "Dominação •, Metamorfose ••",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro deve estar com Rubor da Vida ativo.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "Uma vez por cena, o Yarilo pode expelir uma nuvem contínua de esporos microscópicos enquanto respira e fala. Qualquer mortal que inale esses esporos durante a cena se torna facilmente suscetível aos efeitos de Dominação do vampiro, aplicando metade dos pontos de Metamorfose dele como penalidade em todos os testes para resistir. O vampiro pode afetar, em uma cena, um número de indivíduos igual à sua Potência de Sangue mais um."
+      }
     },
     {
       "id": "devotion-harvest",
       "kind": "devotion",
       "name": "Harvest",
-      "translatedName": "Harvest",
-      "summary": "Reaps stored vitality or influence from infected growth.",
+      "translatedName": "Colher",
+      "summary": "Apply Mesmerize to all targets exposed to Spore in the same scene.",
       "source": "Wild Hunt: Gangrel",
-      "page": 73,
+      "page": 72,
       "manualOnly": true,
       "bloodlineId": "yarilo",
       "experienceCost": 2,
-      "prerequisites": "Dominate •••",
+      "prerequisites": "Dominate •••, Spore",
       "cost": "1 Willpower, plus one Vitae per victim after the first",
       "requirement": "The vampire must have implanted her spores in all potential victims using Spore within the same scene.",
       "dicePool": "None",
       "action": "None",
-      "effect": "The vampire can apply Mesmerize to all characters who were exposed to her spores in the area; use the highest resistance trait in the group to contest the activation roll. She must still spend Vitae and make separate rolls for other effects of Dominate."
+      "effect": "The vampire can apply Mesmerize to all characters who were exposed to her spores in the area; use the highest resistance trait in the group to contest the activation roll. She must still spend Vitae and make separate rolls for other effects of Dominate.",
+      "presentationPt": {
+        "summary": "Aplica Hipnotizar a todos os alvos expostos a Esporo na mesma cena.",
+        "prerequisites": "Dominação •••, Esporo",
+        "cost": "1 de Força de Vontade, mais uma Vitae por vítima além da primeira",
+        "requirement": "O vampiro deve ter implantado seus esporos em todas as vítimas em potencial usando Esporo na mesma cena.",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "effect": "O vampiro pode aplicar Hipnotizar a todos os personagens da área que foram expostos aos seus esporos; use a maior característica de resistência do grupo para disputar o teste de ativação. Ele ainda deve gastar Vitae e fazer testes separados para os outros efeitos de Dominação."
+      },
+      "requiredDevotionIds": [
+        "devotion-spore"
+      ]
     },
     {
       "id": "devotion-sprout",
       "kind": "devotion",
       "name": "Sprout",
-      "translatedName": "Sprout",
-      "summary": "Creates a new plant extension linked to the Yarilo.",
+      "translatedName": "Brotar",
+      "summary": "Turn a victim into a will-less servant with persistent Mesmerized and plantlike adaptations.",
       "source": "Wild Hunt: Gangrel",
-      "page": 73,
+      "page": 72,
       "manualOnly": true,
       "bloodlineId": "yarilo",
       "experienceCost": 2,
-      "prerequisites": "Dominate ••, Protean ••",
+      "prerequisites": "Dominate ••, Protean ••, Spore",
       "cost": "1 Willpower",
       "requirement": "The must inflict the victim with the Mesmerized Condition and then use the Spore Devotion on him.",
       "dicePool": "Intelligence + Expression + Dominate",
-      "action": "Extended (target is ten plus the victim’s Resolve, and",
-      "effect": "each roll represents half an hour of time). The usual results of exceptional success, failure, and dramatic failure for an extended action apply to this action. Once she achieves the required successes, the victim becomes a cipher, totally incapable of acting under his own will. In effect, the Mesmerized Condition becomes persistent, and it can only be resolved if the victim suffers aggravated damage to his head. This Condition applies for the requirements of other Dominate effects, so the vampire has no need to use Mesmerize on the victim. In addition, the spores implanted in the victim’s bloodstream warp his flesh into plant-like protrusions, granting the equiv alent of a permanent Predatory Aspect adaptation (vampire player’s choice). If the vampire knows Unnatural Aspect, she can apply an adaptation from that power as well."
+      "action": "Extended (target is ten plus the victim’s Resolve, and each roll represents half an hour of time).",
+      "effect": "The usual results of exceptional success, failure, and dramatic failure for an extended action apply to this action. Once she achieves the required successes, the victim becomes a cipher, totally incapable of acting under his own will. In effect, the Mesmerized Condition becomes persistent, and it can only be resolved if the victim suffers aggravated damage to his head. This Condition applies for the requirements of other Dominate effects, so the vampire has no need to use Mesmerize on the victim. In addition, the spores implanted in the victim’s bloodstream warp his flesh into plant-like protrusions, granting the equivalent of a permanent Predatory Aspect adaptation (vampire player’s choice). If the vampire knows Unnatural Aspect, she can apply an adaptation from that power as well.",
+      "presentationPt": {
+        "summary": "Transforma a vítima em um servo sem vontade própria, com Mesmerizado persistente e adaptações vegetais.",
+        "prerequisites": "Dominação ••, Metamorfose ••, Esporo",
+        "cost": "1 de Força de Vontade",
+        "requirement": "O vampiro deve impor a Condição Mesmerizado à vítima e depois usar a Devoção Esporo nela.",
+        "dicePool": "Inteligência + Expressão + Dominação",
+        "action": "Estendida (o alvo é dez mais a Perseverança da vítima, e cada teste representa meia hora)",
+        "effect": "Os resultados usuais de sucesso excepcional, falha e falha dramática de uma ação estendida se aplicam a esta ação. Ao alcançar os sucessos necessários, a vítima se torna um fantoche, totalmente incapaz de agir por vontade própria. A Condição Mesmerizado se torna persistente e só pode ser resolvida se a vítima sofrer dano agravado na cabeça. Essa Condição satisfaz os requisitos dos outros efeitos de Dominação, de modo que o vampiro não precisa usar Hipnotizar na vítima. Além disso, os esporos implantados na corrente sanguínea da vítima deformam sua carne em protuberâncias vegetais, concedendo o equivalente a uma adaptação permanente de Aspecto Predatório, escolhida pelo jogador do vampiro. Se o vampiro conhecer Aspecto Sobrenatural, também pode aplicar uma adaptação desse poder."
+      },
+      "requiredDevotionIds": [
+        "devotion-spore"
+      ]
     },
     {
       "id": "devotion-battering-ram",
