@@ -5682,7 +5682,13 @@
         "dicePool": "Nenhuma",
         "action": "Instantânea",
         "effect": "Cada Vitae gasta cria um inseto ou aracnídeo de Tamanho 0. O Nosoi pode comandá-lo como se usasse Animalismo. O guardião faz parte do Gangrel e, por isso, o Nosoi pode perceber tudo no local onde o inseto está. O guardião age com certa independência, mas de acordo com os desejos do Nosoi; novas ordens podem ser dadas a qualquer momento, e ele responde a mudanças nas circunstâncias com a inteligência do Gangrel e uma compreensão perfeita de sua vontade. Se uma aranha for enviada para seguir um estranho pelo hospital e ele sair e entrar em um carro, ela sabe que o Nosoi quer que o siga e assim o faz. Não há alcance máximo para esses guardiões; se o homem seguido embarcar em um avião, a aranha também pode embarcar e não se desintegrará devido à distância como ocorre com o Mérito Forma de Enxame. Desvantagem: os guardiões fazem parte do Nosoi, e enviá-los ao mundo pode ser tanto perceptível quanto perigoso. Para cada guardião enviado, o Gangrel precisa gastar uma Vitae, e uma falange de um dedo de sua mão dominante desaparece quando o guardião é criado. Com um guardião, a menor falange de seu dedo mínimo desaparece; com dois, a menor e a segunda menor, e assim por diante. Os dedos ficam inteiros novamente quando a Devoção termina. Como os guardiões ainda fazem parte do Nosoi, ela sofre 1 de dano letal se forem destruídos. Por fim, eles precisam retornar até o nascer do sol; ela sofre 1 de dano letal por guardião que não tiver reincorporado até o fim da noite."
-      }
+      },
+      "requiredMerits": [
+        {
+          "definitionId": "vtr-swarm-form",
+          "dots": 2
+        }
+      ]
     },
     {
       "id": "devotion-city-attunement",
@@ -9032,7 +9038,7 @@
       "kind": "devotion",
       "name": "Gargoyle's Vigilance",
       "translatedName": "Vigilância da Gárgula",
-      "prerequisites": "Auspex •, Resilience ••, Safe Place •",
+      "prerequisites": "Auspex •, Resilience ••",
       "experienceCost": 1,
       "summary": "Gain complete vigilance over a haven while remaining still.",
       "source": "Vampire: The Requiem Second Edition",
@@ -9044,7 +9050,7 @@
       "effect": "This Devotion requires the vampire to remain completely still, in a location reflected by the Safe Place Merit (see p. 123). She has to be stationary for at least ten minutes before this Devotion offers its benefits. While stationary, she has full use of her Auspex abilities, centered on any single spot of her choosing within the haven. Having full awareness, she may change the spot at will. She receives +5 to any rolls to detect intruders. If she decides to move against an intruder, she gains +5 to her Initiative for the scene. As well, she does not need to spend Vitae to activate her Resilience. With a point of Willpower, this Devotion may be used while the vampire slumbers. An advanced version of this Devotion exists, utilizing Protean 5, costing 4 Experiences. This version allows the vampire to become a statue, immune to fire and sunlight while remaining stationary.",
       "presentationPt": {
         "name": "Vigilância da Gárgula",
-        "prerequisites": "Auspícios •, Resiliência ••, Local Seguro •",
+        "prerequisites": "Auspícios •, Resiliência ••",
         "summary": "Manter vigilância completa sobre um refúgio enquanto permanece imóvel.",
         "cost": "1 Vitae",
         "requirement": "Permanecer imóvel por pelo menos dez minutos em um Local Seguro",

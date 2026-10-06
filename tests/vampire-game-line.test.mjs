@@ -928,3 +928,50 @@ test("Malocusian Devotions require a canonical Haven instance and preserve paid 
   assert.deepEqual(granted.line_data.devotion_ids, [free.id]);
   assert.deepEqual(granted.current_state, sheet.current_state);
 });
+
+test("Core Gargoyle activation access differs from Spilled Blood Tiny Guardian's canonical Swarm Form prerequisite", async () => {
+  const { vampireDevotionPrerequisitesMet } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const { refundVampireAdvancement } = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
+  const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const merits = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/merits.json`, "utf8"));
+  const gargoyle = powers.devotions.find(item => item.id === "devotion-gargoyles-vigilance");
+  const tiny = powers.devotions.find(item => item.id === "devotion-tiny-guardian");
+  const swarm = merits.find(item => item.id === "vtr-swarm-form");
+  const namesake = { ...swarm, id: "homebrew:vampire:swarm", sourceId: "homebrew:vampire" };
+  const catalog = [swarm, namesake];
+  const sheet = blankPrintCharacter("VtR");
+  sheet.line_data = { ...sheet.line_data, clan_id: "gangrel", bloodline_id: "nosoi", disciplines: { Auspex: 1, Resilience: 2, Protean: 3 }, devotion_ids: [] };
+  sheet.merits = [];
+  assert.equal(vampireDevotionPrerequisitesMet(gargoyle, sheet, powers), true, "Core p. 144 requires access to a location, not personal ownership of Safe Place");
+  assert.equal(gargoyle.prerequisites, "Auspex •, Resilience ••");
+  assert.equal(gargoyle.presentationPt.prerequisites, "Auspícios •, Resiliência ••");
+  assert.match(gargoyle.requirement, /stationary for at least ten minutes in a Safe Place/);
+  assert.match(gargoyle.presentationPt.requirement, /imóvel por pelo menos dez minutos em um Local Seguro/);
+  assert.match(gargoyle.effect, /location reflected by the Safe Place Merit/);
+  assert.deepEqual(swarm.ratings, [2], "Core p. 114 fixes Swarm Form at two dots");
+  assert.deepEqual(tiny.requiredMerits, [{ definitionId: swarm.id, dots: 2 }]);
+  const owned = { definitionId: swarm.id, instanceId: "paid-swarm", name: "Authored label", sourceId: swarm.sourceId, dots: 2, creationDots: 0, experienceDots: 2 };
+  for (const selection of [owned, { name: swarm.name, sourceId: swarm.sourceId, dots: 2 }]) {
+    sheet.merits = [selection];
+    const before = JSON.stringify(sheet);
+    assert.equal(vampireDevotionPrerequisitesMet(tiny, sheet, powers, catalog), true);
+    assert.equal(JSON.stringify(sheet), before, "Reading eligibility preserves schema-2 identity and authored labels");
+  }
+  for (const selections of [[], [{ ...owned, dots: 1 }], [{ ...owned, definitionId: namesake.id, name: swarm.name }], [{ ...owned, definitionId: "unavailable", name: swarm.name }], [{ name: "Forma de Enxame", dots: 2 }]]) {
+    sheet.merits = selections;
+    assert.equal(vampireDevotionPrerequisitesMet(tiny, sheet, powers, catalog), false);
+  }
+  sheet.merits = [owned];
+  assert.equal(vampireDevotionPrerequisitesMet(tiny, sheet, powers), false);
+  sheet.line_data.devotion_ids = [tiny.id];
+  sheet.current_state = { experience_available: 7, experience_spent: 2, vampire_experience_history: [{ id: "tiny", cost: 1, undo: { kind: "devotion", id: tiny.id } }] };
+  const before = JSON.stringify(sheet);
+  const undo = { kind: "merit", definitionId: swarm.id, instanceId: owned.instanceId, name: swarm.name, dots: 2 };
+  assert.equal(refundVampireAdvancement(sheet, undo, powers, catalog), false);
+  assert.equal(JSON.stringify(sheet), before, "A retained paid Tiny Guardian protects the exact prerequisite instance atomically");
+  assert.equal(refundVampireAdvancement(sheet, { kind: "devotion", id: tiny.id }, powers, catalog), true);
+  assert.equal(refundVampireAdvancement(sheet, undo, powers, catalog), true);
+  assert.deepEqual(sheet.merits, []);
+  assert.deepEqual(sheet.current_state, JSON.parse(before).current_state, "Only the transaction UI credits XP and removes receipts");
+});

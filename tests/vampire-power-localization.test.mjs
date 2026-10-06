@@ -158,7 +158,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
       const reference = Object.fromEntries(["clans", "covenants", "anchors", "blood-potency", "torpor", "bloodlines"].map(group => [group === "blood-potency" ? "bloodPotency" : group, read(`public/game-lines/vampire/data/${group}.json`)]));
       const { withMeritPresentation } = await vite.ssrLoadModule("/lib/merit-presentation.ts");
-      const vampireMeritCatalog = withMeritPresentation(read("public/game-lines/vampire/data/merits.json").filter(item => ["vtr-kindred-status", "vtr-haven"].includes(item.id)), read("public/game-lines/vampire/data/merits-pt.json"));
+      const vampireMeritCatalog = withMeritPresentation(read("public/game-lines/vampire/data/merits.json").filter(item => ["vtr-kindred-status", "vtr-haven", "vtr-swarm-form"].includes(item.id)), read("public/game-lines/vampire/data/merits-pt.json"));
       const coreCultCatalog = withMeritPresentation(read("public/shared/data/merits.json").filter(item => item.id === "core-2ed:mystery-cult-initiation"), read("public/shared/data/merits-pt.json"));
       const catalogs = { get: id => ({ "vampire-powers": catalog, "vampire-reference": reference, "core-merits": coreCultCatalog, "vampire-merits": vampireMeritCatalog, "vampire-conditions": [] })[id] };
       const backgrounds = [
@@ -401,7 +401,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       }
       const devotionCharacter = blankPrintCharacter("VtR");
       devotionCharacter.skills.Occult = 2;
-      devotionCharacter.merits = [{ definitionId: "vtr-haven", instanceId: "reference-haven", name: "Haven", dots: 1, creationDots: 1, experienceDots: 0, sourceId: "vtr-2ed" }];
+      devotionCharacter.merits = [{ definitionId: "vtr-haven", instanceId: "reference-haven", name: "Haven", dots: 1, creationDots: 1, experienceDots: 0, sourceId: "vtr-2ed" }, { definitionId: "vtr-swarm-form", instanceId: "reference-swarm", name: "Swarm Form", dots: 2, creationDots: 2, experienceDots: 0, sourceId: "vtr-2ed" }];
       devotionCharacter.line_data = { ...devotionCharacter.line_data, clan_id: "gangrel", devotion_ids: devotions.map(item => item.id), disciplines: Object.fromEntries(catalog.disciplines.map(item => [item.name, 5])), notes: "Authored devotion research stays." };
       const devotionCharacterBefore = JSON.stringify(devotionCharacter);
       const devotionSheet = render(PurchasedPowers, { character: devotionCharacter, powers: catalog, locale });
@@ -549,20 +549,22 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
           assert.equal(JSON.stringify(buyer), before);
         }
       }
-      for (const definition of catalog.devotions.filter(item => item.bloodlineId === "malocusians")) {
+      for (const definition of catalog.devotions.filter(item => item.bloodlineId === "malocusians" || item.id === "devotion-tiny-guardian")) {
+        const requirement = definition.requiredMerits[0];
+        const prerequisite = vampireMeritCatalog.find(item => item.id === requirement.definitionId);
         for (const eligible of [false, true]) {
           const buyer = structuredClone(devotionBuyer);
           buyer.character.name = definition.id;
-          buyer.line_data = { ...buyer.line_data, clan_id: "ventrue", bloodline_id: "malocusians" };
-          buyer.merits = [{ definitionId: eligible ? "vtr-haven" : "homebrew:vampire:haven", instanceId: "paid-haven", name: eligible ? "Authored label" : "Haven", dots: 1, creationDots: 0, experienceDots: 1, sourceId: "vtr-2ed", configuration: { value: "Authored home" } }];
-          const havenReceipt = { id: "haven-payment", label: "Original Haven receipt", cost: 1, undo: { kind: "merit", definitionId: "vtr-haven", instanceId: "paid-haven", name: "Haven", dots: 1 } };
-          buyer.current_state = { ...buyer.current_state, experience_available: 10, experience_spent: 4, experience_total: 14, vampire_experience_history: [{ id: "authored", label: "Authored receipt", cost: 3 }, havenReceipt] };
+          buyer.line_data = { ...buyer.line_data, clan_id: definition.id === "devotion-tiny-guardian" ? "gangrel" : "ventrue", bloodline_id: definition.bloodlineId };
+          buyer.merits = [{ definitionId: eligible ? prerequisite.id : `homebrew:vampire:${prerequisite.id}`, instanceId: "paid-prerequisite", name: eligible ? "Authored label" : prerequisite.name, dots: requirement.dots, creationDots: 0, experienceDots: requirement.dots, sourceId: prerequisite.sourceId, configuration: { value: "Authored configuration" } }];
+          const meritReceipt = { id: "merit-payment", label: "Original Merit receipt", cost: requirement.dots, undo: { kind: "merit", definitionId: prerequisite.id, instanceId: "paid-prerequisite", name: prerequisite.name, dots: requirement.dots } };
+          buyer.current_state = { ...buyer.current_state, experience_available: 10, experience_spent: 4, experience_total: 14, vampire_experience_history: [{ id: "authored", label: "Authored receipt", cost: 4 - requirement.dots }, meritReceipt] };
           const before = JSON.stringify(buyer);
           const purchases = [];
           const html = render(VampireExperiencePanel, { character: buyer, updateSheet: value => purchases.push(value), catalogs });
           assert.equal(locked(html, definition), !eligible);
           experienceModule.testBuy();
-          assert.equal(purchases.length, eligible ? 1 : 0, `${locale}: Haven prerequisite ${definition.id}`);
+          assert.equal(purchases.length, eligible ? 1 : 0, `${locale}: canonical Merit prerequisite ${definition.id}`);
           if (eligible) {
             const purchased = purchases[0];
             const receipt = purchased.current_state.vampire_experience_history.at(-1);
@@ -572,7 +574,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
             const purchasedBefore = JSON.stringify(purchased);
             const refunds = [];
             render(VampireExperiencePanel, { character: purchased, updateSheet: value => refunds.push(value), catalogs });
-            experienceModule.testRevert(havenReceipt);
+            experienceModule.testRevert(meritReceipt);
             assert.equal(refunds.length, 0, "Cannot credit XP or remove the exact Merit instance while a paid Devotion requires it");
             assert.equal(JSON.stringify(purchased), purchasedBefore);
             render(VampireExperiencePanel, { character: purchased, updateSheet: value => refunds.push(value), catalogs });
@@ -582,10 +584,10 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
             assert.equal(refunds[0].current_state.experience_spent, 4);
             assert.deepEqual(refunds[0].current_state.vampire_experience_history, buyer.current_state.vampire_experience_history);
             render(VampireExperiencePanel, { character: refunds[0], updateSheet: value => refunds.push(value), catalogs });
-            experienceModule.testRevert(havenReceipt);
+            experienceModule.testRevert(meritReceipt);
             assert.equal(refunds.length, 2);
-            assert.equal(refunds[1].current_state.experience_available, 11);
-            assert.equal(refunds[1].current_state.experience_spent, 3);
+            assert.equal(refunds[1].current_state.experience_available, 10 + requirement.dots);
+            assert.equal(refunds[1].current_state.experience_spent, 4 - requirement.dots);
             assert.deepEqual(refunds[1].merits, []);
             assert.deepEqual(refunds[1].current_state.vampire_experience_history, [buyer.current_state.vampire_experience_history[0]]);
           }
