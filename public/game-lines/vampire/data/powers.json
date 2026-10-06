@@ -9118,10 +9118,10 @@
       "id": "devotion-chimera",
       "kind": "devotion",
       "name": "Chimera",
-      "translatedName": "Chimera",
-      "summary": "Builds a hybrid body from several consumed materials.",
+      "translatedName": "Quimera",
+      "summary": "Merge an undead familiar with inanimate material to grant armor, Size, and adaptations.",
       "source": "Wild Hunt: Gangrel",
-      "page": 23,
+      "page": 24,
       "manualOnly": true,
       "bloodlineId": "baetyl",
       "experienceCost": 2,
@@ -9131,14 +9131,24 @@
       "dicePool": "None",
       "action": "None",
       "duration": "Indefinite",
-      "effect": "The vampire merges her subject with the inanimate material. At base, it gains two points of general armor and a level of Size. In addition, for each dot of Protean, the vampire can apply a permanent adaptation from Predatory Aspect, manifesting as unnatural protrusions of metal, stone, or plastic, depending on the material she fed the creature."
+      "effect": "The vampire merges her subject with the inanimate material. At base, it gains two points of general armor and a level of Size. In addition, for each dot of Protean, the vampire can apply a permanent adaptation from Predatory Aspect, manifesting as unnatural protrusions of metal, stone, or plastic, depending on the material she fed the creature.",
+      "presentationPt": {
+        "summary": "Combina um familiar morto-vivo com material inanimado para conceder armadura, Tamanho e adaptações.",
+        "prerequisites": "Animalismo ••, Metamorfose •••",
+        "cost": "2 Vitae",
+        "requirement": "O vampiro ergue um animal morto com Erguer o Familiar e gasta Vitae adicional, já incluída no custo, espalhada sobre uma peça de material inanimado.",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Indefinida",
+        "effect": "O vampiro funde o sujeito com o material inanimado. Como base, ele recebe dois pontos de armadura geral e um nível de Tamanho. Além disso, para cada ponto de Metamorfose, o vampiro pode aplicar uma adaptação permanente de Aspecto Predatório, manifestada como protuberâncias antinaturais de metal, pedra ou plástico, conforme o material que deu à criatura."
+      }
     },
     {
       "id": "devotion-stone-specter",
       "kind": "devotion",
       "name": "Stone Specter",
-      "translatedName": "Stone Specter",
-      "summary": "Merges an altered body into masonry and mineral surfaces.",
+      "translatedName": "Espectro de Pedra",
+      "summary": "Remain aware in Unmarked Grave and prepare an Auspex power to trigger during daysleep.",
       "source": "Wild Hunt: Gangrel",
       "page": 24,
       "manualOnly": true,
@@ -9149,7 +9159,16 @@
       "dicePool": "None",
       "action": "None",
       "duration": "Special",
-      "effect": "Whenever the vampire enters her Unmarked Grave, she retains her sense of the surrounding world as long as she remains awake, and she can use any Auspex power she knows on people and objects who walk near her hiding spot. If the vampire enters daysleep while in this grave, she can spend a Vitae to trigger a single Auspex power she knows at some point in the day, with the exception of Twilight Projection. The trigger must involve a person or object within (Blood Potency) meters of the Unmarked Grave, but otherwise the condition can be as specific or as broad as the vampire likes. For example, it might apply to a specific person, or only ghouls, or just anyone wearing a particular brand of cologne. If this condition isn’t met before sundown, the Vitae spent is wasted. If it goes off, the vampire must pay the usual cost of the power and her player must make any appropriate roll. Information gained this way takes the form of a prophetic dream that the Baetyl will remember upon waking up."
+      "effect": "Whenever the vampire enters her Unmarked Grave, she retains her sense of the surrounding world as long as she remains awake, and she can use any Auspex power she knows on people and objects who walk near her hiding spot. If the vampire enters daysleep while in this grave, she can spend a Vitae to trigger a single Auspex power she knows at some point in the day, with the exception of Twilight Projection. The trigger must involve a person or object within (Blood Potency) meters of the Unmarked Grave, but otherwise the condition can be as specific or as broad as the vampire likes. For example, it might apply to a specific person, or only ghouls, or just anyone wearing a particular brand of cologne. If this condition isn’t met before sundown, the Vitae spent is wasted. If it goes off, the vampire must pay the usual cost of the power and her player must make any appropriate roll. Information gained this way takes the form of a prophetic dream that the Baetyl will remember upon waking up.",
+      "presentationPt": {
+        "summary": "Mantém a percepção em Túmulo Sem Marca e prepara o uso de um poder de Auspícios durante o Sono Diurno.",
+        "prerequisites": "Auspícios •••, Metamorfose •",
+        "cost": "Nenhum (ou 1 Vitae)",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Especial",
+        "effect": "Sempre que entra em Túmulo Sem Marca, o vampiro conserva a percepção do mundo ao redor enquanto permanecer acordado e pode usar qualquer poder de Auspícios que conheça em pessoas e objetos que passem perto de seu esconderijo. Se entrar em Sono Diurno nesse túmulo, pode gastar uma Vitae para preparar um único poder de Auspícios conhecido para ser ativado em algum momento do dia, exceto Projeção Crepuscular. O gatilho deve envolver uma pessoa ou objeto a até (Potência de Sangue) metros do Túmulo Sem Marca, mas a condição pode ser tão específica ou ampla quanto desejar. Pode envolver uma pessoa específica, somente carniçais ou qualquer pessoa que use uma marca determinada de colônia. Se a condição não se cumprir antes do pôr do sol, a Vitae gasta é desperdiçada. Se ocorrer, o vampiro deve pagar o custo habitual do poder e o jogador deve fazer qualquer teste apropriado. As informações obtidas assumem a forma de um sonho profético que o Baetyl lembrará ao despertar."
+      }
     },
     {
       "id": "devotion-wisdom-of-stones",
@@ -9183,7 +9202,7 @@
       "kind": "devotion",
       "name": "Fata Morgana",
       "translatedName": "Fata Morgana",
-      "summary": "Weaves a compelling mirage through voice and performance.",
+      "summary": "Use the voice to apply Obfuscate powers at a distance.",
       "source": "Wild Hunt: Gangrel",
       "page": 28,
       "manualOnly": true,
@@ -9194,7 +9213,16 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "For the rest of the scene, the vampire can use Obfuscate effects with her voice rather than via touch. Use the system for Touch of Shadow, applying any costs from other Obfuscate effects as normal. She can use her Discipline on any object or person she can see within (10 × Blood Potency) meters; all she needs to do is paint a word picture of the desired effect, though the result is limited by her level of Obfuscate. For example, she can’t make a door look like a castle gate unless she knows The Familiar Stranger."
+      "effect": "For the rest of the scene, the vampire can use Obfuscate effects with her voice rather than via touch. Use the system for Touch of Shadow, applying any costs from other Obfuscate effects as normal. She can use her Discipline on any object or person she can see within (10 × Blood Potency) meters; all she needs to do is paint a word picture of the desired effect, though the result is limited by her level of Obfuscate. For example, she can’t make a door look like a castle gate unless she knows The Familiar Stranger.",
+      "presentationPt": {
+        "summary": "Usa a voz para aplicar poderes de Ofuscação à distância.",
+        "prerequisites": "Majestade ••, Ofuscação ••",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "Pelo resto da cena, o vampiro pode usar efeitos de Ofuscação com a voz em vez do toque. Use o sistema de Toque da Sombra, aplicando normalmente quaisquer custos dos outros efeitos de Ofuscação. Pode usar a Disciplina em qualquer objeto ou pessoa que veja a até (10 × Potência de Sangue) metros; basta descrever com palavras o efeito desejado, embora o resultado seja limitado pelo nível de Ofuscação. Por exemplo, não pode fazer uma porta parecer o portão de um castelo sem conhecer O Estranho Familiar."
+      }
     },
     {
       "id": "devotion-siren-s-lure",
@@ -9223,8 +9251,8 @@
       "id": "devotion-song-of-myself",
       "kind": "devotion",
       "name": "Song of Myself",
-      "translatedName": "Song of Myself",
-      "summary": "Uses performance to reinforce identity against supernatural control.",
+      "translatedName": "Canção de Mim Mesmo",
+      "summary": "Become the victim’s sole focus and enhance Majesty effects while performing.",
       "source": "Wild Hunt: Gangrel",
       "page": 29,
       "manualOnly": true,
@@ -9241,6 +9269,21 @@
         "exceptionalSuccess": "In addition to the above, treat the victim as if he had a first-stage Vinculum to the vampire for the duration.",
         "failure": "Don’t quit your day job.",
         "dramaticFailure": "The victim becomes hostile to the vampire, and any subsequent performances will sound like nails on a chalkboard to his ear. Consider their impression of the vampire Hostile for the rest of the night."
+      },
+      "presentationPt": {
+        "summary": "Torna o vampiro o foco absoluto da vítima e amplia os efeitos de Majestade enquanto se apresenta.",
+        "prerequisites": "Majestade •••",
+        "cost": "2 Vitae",
+        "requirement": "O vampiro deve se apresentar para a vítima por pelo menos alguns minutos.",
+        "dicePool": "Manipulação + Expressão + Majestade contra Autocontrole + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Cena",
+        "rollResults": {
+          "success": "O vampiro se torna o único foco da vítima. Ela deve gastar um ponto de Força de Vontade até para desviar o olhar, a menos que o Cerrid a dispense. Enquanto ele continuar tocando, sucessos normais ao usar poderes de Majestade na vítima são tratados como excepcionais; sucessos excepcionais obtidos no teste ampliam a duração do efeito, como se a vítima tivesse um vínculo de sangue com o vampiro.",
+          "exceptionalSuccess": "Além dos efeitos acima, trate a vítima como se tivesse um Vinculum de primeiro estágio com o vampiro durante a duração.",
+          "failure": "Não largue seu emprego.",
+          "dramaticFailure": "A vítima se torna hostil ao vampiro, e apresentações posteriores soam como unhas arranhando um quadro. Considere sua impressão do vampiro Hostil pelo resto da noite."
+        }
       }
     },
     {
