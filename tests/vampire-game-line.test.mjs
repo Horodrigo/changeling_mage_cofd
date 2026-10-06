@@ -82,7 +82,7 @@ test("Vampire catalogs group core, historical, and uncommon Clans", async () => 
   assert.ok(merits.length >= 45);
   assert.equal(powers.disciplines.length, 23);
   assert.equal(powers.ritualDisciplines.length, 5);
-  assert.equal(powers.devotions.length, 356);
+  assert.equal(powers.devotions.length, 357);
   assert.equal(powers.lashes.length, 2);
   assert.equal(powers.cruacRites.length, 76);
   assert.equal(powers.thebanMiracles.length, 32);
@@ -591,7 +591,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   const counts = Object.fromEntries(Object.entries(Object.groupBy(items, vampireHomebrewSourceId)).map(([sourceId, entries]) => [sourceId, entries.length]));
   assert.deepEqual(counts, {
     "h-vtr-sin-again": 91,
-    "h-vtr-wild-hunt": 92,
+    "h-vtr-wild-hunt": 93,
     "h-vtr-false-gods": 106,
     "h-vtr-strange-shades": 89,
     "h-vtr-better-feared": 92,

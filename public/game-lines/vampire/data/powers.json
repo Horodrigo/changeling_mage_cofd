@@ -9589,17 +9589,26 @@
       "id": "devotion-know-the-road",
       "kind": "devotion",
       "name": "Know the Road",
-      "translatedName": "Know the Road",
-      "summary": "Lets the bonded Ride find a viable route through unfamiliar territory.",
+      "translatedName": "Conhecer a Estrada",
+      "summary": "Sense road obstacles and know the route to a chosen destination.",
       "source": "Wild Hunt: Gangrel",
-      "page": 62,
+      "page": 61,
       "manualOnly": true,
       "bloodlineId": "verlice",
       "prerequisites": "Auspex •••",
       "cost": "2 Vitae",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "The vampire senses obstacles along roughly Auspex × 5 miles of road and exceptionally succeeds on three successes when driving around them. She also knows the correct route to her chosen destination without learning details about the places crossed, adds Auspex to navigation actions, and cannot be surprised while following that route."
+      "effect": "The vampire senses obstacles along roughly Auspex × 5 miles of road and exceptionally succeeds on three successes when driving around them. She also knows the correct route to her chosen destination without learning details about the places crossed, adds Auspex to navigation actions, and cannot be surprised while following that route.",
+      "presentationPt": {
+        "summary": "Percebe obstáculos na estrada e sabe o caminho até o destino escolhido.",
+        "prerequisites": "Auspícios •••",
+        "cost": "2 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "O vampiro percebe obstáculos ao longo de aproximadamente Auspícios × 5 milhas de estrada e obtém sucesso excepcional com três sucessos ao dirigir para contorná-los. Também sabe a rota correta até o destino escolhido, sem conhecer detalhes dos lugares atravessados, soma Auspícios às ações de navegação e não pode ser surpreendido enquanto segue essa rota."
+      },
+      "experienceCost": 1
     },
     {
       "id": "devotion-scavenge",
@@ -9665,6 +9674,35 @@
       "action": "Reflexive",
       "duration": "One night per Blood Potency",
       "effect": "Each success grants the Advanced Action quality to one future roll related to the prophecy. The Devotion cannot be used again until its duration ends or all granted actions are spent. Dread Presence can give one action to another character, while Face of the Beast can transfer all of them. Exceptional success also grants 8-again to one action; dramatic failure attracts a Strix before the story ends."
+    },
+    {
+      "id": "devotion-wisdom-of-crowds",
+      "kind": "devotion",
+      "name": "The Wisdom of Crowds",
+      "translatedName": "A Sabedoria das Multidões",
+      "summary": "Use Auspex reflexively and gain additional free uses of its first two powers while in swarm form.",
+      "source": "Wild Hunt: Gangrel",
+      "page": 67,
+      "manualOnly": true,
+      "bloodlineId": "wickers",
+      "experienceCost": 2,
+      "prerequisites": "Auspex •, Protean •••",
+      "cost": "None",
+      "requirement": "The vampire must take the form of a swarm to use this Devotion.",
+      "dicePool": "None",
+      "action": "Instant",
+      "duration": "Scene",
+      "effect": "The vampire gains great clarity from viewing the world through many eyes. Using Auspex becomes a reflexive action for the duration, and she gains a number of additional free uses of Beast’s Hackles and Uncanny Perception equal to her Protean dots.",
+      "presentationPt": {
+        "summary": "Usa Auspícios reflexivamente e recebe usos gratuitos adicionais de seus dois primeiros poderes enquanto está em forma de enxame.",
+        "prerequisites": "Auspícios •, Metamorfose •••",
+        "cost": "Nenhum",
+        "requirement": "O vampiro deve assumir a forma de um enxame para usar esta Devoção.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "O vampiro obtém grande clareza ao observar o mundo por muitos olhos. Usar Auspícios se torna uma ação reflexiva durante a duração, e ele recebe um número de usos gratuitos adicionais de Arrepio da Fera e Percepção Sobrenatural igual aos seus pontos de Metamorfose."
+      }
     },
     {
       "id": "devotion-bloom",
