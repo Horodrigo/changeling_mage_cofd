@@ -33,7 +33,7 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.deepEqual(sacrileges.map(item => item.id).sort(), ["therion-apotheosis", "therion-avatar-apollyon", "therion-curse-faithful", "therion-demons-tongue", "therion-morning-star", "therion-nine-choirs", "therion-profanity"]);
   assert.equal(invocations.length, 10);
   assert.equal(detournements.length, 5);
-  assert.deepEqual(devotions.map(item => item.id).sort(), ["devotion-body-of-will", "devotion-chain-of-command", "devotion-cloak-the-gathering", "devotion-conditioning", "devotion-cross-contamination", "devotion-cult-of-personality", "devotion-enchantment", "devotion-enfeebling-aura", "devotion-force-of-nature", "devotion-foul-grave", "devotion-gargoyles-vigilance", "devotion-hint-of-fear", "devotion-juggernauts-gait", "devotion-quicken-sight", "devotion-reasons-salon", "devotion-riot", "devotion-shared-sight", "devotion-shatter-the-shroud", "devotion-stalwart-servant", "devotion-subsume-lesser-beast", "devotion-summoning-dominate", "devotion-summoning-majesty", "devotion-suns-brutal-dreamscape", "devotion-the-wish", "devotion-touch-of-deprivation", "devotion-undying-familiar", "devotion-vermin-flood", "devotion-wet-dream", "devotion-wraiths-presence", "devotion-aerial-cocoon", "devotion-bend-space", "devotion-memetic-menace", "devotion-best-served-cold", "devotion-distant-control", "devotion-wrack-mind", "devotion-between-walls", "devotion-blood-scenting", "devotion-flush-out", "devotion-vile-blood", "devotion-give-take", "devotion-look", "devotion-one-got-away", "devotion-pledge"].sort());
+  assert.deepEqual(devotions.map(item => item.id).sort(), ["devotion-body-of-will", "devotion-chain-of-command", "devotion-cloak-the-gathering", "devotion-conditioning", "devotion-cross-contamination", "devotion-cult-of-personality", "devotion-enchantment", "devotion-enfeebling-aura", "devotion-force-of-nature", "devotion-foul-grave", "devotion-gargoyles-vigilance", "devotion-hint-of-fear", "devotion-juggernauts-gait", "devotion-quicken-sight", "devotion-reasons-salon", "devotion-riot", "devotion-shared-sight", "devotion-shatter-the-shroud", "devotion-stalwart-servant", "devotion-subsume-lesser-beast", "devotion-summoning-dominate", "devotion-summoning-majesty", "devotion-suns-brutal-dreamscape", "devotion-the-wish", "devotion-touch-of-deprivation", "devotion-undying-familiar", "devotion-vermin-flood", "devotion-wet-dream", "devotion-wraiths-presence", "devotion-aerial-cocoon", "devotion-bend-space", "devotion-memetic-menace", "devotion-best-served-cold", "devotion-distant-control", "devotion-wrack-mind", "devotion-between-walls", "devotion-blood-scenting", "devotion-flush-out", "devotion-vile-blood", "devotion-give-take", "devotion-look", "devotion-one-got-away", "devotion-pledge", "devotion-infectious-bite", "devotion-plague-doctors-mask", "devotion-tiny-guardian"].sort());
   assert.equal(rites.length, 62);
   assert.equal(miracles.length, 30);
   assert.deepEqual(Object.fromEntries([...new Set(miracles.map(item => item.source))].map(source => [source, miracles.filter(item => item.source === source).length])), { "Better Feared: Nosferatu": 5, "Secrets of the Covenants": 14, "Vampire: The Requiem Second Edition": 9, "Thousand Years of Night": 1, "Dark Eras 2": 1 });
@@ -129,7 +129,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       const { vampirePowerPresentation } = await vite.ssrLoadModule("/game-lines/vampire/power-presentation.ts");
       const { vampireHomebrewSourceId, activeVampirePowers } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
       const { setTestHomebrewPreferences } = await vite.ssrLoadModule("/app/use-homebrew.ts");
-      const { vampireDisciplinePrerequisitesMet } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+      const { vampireDisciplinePrerequisitesMet, synchronizeAutomaticBloodlineDevotions } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
       const { vampireExperienceLabel } = await vite.ssrLoadModule("/game-lines/vampire/experience-presentation.ts");
       const { refundVampireAdvancement } = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
       const { VampireExperiencePanel } = await vite.ssrLoadModule("/game-lines/vampire/experience-panel.tsx");
@@ -405,17 +405,30 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         const presented = vampirePowerPresentation(definition, locale);
         const title = locale === "pt-BR" ? definition.translatedName : definition.name;
         if (definition.bloodlineId) assert.equal(generalDevotionExperience.includes(`<strong>${escape(title)}</strong>`), false, "Bloodline Devotion stays off an unrelated character's picker");
+        const purchasable = Number(definition.experienceCost ?? 0) > 0;
+        const surfaces = purchasable ? [devotionSheet, devotionExperience] : [devotionSheet];
         assert.equal(vampireDisciplinePrerequisitesMet(definition.prerequisites, devotionCharacter.line_data.disciplines, catalog.disciplines.map(item => item.name)), true);
         for (const field of fields.filter(key => presented[key])) {
           assert.ok(devotionSheet.includes(escape(presented[field])), `${locale}: Devotion sheet ${definition.id}.${field}`);
-          if (!(field === "summary" && definition.effect) && definition[field].trim().toLowerCase() !== "none") assert.ok(devotionExperience.includes(escape(presented[field])), `${locale}: Devotion XP ${definition.id}.${field}`);
+          if (purchasable && !(field === "summary" && definition.effect) && definition[field].trim().toLowerCase() !== "none") assert.ok(devotionExperience.includes(escape(presented[field])), `${locale}: Devotion XP ${definition.id}.${field}`);
         }
-        for (const result of Object.values(presented.rollResults ?? {})) for (const html of [devotionSheet, devotionExperience]) assert.ok(html.includes(escape(result)));
-        for (const modifier of presented.suggestedModifiers ?? []) for (const html of [devotionSheet, devotionExperience]) {
+        for (const result of Object.values(presented.rollResults ?? {})) for (const html of surfaces) assert.ok(html.includes(escape(result)));
+        for (const modifier of presented.suggestedModifiers ?? []) for (const html of surfaces) {
           assert.ok(html.includes(escape(modifier.situation)), `${locale}: Devotion modifier ${definition.id}`);
           assert.ok(html.includes(escape(modifier.modifier)));
         }
-        for (const html of [devotionSheet, devotionExperience]) assert.ok(html.includes(escape(title)));
+        for (const html of surfaces) assert.ok(html.includes(escape(title)));
+        if (!purchasable) {
+          assert.equal(devotionExperience.includes(`<strong>${escape(title)}</strong>`), false, "Free Bloodline Devotion is never offered as an XP purchase");
+          const freeBuyer = structuredClone(devotionBuyer);
+          freeBuyer.line_data.bloodline_id = definition.bloodlineId;
+          const before = JSON.stringify(freeBuyer);
+          const granted = synchronizeAutomaticBloodlineDevotions(freeBuyer, catalog);
+          assert.ok(granted.line_data.devotion_ids.includes(definition.id));
+          assert.deepEqual(granted.current_state, freeBuyer.current_state, "Free grant preserves XP and history");
+          assert.equal(JSON.stringify(freeBuyer), before);
+          continue;
+        }
         const receipt = { id: "old-devotion-purchase", label: "Authored devotion receipt", cost: definition.experienceCost, undo: { kind: "devotion", id: definition.id } };
         const receiptBefore = JSON.stringify(receipt);
         assert.equal(vampireExperienceLabel(receipt, devotionCharacter, [], catalog, locale), title);

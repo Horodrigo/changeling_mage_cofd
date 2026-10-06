@@ -5491,7 +5491,7 @@
       "id": "devotion-infectious-bite",
       "kind": "devotion",
       "name": "Infectious Bite",
-      "translatedName": "Infectious Bite",
+      "translatedName": "Mordida Infecciosa",
       "bloodlineId": "nosoi",
       "experienceCost": 0,
       "cost": "1 Vitae",
@@ -5501,13 +5501,21 @@
       "prerequisites": "Protean ••••",
       "dicePool": "Manipulation + Medicine vs Stamina + Survival",
       "action": "Instant",
-      "effect": "With the expenditure of a vitae and a successful contested roll, a Nosoi may infect a mortal with his favored disease, even if this disease is not normally transmissible. Type 1 diabetes isn’t infectious, but his bite can permanently inflict it on a target. Drawback : The Nosoi has the Addicted Condition, which cannot be resolved by any means: an addiction to the blood of someone suffering from their favored disease. Additionally, Infectious Bite doesn’t exactly make Nosoi fun party guests. The bloodline closely guards the truth of this ability, rarely using it except to expand their dependent Herd."
+      "effect": "With the expenditure of a vitae and a successful contested roll, a Nosoi may infect a mortal with his favored disease, even if this disease is not normally transmissible. Type 1 diabetes isn’t infectious, but his bite can permanently inflict it on a target. Drawback : The Nosoi has the Addicted Condition, which cannot be resolved by any means: an addiction to the blood of someone suffering from their favored disease. Additionally, Infectious Bite doesn’t exactly make Nosoi fun party guests. The bloodline closely guards the truth of this ability, rarely using it except to expand their dependent Herd.",
+      "presentationPt": {
+        "prerequisites": "Metamorfose ••••",
+        "cost": "1 Vitae",
+        "summary": "Infecta um mortal com a doença sanguínea dos Nosoi.",
+        "dicePool": "Manipulação + Medicina contra Vigor + Sobrevivência",
+        "action": "Instantânea",
+        "effect": "Ao gastar uma Vitae e vencer um teste disputado, um Nosoi pode infectar um mortal com sua doença predileta, mesmo que ela normalmente não seja transmissível. Diabetes tipo 1 não é infeccioso, mas sua mordida pode infligi-lo permanentemente a um alvo. Desvantagem: o Nosoi tem a Condição Viciado, que não pode ser resolvida por nenhum meio: um vício no sangue de alguém que sofre de sua doença predileta. Além disso, Mordida Infecciosa não torna os Nosoi exatamente convidados divertidos em festas. A Bloodline guarda cuidadosamente a verdade sobre esta habilidade, raramente usando-a, exceto para ampliar seu Rebanho dependente."
+      }
     },
     {
       "id": "devotion-plague-doctors-mask",
       "kind": "devotion",
       "name": "Plague Doctor's Mask",
-      "translatedName": "Plague Doctor's Mask",
+      "translatedName": "Máscara do Médico da Peste",
       "prerequisites": "Obfuscate ••",
       "bloodlineId": "nosoi",
       "experienceCost": 1,
@@ -5517,13 +5525,21 @@
       "page": 32,
       "dicePool": "None",
       "action": "Instant",
-      "effect": "Plague Doctor’s Mask modifies a Nosoi’s Touch of Shadow. By spending an additional point of Vitae, she can mask the symptoms of a single blood-detectable illness within a target. If a mortal has more than one such malady, the Nosoi may spend additional Vitae to mask additional symptom sets. No opioid relieves pain more thoroughly than the Plague Doctor’s Mask. This power neither cures symptoms nor alleviates them; it is possible for a person to profoundly hurt themselves when they can’t feel pain from joints swollen by an autoimmune disease, for example, should they spend the scene running around. A doctor or other person who examines the mortal will be surprised to find clear eyes, a lack of fever, an even heartbeat, etc., unless they succeed on a Wits + Medicine roll assisted by appropriate equipment. The Mask can’t hold up to a CAT scan and won’t fool supernatural powers which provide assessments of health, but the Mask fools any unassisted Medicine roll as the observer’s eyes slide past obvious symptoms."
+      "effect": "Plague Doctor’s Mask modifies a Nosoi’s Touch of Shadow. By spending an additional point of Vitae, she can mask the symptoms of a single blood-detectable illness within a target. If a mortal has more than one such malady, the Nosoi may spend additional Vitae to mask additional symptom sets. No opioid relieves pain more thoroughly than the Plague Doctor’s Mask. This power neither cures symptoms nor alleviates them; it is possible for a person to profoundly hurt themselves when they can’t feel pain from joints swollen by an autoimmune disease, for example, should they spend the scene running around. A doctor or other person who examines the mortal will be surprised to find clear eyes, a lack of fever, an even heartbeat, etc., unless they succeed on a Wits + Medicine roll assisted by appropriate equipment. The Mask can’t hold up to a CAT scan and won’t fool supernatural powers which provide assessments of health, but the Mask fools any unassisted Medicine roll as the observer’s eyes slide past obvious symptoms.",
+      "presentationPt": {
+        "prerequisites": "Ofuscação ••",
+        "cost": "1 Vitae",
+        "summary": "Usa Toque da Sombra para ocultar sintomas de doenças detectáveis no sangue.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "Máscara do Médico da Peste modifica Toque da Sombra de um Nosoi. Ao gastar um ponto adicional de Vitae, ela pode ocultar os sintomas de uma única doença detectável no sangue de um alvo. Se um mortal tiver mais de uma dessas doenças, o Nosoi pode gastar Vitae adicional para ocultar outros conjuntos de sintomas. Nenhum opioide alivia a dor mais completamente que Máscara do Médico da Peste. Este poder não cura nem atenua os sintomas; por exemplo, uma pessoa pode se ferir gravemente ao passar a cena correndo sem sentir a dor de articulações inchadas por uma doença autoimune. Um médico ou outra pessoa que examine o mortal encontrará, para sua surpresa, olhos límpidos, ausência de febre, batimentos cardíacos regulares etc., a menos que obtenha sucesso em um teste de Raciocínio + Medicina auxiliado por equipamento apropriado. A Máscara não resiste a uma tomografia computadorizada nem engana poderes sobrenaturais que avaliam a saúde, mas engana qualquer teste de Medicina sem auxílio, pois os olhos do observador passam pelos sintomas óbvios sem percebê-los."
+      }
     },
     {
       "id": "devotion-tiny-guardian",
       "kind": "devotion",
       "name": "Tiny Guardian",
-      "translatedName": "Tiny Guardian",
+      "translatedName": "Pequeno Guardião",
       "prerequisites": "Protean •••; Swarm Form",
       "bloodlineId": "nosoi",
       "experienceCost": 1,
@@ -5533,7 +5549,15 @@
       "cost": "1 Vitae per insect created",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "Each Vitae spent creates one Size 0 insect or arachnid. The Nosoi can command this insect or arachnid as though using Animalism. The guardian is part of the Gangrel, and accordingly the Nosoi can perceive everything at the insect’s location. The guardian acts quasi-independently but according to the Nosoi’s desires; new commands can be given at any time, but the guardian responds to changes in circumstance with the Gangrel’s intelligence and a perfect understanding of her will. If a spider is sent to follow a stranger through her hospital who then leaves and gets into a car, the spider knows that the Nosoi wants him followed, and does so. There is no maximum range on these guardians; if the man being followed boards a plane, that spider may also board the plane and will not disintegrate due to range as with the merit Swarm Form. Drawback: Guardians are part of the Nosoi and sending them out into the world is potentially both visible and dangerous. For each guardian deployed, not only must the Gangrel spend one Vitae, but when the guardian is created, a finger joint on her dominant hand disappears. With one guardian created, the smallest joint on her pinky goes missing; with two, the smallest and second-smallest, and so on; those digits become whole again when the devotion ends. As the guardians are still part of the Nosoi, if they are destroyed, she takes 1 lethal damage. Lastly, the guardians must return by sunrise; she takes 1 lethal damage for each guardian she hasn’t drawn back into herself by night’s end."
+      "effect": "Each Vitae spent creates one Size 0 insect or arachnid. The Nosoi can command this insect or arachnid as though using Animalism. The guardian is part of the Gangrel, and accordingly the Nosoi can perceive everything at the insect’s location. The guardian acts quasi-independently but according to the Nosoi’s desires; new commands can be given at any time, but the guardian responds to changes in circumstance with the Gangrel’s intelligence and a perfect understanding of her will. If a spider is sent to follow a stranger through her hospital who then leaves and gets into a car, the spider knows that the Nosoi wants him followed, and does so. There is no maximum range on these guardians; if the man being followed boards a plane, that spider may also board the plane and will not disintegrate due to range as with the merit Swarm Form. Drawback: Guardians are part of the Nosoi and sending them out into the world is potentially both visible and dangerous. For each guardian deployed, not only must the Gangrel spend one Vitae, but when the guardian is created, a finger joint on her dominant hand disappears. With one guardian created, the smallest joint on her pinky goes missing; with two, the smallest and second-smallest, and so on; those digits become whole again when the devotion ends. As the guardians are still part of the Nosoi, if they are destroyed, she takes 1 lethal damage. Lastly, the guardians must return by sunrise; she takes 1 lethal damage for each guardian she hasn’t drawn back into herself by night’s end.",
+      "presentationPt": {
+        "prerequisites": "Metamorfose •••; Forma de Enxame",
+        "summary": "Produz pequenos servos insetos inteligentes e leais.",
+        "cost": "1 Vitae por inseto criado",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "Cada Vitae gasta cria um inseto ou aracnídeo de Tamanho 0. O Nosoi pode comandá-lo como se usasse Animalismo. O guardião faz parte do Gangrel e, por isso, o Nosoi pode perceber tudo no local onde o inseto está. O guardião age com certa independência, mas de acordo com os desejos do Nosoi; novas ordens podem ser dadas a qualquer momento, e ele responde a mudanças nas circunstâncias com a inteligência do Gangrel e uma compreensão perfeita de sua vontade. Se uma aranha for enviada para seguir um estranho pelo hospital e ele sair e entrar em um carro, ela sabe que o Nosoi quer que o siga e assim o faz. Não há alcance máximo para esses guardiões; se o homem seguido embarcar em um avião, a aranha também pode embarcar e não se desintegrará devido à distância como ocorre com o Mérito Forma de Enxame. Desvantagem: os guardiões fazem parte do Nosoi, e enviá-los ao mundo pode ser tanto perceptível quanto perigoso. Para cada guardião enviado, o Gangrel precisa gastar uma Vitae, e uma falange de um dedo de sua mão dominante desaparece quando o guardião é criado. Com um guardião, a menor falange de seu dedo mínimo desaparece; com dois, a menor e a segunda menor, e assim por diante. Os dedos ficam inteiros novamente quando a Devoção termina. Como os guardiões ainda fazem parte do Nosoi, ela sofre 1 de dano letal se forem destruídos. Por fim, eles precisam retornar até o nascer do sol; ela sofre 1 de dano letal por guardião que não tiver reincorporado até o fim da noite."
+      }
     },
     {
       "id": "devotion-city-attunement",
