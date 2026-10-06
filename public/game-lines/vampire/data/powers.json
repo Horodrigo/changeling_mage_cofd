@@ -5095,7 +5095,7 @@
       "id": "devotion-aerial-cocoon",
       "kind": "devotion",
       "name": "Aerial Cocoon",
-      "translatedName": "Aerial Cocoon",
+      "translatedName": "Casulo Aéreo",
       "prerequisites": "Protean •",
       "experienceCost": 1,
       "requirement": "Hiding spot has the vampire's Size",
@@ -5105,13 +5105,22 @@
       "cost": "None",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "An alternate Unmarked Grave ( Vampire: The Requiem Second Edition, p. 139), for vampires adapted to living in the high rises of Singapore. This Devotion does not cost additional Vitae for the character to submerge herself into concrete or steel."
+      "effect": "An alternate Unmarked Grave ( Vampire: The Requiem Second Edition, p. 139), for vampires adapted to living in the high rises of Singapore. This Devotion does not cost additional Vitae for the character to submerge herself into concrete or steel.",
+      "presentationPt": {
+        "prerequisites": "Metamorfose •",
+        "requirement": "O esconderijo tem o Tamanho do vampiro",
+        "summary": "Usa Túmulo Sem Marca entre paredes de concreto ou metal como um casulo protetor.",
+        "cost": "Nenhum",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "Uma alternativa a Túmulo Sem Marca (Vampire: The Requiem Second Edition, p. 139) para vampiros adaptados a viver nos arranha-céus de Singapore. Esta Devoção não custa Vitae adicional para o personagem mergulhar no concreto ou aço."
+      }
     },
     {
       "id": "devotion-bend-space",
       "kind": "devotion",
       "name": "Bend Space",
-      "translatedName": "Bend Space",
+      "translatedName": "Dobrar o Espaço",
       "prerequisites": "Auspex ••, Celerity ••••",
       "experienceCost": 5,
       "cost": "2 Vitae; optional 1 Willpower",
@@ -5121,13 +5130,22 @@
       "requirement": "She must arrive in a space equal to or greater than her Size.",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "Using this Devotion allows the Kindred to cross vast distances in an instant. For 2 Vitae, she vanishes from her current location and appears in any point she can see with unaided sight. A point on the horizon would qualify, but a remote location viewed through her data-tablet would not. For 2 Vitae and a point of Willpower, she may cross to any location she has previously visited, or has seen before. This transportation happens in scant seconds, allowing the masters of the Dominion to cross from station to station in heartbeats."
+      "effect": "Using this Devotion allows the Kindred to cross vast distances in an instant. For 2 Vitae, she vanishes from her current location and appears in any point she can see with unaided sight. A point on the horizon would qualify, but a remote location viewed through her data-tablet would not. For 2 Vitae and a point of Willpower, she may cross to any location she has previously visited, or has seen before. This transportation happens in scant seconds, allowing the masters of the Dominion to cross from station to station in heartbeats.",
+      "presentationPt": {
+        "prerequisites": "Auspícios ••, Celeridade ••••",
+        "cost": "2 Vitae; 1 Força de Vontade opcional",
+        "summary": "Teleporta até um lugar visível ou conhecido.",
+        "requirement": "É preciso chegar a um espaço igual ou maior que seu Tamanho.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "Usar esta Devoção permite ao Membro atravessar grandes distâncias em um instante. Por 2 Vitae, ela desaparece da localização atual e surge em qualquer ponto que consiga ver a olho nu. Um ponto no horizonte seria válido, mas um lugar remoto visto por seu tablet não. Por 2 Vitae e um ponto de Força de Vontade, ela pode chegar a qualquer lugar que já tenha visitado ou visto antes. Esse transporte ocorre em poucos segundos, permitindo aos mestres do Dominion atravessar de uma estação a outra em poucas batidas de coração."
+      }
     },
     {
       "id": "devotion-memetic-menace",
       "kind": "devotion",
       "name": "Memetic Menace",
-      "translatedName": "Memetic Menace",
+      "translatedName": "Ameaça Memética",
       "prerequisites": "Majesty ••, Nightmare ••",
       "experienceCost": 2,
       "cost": "2 Vitae",
@@ -5140,7 +5158,20 @@
         "dramaticFailure": "Onlookers see the vampire for what she is, a monster lurking in the night. Rather than be inspired to love or fear her, they are driven to hunt her down.",
         "failure": "The camera captures her image and nothing else.",
         "success": "Fear or desire wells up within the onlooker’s mind. He gains either the Swooning Condition ( Vampire: The Requiem Second Edition, p. 306) or the Frightened Condition (Vampire: The Requiem Second Edition, p. 304).",
-        "exceptionalSuccess": "The target cannot get the vampire out of his head, exchanging whichever Condition he would have gained for Distracted instead, which lasts for a number of days equal to the vampire’s Blood Potency. Night Without End"
+        "exceptionalSuccess": "The target cannot get the vampire out of his head, exchanging whichever Condition he would have gained for Distracted instead, which lasts for a number of days equal to the vampire’s Blood Potency."
+      },
+      "presentationPt": {
+        "prerequisites": "Majestade ••, Pesadelo ••",
+        "cost": "2 Vitae",
+        "summary": "Altera gravações de si mesmo para impor Enamorado ou Assustado.",
+        "dicePool": "Presença + Expressão + Pesadelo ou Majestade contra Perseverança + Potência de Sangue",
+        "action": "Disputada; a resistência é Reflexiva",
+        "rollResults": {
+          "dramaticFailure": "Os observadores veem o vampiro como realmente é: um monstro à espreita na noite. Em vez de serem inspirados a amá-lo ou temê-lo, são levados a caçá-lo.",
+          "failure": "A câmera captura sua imagem e nada mais.",
+          "success": "Medo ou desejo brota na mente do observador. Ele recebe a Condição Enamorado (Vampire: The Requiem Second Edition, p. 306) ou a Condição Assustado (Vampire: The Requiem Second Edition, p. 304).",
+          "exceptionalSuccess": "O alvo não consegue tirar o vampiro da cabeça, trocando a Condição que receberia por Distraído, que dura um número de dias igual à Potência de Sangue do vampiro."
+        }
       }
     },
     {
