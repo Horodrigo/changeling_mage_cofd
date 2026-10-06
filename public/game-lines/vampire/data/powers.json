@@ -5178,7 +5178,7 @@
       "id": "devotion-best-served-cold",
       "kind": "devotion",
       "name": "Best Served Cold",
-      "translatedName": "Best Served Cold",
+      "translatedName": "Melhor Servida Fria",
       "prerequisites": "Vigor •••",
       "experienceCost": 2,
       "cost": "2 Vitae",
@@ -5192,13 +5192,26 @@
         "failure": "The Beast accepts the pain and moves on.",
         "success": "Fury rises within the vampire, empowering her actions against her enemy. She adds three additional dice to attack and damage against the enemy who harmed her. She may only enact her vengeful rage against one opponent at a time. This effect ends when the enemy is killed or defeated, or until the end of the chapter, whichever comes first.",
         "exceptionalSuccess": "As a success, and the vampire also regains a point of Willpower."
+      },
+      "presentationPt": {
+        "prerequisites": "Ímpeto •••",
+        "cost": "2 Vitae",
+        "summary": "Receba +3 em ataques contra quem o feriu.",
+        "dicePool": "Vigor + Atletismo + Ímpeto",
+        "action": "Reflexiva",
+        "rollResults": {
+          "dramaticFailure": "A fúria da Fera domina o vampiro, que entra em frenesi.",
+          "failure": "A Fera aceita a dor e segue em frente.",
+          "success": "A fúria cresce dentro do vampiro, fortalecendo suas ações contra o inimigo. Ela acrescenta três dados aos ataques e ao dano contra o inimigo que a feriu. Só pode exercer sua ira vingativa contra um oponente por vez. Este efeito termina quando o inimigo é morto ou derrotado, ou no fim da sessão, o que ocorrer primeiro.",
+          "exceptionalSuccess": "Como em um sucesso, e o vampiro também recupera um ponto de Força de Vontade."
+        }
       }
     },
     {
       "id": "devotion-distant-control",
       "kind": "devotion",
       "name": "Distant Control",
-      "translatedName": "Distant Control",
+      "translatedName": "Controle à Distância",
       "prerequisites": "Dominate ••••, Vigor ••",
       "experienceCost": 3,
       "cost": "2 Vitae",
@@ -5208,13 +5221,22 @@
       "requirement": "The vampire must be aware of her target’s location.",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "With this Devotion, the vampire no longer needs to be physically present to issue a command or engage in social encounters. She speaks into the minds of her targets, and makes all social engagement rolls as if she were present. This ability persists until the end of a social encounter and does not cost 2 Vitae per action."
+      "effect": "With this Devotion, the vampire no longer needs to be physically present to issue a command or engage in social encounters. She speaks into the minds of her targets, and makes all social engagement rolls as if she were present. This ability persists until the end of a social encounter and does not cost 2 Vitae per action.",
+      "presentationPt": {
+        "prerequisites": "Dominação ••••, Ímpeto ••",
+        "cost": "2 Vitae",
+        "summary": "Dá ordens e faz testes Sociais por meio da mente de um alvo cuja localização conhece.",
+        "requirement": "O vampiro precisa saber a localização de seu alvo.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Com esta Devoção, o vampiro não precisa mais estar fisicamente presente para dar uma ordem ou participar de encontros sociais. Ela fala na mente de seus alvos e faz todos os testes de interação social como se estivesse presente. Esta habilidade persiste até o fim de um encontro social e não custa 2 Vitae por ação."
+      }
     },
     {
       "id": "devotion-wrack-mind",
       "kind": "devotion",
       "name": "Wrack the Mind",
-      "translatedName": "Wrack the Mind",
+      "translatedName": "Atormentar a Mente",
       "prerequisites": "Dominate ••••, Majesty •••",
       "experienceCost": 3,
       "cost": "1 Vitae",
@@ -5227,14 +5249,27 @@
         "dramaticFailure": "The target shrugs off the vampire’s control, either fleeing the scene or becoming aggressive.",
         "failure": "The vampire’s power fails to take hold.",
         "success": "The target gains the Agonized Condition (above).",
-        "exceptionalSuccess": "In addition to taking the condition, the target also suffers the vampire’s Blood Potency in bashing damage. Rain Falls"
+        "exceptionalSuccess": "In addition to taking the condition, the target also suffers the vampire’s Blood Potency in bashing damage."
+      },
+      "presentationPt": {
+        "prerequisites": "Dominação ••••, Majestade •••",
+        "cost": "1 Vitae",
+        "summary": "Impõe a Condição Agonizado.",
+        "dicePool": "Manipulação + Intimidação + Dominação contra Perseverança + Potência de Sangue",
+        "action": "Disputada; a resistência é Reflexiva",
+        "rollResults": {
+          "dramaticFailure": "O alvo se livra do controle do vampiro, fugindo da cena ou tornando-se agressivo.",
+          "failure": "O poder do vampiro não consegue se estabelecer.",
+          "success": "O alvo recebe a Condição Agonizado (acima).",
+          "exceptionalSuccess": "Além de receber a Condição, o alvo também sofre dano contusivo igual à Potência de Sangue do vampiro."
+        }
       }
     },
     {
       "id": "devotion-between-walls",
       "kind": "devotion",
       "name": "Between the Walls",
-      "translatedName": "Between the Walls",
+      "translatedName": "Entre as Paredes",
       "prerequisites": "Obfuscate •••, Resilience •",
       "experienceCost": 2,
       "cost": "1 Vitae",
@@ -5243,13 +5278,21 @@
       "page": 136,
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "This Devotion allows a vampire to ooze into spaces as small as Size 2 and move through these cramped quarters at her normal Speed. When hunting, add her Obfuscate dots in bonus dice to any ambushes made from tiny, hidden spaces. Otherwise this allows her to use Unmarked Grave ( Vampire: The Requiem Second Edition, p. 139) in any space into which she can fit."
+      "effect": "This Devotion allows a vampire to ooze into spaces as small as Size 2 and move through these cramped quarters at her normal Speed. When hunting, add her Obfuscate dots in bonus dice to any ambushes made from tiny, hidden spaces. Otherwise this allows her to use Unmarked Grave ( Vampire: The Requiem Second Edition, p. 139) in any space into which she can fit.",
+      "presentationPt": {
+        "prerequisites": "Ofuscação •••, Resiliência •",
+        "cost": "1 Vitae",
+        "summary": "Passa por espaços de Tamanho 2 e soma Ofuscação aos testes de emboscada.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Esta Devoção permite ao vampiro se esgueirar por espaços tão pequenos quanto Tamanho 2 e mover-se por esses locais apertados com seu Deslocamento normal. Ao caçar, some seus pontos de Ofuscação como dados de bônus a qualquer emboscada feita de pequenos espaços ocultos. Além disso, ela pode usar Túmulo Sem Marca (Vampire: The Requiem Second Edition, p. 139) em qualquer espaço no qual consiga caber."
+      }
     },
     {
       "id": "devotion-blood-scenting",
       "kind": "devotion",
       "name": "Blood Scenting",
-      "translatedName": "Blood Scenting",
+      "translatedName": "Farejar Sangue",
       "prerequisites": "Auspex •••",
       "experienceCost": 4,
       "cost": "1 Vitae",
@@ -5264,13 +5307,27 @@
         "failure": "Scenting the target’s blood identifies them as one of the Kindred, revealing their clan at Storyteller discretion, but nothing more.",
         "success": "She identifies her target’s clan, Blood Potency, and any Disciplines she may know.",
         "exceptionalSuccess": "In addition to the benefits of the success, she also identifies any blood bonds the target may have, and any hidden Disciplines or Devotions she may currently be utilizing."
+      },
+      "presentationPt": {
+        "prerequisites": "Auspícios •••",
+        "cost": "1 Vitae",
+        "summary": "Identifica o Clã, a Potência de Sangue e as Disciplinas de um alvo.",
+        "dicePool": "Raciocínio + Compostura + Auspícios",
+        "action": "Reflexiva",
+        "effect": "O vampiro fareja o ar perto de um dos Membros e faz o teste indicado.",
+        "rollResults": {
+          "dramaticFailure": "O vampiro tira a conclusão que seria mais inconveniente socialmente.",
+          "failure": "Farejar o sangue do alvo o identifica como um dos Membros, revelando seu Clã a critério do Narrador, mas nada além disso.",
+          "success": "Ela identifica o Clã, a Potência de Sangue e quaisquer Disciplinas que seu alvo conheça.",
+          "exceptionalSuccess": "Além dos benefícios do sucesso, ela também identifica quaisquer vínculos de sangue que o alvo possua e quaisquer Disciplinas ou Devoções ocultas que ele esteja utilizando."
+        }
       }
     },
     {
       "id": "devotion-flush-out",
       "kind": "devotion",
       "name": "Flush Out",
-      "translatedName": "Flush Out",
+      "translatedName": "Desalojar",
       "prerequisites": "Dominate •, Nightmare •••",
       "experienceCost": 2,
       "cost": "2 Vitae",
@@ -5284,13 +5341,26 @@
         "failure": "The prey resists the influence and stays hunkered down in their hiding place.",
         "success": "The target gains the Frightened Condition and flees their hiding place to a location of the vampire’s choosing. If there are multiple targets the vampire wishes to terrify, roll against the highest Composure + Blood Potency of the assembled targets.",
         "exceptionalSuccess": "As a success and also the victims suffer –2 dice to all attack actions against the vampire."
+      },
+      "presentationPt": {
+        "prerequisites": "Dominação •, Pesadelo •••",
+        "cost": "2 Vitae",
+        "summary": "Impõe Assustado e expulsa alvos escondidos para um local exposto.",
+        "dicePool": "Presença + Subterfúgio + Pesadelo contra Compostura + Potência de Sangue",
+        "action": "Disputada; a resistência é Reflexiva",
+        "rollResults": {
+          "dramaticFailure": "Em vez de um reflexo de fuga, a presa é levada a lutar, buscando fraquezas comuns e improvisando rapidamente tochas e estacas de madeira.",
+          "failure": "A presa resiste à influência e permanece abrigada em seu esconderijo.",
+          "success": "O alvo recebe a Condição Assustado e foge do esconderijo para um lugar escolhido pelo vampiro. Se o vampiro quiser aterrorizar vários alvos, faça o teste contra a maior Compostura + Potência de Sangue entre os alvos reunidos.",
+          "exceptionalSuccess": "Como em um sucesso, e as vítimas também sofrem −2 dados em todas as ações de ataque contra o vampiro."
+        }
       }
     },
     {
       "id": "devotion-vile-blood",
       "kind": "devotion",
       "name": "Vile Blood",
-      "translatedName": "Vile Blood",
+      "translatedName": "Sangue Vil",
       "prerequisites": "Protean •••, Resilience ••",
       "experienceCost": 2,
       "cost": "1 Vitae",
@@ -5299,7 +5369,15 @@
       "page": 136,
       "dicePool": "Stamina + Medicine + Protean",
       "action": "Reflexive",
-      "effect": "If being fed on by another vampire, the Kindred using this Devotion pays the cost and instead transforms her blood into acidic poison. Her target takes a lethal level of damage for every point of Vitae he would have consumed. In combat, after she has taken any levels of damage she may use this Devotion to force festering blood from her wounds, allowing her to inflict the Poisoned Tilt ( Chronicles of Darkness , p. 286) with any of her attacks."
+      "effect": "If being fed on by another vampire, the Kindred using this Devotion pays the cost and instead transforms her blood into acidic poison. Her target takes a lethal level of damage for every point of Vitae he would have consumed. In combat, after she has taken any levels of damage she may use this Devotion to force festering blood from her wounds, allowing her to inflict the Poisoned Tilt ( Chronicles of Darkness , p. 286) with any of her attacks.",
+      "presentationPt": {
+        "prerequisites": "Metamorfose •••, Resiliência ••",
+        "cost": "1 Vitae",
+        "summary": "Torna seu sangue venenoso para quem se alimenta dele e para combatentes.",
+        "dicePool": "Vigor + Medicina + Metamorfose",
+        "action": "Reflexiva",
+        "effect": "Se outro vampiro estiver se alimentando dela, o Membro que usa esta Devoção paga o custo e transforma seu sangue em veneno ácido. Seu alvo sofre um nível de dano letal por ponto de Vitae que consumiria. Em combate, após sofrer qualquer nível de dano, ela pode usar esta Devoção para expulsar sangue purulento dos ferimentos, permitindo impor a Complicação Envenenado (Chronicles of Darkness, p. 286) com qualquer um de seus ataques."
+      }
     },
     {
       "id": "devotion-give-take",
