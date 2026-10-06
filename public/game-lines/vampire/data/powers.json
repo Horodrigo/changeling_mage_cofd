@@ -5626,7 +5626,7 @@
       "id": "devotion-ghost-skin",
       "kind": "devotion",
       "name": "Ghost Skin",
-      "translatedName": "Ghost Skin",
+      "translatedName": "Pele Espectral",
       "prerequisites": "Auspex •••••",
       "experienceCost": 2,
       "cost": "1 Willpower",
@@ -5635,13 +5635,21 @@
       "page": 85,
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "When activating Twilight Projection, the vampire can spend a Willpower to attune her form with ghosts, allowing her to see and physically interact with the dead. Treat her traits as the same as in her physical form. The vampire is ejected back to her body if she takes full lethal damage and meets Final Death if the damage is aggravated. By default, she can still only use Auspex in this form, but if she knows Pierce the Veil (below), she can spend a Vitae on activation of that Devotion to access other Disciplines."
+      "effect": "When activating Twilight Projection, the vampire can spend a Willpower to attune her form with ghosts, allowing her to see and physically interact with the dead. Treat her traits as the same as in her physical form. The vampire is ejected back to her body if she takes full lethal damage and meets Final Death if the damage is aggravated. By default, she can still only use Auspex in this form, but if she knows Pierce the Veil (below), she can spend a Vitae on activation of that Devotion to access other Disciplines.",
+      "presentationPt": {
+        "prerequisites": "Auspícios •••••",
+        "cost": "1 de Força de Vontade",
+        "summary": "Percebe fantasmas e interage com eles durante Projeção Crepuscular.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Ao ativar Projeção Crepuscular, o vampiro pode gastar um ponto de Força de Vontade para sintonizar sua forma com fantasmas, permitindo ver os mortos e interagir fisicamente com eles. Suas características são as mesmas de sua forma física. O vampiro é expulso de volta para seu corpo se preencher toda a Vitalidade com dano letal e encontra a Morte Final se o dano for agravado. Normalmente, ela ainda só pode usar Auspícios nesta forma, mas, se conhecer Perfurar o Véu, pode gastar uma Vitae ao ativar essa Devoção para acessar outras Disciplinas."
+      }
     },
     {
       "id": "devotion-pierce-veil",
       "kind": "devotion",
       "name": "Pierce the Veil",
-      "translatedName": "Pierce the Veil",
+      "translatedName": "Perfurar o Véu",
       "prerequisites": "Auspex •",
       "experienceCost": 1,
       "summary": "Use Auspex to perceive ghosts and Willpower to affect them with Disciplines.",
@@ -5651,13 +5659,22 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "The vampire perceives any ghost present within the extent of his Kindred Senses and knows its Rank with a reflexive Wits + Occult roll. He can see or speak to any wraith hidden in Twilight form (provoking a Clash of Wills if necessary). By default, he can only use Auspex on ghosts, but if he spends a Willpower at activation his focus is keen enough that he can use other Disciplines as well, but he is still limited in that he cannot physically interact with them."
+      "effect": "The vampire perceives any ghost present within the extent of his Kindred Senses and knows its Rank with a reflexive Wits + Occult roll. He can see or speak to any wraith hidden in Twilight form (provoking a Clash of Wills if necessary). By default, he can only use Auspex on ghosts, but if he spends a Willpower at activation his focus is keen enough that he can use other Disciplines as well, but he is still limited in that he cannot physically interact with them.",
+      "presentationPt": {
+        "prerequisites": "Auspícios •",
+        "cost": "Nenhum ou 1 de Força de Vontade",
+        "summary": "Usa Auspícios para perceber fantasmas e Força de Vontade para afetá-los com Disciplinas.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "O vampiro percebe qualquer fantasma presente ao alcance de seus Sentidos dos Membros e descobre sua Graduação com um teste reflexivo de Raciocínio + Ocultismo. Ele pode ver ou falar com qualquer fantasma oculto em forma de Crepúsculo, provocando um Confronto de Vontades se necessário. Normalmente, só pode usar Auspícios em fantasmas, mas, se gastar um ponto de Força de Vontade na ativação, sua concentração fica aguçada o bastante para também usar outras Disciplinas. Ainda assim, continua sem poder interagir fisicamente com eles."
+      }
     },
     {
       "id": "devotion-seance",
       "kind": "devotion",
       "name": "Séance",
-      "translatedName": "Séance",
+      "translatedName": "Sessão Espírita",
       "prerequisites": "Auspex •••, Vigor ••",
       "experienceCost": 2,
       "cost": "1 Willpower",
@@ -5671,6 +5688,19 @@
         "exceptionalSuccess": "The Condition lasts the rest of the night.",
         "failure": "The ghost refuses the call.",
         "dramaticFailure": "The vampire inflicts the Open Condition on himself."
+      },
+      "presentationPt": {
+        "prerequisites": "Auspícios •••, Ímpeto ••",
+        "cost": "1 de Força de Vontade",
+        "summary": "Força um fantasma a se Materializar em sua Âncora.",
+        "dicePool": "Perseverança + Ocultismo + Auspícios contra Resistência + Graduação",
+        "action": "Disputada; a resistência é Reflexiva",
+        "rollResults": {
+          "success": "O fantasma se teletransporta para sua Âncora se ainda não estiver presente e recebe a Condição Materializado pelo resto da cena. Ela não pode ser encerrada antes do prazo, a menos que o fantasma perca todas as caixas de Corpus por dano letal.",
+          "exceptionalSuccess": "A Condição dura pelo resto da noite.",
+          "failure": "O fantasma recusa o chamado.",
+          "dramaticFailure": "O vampiro inflige a Condição Aberto a si mesmo."
+        }
       }
     },
     {
@@ -5709,7 +5739,7 @@
       "id": "devotion-water-hibernation",
       "kind": "devotion",
       "name": "Water Hibernation",
-      "translatedName": "Water Hibernation",
+      "translatedName": "Hibernação Aquática",
       "prerequisites": "Protean •",
       "experienceCost": 1,
       "summary": "Use Unmarked Grave while fully submerged in water.",
@@ -5720,13 +5750,23 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Indefinite",
-      "effect": "The vampire remains submerged under water without surfacing for as long as she desires. If the water evaporates or is otherwise removed, the Kindred is damaged, taking one point of bashing damage when uncovered. If the vampire is fully exposed, she becomes susceptible to sunlight."
+      "effect": "The vampire remains submerged under water without surfacing for as long as she desires. If the water evaporates or is otherwise removed, the Kindred is damaged, taking one point of bashing damage when uncovered. If the vampire is fully exposed, she becomes susceptible to sunlight.",
+      "presentationPt": {
+        "prerequisites": "Metamorfose •",
+        "cost": "0 Vitae",
+        "summary": "Usa Túmulo Sem Marca enquanto está completamente submerso na água.",
+        "requirement": "O vampiro está completamente submerso na água.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Indefinida",
+        "effect": "O vampiro permanece submerso, sem voltar à superfície, pelo tempo que desejar. Se a água evaporar ou for removida de outra forma, o Membro sofre um ponto de dano contusivo ao ficar descoberto. Se o vampiro ficar totalmente exposto, torna-se suscetível à luz solar."
+      }
     },
     {
       "id": "devotion-not-so-special",
       "kind": "devotion",
       "name": "Not So Special",
-      "translatedName": "Not So Special",
+      "translatedName": "Nada Tão Especial",
       "prerequisites": "Obfuscate ••, Vigor •••",
       "experienceCost": 2,
       "cost": "1+ Vitae",
@@ -5736,7 +5776,16 @@
       "dicePool": "Resolve + Occult + Vigor vs. Blood Potency + Stamina",
       "action": "Contested; resistance is reflexive",
       "duration": "Minutes equal to successes",
-      "effect": "If successful, the victim cannot access a number of dots in the chosen Discipline per Vitae spent, starting with the highest level. This also affects associated Devotions. If a Discipline effect is already active, this provokes a Clash of Wills. The effect continues if the victim wins the clash, but he cannot activate the power again if it expires naturally. Conditions inflicted with a Discipline (e.g., Mesmerized) do not count as active effects."
+      "effect": "If successful, the victim cannot access a number of dots in the chosen Discipline per Vitae spent, starting with the highest level. This also affects associated Devotions. If a Discipline effect is already active, this provokes a Clash of Wills. The effect continues if the victim wins the clash, but he cannot activate the power again if it expires naturally. Conditions inflicted with a Discipline (e.g., Mesmerized) do not count as active effects.",
+      "presentationPt": {
+        "prerequisites": "Ofuscação ••, Ímpeto •••",
+        "cost": "1+ Vitae",
+        "summary": "Suprime as Disciplinas exclusivas do Clã de outro vampiro.",
+        "dicePool": "Perseverança + Ocultismo + Ímpeto contra Potência de Sangue + Vigor",
+        "action": "Disputada; a resistência é Reflexiva",
+        "duration": "Minutos iguais aos sucessos",
+        "effect": "Se obtiver sucesso, a vítima perde acesso a pontos da Disciplina escolhida por Vitae gasta, começando pelo nível mais alto. Isso também afeta Devoções associadas. Se um efeito de Disciplina já estiver ativo, ocorre um Confronto de Vontades. O efeito continua se a vítima vencer o Confronto, mas ela não pode ativar o poder novamente se ele terminar naturalmente. Condições infligidas por uma Disciplina, como Mesmerizado, não contam como efeitos ativos."
+      }
     },
     {
       "id": "devotion-sea-witch-gift",
