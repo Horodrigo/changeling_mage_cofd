@@ -4880,8 +4880,8 @@
       "id": "devotion-aegis",
       "kind": "devotion",
       "name": "Aegis",
-      "translatedName": "Aegis",
-      "summary": "Interposes supernatural command and endurance against an attack.",
+      "translatedName": "Égide",
+      "summary": "Once per scene, suffer one aggravated damage to ignore all damage from one source except sunlight.",
       "source": "False Gods: Ventrue",
       "page": 106,
       "manualOnly": true,
@@ -4890,14 +4890,22 @@
       "cost": "1 aggravated damage",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "Once per scene, the vampire can willingly suffer one point of aggravated damage to ignore all damage from a single source. She wills her Resilience to the site of the injury, condensing the harm into a single grievous wound. This Devotion functions against all sources of damage save sunlight, and cannot be combined with other effects of Resilience."
+      "effect": "Once per scene, the vampire can willingly suffer one point of aggravated damage to ignore all damage from a single source. She wills her Resilience to the site of the injury, condensing the harm into a single grievous wound. This Devotion functions against all sources of damage save sunlight, and cannot be combined with other effects of Resilience.",
+      "presentationPt": {
+        "summary": "Uma vez por cena, sofre um ponto de dano agravado para ignorar todo o dano de uma única fonte, exceto luz solar.",
+        "prerequisites": "Resiliência •••••",
+        "cost": "1 de dano agravado",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Uma vez por cena, a vampira pode sofrer voluntariamente um ponto de dano agravado para ignorar todo o dano de uma única fonte. Ela direciona sua Resiliência ao local da lesão, condensando o dano em um único ferimento grave. Esta Devoção funciona contra todas as fontes de dano, exceto luz solar, e não pode ser combinada com outros efeitos de Resiliência."
+      }
     },
     {
       "id": "devotion-beast-avatar",
       "kind": "devotion",
       "name": "Beast Avatar",
-      "translatedName": "Beast Avatar",
-      "summary": "Projects the authority of Animalism through the vampire's own body.",
+      "translatedName": "Avatar da Fera",
+      "summary": "Uplift an animal ghoul’s Mental Attributes, limited to one uplifted ghoul at a time.",
       "source": "False Gods: Ventrue",
       "page": 106,
       "manualOnly": true,
@@ -4908,14 +4916,24 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "As long as the animal remains a ghoul.",
-      "effect": "The vampire uplifts an animal to sinister levels of intellect. When creating an animal ghoul, he can split a number of dots equal to Animalism among the creature’s Mental Attributes. These dots can be divided in any combination, but they cannot exceed the vampire’s own Attributes, or an upper maximum of five. If the vampire raises his Animalism later in the chronicle, new dots apply to the animal’s Attributes the next time he feeds it. Uplifted animals often develop strange quirks as the Vitae distorts and expands their minds, but the blood bond will keep them loyal. However, some might become Faithful (p. 147) given enough time and Vitae… This Devotion has no activation cost if the vampire knows the Beast King Merit (p. 109)."
+      "effect": "A vampire can only have one uplifted ghoul at a time. The vampire uplifts an animal to sinister levels of intellect. When creating an animal ghoul, he can split a number of dots equal to Animalism among the creature’s Mental Attributes. These dots can be divided in any combination, but they cannot exceed the vampire’s own Attributes, or an upper maximum of five. If the vampire raises his Animalism later in the chronicle, new dots apply to the animal’s Attributes the next time he feeds it. Uplifted animals often develop strange quirks as the Vitae distorts and expands their minds, but the blood bond will keep them loyal. However, some might become Faithful (p. 147) given enough time and Vitae… This Devotion has no activation cost if the vampire knows the Beast King Merit (p. 109).",
+      "presentationPt": {
+        "summary": "Eleva os Atributos Mentais de um animal ghoul, limitado a um ghoul elevado por vez.",
+        "prerequisites": "Animalismo ••, Dominação ••",
+        "cost": "1 de Força de Vontade (ou nenhum custo)",
+        "requirement": "O sujeito precisa ser o ghoul do vampiro",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Enquanto o animal permanecer um ghoul.",
+        "effect": "Um vampiro só pode ter um ghoul elevado por vez. O vampiro eleva um animal a níveis sinistros de intelecto. Ao criar um animal ghoul, pode distribuir um número de pontos igual a Animalismo entre os Atributos Mentais da criatura. Os pontos podem ser divididos em qualquer combinação, mas não podem ultrapassar os Atributos do próprio vampiro nem o limite máximo de cinco. Se aumentar Animalismo mais tarde na crônica, os novos pontos serão aplicados aos Atributos do animal na próxima vez em que ele o alimentar. Animais elevados costumam desenvolver peculiaridades estranhas conforme a Vitae distorce e expande suas mentes, mas o vínculo de sangue os mantém leais. Porém, alguns podem se tornar Fiéis (p. 147) com tempo e Vitae suficientes… Esta Devoção não tem custo de ativação se o vampiro possuir o Mérito Rei das Feras (p. 109)."
+      }
     },
     {
       "id": "devotion-blink",
       "kind": "devotion",
       "name": "Blink",
-      "translatedName": "Blink",
-      "summary": "Crosses a short distance too quickly for ordinary perception.",
+      "translatedName": "Piscar",
+      "summary": "Issue a brief command without eye contact; the victim is aware of their body’s betrayal.",
       "source": "False Gods: Ventrue",
       "page": 106,
       "manualOnly": true,
@@ -4930,6 +4948,20 @@
         "exceptionalSuccess": "The Ventrue’s words cut through his victim with ease. He refreshes the Willpower he spent into this Devotion.",
         "failure": "The victim shrugs it off.",
         "dramaticFailure": "Not only does the victim ignore the vampire’s command, she’s immune to Dominate for the rest of the scene."
+      },
+      "presentationPt": {
+        "summary": "Impõe uma ordem curta sem contato visual; a vítima percebe a traição do próprio corpo.",
+        "prerequisites": "Dominação •, Ímpeto ••",
+        "cost": "1 Vitae",
+        "dicePool": "Presença + Intimidação + Dominação – Perseverança",
+        "action": "Instantânea",
+        "duration": "Turnos iguais aos sucessos",
+        "rollResults": {
+          "success": "O vampiro dá uma ordem de uma ou duas palavras sem precisar de contato visual. A vítima precisa obedecer por um número de turnos igual aos sucessos, ou até concluir a ordem, o que ocorrer primeiro. Se a ordem colocar a personagem em perigo evidente ou provocar um Ponto de Ruptura, ela pode resistir gastando um ponto de Força de Vontade; fora disso, a Fera do Ventrue é poderosa demais para ser ignorada. Ao contrário das aplicações habituais de Dominação, a vítima tem plena consciência da traição do próprio corpo. Uma vítima não pode ser afetada por esta Devoção mais de uma vez por cena.",
+          "exceptionalSuccess": "As palavras do Ventrue atingem a vítima com facilidade. Ele recupera a Força de Vontade que gastou nesta Devoção.",
+          "failure": "A vítima não se abala.",
+          "dramaticFailure": "Além de ignorar a ordem do vampiro, a vítima fica imune a Dominação pelo resto da cena."
+        }
       }
     },
     {
