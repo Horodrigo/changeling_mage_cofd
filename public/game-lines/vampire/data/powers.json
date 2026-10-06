@@ -5113,8 +5113,8 @@
       "id": "devotion-knight-s-example",
       "kind": "devotion",
       "name": "Knight's Example",
-      "translatedName": "Knight's Example",
-      "summary": "Strengthens followers who witness the Ventrue act according to command.",
+      "translatedName": "O Exemplo do Cavaleiro",
+      "summary": "Allied witnesses add activation successes as weapon damage to their next violent action.",
       "source": "False Gods: Ventrue",
       "page": 108,
       "manualOnly": true,
@@ -5123,33 +5123,50 @@
       "cost": "None",
       "dicePool": "Presence + Intimidation + Vigor – number of subjects",
       "action": "Instant",
-      "effect": "On success, allied witnesses add the activation successes as weapon damage to their next violent action during the scene; the bonus is spent even if that attack fails, and the Devotion may be used only once per scene. An exceptional success adds one more weapon damage. Failure provides no inspiration; dramatic failure penalizes the followers' next attacks by the vampire's Dominate dots."
+      "effect": "On success, allied witnesses add the activation successes as weapon damage to their next violent action during the scene; the bonus is spent even if that attack fails, and the Devotion may be used only once per scene. An exceptional success adds one more weapon damage. Failure provides no inspiration; dramatic failure penalizes the followers' next attacks by the vampire's Dominate dots.",
+      "presentationPt": {
+        "summary": "Aliados que testemunham a ativação somam os sucessos ao dano de arma de sua próxima ação violenta.",
+        "prerequisites": "Dominação •",
+        "cost": "Nenhum",
+        "dicePool": "Presença + Intimidação + Ímpeto – número de sujeitos",
+        "action": "Instantânea",
+        "effect": "Com sucesso, aliados que testemunham a ativação somam os sucessos como dano de arma à sua próxima ação violenta durante a cena. O bônus é consumido mesmo se o ataque falhar, e a Devoção só pode ser usada uma vez por cena. Um sucesso excepcional acrescenta mais um de dano de arma. Falhar não inspira os aliados; uma falha dramática impõe aos próximos ataques dos seguidores uma penalidade igual aos pontos de Dominação da vampira."
+      }
     },
     {
       "id": "devotion-lord-of-beasts",
       "kind": "devotion",
       "name": "Lord of Beasts",
-      "translatedName": "Lord of Beasts",
-      "summary": "Extends Animalism's authority across a broad gathering of animals.",
+      "translatedName": "Senhor das Feras",
+      "summary": "Grant a new familiar dots of the vampire’s Physical Disciplines, increasing its Vitae upkeep.",
       "source": "False Gods: Ventrue",
       "page": 108,
       "manualOnly": true,
       "experienceCost": 1,
-      "prerequisites": "Animalism ••; Special",
+      "prerequisites": "Animalism ••; Celerity • or Resilience • or Vigor •",
       "cost": "1 Willpower",
       "dicePool": "None",
       "action": "None",
       "duration": "As with Raise the Familiar",
-      "effect": "The vampire spends a Willpower to grant her new familiar a dot each of Celerity, Resilience, or Vigor, though she must have a dot of the relevant Discipline. Using this Devotion increases the number of Vitae needed to maintain the familiar’s existence by one for each Discipline granted."
+      "effect": "The vampire spends a Willpower to grant her new familiar a dot each of Celerity, Resilience, or Vigor, though she must have a dot of the relevant Discipline. Using this Devotion increases the number of Vitae needed to maintain the familiar’s existence by one for each Discipline granted.",
+      "presentationPt": {
+        "summary": "Concede pontos das Disciplinas Físicas do vampiro a um novo familiar, aumentando o custo de manutenção em Vitae.",
+        "prerequisites": "Animalismo ••; Celeridade • ou Resiliência • ou Ímpeto •",
+        "cost": "1 de Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Como em Erguer o Familiar",
+        "effect": "A vampira gasta um ponto de Força de Vontade para conceder ao novo familiar um ponto de cada uma das Disciplinas escolhidas entre Celeridade, Resiliência e Ímpeto, desde que possua um ponto na Disciplina correspondente. Usar esta Devoção aumenta a Vitae necessária para manter a existência do familiar em um ponto por Disciplina concedida."
+      }
     },
     {
       "id": "devotion-memory-palace",
       "kind": "devotion",
       "name": "Memory Palace",
-      "translatedName": "Memory Palace",
-      "summary": "Organizes memories into a protected, navigable mental structure.",
+      "translatedName": "Palácio da Memória",
+      "summary": "Store memories in blood, protecting them from supernatural retrieval or suppression until a chosen stimulus is encountered.",
       "source": "False Gods: Ventrue",
-      "page": 109,
+      "page": 108,
       "manualOnly": true,
       "experienceCost": 3,
       "prerequisites": "Dominate ••••, Resilience ••",
@@ -5157,7 +5174,16 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Indefinite",
-      "effect": "The Ventrue enshrines a memory in his blood, instantly placing it at the back of his mind. He doesn’t forget it — not exactly — but he can no longer think of it, protecting it from Auspex and other memory-retrieval powers. This memory is tied to a specific stimulus when the Devotion is first activated, be it a symbol, word, or some other visual or audio trigger. The vampire will recall the memory when the stimulus is encountered, even if that memory would have been suppressed or overwritten by supernatural means. The vampire can store a number of memories equal to Blood Potency at any given time. If Blood Potency decreases while the Ventrue is at her storage maximum, her player chooses which memory is unlocked. A stored memory can be up to a scene’s worth of information."
+      "effect": "The Ventrue enshrines a memory in his blood, instantly placing it at the back of his mind. He doesn’t forget it — not exactly — but he can no longer think of it, protecting it from Auspex and other memory-retrieval powers. This memory is tied to a specific stimulus when the Devotion is first activated, be it a symbol, word, or some other visual or audio trigger. The vampire will recall the memory when the stimulus is encountered, even if that memory would have been suppressed or overwritten by supernatural means. The vampire can store a number of memories equal to Blood Potency at any given time. If Blood Potency decreases while the Ventrue is at her storage maximum, her player chooses which memory is unlocked. A stored memory can be up to a scene’s worth of information.",
+      "presentationPt": {
+        "summary": "Guarda memórias no sangue, protegendo-as contra recuperação ou supressão sobrenatural até encontrar um estímulo escolhido.",
+        "prerequisites": "Dominação ••••, Resiliência ••",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Indefinida",
+        "effect": "O Ventrue consagra uma memória em seu sangue, colocando-a instantaneamente no fundo da mente. Não a esquece exatamente, mas não consegue mais pensar nela, protegendo-a de Auspícios e de outros poderes de recuperação de memórias. Ao ativar a Devoção pela primeira vez, a memória é vinculada a um estímulo específico, como um símbolo, uma palavra ou outro gatilho visual ou sonoro. O vampiro recordará a memória quando encontrar o estímulo, mesmo que ela tenha sido suprimida ou sobrescrita por meios sobrenaturais. Pode armazenar ao mesmo tempo um número de memórias igual à Potência de Sangue. Se a Potência de Sangue diminuir enquanto estiver no limite de armazenamento, a jogadora escolhe qual memória será desbloqueada. Uma memória armazenada pode conter até uma cena de informações."
+      }
     },
     {
       "id": "devotion-messenger-s-blessing",

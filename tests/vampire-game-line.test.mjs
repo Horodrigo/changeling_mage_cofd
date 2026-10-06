@@ -982,3 +982,32 @@ test("Core Gargoyle activation access differs from Spilled Blood Tiny Guardian's
   assert.deepEqual(sheet.merits, []);
   assert.deepEqual(sheet.current_state, JSON.parse(before).current_state, "Only the transaction UI credits XP and removes receipts");
 });
+
+test("False Gods Lord of Beasts requires Animalism and any one Physical Discipline, retaining paid refund dependencies", async () => {
+  const { vampireDevotionPrerequisitesMet } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const { refundVampireAdvancement } = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
+  const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const lord = powers.devotions.find(item => item.id === "devotion-lord-of-beasts");
+  const sheet = blankPrintCharacter("VtR");
+  sheet.line_data = { ...sheet.line_data, disciplines: { Animalism: 2, Celerity: 0, Resilience: 0, Vigor: 0 }, devotion_ids: [] };
+  assert.equal(vampireDevotionPrerequisitesMet(lord, sheet, powers), false);
+  sheet.line_data.disciplines["Ímpeto"] = 1;
+  assert.equal(vampireDevotionPrerequisitesMet(lord, sheet, powers), false, "Localized Stamina/Vigor labels cannot replace the canonical Vigor Discipline");
+  for (const physical of ["Celerity", "Resilience", "Vigor"]) {
+    const buyer = structuredClone(sheet);
+    buyer.line_data.disciplines[physical] = 1;
+    assert.equal(vampireDevotionPrerequisitesMet(lord, buyer, powers), true, "False Gods p. 108 allows each Physical Discipline independently");
+    const insufficient = structuredClone(buyer);
+    insufficient.line_data.disciplines.Animalism = 1;
+    assert.equal(vampireDevotionPrerequisitesMet(lord, insufficient, powers), false);
+    buyer.line_data.devotion_ids = [lord.id];
+    buyer.current_state = { experience_available: 7, experience_spent: 4, vampire_experience_history: [{ id: "lord", label: "Original receipt", cost: 1, undo: { kind: "devotion", id: lord.id } }] };
+    const before = JSON.stringify(buyer);
+    assert.equal(refundVampireAdvancement(buyer, { kind: "discipline", name: physical }, powers), false);
+    assert.equal(JSON.stringify(buyer), before);
+    buyer.line_data.disciplines[physical === "Celerity" ? "Resilience" : "Celerity"] = 1;
+    assert.equal(refundVampireAdvancement(buyer, { kind: "discipline", name: physical }, powers), true, "Another eligible alternative permits the refund");
+    assert.deepEqual(buyer.current_state, JSON.parse(before).current_state);
+  }
+});
