@@ -9818,7 +9818,7 @@
       "id": "devotion-frog-prince",
       "kind": "devotion",
       "name": "Frog Prince",
-      "translatedName": "Frog Prince",
+      "translatedName": "Príncipe Sapo",
       "prerequisites": "Animalism ••; Protean •••",
       "experienceCost": 2,
       "summary": "Transform another character into an animal for the night.",
@@ -9835,6 +9835,21 @@
         "exceptionalSuccess": "The transformation lasts for additional nights equal to the vampire’s Blood Potency.",
         "failure": "The victim’s body resists the vampire’s alteration.",
         "dramaticFailure": "The vampire is forced into her own animal form for the rest of the scene and loses access to her other Protean powers."
+      },
+      "presentationPt": {
+        "summary": "Transforma outro personagem em um animal pela noite.",
+        "prerequisites": "Animalismo ••; Metamorfose •••",
+        "cost": "2 Vitae",
+        "requirement": "A vítima deve consumir uma Vitae ou ser ungida com ela, já incluída no custo. Se o vampiro quiser conceder uma forma animal que não tenha memorizado, precisa consumir sangue de um animal desse tipo na mesma noite.",
+        "dicePool": "Presença + Empatia com Animais + Metamorfose contra Vigor + Potência de Sangue",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "rollResults": {
+          "success": "O sujeito se transforma em um animal pelo resto da noite ou até que o vampiro o alimente ou o unja com outro ponto de Vitae, o que ocorrer primeiro. Se o Gangrel possui o Mérito Forma de Enxame (Vampire, p. 114), também pode conceder esse efeito.",
+          "exceptionalSuccess": "A transformação dura noites adicionais em número igual à Potência de Sangue do vampiro.",
+          "failure": "O corpo da vítima resiste à alteração do vampiro.",
+          "dramaticFailure": "O vampiro é forçado a assumir sua própria forma animal pelo resto da cena e perde acesso aos outros poderes de Metamorfose."
+        }
       }
     },
     {
@@ -9867,24 +9882,33 @@
       "id": "devotion-graft",
       "kind": "devotion",
       "name": "Graft",
-      "translatedName": "Graft",
+      "translatedName": "Enxerto",
       "prerequisites": "Protean •••; Resilience ••",
       "experienceCost": 3,
       "summary": "Attach stolen limbs, organs, or bones and use them as part of the vampire's body.",
       "source": "Wild Hunt: Gangrel",
-      "page": 106,
+      "page": 105,
       "cost": "1 Vitae per part",
       "action": "Instant",
       "duration": "Night",
       "effect": "The vampire attaches a limb his body, torn or removed from its original host, which he can now use as if it was his own. Each limb added grants +1 to Dexterity and Strength; extra organs or bones apply +1 Stamina. However, he can only apply extra parts to his body equal to his Blood Potency dots plus one. The duration above can be reset each night by spending one Vitae per part the vampire wants to keep attached.",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "summary": "Prende membros, órgãos ou ossos roubados ao corpo do vampiro e os utiliza como se fossem seus.",
+        "prerequisites": "Metamorfose •••; Resiliência ••",
+        "cost": "1 Vitae por parte",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "effect": "O vampiro prende ao próprio corpo um membro arrancado ou removido do dono original e pode usá-lo como se fosse seu. Cada membro acrescentado concede +1 a Destreza e Força; órgãos ou ossos extras concedem +1 a Vigor. Porém, só pode acrescentar ao corpo um número de partes igual a seus pontos de Potência de Sangue mais um. A duração pode ser renovada a cada noite gastando uma Vitae por parte que deseja manter presa."
+      }
     },
     {
       "id": "devotion-inner-rage",
       "kind": "devotion",
       "name": "Inner Rage",
-      "translatedName": "Inner Rage",
+      "translatedName": "Fúria Interior",
       "prerequisites": "Animalism ••••; Resilience ••••",
       "experienceCost": 4,
       "summary": "Escape supernatural coercion by surrendering to an uncontrollable frenzy.",
@@ -9894,7 +9918,15 @@
       "action": "Reflexive",
       "effect": "When the vampire fails to resist Dominate, Majesty, Nightmare, or a Devotion requiring any of these Disciplines, she can activate this Devotion. Doing so causes her to ignore the effects of the Discipline or Devotion targeting her, but she enters frenzy as if she had dramatically failed to resist. She cannot ride the wave or otherwise influence this frenzy, even with the Coil of the Wyrm.",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "summary": "Escapa de coerção sobrenatural entregando-se a um frenesi incontrolável.",
+        "prerequisites": "Animalismo ••••; Resiliência ••••",
+        "cost": "1 de Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Quando o vampiro falha em resistir a Dominação, Majestade, Pesadelo ou uma Devoção que exija qualquer dessas Disciplinas, pode ativar esta Devoção. Ignora os efeitos da Disciplina ou Devoção que o afeta, mas entra em frenesi como se tivesse sofrido uma falha dramática na resistência. Não pode usar Cavalgar a Onda nem influenciar esse frenesi de outra forma, nem mesmo com a Espiral da Serpente."
+      }
     },
     {
       "id": "devotion-it-will-not-die",
