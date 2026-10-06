@@ -10041,7 +10041,7 @@
       "id": "devotion-flesh-sculpting",
       "kind": "devotion",
       "name": "Flesh Sculpting",
-      "translatedName": "Flesh Sculpting",
+      "translatedName": "Escultura da Carne",
       "prerequisites": "Dominate ••; Protean ••; Flesh Crafting",
       "experienceCost": 2,
       "summary": "Sculpt a subject's Physical Attributes, Size, and bodily Conditions.",
@@ -10049,7 +10049,7 @@
       "page": 104,
       "cost": "1 Vitae and 1 Willpower",
       "dicePool": "Dexterity + Medicine + Protean – Stamina",
-      "action": "Extended",
+      "action": "Extended (target successes is ten plus the total Attribute dots and/or levels of Size to be altered, and each roll represents ten minutes of work manually shifting the subject’s flesh)",
       "manualOnly": true,
       "requirement": "The vampire must inflict the Mesmerized Condition on the subject, who must also consume or be anointed by a Vitae (included in cost).",
       "duration": "Indefinite on humans; one night on vampires",
@@ -10058,7 +10058,25 @@
         "exceptionalSuccess": "The vampire refreshes a Willpower point from the sheer elegance of her work.",
         "failure": "The subject’s body rejects such gross alteration.",
         "dramaticFailure": "Something awful happens. The Storyteller has free rein to get icky."
-      }
+      },
+      "presentationPt": {
+        "summary": "Esculpe os Atributos Físicos, o Tamanho e as Condições corporais de um sujeito.",
+        "prerequisites": "Dominação ••; Metamorfose ••; Modelagem da Carne",
+        "cost": "1 Vitae e 1 de Força de Vontade",
+        "requirement": "O vampiro deve impor a Condição Mesmerizado ao sujeito, que também deve consumir ou ser ungido com uma Vitae, incluída no custo.",
+        "dicePool": "Destreza + Medicina + Metamorfose – Vigor",
+        "action": "Estendida (os Sucessos Alvo são dez mais o total de pontos de Atributos e/ou níveis de Tamanho a alterar; cada teste representa dez minutos de trabalho manual para remodelar a carne do sujeito)",
+        "duration": "Indefinida em humanos; uma noite em vampiros",
+        "rollResults": {
+          "success": "O vampiro pode redistribuir os Atributos Físicos do sujeito e alterar seu Tamanho com as seguintes restrições: • O total de pontos redistribuídos e níveis de Tamanho alterados não pode exceder os pontos de Metamorfose do vampiro. • Não pode reduzir um Atributo abaixo de um ponto. • Não pode reduzir o Tamanho de um personagem abaixo de 3 nem aumentá-lo acima de 7. • Não pode exceder os limites de características impostos pela Potência de Sangue nem as limitações físicas humanas. • Não pode apagar pontos de Atributos, mas pode impor Condições persistentes como Cego, Incapacitado ou Mudo (Chronicles of Darkness, pp. 288 e 290). Cada Condição/Complicação conta como uma alteração separada. Em humanos, essa forma é permanente até o vampiro alimentar ou ungir o sujeito com outra Vitae. Vampiros revertem durante o sono diurno, mas podem preservar suas novas formas gastando um ponto de Força de Vontade por ponto de Atributo ou nível de Tamanho alterado. Alguns Gangrel aprendem a usar esta Devoção em si mesmos; isso exige conhecer Pele da Fera e gastar uma Experiência adicional além do preço indicado. O sistema é o mesmo, mas o vampiro não subtrai Vigor do teste de ativação nem precisa impor Mesmerizado a si mesmo.",
+          "exceptionalSuccess": "O vampiro recupera um ponto de Força de Vontade pela pura elegância de seu trabalho.",
+          "failure": "O corpo do sujeito rejeita uma alteração tão profunda.",
+          "dramaticFailure": "Algo horrível acontece. O Narrador tem liberdade para tornar a situação repulsiva."
+        }
+      },
+      "requiredDevotionIds": [
+        "devotion-flesh-crafting"
+      ]
     },
     {
       "id": "devotion-forced-march",
