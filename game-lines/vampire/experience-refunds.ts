@@ -2,6 +2,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { refundMeritDots, subtractDots } from "@/lib/experience-refunds";
 import type { VampirePowers } from "./catalog-types";
 import { stringArray, vampireDevotionPrerequisitesMet, vampirePaidDevotionIds } from "./creation-rules";
+import type { DefinitionIdentity } from "@/lib/merit-identity";
 
 export type VampireAdvancementUndo =
   | { kind: "trait"; group: "attributes" | "skills"; name: string; amount?: number }
@@ -25,14 +26,14 @@ const withoutMany = (value: unknown, ids: readonly string[]) =>
   Array.isArray(value) ? value.map(String).filter((item) => !ids.includes(item)) : [];
 
 /** Undo only one purchase delta so later Vampire purchases remain intact. */
-export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdvancementUndo, powers?: Pick<VampirePowers, "disciplines" | "devotions">) {
+export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdvancementUndo, powers?: Pick<VampirePowers, "disciplines" | "devotions">, meritCatalog: readonly DefinitionIdentity[] = []) {
   const next = structuredClone(sheet);
   if (!applyVampireAdvancementUndo(next, undo)) return false;
   const retained = stringArray(next.line_data.devotion_ids);
   const paid = vampirePaidDevotionIds(sheet);
   const automatic = new Set(stringArray(sheet.line_data.automatic_devotion_ids));
   if (powers?.devotions.some((item) => (paid.has(item.id) || Number(item.experienceCost ?? 0) > 0 && !automatic.has(item.id)) && retained.includes(item.id)
-    && vampireDevotionPrerequisitesMet(item, sheet, powers) && !vampireDevotionPrerequisitesMet(item, next, powers))) return false;
+    && vampireDevotionPrerequisitesMet(item, sheet, powers, meritCatalog) && !vampireDevotionPrerequisitesMet(item, next, powers, meritCatalog))) return false;
   Object.assign(sheet, next);
   return true;
 }

@@ -408,7 +408,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
       derived: vampireDerived(finalAttributes, finalSkills, finalDisciplines, finalBloodPotency, reference),
       current_state: builderCurrentState(source, draft, common.step, common.allowAdvancement), created_at: source?.created_at ?? now, updated_at: now,
     };
-    return synchronizeBloodTetherPack(synchronizeAutomaticBloodlineDevotions(synchronizeVampireBuilderMeritGrants(completed), powers));
+    return synchronizeBloodTetherPack(synchronizeAutomaticBloodlineDevotions(synchronizeVampireBuilderMeritGrants(completed), powers, meritCatalog));
   };
   const finish = (draft: boolean, advancement?: CharacterSheet) => {
     if (!draft && issues.length) {

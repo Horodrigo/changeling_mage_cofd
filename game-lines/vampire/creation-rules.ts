@@ -2,6 +2,8 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { BloodPotencyRow, VampireBloodlineDefinition, VampireClanDefinition, VampireCovenantDefinition, VampireDisciplineDefinition, VampirePowers, VampirePurchasablePower, VampireReference } from "./catalog-types";
 import { translate, type Locale } from "@/lib/i18n";
 import { vampireMeritId } from "./merit-identities";
+import { requirementMet } from "@/lib/merit-requirements";
+import type { DefinitionIdentity } from "@/lib/merit-identity";
 
 export const VAMPIRE_CREATION_DISCIPLINES = [
   "Animalism", "Auspex", "Celerity", "Dominate", "Majesty",
@@ -170,14 +172,16 @@ export function vampireDisciplinePrerequisitesMet(prerequisites: string | undefi
   });
 }
 
-export function vampireDevotionPrerequisitesMet(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "skills" | "line_data">, powers: Pick<VampirePowers, "disciplines" | "devotions">) {
+export function vampireDevotionPrerequisitesMet(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "skills" | "line_data" | "merits">, powers: Pick<VampirePowers, "disciplines" | "devotions">, meritCatalog: readonly DefinitionIdentity[] = []) {
   if (!definition) return false;
   const names = powers.disciplines.map((item) => item.name);
   const disciplines = recordRatings(character.line_data.disciplines, names, 10);
   const known = stringArray(character.line_data.devotion_ids);
   return vampireDisciplinePrerequisitesMet(definition.prerequisites, disciplines, names)
     && Object.entries(definition.requiredSkills ?? {}).every(([skill, rating]) => Number(character.skills?.[skill] ?? 0) >= rating)
-    && (definition.requiredDevotionIds ?? []).every((id) => known.includes(id) && powers.devotions.some((item) => item.id === id));
+    && (definition.requiredDevotionIds ?? []).every((id) => known.includes(id) && powers.devotions.some((item) => item.id === id))
+    && (definition.requiredMerits ?? []).every(({ definitionId, dots }) => meritCatalog.some((item) => item.id === definitionId)
+      && requirementMet({ merit: definitionId, minimum: dots }, { gameLine: "VtR", merits: character.merits, meritCatalog }));
 }
 
 export function vampireDevotionAvailable(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "line_data">) {
@@ -208,7 +212,7 @@ export function vampirePaidDevotionIds(character: Pick<CharacterSheet, "current_
   }));
 }
 
-export function synchronizeAutomaticBloodlineDevotions(character: CharacterSheet, powers: Pick<VampirePowers, "disciplines" | "devotions">) {
+export function synchronizeAutomaticBloodlineDevotions(character: CharacterSheet, powers: Pick<VampirePowers, "disciplines" | "devotions">, meritCatalog: readonly DefinitionIdentity[] = []) {
   const automatic = powers.devotions.filter((item) => item.bloodlineId && (item.experienceCost === 0 || item.experienceDiscounts?.some((discount) => discount.cost === 0)));
   const current = stringArray(character.line_data.devotion_ids);
   const tracked = stringArray(character.line_data.automatic_devotion_ids);
@@ -221,7 +225,7 @@ export function synchronizeAutomaticBloodlineDevotions(character: CharacterSheet
   const nextTracked = tracked.filter((id) => next.includes(id) && !paid.has(id));
   const bloodlineId = String(character.line_data.bloodline_id ?? "");
   for (const item of automatic) {
-    if (item.bloodlineId !== bloodlineId || vampireDevotionExperienceCost(item, character, powers) !== 0 || !vampireDevotionPrerequisitesMet(item, character, powers) || next.includes(item.id)) continue;
+    if (item.bloodlineId !== bloodlineId || vampireDevotionExperienceCost(item, character, powers) !== 0 || !vampireDevotionPrerequisitesMet(item, character, powers, meritCatalog) || next.includes(item.id)) continue;
     next.push(item.id);
     if (item.experienceCost !== 0) nextTracked.push(item.id);
   }

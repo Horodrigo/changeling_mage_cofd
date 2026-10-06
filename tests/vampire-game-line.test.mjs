@@ -523,7 +523,7 @@ test("Vampire Experience separates Rites from Miracles and orders free rituals b
   assert.match(source, /value === "rite" && cruacRating >= 1[\s\S]*value === "scale" && Math\.max/);
   assert.match(source, /levels: mechanicsDetails|details: mechanicsDetails\(definition\), levels/);
   assert.match(source, /add\(t\("ui\.prerequisites"\), item\.prerequisites/);
-  assert.match(source, /vampireDevotionPrerequisitesMet\(definition, character, powers\)/);
+  assert.match(source, /vampireDevotionPrerequisitesMet\(definition, character, powers, meritCatalog\)/);
   assert.match(source, /category: item\.bloodlineId \? t\("sheet\.bloodline"\) : t\("ui\.generalDevotions"\)/);
   assert.match(source, /categoryOptions=\{\[t\("ui\.generalDevotions"\), t\("sheet\.bloodline"\)\]\}/);
   assert.match(source, /description: item\.effect \?\? item\.summary, descriptionAfterDetails: true/);
@@ -872,4 +872,59 @@ test("conditional free Devotions track only new grants and preserve paid or opaq
     assert.deepEqual(left.line_data.devotion_ids, legacy.line_data.devotion_ids);
     assert.deepEqual(left.current_state, legacy.current_state);
   }
+});
+
+test("Malocusian Devotions require a canonical Haven instance and preserve paid dependencies on refunds", async () => {
+  const { vampireDevotionPrerequisitesMet, synchronizeAutomaticBloodlineDevotions } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const { refundVampireAdvancement } = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
+  const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const merits = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/merits.json`, "utf8"));
+  const haven = merits.find(item => item.id === "vtr-haven");
+  const namesake = { ...haven, id: "homebrew:vampire:haven", sourceId: "homebrew:vampire", name: "Haven" };
+  const catalog = [haven, namesake];
+  const definitions = powers.devotions.filter(item => item.bloodlineId === "malocusians");
+  assert.equal(definitions.length, 4);
+  const sheet = blankPrintCharacter("VtR");
+  sheet.line_data = { ...sheet.line_data, clan_id: "ventrue", bloodline_id: "malocusians", disciplines: { Resilience: 5, Obfuscate: 5, Animalism: 5, Dominate: 5 }, devotion_ids: [] };
+  const owned = { definitionId: haven.id, instanceId: "paid-haven", name: "Authored Haven label", dots: 1, creationDots: 0, experienceDots: 1, sourceId: haven.sourceId, configuration: { value: "Authored home" } };
+  for (const definition of definitions) {
+    assert.deepEqual(definition.requiredMerits, [{ definitionId: haven.id, dots: 1 }]);
+    assert.equal(vampireDevotionPrerequisitesMet(definition, sheet, powers, catalog), false);
+    for (const selection of [owned, { name: "Haven", sourceId: haven.sourceId, dots: 1 }]) {
+      sheet.merits = [selection];
+      const before = JSON.stringify(sheet);
+      assert.equal(vampireDevotionPrerequisitesMet(definition, sheet, powers, catalog), true);
+      assert.equal(JSON.stringify(sheet), before, "Eligibility never rewrites legacy identity or authored configuration");
+    }
+    for (const selection of [{ ...owned, definitionId: namesake.id, name: "Haven" }, { ...owned, definitionId: "unavailable", name: "Haven" }, { name: "Refúgio", dots: 1 }, { ...owned, dots: 0 }]) {
+      sheet.merits = [selection];
+      assert.equal(vampireDevotionPrerequisitesMet(definition, sheet, powers, catalog), false);
+    }
+    sheet.merits = [owned];
+    assert.equal(vampireDevotionPrerequisitesMet(definition, sheet, powers), false, "Missing active catalog fails closed");
+    assert.equal(vampireDevotionPrerequisitesMet(definition, sheet, powers, [{ ...namesake, name: haven.id }]), false, "A player-authored title equal to an unavailable ID is not that definition");
+    sheet.line_data.devotion_ids = [definition.id];
+    sheet.current_state = { experience_available: 7, experience_spent: 1 + definition.experienceCost, vampire_experience_history: [{ id: "devotion", label: "Original title", cost: definition.experienceCost, undo: { kind: "devotion", id: definition.id } }] };
+    const before = JSON.stringify(sheet);
+    const undo = { kind: "merit", definitionId: haven.id, instanceId: owned.instanceId, name: "Haven", dots: 1 };
+    assert.equal(refundVampireAdvancement(sheet, undo, powers, catalog), false);
+    assert.equal(JSON.stringify(sheet), before, "A newly invalid paid Devotion rejects the whole refund");
+    sheet.merits.push({ ...owned, instanceId: "other-haven", name: "Another authored home" });
+    assert.equal(refundVampireAdvancement(sheet, undo, powers, catalog), true, "Another eligible instance can satisfy the requirement");
+    assert.deepEqual(sheet.merits.map(item => item.instanceId), ["other-haven"]);
+    sheet.line_data.devotion_ids = [];
+    sheet.merits = [];
+  }
+  const stronger = { ...definitions[0], requiredMerits: [{ definitionId: haven.id, dots: 2 }] };
+  sheet.merits = [owned, { ...owned, instanceId: "second" }];
+  assert.equal(vampireDevotionPrerequisitesMet(stronger, sheet, powers, catalog), false, "Separate instances never combine ratings");
+  sheet.merits[0] = { ...owned, dots: 2, experienceDots: 2 };
+  assert.equal(vampireDevotionPrerequisitesMet(stronger, sheet, powers, catalog), true);
+  const free = { ...definitions[0], id: "free-haven-test", experienceCost: 0 };
+  const freePowers = { ...powers, devotions: [free] };
+  assert.deepEqual(synchronizeAutomaticBloodlineDevotions(sheet, freePowers).line_data.devotion_ids, []);
+  const granted = synchronizeAutomaticBloodlineDevotions(sheet, freePowers, catalog);
+  assert.deepEqual(granted.line_data.devotion_ids, [free.id]);
+  assert.deepEqual(granted.current_state, sheet.current_state);
 });

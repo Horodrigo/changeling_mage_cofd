@@ -1607,6 +1607,7 @@ export function VampireCharacterPaper({
       updateSheet={updateSheet}
       bloodlines={bloodlines}
       powers={powers}
+      meritCatalog={merits}
       onRemoved={closeBloodline}
     />
   );
@@ -1619,6 +1620,7 @@ export function VampireCharacterPaper({
       updateSheet={updateSheet}
       reference={reference}
       powers={powers}
+      meritCatalog={merits}
     />
   );
   const mainBody = (

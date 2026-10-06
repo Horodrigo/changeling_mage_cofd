@@ -194,6 +194,7 @@ export type VampirePurchasablePower = VampireMechanics & {
   prerequisites?: string;
   requiredSkills?: Record<string, number>;
   requiredDevotionIds?: string[];
+  requiredMerits?: Array<{ definitionId: string; dots: number }>;
   experienceCost?: number;
   experienceDiscounts?: Array<{ cost: number } & ({ bloodlineId: string } | { covenantId: string } | { devotionIds: string[] })>;
   bloodlineId?: string;

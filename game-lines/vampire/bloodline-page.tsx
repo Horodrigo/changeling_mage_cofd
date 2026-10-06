@@ -18,6 +18,7 @@ import type { VampireBloodlineDefinition, VampirePowers, VampireReference } from
 import { leaveBloodTetherPack, stringArray, synchronizeAutomaticBloodlineDevotions, vampireBloodlineAvailable, vampireBloodlineFavoredAttributes, vampireDisciplineDisplayName } from "./creation-rules";
 import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
 import { vampireBloodlinePresentation } from "./reference-presentation";
+import type { DefinitionIdentity } from "@/lib/merit-identity";
 
 function replaceFavoredAttributes(character: CharacterSheet, previous: readonly string[], replacement: readonly string[]) {
   const next = structuredClone(character), attributes = { ...next.attributes };
@@ -28,17 +29,17 @@ function replaceFavoredAttributes(character: CharacterSheet, previous: readonly 
   return { ...next, attributes };
 }
 
-export function joinVampireBloodline(character: CharacterSheet, definition: VampireBloodlineDefinition, favoredAttribute: string, powers: VampirePowers, clan?: VampireReference["clans"][number]) {
+export function joinVampireBloodline(character: CharacterSheet, definition: VampireBloodlineDefinition, favoredAttribute: string, powers: VampirePowers, clan?: VampireReference["clans"][number], meritCatalog: readonly DefinitionIdentity[] = []) {
   if (!vampireBloodlineFavoredAttributes(definition, clan).includes(favoredAttribute)) return character;
   const previous = character.line_data.bloodline_id
     ? [String(character.line_data.bloodline_favored_attribute ?? "")]
     : stringArray(character.line_data.favored_attributes).length ? stringArray(character.line_data.favored_attributes) : [String(character.line_data.favored_attribute ?? "")];
   const next = replaceFavoredAttributes(character, previous, [favoredAttribute]);
   next.line_data = { ...next.line_data, bloodline_id: definition.id, bloodline_favored_attribute: favoredAttribute };
-  return synchronizeAutomaticBloodlineDevotions(next, powers);
+  return synchronizeAutomaticBloodlineDevotions(next, powers, meritCatalog);
 }
 
-export function removeVampireBloodline(character: CharacterSheet, definition?: VampireBloodlineDefinition, powers?: VampirePowers) {
+export function removeVampireBloodline(character: CharacterSheet, definition?: VampireBloodlineDefinition, powers?: VampirePowers, meritCatalog: readonly DefinitionIdentity[] = []) {
   const restore = stringArray(character.line_data.favored_attributes).length ? stringArray(character.line_data.favored_attributes) : [String(character.line_data.favored_attribute ?? "")];
   const next = leaveBloodTetherPack(replaceFavoredAttributes(character, [String(character.line_data.bloodline_favored_attribute ?? "")], restore));
   const history = Array.isArray(next.current_state.vampire_experience_history) ? next.current_state.vampire_experience_history as Array<Record<string, unknown>> : [];
@@ -50,11 +51,11 @@ export function removeVampireBloodline(character: CharacterSheet, definition?: V
   for (const name of exclusive) disciplines[name] = 0;
   next.line_data = { ...next.line_data, bloodline_id: "", bloodline_favored_attribute: "", disciplines, lash_ids: [], blood_tether_pack_active: false };
   next.current_state = { ...next.current_state, experience_available: Math.max(0, Number(next.current_state.experience_available ?? 0)) + refund, experience_spent: Math.max(0, Number(next.current_state.experience_spent ?? 0) - refund), vampire_experience_history: history.filter((entry) => !refunded.includes(entry)) };
-  return powers ? synchronizeAutomaticBloodlineDevotions(next, powers) : next;
+  return powers ? synchronizeAutomaticBloodlineDevotions(next, powers, meritCatalog) : next;
 }
 
-export function BloodlineJoinDialog({ open, onOpenChange, onJoined, character, updateSheet, reference, powers }: {
-  open: boolean; onOpenChange: (open: boolean) => void; onJoined: () => void; character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; reference: VampireReference; powers: VampirePowers;
+export function BloodlineJoinDialog({ open, onOpenChange, onJoined, character, updateSheet, reference, powers, meritCatalog }: {
+  open: boolean; onOpenChange: (open: boolean) => void; onJoined: () => void; character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; reference: VampireReference; powers: VampirePowers; meritCatalog?: readonly DefinitionIdentity[];
 }) {
   const { locale, t } = useLanguage();
   const preferences = useHomebrewPreferences(), custom = useBloodlineHomebrews();
@@ -77,7 +78,7 @@ export function BloodlineJoinDialog({ open, onOpenChange, onJoined, character, u
   };
   const join = () => {
     if (!preview || !favoredAttributes.includes(favoredAttribute)) return;
-    updateSheet(joinVampireBloodline(character, preview, favoredAttribute, powers, clan)); onOpenChange(false); onJoined();
+    updateSheet(joinVampireBloodline(character, preview, favoredAttribute, powers, clan, meritCatalog)); onOpenChange(false); onJoined();
   };
   return <>
     <Dialog open={open} onOpenChange={onOpenChange}><DialogContent className="homebrew-dialog vampire-bloodline-join-dialog vtr-dialog">
@@ -92,12 +93,12 @@ export function BloodlineJoinDialog({ open, onOpenChange, onJoined, character, u
   </>;
 }
 
-export function BloodlinePage({ character, updateSheet, bloodlines, powers, onRemoved }: {
-  character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; bloodlines: readonly VampireBloodlineDefinition[]; powers: VampirePowers; onRemoved: () => void;
+export function BloodlinePage({ character, updateSheet, bloodlines, powers, onRemoved, meritCatalog }: {
+  character: CharacterSheet; updateSheet: (sheet: CharacterSheet) => void; bloodlines: readonly VampireBloodlineDefinition[]; powers: VampirePowers; onRemoved: () => void; meritCatalog?: readonly DefinitionIdentity[];
 }) {
   const { locale, t } = useLanguage();
   const currentId = String(character.line_data.bloodline_id ?? ""), current = bloodlines.find((item) => item.id === currentId);
-  const remove = () => { updateSheet(removeVampireBloodline(character, current, powers)); onRemoved(); };
+  const remove = () => { updateSheet(removeVampireBloodline(character, current, powers, meritCatalog)); onRemoved(); };
   if (!current) return <div className="affiliation-page bloodline-page"><header className="affiliation-title"><div><h2>{currentId || t("ui.noBloodline")}</h2><p>{t("ui.bloodlineDefinitionUnavailable")}</p></div>{currentId && <ConfirmAction trigger={<Button type="button" size="sm" className="builder-add-action" variant="destructive">{t("ui.leaveBloodline")}</Button>} title={t("ui.leaveBloodlineTitle")} description={t("ui.removeBloodlineDescription")} action={t("ui.leave") } onConfirm={remove} />}</header></div>;
   const currentName = catalogDisplayName(current, locale, undefined, "pt-BR");
   return <div className="affiliation-page bloodline-page">

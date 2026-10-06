@@ -4628,76 +4628,139 @@
       "id": "devotion-bones-of-the-manor",
       "kind": "devotion",
       "name": "Bones of the Manor",
-      "translatedName": "Bones of the Manor",
-      "summary": "Hardens a Domus and lets the Malocusian feel damage to it.",
+      "translatedName": "Ossos da Mansão",
+      "summary": "Redirect damage to the haven, up to the vampire's Resilience rating.",
       "source": "False Gods: Ventrue",
       "page": 42,
       "manualOnly": true,
       "bloodlineId": "malocusians",
       "experienceCost": 1,
-      "prerequisites": "Resilience ••",
+      "prerequisites": "Haven •; Resilience ••",
       "cost": "None",
       "requirement": "The Malocusian must be within her Haven.",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "Once per scene, the vampire can re-direct damage meant for her onto her haven. For every point of damage the Malocusian would take, instead deal a point of Structure damage to the nearest piece of her haven, up to a maximum of the Spider’s dots in Resilience. Windows shatter and floorboards crack as blows hammer home, but the vampire’s flesh remains unmarked."
+      "effect": "Once per scene, the vampire can re-direct damage meant for her onto her haven. For every point of damage the Malocusian would take, instead deal a point of Structure damage to the nearest piece of her haven, up to a maximum of the Spider’s dots in Resilience. Windows shatter and floorboards crack as blows hammer home, but the vampire’s flesh remains unmarked.",
+      "presentationPt": {
+        "summary": "Redireciona para o Refúgio parte do dano recebido, até o limite de Resiliência.",
+        "prerequisites": "Refúgio •; Resiliência ••",
+        "cost": "Nenhum",
+        "requirement": "A Malocusian deve estar dentro de seu Refúgio.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Uma vez por cena, o vampiro pode redirecionar para seu Refúgio dano que receberia. Para cada ponto de dano que a Malocusian sofreria, cause em vez disso um ponto de dano à Estrutura da parte mais próxima de seu Refúgio, até o máximo dos pontos da Aranha em Resiliência. Janelas se estilhaçam e tábuas do chão racham com os golpes, mas a carne do vampiro permanece intacta."
+      },
+      "requiredMerits": [
+        {
+          "definitionId": "vtr-haven",
+          "dots": 1
+        }
+      ]
     },
     {
       "id": "devotion-steel-shadows",
       "kind": "devotion",
       "name": "Steel Shadows",
-      "translatedName": "Steel Shadows",
-      "summary": "Animates household defenses through the vampire's will.",
+      "translatedName": "Sombras de Aço",
+      "summary": "Give physical substance to illusions of simple objects created within the haven.",
       "source": "False Gods: Ventrue",
       "page": 42,
       "manualOnly": true,
       "bloodlineId": "malocusians",
       "experienceCost": 2,
-      "prerequisites": "Obfuscate ••••, Resilience ••",
+      "prerequisites": "Haven •; Obfuscate ••••, Resilience ••",
       "cost": "2 Vitae",
       "requirement": "The Malocusian uses The Familiar Stranger to create an illusion of an object, and must be within his haven.",
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "By lending a portion of his enduring nature to phantoms created with Obfuscate, the Spider can give them substance enough to affect the environment. An illusory hammer will pound a nail, and an illusory knife will cut meat. Steel Shadows is limited to making solid only simple objects no larger than the vampire himself, with no more than two moving parts. This effect can’t mimic chemical reactions. Objects have the same Durability, damage rating (if any), and Size as real examples of their kind, but only ever a single point of Structure, due to their ephemeral nature. Furthermore, solid as they might be, objects created with this power are not considered real for any supernatural properties they might otherwise have. A wooden stake created with Steel Shadows can still stab and cause damage, but will not render a vampire torpid if it pierces their heart. The same goes for a silver bullet and a werewolf. This Devotion is particularly deadly when used in conjunction with an Oubliette, due to the freedom with which the vampire may use The Familiar Stranger in that environment. A Hermit may only have (Blood Potency) instances of Steel Shadows active at one time."
+      "effect": "By lending a portion of his enduring nature to phantoms created with Obfuscate, the Spider can give them substance enough to affect the environment. An illusory hammer will pound a nail, and an illusory knife will cut meat. Steel Shadows is limited to making solid only simple objects no larger than the vampire himself, with no more than two moving parts. This effect can’t mimic chemical reactions. Objects have the same Durability, damage rating (if any), and Size as real examples of their kind, but only ever a single point of Structure, due to their ephemeral nature. Furthermore, solid as they might be, objects created with this power are not considered real for any supernatural properties they might otherwise have. A wooden stake created with Steel Shadows can still stab and cause damage, but will not render a vampire torpid if it pierces their heart. The same goes for a silver bullet and a werewolf. This Devotion is particularly deadly when used in conjunction with an Oubliette, due to the freedom with which the vampire may use The Familiar Stranger in that environment. A Hermit may only have (Blood Potency) instances of Steel Shadows active at one time.",
+      "presentationPt": {
+        "summary": "Dá substância física a ilusões de objetos simples criadas dentro do Refúgio.",
+        "prerequisites": "Refúgio •; Ofuscação ••••, Resiliência ••",
+        "cost": "2 Vitae",
+        "requirement": "O Malocusian usa O Estranho Familiar para criar a ilusão de um objeto e deve estar dentro de seu Refúgio.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "Ao emprestar parte de sua natureza duradoura a imagens criadas com Ofuscação, a Aranha lhes dá substância suficiente para afetar o ambiente. Um martelo ilusório prega um prego, e uma faca ilusória corta carne. Sombras de Aço só pode tornar sólidos objetos simples que não sejam maiores que o próprio vampiro e tenham no máximo duas partes móveis. Este efeito não pode imitar reações químicas. Os objetos têm a mesma Durabilidade, valor de dano, se houver, e Tamanho de exemplares reais de seu tipo, mas sempre apenas um ponto de Estrutura, por sua natureza efêmera. Além disso, por mais sólidos que sejam, objetos criados com este poder não são considerados reais para quaisquer propriedades sobrenaturais que teriam. Uma estaca de madeira criada com Sombras de Aço pode perfurar e causar dano, mas não coloca um vampiro em torpor ao atravessar seu coração. O mesmo vale para uma bala de prata e um lobisomem. Esta Devoção é particularmente mortal quando usada com uma Masmorra do Esquecimento, pela liberdade de usar O Estranho Familiar nesse ambiente. Um Eremita só pode ter um número de instâncias ativas de Sombras de Aço igual à Potência de Sangue."
+      },
+      "requiredMerits": [
+        {
+          "definitionId": "vtr-haven",
+          "dots": 1
+        }
+      ]
     },
     {
       "id": "devotion-spotless",
       "kind": "devotion",
       "name": "Spotless",
-      "translatedName": "Spotless",
-      "summary": "Erases signs of violence or intrusion from the Domus.",
+      "translatedName": "Imaculado",
+      "summary": "Absorb and store blood spilled inside the haven as Vitae.",
       "source": "False Gods: Ventrue",
       "page": 43,
       "manualOnly": true,
       "bloodlineId": "malocusians",
       "experienceCost": 4,
-      "prerequisites": "Animalism •••••",
+      "prerequisites": "Haven •; Animalism •••••",
       "cost": "1 Willpower",
       "requirement": "The Malocusian must be within her haven.",
       "dicePool": "None",
       "action": "Instant",
       "duration": "Nights equal to Blood Potency",
-      "effect": "Whenever blood spills within the Malocusian’s home, it’s absorbed into the building, vanishing into tiling, wallpaper, and even thick carpeting without leaving a trace. A haven can store up to its dot rating in Vitae this way, and the vampire can spend that blood as if it were part of his own Vitae pool. While the haven can store blood indefinitely, it spoils somewhat being kept in timber and brick rather than within a vampire’s body. Blood stored for less than 24-hours counts as fresh, but after that time it counts as cold human blood."
+      "effect": "Whenever blood spills within the Malocusian’s home, it’s absorbed into the building, vanishing into tiling, wallpaper, and even thick carpeting without leaving a trace. A haven can store up to its dot rating in Vitae this way, and the vampire can spend that blood as if it were part of his own Vitae pool. While the haven can store blood indefinitely, it spoils somewhat being kept in timber and brick rather than within a vampire’s body. Blood stored for less than 24-hours counts as fresh, but after that time it counts as cold human blood.",
+      "presentationPt": {
+        "summary": "Absorve e armazena como Vitae o sangue derramado dentro do Refúgio.",
+        "prerequisites": "Refúgio •; Animalismo •••••",
+        "cost": "1 de Força de Vontade",
+        "requirement": "A Malocusian deve estar dentro de seu Refúgio.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noites iguais à Potência de Sangue",
+        "effect": "Sempre que sangue é derramado dentro da casa do Malocusian, o prédio o absorve: ele desaparece entre azulejos, papel de parede e até carpetes grossos sem deixar vestígios. Um Refúgio pode armazenar dessa forma Vitae até sua pontuação em pontos, e o vampiro pode gastar esse sangue como se integrasse sua própria reserva de Vitae. Embora o Refúgio possa armazenar sangue indefinidamente, ele se deteriora um pouco ao ficar em madeira e tijolos em vez do corpo de um vampiro. Sangue armazenado por menos de 24 horas conta como fresco; depois desse tempo, conta como sangue humano frio."
+      },
+      "requiredMerits": [
+        {
+          "definitionId": "vtr-haven",
+          "dots": 1
+        }
+      ]
     },
     {
       "id": "devotion-written-invitation",
       "kind": "devotion",
       "name": "Written Invitation",
-      "translatedName": "Written Invitation",
-      "summary": "Extends the threshold's welcome or prohibition through a written summons.",
+      "translatedName": "Convite por Escrito",
+      "summary": "Imbue a written message with Dominate to command the next person who reads it.",
       "source": "False Gods: Ventrue",
       "page": 43,
       "manualOnly": true,
       "bloodlineId": "malocusians",
       "experienceCost": 2,
-      "prerequisites": "Dominate ••, Obfuscate ••",
+      "prerequisites": "Haven •; Dominate ••, Obfuscate ••",
       "cost": "2 Vitae",
       "requirement": "The vampire must write out the message himself, mixing whatever medium he uses with his Vitae, but the entire text does not have to be written in blood. The effect costs the same regardless of whether the vampire is jotting down a short note or painting a road sign. She then rolls the usual activation for Mesmerize, and spends any Vitae required for Iron Edict.",
       "dicePool": "None",
       "action": "None",
-      "duration": "The message retains its power to command for",
-      "effect": "weeks equal to the vampire’s Blood Potency, after which it becomes mundane writing. The vampire scribes a piece of writing, traditionally a formal letter of invitation, and imbues it with his powers of Dominate. The next person to read the message must roll against the vampire’s successes on Mesmerize; if he fails, he must follow the message to the best of his ability, gaining any associated Dominate Conditions. This command can be as simple as a hand-lettered sign that says “Take Next Left” or as complex a set of directions through the woods to vampire-grandma’s house. After the words have been read once, succeed or fail, the power in them fades and the letters flake and crumble, as if from great age."
+      "duration": "The message retains its power to command for weeks equal to the vampire’s Blood Potency, after which it becomes mundane writing.",
+      "effect": "The vampire scribes a piece of writing, traditionally a formal letter of invitation, and imbues it with his powers of Dominate. The next person to read the message must roll against the vampire’s successes on Mesmerize; if he fails, he must follow the message to the best of his ability, gaining any associated Dominate Conditions. This command can be as simple as a hand-lettered sign that says “Take Next Left” or as complex a set of directions through the woods to vampire-grandma’s house. After the words have been read once, succeed or fail, the power in them fades and the letters flake and crumble, as if from great age.",
+      "presentationPt": {
+        "summary": "Imbui uma mensagem escrita com Dominação para comandar a próxima pessoa que a ler.",
+        "prerequisites": "Refúgio •; Dominação ••, Ofuscação ••",
+        "cost": "2 Vitae",
+        "requirement": "O próprio vampiro deve escrever a mensagem, misturando sua Vitae ao material usado, mas o texto inteiro não precisa ser escrito em sangue. O efeito custa o mesmo para uma nota curta ou uma placa de trânsito pintada. Em seguida, faz o teste normal de ativação de Hipnotizar e gasta qualquer Vitae exigida por Édito de Ferro.",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "A mensagem mantém o poder de comandar por semanas iguais à Potência de Sangue do vampiro, tornando-se uma escrita comum depois disso.",
+        "effect": "O vampiro escreve um texto, tradicionalmente uma carta formal de convite, e o imbui com seus poderes de Dominação. A próxima pessoa a ler a mensagem deve testar contra os sucessos do vampiro em Hipnotizar; se falhar, deve obedecer à mensagem da melhor maneira possível, recebendo quaisquer Condições associadas de Dominação. Essa ordem pode ser tão simples quanto uma placa escrita à mão dizendo “Vire na Próxima Esquerda”, ou tão complexa quanto instruções para atravessar a floresta até a casa da vovó vampira. Depois que as palavras forem lidas uma vez, com sucesso ou falha, seu poder se dissipa e as letras descascam e se desfazem, como se fossem muito antigas."
+      },
+      "requiredMerits": [
+        {
+          "definitionId": "vtr-haven",
+          "dots": 1
+        }
+      ]
     },
     {
       "id": "devotion-body-colony",
