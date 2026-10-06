@@ -5037,33 +5037,52 @@
       "id": "devotion-hive-nexus-gestalt",
       "kind": "devotion",
       "name": "Hive Nexus Gestalt",
-      "translatedName": "Hive Nexus Gestalt",
-      "summary": "Coordinates several servants as one directed collective.",
+      "translatedName": "Gestalt do Nexo da Colmeia",
+      "summary": "Combine willing vampires in a temporary hive mind, sharing intellect, Mental Skills and Willpower.",
       "source": "False Gods: Ventrue",
       "page": 107,
       "manualOnly": true,
       "experienceCost": 5,
       "prerequisites": "Auspex ••••, Dominate •••••",
-      "cost": "None",
+      "cost": "1 Willpower per character and 1 Vitae per night",
       "requirement": "All members of the gestalt must be willing Kindred participants. The vampire must be touching each participant at the same time to activate the effect.",
-      "dicePool": "Presence + Intimidation + Vigor – number of subjects",
+      "dicePool": "None",
       "action": "Instant",
-      "duration": "One night per Vitae spent at activation The vampires form a temporary hive mind, combining their mutual brain power into something greater than its parts: • Add up the characters’ collective Intelligences, to a limit imposed by the highest Blood Potency. For example, three characters with Intelligence 2, one of whom has Blood Potency 6, would treat their collective Intelligence as 6. • When a gestalt member makes a Mental Skill roll, use the highest Skill in the group. • All Willpower is pooled, and can be transferred between characters reflexively. If a member of the gestalt suffers a breaking point, all characters must roll to resist detachment if they are of equal or greater Humanity. Characters are considered to have the equivalent of a second step blood bond with each other for the duration, overriding any natural Vincula except a thirdstage bond. The Knight’s Example (Dominate •) Once nobility was linked with martial prowess and the ability to field an army, and many Ventrue haven’t forgotten that heritage. By setting the right example for her troops, the vampire can push them on to greater victories.",
-      "rollResults": {
-        "success": "The Ventrue barks a few orders or makes an inspiring battle cry. Allied characters who witness her iron glory gain her successes as weapon damage on their next violent actions. This lasts the scene or until the effect is used up, including if the attack is a failure. The vampire can only use this Devotion once per scene.",
-        "exceptionalSuccess": "The vampire’s followers gain an additional +1 on their weapon damage.",
-        "failure": "The vampire fails to inspire.",
-        "dramaticFailure": "The vampire demoralizes her troops, who suffer her Dominate dots as a penalty on their next attacks."
-      }
+      "duration": "One night per Vitae spent at activation",
+      "presentationPt": {
+        "prerequisites": "Auspícios ••••, Dominação •••••",
+        "summary": "Une vampiros voluntários em uma mente coletiva temporária, compartilhando intelecto, Perícias Mentais e Força de Vontade.",
+        "cost": "1 de Força de Vontade por personagem e 1 Vitae por noite",
+        "requirement": "Todos os membros da gestalt precisam ser participantes Membros voluntários. O vampiro precisa tocar todos os participantes ao mesmo tempo para ativar o efeito.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Uma noite por Vitae gasta na ativação",
+        "effect": "Os vampiros formam uma mente coletiva temporária, combinando sua capacidade mental em algo maior que a soma das partes: • Some as Inteligências dos personagens, até o limite imposto pela maior Potência de Sangue. Por exemplo, três personagens com Inteligência 2, um deles com Potência de Sangue 6, tratariam sua Inteligência coletiva como 6. • Quando um membro da gestalt fizer um teste de Perícia Mental, use a maior Perícia do grupo. • Toda a Força de Vontade é reunida em uma reserva comum e pode ser transferida entre os personagens reflexivamente. Se um membro da gestalt sofrer um Ponto de Ruptura, todos os personagens com Humanidade igual ou maior precisam fazer um teste para resistir ao Desapego. Durante a duração, os personagens são considerados como tendo o equivalente a um vínculo de sangue de segundo estágio entre si, que substitui qualquer Vinculum natural, exceto um vínculo de terceiro estágio."
+      },
+      "effect": "The vampires form a temporary hive mind, combining their mutual brain power into something greater than its parts: • Add up the characters’ collective Intelligences, to a limit imposed by the highest Blood Potency. For example, three characters with Intelligence 2, one of whom has Blood Potency 6, would treat their collective Intelligence as 6. • When a gestalt member makes a Mental Skill roll, use the highest Skill in the group. • All Willpower is pooled, and can be transferred between characters reflexively. If a member of the gestalt suffers a breaking point, all characters must roll to resist detachment if they are of equal or greater Humanity. Characters are considered to have the equivalent of a second step blood bond with each other for the duration, overriding any natural Vincula except a third-stage bond.",
+      "experienceDiscounts": [
+        {
+          "cost": 4,
+          "covenantId": "carthian-movement"
+        },
+        {
+          "cost": 4,
+          "bloodlineId": "adrestoi"
+        },
+        {
+          "cost": 4,
+          "bloodlineId": "melissidae"
+        }
+      ]
     },
     {
       "id": "devotion-hounds-of-blood",
       "kind": "devotion",
       "name": "Hounds of Blood",
-      "translatedName": "Hounds of Blood",
-      "summary": "Sets animals or retainers on the scent of a blood-marked quarry.",
+      "translatedName": "Sabujos de Sangue",
+      "summary": "Allow an animal to collect and store Vitae for the vampire to feed on.",
       "source": "False Gods: Ventrue",
-      "page": 108,
+      "page": 107,
       "manualOnly": true,
       "experienceCost": 2,
       "prerequisites": "Animalism ••, Resilience ••",
@@ -5072,7 +5091,23 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Night",
-      "effect": "The vampire touches the animal and activates this Devotion. The creature can now feed from mortals as a vampire can, using the system for the Assault (Vampire, p. 94), and can store Vitae equal to its Stamina. However, it cannot spend this Vitae, or add to its reserves if it’s a ghoul. Instead, the vampire can feed on the animal’s stored Vitae as if it were human blood or Kindred Vitae, depending on the victim. This does not inflict damage on the animal. The Ventrue is still vulnerable to blood bonds and addiction if she drinks vampire blood with this Devotion."
+      "effect": "The vampire touches the animal and activates this Devotion. The creature can now feed from mortals as a vampire can, using the system for the Assault (Vampire, p. 94), and can store Vitae equal to its Stamina. However, it cannot spend this Vitae, or add to its reserves if it’s a ghoul. Instead, the vampire can feed on the animal’s stored Vitae as if it were human blood or Kindred Vitae, depending on the victim. This does not inflict damage on the animal. The Ventrue is still vulnerable to blood bonds and addiction if she drinks vampire blood with this Devotion.",
+      "presentationPt": {
+        "prerequisites": "Animalismo ••, Resiliência ••",
+        "summary": "Permite que um animal recolha e armazene Vitae para alimentar o vampiro.",
+        "cost": "1 de Força de Vontade",
+        "requirement": "A criatura precisa ter provado o sangue do vampiro em algum momento, seja como ghoul ou como familiar criado com Erguer o Familiar.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "effect": "A vampira toca o animal e ativa esta Devoção. A criatura agora pode se alimentar de mortais como um vampiro, usando as regras do Assalto (Vampire, p. 94), e pode armazenar Vitae igual ao seu Vigor. Porém, não pode gastar essa Vitae nem acrescentá-la às suas reservas se for um ghoul. Em vez disso, a vampira pode se alimentar da Vitae armazenada pelo animal como se fosse sangue humano ou Vitae dos Membros, conforme a vítima. Isso não causa dano ao animal. A Ventrue continua vulnerável a vínculos de sangue e dependência se beber sangue de vampiro com esta Devoção."
+      },
+      "experienceDiscounts": [
+        {
+          "cost": 1,
+          "bloodlineId": "malocusians"
+        }
+      ]
     },
     {
       "id": "devotion-knight-s-example",

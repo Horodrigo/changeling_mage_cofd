@@ -808,6 +808,10 @@ test("Devotion access and learning discounts use canonical affiliations and know
     ["devotion-flesh-crafting", { devotion_ids: ["devotion-elastic-visage"] }, 1],
     ["devotion-forced-march", { covenant_ids: ["carthian-movement"] }, 1],
     ["devotion-sheeps-clothing", { devotion_ids: ["devotion-elastic-visage"] }, 1],
+    ["devotion-hounds-of-blood", { bloodline_id: "malocusians" }, 1],
+    ["devotion-hive-nexus-gestalt", { covenant_ids: ["carthian-movement"] }, 4],
+    ["devotion-hive-nexus-gestalt", { bloodline_id: "adrestoi" }, 4],
+    ["devotion-hive-nexus-gestalt", { bloodline_id: "melissidae" }, 4],
   ]) {
     const definition = powers.devotions.find(item => item.id === id);
     const buyer = { line_data: { ...sheet.line_data, ...condition } };
@@ -829,6 +833,9 @@ test("Devotion access and learning discounts use canonical affiliations and know
   assert.equal(vampireDevotionAvailable(trickster, sheet), true);
   assert.equal(vampireDevotionExperienceCost(undefined, sheet, powers), undefined);
   assert.equal(vampireDevotionExperienceCost({ id: "unknown" }, sheet, powers), undefined);
+  const hive = powers.devotions.find(item => item.id === "devotion-hive-nexus-gestalt");
+  assert.equal(vampireDevotionExperienceCost(hive, { line_data: { ...sheet.line_data, bloodline_id: "melissidae", covenant_ids: ["carthian-movement"] } }, powers), 4, "Printed affiliation discounts never stack");
+  assert.equal(vampireDevotionExperienceCost(hive, { line_data: { ...sheet.line_data, bloodline_id: "Melissid", covenant_ids: ["Movimento Cartiano"] } }, powers), 5, "Display names never grant canonical affiliation discounts");
 });
 
 test("conditional free Devotions track only new grants and preserve paid or opaque older choices", async () => {
