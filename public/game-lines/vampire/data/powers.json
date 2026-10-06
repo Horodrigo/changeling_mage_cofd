@@ -9089,7 +9089,7 @@
       "id": "devotion-bezoar-thorns",
       "kind": "devotion",
       "name": "Bezoar Thorns",
-      "translatedName": "Bezoar Thorns",
+      "translatedName": "Espinhos do Bezoar",
       "summary": "Shapes swallowed material into defensive thorns.",
       "source": "Wild Hunt: Gangrel",
       "page": 23,
@@ -9102,7 +9102,17 @@
       "dicePool": "None",
       "action": "None",
       "duration": "Scene",
-      "effect": "While manifesting bestial traits through Predatory Aspect, the Baetyl can augment his adaptations with materials he’s recently devoured. These changes look even more unnatural than normal Protean adaptations, with talons of iron growing out from the Termite’s fingers or new sensory organs made from camera lenses and plastic emerging from his face. When activating Predatory Aspect, the vampire has a number of points to spend on the enhancement of her adaptations equal to Auspex dots: • For one point, the Baetyl applies a +1 modifier on any action that uses the adaptation. This can be applied multiple times for a single adaptation, or spread out over multiple traits. • For two points, the Baetyl only needs three successes to achieve an exceptional success when rolling a Skill associated with his adaptation. If the adaptation doesn’t have a specific Skill, choose one (with Storyteller approval). • For three points, the Baetyl gains the rote quality on a single Skill associated with his adaptation."
+      "effect": "While manifesting bestial traits through Predatory Aspect, the Baetyl can augment his adaptations with materials he’s recently devoured. These changes look even more unnatural than normal Protean adaptations, with talons of iron growing out from the Termite’s fingers or new sensory organs made from camera lenses and plastic emerging from his face. When activating Predatory Aspect, the vampire has a number of points to spend on the enhancement of her adaptations equal to Auspex dots: • For one point, the Baetyl applies a +1 modifier on any action that uses the adaptation. This can be applied multiple times for a single adaptation, or spread out over multiple traits. • For two points, the Baetyl only needs three successes to achieve an exceptional success when rolling a Skill associated with his adaptation. If the adaptation doesn’t have a specific Skill, choose one (with Storyteller approval). • For three points, the Baetyl gains the rote quality on a single Skill associated with his adaptation.",
+      "presentationPt": {
+        "summary": "Molda o material engolido em espinhos defensivos.",
+        "prerequisites": "Auspícios •••, Metamorfose ••",
+        "cost": "1 Vitae",
+        "requirement": "Antes de ativar Metamorfose, o vampiro deve consumir material inorgânico de Tamanho igual aos pontos que deseja usar para aprimorar a Disciplina.",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Cena",
+        "effect": "Ao manifestar traços bestiais por meio de Aspecto Predatório, o Baetyl pode aprimorar suas adaptações com materiais que devorou recentemente. Essas mudanças parecem ainda menos naturais que as adaptações normais de Metamorfose, com garras de ferro crescendo dos dedos do Cupim ou novos órgãos sensoriais de lentes de câmera e plástico surgindo no rosto. Ao ativar Aspecto Predatório, o vampiro tem pontos para gastar no aprimoramento de suas adaptações em número igual aos pontos de Auspícios: • Por um ponto, aplica +1 a qualquer ação que use a adaptação. Pode aplicar isso várias vezes a uma única adaptação ou distribuir entre vários traços. • Por dois pontos, precisa de apenas três sucessos para obter sucesso excepcional ao testar uma Perícia associada à adaptação. Se ela não tiver uma Perícia específica, escolha uma com a aprovação do Narrador. • Por três pontos, recebe a qualidade de Rotina em uma única Perícia associada à adaptação."
+      }
     },
     {
       "id": "devotion-chimera",
@@ -9145,7 +9155,7 @@
       "id": "devotion-wisdom-of-stones",
       "kind": "devotion",
       "name": "Wisdom of Stones",
-      "translatedName": "Wisdom of Stones",
+      "translatedName": "Sabedoria das Pedras",
       "summary": "Reads impressions held in swallowed stone.",
       "source": "Wild Hunt: Gangrel",
       "page": 24,
@@ -9157,7 +9167,16 @@
       "requirement": "The vampire must consume an object with her bloodline gift and spend an additional Vitae (included in the cost).",
       "dicePool": "None",
       "action": "None",
-      "effect": "Instead of a bonus to Auspex, the vampire gains access to the effect of the Dream Visions Merit ( Vampire, p. 111) as if she had rolled a success. If a character shed blood on this object, the vampire can ignore the usual restriction of having to use the effect on a stranger. The Baetyl can only use this Devotion once per night."
+      "effect": "Instead of a bonus to Auspex, the vampire gains access to the effect of the Dream Visions Merit ( Vampire, p. 111) as if she had rolled a success. If a character shed blood on this object, the vampire can ignore the usual restriction of having to use the effect on a stranger. The Baetyl can only use this Devotion once per night.",
+      "presentationPt": {
+        "summary": "Lê impressões preservadas em pedras engolidas.",
+        "prerequisites": "Auspícios •••",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro deve consumir um objeto com o dom de sua Bloodline e gastar uma Vitae adicional, já incluída no custo.",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "effect": "Em vez de um bônus a Auspícios, o vampiro tem acesso ao efeito do Mérito Visões Oníricas (Vampire, p. 111) como se tivesse obtido sucesso em um teste. Se um personagem derramou sangue sobre o objeto, o vampiro pode ignorar a restrição habitual de usar o efeito em um desconhecido. O Baetyl só pode usar esta Devoção uma vez por noite."
+      }
     },
     {
       "id": "devotion-fata-morgana",
@@ -9309,7 +9328,7 @@
       "id": "devotion-hunter-s-true-form",
       "kind": "devotion",
       "name": "Hunter's True Form",
-      "translatedName": "Hunter's True Form",
+      "translatedName": "Forma Verdadeira do Caçador",
       "summary": "Assumes the bloodline's perfected hunting shape.",
       "source": "Wild Hunt: Gangrel",
       "page": 45,
@@ -9320,7 +9339,15 @@
       "cost": "2 Vitae",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "The vampire transforms into a hulking, fur-covered hybrid of man and beast, though he more resembles the classic Hollywood wolfman than the eight-foot terrors Uratha can become (unless, of course, she also manifests the Moon’s Blessing of Sublunario). While in this form, the vampire gains a level of Size, one point of general armor, adds Protean to Intimidation-based rolls, and does not need to be in frenzy to attack with his fangs without a grapple. The first time the vampire activates this Devotion in a scene, he must immediately resist frenzy as if provoked to anger. Even if the vampire succeeds at reigning in his Beast, the boiling rage he feels in this form imposes a –2 on all Mental actions, and to all Social rolls not based on Animal Ken or Intimidation. If the Dead Wolf possesses the Moon’s Blessing, he does not suffer this penalty when using Insight Skills."
+      "effect": "The vampire transforms into a hulking, fur-covered hybrid of man and beast, though he more resembles the classic Hollywood wolfman than the eight-foot terrors Uratha can become (unless, of course, she also manifests the Moon’s Blessing of Sublunario). While in this form, the vampire gains a level of Size, one point of general armor, adds Protean to Intimidation-based rolls, and does not need to be in frenzy to attack with his fangs without a grapple. The first time the vampire activates this Devotion in a scene, he must immediately resist frenzy as if provoked to anger. Even if the vampire succeeds at reigning in his Beast, the boiling rage he feels in this form imposes a –2 on all Mental actions, and to all Social rolls not based on Animal Ken or Intimidation. If the Dead Wolf possesses the Moon’s Blessing, he does not suffer this penalty when using Insight Skills.",
+      "presentationPt": {
+        "summary": "Assume a forma de caça aperfeiçoada da Bloodline.",
+        "prerequisites": "Metamorfose ••••",
+        "cost": "2 Vitae",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "O vampiro se transforma em um enorme híbrido de humano e fera coberto de pelos, mais parecido com o lobisomem clássico de Hollywood que com os terrores de oito pés de altura nos quais os Uratha podem se transformar, a menos que também manifeste a Bênção da Lua de Sublunario. Nessa forma, recebe um nível de Tamanho e um ponto de armadura geral, acrescenta Metamorfose aos testes baseados em Intimidação e não precisa estar em frenesi para atacar com as presas sem agarrar o alvo. Na primeira vez que ativa esta Devoção em uma cena, deve imediatamente resistir ao frenesi como se tivesse sido provocado à raiva. Mesmo se conseguir conter a Fera, a raiva intensa dessa forma impõe –2 a todas as ações Mentais e a todos os testes Sociais que não sejam baseados em Empatia com Animais ou Intimidação. Se o Lobo Morto possui a Bênção da Lua, não sofre essa penalidade ao usar Perícias de Intuição."
+      }
     },
     {
       "id": "devotion-vessel-of-bone-and-blood",
