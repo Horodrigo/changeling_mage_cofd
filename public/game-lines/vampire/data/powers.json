@@ -10607,7 +10607,7 @@
       "id": "sethite-cruac-maat-kauket",
       "kind": "cruac-rite",
       "name": "Ma'at and Kauket",
-      "translatedName": "Ma'at and Kauket",
+      "translatedName": "Ma'at e Kauket",
       "rating": 1,
       "experienceCost": 2,
       "covenantIds": [
@@ -10619,13 +10619,18 @@
       "page": 69,
       "manualOnly": true,
       "duration": "One week",
-      "effect": "The rite introduces chaos into an area, reversing qualities it previously encouraged and temporarily altering the Resonant Condition of any locus. The area imposes a penalty equal to the caster's Crúac dots on Social or Physical actions it would previously have aided."
+      "effect": "The rite introduces chaos into an area, reversing qualities it previously encouraged and temporarily altering the Resonant Condition of any locus. The area imposes a penalty equal to the caster's Crúac dots on Social or Physical actions it would previously have aided.",
+      "presentationPt": {
+        "summary": "Inverte a ressonância espiritual de uma área e altera sua Condição Ressonante.",
+        "duration": "Uma semana",
+        "effect": "O rito introduz caos em uma área, invertendo as qualidades que ela antes favorecia e alterando temporariamente a Condição Ressonante de qualquer locus. A área impõe uma penalidade igual aos pontos de Crúac do conjurador às ações Sociais ou Físicas que antes teria auxiliado."
+      }
     },
     {
       "id": "sethite-cruac-ahmets-pursuit",
       "kind": "cruac-rite",
       "name": "Ahmet's Pursuit",
-      "translatedName": "Ahmet's Pursuit",
+      "translatedName": "Perseguição de Ahmet",
       "rating": 2,
       "experienceCost": 2,
       "covenantIds": [
@@ -10635,16 +10640,22 @@
       "resistedBy": "Composure",
       "summary": "Curse a nearby subject through a material focus, inflicting Lost and revealing the target's location for the rest of the night.",
       "source": "Strange Shades: Mekhet",
-      "page": 70,
+      "page": 69,
       "manualOnly": true,
       "duration": "Night",
-      "effect": "Using an effigy or other material focus, curse a victim within one mile with Lost. Even a successful navigation roll, penalized by Potency, sends the victim along the worst route or through the wrong door. The ritualist always knows where the victim runs."
+      "effect": "Using an effigy or other material focus, curse a victim within one mile with Lost. Even a successful navigation roll, penalized by Potency, sends the victim along the worst route or through the wrong door. The ritualist always knows where the victim runs.",
+      "presentationPt": {
+        "resistedBy": "Compostura",
+        "summary": "Amaldiçoa um alvo próximo por meio de um foco material, impondo Perdido e revelando sua localização pelo resto da noite.",
+        "duration": "Noite",
+        "effect": "Usando uma efígie ou outro foco material, amaldiçoe uma vítima a até uma milha com Perdido. Mesmo um teste de orientação bem-sucedido, penalizado pela Potência, leva a vítima pelo pior caminho ou pela porta errada. O ritualista sempre sabe para onde a vítima corre."
+      }
     },
     {
       "id": "sethite-cruac-doom-osiris",
       "kind": "cruac-rite",
       "name": "Doom of Osiris",
-      "translatedName": "Doom of Osiris",
+      "translatedName": "Condenação de Osiris",
       "rating": 4,
       "experienceCost": 2,
       "covenantIds": [
@@ -10656,13 +10667,18 @@
       "page": 70,
       "manualOnly": true,
       "duration": "Night",
-      "effect": "A bladed weapon deals aggravated damage to ephemeral beings and Strix, even while they are in Twilight if the wielder can perceive them. At dawn the weapon turns to sand."
+      "effect": "A bladed weapon deals aggravated damage to ephemeral beings and Strix, even while they are in Twilight if the wielder can perceive them. At dawn the weapon turns to sand.",
+      "presentationPt": {
+        "summary": "Consagra uma arma de lâmina para que seus ataques causem dano agravado a seres efêmeros.",
+        "duration": "Noite",
+        "effect": "Uma arma de lâmina causa dano agravado a seres efêmeros e Strix, mesmo quando estão no Crepúsculo, se quem a empunha puder percebê-los. Ao amanhecer, a arma se transforma em areia."
+      }
     },
     {
       "id": "sethite-cruac-feast-ka",
       "kind": "cruac-rite",
       "name": "Feast of Ka",
-      "translatedName": "Feast of Ka",
+      "translatedName": "Banquete do Ka",
       "rating": 4,
       "experienceCost": 2,
       "covenantIds": [
@@ -10674,13 +10690,18 @@
       "source": "Strange Shades: Mekhet",
       "page": 70,
       "manualOnly": true,
-      "effect": "Prepare a meal for a Hollow Mekhet's Ka using foods the vampire enjoyed in life and Vitae. The Ka gains Materialized; if tracking Conditions, the table gains Anchor and Open. If it eats, it gains Essence equal to the Vitae used and cannot manifest to harass the vampire again until her next breaking point, though she may still call it voluntarily. While materialized, it can converse, with its attitude determined by its relationship with the Mekhet."
+      "effect": "Prepare a meal for a Hollow Mekhet's Ka using foods the vampire enjoyed in life and Vitae. The Ka gains Materialized; if tracking Conditions, the table gains Anchor and Open. If it eats, it gains Essence equal to the Vitae used and cannot manifest to harass the vampire again until her next breaking point, though she may still call it voluntarily. While materialized, it can converse, with its attitude determined by its relationship with the Mekhet.",
+      "presentationPt": {
+        "resistedBy": "Resistência",
+        "summary": "Força o Ka de um Mekhet Vazio a se materializar e o alimenta com Essência.",
+        "effect": "Prepare uma refeição para o Ka de um Mekhet Vazio usando alimentos de que o vampiro gostava em vida e Vitae. O Ka recebe Materializado; se estiver acompanhando Condições, a mesa recebe Âncora e Aberto. Se comer, ele ganha Essência igual ao Vitae utilizado e não pode voltar a se manifestar para atormentar o vampiro até seu próximo Ponto de Ruptura, embora ela ainda possa chamá-lo voluntariamente. Enquanto materializado, pode conversar, com sua atitude determinada pela relação com o Mekhet."
+      }
     },
     {
       "id": "sethite-cruac-hand-of-seth",
       "kind": "cruac-rite",
       "name": "Hand of Seth",
-      "translatedName": "Hand of Seth",
+      "translatedName": "Mão de Seth",
       "rating": 3,
       "experienceCost": 2,
       "covenantIds": [
@@ -10694,13 +10715,20 @@
       "manualOnly": true,
       "duration": "Scene",
       "requirement": "A scrap of the vessel's DNA, such as hair or fingernails.",
-      "effect": "Force a spirit or Strix out of a body within one mile. A ghost or spirit returns to Twilight, the vessel's ephemeral Conditions are temporarily suppressed, and the entity cannot repossess the victim for the scene. This rite does not affect Claimed."
+      "effect": "Force a spirit or Strix out of a body within one mile. A ghost or spirit returns to Twilight, the vessel's ephemeral Conditions are temporarily suppressed, and the entity cannot repossess the victim for the scene. This rite does not affect Claimed.",
+      "presentationPt": {
+        "contestedBy": "Resistência + Graduação ou Potência de Sombra",
+        "summary": "Exorciza uma entidade efêmera que possui seu hospedeiro.",
+        "duration": "Cena",
+        "requirement": "Um fragmento do DNA do receptáculo, como cabelo ou unhas.",
+        "effect": "Força um espírito ou Strix a sair de um corpo a até uma milha. Um fantasma ou espírito retorna ao Crepúsculo, as Condições efêmeras do receptáculo são temporariamente suprimidas e a entidade não pode voltar a possuir a vítima durante a cena. Este rito não afeta Reivindicados."
+      }
     },
     {
       "id": "sethite-cruac-thrashing-apeps-coils",
       "kind": "cruac-rite",
       "name": "Thrashing of Apep's Coils",
-      "translatedName": "Thrashing of Apep's Coils",
+      "translatedName": "Agitação das Espirais de Apep",
       "rating": 5,
       "experienceCost": 2,
       "covenantIds": [
@@ -10712,7 +10740,12 @@
       "page": 71,
       "manualOnly": true,
       "duration": "Night",
-      "effect": "Impale the sacrifice with a spear at the climax of the rite to impose Heavy Rain within a mile, covering roughly a half-mile radius. The ritualist and allies carrying Sethite-blessed charms are immune. Adding one Vitae to the sacrifice also calls one level of Heavy Winds. The Sethite may dismiss the storm with an instant action."
+      "effect": "Impale the sacrifice with a spear at the climax of the rite to impose Heavy Rain within a mile, covering roughly a half-mile radius. The ritualist and allies carrying Sethite-blessed charms are immune. Adding one Vitae to the sacrifice also calls one level of Heavy Winds. The Sethite may dismiss the storm with an instant action.",
+      "presentationPt": {
+        "summary": "Invoca chuva violenta sobre a área do ritual e pode acrescentar ventos fortes; aliados preparados ficam protegidos.",
+        "duration": "Noite",
+        "effect": "Empale o sacrifício com uma lança no ápice do rito para impor Chuva Forte a até uma milha, cobrindo aproximadamente meia milha de raio. O ritualista e os aliados que carregam amuletos abençoados por um Sethite são imunes. Acrescentar um Vitae ao sacrifício também invoca um nível de Ventos Fortes. O Sethite pode dissipar a tempestade com uma ação instantânea."
+      }
     },
     {
       "id": "cruac-gwydions-curse",
