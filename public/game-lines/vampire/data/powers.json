@@ -10408,7 +10408,7 @@
       "id": "h-vtr-fire-revolution:devotion:got-my-back",
       "kind": "devotion",
       "name": "Got My Back",
-      "translatedName": "Got My Back",
+      "translatedName": "Me Dão Cobertura",
       "prerequisites": "Animalism •",
       "experienceCost": 1,
       "summary": "Calls allied predators through the Beast when the vampire is threatened.",
@@ -10422,7 +10422,17 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "Night",
-      "effect": "The vampire’s blood sympathy dice pools are doubled when communicating pain or fear to those she has a blood tie with. She can’t control how they might react, but remaining where they are rather than going to her location costs a point of Willpower, and attempting to bring further harm to her costs another."
+      "effect": "The vampire’s blood sympathy dice pools are doubled when communicating pain or fear to those she has a blood tie with. She can’t control how they might react, but remaining where they are rather than going to her location costs a point of Willpower, and attempting to bring further harm to her costs another.",
+      "presentationPt": {
+        "prerequisites": "Animalismo •",
+        "cost": "2 Vitae",
+        "summary": "Chama predadores aliados por meio da Fera quando o vampiro está ameaçado.",
+        "requirement": "O vampiro precisa ativar esta Devoção no mesmo turno em que invoca Simpatia de Sangue.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Noite",
+        "effect": "As paradas de Simpatia de Sangue do vampiro são dobradas ao comunicar dor ou medo a quem tem um laço de sangue com ele. Ele não pode controlar como essas pessoas reagirão, mas permanecer onde estão em vez de ir até sua localização custa um ponto de Força de Vontade, e tentar causar mais dano a ele custa outro."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:it-s-who-you-know",
@@ -10635,7 +10645,7 @@
       "id": "h-vtr-fire-revolution:devotion:trick-shot",
       "kind": "devotion",
       "name": "Trick Shot",
-      "translatedName": "Trick Shot",
+      "translatedName": "Tiro de Mestre",
       "prerequisites": "Celerity •••; Quicken Sight",
       "experienceCost": 2,
       "summary": "Executes an extraordinary Firearms maneuver before a target can retaliate.",
@@ -10648,13 +10658,22 @@
       "action": "Reflexive",
       "duration": "Turn",
       "dicePool": "None",
-      "effect": "The vampire adds half his Celerity dots (rounded up) as damage to a successful Firearms attack. He also ignores any range penalties or penalties from cover he would ordinarily take."
+      "effect": "The vampire adds half his Celerity dots (rounded up) as damage to a successful Firearms attack. He also ignores any range penalties or penalties from cover he would ordinarily take.",
+      "presentationPt": {
+        "prerequisites": "Celeridade •••; Visão Acelerada",
+        "cost": "1 Vitae",
+        "summary": "Executa uma manobra extraordinária com Armas de Fogo antes que o alvo possa revidar.",
+        "action": "Reflexiva",
+        "duration": "Turno",
+        "dicePool": "Nenhuma",
+        "effect": "O vampiro soma metade de seus pontos de Celeridade (arredondada para cima) ao dano de um ataque bem-sucedido com Armas de Fogo. Também ignora quaisquer penalidades de distância ou de cobertura que normalmente sofreria."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:uplift",
       "kind": "devotion",
       "name": "Uplift",
-      "translatedName": "Uplift",
+      "translatedName": "Elevação",
       "prerequisites": "Animalism ••; Dominate ••••",
       "experienceCost": 4,
       "summary": "Feeds a revenant five Vitae to preserve Vitae through daysleep and temporarily grant further Kindred-like benefits.",
@@ -10668,7 +10687,17 @@
       "duration": "Nights equal to Blood Potency",
       "requirement": "The vampire must feed a revenant the Vitae cost. This will not create a blood bond or cause Vitae addiction, for better or worse.",
       "dicePool": "None",
-      "effect": "The subject gains something close to the benefits Kindred enjoy. The revenant no longer loses all Vitae upon waking from daysleep and appears to be an ordinary vampire of the Devotion-user’s clan. The subject can act against her benefactor, but she must spend a point of Willpower the first time she tries to harm him in the scene. Even if she does so, any actions she takes against him suffer the vampire’s Animalism dots as a penalty."
+      "effect": "The subject gains something close to the benefits Kindred enjoy. The revenant no longer loses all Vitae upon waking from daysleep and appears to be an ordinary vampire of the Devotion-user’s clan. The subject can act against her benefactor, but she must spend a point of Willpower the first time she tries to harm him in the scene. Even if she does so, any actions she takes against him suffer the vampire’s Animalism dots as a penalty.",
+      "presentationPt": {
+        "prerequisites": "Animalismo ••; Dominação ••••",
+        "cost": "5 Vitae",
+        "summary": "Alimenta um revenante com cinco Vitae para que preserve Vitae durante o Sono Diurno e receba temporariamente outros benefícios semelhantes aos dos Membros.",
+        "action": "Instantânea",
+        "duration": "Noites iguais à Potência de Sangue",
+        "requirement": "O vampiro precisa alimentar um revenante com o custo em Vitae. Isso não cria um vínculo de sangue nem causa dependência de Vitae, para o bem ou para o mal.",
+        "dicePool": "Nenhuma",
+        "effect": "O sujeito recebe algo próximo dos benefícios dos Membros. O revenante deixa de perder toda sua Vitae ao despertar do Sono Diurno e parece ser um vampiro comum do Clan de quem usa a Devoção. O sujeito pode agir contra seu benfeitor, mas precisa gastar um ponto de Força de Vontade na primeira vez em que tentar feri-lo na cena. Mesmo que faça isso, quaisquer ações contra ele sofrem uma penalidade igual aos pontos de Animalismo do vampiro."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:sawbones",
