@@ -9688,7 +9688,7 @@
       "id": "h-vtr-agony-ecstasy:devotion:bitch-hammer",
       "kind": "devotion",
       "name": "Bitch-Hammer",
-      "translatedName": "Bitch-Hammer",
+      "translatedName": "Puta duma Martelada",
       "prerequisites": "Vigor ••••",
       "experienceCost": 2,
       "summary": "A bare-handed blow that exceeds the victim's Stamina prevents most Willpower expenditure.",
@@ -9702,7 +9702,17 @@
       "duration": "Hours equal to Blood Potency",
       "requirement": "The vampire must successfully deal any kind of damage exceeding the victim’s Stamina using her bare fists. This requirement is not fulfilled if the subject absorbs enough of that damage with Resilience.",
       "dicePool": "None",
-      "effect": "The vampire punches the victim so hard that they get the will knocked out of them. They can’t spend Willpower except for self-preservation, such as bolstering a Resistance Attribute."
+      "effect": "The vampire punches the victim so hard that they get the will knocked out of them. They can’t spend Willpower except for self-preservation, such as bolstering a Resistance Attribute.",
+      "presentationPt": {
+        "prerequisites": "Ímpeto ••••",
+        "cost": "1 de Força de Vontade",
+        "summary": "Um golpe com as mãos nuas que supera o Vigor da vítima impede a maioria dos gastos de Força de Vontade.",
+        "action": "Reflexiva",
+        "duration": "Horas iguais à Potência de Sangue",
+        "requirement": "O vampiro precisa infligir, com os punhos nus, uma quantidade de dano de qualquer tipo maior que o Vigor da vítima. Esse requisito não é atendido se o sujeito absorver dano suficiente com Resiliência.",
+        "dicePool": "Nenhuma",
+        "effect": "O vampiro soca a vítima com tanta força que arranca sua vontade. Ela não pode gastar Força de Vontade, exceto para autopreservação, como reforçar um Atributo de Resistência."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:dance-of-the-swarm",
@@ -9746,7 +9756,7 @@
       "id": "h-vtr-agony-ecstasy:devotion:folly-of-theseus",
       "kind": "devotion",
       "name": "Folly of Theseus",
-      "translatedName": "Folly of Theseus",
+      "translatedName": "Insensatez de Theseus",
       "prerequisites": "Majesty ••• or Nightmare •••",
       "experienceCost": 1,
       "summary": "Calls mortals within range toward the vampire with an irresistible sense of destiny.",
@@ -9764,13 +9774,27 @@
         "exceptionalSuccess": "A vampire refreshes a Willpower point of her own.",
         "failure": "The labyrinth is too foreboding.",
         "dramaticFailure": "All victims learn the vampire’s location and enjoy +3 on any violent action against her for a single turn of their choosing before the end of the scene."
+      },
+      "presentationPt": {
+        "prerequisites": "Majestade ••• ou Pesadelo •••",
+        "cost": "2 Vitae",
+        "summary": "Atrai mortais dentro do alcance até o vampiro com uma sensação irresistível de destino.",
+        "dicePool": "Manipulação + Intimidação + Majestade ou Pesadelo",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "rollResults": {
+          "success": "Durante a duração, personagens mortais a até (Potência de Sangue × 15) metros sentem uma forte compulsão de procurar o vampiro, cuja localização conhecem intuitivamente dentro dessa área. O vampiro pode atrair um número de vítimas igual aos seus pontos de Majestade/Pesadelo, mas não pode escolher personagens específicos a menos que já os tenha conhecido. Também não pode usar esse efeito em qualquer personagem com um laço de sangue ou vínculo de sangue com ele. A experiência é semelhante a sentir o chamado do próprio destino, algo que a vítima precisa fazer. Se atender ao chamado, recebe um Ato (ou um ponto de Força de Vontade se a vítima for um personagem do Narrador), mas então não pode ignorar a compulsão. Se preferir ignorar o chamado, a vítima precisa gastar um ponto de Força de Vontade ou receber a Condição Culpado. Um personagem só pode ser afetado por esta Devoção uma vez por noite.",
+          "exceptionalSuccess": "O vampiro recupera um ponto de Força de Vontade.",
+          "failure": "O labirinto é intimidador demais.",
+          "dramaticFailure": "Todas as vítimas descobrem a localização do vampiro e recebem +3 em qualquer ação violenta contra ele durante um único turno de sua escolha antes do fim da cena."
+        }
       }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:grounded-sorcery",
       "kind": "devotion",
       "name": "Grounded Sorcery",
-      "translatedName": "Grounded Sorcery",
+      "translatedName": "Aterramento da Feitiçaria",
       "prerequisites": "Obfuscate •••; Resilience ••••",
       "experienceCost": 3,
       "summary": "Contests an incoming Ritual Discipline and corrupts its effect even when it succeeds.",
@@ -9782,7 +9806,15 @@
       "cost": "1 Willpower",
       "action": "Reflexive",
       "dicePool": "None",
-      "effect": "When affected by a Ritual Discipline, the vampire can acti vate this Devotion. Make a Clash of Wills versus the offender; the vampire’s player benefits from the 8-again quality and gains a bonus as if it were a permanent effect. If the vampire prevails, the magic doesn’t affect him. However, regardless of whether he succeeds, the effect corrupts and spreads, taking on strange forms and affecting bystanders or the caster herself. By default, this also inflicts the dramatic failure effect of the offending power (though it may still suc ceed), applying it to the closest individual hostile to the Acolyte. The Storyteller can warp the effect as it suits the situation."
+      "effect": "When affected by a Ritual Discipline, the vampire can activate this Devotion. Make a Clash of Wills versus the offender; the vampire’s player benefits from the 8-again quality and gains a bonus as if it were a permanent effect. If the vampire prevails, the magic doesn’t affect him. However, regardless of whether he succeeds, the effect corrupts and spreads, taking on strange forms and affecting bystanders or the caster herself. By default, this also inflicts the dramatic failure effect of the offending power (though it may still succeed), applying it to the closest individual hostile to the Acolyte. The Storyteller can warp the effect as it suits the situation.",
+      "presentationPt": {
+        "prerequisites": "Ofuscação •••; Resiliência ••••",
+        "cost": "1 de Força de Vontade",
+        "summary": "Contesta uma Disciplina Ritual que o afeta e corrompe seu efeito mesmo quando ela obtém sucesso.",
+        "action": "Reflexiva",
+        "dicePool": "Nenhuma",
+        "effect": "Quando afetado por uma Disciplina Ritual, o vampiro pode ativar esta Devoção. Faça um Confronto de Vontades contra o responsável; o jogador do vampiro recebe a qualidade de 8-novamente e um bônus como se fosse um efeito permanente. Se o vampiro vencer, a magia não o afeta. Porém, tenha ele sucesso ou não, o efeito se corrompe e se espalha, assumindo formas estranhas e afetando espectadores ou a própria conjuradora. Por padrão, isso também inflige o efeito de falha dramática do poder original (embora ele ainda possa obter sucesso), aplicando-o ao indivíduo mais próximo que seja hostil ao Acólito. O Narrador pode distorcer o efeito conforme a situação."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:hekau",
@@ -9826,7 +9858,7 @@
       "id": "h-vtr-agony-ecstasy:devotion:instrument-of-blood",
       "kind": "devotion",
       "name": "Instrument of Blood",
-      "translatedName": "Instrument of Blood",
+      "translatedName": "Instrumento de Sangue",
       "prerequisites": "Obfuscate ••; Protean ••",
       "experienceCost": 2,
       "summary": "Replaces a Predatory Aspect adaptation with a small flesh-and-bone tool of limited Availability.",
@@ -9838,7 +9870,15 @@
       "cost": "1 Vitae",
       "dicePool": "None",
       "action": "None",
-      "effect": "When using Predator’s Aspect, the Acolyte can activate this Devotion to replace an adaptation with a piece of equipment, with an Availability rating no greater than her Protean dots and a Size no greater than about 2. This object must be fleshly in some way: For example, she might sprout a chime candle out of fat and sinew from her forearm, produce dander that works like salt to ward off the dead, or just create a ritual knife made of sinew and bone. This object always has the “metaphysical” qualities of the mundane example, though it never counts as a bane. This equipment inflicts a point of lethal damage on the vampire if it’s destroyed, or aggravated if it’s burned. Otherwise, it can be returned to her flesh when Predatory Aspect ends."
+      "effect": "When using Predator’s Aspect, the Acolyte can activate this Devotion to replace an adaptation with a piece of equipment, with an Availability rating no greater than her Protean dots and a Size no greater than about 2. This object must be fleshly in some way: For example, she might sprout a chime candle out of fat and sinew from her forearm, produce dander that works like salt to ward off the dead, or just create a ritual knife made of sinew and bone. This object always has the “metaphysical” qualities of the mundane example, though it never counts as a bane. This equipment inflicts a point of lethal damage on the vampire if it’s destroyed, or aggravated if it’s burned. Otherwise, it can be returned to her flesh when Predatory Aspect ends.",
+      "presentationPt": {
+        "prerequisites": "Ofuscação ••; Metamorfose ••",
+        "cost": "1 Vitae",
+        "summary": "Substitui uma adaptação de Aspecto Predatório por uma pequena ferramenta de carne e osso com Disponibilidade limitada.",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "effect": "Ao usar Aspecto Predatório, a Acólita pode ativar esta Devoção para substituir uma adaptação por um equipamento com Disponibilidade não maior que seus pontos de Metamorfose e Tamanho não maior que aproximadamente 2. Esse objeto precisa ter alguma característica de carne: por exemplo, ela pode fazer brotar de seu antebraço uma vela fina de gordura e tendões, produzir descamações de pele que funcionam como sal para afastar os mortos ou simplesmente criar uma faca ritual de tendões e osso. O objeto sempre possui as qualidades “metafísicas” do exemplo mundano, mas nunca conta como uma Fraqueza. Esse equipamento inflige um ponto de dano letal ao vampiro se for destruído, ou agravado se for queimado. Caso contrário, pode ser reincorporado à carne dela quando Aspecto Predatório terminar."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:invigorating-draft",
