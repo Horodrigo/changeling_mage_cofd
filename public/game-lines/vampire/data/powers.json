@@ -7731,7 +7731,7 @@
       "id": "devotion-malignant-smog",
       "kind": "devotion",
       "name": "Malignant Smog",
-      "translatedName": "Malignant Smog",
+      "translatedName": "Névoa Maligna",
       "prerequisites": "Protean •••••",
       "experienceCost": 3,
       "cost": "2 Vitae",
@@ -7740,7 +7740,15 @@
       "page": 75,
       "dicePool": "None",
       "action": "None",
-      "effect": "This Devotion enhances the effect of Primeval Miasma, transforming the vampire from a cloud of hungry smoke to a cloud of toxic gas. By spending 2 additional Vitae when she activates Primeval Miasma, she doubles the maximum diameter of her cloud and can float at her normal Speed. When she activates Malignant Smog, she chooses a Tilt based on the type of gas she becomes. Anyone who enters her Miasma must succeed on a Stamina roll once every (10 – Blood Potency) turns he stays there to avoid falling prey to the Tilt, with its most severe possible effect. If the vampire transforms into mustard gas, she might inflict the Sick (grave) or Blinded (both eyes) Tilt, as blisters and chemical burns cover the victim’s body inside and out. Transforming into a psychotropic inhalant might inflict the Insane or Insensate Tilt, while becoming concentrated smog or tobacco smoke can cause Poisoned (grave) Tilt. The Tilt wears off once the victim spends a number of consecutive turns outside the cloud equal to the elder’s Blood Potency."
+      "effect": "This Devotion enhances the effect of Primeval Miasma, transforming the vampire from a cloud of hungry smoke to a cloud of toxic gas. By spending 2 additional Vitae when she activates Primeval Miasma, she doubles the maximum diameter of her cloud and can float at her normal Speed. When she activates Malignant Smog, she chooses a Tilt based on the type of gas she becomes. Anyone who enters her Miasma must succeed on a Stamina roll once every (10 – Blood Potency) turns he stays there to avoid falling prey to the Tilt, with its most severe possible effect. If the vampire transforms into mustard gas, she might inflict the Sick (grave) or Blinded (both eyes) Tilt, as blisters and chemical burns cover the victim’s body inside and out. Transforming into a psychotropic inhalant might inflict the Insane or Insensate Tilt, while becoming concentrated smog or tobacco smoke can cause Poisoned (grave) Tilt. The Tilt wears off once the victim spends a number of consecutive turns outside the cloud equal to the elder’s Blood Potency.",
+      "presentationPt": {
+        "prerequisites": "Metamorfose •••••",
+        "cost": "2 Vitae",
+        "summary": "Transforma Miasma Primevo em gás tóxico que inflige Complicações.",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "effect": "Esta Devoção aprimora Miasma Primevo, transformando o vampiro de uma nuvem de fumaça faminta em uma nuvem de gás tóxico. Ao gastar 2 Vitae adicionais quando ativa Miasma Primevo, ela dobra o diâmetro máximo de sua nuvem e pode flutuar com seu Deslocamento normal. Ao ativar Névoa Maligna, escolhe uma Complicação com base no tipo de gás em que se transforma. Quem entrar em seu Miasma precisa obter sucesso em um teste de Vigor uma vez a cada (10 − Potência de Sangue) turnos em que permanecer ali, para evitar sofrer a Complicação com seu efeito mais grave possível. Se o vampiro se transformar em gás mostarda, pode infligir Doente (grave) ou Cegueira (ambos os olhos), enquanto bolhas e queimaduras químicas cobrem o corpo da vítima por dentro e por fora. Transformar-se em uma substância psicotrópica inalável pode infligir Insano ou Insensível, enquanto se tornar poluição atmosférica concentrada ou fumaça de tabaco pode causar Envenenado (grave). A Complicação termina quando a vítima passar um número de turnos consecutivos fora da nuvem igual à Potência de Sangue do ancião."
+      }
     },
     {
       "id": "devotion-pass-yesteryear",
@@ -7798,7 +7806,7 @@
       "id": "devotion-unbridled-force",
       "kind": "devotion",
       "name": "Unbridled Force",
-      "translatedName": "Unbridled Force",
+      "translatedName": "Força Desenfreada",
       "prerequisites": "Vigor •••••, Dominate ••",
       "experienceCost": 4,
       "cost": "5 Vitae",
@@ -7808,7 +7816,16 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "Scene",
-      "effect": "For the duration, the vampire may perform feats of raw strength at a distance by simply exuding force with his gestures. He can push, pull, throw, or lift any object within (Blood Potency x 10) yards/meters that he normally could without touching it, so long as he can perceive it, and can make Brawl attacks the same way. No fine manipulation is possible, but he can use his Vigor Discipline to increase his Strength as normal for the purposes of this Devotion. He still must have at least one hand free to direct this force. The vampire may not use this power at anything less than his full strength — he can’t gently slide a bookcase aside, deposit a person lightly onto the ground, or pull his punches."
+      "effect": "For the duration, the vampire may perform feats of raw strength at a distance by simply exuding force with his gestures. He can push, pull, throw, or lift any object within (Blood Potency x 10) yards/meters that he normally could without touching it, so long as he can perceive it, and can make Brawl attacks the same way. No fine manipulation is possible, but he can use his Vigor Discipline to increase his Strength as normal for the purposes of this Devotion. He still must have at least one hand free to direct this force. The vampire may not use this power at anything less than his full strength — he can’t gently slide a bookcase aside, deposit a person lightly onto the ground, or pull his punches.",
+      "presentationPt": {
+        "prerequisites": "Ímpeto •••••, Dominação ••",
+        "cost": "5 Vitae",
+        "summary": "Realiza façanhas de força bruta à distância.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Cena",
+        "effect": "Durante o efeito, o vampiro pode realizar façanhas de força bruta à distância, simplesmente emanando força com seus gestos. Ele pode empurrar, puxar, arremessar ou erguer qualquer objeto a até (Potência de Sangue × 10) jardas/metros que normalmente conseguiria sem tocá-lo, desde que possa percebê-lo, e pode fazer ataques de Briga da mesma maneira. Não é possível fazer manipulações delicadas, mas ele pode usar Ímpeto para aumentar sua Força normalmente para os fins desta Devoção. Ainda precisa ter ao menos uma mão livre para direcionar essa força. O vampiro não pode usar este poder com menos que sua força total: não pode deslizar suavemente uma estante para o lado, depositar uma pessoa delicadamente no chão ou conter seus socos."
+      }
     },
     {
       "id": "devotion-kin-maker",
