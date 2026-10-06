@@ -4471,8 +4471,8 @@
       "id": "devotion-borrowed-talent",
       "kind": "devotion",
       "name": "Borrowed Talent",
-      "translatedName": "Borrowed Talent",
-      "summary": "Draws an actor's practiced talent into the director's production.",
+      "translatedName": "Talento Emprestado",
+      "summary": "Temporarily steal a Social Skill Specialty from the victim.",
       "source": "False Gods: Ventrue",
       "page": 30,
       "manualOnly": true,
@@ -4484,7 +4484,17 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Night",
-      "effect": "The vampire temporarily steals a Social Skill Specialty the subject possesses. For the rest of the night, she can play the piano, sing opera, or whatever else her victim might have in their repertoire, depriving him of his special talent. However, the vampire must have at least one dot in the appropriate Skill or else the Specialty has no effect. If the victim has more than one Social Specialty in his traits, the vampire’s player chooses which to copy. The vampire can only use this Devotion once a night."
+      "effect": "The vampire temporarily steals a Social Skill Specialty the subject possesses. For the rest of the night, she can play the piano, sing opera, or whatever else her victim might have in their repertoire, depriving him of his special talent. However, the vampire must have at least one dot in the appropriate Skill or else the Specialty has no effect. If the victim has more than one Social Specialty in his traits, the vampire’s player chooses which to copy. The vampire can only use this Devotion once a night.",
+      "presentationPt": {
+        "summary": "Rouba temporariamente uma Especialização de Perícia Social da vítima.",
+        "prerequisites": "Auspícios ••••, Dominação •",
+        "cost": "2 Vitae",
+        "requirement": "O vampiro está lendo os pensamentos da vítima com Abrir a Mente.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "effect": "O vampiro rouba temporariamente uma Especialização de Perícia Social que o sujeito possui. Pelo resto da noite, pode tocar piano, cantar ópera ou fazer qualquer outra coisa do repertório da vítima, privando-a desse talento especial. Contudo, o vampiro deve ter ao menos um ponto na Perícia apropriada, ou a Especialização não tem efeito. Se a vítima tiver mais de uma Especialização Social, o jogador do vampiro escolhe qual copiar. O vampiro só pode usar esta Devoção uma vez por noite."
+      }
     },
     {
       "id": "devotion-dream-casting",
@@ -4546,8 +4556,8 @@
       "id": "devotion-live-wire",
       "kind": "devotion",
       "name": "Live Wire",
-      "translatedName": "Live Wire",
-      "summary": "Channels stored electricity through a living target.",
+      "translatedName": "Fio Vivo",
+      "summary": "Convert latent electricity in a living body into Vitae, inflicting bashing damage on the subject.",
       "source": "False Gods: Ventrue",
       "page": 36,
       "manualOnly": true,
@@ -4562,14 +4572,29 @@
         "exceptionalSuccess": "The vampire feels reinvigorated, regaining a Willpower point.",
         "failure": "The vampire’s spark sputters.",
         "dramaticFailure": "The vampire takes no sustenance, and causes painful burns, arrhythmia, or an epileptic episode in her victim."
-      }
+      },
+      "presentationPt": {
+        "summary": "Converte a eletricidade latente de um corpo vivo em Vitae, causando dano contusivo ao sujeito.",
+        "prerequisites": "Celeridade ••, Surto Elétrico ••",
+        "cost": "1 de Força de Vontade",
+        "requirement": "Ao se alimentar de forma violenta, o vampiro deve tocar a vítima por um turno inteiro (Vampire, p. 177), ou obter sucesso ao agarrá-la. Se conseguir, pode usar esta Devoção no lugar da manobra Alimentar.",
+        "dicePool": "Destreza + Medicina + Surto Elétrico",
+        "action": "Reflexiva",
+        "rollResults": {
+          "success": "O Chocante converte a eletricidade latente de um corpo vivo em Vitae. Para cada sucesso, causa um ponto de dano contusivo ao sujeito e recebe metade desse valor em Vitae, arredondando para cima. Só é possível extrair energia de uma vítima dessa forma uma vez por noite. Com sucesso ou falha, esta Devoção não tem mais efeito sobre a mesma vítima. Para a Maldição Voltaica, usar esta Devoção não conta como se alimentar de mortais.",
+          "exceptionalSuccess": "O vampiro se sente revigorado e recupera um ponto de Força de Vontade.",
+          "failure": "A faísca do vampiro falha.",
+          "dramaticFailure": "O vampiro não obtém sustento e causa queimaduras dolorosas, arritmia ou uma crise epiléptica na vítima."
+        }
+      },
+      "requirement": "If feeding violently, the vampire must touch the victim for one full turn (Vampire, p. 177), or succeed in grappling him; on success, this Devotion may replace the Feed move."
     },
     {
       "id": "devotion-surgical-spark",
       "kind": "devotion",
       "name": "Surgical Spark",
-      "translatedName": "Surgical Spark",
-      "summary": "Applies exact electrical current to heal, disable, or stimulate tissue.",
+      "translatedName": "Faísca Cirúrgica",
+      "summary": "Heal a mortal subject's bashing damage and restore their usual heart rhythm in cardiac arrest or arrhythmia.",
       "source": "False Gods: Ventrue",
       "page": 37,
       "manualOnly": true,
@@ -4584,6 +4609,19 @@
         "exceptionalSuccess": "Flash! The subject heals all bashing damage.",
         "failure": "Fizzle.",
         "dramaticFailure": "Flatline. The vampire compounds the emergency, and the subject now requires immediate medical attention."
+      },
+      "presentationPt": {
+        "summary": "Cura dano contusivo de um mortal e restaura seu ritmo cardíaco em caso de parada ou arritmia.",
+        "prerequisites": "Resiliência •, Surto Elétrico •",
+        "cost": "1 Vitae",
+        "dicePool": "Destreza + Medicina + Surto Elétrico – dano a curar",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "O vampiro cura dano contusivo de seu sujeito mortal igual aos sucessos, até o limite do Tamanho dele. Se o sujeito estiver sofrendo uma parada cardíaca ou arritmia, esta Devoção também faz seu coração voltar ao ritmo habitual.",
+          "exceptionalSuccess": "Clarão! O sujeito cura todo o dano contusivo.",
+          "failure": "A faísca se apaga.",
+          "dramaticFailure": "Linha reta. O vampiro agrava a emergência, e o sujeito agora precisa de atendimento médico imediato."
+        }
       }
     },
     {
