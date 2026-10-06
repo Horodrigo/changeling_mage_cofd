@@ -6438,8 +6438,8 @@
       "id": "devotion-taking-the-measure",
       "kind": "devotion",
       "name": "Taking the Measure",
-      "translatedName": "Taking the Measure",
-      "summary": "Reads a subject's age, health, and physical history through close observation.",
+      "translatedName": "Tirando a Medida",
+      "summary": "Add Auspex to Humanity when determining Social penalties for relating to a subject.",
       "source": "Sin Again: Daeva",
       "page": 35,
       "manualOnly": true,
@@ -6451,7 +6451,17 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "The vampire adds her Auspex dots to Humanity to negate the penalty on any Social roll to relate to the subject. If the victim had the Swooning Condition toward the vampire when she activated this Devotion, the effect lasts the night. Story Seed: Silver and Gold Despite a certain symbolic duality, the Erzsébet have an icy relationship with the Star-Crossed (p. 52). Maybe Electrum could cure a Cavalier’s bane, but so far, it hasn’t. This has led to conflict, as the Custodians get twitchy when others ask too many questions about their collections. Some Erzsébet have offered to rent Purities for experimentation, but no Sophist has been willing to offer up a loaner. A few Withered wonder if they could be “purified” themselves, but this idea (suspiciously, in the Erzsébet’s eyes) is a non-starter for the Star-Crossed."
+      "effect": "The vampire adds her Auspex dots to Humanity to negate the penalty on any Social roll to relate to the subject. If the victim had the Swooning Condition toward the vampire when she activated this Devotion, the effect lasts the night.",
+      "presentationPt": {
+        "summary": "Soma Auspícios à Humanidade ao determinar penalidades Sociais para se relacionar com o sujeito.",
+        "prerequisites": "Auspícios ••, Majestade •",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro usa Percepção Sobrenatural com sucesso em uma vítima humana na mesma cena.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "O vampiro soma seus pontos de Auspícios à Humanidade para anular a penalidade em qualquer teste Social para se relacionar com o sujeito. Se a vítima tiver a Condição Enamorado em relação ao vampiro quando ele ativar esta Devoção, o efeito dura a noite."
+      }
     },
     {
       "id": "devotion-essence-vitale-absolue",
@@ -6693,10 +6703,10 @@
       "id": "devotion-dressed-to-kill",
       "kind": "devotion",
       "name": "Dressed to Kill",
-      "translatedName": "Dressed to Kill",
-      "summary": "Turns clothing and presentation into part of a lethal message.",
+      "translatedName": "Vestido para Matar",
+      "summary": "Use a prepared outfit to inflict the Insensate Tilt on a victim.",
       "source": "Sin Again: Daeva",
-      "page": 47,
+      "page": 46,
       "manualOnly": true,
       "bloodlineId": "moda-mortale",
       "experienceCost": 2,
@@ -6710,6 +6720,20 @@
         "exceptionalSuccess": "The victim also loses a point of temporary Willpower.",
         "failure": "The distinctive outfit grabs attention, but doesn’t impede reaction.",
         "dramaticFailure": "The Fashionista is too notable, and his mark reacts explosively, either to defend himself or to flee from approaching death with a 5-die bonus."
+      },
+      "presentationPt": {
+        "summary": "Usa um traje preparado para impor a Complicação Insensível à vítima.",
+        "prerequisites": "Majestade •••, Ímpeto ••",
+        "cost": "2 Vitae",
+        "requirement": "O vampiro deve ter obtido sucesso ao compor seu traje. Isso exige um teste de Raciocínio + Ofícios e espalhar o custo acima pela roupa. O efeito dura até o fim da noite ou até o vampiro usá-lo, o que ocorrer primeiro.",
+        "dicePool": "Presença + Expressão + Majestade contra Perseverança + Potência de Sangue",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "A vítima sofre a Complicação Insensível (Chronicles of Darkness, p. 285).",
+          "exceptionalSuccess": "A vítima também perde um ponto temporário de Força de Vontade.",
+          "failure": "O traje distinto chama atenção, mas não impede a reação.",
+          "dramaticFailure": "O Fashionista chama atenção demais, e seu alvo reage de forma explosiva, seja para se defender ou fugir da morte que se aproxima, com um bônus de 5 dados."
+        }
       }
     },
     {
@@ -6745,17 +6769,24 @@
       "id": "devotion-purification",
       "kind": "devotion",
       "name": "Purification",
-      "translatedName": "Purification",
+      "translatedName": "Purificação",
       "bloodlineId": "star-crossed",
       "experienceCost": 0,
-      "summary": "Bind a living mortal's Purity into a repeating 24-hour stasis and harvest Electrum from lethal harm dealt to that Purity.",
+      "summary": "Bind a mortal Purity in a repeating 24-hour biological cycle that reverses aging, disease, injuries, and death.",
       "source": "Sin Again: Daeva",
       "page": 55,
       "cost": "1 Vitae and 1 Willpower to establish; 1 Vitae each week to maintain",
       "duration": "One week per upkeep",
       "effect": "The Star-Crossed anoints her subject’s throat with Vitae, painting an unbroken ring around the neck. She then spends a Willpower and anoints his forehead with another daub of blood. From that point onward, the new Purity’s body is locked in a 24-hour biological time loop. The subject’s body always returns to the exact condition at the end of the night, effectively pausing the progress of aging and any diseases. A Purity heals all wounds she’s acquired at the end of her daily cycle, even if she’s killed. A Purity bearing a wound when the cycle began will regain it at the beginning of each reset if it healed in the meantime. In addition, a Purity’s mental processes are permanently beset by an intense sense of déjà vu. He suffers from a persistent form of the Confused Condition, which cannot be resolved without exiting the loop, becoming a ghoul, or receiving the Embrace. Purity characters take a Beat whenever this endless mental fog causes them significant embarrassment. This effect must be upkept once a week with another anointment. Failure to do so will cause all the time the Custodian paused to rapidly advance upon their Purity within a few minutes. A vampire can have a number of Purities equal to Blood Potency, but any she has the Dependent Condition toward do not count against this limit. Feeding on vampire blood ends this effect.",
       "manualOnly": true,
-      "requirement": "The subject cannot have any level of blood bond to a vampire and must be mortal (e.g., not a ghoul)."
+      "requirement": "The subject cannot have any level of blood bond to a vampire and must be mortal (e.g., not a ghoul).",
+      "presentationPt": {
+        "summary": "Prende um mortal chamado Pureza em um ciclo biológico de 24 horas que reverte envelhecimento, doenças, ferimentos e morte.",
+        "cost": "1 Vitae e 1 de Força de Vontade para estabelecer; 1 Vitae por semana para manter",
+        "duration": "Uma semana por manutenção",
+        "requirement": "O sujeito não pode ter nenhum nível de vínculo de sangue com um vampiro e deve ser mortal, por exemplo, não pode ser um Ghoul.",
+        "effect": "O Desventurado unge a garganta do sujeito com Vitae, pintando um círculo ininterrupto ao redor do pescoço. Então gasta um ponto de Força de Vontade e unge a testa dele com mais um pouco de sangue. Daí em diante, o corpo da nova Pureza fica preso em um ciclo biológico de 24 horas. O corpo do sujeito sempre retorna à condição exata ao fim da noite, efetivamente interrompendo o avanço do envelhecimento e de quaisquer doenças. Uma Pureza cura todos os ferimentos adquiridos ao fim de seu ciclo diário, mesmo que tenha morrido. Uma Pureza que tinha um ferimento quando o ciclo começou volta a tê-lo no início de cada reinício, caso ele tenha sido curado nesse meio-tempo. Além disso, os processos mentais de uma Pureza são permanentemente atormentados por uma intensa sensação de déjà vu. Ela sofre uma forma persistente da Condição Confuso, que não pode ser resolvida sem sair do ciclo, tornar-se um Ghoul ou receber o Abraço. Personagens Pureza recebem um Ato sempre que essa névoa mental interminável lhes causar constrangimento significativo. O efeito deve ser mantido uma vez por semana com outra unção. Deixar de fazê-lo faz todo o tempo que o Custódio interrompeu avançar rapidamente sobre sua Pureza em poucos minutos. Um vampiro pode ter um número de Purezas igual à Potência de Sangue, mas aquelas em relação às quais tem a Condição Dependente não contam para esse limite. Alimentar-se de sangue de vampiro encerra este efeito."
+      }
     },
     {
       "id": "devotion-drowned-abyss",
