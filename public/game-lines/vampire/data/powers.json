@@ -9932,7 +9932,7 @@
       "id": "devotion-it-will-not-die",
       "kind": "devotion",
       "name": "It Will Not Die",
-      "translatedName": "It Will Not Die",
+      "translatedName": "Não Vai Morrer",
       "prerequisites": "Resilience •••••",
       "experienceCost": 2,
       "summary": "Ignore wounds and briefly remain active when torpor should take hold.",
@@ -9942,13 +9942,21 @@
       "action": "Reflexive",
       "effect": "The vampire can spend one or more Willpower dots to ignore an equal number of Health levels of any damage type. In addition, once per scene, if she would fall to torpor for any reason, he can spend a Willpower point to remain active for a number of additional turns equal to Resilience. However, even if damage in the character’s last Health box is healed in these turns, he will still enter torpor when the duration expires. This Devotion does not function against damage dealt by sunlight or personal banes.",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "summary": "Ignora ferimentos e permanece ativo por pouco tempo quando deveria entrar em torpor.",
+        "prerequisites": "Resiliência •••••",
+        "cost": "Pontos permanentes ou pontos de Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "O vampiro pode gastar um ou mais pontos permanentes de Força de Vontade para ignorar igual número de níveis de Vitalidade de qualquer tipo de dano. Além disso, uma vez por cena, se fosse entrar em torpor por qualquer motivo, pode gastar um ponto de Força de Vontade para permanecer ativo por turnos adicionais iguais à Resiliência. Mesmo se o dano na última caixa de Vitalidade for curado nesses turnos, ainda entra em torpor quando a duração termina. Esta Devoção não funciona contra dano causado por luz solar ou Maldições pessoais."
+      }
     },
     {
       "id": "devotion-regeneration",
       "kind": "devotion",
       "name": "Regeneration",
-      "translatedName": "Regeneration",
+      "translatedName": "Regeneração",
       "prerequisites": "Protean ••••; Resilience ••••",
       "experienceCost": 4,
       "summary": "Repair aggravated wounds without resting at the cost of severe lethargy.",
@@ -9958,13 +9966,21 @@
       "action": "Instant",
       "effect": "The vampire can heal any number of aggravated damage she has without resting, manually pressing her flesh back together through painful, ad hoc surgery. However, this is an enormous strain on her dead physiology: Whenever she uses this Devotion, the vampire gains the Lethargic Condition, which ends without resolving in scenes equal to the amount of aggravated damage healed.",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "summary": "Repara ferimentos agravados sem repousar, ao custo de intensa letargia.",
+        "prerequisites": "Metamorfose ••••; Resiliência ••••",
+        "cost": "5 Vitae por ferimento",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "O vampiro pode curar qualquer quantidade de dano agravado que tenha sem repousar, unindo manualmente a carne por meio de uma cirurgia dolorosa e improvisada. Isso impõe um esforço enorme à sua fisiologia morta: sempre que usa esta Devoção, recebe a Condição Letárgico, que termina sem resolução após um número de cenas igual à quantidade de dano agravado curado."
+      }
     },
     {
       "id": "devotion-sheeps-clothing",
       "kind": "devotion",
       "name": "Sheep's Clothing",
-      "translatedName": "Sheep's Clothing",
+      "translatedName": "Pele de Cordeiro",
       "prerequisites": "Protean •••",
       "experienceCost": 2,
       "summary": "Memorize and assume the physical form of a mortal drained to death.",
@@ -9975,7 +9991,16 @@
       "manualOnly": true,
       "cost": "None",
       "dicePool": "None",
-      "action": "None"
+      "action": "None",
+      "presentationPt": {
+        "summary": "Memoriza e assume a forma física de um mortal drenado até a morte.",
+        "prerequisites": "Metamorfose •••",
+        "cost": "Nenhum",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Permanente",
+        "effect": "Quando o vampiro drena um mortal até a morte, pode memorizar sua forma. Como ao se transformar em um animal, assume as características Físicas da pessoa que copia — Atributos, Perícias, Tamanho, Velocidade e Vitalidade —, mas nenhuma de suas lembranças ou personalidade. Pele de Cordeiro não pode reproduzir mudanças cosméticas, como piercings, tatuagens ou outras modificações corporais. Fora essa restrição, a forma assumida é uma réplica perfeita da vítima no momento da morte. Formas obtidas com Pele de Cordeiro contam para o número de formas de Pele da Fera que o vampiro pode conhecer ao mesmo tempo."
+      }
     },
     {
       "id": "devotion-walk-it-off",
