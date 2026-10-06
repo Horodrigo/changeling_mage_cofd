@@ -4862,7 +4862,7 @@
       "id": "devotion-doctors-orders",
       "kind": "devotion",
       "name": "Doctor's Orders",
-      "translatedName": "Doctor's Orders",
+      "translatedName": "Ordens Médicas",
       "bloodlineId": "typhos",
       "prerequisites": "Auspex ••••; Dominate ••",
       "experienceCost": 2,
@@ -4874,7 +4874,16 @@
       "effect": "While the Surgeon is accessing the thoughts of another, she can activate this Devotion to use her powers of Dominate directly within the mind of her victim, without the need for eye-contact or verbal commands. This also overcomes any language barrier between the vampire and her victim, but the Surgeon must still roll to inflict the Mesmerized Condition and pay any associated costs for other levels of Dominate. Victims view commands given to them with this power as coming from within their own mind, and so will go to great lengths to justify their actions, even if they make little sense.",
       "manualOnly": true,
       "requirement": "The Surgeon must successfully use Lay Open the Mind on the victim.",
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "prerequisites": "Auspícios ••••; Dominação ••",
+        "summary": "Após obter sucesso com Abrir a Mente, usa Dominação dentro da mente do sujeito, sem contato visual, fala ou idioma em comum.",
+        "cost": "1 Vitae",
+        "requirement": "O Cirurgião precisa usar Abrir a Mente com sucesso na vítima.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Enquanto acessa os pensamentos de outra pessoa, a Cirurgiã pode ativar esta Devoção para usar seus poderes de Dominação diretamente na mente da vítima, sem contato visual nem ordens verbais. Isso também supera qualquer barreira de idioma entre a vampira e a vítima, mas a Cirurgiã ainda precisa fazer o teste para impor a Condição Mesmerizado e pagar os custos associados aos outros níveis de Dominação. As vítimas percebem as ordens dadas com este poder como provenientes da própria mente e, por isso, fazem grandes esforços para justificar suas ações, mesmo que façam pouco sentido."
+      }
     },
     {
       "id": "devotion-aegis",
@@ -4968,8 +4977,8 @@
       "id": "devotion-dissociate",
       "kind": "devotion",
       "name": "Dissociate",
-      "translatedName": "Dissociate",
-      "summary": "Separates a subject from an emotion, memory, or immediate impulse.",
+      "translatedName": "Dissociar",
+      "summary": "Detach the victim from their highest attached Touchstone, or all Touchstones on exceptional success.",
       "source": "False Gods: Ventrue",
       "page": 107,
       "manualOnly": true,
@@ -4984,14 +4993,28 @@
         "exceptionalSuccess": "The victim detaches from all of her Touchstones.",
         "failure": "The Devotion has no effect.",
         "dramaticFailure": "The vampire is confronted with the monstrousness of actively driving her Kindred away from Humanity. She suffers a Humanity 1 breaking point."
+      },
+      "presentationPt": {
+        "prerequisites": "Dominação •••, Ímpeto ••",
+        "summary": "Provoca o Desapego da vítima em relação ao seu Touchstone vinculado mais alto, ou a todos em um sucesso excepcional.",
+        "cost": "1 de Força de Vontade",
+        "requirement": "O vampiro precisa conhecer a identidade de pelo menos um dos Touchstones da vítima.",
+        "dicePool": "Presença + Intimidação + Dominação contra Perseverança + Potência de Sangue",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "A vítima sofre Desapego em relação ao seu Touchstone vinculado mais alto. Isso dura pelo resto da noite ou até que a vítima sofra um Ponto de Ruptura, o que ocorrer primeiro. O vampiro só pode usar esta Devoção em uma vítima uma vez por noite.",
+          "exceptionalSuccess": "A vítima sofre Desapego em relação a todos os seus Touchstones.",
+          "failure": "A Devoção não tem efeito.",
+          "dramaticFailure": "O vampiro se depara com a monstruosidade de afastar deliberadamente seus companheiros Membros da Humanidade. Sofre um Ponto de Ruptura em Humanidade 1."
+        }
       }
     },
     {
       "id": "devotion-feet-of-stone",
       "kind": "devotion",
       "name": "Feet of Stone",
-      "translatedName": "Feet of Stone",
-      "summary": "Makes the vampire impossible to move against her will.",
+      "translatedName": "Pés de Pedra",
+      "summary": "Add Resilience to actions to remain upright against force; purely balance-based rolls are unaffected.",
       "source": "False Gods: Ventrue",
       "page": 107,
       "manualOnly": true,
@@ -5000,7 +5023,15 @@
       "cost": "None",
       "dicePool": "None",
       "duration": "Permanent",
-      "effect": "The vampire applies her Resilience dots as a bonus to any action to remain standing upright as a result of force. If no roll is required, she always remains standing. This Devotion has no effect on rolls that strictly represent balance, like walking the edge of a building."
+      "effect": "The vampire applies her Resilience dots as a bonus to any action to remain standing upright as a result of force. If no roll is required, she always remains standing. This Devotion has no effect on rolls that strictly represent balance, like walking the edge of a building.",
+      "presentationPt": {
+        "prerequisites": "Resiliência ••",
+        "summary": "Soma Resiliência às ações para permanecer de pé contra uma força; não afeta testes exclusivamente de equilíbrio.",
+        "cost": "Nenhum",
+        "dicePool": "Nenhuma",
+        "duration": "Permanente",
+        "effect": "A vampira aplica seus pontos de Resiliência como bônus a qualquer ação para permanecer de pé contra uma força. Se nenhum teste for necessário, ela sempre permanece de pé. Esta Devoção não afeta testes que representem exclusivamente equilíbrio, como andar pela borda de um edifício."
+      }
     },
     {
       "id": "devotion-hive-nexus-gestalt",
