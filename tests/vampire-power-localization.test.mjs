@@ -422,12 +422,12 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         }
         for (const html of surfaces) assert.ok(html.includes(escape(title)));
         if (!purchasable) {
-          assert.equal(devotionExperience.includes(`<strong>${escape(title)}</strong>`), false, "Free Bloodline Devotion is never offered as an XP purchase");
+          assert.equal(devotionExperience.includes(`<strong>${escape(title)}</strong>`), false, "Powers without a positive learning cost are never offered as XP purchases");
           const freeBuyer = structuredClone(devotionBuyer);
           freeBuyer.line_data.bloodline_id = definition.bloodlineId;
           const before = JSON.stringify(freeBuyer);
           const granted = synchronizeAutomaticBloodlineDevotions(freeBuyer, catalog);
-          assert.ok(granted.line_data.devotion_ids.includes(definition.id));
+          assert.equal(granted.line_data.devotion_ids.includes(definition.id), definition.experienceCost === 0, "Only an explicit zero learning cost declares an automatic grant");
           assert.deepEqual(granted.current_state, freeBuyer.current_state, "Free grant preserves XP and history");
           assert.equal(JSON.stringify(freeBuyer), before);
           continue;

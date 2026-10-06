@@ -48,9 +48,7 @@ export function removeVampireBloodline(character: CharacterSheet, definition?: V
   const refund = refunded.reduce((sum, entry) => sum + Math.max(0, Number(entry.cost ?? 0)), 0);
   const disciplines = next.line_data.disciplines && typeof next.line_data.disciplines === "object" ? { ...next.line_data.disciplines as Record<string, unknown> } : {};
   for (const name of exclusive) disciplines[name] = 0;
-  const automatic = new Set((powers?.devotions ?? []).filter((item) => item.bloodlineId === definition?.id && Number(item.experienceCost ?? 0) === 0).map((item) => item.id));
-  const devotionIds = Array.isArray(next.line_data.devotion_ids) ? next.line_data.devotion_ids.map(String).filter((id) => !automatic.has(id)) : [];
-  next.line_data = { ...next.line_data, bloodline_id: "", bloodline_favored_attribute: "", disciplines, devotion_ids: devotionIds, lash_ids: [], blood_tether_pack_active: false };
+  next.line_data = { ...next.line_data, bloodline_id: "", bloodline_favored_attribute: "", disciplines, lash_ids: [], blood_tether_pack_active: false };
   next.current_state = { ...next.current_state, experience_available: Math.max(0, Number(next.current_state.experience_available ?? 0)) + refund, experience_spent: Math.max(0, Number(next.current_state.experience_spent ?? 0) - refund), vampire_experience_history: history.filter((entry) => !refunded.includes(entry)) };
   return powers ? synchronizeAutomaticBloodlineDevotions(next, powers) : next;
 }

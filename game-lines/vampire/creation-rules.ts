@@ -181,7 +181,7 @@ export function vampireDevotionPrerequisitesMet(definition: VampirePurchasablePo
 }
 
 export function synchronizeAutomaticBloodlineDevotions(character: CharacterSheet, powers: Pick<VampirePowers, "disciplines" | "devotions">) {
-  const automatic = powers.devotions.filter((item) => item.bloodlineId && Number(item.experienceCost ?? 0) === 0);
+  const automatic = powers.devotions.filter((item) => item.bloodlineId && item.experienceCost === 0);
   const automaticIds = new Set(automatic.map((item) => item.id));
   const current = stringArray(character.line_data.devotion_ids);
   const next = current.filter((id) => !automaticIds.has(id));

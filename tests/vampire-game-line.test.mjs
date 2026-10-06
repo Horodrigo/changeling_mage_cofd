@@ -770,3 +770,28 @@ test("canonical additional Devotion prerequisites and refunds preserve paid depe
   assert.equal(refundVampireAdvancement(freeSheet, { kind: "trait", group: "skills", name: "Occult" }, freePowers), true);
   assert.deepEqual(synchronizeAutomaticBloodlineDevotions(freeSheet, freePowers).line_data.devotion_ids, [], "Free Bloodline grants can be recomposed after a refund");
 });
+
+
+test("Sin Again Ortam recipes with no learning cost are not automatic free Devotions or removed with Gulikan", async () => {
+  const { synchronizeAutomaticBloodlineDevotions } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const { removeVampireBloodline } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");
+  const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const bloodlines = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/bloodlines.json`, "utf8"));
+  const recipes = powers.devotions.filter(item => item.category === "Ortam Recipes");
+  assert.equal(recipes.length, 11);
+  assert.ok(recipes.every(item => item.experienceCost === undefined));
+  const character = blankPrintCharacter("VtR");
+  character.line_data = { ...character.line_data, clan_id: "daeva", bloodline_id: "gulikan", disciplines: { Ortam: 5 }, devotion_ids: [] };
+  character.current_state = { ...character.current_state, experience_available: 10, experience_spent: 4, experience_total: 14, vampire_experience_history: [{ id: "authored", label: "Authored recipe history", cost: 4 }] };
+  assert.deepEqual(synchronizeAutomaticBloodlineDevotions(character, powers).line_data.devotion_ids, [], "Entering Gulikan does not grant all eleven recipes");
+  character.line_data.devotion_ids = [recipes[0].id, recipes[3].id, "authored-choice"];
+  const before = JSON.stringify(character);
+  const synchronized = synchronizeAutomaticBloodlineDevotions(character, powers);
+  const removed = removeVampireBloodline(character, bloodlines.find(item => item.id === "gulikan"), powers);
+  for (const result of [synchronized, removed]) {
+    assert.deepEqual(result.line_data.devotion_ids, character.line_data.devotion_ids, "Unknown learning cost never authorizes deleting an owned choice");
+    for (const key of ["experience_available", "experience_spent", "experience_total", "vampire_experience_history"]) assert.deepEqual(result.current_state[key], character.current_state[key]);
+  }
+  assert.equal(JSON.stringify(character), before);
+});
