@@ -6315,43 +6315,58 @@
       "id": "devotion-bold-statement",
       "kind": "devotion",
       "name": "Bold Statement",
-      "translatedName": "Bold Statement",
+      "translatedName": "Declaração Ousada",
       "summary": "An Ortam recipe distilling a Discipline's resonance into supernatural perfume.",
       "source": "Sin Again: Daeva",
-      "page": 42,
+      "page": 41,
       "manualOnly": true,
       "bloodlineId": "gulikan",
       "category": "Ortam Recipes",
       "duration": "Night",
-      "effect": "A brash and powerful odor, the wearer of this scent seems unstoppable to all in sniffing distance. When she deals damage to someone who can smell her, she can choose to inflict the Beaten Down Tilt on her victim. Kindred can end the Tilt by simply ceasing to breathe, but most humans have no such recourse."
+      "effect": "A brash and powerful odor, the wearer of this scent seems unstoppable to all in sniffing distance. When she deals damage to someone who can smell her, she can choose to inflict the Beaten Down Tilt on her victim. Kindred can end the Tilt by simply ceasing to breathe, but most humans have no such recourse.",
+      "presentationPt": {
+        "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
+        "duration": "Noite",
+        "effect": "Um odor forte e ousado que faz quem o usa parecer imparável a todos ao alcance do cheiro. Ao causar dano a alguém que possa sentir seu cheiro, o portador pode escolher impor a Complicação Derrotado à vítima. Membros podem encerrar a Complicação simplesmente parando de respirar, mas a maioria dos humanos não dispõe desse recurso."
+      }
     },
     {
       "id": "devotion-marble-confidence",
       "kind": "devotion",
       "name": "Marble Confidence",
-      "translatedName": "Marble Confidence",
+      "translatedName": "Confiança de Mármore",
       "summary": "An Ortam recipe distilling a Discipline's resonance into supernatural perfume.",
       "source": "Sin Again: Daeva",
-      "page": 42,
+      "page": 41,
       "manualOnly": true,
       "bloodlineId": "gulikan",
       "category": "Ortam Recipes",
       "duration": "Night",
-      "effect": "A fresh, earthy fragrance that boosts the wearer’s confidence and shields his mind from harm. Anyone wearing this scent enjoys the benefits of the Indomitable and Iron Will Merits. If the wearer already possesses these Merits, their effects are enhanced: double the bonus from Indomitable and/or apply the rote quality on contested rolls for Iron Will."
+      "effect": "A fresh, earthy fragrance that boosts the wearer’s confidence and shields his mind from harm. Anyone wearing this scent enjoys the benefits of the Indomitable and Iron Will Merits. If the wearer already possesses these Merits, their effects are enhanced: double the bonus from Indomitable and/or apply the rote quality on contested rolls for Iron Will.",
+      "presentationPt": {
+        "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
+        "duration": "Noite",
+        "effect": "Uma fragrância fresca e terrosa que aumenta a confiança de quem a usa e protege sua mente. Quem usa esse aroma recebe os benefícios dos Méritos Indomável e Vontade de Ferro. Se já possuir esses Méritos, seus efeitos são ampliados: dobre o bônus de Indomável e/ou aplique a qualidade de Rotina aos testes disputados de Vontade de Ferro."
+      }
     },
     {
       "id": "devotion-savage-exemplar",
       "kind": "devotion",
       "name": "Savage Exemplar",
-      "translatedName": "Savage Exemplar",
+      "translatedName": "Exemplar Selvagem",
       "summary": "An Ortam recipe distilling a Discipline's resonance into supernatural perfume.",
       "source": "Sin Again: Daeva",
-      "page": 42,
+      "page": 41,
       "manualOnly": true,
       "bloodlineId": "gulikan",
       "category": "Ortam Recipes",
       "duration": "One use",
-      "effect": "Perhaps the most dangerous scent crafted by the Gulikan, Savage Exemplar smells of fresh blood and concen trated fury. A vampire who inhales this scent immediately enters frenzy as if they were riding the wave. However, when this frenzy ends, they gain the Lethargic Condition. Humans and creatures not prone to frenzy who are exposed to Savage Exemplar gain the Fired Up! Condition, below."
+      "effect": "Perhaps the most dangerous scent crafted by the Gulikan, Savage Exemplar smells of fresh blood and concentrated fury. A vampire who inhales this scent immediately enters frenzy as if they were riding the wave. However, when this frenzy ends, they gain the Lethargic Condition. Humans and creatures not prone to frenzy who are exposed to Savage Exemplar gain the Fired Up! Condition, below.",
+      "presentationPt": {
+        "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
+        "duration": "Um uso",
+        "effect": "Talvez o aroma mais perigoso produzido pelos Gulikan, Exemplar Selvagem cheira a sangue fresco e fúria concentrada. Um vampiro que o inala entra imediatamente em frenesi, como se estivesse usando Cavalgar a Onda. Quando esse frenesi termina, recebe a Condição Letárgico. Humanos e criaturas que não são propensas ao frenesi e são expostos a Exemplar Selvagem recebem a Condição Exaltado!, descrita em seu próprio registro."
+      }
     },
     {
       "id": "devotion-face-lift",
