@@ -9555,7 +9555,7 @@
       "id": "devotion-battering-ram",
       "kind": "devotion",
       "name": "Battering Ram",
-      "translatedName": "Battering Ram",
+      "translatedName": "Aríete",
       "prerequisites": "Celerity •; Resilience •; Vigor •",
       "experienceCost": 1,
       "summary": "Crash through barriers at full speed by reducing their Durability by Resilience.",
@@ -9565,13 +9565,21 @@
       "action": "Reflexive",
       "effect": "If the vampire runs into an object, he can inflict his Resilience dots as a penalty to that object’s Durability. He can crash through walls, break down doors, or shatter weapons used to harm him, but he must be running his full Speed.",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "summary": "Atravessa barreiras correndo à velocidade máxima, reduzindo a Durabilidade delas pelos pontos de Resiliência.",
+        "prerequisites": "Celeridade •; Resiliência •; Ímpeto •",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Se o vampiro colidir com um objeto enquanto corre, pode impor seus pontos de Resiliência como penalidade à Durabilidade do objeto. Pode atravessar paredes, arrombar portas ou estilhaçar armas usadas para feri-lo, mas precisa estar correndo com sua Velocidade total."
+      }
     },
     {
       "id": "devotion-body-of-steel",
       "kind": "devotion",
       "name": "Body of Steel",
-      "translatedName": "Body of Steel",
+      "translatedName": "Corpo de Aço",
       "prerequisites": "Resilience •••",
       "experienceCost": 2,
       "summary": "Turn absorbed attacks back against weapons and unarmed attackers.",
@@ -9582,13 +9590,22 @@
       "effect": "The vampire spends a Vitae if she’s successfully attacked, and any Health levels absorbed by her Resilience are inflicted upon the melee weapon that hit her, dealing damage to its structure. A weapon destroyed this way inflicts (Resilience) dice of bashing damage on the wielder as it shatters in his hand. Characters making unarmed attacks against the vampire take damage directly if she uses this effect.",
       "manualOnly": true,
       "requirement": "The vampire must absorb incoming damage with Resilience.",
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "summary": "Devolve ataques absorvidos às armas e aos agressores desarmados.",
+        "prerequisites": "Resiliência •••",
+        "cost": "1 de Força de Vontade",
+        "requirement": "O vampiro deve absorver dano recebido com Resiliência.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "O vampiro gasta uma Vitae se for atingido por um ataque, e quaisquer níveis de Vitalidade absorvidos por sua Resiliência são infligidos à arma branca que o atingiu, causando dano à Estrutura dela. Uma arma destruída dessa maneira causa dados de dano contusivo iguais à Resiliência ao portador ao se estilhaçar na mão dele. Personagens que fazem ataques desarmados contra o vampiro sofrem esse dano diretamente se ele usar o efeito."
+      }
     },
     {
       "id": "devotion-brood-mother",
       "kind": "devotion",
       "name": "Brood Mother",
-      "translatedName": "Brood Mother",
+      "translatedName": "Mãe da Ninhada",
       "prerequisites": "Animalism ••; Protean •••••",
       "experienceCost": 3,
       "summary": "Birth a temporary flesh-minion from the vampire's own body.",
@@ -9599,13 +9616,22 @@
       "duration": "Night",
       "effect": "The vampire births a mobile minion from her own flesh. This creature is Size 2, has a Physical dice pool equal to the vampire’s Protean + Blood Potency, and Health equal to the vampire’s Stamina (including Resilience). Its Defense is half its master’s, rounding up, and it acts after the vampire’s turn in combat. In addition to the cost, the vampire can spend additional Vitae to provide the creature with a Vitae pool, up to an amount equal to its Health. It can spend this Vitae as if it had Blood Potency 1, and it can use Physical Intensity and the active effects of the vampire’s physical Disciplines. It can also manifest its master’s current Predatory Aspect adaptations. When the vampire births this creature, mark off her rightmost Health dot; she cannot regain this dot until she reabsorbs the creature or its remains, or she enters daysleep. At the end of the duration, the creature becomes an inert pile of flesh. In addition to Health, the vampire recoups any remaining Vitae in its system.",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "summary": "Gera um servo temporário de carne a partir do próprio corpo do vampiro.",
+        "prerequisites": "Animalismo ••; Metamorfose •••••",
+        "cost": "3 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "effect": "O vampiro gera um servo móvel a partir da própria carne. A criatura tem Tamanho 2, uma parada de dados Física igual à Metamorfose + Potência de Sangue do vampiro e Vitalidade igual ao Vigor dele, incluindo Resiliência. Sua Defesa é metade da do mestre, arredondada para cima, e ela age depois do turno do vampiro em combate. Além do custo, o vampiro pode gastar Vitae adicional para dar à criatura uma reserva de Vitae até o limite da Vitalidade dela. Ela pode gastar essa Vitae como se tivesse Potência de Sangue 1 e usar Intensidade Física e os efeitos ativos das Disciplinas Físicas do vampiro. Também pode manifestar as adaptações atuais de Aspecto Predatório do mestre. Ao gerar a criatura, o vampiro marca como indisponível seu ponto mais à direita de Vitalidade; não pode recuperá-lo até reabsorver a criatura ou seus restos, ou entrar em Sono Diurno. Ao fim da duração, a criatura se torna um amontoado inerte de carne. Além da Vitalidade, o vampiro recupera qualquer Vitae restante nela."
+      }
     },
     {
       "id": "devotion-consume",
       "kind": "devotion",
       "name": "Consume",
-      "translatedName": "Consume",
+      "translatedName": "Consumir",
       "prerequisites": "Auspex ••••; Protean ••••",
       "experienceCost": 5,
       "summary": "Absorb a drained mortal into the vampire's body and borrow the victim's knowledge.",
@@ -9617,13 +9643,23 @@
       "effect": "The vampire draws the victim into her body, completely absorbing him, and knowledge flows between the two. She gains all stored Willpower the victim had and, for the duration, can use any of his Mental and Social Skills if they are higher than her own. If the vampire wishes to consume a new victim before the duration expires, she must spend a Vitae to messily regurgitate the previous victim’s bones and partially digested viscera beforehand.",
       "manualOnly": true,
       "requirement": "The vampire must drain a mortal victim of blood to the point of death.",
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "summary": "Absorve um mortal drenado para dentro do corpo do vampiro e usa os conhecimentos da vítima.",
+        "prerequisites": "Auspícios ••••; Metamorfose ••••",
+        "cost": "5 Vitae",
+        "requirement": "O vampiro deve drenar o sangue de uma vítima mortal até matá-la.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Uma semana",
+        "effect": "O vampiro puxa a vítima para dentro do próprio corpo, absorvendo-a completamente, e o conhecimento flui entre os dois. Recebe toda a Força de Vontade que a vítima tinha disponível e, pela duração, pode usar qualquer Perícia Mental ou Social dela que seja maior que a sua. Se quiser consumir uma nova vítima antes que a duração termine, deve primeiro gastar uma Vitae para regurgitar de maneira repulsiva os ossos e as vísceras parcialmente digeridas da vítima anterior."
+      }
     },
     {
       "id": "devotion-earthen-insight",
       "kind": "devotion",
       "name": "Earthen Insight",
-      "translatedName": "Earthen Insight",
+      "translatedName": "Intuição da Terra",
       "prerequisites": "Auspex •; Protean •",
       "experienceCost": 1,
       "summary": "Learn the rhythms of an area while resting beneath it.",
@@ -9635,7 +9671,17 @@
       "manualOnly": true,
       "cost": "None",
       "dicePool": "None",
-      "action": "None"
+      "action": "None",
+      "presentationPt": {
+        "summary": "Aprende os ritmos de uma área enquanto repousa sob ela.",
+        "prerequisites": "Auspícios •; Metamorfose •",
+        "cost": "Nenhum",
+        "requirement": "Repousar por uma hora em Túmulo Sem Marca dentro da área.",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "24 horas",
+        "effect": "O vampiro recebe a qualidade 9-novamente em todos os testes de Condução, Furtividade, Manha e Sobrevivência feitos dentro da área, assim como em qualquer teste de Percepção. A área desses bônus é centrada no lugar onde usou Túmulo Sem Marca e tem raio igual a (Potência de Sangue × 3) quilômetros."
+      }
     },
     {
       "id": "devotion-elastic-visage",
