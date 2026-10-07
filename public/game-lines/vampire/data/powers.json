@@ -9357,8 +9357,8 @@
       "id": "devotion-arcane-sight",
       "kind": "devotion",
       "name": "Arcane Sight",
-      "translatedName": "Arcane Sight",
-      "summary": "Extends Auspex toward occult traces and workings.",
+      "translatedName": "Visão Arcana",
+      "summary": "Perceives ephemeral energies and asks questions about supernatural phenomena.",
       "source": "Strange Shades: Mekhet",
       "page": 86,
       "manualOnly": true,
@@ -9368,14 +9368,23 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "The vampire can perceive the presence of ephemeral energy in an area. He can identify things like loci, hauntings, and even fetishes. Objects and places take on qualities that reflect their nature: a dagger containing a trapped spirit of war exudes a crackling, wild energy, while a cemetery takes on an eerie blue glow, or a faint rotting smell. Once a scene, the player can ask a number of yes/no/maybe questions equal to Auspex dots about the nature of any phenomena she can perceive."
+      "effect": "The vampire can perceive the presence of ephemeral energy in an area. He can identify things like loci, hauntings, and even fetishes. Objects and places take on qualities that reflect their nature: a dagger containing a trapped spirit of war exudes a crackling, wild energy, while a cemetery takes on an eerie blue glow, or a faint rotting smell. Once a scene, the player can ask a number of yes/no/maybe questions equal to Auspex dots about the nature of any phenomena she can perceive.",
+      "presentationPt": {
+        "summary": "Percebe energias efêmeras e permite perguntas sobre fenômenos sobrenaturais.",
+        "prerequisites": "Auspícios •",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "O vampiro percebe a presença de energia efêmera em uma área. Pode identificar coisas como loci, assombrações e até fetiches. Objetos e lugares assumem qualidades que refletem sua natureza: uma adaga que aprisiona um espírito de guerra emana uma energia selvagem e crepitante, enquanto um cemitério assume um brilho azul sinistro ou um tênue cheiro de podridão. Uma vez por cena, o jogador pode fazer um número de perguntas com respostas “sim”, “não” ou “talvez” igual aos pontos de Auspícios sobre a natureza de qualquer fenômeno que perceba."
+      }
     },
     {
       "id": "devotion-butcher-s-hook",
       "kind": "devotion",
       "name": "Butcher's Hook",
-      "translatedName": "Butcher's Hook",
-      "summary": "Hooks a target's shadow to expose or restrain movement.",
+      "translatedName": "Gancho do Açougueiro",
+      "summary": "Identifies vampires concealed in recordings by the Lost Visage.",
       "source": "Strange Shades: Mekhet",
       "page": 86,
       "manualOnly": true,
@@ -9383,14 +9392,23 @@
       "cost": "1 Vitae",
       "dicePool": "None",
       "action": "None",
-      "effect": "The Mekhet spends a Vitae when activating The Spirit’s Touch while studying a video recording of a vampire obscured by the Lost Visage; he must be touching the screen as the subject appears. He can ask questions about the vampire for the purposes of Uncanny Perception, and the Beast will reveal a symbolic representation of the victim’s identity: a five-pointed star might appear over a recording of the sheriff, for example. If activating The Spirit’s Touch was an exceptional success, the Beast can see behind the Lost Visage, but the vampire is still limited by the quality of the mundane recording."
+      "effect": "The Mekhet spends a Vitae when activating The Spirit’s Touch while studying a video recording of a vampire obscured by the Lost Visage; he must be touching the screen as the subject appears. He can ask questions about the vampire for the purposes of Uncanny Perception, and the Beast will reveal a symbolic representation of the victim’s identity: a five-pointed star might appear over a recording of the sheriff, for example. If activating The Spirit’s Touch was an exceptional success, the Beast can see behind the Lost Visage, but the vampire is still limited by the quality of the mundane recording.",
+      "presentationPt": {
+        "summary": "Identifica vampiros ocultos em gravações pelo Semblante Perdido.",
+        "prerequisites": "Auspícios •••",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "effect": "O Mekhet gasta uma Vitae ao ativar Toque do Espírito enquanto examina uma gravação de vídeo de um vampiro oculto pelo Semblante Perdido; deve tocar a tela quando o alvo aparece. Pode fazer perguntas sobre o vampiro para os propósitos de Percepção Sobrenatural, e a Fera revela uma representação simbólica da identidade da vítima: por exemplo, uma estrela de cinco pontas pode aparecer sobre uma gravação do xerife. Se a ativação de Toque do Espírito foi um sucesso excepcional, a Fera consegue enxergar além do Semblante Perdido, mas o vampiro ainda é limitado pela qualidade da gravação mundana."
+      },
+      "experienceCost": 2
     },
     {
       "id": "devotion-cats-paw",
       "kind": "devotion",
-      "name": "Cats' Paw",
-      "translatedName": "Cats' Paw",
-      "summary": "Uses another person as an unwitting instrument.",
+      "name": "Cat's Paw",
+      "translatedName": "Pata de Gato",
+      "summary": "Steals or plants small items on a victim with preternatural ease.",
       "source": "Strange Shades: Mekhet",
       "page": 86,
       "manualOnly": true,
@@ -9403,16 +9421,32 @@
         "exceptionalSuccess": "The vampire’s speed is such that no item is safe. She can disarm an opponent of objects no greater than Size 3, including those under active attention.",
         "failure": "The vampire doesn’t manage to acquire or deposit any items, and might be in trouble if the victim notices her looming over him.",
         "dramaticFailure": "The vampire spectacularly miscalculates her attempt and leaves herself wide open. She gains the Stunned Tilt."
-      }
+      },
+      "presentationPt": {
+        "summary": "Subtrai ou planta pequenos objetos em uma vítima com facilidade sobrenatural.",
+        "prerequisites": "Ofuscação •, Celeridade •",
+        "cost": "1 Vitae",
+        "requirement": "A vampira deve tocar sua vítima para usar esta Devoção (Vampire, p. 177).",
+        "dicePool": "Destreza + Furto + Ofuscação – Compostura",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "A vampira furta seu alvo. Para cada sucesso, pode adquirir da vítima um objeto de Tamanho 0 ou 1 que não seja o foco imediato da atenção dela. Isso pode até incluir objetos íntimos, como lentes de contato. Como alternativa, pode plantar objetos na vítima, como provas de atividade criminosa ou dispositivos de escuta. Isso não se aplica a objetos que seria fisicamente impossível acrescentar ou remover, nem a itens presos por trava ao corpo da vítima.",
+          "exceptionalSuccess": "A velocidade da vampira é tamanha que nenhum objeto está seguro. Pode desarmar um oponente de objetos de até Tamanho 3, inclusive os que recebem atenção ativa.",
+          "failure": "A vampira não consegue adquirir ou depositar objetos e pode estar em apuros se a vítima notar sua proximidade.",
+          "dramaticFailure": "A vampira calcula sua tentativa de forma desastrosa e fica completamente exposta. Recebe a Complicação Atordoado."
+        }
+      },
+      "experienceCost": 2,
+      "requirement": "The vampire must be touching her victim to use this Devotion (Vampire, p. 177)."
     },
     {
       "id": "devotion-copycat",
       "kind": "devotion",
       "name": "Copycat",
-      "translatedName": "Copycat",
-      "summary": "Temporarily imitates an observed technique.",
+      "translatedName": "Imitador",
+      "summary": "Makes a victim look like an illusory duplicate of the vampire.",
       "source": "Strange Shades: Mekhet",
-      "page": 86,
+      "page": 87,
       "manualOnly": true,
       "experienceCost": 1,
       "prerequisites": "Obfuscate ••••",
@@ -9421,7 +9455,17 @@
       "dicePool": "None",
       "action": "None",
       "duration": "Night",
-      "effect": "The vampire copies her appearance onto a victim, creating an illusory duplicate. The two are identical twins down to the very last stitch of clothing, and this can even fool technology. If the victim is mortal, he exhibits the exact same signs of vampirism as the Mekhet herself, including a lack of heart rate or breathing. Should the vampire do something to change her own features before the end of the night, such as cutting her hair off or using the Blush of Life, she can choose if this affects her victim as well."
+      "effect": "The vampire copies her appearance onto a victim, creating an illusory duplicate. The two are identical twins down to the very last stitch of clothing, and this can even fool technology. If the victim is mortal, he exhibits the exact same signs of vampirism as the Mekhet herself, including a lack of heart rate or breathing. Should the vampire do something to change her own features before the end of the night, such as cutting her hair off or using the Blush of Life, she can choose if this affects her victim as well.",
+      "presentationPt": {
+        "summary": "Faz uma vítima parecer uma duplicata ilusória da própria vampira.",
+        "prerequisites": "Ofuscação ••••",
+        "cost": "1 Vitae",
+        "requirement": "A vampira usa Toque da Sombra na vítima.",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Noite",
+        "effect": "A vampira copia sua aparência na vítima, criando uma duplicata ilusória. As duas são gêmeas idênticas até o último ponto de costura das roupas, e isso pode até enganar a tecnologia. Se a vítima for mortal, exibe os mesmos sinais de vampirismo que a própria Mekhet, inclusive ausência de batimentos cardíacos ou respiração. Se a vampira alterar suas próprias características antes do fim da noite, como cortar o cabelo ou usar o Rubor da Vida, pode escolher se isso também afeta a vítima."
+      }
     },
     {
       "id": "devotion-cutting-the-strings",
