@@ -3211,8 +3211,8 @@
       "id": "devotion-bad-trip",
       "kind": "devotion",
       "name": "Bad Trip",
-      "translatedName": "Bad Trip",
-      "summary": "Turns an infused treat into a terrifying altered state.",
+      "translatedName": "Viagem Ruim",
+      "summary": "Causes hallucinations and lets the vampire alter the victim’s perceptions with Vitae.",
       "source": "Better Feared: Nosferatu",
       "page": 29,
       "manualOnly": true,
@@ -3224,14 +3224,24 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "If a victim imbibes the tainted substance, he must succeed on a Stamina + Blood Potency roll penalized by the Candyman’s Dominate dots. On a failure, he gains the Intoxicated Condition, suffering strange and alarming hallucinations. The vampire is privy to the victim’s trip, and may, as a reflexive action, spend a Vitae to adjust the victim’s experience in one of the following ways: Content Warning The powers below involve supernatural malnourishment and compulsive eating. These can be difficult subjects for some players, so make sure everyone’s on board when using those aspects of the Candymen in your chronicles. John Stavropoulos’ X-Card (found here) is an indispensable tool for dealing with sensitive topics in roleplaying games. • H alve the victim’s Defense for a turn (rounding down). • C ause the victim to suffer from vertigo and nausea, imposing the Drugged Tilt for a turn (this stacks with Intoxicated). • I n combat, adjust the victim’s perceptions so they attack an ally rather than an intended target for a turn."
+      "effect": "If a victim imbibes the tainted substance, he must succeed on a Stamina + Blood Potency roll penalized by the Candyman’s Dominate dots. On a failure, he gains the Intoxicated Condition, suffering strange and alarming hallucinations. The vampire is privy to the victim’s trip, and may, as a reflexive action, spend a Vitae to adjust the victim’s experience in one of the following ways: • Halve the victim’s Defense for a turn (rounding down). • Cause the victim to suffer from vertigo and nausea, imposing the Drugged Tilt for a turn (this stacks with Intoxicated). • In combat, adjust the victim’s perceptions so they attack an ally rather than an intended target for a turn.",
+      "presentationPt": {
+        "prerequisites": "Dominação •, Pesadelo •",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro usa seu dom de Linhagem e gasta uma Vitae adicional, incluída no custo.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "summary": "Provoca alucinações e permite alterar a percepção da vítima com Vitae.",
+        "effect": "Se a vítima ingerir a substância contaminada, deve obter sucesso em Vigor + Potência de Sangue, com penalidade igual aos pontos de Dominação do Candyman. Uma falha impõe a Condição Intoxicado, com alucinações estranhas e alarmantes. O vampiro acompanha a experiência da vítima e, como ação reflexiva, pode gastar uma Vitae para alterá-la de uma das seguintes formas: • reduzir a Defesa da vítima à metade por um turno, arredondando para baixo; • causar vertigem e náusea, impondo a Complicação Drogado por um turno, cumulativa com Intoxicado; • ou, em combate, alterar suas percepções para que ataque um aliado em vez do alvo pretendido por um turno."
+      }
     },
     {
       "id": "devotion-everlasting-blood-doll",
       "kind": "devotion",
       "name": "Everlasting Blood Doll",
-      "translatedName": "Everlasting Blood Doll",
-      "summary": "Makes a treated vessel endure repeated feeding and addiction.",
+      "translatedName": "Boneco de Sangue Eterno",
+      "summary": "Imprisons a mortal victim in stasis, allowing repeated feeding and regeneration.",
       "source": "Better Feared: Nosferatu",
       "page": 30,
       "manualOnly": true,
@@ -3243,14 +3253,24 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "One week per dot of Blood Potency",
-      "effect": "The vampire encases a mortal victim in a prison of sweet ichor, resembling something between hard candy and amber. This shell is as hard as stone (Durability 2), and its Structure is equal to (victim Size + Durability). Through an exposed body part, the vampire can feed freely, and the encased victim heals lethal damage equal to the vampire’s Vigor dots every 24 hours. While encased, the victim is kept in stasis and doesn’t require food. However, they also remain partially aware, flitting in and out of fever dreams. These hallucinations are at once hellish and blissful, highly addictive and deeply unsettling. Should the victim escape their imprisonment, their shattered sense of reality manifests with the Fugue Condition (Vampire, p. 304). Furthermore, a released victim becomes a vector for the Peddler’s bloodline gift as long as Fugue lasts. If she feeds them a point of Vitae, anyone who drinks the victim’s blood treats it as though they were draining the Candyman. This includes Vincula, but isn’t sufficient for an elder vampire to sustain herself. Using this Devotion is a Humanity 1 breaking point."
+      "effect": "The vampire encases a mortal victim in a prison of sweet ichor, resembling something between hard candy and amber. This shell is as hard as stone (Durability 2), and its Structure is equal to (victim Size + Durability). Through an exposed body part, the vampire can feed freely, and the encased victim heals lethal damage equal to the vampire’s Vigor dots every 24 hours. While encased, the victim is kept in stasis and doesn’t require food. However, they also remain partially aware, flitting in and out of fever dreams. These hallucinations are at once hellish and blissful, highly addictive and deeply unsettling. Should the victim escape their imprisonment, their shattered sense of reality manifests with the Fugue Condition (Vampire, p. 304). Furthermore, a released victim becomes a vector for the Peddler’s bloodline gift as long as Fugue lasts. If she feeds them a point of Vitae, anyone who drinks the victim’s blood treats it as though they were draining the Candyman. This includes Vincula, but isn’t sufficient for an elder vampire to sustain herself. Using this Devotion is a Humanity 1 breaking point.",
+      "presentationPt": {
+        "prerequisites": "Dominação •••, Pesadelo ••••, Ímpeto •••",
+        "cost": "1 Vitae por ponto de Tamanho da vítima e 1 de Força de Vontade",
+        "requirement": "O vampiro deve ter imposto a Condição Mesmerizado à vítima.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Uma semana por ponto de Potência de Sangue",
+        "summary": "Aprisiona uma vítima mortal em estase, permitindo alimentação repetida e regeneração.",
+        "effect": "O vampiro envolve uma vítima mortal em uma prisão de icor doce, semelhante a uma mistura de bala dura e âmbar. A casca é dura como pedra, com Durabilidade 2 e Estrutura igual ao Tamanho da vítima + Durabilidade. Por uma parte exposta do corpo, o vampiro pode se alimentar livremente; a vítima aprisionada cura dano letal igual aos pontos de Ímpeto do vampiro a cada 24 horas. A vítima fica em estase e não precisa comer, mas permanece parcialmente consciente, alternando entre sonhos febris, infernais e prazerosos, viciantes e perturbadores. Se escapar, sua percepção fragmentada da realidade se manifesta pela Condição Fuga (Vampire, p. 304). Enquanto Fuga durar, uma vítima libertada também serve como vetor do dom da Linhagem: se o Candyman lhe der uma Vitae, quem beber o sangue da vítima o trata como se estivesse bebendo diretamente do Candyman. Isso inclui Vincula, mas não basta para sustentar um vampiro ancião. Usar esta Devoção provoca um Ponto de Ruptura em Humanidade 1."
+      }
     },
     {
       "id": "devotion-sugar-rush",
       "kind": "devotion",
       "name": "Sugar Rush",
-      "translatedName": "Sugar Rush",
-      "summary": "Converts the Candyman's product into a burst of speed and energy.",
+      "translatedName": "Pico de Açúcar",
+      "summary": "The Candyman’s product grants a bonus to Physical actions, with damage and exhaustion as consequences.",
       "source": "Better Feared: Nosferatu",
       "page": 30,
       "manualOnly": true,
@@ -3262,19 +3282,29 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "For the rest of the scene, all who eat the vampire’s product gain her Vigor dots as a bonus to Physical actions, pushing their bodies to the human limit. However, every exceptional success on these rolls self-inflicts a point of lethal damage. At the end of the scene, subjects suffer the Lethargic Condition until they get a full night’s rest, or another hit."
+      "effect": "For the rest of the scene, all who eat the vampire’s product gain her Vigor dots as a bonus to Physical actions, pushing their bodies to the human limit. However, every exceptional success on these rolls self-inflicts a point of lethal damage. At the end of the scene, subjects suffer the Lethargic Condition until they get a full night’s rest, or another hit.",
+      "presentationPt": {
+        "prerequisites": "Ímpeto •••",
+        "cost": "2 Vitae",
+        "requirement": "O vampiro usa seu dom de Linhagem e gasta Vitae adicional, incluída no custo.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "summary": "O produto do Candyman concede bônus a ações Físicas, com dano e exaustão como consequências.",
+        "effect": "Pelo restante da cena, todos que comerem o produto do vampiro recebem seus pontos de Ímpeto como bônus nas ações Físicas, levando seus corpos ao limite humano. Porém, cada sucesso excepcional nessas jogadas causa um ponto de dano letal ao próprio beneficiário. No fim da cena, os alvos recebem a Condição Letárgico até descansarem por uma noite inteira ou consumirem outra dose."
+      }
     },
     {
       "id": "devotion-sweet-tooth",
       "kind": "devotion",
       "name": "Sweet Tooth",
-      "translatedName": "Sweet Tooth",
-      "summary": "Creates an Overwhelming Hunger for the Candyman's chosen product.",
+      "translatedName": "Gula por Doces",
+      "summary": "Inflicts Overwhelming Hunger for a particular food on a mortal victim.",
       "source": "Better Feared: Nosferatu",
-      "page": 31,
+      "page": 30,
       "manualOnly": true,
       "bloodlineId": "candymen",
-      "experienceCost": 2,
+      "experienceCost": 1,
       "prerequisites": "Dominate ••",
       "cost": "1 Vitae",
       "dicePool": "Manipulation + Persuasion + Dominate – Stamina",
@@ -3284,16 +3314,29 @@
         "exceptionalSuccess": "The hunger is so complete that the victim also gains the Wanton Condition.",
         "failure": "The victim isn’t any hungrier than they were before.",
         "dramaticFailure": "The vampire triggers the wrong reflex in her victim. He gains the Steadfast Condition."
+      },
+      "presentationPt": {
+        "prerequisites": "Dominação ••",
+        "cost": "1 Vitae",
+        "dicePool": "Manipulação + Persuasão + Dominação – Vigor",
+        "action": "Instantânea",
+        "summary": "Impõe a uma vítima mortal uma Fome Avassaladora por um alimento específico.",
+        "rollResults": {
+          "success": "A vítima é dominada pela fome por um alimento específico e recebe a Condição Fome Avassaladora.",
+          "exceptionalSuccess": "A fome é tão completa que a vítima também recebe a Condição Lascivo.",
+          "failure": "A vítima não fica mais faminta do que estava antes.",
+          "dramaticFailure": "O vampiro desperta o reflexo errado na vítima, que recebe a Condição Resoluto."
+        }
       }
     },
     {
       "id": "devotion-thinner",
       "kind": "devotion",
       "name": "Thinner",
-      "translatedName": "Thinner",
-      "summary": "Makes a treated body or substance unnaturally slight and easy to move.",
+      "translatedName": "Emagrecedor",
+      "summary": "Inflicts aversion to nourishment; the Candyman’s treats temporarily ease its effects.",
       "source": "Better Feared: Nosferatu",
-      "page": 31,
+      "page": 30,
       "manualOnly": true,
       "bloodlineId": "candymen",
       "experienceCost": 2,
@@ -3304,7 +3347,25 @@
       "action": "Contested; resistance is reflexive",
       "duration": "Week",
       "rollResults": {
-        "success": "The vampire curses a mortal victim with an aversion to eating. For the duration, he finds himself unable to willingly consume any form of nourishment. He’s repulsed by food (or blood), and must spend a Willpower not to vomit up anything more substantial than water. If mortal, he accumulates a lethal damage per day he fails to nourish himself, which he cannot heal until the duration expires or he seeks medical attention."
+        "success": "The vampire curses a mortal victim with an aversion to eating. For the duration, he finds himself unable to willingly consume any form of nourishment. He’s repulsed by food (or blood), and must spend a Willpower not to vomit up anything more substantial than water. If mortal, he accumulates a lethal damage per day he fails to nourish himself, which he cannot heal until the duration expires or he seeks medical attention. However, if the victim eats one of the Candyman’s special treats, it temporarily eases his aversion. He heals a point of lethal damage inflicted by this Devotion and can stomach food until the next sunrise.",
+        "exceptionalSuccess": "The victim also suffers the Drained Condition until he next stomachs a meal.",
+        "failure": "The vampire can’t harm the victim’s appetite.",
+        "dramaticFailure": "The victim resists the vampire’s influences and regains a point of Willpower. He is immune to this Devotion for the rest of the night."
+      },
+      "presentationPt": {
+        "prerequisites": "Pesadelo •••",
+        "cost": "1 de Força de Vontade",
+        "requirement": "A vítima deve ter sido alvo do dom de Linhagem do vampiro na mesma semana.",
+        "dicePool": "Manipulação + Intimidação + Pesadelo contra Vigor + Potência de Sangue",
+        "action": "Disputada; resistência reflexiva",
+        "duration": "Semana",
+        "summary": "Impõe aversão à alimentação; os produtos do Candyman aliviam temporariamente seus efeitos.",
+        "rollResults": {
+          "success": "O vampiro amaldiçoa uma vítima mortal com aversão a comer. Durante a duração, ela não consegue consumir voluntariamente qualquer forma de alimento. Comida ou sangue a repugnam, e ela deve gastar Força de Vontade para não vomitar qualquer coisa mais substancial que água. Se mortal, acumula um ponto de dano letal por dia sem se alimentar, que não pode curar até a duração terminar ou receber atendimento médico. Porém, comer uma das guloseimas especiais do Candyman alivia temporariamente a aversão: a vítima cura um ponto de dano letal causado por esta Devoção e consegue comer até o próximo nascer do sol.",
+          "exceptionalSuccess": "A vítima também recebe a Condição Drenado até conseguir comer uma refeição.",
+          "failure": "O vampiro não consegue afetar o apetite da vítima.",
+          "dramaticFailure": "A vítima resiste à influência do vampiro, recupera um ponto de Força de Vontade e fica imune a esta Devoção pelo restante da noite."
+        }
       }
     },
     {
