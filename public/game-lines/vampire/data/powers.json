@@ -3499,65 +3499,99 @@
       "id": "devotion-master-of-the-maze",
       "kind": "devotion",
       "name": "Master of the Maze",
-      "translatedName": "Master of the Maze",
+      "translatedName": "Mestre do Labirinto",
       "summary": "Transforms a Labyrinth into a shifting Maze under the Keeper's complete spatial control.",
       "source": "Better Feared: Nosferatu",
       "page": 47,
       "manualOnly": true,
       "bloodlineId": "keepers-of-the-dark",
       "experienceCost": 5,
-      "prerequisites": "Auspex •••, Obfuscate •••••, Resilience •••; Special",
+      "prerequisites": "Auspex •••, Obfuscate •••••, Resilience •••; Special: Labyrinth •",
       "cost": "Variable Vitae and 1 Willpower",
       "requirement": "The vampire must mark each entrance to the structure with a point of Vitae (front doors, fire exits, etc.) Windows, skylights, and holes in the walls do not need to be marked unless they’re considered regular access points.",
       "dicePool": "None",
       "action": "Instant",
       "duration": "One week per dot of Blood Potency",
-      "effect": "The vampire gains complete control over the layout of the Maze. By spending a Vitae and taking an instant action, they can alter the layout in any way they see fit, with two caveats. First, the Maze cannot change while being observed by an outsider. A victim might wander down a straight corridor, look over her shoulder at a distant sound, and turn back to discover she’s now at a crossroad. Second, the Maze must always have at least one pathway that can lead victims to an exit, even if that goal moves. The Warden instinctively knows the location of any being within their Maze, as well as the fastest way to reach her. They can travel at a pace equal to (Speed * [Blood Potency + 1]), which compounds further if the vampire uses the active effect of Celerity. Note that this Devotion is not an illusion, and no amount of Auspex will help see a victim through the Maze. The vampire can renew this Devotion by re-marking the entrances before the duration expires."
+      "effect": "Any building or structure can be a Maze, but if the location is above ground, its effects do not function during daylight hours. The vampire gains complete control over the layout of the Maze. By spending a Vitae and taking an instant action, they can alter the layout in any way they see fit, with two caveats. First, the Maze cannot change while being observed by an outsider. A victim might wander down a straight corridor, look over her shoulder at a distant sound, and turn back to discover she’s now at a crossroad. Second, the Maze must always have at least one pathway that can lead victims to an exit, even if that goal moves. The Warden instinctively knows the location of any being within their Maze, as well as the fastest way to reach her. They can travel at a pace equal to (Speed * [Blood Potency + 1]), which compounds further if the vampire uses the active effect of Celerity. Note that this Devotion is not an illusion, and no amount of Auspex will help see a victim through the Maze. The vampire can renew this Devotion by re-marking the entrances before the duration expires.",
+      "presentationPt": {
+        "prerequisites": "Auspícios •••, Ofuscação •••••, Resiliência •••; Especial: Labirinto •",
+        "summary": "Transforma um Labirinto em um Labirinto Mutável sob o controle espacial completo do Guardião.",
+        "cost": "Vitae variável e 1 de Força de Vontade",
+        "requirement": "O vampiro deve marcar cada entrada da estrutura com uma Vitae, como portas da frente e saídas de emergência. Janelas, claraboias e buracos nas paredes não precisam ser marcados, salvo se forem pontos de acesso regulares.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Uma semana por ponto de Potência de Sangue",
+        "effect": "Qualquer edifício ou estrutura pode se tornar um Labirinto Mutável, mas, se estiver acima do solo, seus efeitos não funcionam durante o dia. O vampiro controla completamente sua disposição. Ao gastar uma Vitae e realizar uma ação instantânea, pode alterar a disposição como quiser, com duas restrições: o Labirinto Mutável não pode mudar enquanto um intruso o estiver observando; e deve sempre existir ao menos um caminho que permita às vítimas chegar a uma saída, mesmo que ela se desloque. O Guardião sabe instintivamente onde está qualquer ser dentro de seu Labirinto Mutável e qual é o caminho mais rápido até ele. Pode se mover à Velocidade × (Potência de Sangue + 1), acumulando esse benefício com o efeito ativo de Celeridade. Esta Devoção não é uma ilusão, e Auspícios não ajuda uma vítima a enxergar através do Labirinto Mutável. O vampiro pode renovar a Devoção remarcando as entradas antes de a duração terminar."
+      },
+      "requiredMerits": [
+        {
+          "definitionId": "vtr-better-feared:labyrinth",
+          "dots": 1
+        }
+      ]
     },
     {
       "id": "devotion-abundance-of-nyx",
       "kind": "devotion",
       "name": "Abundance of Nyx",
-      "translatedName": "Abundance of Nyx",
+      "translatedName": "Abundância de Nyx",
       "summary": "Implants true darkness in a subject so it can be expelled to smother nearby light.",
       "source": "Better Feared: Nosferatu",
       "page": 53,
       "manualOnly": true,
       "bloodlineId": "lygos",
       "category": "Lessons of Erebus",
-      "prerequisites": "The Nocturnal Bounty",
+      "prerequisites": "Truths of Erebus •• (The Nocturnal Bounty)",
       "procedure": "Working in total darkness, the Lygos opens a Kindred subject's abdomen and removes several internal organs. The procedure takes one hour and inflicts two lethal damage, or two hours without damage. Performing it on oneself requires Resolve + Stamina; failure prevents another attempt until the next night.",
-      "outcome": "For the rest of the night, or until the subject expels it as an instant action, the subject carries true darkness. The expelled cloud extinguishes every light source except fire and sunlight within nine meters for minutes equal to the Lygos' Blood Potency; those lights cannot be reignited during that time."
+      "outcome": "For the rest of the night, or until the subject expels it as an instant action, the subject carries true darkness. The expelled cloud extinguishes every light source except fire and sunlight within nine meters for minutes equal to the Lygos' Blood Potency; those lights cannot be reignited during that time.",
+      "presentationPt": {
+        "prerequisites": "Verdades de Erebus •• (Dádiva Noturna)",
+        "summary": "Implanta escuridão verdadeira em um alvo, que pode expeli-la para apagar a luz próxima.",
+        "procedure": "Trabalhando na escuridão total, o Lygos abre o abdômen de um Membro e remove vários órgãos internos. O procedimento leva uma hora e causa dois pontos de dano letal, ou duas horas sem causar dano. Realizá-lo em si mesmo exige Perseverança + Vigor; uma falha impede outra tentativa até a noite seguinte.",
+        "outcome": "Pelo restante da noite, ou até expeli-la como ação instantânea, o alvo carrega escuridão verdadeira. A nuvem expelida apaga todas as fontes de luz, exceto fogo e luz solar, em um raio de nove metros, por minutos iguais à Potência de Sangue do Lygos; essas fontes não podem ser reacendidas durante esse tempo."
+      }
     },
     {
       "id": "devotion-denial-of-the-enemy",
       "kind": "devotion",
       "name": "Denial of the Enemy",
-      "translatedName": "Denial of the Enemy",
+      "translatedName": "Negação do Inimigo",
       "summary": "Makes ordinary light avoid the subject after burial in ritual darkness.",
       "source": "Better Feared: Nosferatu",
       "page": 53,
       "manualOnly": true,
       "bloodlineId": "lygos",
       "category": "Lessons of Erebus",
-      "prerequisites": "The Lidless Eye",
+      "prerequisites": "Truths of Erebus • (The Lidless Eye)",
       "procedure": "The Lygos smears one Vitae over the subject's eyes and buries the subject at least two meters underground in a light-proof container for one to six hours while chanting. The Vitae must remain in place. At the end, the Lygos unearths the subject and ritually snuffs a candle.",
-      "outcome": "For as many hours as the subject was buried, ordinary light avoids them. Fire and sunlight are unaffected. The subject cannot be seen or detected by light-gathering technology, though other senses work normally. Supernaturally keen sight triggers a Clash of Wills against Truths of Erebus + Blood Potency. Auspex does not bypass the effect, and the subject cannot end it early."
+      "outcome": "For as many hours as the subject was buried, ordinary light avoids them. Fire and sunlight are unaffected. The subject cannot be seen or detected by light-gathering technology, though other senses work normally. Supernaturally keen sight triggers a Clash of Wills against Truths of Erebus + Blood Potency. Auspex does not bypass the effect, and the subject cannot end it early.",
+      "presentationPt": {
+        "prerequisites": "Verdades de Erebus • (Olho sem Pálpebras)",
+        "summary": "Faz a luz comum evitar o alvo após seu sepultamento em escuridão ritual.",
+        "procedure": "O Lygos espalha uma Vitae sobre os olhos do alvo e o enterra a pelo menos dois metros de profundidade em um recipiente que não deixa passar luz, por uma a seis horas, enquanto entoa bênçãos. A Vitae deve permanecer no lugar. Ao final, o Lygos desenterra o alvo e apaga ritualmente uma vela.",
+        "outcome": "Por tantas horas quanto o alvo ficou enterrado, a luz comum o evita. Fogo e luz solar não são afetados. O alvo não pode ser visto nem detectado por tecnologia que capte luz, mas os outros sentidos funcionam normalmente. Visão sobrenaturalmente aguçada provoca um Confronto de Vontades contra Verdades de Erebus + Potência de Sangue. Auspícios não supera o efeito, e o alvo não pode encerrá-lo antecipadamente."
+      }
     },
     {
       "id": "devotion-heart-of-darkness",
       "kind": "devotion",
       "name": "Heart of Darkness",
-      "translatedName": "Heart of Darkness",
-      "summary": "Transmutes a subject through prolonged contact with absolute darkness.",
+      "translatedName": "Coração das Trevas",
+      "summary": "Guarantees success on the next breaking point, then detaches the subject from their highest Touchstone.",
       "source": "Better Feared: Nosferatu",
       "page": 54,
       "manualOnly": true,
       "bloodlineId": "lygos",
       "category": "Lessons of Erebus",
-      "prerequisites": "The Welcoming Void",
+      "prerequisites": "Truths of Erebus ••••• (The Welcoming Void)",
       "procedure": "In a pitch-black room, the Lygos opens a Kindred subject's ribcage, inflicting one lethal damage, paints the exposed heart with ash and blood, and seals the wound. The coating and Lesson last 24 hours. A Lygos cannot perform this Lesson on himself.",
-      "outcome": "The subject's next breaking point during the Lesson automatically succeeds with one success. After the Heart absorbs the sin, the subject is detached from their highest Touchstone for the following night."
+      "outcome": "The subject's next breaking point during the Lesson automatically succeeds with one success. After the Heart absorbs the sin, the subject is detached from their highest Touchstone for the following night.",
+      "presentationPt": {
+        "prerequisites": "Verdades de Erebus ••••• (Vazio Acolhedor)",
+        "summary": "Garante sucesso no próximo Ponto de Ruptura, afastando depois o alvo de sua Touchstone mais elevada.",
+        "procedure": "Em um cômodo totalmente escuro, o Lygos abre a caixa torácica de um Membro, causando um ponto de dano letal, pinta o coração exposto com cinzas e sangue e fecha a ferida. A cobertura e a Lição duram 24 horas. Um Lygos não pode realizar esta Lição em si mesmo.",
+        "outcome": "O próximo Ponto de Ruptura do alvo durante a Lição tem sucesso automático com um sucesso. Depois que o Coração absorver o pecado, o alvo fica afastado de sua Touchstone mais elevada pela noite seguinte."
+      }
     },
     {
       "id": "devotion-bloody-good-flick",

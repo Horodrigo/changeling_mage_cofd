@@ -1141,3 +1141,26 @@ test("False Gods Lord of Beasts requires Animalism and any one Physical Discipli
     assert.deepEqual(buyer.current_state, JSON.parse(before).current_state);
   }
 });
+
+test("Better Feared Lessons require their printed Truth rank without inventing a free learning cost", async () => {
+  const { vampireDevotionPrerequisitesMet, vampireDevotionExperienceCost, synchronizeAutomaticBloodlineDevotions } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const sheet = blankPrintCharacter("VtR");
+  sheet.line_data = { ...sheet.line_data, bloodline_id: "lygos", devotion_ids: ["authored-choice"], disciplines: {} };
+  for (const [id, required] of [["devotion-abundance-of-nyx", 2], ["devotion-denial-of-the-enemy", 1], ["devotion-heart-of-darkness", 5]]) {
+    const definition = powers.devotions.find(item => item.id === id);
+    for (let rating = 0; rating <= 5; rating++) {
+      sheet.line_data.disciplines = { "Truths of Erebus": rating };
+      const before = JSON.stringify(sheet);
+      assert.equal(vampireDevotionPrerequisitesMet(definition, sheet, powers), rating >= required);
+      assert.equal(vampireDevotionExperienceCost(definition, sheet, powers), undefined);
+      const synchronized = synchronizeAutomaticBloodlineDevotions(sheet, powers);
+      assert.deepEqual(synchronized.line_data.devotion_ids, ["authored-choice"], "An unprinted price is not an automatic free grant");
+      assert.deepEqual(synchronized.current_state, sheet.current_state);
+      assert.equal(JSON.stringify(sheet), before);
+    }
+    sheet.line_data.disciplines = { "Verdades de Erebus": 5 };
+    assert.equal(vampireDevotionPrerequisitesMet(definition, sheet, powers), false, "Presentation never replaces the canonical parser input");
+  }
+});
