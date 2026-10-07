@@ -7276,7 +7276,7 @@
       "id": "devotion-drowned-abyss",
       "kind": "devotion",
       "name": "Drowned in the Abyss",
-      "translatedName": "Drowned in the Abyss",
+      "translatedName": "Afogado no Abismo",
       "bloodlineId": "xiao",
       "prerequisites": "Majesty •••; Nightmare •••; Silence of Depths",
       "experienceCost": 2,
@@ -7284,11 +7284,23 @@
       "source": "Sin Again: Daeva",
       "page": 62,
       "cost": "1 Willpower",
-      "action": "Reflexive",
+      "action": "None",
       "manualOnly": true,
       "requirement": "The vampire must successfully resist an effect with Silence of Depths.",
       "dicePool": "None",
-      "effect": "The effect is the same as Silence of Depths, except that if the Xiao wins the contested roll to resist, she reflects the power back upon the aggressor. The originating character is subject to all the effects of a regular success of whatever power they were attempting to use on the Xiao, with her as the focus of any Conditions such as Charmed or Frightened. T wo Sides of a Bloody Coin Nothing prevents Apostates from learning Kingjan or Ascended from learning the Heart’s Echoes. In theory, a single Xiao character could have both. However, Storytellers are encouraged to keep in mind the raw hatred and deep philosophical differences between the two groups. Careful thought should be given to the circumstances that would lead to any character possessing both sets of Xiao powers. That said, a character from one side attempting to gain knowledge of the other could be an excellent focus for a story in and of itself."
+      "effect": "The effect is the same as Silence of Depths, except that if the Xiao wins the contested roll to resist, she reflects the power back upon the aggressor. The originating character is subject to all the effects of a regular success of whatever power they were attempting to use on the Xiao, with her as the focus of any Conditions such as Charmed or Frightened.",
+      "requiredDevotionIds": [
+        "devotion-silence-depths"
+      ],
+      "presentationPt": {
+        "prerequisites": "Majestade •••; Pesadelo •••; Silêncio das Profundezas",
+        "summary": "Ao resistir com sucesso a um poder sobrenatural, reflete-o de volta sobre quem o usou.",
+        "cost": "1 de Força de Vontade",
+        "action": "Nenhuma",
+        "requirement": "O vampiro precisa resistir com sucesso a um efeito usando Silêncio das Profundezas.",
+        "dicePool": "Nenhuma",
+        "effect": "O efeito é o mesmo de Silêncio das Profundezas, mas, se a Xiao vencer o teste disputado para resistir, reflete o poder de volta sobre o agressor. Quem originou o poder sofre todos os efeitos de um sucesso normal do poder que tentou usar contra a Xiao, tendo-a como foco de quaisquer Condições, como Encantado(Membro) ou Assustado."
+      }
     },
     {
       "id": "devotion-ripples-still-water",
