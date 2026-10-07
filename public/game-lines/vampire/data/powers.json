@@ -4008,20 +4008,33 @@
       "page": 98,
       "cost": "1 Vitae",
       "dicePool": "Presence + Empathy + Nightmare vs. Resolve + Blood Potency",
-      "action": "Contested",
+      "action": "Contested; resistance is reflexive",
       "manualOnly": true,
       "rollResults": {
         "success": "The vampire puts her victim’s brain into overdrive. He’s unable to concentrate on the same thing for more than a few minutes at a time, and finds himself picking up tasks just as quickly as he abandons them. He gains the Frantic Condition.",
         "exceptionalSuccess": "The Frantic Condition lasts for nights equal to Blood Potency",
         "failure": "No spark sets off in the victim’s mind.",
         "dramaticFailure": "The Nosferatu goes off the rails, taking the Frantic Condition herself."
+      },
+      "presentationPt": {
+        "prerequisites": "Celeridade •; Pesadelo •••",
+        "cost": "1 Vitae",
+        "dicePool": "Presença + Empatia + Pesadelo contra Perseverança + Potência de Sangue",
+        "action": "Disputada; resistência reflexiva",
+        "summary": "Acelera excessivamente a mente da vítima e impõe a Condição Frenético.",
+        "rollResults": {
+          "success": "O vampiro acelera o cérebro da vítima. Ela não consegue se concentrar na mesma coisa por mais de alguns minutos e começa tarefas tão depressa quanto as abandona. Recebe a Condição Frenético.",
+          "exceptionalSuccess": "Frenético dura um número de noites igual à Potência de Sangue.",
+          "failure": "Nenhuma faísca se acende na mente da vítima.",
+          "dramaticFailure": "O Nosferatu perde o controle e recebe Frenético."
+        }
       }
     },
     {
       "id": "devotion-mind-killer",
       "kind": "devotion",
       "name": "Mind Killer",
-      "translatedName": "Mind Killer",
+      "translatedName": "Assassino da Mente",
       "prerequisites": "Nightmare •••; Vigor •",
       "experienceCost": 1,
       "summary": "Seize a victim's reasoning center with sustained intimidation.",
@@ -4029,7 +4042,7 @@
       "page": 98,
       "cost": "2 Vitae",
       "dicePool": "Intelligence + Intimidation + Nightmare vs. Resolve + Blood Potency",
-      "action": "Contested",
+      "action": "Contested; resistance is reflexive",
       "duration": "Scene",
       "manualOnly": true,
       "requirement": "The vampire must engage her victim in at least a full minute of conversation.",
@@ -4038,13 +4051,28 @@
         "exceptionalSuccess": "The victim’s sense of cohesion is shattered, and he suffers the Confused Condition for the rest of the scene.",
         "failure": "The victim is unfazed by the vampire’s intimidation tactics.",
         "dramaticFailure": "Turnabout is fair play. The vampire’s attempts to shut her opponent’s mind down rebounds, and she gains the Confused Condition instead."
+      },
+      "presentationPt": {
+        "prerequisites": "Pesadelo •••; Ímpeto •",
+        "cost": "2 Vitae",
+        "requirement": "O vampiro deve conversar com a vítima por pelo menos um minuto inteiro.",
+        "dicePool": "Inteligência + Intimidação + Pesadelo contra Perseverança + Potência de Sangue",
+        "action": "Disputada; resistência reflexiva",
+        "duration": "Cena",
+        "summary": "Paralisa o raciocínio da vítima por meio de intimidação prolongada.",
+        "rollResults": {
+          "success": "Qualquer ação da vítima que use o Atributo Raciocínio, incluindo Traços Derivados, sofre penalidade igual aos pontos de Pesadelo do vampiro. Se o valor penalizado ficar abaixo de zero, ela recebe a Complicação Insensível no primeiro turno de qualquer confronto violento.",
+          "exceptionalSuccess": "O senso de coerência da vítima é destruído, e ela recebe a Condição Confuso pelo restante da cena.",
+          "failure": "A vítima não se deixa abalar pelas táticas de intimidação do vampiro.",
+          "dramaticFailure": "A tentativa de paralisar a mente do oponente se volta contra o vampiro, que recebe Confuso."
+        }
       }
     },
     {
       "id": "devotion-loathsome-foe",
       "kind": "devotion",
       "name": "The Loathsome Foe",
-      "translatedName": "The Loathsome Foe",
+      "translatedName": "O Inimigo Repugnante",
       "prerequisites": "Nightmare ••; Obfuscate ••••",
       "experienceCost": 2,
       "summary": "Make one victim perceive the vampire as a person they deeply fear.",
@@ -4052,7 +4080,7 @@
       "page": 98,
       "cost": "1 Vitae",
       "dicePool": "Presence + Intimidation + Obfuscate vs. Composure + Blood Potency",
-      "action": "Contested",
+      "action": "Contested; resistance is reflexive",
       "duration": "Scene",
       "manualOnly": true,
       "requirement": "The vampire has The Familiar Stranger active on herself when she uses this Devotion.",
@@ -4061,13 +4089,28 @@
         "exceptionalSuccess": "The victim is overcome with terror, and loses a Willpower point.",
         "failure": "The vampire’s disguise is scarier in theory than in practice.",
         "dramaticFailure": "Not only does the vampire fail to scare her victim, the effect of the Familiar Stranger also shatters, and can’t be used for the rest of the scene."
+      },
+      "presentationPt": {
+        "prerequisites": "Pesadelo ••; Ofuscação ••••",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro deve ter o poder O Estranho Familiar ativo em si mesmo ao usar esta Devoção.",
+        "dicePool": "Presença + Intimidação + Ofuscação contra Compostura + Potência de Sangue",
+        "action": "Disputada; resistência reflexiva",
+        "duration": "Cena",
+        "summary": "Faz uma vítima perceber o vampiro como alguém que ela teme profundamente.",
+        "rollResults": {
+          "success": "A vítima percebe o vampiro como alguém que teme profundamente. Enquanto o Nosferatu permanecer em sua presença, ela só aplica metade do Atributo relevante em testes de resistência e disputados contra ele envolvendo medo, arredondando para cima; o vampiro soma seus pontos de Pesadelo à Defesa contra os ataques dela. A ilusão só afeta a vítima. Os demais o percebem conforme O Estranho Familiar. Esse medo é sobrenatural: saber que não é real não basta para afastá-lo, e a ilusão nem precisa fazer sentido no contexto. A pessoa imitada pode até estar morta. Porém, se não souber quem a vítima teme, o vampiro não controla o disfarce. Investigar seu passado ou sondá-la com Auspícios pode ajudar.",
+          "exceptionalSuccess": "A vítima é dominada pelo terror e perde um ponto de Força de Vontade.",
+          "failure": "O disfarce do vampiro é mais assustador na teoria do que na prática.",
+          "dramaticFailure": "Além de não assustar a vítima, o efeito de O Estranho Familiar se desfaz e não pode ser usado pelo restante da cena."
+        }
       }
     },
     {
       "id": "devotion-no-one-hear-you-scream",
       "kind": "devotion",
       "name": "No One Can Hear You Scream",
-      "translatedName": "No One Can Hear You Scream",
+      "translatedName": "Ninguém Pode Ouvir Você Gritar",
       "prerequisites": "Obfuscate •",
       "experienceCost": 1,
       "summary": "Wrap a touched victim in a field that reduces every sound to a whisper.",
@@ -4083,7 +4126,23 @@
         "exceptionalSuccess": "The zone of silence lasts a scene.",
         "failure": "The victim is as noisy as humans tend to be.",
         "dramaticFailure": "The victim is not only immune to the vampire’s Devotion, she gains a +3 on any action to call attention to herself, such as calling for help."
-      }
+      },
+      "presentationPt": {
+        "prerequisites": "Ofuscação •",
+        "cost": "Nenhum",
+        "requirement": "O vampiro deve tocar a vítima.",
+        "dicePool": "Raciocínio + Furtividade + Ofuscação – Vigor",
+        "action": "Instantânea",
+        "duration": "Sucessos em turnos",
+        "summary": "Envolve uma vítima tocada em um campo que reduz todos os sons a sussurros.",
+        "rollResults": {
+          "success": "O vampiro envolve o alvo em um campo de silêncio, impedindo-o de chamar por ajuda ou atrair atenção. Todos os sons que partem da vítima, sejam tiros ou gritos, saem como sussurros.",
+          "exceptionalSuccess": "A zona de silêncio dura uma cena.",
+          "failure": "A vítima continua tão barulhenta quanto os humanos costumam ser.",
+          "dramaticFailure": "Além de ficar imune à Devoção, a vítima recebe +3 em qualquer ação para chamar atenção para si, como pedir ajuda."
+        }
+      },
+      "requirement": "The vampire must touch the victim."
     },
     {
       "id": "devotion-pied-piper",
