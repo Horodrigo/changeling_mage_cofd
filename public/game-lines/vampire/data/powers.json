@@ -3132,10 +3132,10 @@
       "id": "devotion-after-hours",
       "kind": "devotion",
       "name": "After Hours",
-      "translatedName": "After Hours",
-      "summary": "Continues Bloodcrafting work with inhuman speed and endurance.",
+      "translatedName": "Depois do Expediente",
+      "summary": "Converts Lethargic penalties into bonuses for an extended task, excluding blood sorcery.",
       "source": "Better Feared: Nosferatu",
-      "page": 25,
+      "page": 24,
       "manualOnly": true,
       "bloodlineId": "acteius",
       "experienceCost": 1,
@@ -3144,14 +3144,23 @@
       "dicePool": "None",
       "action": "None",
       "duration": "Special",
-      "effect": "If the vampire performs an extended action while she has the Lethargic Condition, she can activate this Devotion at the beginning of that task to add any penalties from the Condition as bonuses instead, channeling her exhaustion into laser focus. However, she still can’t spend Willpower. Once she completes the task, Lethargic applies as usual, and may have compounded in the meantime. This Devotion does not apply to blood sorcery. Alternate Constructions If you prefer, Bloodcrafting can operate under the Build Equipment rules from the Chronicles of Darkness Rulebook (p. 101). Use those systems with the following changes: Cost and dice pool remain the same as above. Determine how many modifications and how much Durability the object will need, and apply that number as a penalty rather than the one determined in Chronicles of Darkness. This modifier cannot exceed –5. On an exceptional success, apply an additional point of Durability or Size, if desired, and if these traits aren’t at their maximum already."
+      "effect": "If the vampire performs an extended action while she has the Lethargic Condition, she can activate this Devotion at the beginning of that task to add any penalties from the Condition as bonuses instead, channeling her exhaustion into laser focus. However, she still can’t spend Willpower. Once she completes the task, Lethargic applies as usual, and may have compounded in the meantime. This Devotion does not apply to blood sorcery.",
+      "presentationPt": {
+        "prerequisites": "Celeridade ••",
+        "cost": "2 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Especial",
+        "summary": "Converte penalidades de Letárgico em bônus durante uma tarefa estendida, exceto em feitiçaria do sangue.",
+        "effect": "Se o vampiro realizar uma ação estendida enquanto tiver a Condição Letárgico, pode ativar esta Devoção no início da tarefa para aplicar quaisquer penalidades da Condição como bônus, canalizando sua exaustão em concentração absoluta. Porém, ainda não pode gastar Força de Vontade. Ao concluir a tarefa, Letárgico volta a se aplicar normalmente e pode ter se agravado nesse intervalo. Esta Devoção não se aplica à feitiçaria do sangue."
+      }
     },
     {
       "id": "devotion-lockpicker-s-wrist",
       "kind": "devotion",
       "name": "Lockpicker's Wrist",
-      "translatedName": "Lockpicker's Wrist",
-      "summary": "Reshapes a crafted tool or limb for impossible access.",
+      "translatedName": "Pulso de Arrombador",
+      "summary": "Escapes physical restraints, damaging weaker bindings and contesting supernatural confinement.",
       "source": "Better Feared: Nosferatu",
       "page": 25,
       "manualOnly": true,
@@ -3160,14 +3169,23 @@
       "cost": "2 Vitae",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "The vampire slips out of a restraint, whether rope, handcuffs, duct tape, or any other object meant to hold her. If the object had less Durability than her Vigor dots, it takes a point of damage in the process. This Devotion applies whether the restraint is around the vampire’s hands or her feet, or even her torso. It doesn’t work in grapples, though it would apply to any use of the Restrain move. If a supernatural power is involved in the vampire’s restraint, a Clash of Wills takes place."
+      "effect": "The vampire slips out of a restraint, whether rope, handcuffs, duct tape, or any other object meant to hold her. If the object had less Durability than her Vigor dots, it takes a point of damage in the process. This Devotion applies whether the restraint is around the vampire’s hands or her feet, or even her torso. It doesn’t work in grapples, though it would apply to any use of the Restrain move. If a supernatural power is involved in the vampire’s restraint, a Clash of Wills takes place.",
+      "presentationPt": {
+        "prerequisites": "Celeridade ••, Ímpeto •",
+        "cost": "2 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "summary": "Escapa de amarras físicas, danifica as mais frágeis e disputa confinamento sobrenatural.",
+        "effect": "O vampiro se solta de uma amarra, seja corda, algemas, fita adesiva ou qualquer outro objeto destinado a prendê-lo. Se o objeto tiver Durabilidade menor que seus pontos de Ímpeto, sofre um ponto de dano no processo. Esta Devoção se aplica a amarras nas mãos, nos pés ou mesmo no torso do vampiro. Não funciona em agarrões, mas se aplica a qualquer uso da manobra Imobilizar. Se um poder sobrenatural participar do confinamento, ocorre um Confronto de Vontades."
+      },
+      "experienceCost": 1
     },
     {
       "id": "devotion-work-fast-not-hard",
       "kind": "devotion",
       "name": "Work Fast, Not Hard",
-      "translatedName": "Work Fast, Not Hard",
-      "summary": "Accelerates Bloodcrafting without sacrificing the finished object's function.",
+      "translatedName": "Trabalhe Rápido, Sem Esforço",
+      "summary": "Turns one instant Discipline or Devotion action into a reflexive action per turn.",
       "source": "Better Feared: Nosferatu",
       "page": 25,
       "manualOnly": true,
@@ -3178,7 +3196,16 @@
       "requirement": "The vampire activates a Discipline or Devotion that takes an instant action, paying all costs.",
       "dicePool": "None",
       "action": "None",
-      "effect": "The vampire treats a supernatural power that would normally be an instant action as a reflexive action. If the effect costs Willpower, activating Work Fast, Not Hard is considered a discrete action. However, the vampire is limited in that he can only use this Devotion once per turn. An Acteius can use it after using another instant action power, but he cannot use the same effect twice in one turn."
+      "effect": "The vampire treats a supernatural power that would normally be an instant action as a reflexive action. If the effect costs Willpower, activating Work Fast, Not Hard is considered a discrete action. However, the vampire is limited in that he can only use this Devotion once per turn. An Acteius can use it after using another instant action power, but he cannot use the same effect twice in one turn.",
+      "presentationPt": {
+        "prerequisites": "Celeridade •••••",
+        "cost": "1 de Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "requirement": "O vampiro ativa uma Disciplina ou Devoção que exija uma ação instantânea, pagando todos os custos.",
+        "summary": "Transforma em reflexiva uma ação instantânea de Disciplina ou Devoção, uma vez por turno.",
+        "effect": "O vampiro trata um poder sobrenatural que normalmente exigiria uma ação instantânea como uma ação reflexiva. Se o efeito custar Força de Vontade, ativar Trabalhe Rápido, Sem Esforço é considerado uma ação separada. Porém, o vampiro só pode usar esta Devoção uma vez por turno. Um Acteius pode usá-la depois de usar outro poder de ação instantânea, mas não pode usar o mesmo efeito duas vezes no mesmo turno."
+      }
     },
     {
       "id": "devotion-bad-trip",
