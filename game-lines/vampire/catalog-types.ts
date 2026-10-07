@@ -187,7 +187,7 @@ export type VampireRitualDisciplineDefinition = VampireMechanics & {
 
 export type VampirePurchasablePower = VampireMechanics & {
   id: string;
-  kind: "devotion" | "lash" | "cruac-rite" | "theban-miracle" | "kimiya-formula" | "therion-sacrilege" | "gilded-invocation" | "coil" | "scale" | "detournement";
+  kind: "devotion" | "discipline-option" | "lash" | "cruac-rite" | "theban-miracle" | "kimiya-formula" | "therion-sacrilege" | "gilded-invocation" | "coil" | "scale" | "detournement";
   name: string;
   translatedName: string;
   rating?: number;
@@ -217,6 +217,7 @@ export type VampirePowers = {
   disciplines: VampireDisciplineDefinition[];
   ritualDisciplines: VampireRitualDisciplineDefinition[];
   devotions: VampirePurchasablePower[];
+  disciplineOptions: VampirePurchasablePower[];
   lashes: VampirePurchasablePower[];
   cruacRites: VampirePurchasablePower[];
   thebanMiracles: VampirePurchasablePower[];

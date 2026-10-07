@@ -94,6 +94,10 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
     const placement = item.category ? nestedDevotions[item.category] : undefined;
     add(item, placement?.kind ?? item.category ?? t("ui.devotions"), [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], placement?.parentId);
   });
+  (powers.disciplineOptions ?? []).forEach((definition) => {
+    const item = vampirePowerPresentation(definition, locale);
+    add(item, t("ui.disciplineOptions"), [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...detail(t("ui.experienceCost"), item.experienceCost), ...mechanics(item)]);
+  });
   powers.lashes.forEach((definition) => {
     const item = vampirePowerPresentation(definition, locale);
     add(item, disciplines, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], "blood-tether");

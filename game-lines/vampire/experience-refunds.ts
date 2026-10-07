@@ -1,7 +1,7 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { refundMeritDots, subtractDots } from "@/lib/experience-refunds";
 import type { VampirePowers } from "./catalog-types";
-import { stringArray, vampireAutomaticDevotionIds, vampireDevotionPrerequisitesMet, vampirePaidDevotionIds } from "./creation-rules";
+import { stringArray, vampireAutomaticDevotionIds, vampireDevotionPrerequisitesMet, vampireDisciplineOptionPrerequisitesMet, vampirePaidDevotionIds } from "./creation-rules";
 import type { DefinitionIdentity } from "@/lib/merit-identity";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { BLOODCRAFTING_ID, bloodcraftingConfigurationMet } from "./bloodcrafting";
@@ -13,6 +13,7 @@ export type VampireAdvancementUndo =
   | { kind: "discipline"; name: string; amount?: number }
   | { kind: "bloodPotency" | "humanity" | "humanityLoss" | "willpower"; amount?: number }
   | { kind: "devotion"; id: string }
+  | { kind: "discipline-option"; id: string; cost: number }
   | { kind: "lash"; id: string }
   | { kind: "cruac"; ids?: string[]; id?: string; humanityLost: number; amount?: number }
   | { kind: "theban"; ids?: string[]; id?: string; amount?: number }
@@ -28,7 +29,10 @@ const withoutMany = (value: unknown, ids: readonly string[]) =>
   Array.isArray(value) ? value.map(String).filter((item) => !ids.includes(item)) : [];
 
 /** Undo only one purchase delta so later Vampire purchases remain intact. */
-export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdvancementUndo, powers?: Pick<VampirePowers, "disciplines" | "devotions">, meritCatalog: readonly DefinitionIdentity[] = []) {
+export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdvancementUndo, powers?: Pick<VampirePowers, "disciplines" | "devotions"> & Partial<Pick<VampirePowers, "disciplineOptions">>, meritCatalog: readonly DefinitionIdentity[] = []) {
+  if (undo.kind === "discipline-option" && (!powers?.disciplineOptions?.some(item => item.id === undo.id)
+    || !Number.isInteger(undo.cost) || undo.cost < 1
+    || stringArray(sheet.line_data.discipline_option_ids).filter(id => id === undo.id).length !== 1)) return false;
   const next = structuredClone(sheet);
   if (!applyVampireAdvancementUndo(next, undo)) return false;
   if (next.merits.some(merit => {
@@ -43,6 +47,8 @@ export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdv
   const automatic = powers ? vampireAutomaticDevotionIds(sheet, powers) : new Set<string>();
   if (powers?.devotions.some((item) => (paid.has(item.id) || !automatic.has(item.id)) && retained.includes(item.id)
     && vampireDevotionPrerequisitesMet(item, sheet, powers, meritCatalog) && !vampireDevotionPrerequisitesMet(item, next, powers, meritCatalog))) return false;
+  if (powers?.disciplineOptions?.some(item => stringArray(next.line_data.discipline_option_ids).includes(item.id)
+    && vampireDisciplineOptionPrerequisitesMet(item, sheet, powers, meritCatalog) && !vampireDisciplineOptionPrerequisitesMet(item, next, powers, meritCatalog))) return false;
   Object.assign(sheet, next);
   return true;
 }
@@ -65,6 +71,7 @@ function applyVampireAdvancementUndo(sheet: CharacterSheet, undo: VampireAdvance
   }
   else if (undo.kind === "willpower") sheet.current_state.willpower_lost_dots = Math.max(0, Number(sheet.current_state.willpower_lost_dots ?? 0) + (undo.amount ?? 1));
   else if (undo.kind === "devotion") sheet.line_data.devotion_ids = without(sheet.line_data.devotion_ids, undo.id);
+  else if (undo.kind === "discipline-option") sheet.line_data.discipline_option_ids = without(sheet.line_data.discipline_option_ids, undo.id);
   else if (undo.kind === "lash") sheet.line_data.lash_ids = without(sheet.line_data.lash_ids, undo.id);
   else if (undo.kind === "detournement") sheet.line_data.detournement_ids = without(sheet.line_data.detournement_ids, undo.id);
   else if (undo.kind === "cruac" || undo.kind === "theban" || undo.kind === "bloodSorcery" || undo.kind === "ritual") {

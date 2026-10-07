@@ -192,6 +192,12 @@ export function vampireDevotionAvailable(definition: VampirePurchasablePower | u
     && (!definition.covenantIds?.length || definition.covenantIds.some((id) => vampireCovenantIds(character.line_data).includes(id)));
 }
 
+export function vampireDisciplineOptionPrerequisitesMet(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "skills" | "line_data" | "merits">, powers: Pick<VampirePowers, "disciplines" | "devotions">, meritCatalog: readonly DefinitionIdentity[] = []) {
+  return definition?.kind === "discipline-option" && Boolean(definition.requiredDevotionIds?.length)
+    && vampireDevotionPrerequisitesMet(definition, character, powers, meritCatalog)
+    && (definition.requiredDevotionIds ?? []).every(id => vampireDevotionPrerequisitesMet(powers.devotions.find(item => item.id === id), character, powers, meritCatalog));
+}
+
 export function vampireDevotionExperienceCost(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "line_data">, powers: Pick<VampirePowers, "devotions">, confirmationId?: string) {
   const base = definition?.experienceCost;
   if (typeof base !== "number" || !Number.isFinite(base) || base < 0) return undefined;

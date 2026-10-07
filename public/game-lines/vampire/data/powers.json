@@ -17136,5 +17136,140 @@
         "outcome": "Por uma semana, o Dragão trata a Potência de Sangue como quatro pontos menor ao verificar se pode se alimentar do sujeito e quatro pontos maior para farejar seu sangue. A injeção por si só não cria Laço de Sangue nem vício no sujeito."
       }
     }
+  ],
+  "disciplineOptions": [
+    {
+      "id": "devotion-flesh-sculpting:self",
+      "kind": "discipline-option",
+      "name": "Flesh Sculpting: Self",
+      "translatedName": "Escultura da Carne: Uso Próprio",
+      "requiredDevotionIds": [
+        "devotion-flesh-sculpting"
+      ],
+      "prerequisites": "Protean •••",
+      "experienceCost": 1,
+      "summary": "Use Flesh Sculpting on yourself without subtracting Stamina from Dexterity + Medicine + Protean and without inflicting Mesmerized on yourself. Costs 1 additional Experience.",
+      "effect": "Use Flesh Sculpting on yourself without subtracting Stamina from Dexterity + Medicine + Protean and without inflicting Mesmerized on yourself. Costs 1 additional Experience.",
+      "source": "Wild Hunt: Gangrel",
+      "page": 105,
+      "manualOnly": true,
+      "presentationPt": {
+        "prerequisites": "Metamorfose •••",
+        "summary": "Use Escultura da Carne em si sem subtrair Vigor de Destreza + Medicina + Metamorfose e sem infligir Mesmerizado em si. Custa 1 Experiência adicional.",
+        "effect": "Use Escultura da Carne em si sem subtrair Vigor de Destreza + Medicina + Metamorfose e sem infligir Mesmerizado em si. Custa 1 Experiência adicional."
+      }
+    },
+    {
+      "id": "devotion-hell-beast:face-in-the-crowd",
+      "kind": "discipline-option",
+      "name": "Hell Beast: Face in the Crowd",
+      "translatedName": "Fera Infernal: Rosto na Multidão",
+      "requiredDevotionIds": [
+        "devotion-hell-beast"
+      ],
+      "prerequisites": "Obfuscate •••",
+      "experienceCost": 1,
+      "summary": "The familiar benefits from Face in the Crowd: mortals ignore its monstrous appearance until it attacks. Costs 1 additional Experience.",
+      "effect": "The familiar benefits from Face in the Crowd: mortals ignore its monstrous appearance until it attacks. Costs 1 additional Experience.",
+      "source": "Better Feared: Nosferatu",
+      "page": 97,
+      "manualOnly": true,
+      "presentationPt": {
+        "prerequisites": "Ofuscação •••",
+        "summary": "O familiar recebe Rosto na Multidão: mortais ignoram sua aparência monstruosa até ele atacar. Custa 1 Experiência adicional.",
+        "effect": "O familiar recebe Rosto na Multidão: mortais ignoram sua aparência monstruosa até ele atacar. Custa 1 Experiência adicional."
+      }
+    },
+    {
+      "id": "h-vtr-agony-ecstasy:devotion:sharing-the-familiar-s-form:human",
+      "kind": "discipline-option",
+      "name": "Sharing the Familiar’s Form: Human Ghouls",
+      "translatedName": "Compartilhando a Forma do Familiar: Ghouls Humanos",
+      "requiredDevotionIds": [
+        "h-vtr-agony-ecstasy:devotion:sharing-the-familiar-s-form",
+        "devotion-sheeps-clothing"
+      ],
+      "prerequisites": "Animalism •, Protean •••",
+      "experienceCost": 1,
+      "summary": "Memorize human ghoul forms with Sheep’s Clothing. Pay 1 additional Willpower beyond the normal ghoul creation cost for each human form. Costs 1 additional Experience.",
+      "effect": "Memorize human ghoul forms with Sheep’s Clothing. Pay 1 additional Willpower beyond the normal ghoul creation cost for each human form. Costs 1 additional Experience.",
+      "source": "Agony & Ecstasy: Circle of the Crone",
+      "page": 89,
+      "manualOnly": true,
+      "presentationPt": {
+        "prerequisites": "Animalismo •, Metamorfose •••",
+        "summary": "Memorize formas de ghouls humanos com Pele de Cordeiro. Gaste 1 Força de Vontade adicional ao custo habitual de criar o ghoul para cada forma humana. Custa 1 Experiência adicional.",
+        "effect": "Memorize formas de ghouls humanos com Pele de Cordeiro. Gaste 1 Força de Vontade adicional ao custo habitual de criar o ghoul para cada forma humana. Custa 1 Experiência adicional."
+      }
+    },
+    {
+      "id": "h-vtr-agony-ecstasy:devotion:folly-of-theseus:advanced",
+      "kind": "discipline-option",
+      "name": "Folly of Theseus: Advanced",
+      "translatedName": "Insensatez de Theseus: Avançada",
+      "requiredDevotionIds": [
+        "h-vtr-agony-ecstasy:devotion:folly-of-theseus"
+      ],
+      "prerequisites": "Majesty ••••• or Nightmare •••••",
+      "experienceCost": 1,
+      "summary": "The advanced version affects vampires. Activation is contested by the victim’s Composure + Blood Potency. Total learning cost is 2 Experiences: 1 for the basic version and 1 for this upgrade.",
+      "effect": "The advanced version affects vampires. Activation is contested by the victim’s Composure + Blood Potency. Total learning cost is 2 Experiences: 1 for the basic version and 1 for this upgrade.",
+      "source": "Agony & Ecstasy: Circle of the Crone",
+      "page": 87,
+      "manualOnly": true,
+      "presentationPt": {
+        "prerequisites": "Majestade ••••• ou Pesadelo •••••",
+        "summary": "A versão avançada afeta vampiros. A ativação é disputada por Compostura + Potência de Sangue da vítima. O custo total de aprendizado é 2 Experiências: 1 da versão básica e 1 desta melhoria.",
+        "effect": "A versão avançada afeta vampiros. A ativação é disputada por Compostura + Potência de Sangue da vítima. O custo total de aprendizado é 2 Experiências: 1 da versão básica e 1 desta melhoria.",
+        "action": "Disputada; resistência reflexiva",
+        "contestedBy": "Compostura + Potência de Sangue"
+      },
+      "action": "Contested; resistance is reflexive",
+      "contestedBy": "Composure + Blood Potency"
+    },
+    {
+      "id": "devotion-gargoyles-vigilance:advanced",
+      "kind": "discipline-option",
+      "name": "Gargoyle’s Vigilance: Advanced",
+      "translatedName": "Vigilância da Gárgula: Avançada",
+      "requiredDevotionIds": [
+        "devotion-gargoyles-vigilance"
+      ],
+      "prerequisites": "Protean •••••",
+      "experienceCost": 3,
+      "summary": "Become a statue immune to fire and sunlight while remaining stationary. Total learning cost is 4 Experiences: 1 for the basic version and 3 for this upgrade.",
+      "effect": "Become a statue immune to fire and sunlight while remaining stationary. Total learning cost is 4 Experiences: 1 for the basic version and 3 for this upgrade.",
+      "source": "Vampire: The Requiem Second Edition",
+      "page": 144,
+      "manualOnly": true,
+      "presentationPt": {
+        "prerequisites": "Metamorfose •••••",
+        "summary": "Torne-se uma estátua imune a fogo e luz solar enquanto permanecer imóvel. O custo total de aprendizado é 4 Experiências: 1 da versão básica e 3 desta melhoria.",
+        "effect": "Torne-se uma estátua imune a fogo e luz solar enquanto permanecer imóvel. O custo total de aprendizado é 4 Experiências: 1 da versão básica e 3 desta melhoria."
+      }
+    },
+    {
+      "id": "h-vtr-fire-revolution:devotion:death-mask:advanced",
+      "kind": "discipline-option",
+      "name": "Death Mask: Advanced",
+      "translatedName": "Máscara Mortuária: Avançada",
+      "requiredDevotionIds": [
+        "h-vtr-fire-revolution:devotion:death-mask"
+      ],
+      "prerequisites": "Auspex •••",
+      "experienceCost": 2,
+      "summary": "Falsify information obtained by supernatural investigation of your memories or supposed Final Death. Roll Manipulation + Subterfuge + Auspex contested by the investigator’s Resolve + Blood Potency. Total learning cost is 3 Experiences: 1 for the basic version and 2 for this upgrade.",
+      "effect": "Falsify information obtained by supernatural investigation of your memories or supposed Final Death. Roll Manipulation + Subterfuge + Auspex contested by the investigator’s Resolve + Blood Potency. Total learning cost is 3 Experiences: 1 for the basic version and 2 for this upgrade.",
+      "source": "Fire & Revolution: Carthians",
+      "page": 89,
+      "manualOnly": true,
+      "presentationPt": {
+        "prerequisites": "Auspícios •••",
+        "summary": "Falsifique informações obtidas por investigação sobrenatural de suas memórias ou suposta Morte Final. Jogue Manipulação + Dissimulação + Auspícios disputada por Perseverança + Potência de Sangue do investigador. O custo total de aprendizado é 3 Experiências: 1 da versão básica e 2 desta melhoria.",
+        "effect": "Falsifique informações obtidas por investigação sobrenatural de suas memórias ou suposta Morte Final. Jogue Manipulação + Dissimulação + Auspícios disputada por Perseverança + Potência de Sangue do investigador. O custo total de aprendizado é 3 Experiências: 1 da versão básica e 2 desta melhoria.",
+        "dicePool": "Manipulação + Dissimulação + Auspícios vs. Perseverança + Potência de Sangue"
+      },
+      "dicePool": "Manipulation + Subterfuge + Auspex vs. Resolve + Blood Potency"
+    }
   ]
 }

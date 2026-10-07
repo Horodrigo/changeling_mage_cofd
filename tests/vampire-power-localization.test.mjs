@@ -257,7 +257,7 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.match(therion.effect, /^If Humanity is higher than the Sacrilege rating/);
   assert.equal(therion.minimumHumanityToCast, undefined);
   assert.match(rituals.find(item => item.id === "gilded-cage").effect, /in a Convergence, ritual rolls achieve exceptional success with three successes instead of five/);
-  for (const definition of [...selected, ...rituals, ...lashes, ...formulae, ...sacrileges, ...invocations, ...detournements, ...coils, ...scales, ...rites, ...miracles, ...devotions]) {
+  for (const definition of [...selected, ...rituals, ...lashes, ...formulae, ...sacrileges, ...invocations, ...detournements, ...coils, ...scales, ...rites, ...miracles, ...devotions, ...powers.disciplineOptions]) {
     for (const item of [definition, ...(definition.levels ?? [])]) {
       assert.ok(item.presentationPt, `${definition.id}.${item.rating ?? "summary"}`);
       for (const field of fields.filter(key => item[key])) {
@@ -293,7 +293,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       const path = id.replaceAll("\\", "/");
       if (path.endsWith("/app/use-homebrew.ts")) return 'let preferences = { disabledIds: [] }; export const useHomebrewPreferences = () => preferences; export const setTestHomebrewPreferences = value => { preferences = value; };';
       if (path.endsWith("/game-lines/vampire/sheet-view.tsx")) return `${code}\nexport { DisciplineCards, RitualDisciplines, PurchasedPowers };`;
-      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return ("export let testBuy, testRevert;\n" + code).replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "devotion-test" ? "devotion" : character.character.concept === "rite-test" ? "rite" : character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : character.character.concept === "formula-test" ? "formula" : character.character.concept === "invocation-test" ? "invocation" : character.character.concept === "detournement-test" ? "detournement" : character.character.concept === "scale-test" ? "scale" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : character.character.concept === "devotion-test" ? character.character.name : "");') .replace('useState<{ powerId: string; confirmationId: string } | null>(null)', 'useState<{ powerId: string; confirmationId: string } | null>(character.character.player ? { powerId: character.character.chronicle || character.character.name, confirmationId: character.character.player } : null)').replace("  return <", "  testBuy = buy; testRevert = revert;\n  return <");
+      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return ("export let testBuy, testRevert;\n" + code).replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "discipline-option-test" ? "discipline-option" : character.character.concept === "devotion-test" ? "devotion" : character.character.concept === "rite-test" ? "rite" : character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : character.character.concept === "formula-test" ? "formula" : character.character.concept === "invocation-test" ? "invocation" : character.character.concept === "detournement-test" ? "detournement" : character.character.concept === "scale-test" ? "scale" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : (character.character.concept === "devotion-test" || character.character.concept === "discipline-option-test") ? character.character.name : "");') .replace('useState<{ powerId: string; confirmationId: string } | null>(null)', 'useState<{ powerId: string; confirmationId: string } | null>(character.character.player ? { powerId: character.character.chronicle || character.character.name, confirmationId: character.character.player } : null)').replace("  return <", "  testBuy = buy; testRevert = revert;\n  return <");
       if (path.endsWith("/components/ui/dialog.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Dialog, Wrapper as DialogTrigger, Wrapper as DialogPortal, Wrapper as DialogClose, Wrapper as DialogOverlay, Wrapper as DialogContent, Wrapper as DialogHeader, Wrapper as DialogFooter, Wrapper as DialogTitle, Wrapper as DialogDescription };';
       if (path.endsWith("/components/ui/select.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Select, Wrapper as SelectContent, Wrapper as SelectGroup, Wrapper as SelectItem, Wrapper as SelectLabel, Wrapper as SelectSeparator, Wrapper as SelectTrigger, Wrapper as SelectValue };';
       if (path.endsWith("/components/ui/tabs.tsx")) return code.replace("<TabsPrimitive.Content", "<TabsPrimitive.Content forceMount");
@@ -1087,6 +1087,50 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       }
       assert.equal(JSON.stringify(detournementCharacter), detournementCharacterBefore);
       assert.equal(JSON.stringify(detournementBuyer), detournementBuyerBefore);
+      for (const option of catalog.disciplineOptions) {
+        const buyer = blankPrintCharacter("VtR");
+        buyer.character.concept = "discipline-option-test";
+        buyer.character.name = option.id;
+        buyer.line_data = { ...buyer.line_data, disciplines: Object.fromEntries(catalog.disciplines.map(item => [item.name, 5])), devotion_ids: [...new Set(option.requiredDevotionIds.flatMap(id => [id, ...(catalog.devotions.find(item => item.id === id).requiredDevotionIds ?? [])]))] };
+        buyer.skills.Medicine = 5;
+        buyer.current_state = { ...buyer.current_state, experience_available: 10, experience_spent: 5, experience_total: 15 };
+        const updates = [];
+        const html = render(VampireExperiencePanel, { character: buyer, updateSheet: sheet => updates.push(sheet), catalogs });
+        const title = locale === "pt-BR" ? option.translatedName : option.name;
+        const presented = vampirePowerPresentation(option, locale);
+        assert.ok(html.includes(escape(translate(locale, "ui.disciplineOptions"))));
+        assert.ok(html.includes(escape(title)));
+        assert.ok(html.includes(escape(presented.effect)));
+        experienceModule.testBuy();
+        assert.equal(updates.length, 1);
+        const purchased = updates[0];
+        const receipt = purchased.current_state.vampire_experience_history.at(-1);
+        assert.deepEqual(receipt.undo, { kind: "discipline-option", id: option.id, cost: option.experienceCost });
+        assert.equal(receipt.cost, option.experienceCost);
+        assert.equal(purchased.current_state.experience_available, 10 - option.experienceCost);
+        assert.deepEqual(purchased.line_data.devotion_ids, buyer.line_data.devotion_ids);
+        assert.deepEqual(purchased.line_data.discipline_option_ids, [option.id]);
+        assert.ok(render(PurchasedPowers, { character: purchased, powers: catalog, locale }).includes(escape(presented.effect)));
+        const refunds = [];
+        render(VampireExperiencePanel, { character: purchased, updateSheet: sheet => refunds.push(sheet), catalogs });
+        experienceModule.testRevert({ ...receipt, cost: receipt.cost + 1 });
+        assert.equal(refunds.length, 0, "Mismatched recorded costs cannot create XP");
+        experienceModule.testRevert({ ...receipt, cost: receipt.cost + 1, undo: { ...receipt.undo, cost: receipt.cost + 1 } });
+        assert.equal(refunds.length, 0, "A coherent forged receipt cannot replace the persisted purchase");
+        experienceModule.testRevert(receipt);
+        assert.equal(refunds.length, 1);
+        assert.equal(refunds[0].current_state.experience_available, 10);
+        assert.equal(refunds[0].current_state.experience_spent, 5);
+        assert.deepEqual(refunds[0].line_data.discipline_option_ids, []);
+        const blocked = structuredClone(buyer);
+        blocked.line_data.devotion_ids = blocked.line_data.devotion_ids.filter(id => id !== option.requiredDevotionIds[0]);
+        const blockedUpdates = [];
+        render(VampireExperiencePanel, { character: blocked, updateSheet: sheet => blockedUpdates.push(sheet), catalogs });
+        experienceModule.testBuy();
+        assert.equal(blockedUpdates.length, 0);
+        const hidden = activeVampirePowers(catalog, { disabledIds: [option.id] });
+        assert.equal(hidden.disciplineOptions.some(item => item.id === option.id), !vampireHomebrewSourceId(option), "Only Homebrew content can be disabled");
+      }
       const authoredFormula = normalizeVampireCatalogHomebrew({ entryType: "power", kind: "kimiya-formula", id: "homebrew:vampire:authored-formula", name: "Ebony Horse", summary: "Authored formula stays.", effect: "Authored formula effect stays." });
       assert.equal(vampirePowerPresentation(authoredFormula, locale), authoredFormula);
       const custom = normalizeVampireCatalogHomebrew({ entryType: "discipline", id: "homebrew:vampire:authored", name: "Animalism", summary: "Authored English stays.", levels: [{ rating: 1, name: "Feral Whispers", summary: "Authored level stays.", effect: "Authored effect stays." }] });

@@ -46,7 +46,7 @@ export function vampireExperienceLabel(entry: VampireExperienceEntry, character:
   }
   if ("id" in undo && undo.id) {
     const groups = undo.kind === "ritual" ? ({ cruac_rite_ids: powers.cruacRites, theban_miracle_ids: powers.thebanMiracles, kimiya_formula_ids: powers.kimiyaFormulae, therion_sacrilege_ids: powers.therionSacrileges, gilded_invocation_ids: powers.gildedInvocations })[undo.key]
-      : undo.kind === "devotion" ? powers.devotions : undo.kind === "lash" ? powers.lashes : undo.kind === "coil" ? powers.coils : undo.kind === "scale" ? powers.scales : undo.kind === "detournement" ? powers.detournements : [];
+      : undo.kind === "devotion" ? powers.devotions : undo.kind === "discipline-option" ? powers.disciplineOptions ?? [] : undo.kind === "lash" ? powers.lashes : undo.kind === "coil" ? powers.coils : undo.kind === "scale" ? powers.scales : undo.kind === "detournement" ? powers.detournements : [];
     const item = groups.find(item => item.id === undo.id);
     const title = item ? name(item) : undo.id;
     return undo.kind === "coil" ? rated(title, undo.amount) : title;

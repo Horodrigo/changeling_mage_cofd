@@ -121,7 +121,7 @@ export function ExperiencePowerPicker({
   dialogDescription,
   categoryOptions,
 }: {
-  kind: "Contrato" | "Rota" | "Práxis" | "Feitiço" | "Benefício de Contrato" | "Disciplina" | "Devoção" | "Lash" | "Ritual";
+  kind: string;
   items: ExperienceCatalogItem[];
   selectedId: string;
   onSelect: (id: string) => void;

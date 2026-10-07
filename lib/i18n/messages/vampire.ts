@@ -65,6 +65,7 @@ export const vampireMessages = {
     },
     "ui": {
       "vampireTitle": "VAMPIRE",
+      "disciplineOptions": "Opções de Disciplina",
       "cruac": "Crúac",
       "thebanSorcery": "Feitiçaria Tebana",
       "kimiya": "Kimiya",
@@ -519,6 +520,7 @@ export const vampireMessages = {
     },
     "ui": {
       "vampireTitle": "VAMPIRE",
+      "disciplineOptions": "Discipline Options",
       "cruac": "Crúac",
       "thebanSorcery": "Theban Sorcery",
       "kimiya": "Kimiya",

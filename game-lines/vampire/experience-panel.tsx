@@ -17,7 +17,7 @@ import { meritRatingsFor, meritSelectionProblems, type MeritDefinition } from "@
 import { createRandomId } from "@/lib/random-id";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampireMechanics, VampirePowers, VampireReference, VampirePurchasablePower, VampireRitualDisciplineDefinition } from "./catalog-types";
-import { recordRatings, synchronizeAutomaticBloodlineDevotions, synchronizeBloodTetherPack, vampireBloodTetherLashes, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName, vampireDevotionPrerequisitesMet, vampireDevotionAvailable, vampireDevotionExperienceCost } from "./creation-rules";
+import { recordRatings, synchronizeAutomaticBloodlineDevotions, synchronizeBloodTetherPack, vampireBloodTetherLashes, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName, vampireDevotionPrerequisitesMet, vampireDisciplineOptionPrerequisitesMet, vampireDevotionAvailable, vampireDevotionExperienceCost } from "./creation-rules";
 import { refundVampireAdvancement, type VampireAdvancementUndo } from "./experience-refunds";
 import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
@@ -34,20 +34,20 @@ import { mergeVampirePowers, mergeVampireReference } from "./catalog-homebrews";
 import { useVampireCatalogHomebrews } from "./use-catalog-homebrews";
 import { vampirePowerPresentation } from "./power-presentation";
 
-type PurchaseType = "attribute" | "skill" | "specialty" | "merit" | "discipline" | "blood-potency" | "humanity" | "willpower" | "devotion" | "lash" | "cruac" | "theban" | "kimiya" | "therion" | "gilded" | "rite" | "miracle" | "formula" | "sacrilege" | "invocation" | "detournement" | "coil" | "scale";
+type PurchaseType = "attribute" | "skill" | "specialty" | "merit" | "discipline" | "discipline-option" | "blood-potency" | "humanity" | "willpower" | "devotion" | "lash" | "cruac" | "theban" | "kimiya" | "therion" | "gilded" | "rite" | "miracle" | "formula" | "sacrilege" | "invocation" | "detournement" | "coil" | "scale";
 type HistoryEntry = VampireExperienceEntry;
 
 const PURCHASE_GROUPS = [
   { group: "core", purchases: ["attribute", "skill", "specialty", "merit"] },
   { group: "supernatural", purchases: ["blood-potency", "discipline"] },
   { group: "integrity", purchases: ["humanity", "willpower"] },
-  { group: "acquired", purchases: ["devotion", "lash", "rite", "miracle", "formula", "sacrilege", "invocation", "detournement", "scale"] },
+  { group: "acquired", purchases: ["devotion", "discipline-option", "lash", "rite", "miracle", "formula", "sacrilege", "invocation", "detournement", "scale"] },
 ] as const satisfies readonly ExperiencePurchaseGroup<PurchaseType>[];
 
 export function purchaseLabel(type: PurchaseType, locale: Locale) {
   const labels: Record<PurchaseType, MessageKey> = {
     attribute: "ui.attribute", skill: "ui.skill", specialty: "ui.specialty", merit: "ui.merit",
-    discipline: "ui.discipline", "blood-potency": "ui.bloodPotency", humanity: "ui.humanity", willpower: "ui.lostWillpowerDot",
+    discipline: "ui.discipline", "discipline-option": "ui.disciplineOptions", "blood-potency": "ui.bloodPotency", humanity: "ui.humanity", willpower: "ui.lostWillpowerDot",
     devotion: "ui.devotion", lash: "ui.lashesOfBloodTether", cruac: "ui.cruac", theban: "ui.thebanSorcery", kimiya: "ui.kimiya", therion: "ui.therion", gilded: "ui.gildedCage", rite: "ui.cruacRite", miracle: "ui.thebanMiracle", formula: "ui.kimiyaFormula", sacrilege: "ui.therionSacrilege", invocation: "ui.gildedInvocation", detournement: "ui.detournement", coil: "ui.coilOfTheDragon", scale: "ui.scaleOfTheDragon",
   };
   return translate(locale, labels[type]);
@@ -120,6 +120,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const zirnitraRating = Number(coilRatings["coil-zirnitra"] ?? 0);
   const meritContext = vampireMeritContextForSheet(character, meritCatalog, ["vampire", String(character.line_data.clan_id ?? ""), bloodlineId, ...covenantIds], { devotionCatalog: powers.devotions, covenants: reference.covenants });
   const knownDevotions = new Set(Array.isArray(character.line_data.devotion_ids) ? character.line_data.devotion_ids.map(String) : []);
+  const knownDisciplineOptions = new Set(Array.isArray(character.line_data.discipline_option_ids) ? character.line_data.discipline_option_ids.map(String) : []);
   const synchronizedCharacter = synchronizeBloodTetherPack(synchronizeAutomaticBloodlineDevotions(character, powers, meritCatalog));
   useEffect(() => {
     if (synchronizedCharacter !== character) updateSheet(synchronizedCharacter);
@@ -142,7 +143,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const kimiyaRating = Number(bloodSorcery.kimiya_rating ?? 0);
   const therionRating = Number(bloodSorcery.therion_rating ?? 0);
   const gildedRating = Number(bloodSorcery.gilded_cage_rating ?? 0);
-  const availablePurchaseGroups = PURCHASE_GROUPS.map((group) => group.group !== "acquired" ? group : { ...group, purchases: group.purchases.filter((value) => value === "devotion"
+  const availablePurchaseGroups = PURCHASE_GROUPS.map((group) => group.group !== "acquired" ? group : { ...group, purchases: group.purchases.filter((value) => value === "devotion" || value === "discipline-option"
     || value === "lash" && bloodlineId === "adrestoi" && bloodTetherRating >= 1
     || value === "rite" && cruacRating >= 1
     || value === "miracle" && thebanRating >= 1
@@ -165,6 +166,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
       ...(hasStatus("ordo-dracul") ? powers.coils.filter(activePower).map((item) => ({ value: item.id, label: powerName(item, locale), localized: true })) : []),
     ];
     if (purchase === "devotion") return powers.devotions.filter((item) => activePower(item) && !knownDevotions.has(item.id) && vampireDevotionAvailable(item, character) && Number(vampireDevotionExperienceCost(item, character, powers) ?? 0) > 0 && (item.bloodlineId || Boolean(item.prerequisites))).map((item) => ({ value: item.id, label: powerName(item, locale), localized: true }));
+    if (purchase === "discipline-option") return (powers.disciplineOptions ?? []).filter(item => !knownDisciplineOptions.has(item.id)).map(item => ({ value: item.id, label: powerName(item, locale), localized: true }));
     if (purchase === "lash") return bloodlineId === "adrestoi" && bloodTetherRating >= 1 ? bloodTetherLashes.filter((item) => activePower(item) && !knownLashes.has(item.id) && !knownScales.has(item.id)).map((item) => ({ value: item.id, label: powerName(item, locale), localized: true })) : [];
     const cruacCatalog = powers.cruacRites.filter((item) => activePower(item) && (!item.bloodlineId || item.bloodlineId === bloodlineId) && (!item.covenantIds || item.covenantIds.some((id) => covenantIds.includes(id))));
     if (purchase === "cruac") return covenantIds.some((id) => ["circle-of-the-crone", "followers-of-seth"].includes(id)) ? bloodSorceryOptions(cruacCatalog, cruacRating + 1).map((item) => ({ ...item, label: `${item.label} (${t("ui.freeRite")})` })) : [];
@@ -228,7 +230,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const freePowerHumanityLimit = selectedRitualDiscipline?.id === "theban" ? Number(character.line_data.humanity ?? 7) : 10;
   const freePowerSelections = ritualPurchase ? freeBloodSorcerySelections(freePowerCatalog, knownRites, freePowerIds, ratedCurrent, intendedRating, freePowerHumanityLimit) : [];
   const chosen = chosenOption;
-  const selectedPower = [...powers.devotions, ...bloodTetherLashes, ...powers.cruacRites, ...powers.thebanMiracles, ...powers.kimiyaFormulae, ...powers.therionSacrileges, ...powers.gildedInvocations, ...powers.detournements, ...powers.coils, ...powers.scales].find((item) => item.id === chosen);
+  const selectedPower = [...powers.devotions, ...(powers.disciplineOptions ?? []), ...bloodTetherLashes, ...powers.cruacRites, ...powers.thebanMiracles, ...powers.kimiyaFormulae, ...powers.therionSacrileges, ...powers.gildedInvocations, ...powers.detournements, ...powers.coils, ...powers.scales].find((item) => item.id === chosen);
   const confirmationId = purchase === "devotion" && learningConfirmation?.powerId === chosen ? learningConfirmation.confirmationId : undefined;
   const mechanicsDetails = (definition: VampireMechanics & { prerequisites?: string; experienceCost?: number } & Partial<Pick<VampireRitualDisciplineDefinition, "statusRequirement" | "humanityCapFormula">>, prerequisitesMet = true) => {
     const item = vampirePowerPresentation(definition, locale);
@@ -287,16 +289,17 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     details.push({ label: t("ui.experienceCost"), value: `${prerequisiteMet ? 1 : 2} ${t("ui.xp")}` });
     return [{ id: item.id, name: option.label, category: t("ui.lashesOfBloodTether"), description: item.summary, meta: `${item.source} · p. ${item.page || "—"}`, details }];
   }) : [];
-  const ritualCatalog = ({ rite: powers.cruacRites, miracle: powers.thebanMiracles, formula: powers.kimiyaFormulae, sacrilege: powers.therionSacrileges, invocation: powers.gildedInvocations, detournement: powers.detournements, scale: powers.scales } as Partial<Record<PurchaseType, VampirePurchasablePower[]>>)[purchase];
+  const ritualCatalog = ({ "discipline-option": powers.disciplineOptions ?? [], rite: powers.cruacRites, miracle: powers.thebanMiracles, formula: powers.kimiyaFormulae, sacrilege: powers.therionSacrileges, invocation: powers.gildedInvocations, detournement: powers.detournements, scale: powers.scales } as Partial<Record<PurchaseType, VampirePurchasablePower[]>>)[purchase];
   const ritualPickerItems = ritualCatalog ? options.flatMap((option) => {
     const definition = ritualCatalog.find((item) => item.id === option.value);
     if (!definition) return [];
     const item = vampirePowerPresentation(definition, locale);
-    const details = mechanicsDetails(item).map((detail) => purchase === "scale" && detail.label === t("ui.experienceCost") ? { ...detail, value: `${coilPrerequisiteMet(definition.prerequisites, coilRatings) ? 1 : 2} ${t("ui.xp")}` } : detail);
-    return [{ id: item.id, name: option.label, category: item.rating === undefined ? purchaseLabel(purchase, locale) : `${t("ui.level")} ${item.rating}`, description: item.summary, meta: `${item.source} · p. ${item.page || "—"}`, details }];
+    const prerequisiteMet = purchase !== "discipline-option" || vampireDisciplineOptionPrerequisitesMet(definition, character, powers, meritCatalog);
+    const details = mechanicsDetails(item, prerequisiteMet).map((detail) => purchase === "scale" && detail.label === t("ui.experienceCost") ? { ...detail, value: `${coilPrerequisiteMet(definition.prerequisites, coilRatings) ? 1 : 2} ${t("ui.xp")}` } : detail);
+    return [{ id: item.id, name: option.label, category: item.rating === undefined ? purchaseLabel(purchase, locale) : `${t("ui.level")} ${item.rating}`, description: purchase === "discipline-option" ? item.effect ?? item.summary : item.summary, meta: `${item.source} · p. ${item.page || "—"}`, disabled: !prerequisiteMet, details: [...details, ...(purchase === "discipline-option" ? (definition.requiredDevotionIds ?? []).map(id => ({ label: t("ui.prerequisites"), value: powers.devotions.find(item => item.id === id) ? powerName(powers.devotions.find(item => item.id === id)!, locale) : id, warning: !knownDevotions.has(id) })) : [])] }];
   }) : [];
   const bloodlineDiscipline = powers.disciplines.find((item) => item.name === chosen)?.bloodlineId === bloodlineId;
-  const cost = purchase === "attribute" ? 4 * ratingAmount : purchase === "skill" ? 2 * ratingAmount : purchase === "specialty" ? 1 : purchase === "merit" ? Math.max(0, Number(nextMeritRating ?? 0) - Number(ownedMerit?.dots ?? 0)) : purchase === "discipline" ? (selectedRitualDiscipline ? 4 : selectedCoil ? coilInMystery ? 3 : 4 : clan?.disciplines.includes(chosen) || bloodlineDiscipline ? 3 : 4) * ratingAmount : purchase === "blood-potency" ? 5 * ratingAmount : purchase === "humanity" ? 2 * ratingAmount : purchase === "willpower" ? ratingAmount : purchase === "devotion" ? Number(vampireDevotionExperienceCost(selectedPower, character, powers, confirmationId) ?? 0) : purchase === "detournement" ? Number(selectedPower?.experienceCost ?? 0) : purchase === "lash" ? bloodTetherRating >= Number(selectedPower?.rating ?? 0) ? 1 : 2 : purchase === "rite" || purchase === "miracle" || purchase === "formula" || purchase === "sacrilege" || purchase === "invocation" ? 2 : purchase === "scale" ? (coilPrerequisiteMet(selectedPower?.prerequisites, coilRatings) ? 1 : 2) : 0;
+  const cost = purchase === "attribute" ? 4 * ratingAmount : purchase === "skill" ? 2 * ratingAmount : purchase === "specialty" ? 1 : purchase === "merit" ? Math.max(0, Number(nextMeritRating ?? 0) - Number(ownedMerit?.dots ?? 0)) : purchase === "discipline" ? (selectedRitualDiscipline ? 4 : selectedCoil ? coilInMystery ? 3 : 4 : clan?.disciplines.includes(chosen) || bloodlineDiscipline ? 3 : 4) * ratingAmount : purchase === "blood-potency" ? 5 * ratingAmount : purchase === "humanity" ? 2 * ratingAmount : purchase === "willpower" ? ratingAmount : purchase === "devotion" ? Number(vampireDevotionExperienceCost(selectedPower, character, powers, confirmationId) ?? 0) : (purchase === "detournement" || purchase === "discipline-option") ? Number(selectedPower?.experienceCost ?? 0) : purchase === "lash" ? bloodTetherRating >= Number(selectedPower?.rating ?? 0) ? 1 : 2 : purchase === "rite" || purchase === "miracle" || purchase === "formula" || purchase === "sacrilege" || purchase === "invocation" ? 2 : purchase === "scale" ? (coilPrerequisiteMet(selectedPower?.prerequisites, coilRatings) ? 1 : 2) : 0;
   const duplicateNonRepeatableMerit = purchase === "merit" && Boolean(
     selectedMerit &&
     meritInstance < 0 &&
@@ -326,7 +329,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     || purchase === "invocation" && (!gildedCageAvailable || !hasStatus("architects-of-the-monolith") || gildedRating < 1)
     || purchase === "detournement" && !hasStatus("moulding-room")
     || purchase === "scale" && (!hasStatus("ordo-dracul") || Math.max(0, ...Object.values(coilRatings)) < 1);
-  const unavailable = !chosen || cost < 1 || meritUnavailable || lacksPowerAccess || (purchase === "devotion" && (!vampireDevotionAvailable(selectedPower, character) || !vampireDevotionPrerequisitesMet(selectedPower, character, powers, meritCatalog))) || (ritualPurchase && freePowerSelections.some((id) => !id)) || (purchase === "attribute" && ratedCurrent >= limit) || (purchase === "skill" && ratedCurrent >= limit) || (purchase === "discipline" && ratedCurrent >= ratedMaximum) || (purchase === "blood-potency" && ratedCurrent >= 10) || (purchase === "humanity" && ratedCurrent >= humanityMaximum) || (purchase === "willpower" && Number(state.willpower_lost_dots ?? 0) <= packWillpowerInvestment) || (purchase === "specialty" && !specialtyName.trim());
+  const unavailable = !chosen || !Number.isInteger(cost) || cost < 1 || (purchase === "discipline-option" && (knownDisciplineOptions.has(chosen) || !vampireDisciplineOptionPrerequisitesMet(selectedPower, character, powers, meritCatalog))) || meritUnavailable || lacksPowerAccess || (purchase === "devotion" && (!vampireDevotionAvailable(selectedPower, character) || !vampireDevotionPrerequisitesMet(selectedPower, character, powers, meritCatalog))) || (ritualPurchase && freePowerSelections.some((id) => !id)) || (purchase === "attribute" && ratedCurrent >= limit) || (purchase === "skill" && ratedCurrent >= limit) || (purchase === "discipline" && ratedCurrent >= ratedMaximum) || (purchase === "blood-potency" && ratedCurrent >= 10) || (purchase === "humanity" && ratedCurrent >= humanityMaximum) || (purchase === "willpower" && Number(state.willpower_lost_dots ?? 0) <= packWillpowerInvestment) || (purchase === "specialty" && !specialtyName.trim());
   const saveState = (patch: Record<string, unknown>) => { const next = structuredClone(character); next.current_state = { ...next.current_state, ...patch }; updateSheet(next); };
   const buy = () => {
     if (unavailable || (!builderMode && available < cost)) return setFeedback(t("ui.purchaseUnavailableOrInsufficientExperience"));
@@ -365,6 +368,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     else if (purchase === "humanity") next.line_data.humanity = intendedRating;
     else if (purchase === "willpower") next.current_state.willpower_lost_dots = Math.max(0, Number(next.current_state.willpower_lost_dots ?? 0) - ratingAmount);
     else if (purchase === "devotion") next.line_data.devotion_ids = [...knownDevotions, chosen];
+    else if (purchase === "discipline-option") next.line_data.discipline_option_ids = [...knownDisciplineOptions, chosen];
     else if (purchase === "lash") next.line_data.lash_ids = [...knownLashes, chosen];
     else if (purchase === "rite") next.line_data.blood_sorcery = { ...bloodSorcery, cruac_rite_ids: [...(Array.isArray(bloodSorcery.cruac_rite_ids) ? bloodSorcery.cruac_rite_ids : []), chosen] };
     else if (purchase === "miracle") next.line_data.blood_sorcery = { ...bloodSorcery, theban_miracle_ids: [...(Array.isArray(bloodSorcery.theban_miracle_ids) ? bloodSorcery.theban_miracle_ids : []), chosen] };
@@ -393,6 +397,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
       : purchase === "humanity" ? { kind: "humanity", amount: ratingAmount }
       : purchase === "willpower" ? { kind: "willpower", amount: ratingAmount }
       : purchase === "devotion" ? { kind: "devotion", id: chosen }
+      : purchase === "discipline-option" ? { kind: "discipline-option", id: chosen, cost }
       : purchase === "lash" ? { kind: "lash", id: chosen }
       : purchase === "rite" || purchase === "miracle" || purchase === "formula" || purchase === "sacrilege" || purchase === "invocation" ? { kind: "ritual", key: ({ rite: "cruac_rite_ids", miracle: "theban_miracle_ids", formula: "kimiya_formula_ids", sacrilege: "therion_sacrilege_ids", invocation: "gilded_invocation_ids" } as const)[purchase], id: chosen }
       : purchase === "detournement" ? { kind: "detournement", id: chosen }
@@ -443,7 +448,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
       setTarget("");
     } else if (purchase === "willpower" && Number(next.current_state.willpower_lost_dots ?? 0) <= packWillpowerInvestment) {
       setTarget("");
-    } else if (purchase === "devotion" || purchase === "lash" || purchase === "rite" || purchase === "miracle" || purchase === "formula" || purchase === "sacrilege" || purchase === "invocation" || purchase === "detournement" || purchase === "scale") {
+    } else if (purchase === "discipline-option" || purchase === "devotion" || purchase === "lash" || purchase === "rite" || purchase === "miracle" || purchase === "formula" || purchase === "sacrilege" || purchase === "invocation" || purchase === "detournement" || purchase === "scale") {
       setTarget("");
     }
 
@@ -452,8 +457,10 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     setSpecialtyName("");
   };
   const revert = (entry: HistoryEntry) => {
-    if (!history.some((item) => item.id === entry.id)) return;
-    if (!entry.undo || !Number.isInteger(entry.cost) || entry.cost < 0 || (entry.undo.kind === "merit" && entry.cost !== entry.undo.dots)) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
+    const recorded = history.find(item => item.id === entry.id);
+    if (!recorded) return;
+    if (entry.undo?.kind === "discipline-option" && (entry.cost !== recorded.cost || JSON.stringify(entry.undo) !== JSON.stringify(recorded.undo))) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
+    if (!entry.undo || !Number.isInteger(entry.cost) || entry.cost < 0 || (entry.undo.kind === "merit" && entry.cost !== entry.undo.dots) || (entry.undo.kind === "discipline-option" && entry.cost !== entry.undo.cost)) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
     const next = structuredClone(character);
     if (!refundVampireAdvancement(next, entry.undo, powers, meritCatalog)) return setFeedback(t("ui.refundVampirePurchaseUnavailable"));
     next.derived = vampireDerived(next.attributes, next.skills, recordRatings(next.line_data.disciplines, disciplineNames, 10), Number(next.line_data.blood_potency ?? 1), reference);
@@ -491,7 +498,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
               { group: "core", purchases: ["attribute", "skill", "merit"] },
               { group: "supernatural", purchases: ["blood-potency", "discipline"] },
             ] : availablePurchaseGroups, (value) => purchaseLabel(value as PurchaseType, locale), locale)} /></label>
-            {purchase === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="VtR" context={meritContext} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={nextMeritRating ?? 0} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} isEligible={(definition, context) => vampireMeritEligible(definition, context, zirnitraRating)} categoryFor={vampireMeritFilterCategory} /></label> : purchase === "discipline" ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind="Disciplina" line="VtR" items={disciplinePickerItems} selectedId={chosen} onSelect={(value) => { setTarget(value); setTargetRating(0); }} triggerLabel={t("ui.selectDiscipline")} dialogTitle={t("ui.purchaseDiscipline")} /></label> : purchase === "devotion" ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind="Devoção" line="VtR" items={devotionPickerItems} categoryOptions={[t("ui.generalDevotions"), t("sheet.bloodline")]} selectedId={chosen} onSelect={(value) => { setTarget(value); setLearningConfirmation(null); }} triggerLabel={t("ui.selectDevotion")} dialogTitle={t("ui.purchaseDevotion")} dialogDescription={t("ui.devotionCatalogDescription")} /></label> : purchase === "lash" ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind="Lash" line="VtR" items={lashPickerItems} selectedId={chosen} onSelect={(value) => setTarget(value)} triggerLabel={t("ui.selectBloodTetherLash")} dialogTitle={t("ui.lashesOfBloodTether")} /></label> : ritualCatalog ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind="Ritual" line="VtR" items={ritualPickerItems} selectedId={chosen} onSelect={(value) => setTarget(value)} triggerLabel={t(purchase === "scale" ? "ui.selectScale" : "ui.selectRitual")} dialogTitle={t(purchase === "scale" ? "ui.purchaseScale" : "ui.purchaseRitual")} /></label> : !ritualPurchase && (options.length > 1 || options[0]?.value !== purchase) ? <label>{t("ui.trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTargetRating(0); }} options={options} /></label> : null}
+            {purchase === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="VtR" context={meritContext} meritCatalog={meritCatalog} character={character} selectedId={selectedMerit?.id ?? ""} targetDots={nextMeritRating ?? 0} onSelect={(id, dots, instance) => { setTarget(id); setMeritDots(dots); setMeritInstance(instance); setMeritConfiguration(normalizeMeritConfiguration(character.merits[instance]?.configuration)); }} isEligible={(definition, context) => vampireMeritEligible(definition, context, zirnitraRating)} categoryFor={vampireMeritFilterCategory} /></label> : purchase === "discipline" ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind="Disciplina" line="VtR" items={disciplinePickerItems} selectedId={chosen} onSelect={(value) => { setTarget(value); setTargetRating(0); }} triggerLabel={t("ui.selectDiscipline")} dialogTitle={t("ui.purchaseDiscipline")} /></label> : purchase === "devotion" ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind="Devoção" line="VtR" items={devotionPickerItems} categoryOptions={[t("ui.generalDevotions"), t("sheet.bloodline")]} selectedId={chosen} onSelect={(value) => { setTarget(value); setLearningConfirmation(null); }} triggerLabel={t("ui.selectDevotion")} dialogTitle={t("ui.purchaseDevotion")} dialogDescription={t("ui.devotionCatalogDescription")} /></label> : purchase === "lash" ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind="Lash" line="VtR" items={lashPickerItems} selectedId={chosen} onSelect={(value) => setTarget(value)} triggerLabel={t("ui.selectBloodTetherLash")} dialogTitle={t("ui.lashesOfBloodTether")} /></label> : ritualCatalog ? <label>{purchaseLabel(purchase, locale)}<ExperiencePowerPicker kind={purchase === "discipline-option" ? t("ui.disciplineOptions") : "Ritual"} line="VtR" items={ritualPickerItems} selectedId={chosen} onSelect={(value) => setTarget(value)} triggerLabel={purchase === "discipline-option" ? t("ui.disciplineOptions") : t(purchase === "scale" ? "ui.selectScale" : "ui.selectRitual")} dialogTitle={purchase === "discipline-option" ? t("ui.disciplineOptions") : t(purchase === "scale" ? "ui.purchaseScale" : "ui.purchaseRitual")} /></label> : !ritualPurchase && (options.length > 1 || options[0]?.value !== purchase) ? <label>{t("ui.trait")}<RuleSelect value={chosen} onChange={(value) => { setTarget(value); setTargetRating(0); }} options={options} /></label> : null}
             {purchase === "devotion" && selectedPower?.experienceDiscounts?.map((discount) => "confirmation" in discount && Number.isFinite(discount.cost) && discount.cost >= 0 ? <label key={discount.confirmation.id}><input type="checkbox" checked={confirmationId === discount.confirmation.id} onChange={(event) => setLearningConfirmation(event.target.checked ? { powerId: chosen, confirmationId: discount.confirmation.id } : null)} />{locale === "pt-BR" ? discount.confirmation.labelPt : discount.confirmation.label}</label> : null)}
             {purchase === "merit" && selectedMerit && Number(nextMeritRating) > 0 && <VampireMeritConfigurationEditor specialtyContext={meritContext} merit={{ definitionId: selectedMerit.id, name: selectedMerit.name, dots: Number(nextMeritRating), configuration: meritConfiguration }} onChange={setMeritConfiguration} catalog={[...meritCatalog]} ownedMerits={character.merits} definitions={VAMPIRE_MERIT_CONFIGURATIONS} />}
             {purchase === "specialty" && <label>{t("ui.specialty")}<Input value={specialtyName} placeholder={t("ui.specialtyName")} onChange={(event) => setSpecialtyName(event.target.value)} maxLength={80} /></label>}

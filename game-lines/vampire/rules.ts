@@ -83,6 +83,7 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
       touchstones,
       undead_companions: undeadCompanions,
       devotion_ids: stringArray(data.devotion_ids).filter((id) => !LEGACY_BLOOD_TETHER_LASH_IDS.includes(id as typeof LEGACY_BLOOD_TETHER_LASH_IDS[number])),
+      discipline_option_ids: stringArray(data.discipline_option_ids),
       lash_ids: bloodlineId === "adrestoi" ? stringArray(data.lash_ids) : [],
       blood_tether_pack_active: data.blood_tether_pack_active === true,
       detournement_ids: stringArray(data.detournement_ids),
