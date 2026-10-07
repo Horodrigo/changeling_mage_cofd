@@ -12498,9 +12498,9 @@
       "id": "h-vtr-fire-revolution:devotion:skulk",
       "kind": "devotion",
       "name": "Skulk",
-      "translatedName": "Skulk",
+      "translatedName": "Esgueirar-se",
       "prerequisites": "Obfuscate •••; Resilience ••",
-      "experienceCost": 3,
+      "experienceCost": 2,
       "summary": "Bypasses passive supernatural effects that would alert their users to the vampire's intrusion.",
       "sourceId": "h-vtr-fire-revolution",
       "source": "Fire & Revolution: Carthians",
@@ -12511,26 +12511,44 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Night",
-      "effect": "The vampire occults her metaphysical presence. Any passive supernatural effect that would alert its user to her intrusion in an area, such as Lord of the Land, fails to detect her, bypassing any Clash of Wills. This does not apply to active searching, such as with Auspex. The vampire is still entirely visible through mundane senses unless she uses another Discipline or Devotion."
+      "effect": "The vampire occults her metaphysical presence. Any passive supernatural effect that would alert its user to her intrusion in an area, such as Lord of the Land, fails to detect her, bypassing any Clash of Wills. This does not apply to active searching, such as with Auspex. The vampire is still entirely visible through mundane senses unless she uses another Discipline or Devotion.",
+      "presentationPt": {
+        "prerequisites": "Ofuscação •••; Resiliência ••",
+        "summary": "Evita efeitos sobrenaturais passivos que alertariam seus usuários sobre a intrusão do vampiro.",
+        "cost": "3 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "effect": "O vampiro oculta sua presença metafísica. Efeitos sobrenaturais passivos que alertariam seus usuários sobre sua intrusão, como Senhor da Terra, não conseguem detectá-lo, dispensando qualquer Confronto de Vontades. Isso não se aplica a buscas ativas, como Auspícios. Ele continua totalmente visível aos sentidos mundanos, a menos que use outra Disciplina ou Devoção."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:witch-hunt",
       "kind": "devotion",
       "name": "Witch Hunt",
-      "translatedName": "Witch Hunt",
+      "translatedName": "Caça às Bruxas",
       "prerequisites": "Auspex ••",
-      "experienceCost": 2,
-      "summary": "Examines an unknown supernatural being as a potential enemy and reveals useful weaknesses.",
+      "experienceCost": 1,
+      "summary": "Reveal a supernatural creature’s predefined forms and identify the most dangerous one.",
       "sourceId": "h-vtr-fire-revolution",
       "source": "Fire & Revolution: Carthians",
-      "page": 92,
+      "page": 93,
       "homebrew": true,
       "manualOnly": true,
       "cost": "1 Vitae",
       "requirement": "The vampire uses Uncanny Perception to reveal a creature as a supernatural creature and then spends an additional Vitae (included in the cost).",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "The vampire smells out all possible predefined forms the creature possesses. Each flickers through her aura over the course of a few seconds. Her keen senses also pick out the potential strengths of this potential foe, learning which of the subject’s forms she should fear the most."
+      "effect": "The vampire smells out all possible predefined forms the creature possesses. Each flickers through her aura over the course of a few seconds. Her keen senses also pick out the potential strengths of this potential foe, learning which of the subject’s forms she should fear the most.",
+      "presentationPt": {
+        "prerequisites": "Auspícios ••",
+        "summary": "Revela todas as formas predefinidas de uma criatura sobrenatural e identifica qual delas é mais perigosa.",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro usa Percepção Sobrenatural para identificar uma criatura como sobrenatural e então gasta uma Vitae adicional, incluída no custo.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "O vampiro percebe todas as formas predefinidas que a criatura possui. Cada uma aparece brevemente em sua aura ao longo de alguns segundos. Seus sentidos também reconhecem os pontos fortes desse possível inimigo, revelando qual das formas deveria temer mais."
+      }
     }
   ],
   "lashes": [
