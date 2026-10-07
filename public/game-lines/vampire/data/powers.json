@@ -3752,7 +3752,7 @@
       "id": "devotion-brain-dead",
       "kind": "devotion",
       "name": "Brain Dead",
-      "translatedName": "Brain Dead",
+      "translatedName": "Morte Cerebral",
       "prerequisites": "Nightmare •••; Vigor •",
       "experienceCost": 2,
       "summary": "Convince a Delusional victim to make reckless, shortsighted mistakes.",
@@ -3763,19 +3763,34 @@
       "duration": "Scene",
       "manualOnly": true,
       "cost": "None",
-      "requirement": "The victim must have the Delusional Condition.",
+      "requirement": "The victim must have the Delusional Condition, and the vampire must be able to see the victim.",
       "rollResults": {
         "success": "The victim is imbued with shortsighted invincibility (or just brain damage). For the rest of the scene, he suffers a penalty equal to successes on any Mental actions to evade, trick, or outwit the vampire.",
         "exceptionalSuccess": "On normal failures, the victim dramatically fails affected actions.",
         "failure": "The victim is as smart as he ever was.",
         "dramaticFailure": "The vampire instills a true sense of invincibility in the victim: He gains the Steadfast Condition, and resolves Delusional."
+      },
+      "presentationPt": {
+        "prerequisites": "Pesadelo •••; Ímpeto •",
+        "cost": "Nenhum",
+        "requirement": "A vítima deve ter a Condição Delirante, e o vampiro deve conseguir vê-la.",
+        "dicePool": "Presença + Persuasão + Pesadelo – Perseverança",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "summary": "Convence uma vítima Delirante a cometer erros imprudentes e imediatistas.",
+        "rollResults": {
+          "success": "A vítima recebe uma sensação míope de invencibilidade, ou apenas dano cerebral. Pelo restante da cena, sofre penalidade igual aos sucessos em quaisquer ações Mentais para evitar, enganar ou superar o vampiro.",
+          "exceptionalSuccess": "Falhas normais nas ações afetadas tornam-se falhas dramáticas.",
+          "failure": "A vítima continua tão inteligente quanto antes.",
+          "dramaticFailure": "O vampiro desperta na vítima uma verdadeira sensação de invencibilidade: ela recebe a Condição Resoluto e resolve Delirante."
+        }
       }
     },
     {
       "id": "devotion-friend-to-foe",
       "kind": "devotion",
       "name": "Friend to Foe",
-      "translatedName": "Friend to Foe",
+      "translatedName": "De Amigo a Inimigo",
       "prerequisites": "Nightmare •; Obfuscate ••••",
       "experienceCost": 2,
       "summary": "Redirect suspicion and hostility from the vampire onto a chosen bystander.",
@@ -3787,13 +3802,23 @@
       "effect": "For the rest of the scene, everyone in the immediate area redirects all suspicions, fears, or hostilities they feel for the vampire onto the victim. The Nosferatu gains no special advantage for this effect beyond a distraction, but it’s a good one: She or one of her allies could be carrying a chainsaw and a severed head and people would think she’s the least of their worries. Note also that this isn’t a mental compulsion, just a redirection of the vampire’s natural creepiness. People will react however they normally would to a threat. This effect ends if the Nosferatu attacks anyone other than the designated victim.",
       "manualOnly": true,
       "requirement": "The vampire uses Touch of Shadow on the victim then activates this Devotion.",
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "prerequisites": "Pesadelo •; Ofuscação ••••",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro usa Toque da Sombra na vítima e então ativa esta Devoção.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "summary": "Redireciona suspeitas e hostilidade contra o vampiro para um espectador escolhido.",
+        "effect": "Pelo restante da cena, todos nas proximidades redirecionam para a vítima todas as suspeitas, medos e hostilidades que sentirem pelo vampiro. O Nosferatu não recebe vantagem especial além da distração, mas ela é poderosa: ele ou um aliado poderia estar carregando uma motosserra e uma cabeça decepada, e as pessoas pensariam que ele é a menor de suas preocupações. Isso não é uma compulsão mental, apenas um redirecionamento da estranheza natural do vampiro. As pessoas reagem a uma ameaça como fariam normalmente. O efeito termina se o Nosferatu atacar alguém além da vítima designada."
+      }
     },
     {
       "id": "devotion-gaslight",
       "kind": "devotion",
       "name": "Gaslight",
-      "translatedName": "Gaslight",
+      "translatedName": "Manipulação Psicológica",
       "prerequisites": "Nightmare ••••; Obfuscate •••••",
       "experienceCost": 4,
       "summary": "Alter one visible detail of a room and make everyone but one victim accept it as normal.",
@@ -3810,13 +3835,28 @@
         "exceptionalSuccess": "The totality of the illusion is such that the vampire can add her Nightmare dots to any role to incite the crowd against her victim’s “ravings.”",
         "failure": "Reality remains immutable.",
         "dramaticFailure": "The vampire reflects her lies back on herself. She gains the Delusional Condition for the rest of the night, believing her Devotion worked."
+      },
+      "presentationPt": {
+        "prerequisites": "Pesadelo ••••; Ofuscação •••••",
+        "cost": "1 Vitae e 1 de Força de Vontade",
+        "requirement": "O vampiro derrama a Vitae do custo em um ponto central do cômodo antes de ativar esta Devoção.",
+        "dicePool": "Manipulação + Subterfúgio + Ofuscação contra a maior Perseverança + Potência de Sangue",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "summary": "Altera um detalhe visível de um cômodo e faz todos, exceto uma vítima, aceitá-lo como normal.",
+        "rollResults": {
+          "success": "Antes do fim da cena em que derramou seu sangue, o vampiro pode gastar Força de Vontade para alterar visivelmente um detalhe do cômodo, como uma pessoa ou um elemento arquitetônico. Pode mudar um papel de parede de listras discretas para estampas psicodélicas, ou os cabelos de um cantor de louro acinzentado para ruivo vivo. As testemunhas ignoram a mudança, aceitando-a como normal. Se questionadas, justificam-na com mentiras óbvias ou raciocínios absurdos. Personagens importantes do Narrador e personagens dos jogadores devem receber o equivalente a Falsas Memórias (Vampire, p. 303); figurantes não precisam acompanhar uma Condição. Depois que a ilusão se formar, o vampiro designa alguém que não consegue ignorar a mudança. Pelo restante da noite, os demais afetados tratam essa vítima com hostilidade e desprezo quando ela aponta a alteração. As pessoas não são compelidas sobrenaturalmente a agir assim, mas, uma vez por cena, quem repreender significativamente a vítima recupera Força de Vontade. No fim da noite, os demais não se lembram da alteração e suas lembranças do próprio comportamento ficam vagas. A vítima, porém, se lembra muito bem de seu sofrimento.",
+          "exceptionalSuccess": "A ilusão é tão completa que o vampiro pode somar seus pontos de Pesadelo a qualquer teste para incitar a multidão contra os delírios da vítima.",
+          "failure": "A realidade permanece imutável.",
+          "dramaticFailure": "O vampiro volta suas mentiras contra si mesmo e recebe a Condição Delirante pelo restante da noite, acreditando que a Devoção funcionou."
+        }
       }
     },
     {
       "id": "devotion-gaze-of-the-abyss",
       "kind": "devotion",
       "name": "Gaze of the Abyss",
-      "translatedName": "Gaze of the Abyss",
+      "translatedName": "Olhar do Abismo",
       "prerequisites": "Nightmare •••••",
       "experienceCost": 2,
       "summary": "Show a Frightened victim incomprehensible horrors that drain Willpower.",
@@ -3832,6 +3872,20 @@
         "exceptionalSuccess": "The vision of horror is so complete that the victim also gains the Fugue Condition for the rest of the night.",
         "failure": "The victim’s mind is no worse for wear.",
         "dramaticFailure": "The vampire has looked too closely into the abyss, and it echoes in her mind. She gains the Frightened Condition."
+      },
+      "presentationPt": {
+        "prerequisites": "Pesadelo •••••",
+        "cost": "2 Vitae",
+        "requirement": "O vampiro deve ter imposto a Condição Assustado à vítima.",
+        "dicePool": "Presença + Ocultismo + Pesadelo – Perseverança",
+        "action": "Instantânea",
+        "summary": "Mostra horrores incompreensíveis a uma vítima Assustada, drenando sua Força de Vontade.",
+        "rollResults": {
+          "success": "O vampiro mostra à vítima horrores além da compreensão, desmoralizando-a completamente e causando a perda de um ponto de Força de Vontade por sucesso.",
+          "exceptionalSuccess": "A visão é tão aterradora que a vítima também recebe a Condição Fuga pelo restante da noite.",
+          "failure": "A mente da vítima não fica pior do que estava.",
+          "dramaticFailure": "O vampiro olhou de perto demais para o abismo, que ecoa em sua mente. Ele recebe a Condição Assustado."
+        }
       }
     },
     {
