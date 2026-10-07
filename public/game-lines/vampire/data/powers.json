@@ -4148,7 +4148,7 @@
       "id": "devotion-pied-piper",
       "kind": "devotion",
       "name": "Pied Piper",
-      "translatedName": "Pied Piper",
+      "translatedName": "Flautista",
       "prerequisites": "Majesty •; Nightmare ••",
       "experienceCost": 1,
       "summary": "Turn music into a lure that rewards listeners for following it and leaves them Spooked.",
@@ -4160,34 +4160,67 @@
       "effect": "The vampire’s lure infects her victims with gnawing need to follow the music. Until the Nosferatu stops playing the tune, anyone who follows the sound to its source refreshes a Willpower point. However, if a victim accepts this “gift,” they also gain the Spooked Condition. The vampire can take no other instant actions while she plays her song, but she can apply Defense as usual.",
       "manualOnly": true,
       "requirement": "The vampire must be playing music.",
-      "dicePool": "None"
+      "dicePool": "None",
+      "bloodlineId": "candymen",
+      "bloodlineExclusive": false,
+      "experienceDiscounts": [
+        {
+          "bloodlineId": "candymen",
+          "cost": 0
+        }
+      ],
+      "presentationPt": {
+        "prerequisites": "Majestade •; Pesadelo ••",
+        "cost": "1 Vitae",
+        "action": "Reflexiva",
+        "duration": "Cena",
+        "requirement": "O vampiro deve estar tocando música.",
+        "dicePool": "Nenhuma",
+        "summary": "Transforma música em uma isca que recompensa quem a segue e deixa os ouvintes Assombrados.",
+        "effect": "A isca do vampiro contamina as vítimas com uma necessidade irresistível de seguir a música. Até o Nosferatu parar de tocar, qualquer pessoa que siga o som até sua origem recupera um ponto de Força de Vontade. Se a vítima aceitar esse “presente”, também recebe a Condição Assombrado. O vampiro não pode realizar outras ações instantâneas enquanto toca, mas aplica sua Defesa normalmente."
+      }
     },
     {
       "id": "devotion-rampage",
       "kind": "devotion",
       "name": "Rampage",
-      "translatedName": "Rampage",
+      "translatedName": "Carnificina",
       "prerequisites": "Nightmare •••••; Obfuscate ••••; Vigor •••••",
       "experienceCost": 7,
       "summary": "Become a shadowy monster capable of killing many ordinary mortals at once.",
       "source": "Better Feared: Nosferatu",
       "page": 100,
       "cost": "1 Vitae and 1 Willpower",
-      "dicePool": "Strength + Brawl + Nightmare – number of mortals",
+      "dicePool": "Strength + Brawl + Nightmare – number of mortals in the fight",
       "action": "Instant",
       "manualOnly": true,
       "rollResults": {
         "success": "The vampire becomes a thing of shadow and terror, leaving her victims utterly defenseless. She kills a number mortals equal to successes on the activation roll. “Mortal” is anyone without a Supernatural Tolerance trait. For example, a Nosferatu can’t kill ghouls with this Devotion, even though their Blood Potency trait is zero. Furthermore, if any of her victims are armed with fire, they are exempt from her wrath.",
         "exceptionalSuccess": "In addition to a tremendous body count, any surviving mortal in the scene who is not allied with the vampire is Beaten Down.",
         "failure": "The vampire misjudges her human opponents and is in for a violent reply.",
-        "dramaticFailure": "The vampire is overcome with a profound remorse, suffering the Guilty Condition. Using Rampage, even on a failure, is a breaking point at Humanity 1 and higher."
+        "dramaticFailure": "The vampire is overcome with a profound remorse, suffering the Guilty Condition."
+      },
+      "effect": "Using Rampage, even on a failure, is a breaking point at Humanity 1 and higher.",
+      "presentationPt": {
+        "prerequisites": "Pesadelo •••••; Ofuscação ••••; Ímpeto •••••",
+        "cost": "1 Vitae e 1 ponto de Força de Vontade",
+        "dicePool": "Força + Briga + Pesadelo – número de mortais no combate",
+        "action": "Instantânea",
+        "summary": "Transforma-se em um monstro de sombras capaz de matar vários mortais comuns de uma vez.",
+        "effect": "Usar Carnificina, mesmo em caso de falha, é um Ponto de Ruptura com Humanidade 1 ou maior.",
+        "rollResults": {
+          "success": "O vampiro torna-se uma criatura de sombras e terror, deixando as vítimas completamente indefesas. Mata um número de mortais igual aos sucessos no teste de ativação. “Mortal” é qualquer pessoa sem um Traço de Tolerância Sobrenatural. Por exemplo, um Nosferatu não pode matar ghouls com esta Devoção, mesmo que sua Potência de Sangue seja zero. Vítimas armadas com fogo também são poupadas de sua fúria.",
+          "exceptionalSuccess": "Além do grande número de mortos, qualquer mortal sobrevivente na cena que não seja aliado do vampiro recebe Derrotado.",
+          "failure": "O vampiro subestima os oponentes humanos e sofre uma reação violenta.",
+          "dramaticFailure": "O vampiro é tomado por profundo remorso e recebe a Condição Culpado."
+        }
       }
     },
     {
       "id": "devotion-rising-tension",
       "kind": "devotion",
       "name": "Rising Tension",
-      "translatedName": "Rising Tension",
+      "translatedName": "Tensão Crescente",
       "prerequisites": "Nightmare ••",
       "experienceCost": 1,
       "summary": "Turn a watched victim's heartbeat into distracting dread.",
@@ -4195,7 +4228,7 @@
       "page": 100,
       "cost": "2 Vitae",
       "dicePool": "Manipulation + Intimidation + Nightmare vs. Composure + Blood Potency",
-      "action": "Contested",
+      "action": "Contested; resistance is reflexive",
       "duration": "Scene",
       "manualOnly": true,
       "requirement": "The victim must know he’s being watched or followed.",
@@ -4204,13 +4237,28 @@
         "exceptionalSuccess": "The victim is so dazed by his sense of impending doom that the first action the vampire takes against him gains the rote quality.",
         "failure": "If the tension is rising, the victim doesn’t notice.",
         "dramaticFailure": "The victim thinks the odds are with him. The vampire, however, suffers the Stunned Tilt."
+      },
+      "presentationPt": {
+        "prerequisites": "Pesadelo ••",
+        "cost": "2 Vitae",
+        "requirement": "A vítima deve saber que está sendo observada ou seguida.",
+        "dicePool": "Manipulação + Intimidação + Pesadelo contra Compostura + Potência de Sangue",
+        "action": "Disputada; resistência reflexiva",
+        "duration": "Cena",
+        "summary": "Transforma os batimentos cardíacos de uma vítima observada em um medo que a distrai.",
+        "rollResults": {
+          "success": "O vampiro planta um medo sutil na mente da vítima, tornando-a desajeitada e mais fácil de caçar. Ela recebe a Condição Abalado. Enquanto a Condição durar ou até o fim da cena, o que ocorrer primeiro, não se beneficia de 10-novamente em ações Físicas contra o vampiro e sofre os pontos de Pesadelo dele como penalidade em Percepção.",
+          "exceptionalSuccess": "A vítima fica tão atordoada pela sensação de desastre iminente que a primeira ação do vampiro contra ela recebe a qualidade de Rotina.",
+          "failure": "Se a tensão está aumentando, a vítima não percebe.",
+          "dramaticFailure": "A vítima acredita que as chances estão a seu favor. O vampiro, porém, sofre a Complicação Atordoado."
+        }
       }
     },
     {
       "id": "devotion-sign-of-terror",
       "kind": "devotion",
       "name": "Sign of Terror",
-      "translatedName": "Sign of Terror",
+      "translatedName": "Sinal do Terror",
       "prerequisites": "Auspex •••; Nightmare ••••",
       "experienceCost": 4,
       "summary": "Store a Nightmare power in a Vitae-marked object as a supernatural trap.",
@@ -4221,7 +4269,22 @@
       "duration": "One week",
       "effect": "The vampire marks an object with an eldritch sign written in Vitae, and imbues it with a power of Nightmare. When placed, the vampire chooses a Nightmare effect to attach to the object (paying all costs), whether the object is a book, door, or corpse. When viewed by anyone except the vampire herself, this power invades the victim’s mind as if the Nosferatu were present. The normal rules of that effect, including resistance, apply as normal. If needed, the Storyteller rolls the vampire’s dice pool. Each point of Vitae beyond the first causes the power to activate an additional time before the duration ends. However, an object cannot hold more charges than its Size (to a limit of five charges).",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "experienceDiscounts": [
+        {
+          "bloodlineId": "keepers-of-the-dark",
+          "cost": 3
+        }
+      ],
+      "presentationPt": {
+        "prerequisites": "Auspícios •••; Pesadelo ••••",
+        "cost": "1 Vitae, mais uma por carga adicional",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Uma semana",
+        "summary": "Armazena um poder de Pesadelo em um objeto marcado com Vitae, criando uma armadilha sobrenatural.",
+        "effect": "O vampiro marca um objeto com um sinal sobrenatural escrito em Vitae e o imbui com um poder de Pesadelo. Ao colocá-lo, escolhe um efeito de Pesadelo para vincular ao objeto e paga todos os custos, seja o objeto um livro, uma porta ou um cadáver. Quando qualquer pessoa além do próprio vampiro o vê, o poder invade sua mente como se o Nosferatu estivesse presente. Aplicam-se as regras normais do efeito, incluindo resistência. Se necessário, o Narrador testa a parada do vampiro. Cada ponto de Vitae além do primeiro permite uma ativação adicional antes de a duração terminar. O objeto não pode conter mais cargas que seu Tamanho, até o limite de cinco."
+      }
     },
     {
       "id": "devotion-terrible-will",
