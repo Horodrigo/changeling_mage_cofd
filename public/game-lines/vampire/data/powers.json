@@ -4834,7 +4834,7 @@
       "id": "devotion-punching-fucking",
       "kind": "devotion",
       "name": "Punching and Fucking",
-      "translatedName": "Punching and Fucking",
+      "translatedName": "Socos e Fodas",
       "prerequisites": "Majesty ••, Vigor •",
       "covenantIds": [
         "carthian-movement"
@@ -4845,7 +4845,14 @@
       "page": 0,
       "cost": "1 Willpower",
       "dicePool": "Special",
-      "effect": "After an unarmed attack deals damage, the victim contests that damage with Composure + Blood Potency as though it were Confidant. If the victim is Charmed and the vampire knows Loyalty, two Vitae may apply Loyalty instead. Damage dealt through this Devotion does not resolve Charmed or Enthralled."
+      "effect": "After an unarmed attack deals damage, the victim contests that damage with Composure + Blood Potency as though it were Confidant. If the victim is Charmed and the vampire knows Loyalty, two Vitae may apply Loyalty instead. Damage dealt through this Devotion does not resolve Charmed or Enthralled.",
+      "presentationPt": {
+        "prerequisites": "Majestade ••, Ímpeto •",
+        "summary": "Aplica Majestade por meio de um ataque desarmado.",
+        "cost": "1 Força de Vontade",
+        "dicePool": "Especial",
+        "effect": "Após um ataque desarmado causar dano, a vítima disputa esse dano com Compostura + Potência de Sangue, como se fosse Confidente. Se a vítima estiver com Encantado(Membro) e o vampiro conhecer Lealdade, duas Vitae permitem aplicar Lealdade em seu lugar. O dano causado por esta Devoção não resolve Encantado(Membro) nem Cativado."
+      }
     },
     {
       "id": "devotion-rapidity",
@@ -4913,7 +4920,7 @@
       "id": "devotion-straight-up-murderer",
       "kind": "devotion",
       "name": "Straight Up Fucking Murderer",
-      "translatedName": "Straight Up Fucking Murderer",
+      "translatedName": "Assassino pra Caralho",
       "prerequisites": "Celerity ••, Resilience ••",
       "covenantIds": [
         "carthian-movement"
@@ -4925,7 +4932,15 @@
       "cost": "1 Vitae",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "Activate whenever a maneuver would sacrifice Defense. The vampire keeps Defense while using that maneuver and may combine multiple such techniques by paying again for each, but cannot duplicate all-out attack or gain extra actions."
+      "effect": "Activate whenever a maneuver would sacrifice Defense. The vampire keeps Defense while using that maneuver and may combine multiple such techniques by paying again for each, but cannot duplicate all-out attack or gain extra actions.",
+      "presentationPt": {
+        "prerequisites": "Celeridade ••, Resiliência ••",
+        "summary": "Usa uma manobra sem sacrificar Defesa.",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Ative quando uma manobra exigir sacrificar Defesa. O vampiro mantém sua Defesa ao usar essa manobra e pode combinar várias dessas técnicas, pagando novamente por cada uma, mas não pode usar ataque total duas vezes na mesma ação nem obter ações adicionais."
+      }
     },
     {
       "id": "devotion-strength-empire",
