@@ -4766,8 +4766,8 @@
       "id": "devotion-body-colony",
       "kind": "devotion",
       "name": "Body Colony",
-      "translatedName": "Body Colony",
-      "summary": "Houses a living insect colony inside the vampire's corpse.",
+      "translatedName": "Colônia Corporal",
+      "summary": "Grow a parasitic insect colony inside an Enthralled victim, causing daily lethal damage until it emerges.",
       "source": "False Gods: Ventrue",
       "page": 48,
       "manualOnly": true,
@@ -4779,14 +4779,24 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Special",
-      "effect": "A colony of swarming insects slowly grows within the victim, causing a point of lethal damage per day, and will automatically emerge from the victim once their last Health box is filled with damage. Layers of euphoria and loyalty prevent the victim from feeling any discomfort while being eaten alive, but even a cursory examination of their body will reveal something is deeply wrong. Medical intervention can remove the nascent colony and prevent further damage, but will almost certainly require surgery. When in the victim’s presence, the vampire can spend an additional Vitae to force the swarm to exit, inflicting three points of lethal damage as they burrow through the victim’s skin to escape. To represent the Body Colony, use the rules for Swarm Form found on p. 114 of Vampire: The Requiem with the following addenda: The swarm has Health boxes equal to the damage it did to its host before emerging, and uses the vampire’s Animalism + Blood Potency as an attack pool. The swarm counts as a single entity created via Raise the Familiar, but its Stamina counts as 1 when determining that effect’s duration."
+      "effect": "Using this Devotion on an unwilling victim is a Humanity 2 breaking point. On a willing victim, the vampire’s player gains a +1 modifier to the detachment roll. A colony of swarming insects slowly grows within the victim, causing a point of lethal damage per day, and will automatically emerge from the victim once their last Health box is filled with damage. Layers of euphoria and loyalty prevent the victim from feeling any discomfort while being eaten alive, but even a cursory examination of their body will reveal something is deeply wrong. Medical intervention can remove the nascent colony and prevent further damage, but will almost certainly require surgery. When in the victim’s presence, the vampire can spend an additional Vitae to force the swarm to exit, inflicting three points of lethal damage as they burrow through the victim’s skin to escape. To represent the Body Colony, use the rules for Swarm Form found on p. 114 of Vampire: The Requiem with the following addenda: The swarm has Health boxes equal to the damage it did to its host before emerging, and uses the vampire’s Animalism + Blood Potency as an attack pool. The swarm counts as a single entity created via Raise the Familiar, but its Stamina counts as 1 when determining that effect’s duration.",
+      "presentationPt": {
+        "summary": "Cria uma colônia parasitária de insetos dentro de uma vítima Cativada, causando dano letal diário até que ela emerja.",
+        "prerequisites": "Animalismo ••, Majestade ••••",
+        "cost": "1 Vitae",
+        "requirement": "A vampira precisa impor a Condição Cativado à vítima.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Especial",
+        "effect": "Usar esta Devoção em uma vítima que não consente é um Ponto de Ruptura em Humanidade 2. Em uma vítima que consente, a jogadora da vampira recebe um modificador de +1 no teste de Desapego. Uma colônia de insetos cresce lentamente dentro da vítima, causando um ponto de dano letal por dia, e emerge automaticamente quando a última caixa de Vitalidade da vítima fica preenchida com dano. Camadas de euforia e lealdade impedem que ela sinta desconforto enquanto é devorada viva, mas até um exame superficial de seu corpo revela que há algo profundamente errado. Uma intervenção médica pode remover a colônia em formação e impedir dano adicional, mas quase certamente exigirá cirurgia. Na presença da vítima, a vampira pode gastar outra Vitae para forçar a saída do enxame, causando três pontos de dano letal enquanto os insetos atravessam a pele. Para representar Colônia Corporal, use as regras de Forma de Enxame da p. 114 de Vampire: The Requiem, com estes acréscimos: o enxame possui caixas de Vitalidade iguais ao dano causado ao hospedeiro antes de emergir e usa Animalismo + Potência de Sangue da vampira como parada de ataque. Conta como uma única entidade criada com Erguer o Familiar, mas seu Vigor conta como 1 ao determinar a duração desse efeito."
+      }
     },
     {
       "id": "devotion-dance-of-the-honeybee",
       "kind": "devotion",
       "name": "Dance of the Honeybee",
-      "translatedName": "Dance of the Honeybee",
-      "summary": "Communicates precise directions and intentions through hive movement.",
+      "translatedName": "Dança da Abelha de Mel",
+      "summary": "Mesmerize humans and Kindred who failed to resist Feral Infection, permitting simple commands; this does not work on werewolves.",
       "source": "False Gods: Ventrue",
       "page": 49,
       "manualOnly": true,
@@ -4803,14 +4813,29 @@
         "exceptionalSuccess": "The Queen’s authority is absolute. She can issue a command on the same turn as she mesmerizes her victims.",
         "failure": "The Melissid’s victims continue to rage.",
         "dramaticFailure": "The victims turn on their Queen with a single-minded purpose."
+      },
+      "presentationPt": {
+        "summary": "Impõe Mesmerizado a humanos e Membros que não resistiram a Infecção Feral, permitindo ordens simples; não funciona em lobisomens.",
+        "prerequisites": "Animalismo ••••, Dominação ••, Majestade •••••",
+        "cost": "1 de Força de Vontade",
+        "requirement": "As vítimas precisam estar sob os efeitos de Infecção Feral.",
+        "dicePool": "Inteligência + Expressão + Animalismo contra a maior Perseverança + Potência de Sangue do grupo",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "rollResults": {
+          "success": "Em vez de apenas direcionar os instintos ferais das vítimas mortais e dos Membros, a vampira pode fazê-las realizar tarefas mais complexas. Impõe a Condição Mesmerizado a todos os personagens que não resistiram a sua Infecção Feral, permitindo dar ordens em vez de apenas direcionar sua fúria. As vítimas ainda estão em um estado um tanto atávico, mas conseguem compreender ordens simples. Esta Devoção não funciona em lobisomens.",
+          "exceptionalSuccess": "A autoridade da Rainha é absoluta. Pode dar uma ordem no mesmo turno em que mesmeriza suas vítimas.",
+          "failure": "As vítimas da Melissid continuam enfurecidas.",
+          "dramaticFailure": "As vítimas se voltam contra sua Rainha com um único propósito."
+        }
       }
     },
     {
       "id": "devotion-honeycomb-heart",
       "kind": "devotion",
       "name": "Honeycomb Heart",
-      "translatedName": "Honeycomb Heart",
-      "summary": "Stores blood and hive members within a transformed body.",
+      "translatedName": "Coração de Colmeia",
+      "summary": "Host flying insects inside the vampire’s own body and release them to attack or track, recalling them at no cost.",
       "source": "False Gods: Ventrue",
       "page": 49,
       "manualOnly": true,
@@ -4822,7 +4847,17 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Special",
-      "effect": "The vampire invites a colony of flying insects to nest inside her dead organs, typically from the order Hymenoptera. It takes a day for the swarm to become large enough to be of use, and it remains within the vampire for as long as she wishes. She can call forth the hive as an instant action, causing insects to emerge from her mouth and nose in a buzzing hoard. Outside her body, the swarm has Health equal to the vampire’s Stamina, and can attack her enemies similar to"
+      "effect": "The vampire invites a colony of flying insects to nest inside her dead organs, typically from the order Hymenoptera. It takes a day for the swarm to become large enough to be of use, and it remains within the vampire for as long as she wishes. She can call forth the hive as an instant action, causing insects to emerge from her mouth and nose in a buzzing hoard. Outside her body, the swarm has Health equal to the vampire’s Stamina, and can attack her enemies similar to Body Colony (above); these are living insects, however, and are not subject to Raise the Familiar. The vampire can know the direction of any insect from her swarm on an instinctual level, allowing her to use them as trackers by ordering them to cling to unsuspecting targets. The vampire can recall the colony at no cost, but if it remains outside her body for (Blood Potency) hours, it dies off.",
+      "presentationPt": {
+        "summary": "Abriga insetos voadores no próprio corpo e os libera para atacar ou rastrear, podendo recolhê-los gratuitamente.",
+        "prerequisites": "Animalismo •••, Resiliência ••",
+        "cost": "2 Vitae",
+        "requirement": "A vampira consome a larva viva do inseto com que deseja colonizar seu corpo.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Especial",
+        "effect": "A vampira convida uma colônia de insetos voadores, geralmente da ordem Hymenoptera, a se alojar em seus órgãos mortos. O enxame leva um dia para crescer o bastante para ser útil e permanece no corpo enquanto ela desejar. Pode liberar a colmeia como ação instantânea, fazendo os insetos saírem por sua boca e nariz em uma massa zumbidora. Fora do corpo, o enxame tem Vitalidade igual ao Vigor da vampira e pode atacar seus inimigos de modo semelhante a Colônia Corporal, acima; porém, esses insetos são vivos e não estão sujeitos a Erguer o Familiar. A vampira sabe instintivamente a direção de qualquer inseto de seu enxame, permitindo usá-los como rastreadores ao ordenar que se agarrem a alvos desavisados. Pode recolher a colônia sem custo, mas ela morre se permanecer fora do corpo por um número de horas igual à Potência de Sangue."
+      }
     },
     {
       "id": "devotion-form-of-the-trickster",
