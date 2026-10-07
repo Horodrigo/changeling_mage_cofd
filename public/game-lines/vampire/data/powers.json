@@ -8850,8 +8850,10 @@
           "failure": "As insinuações do vampiro são sutis demais para despertar o fanatismo da vítima.",
           "success": "O ancião alimenta o entusiasmo da vítima por ele, levando-a a falar maravilhas de seu novo melhor amigo sempre que puder e a espalhar sua influência. Ao fim de cada cena enquanto a vítima ainda estiver Encantado(Membro) ou Cativado, desde que tenha tido uma oportunidade razoável de conversar com alguém, o vampiro recebe um ponto temporário de um dos seguintes Méritos: Aliados, Fama, Rebanho, Lacaio, Funcionários ou Status. Os efeitos desta Devoção terminam quando a vítima deixa de ter a Condição exigida. Tentativas de usar Majestade em alguém na região onde a vítima mora ou passa a maior parte do tempo recebem 9-novamente, ou 8-novamente se a duração ultrapassar uma semana, por exemplo como resultado de O Desejo (Vampire: The Requiem Second Edition, p. 148).",
           "exceptionalSuccess": "Tentativas de usar Majestade em alguém na região onde a vítima mora ou passa a maior parte do tempo recebem 8-novamente imediatamente."
-        }
-      }
+        },
+        "effect": "Contra um alvo em quem o vampiro infligiu Cativado, esta Devoção obtém sucesso automático sem teste. A jogadora ainda pode testar para buscar sucesso excepcional, mas precisa aceitar o resultado se falhar."
+      },
+      "effect": "Against a target on whom the vampire inflicted Enthralled, this Devotion automatically succeeds without a roll. The player may still roll to seek exceptional success, but must accept a failed result."
     },
     {
       "id": "devotion-consumption",
@@ -8918,8 +8920,10 @@
           "failure": "Os esforços do vampiro não impressionam seu público.",
           "success": "Quem não superar o teste do vampiro sucumbe ao pleno conhecimento proibido da eternidade e recebe a Condição Esmagado.",
           "exceptionalSuccess": "O vampiro recupera um ponto de Força de Vontade, tendo encarado a imortalidade de frente e aceitado o que ela significa."
-        }
-      }
+        },
+        "requirement": "Afeta quem percebe diretamente o vampiro a até (Potência de Sangue × 2) jardas/metros e tem menos de cem anos de existência no total. Faça um único teste e compare o resultado separadamente à resistência de cada vítima."
+      },
+      "requirement": "Affects everyone within (Blood Potency × 2) yards/meters who can directly perceive the vampire and has existed for less than one hundred years in total. Roll once and compare the result to each victim’s resistance separately."
     },
     {
       "id": "devotion-legion",
@@ -11085,7 +11089,7 @@
       "source": "Wild Hunt: Gangrel",
       "page": 105,
       "cost": "2 Vitae",
-      "dicePool": "Presence + Animal Ken + Protean vs. Stamina + Blood Potency",
+      "dicePool": "Presence + Animal Ken + Protean vs. Stamina + Blood Potency (if unwilling)",
       "action": "Instant",
       "duration": "Night",
       "manualOnly": true,
@@ -11101,7 +11105,7 @@
         "prerequisites": "Animalismo ••; Metamorfose •••",
         "cost": "2 Vitae",
         "requirement": "A vítima deve consumir uma Vitae ou ser ungida com ela, já incluída no custo. Se o vampiro quiser conceder uma forma animal que não tenha memorizado, precisa consumir sangue de um animal desse tipo na mesma noite.",
-        "dicePool": "Presença + Empatia com Animais + Metamorfose contra Vigor + Potência de Sangue",
+        "dicePool": "Presença + Empatia com Animais + Metamorfose contra Vigor + Potência de Sangue, se a vítima não consentir",
         "action": "Instantânea",
         "duration": "Noite",
         "rollResults": {

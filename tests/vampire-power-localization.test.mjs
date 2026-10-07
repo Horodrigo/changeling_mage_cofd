@@ -100,6 +100,9 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.equal(devotions.find(item => item.id === "devotion-our-mothers-mind").dicePool, "Intelligence + Occult + Auspex vs. Blood Potency + Resolve");
   assert.match(devotions.find(item => item.id === "devotion-city-attunement").requirement, /10,000 inhabitants/);
   assert.match(devotions.find(item => item.id === "devotion-null-space").summary, /spend Willpower.*Beaten Down/);
+  assert.match(devotions.find(item => item.id === "devotion-celebrity").effect, /inflicted Enthralled.*automatically succeeds.*may still roll.*failed result/);
+  assert.match(devotions.find(item => item.id === "devotion-crush-years").requirement, /Blood Potency × 2.*less than one hundred.*Roll once.*separately/);
+  assert.match(devotions.find(item => item.id === "devotion-frog-prince").dicePool, /\(if unwilling\)$/);
   const donning = rites.find(item => item.id === "cruac-donning-beasts-flesh");
   assert.equal(donning.cost, "1 Vitae");
   assert.equal(donning.action, "Three turns to transform");
