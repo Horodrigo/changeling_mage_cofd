@@ -13463,18 +13463,23 @@
       "id": "h-vtr-agony-ecstasy:rite:witch-s-locus",
       "kind": "cruac-rite",
       "name": "Witch's Locus",
-      "translatedName": "Witch's Locus",
+      "translatedName": "Locus da Bruxa",
       "rating": 1,
       "experienceCost": 2,
       "targetSuccesses": 9,
-      "summary": "Enlivens a small home's spirit, producing occult signs and empowering the ritualist's senses within it.",
+      "summary": "Enliven a small area’s spirit with supernatural signs, imposing −2 on Composure rolls and attempts to make a good impression.",
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 100,
       "duration": "Night; one week at Crúac •• with one additional success",
       "effect": "Mark the boundary of an area no larger than a small home. Peripheral supernatural signs impose −2 on Composure rolls and attempts to make a good impression in Social maneuvering.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Anima o espírito de uma área pequena com sinais sobrenaturais, impondo −2 a testes de Compostura e tentativas de causar boa impressão.",
+        "duration": "Noite; uma semana com Crúac •• e um sucesso adicional",
+        "effect": "Marque com Vitae a fronteira de uma área não maior que uma casa pequena e desperte seu espírito interior. Sinais sobrenaturais periféricos impõem −2 aos testes de Compostura e às tentativas de causar uma boa impressão na Manobra Social."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:mantle-of-the-predator-s-eye",
@@ -13502,7 +13507,7 @@
       "id": "h-vtr-agony-ecstasy:rite:mark-of-the-praecursor",
       "kind": "cruac-rite",
       "name": "Mark of the Praecursor",
-      "translatedName": "Mark of the Praecursor",
+      "translatedName": "Marca do Praecursor",
       "rating": 1,
       "experienceCost": 2,
       "targetSuccesses": 10,
@@ -13511,26 +13516,36 @@
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 100,
       "duration": "One month",
-      "effect": "Cover an area no larger than a manor house in warning sigils. Anyone using supernatural scrying or information-gathering on or inside it weeps black tears through mundane coverings until chapter end; exempt up to Potency people. At Crúac •• with one more success, reflective surfaces show the latest unseen offender's face. At Crúac •••• with three more successes, supernatural concealment in the area automatically provokes a Clash of Wills.",
+      "effect": "Cover an area no larger than a manor house in warning sigils. For the duration, anyone using supernatural information-gathering or scrying on or inside the area weeps black tears until the end of the next session. The tears pass through mundane coverings but can be hidden supernaturally. The sorcerer can exempt individuals up to the rite’s Potency. At Crúac •• with one additional success, the Witch also sees the most recent unseen offender’s face whenever she looks into a reflective surface at the ritual site. At Crúac •••• with three additional successes, the ritualist can automatically provoke a Clash of Wills to end any supernatural concealment used within the area.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Protege uma área do tamanho de uma mansão e marca quem a espiona sobrenaturalmente.",
+        "duration": "Um mês",
+        "effect": "Cubra uma área não maior que uma mansão com sigilos de alerta. Durante a duração, quem usar coleta sobrenatural de informações ou vidência sobre a área ou dentro dela verte lágrimas negras até o fim da próxima sessão. As lágrimas atravessam coberturas mundanas, mas podem ser ocultadas sobrenaturalmente. O feiticeiro pode isentar um número de indivíduos igual à Potência do rito. Com Crúac •• e um sucesso adicional, a Bruxa também vê o rosto do infrator não visto mais recente sempre que olha para uma superfície reflexiva no local do ritual. Com Crúac •••• e três sucessos adicionais, o ritualista pode provocar automaticamente um Confronto de Vontades para encerrar qualquer ocultação sobrenatural usada na área."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:barrier-of-blood",
       "kind": "cruac-rite",
       "name": "Barrier of Blood",
-      "translatedName": "Barrier of Blood",
+      "translatedName": "Barreira de Sangue",
       "rating": 2,
       "experienceCost": 2,
       "targetSuccesses": 7,
       "summary": "Seals marked doors and windows as durable solid barriers; target successes are 7 + Potency.",
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
-      "page": 101,
+      "page": 100,
       "duration": "One month",
-      "effect": "Smear the sacrifice across a number of entrances equal to the declared Potency. Their Durability increases by Crúac and they seal like walls, though the ritualist and those she touched while casting can pass. Covering every entrance extends the Durability to walls. At Crúac ••• with one more success, supernatural entry such as teleportation or intangibility requires a Clash of Wills.",
+      "effect": "Smear the sacrifice across a number of entrances equal to the desired Potency. Marked entrances gain Durability equal to the vampire’s Crúac dots and physically seal like solid walls. The Acolyte and anyone she is touching while casting can pass normally. This does not prevent supernatural entry. Covering every entrance also increases the Durability of walls and other barriers. Under the standard Ritual Discipline rules, Potency is defined before the roll and extra successes do not increase it. At Crúac ••• with one additional success, if every entrance is covered, the ritual wards against supernatural entry such as intangibly moving through walls; teleportation or magical portals require a Clash of Wills against the Acolyte.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Sela portas e janelas marcadas como barreiras sólidas e resistentes; os Sucessos Alvo são 7 + Potência.",
+        "duration": "Um mês",
+        "effect": "Espalhe o sacrifício por um número de entradas igual à Potência desejada. A Durabilidade das entradas marcadas aumenta pelos pontos de Crúac e elas se fecham fisicamente como paredes sólidas. A Acólita e quem ela estiver tocando durante o ritual podem passar normalmente. Isso não impede entrada sobrenatural. Cobrir todas as entradas também aumenta a Durabilidade das paredes e demais barreiras. Pelas regras padrão de Disciplina Ritual, a Potência é definida antes do teste e sucessos adicionais não a aumentam. Com Crúac ••• e um sucesso adicional, se todas as entradas estiverem cobertas, o ritual impede passagem sobrenatural, como atravessar paredes intangivelmente; teletransporte ou portais mágicos exigem um Confronto de Vontades contra a Acólita."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:painted-fears",
@@ -13624,7 +13639,7 @@
       "id": "h-vtr-agony-ecstasy:rite:bleeding-the-tarantula",
       "kind": "cruac-rite",
       "name": "Bleeding the Tarantula",
-      "translatedName": "Bleeding the Tarantula",
+      "translatedName": "Sangrar a Tarântula",
       "rating": 3,
       "experienceCost": 2,
       "targetSuccesses": 6,
@@ -13632,10 +13647,15 @@
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 101,
-      "duration": "Until the vampire wakes",
-      "effect": "Carve a spider on the ritualist's arm before daysleep, creating a Size 4 Retainer with rating equal to Crúac, specialized in stealth and guarding her body. Distribute Potency among web Durability, fang weapon rating up to +5, closer blood sympathy, and an immobilizing web attack. Its protective web falls away when she wakes, and blood sympathy may wake her if the spider is destroyed.",
+      "duration": "Special",
+      "effect": "Carve a spider on the ritualist’s arm before daysleep, creating a protective homunculus while she is unconscious. The spider is Size 4 with a Retainer rating equal to Crúac; stealth and guarding the vampire’s body are among its virtues. Distribute Potency among these factors: at the start of the day, a protective web surrounds her body with Durability equal to Potency spent and falls away when she wakes, including early; natural fangs have a weapon rating equal to Potency spent (maximum +5), inflicting bashing damage on vampires; three-removed blood sympathy lets the vampire sense the spider’s destruction with the usual system and wake automatically on success, reducible to twice- or once-removed for 2 or 3 levels of Potency; the spider can shoot bloody webbing with its normal pool minus the victim’s Defense as an instant action to immobilize them until the end of the scene when the vampire wakes. For escape, the web has Durability equal to Potency, but the victim can only try once.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Cria um homúnculo protetor de aranha na carne da ritualista enquanto ela dorme.",
+        "duration": "Especial",
+        "effect": "Entalhe uma aranha no braço antes do Sono Diurno. Ela se torna um homúnculo protetor enquanto a vampira está inconsciente: Tamanho 4 e Graduação de Lacaio igual a Crúac, com furtividade e proteção do corpo da vampira como pontos fortes. Divida a Potência entre os seguintes fatores: no início do dia, uma teia protetora envolve o corpo com Durabilidade igual à Potência gasta e desaparece ao despertar, inclusive antes da hora; presas têm modificador de arma igual à Potência gasta (máximo +5) e causam dano contundente em vampiros; Simpatia de Sangue a três graus da vampira permite sentir a destruição da aranha pelo sistema habitual e despertar automaticamente em caso de sucesso, podendo reduzir para dois ou um grau por 2 ou 3 níveis de Potência; a aranha pode disparar teia ensanguentada com sua parada normal menos a Defesa da vítima, como ação instantânea, para imobilizá-la até o fim da cena em que a vampira desperta. Para escapar, a teia tem Durabilidade igual à Potência, mas a vítima só pode tentar uma vez."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:mantle-of-the-mother-s-army",
