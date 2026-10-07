@@ -3372,26 +3372,38 @@
       "id": "devotion-dropping-the-act",
       "kind": "devotion",
       "name": "Dropping the Act",
-      "translatedName": "Dropping the Act",
-      "summary": "Releases cultivated civility in a sudden display of the Beast.",
+      "translatedName": "Abandonando a Encenação",
+      "summary": "Reveals the vampire’s nature when forcing a mortal’s Doors, causing a breaking point and removing Doors.",
       "source": "Better Feared: Nosferatu",
-      "page": 35,
+      "page": 36,
       "manualOnly": true,
       "bloodlineId": "cockscomb-society",
-      "experienceCost": 2,
+      "experienceCost": 1,
       "prerequisites": "Nightmare ••; Special",
       "cost": "None",
       "requirement": "The vampire must have Playing the Role active.",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "When attempting to force a mortal’s doors in Social maneuvering, the vampire can activate this Devotion and drop the effects of the Blush of Life and Playing the Role: The victim immediately (but briefly) becomes aware of the Cockerel’s malignancy as a blood-drinking corpse. She suffers a breaking point with a penalty equal to (10 – the vampire’s Humanity) divided by two, rounding up. Remove one of the victim’s Doors if she succeeds on the breaking point roll, or two if she fails."
+      "effect": "When attempting to force a mortal’s doors in Social maneuvering, the vampire can activate this Devotion and drop the effects of the Blush of Life and Playing the Role: The victim immediately (but briefly) becomes aware of the Cockerel’s malignancy as a blood-drinking corpse. She suffers a breaking point with a penalty equal to (10 – the vampire’s Humanity) divided by two, rounding up. Remove one of the victim’s Doors if she succeeds on the breaking point roll, or two if she fails.",
+      "presentationPt": {
+        "prerequisites": "Pesadelo ••; Especial: conhecer Interpretando o Papel",
+        "cost": "Nenhum",
+        "requirement": "O vampiro deve ter Interpretando o Papel ativo.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "summary": "Revela a natureza vampírica ao forçar Portas de um mortal, causando um Ponto de Ruptura e removendo Portas.",
+        "effect": "Ao tentar forçar as Portas de um mortal em Manobras Sociais, o vampiro pode ativar esta Devoção e encerrar os efeitos de Rubor da Vida e Interpretando o Papel. A vítima percebe imediatamente, embora por pouco tempo, a natureza maligna do vampiro como um cadáver que bebe sangue. Ela sofre um Ponto de Ruptura com penalidade igual a (10 – Humanidade do vampiro) dividido por dois, arredondando para cima. Remova uma Porta da vítima se ela obtiver sucesso nesse teste, ou duas se falhar."
+      },
+      "requiredDevotionIds": [
+        "devotion-playing-the-role"
+      ]
     },
     {
       "id": "devotion-playing-the-role",
       "kind": "devotion",
       "name": "Playing the Role",
-      "translatedName": "Playing the Role",
-      "summary": "Adopts a social part so completely that the performance becomes supernatural.",
+      "translatedName": "Interpretando o Papel",
+      "summary": "Suppresses the Predatory Aura and reduces Humanity penalties when negotiating with mortals.",
       "source": "Better Feared: Nosferatu",
       "page": 36,
       "manualOnly": true,
@@ -3408,13 +3420,28 @@
         "exceptionalSuccess": "As with a success, and if the number of successes exceeds the vampire’s Social penalties for low Humanity, she does add bonus dice equal to the difference.",
         "failure": "The Blush of Life takes effect, but the Cockerel’s power of mimicry fails to overcome her unsettling nature.",
         "dramaticFailure": "Not only does the Devotion fail to take effect, the Haunt’s attempt at imitation is deeply offputting. For the rest of the scene, mortals’ impressions of the vampire are treated as one level lower in Social maneuvering."
+      },
+      "presentationPt": {
+        "prerequisites": "Majestade •, Ofuscação ••",
+        "cost": "1 de Força de Vontade",
+        "requirement": "O vampiro deve ter Rubor da Vida ativo ao usar esta Devoção.",
+        "dicePool": "Manipulação + Socialização + Ofuscação",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "summary": "Suprime a Aura Predatória e reduz penalidades de Humanidade nas negociações com mortais.",
+        "rollResults": {
+          "success": "O vampiro suprime sua Aura Predatória para imitar melhor um mortal. Enquanto a Devoção estiver ativa, subtrai seus sucessos de quaisquer penalidades baseadas em Humanidade ao tentar ou negociar com mortais. Se os sucessos excederem a penalidade, não recebe bônus adicional. Além disso, outras Auras Predatórias não o identificam como vampiro.",
+          "exceptionalSuccess": "Como em um sucesso, mas, se os sucessos excederem as penalidades Sociais do vampiro por Humanidade baixa, ele recebe dados de bônus iguais à diferença.",
+          "failure": "Rubor da Vida funciona, mas a imitação do vampiro não supera sua natureza perturbadora.",
+          "dramaticFailure": "Além de a Devoção falhar, a tentativa de imitação do vampiro é profundamente repulsiva. Pelo restante da cena, as impressões dos mortais a seu respeito são tratadas como um nível abaixo nas Manobras Sociais."
+        }
       }
     },
     {
       "id": "devotion-iron-dogma",
       "kind": "devotion",
       "name": "Iron Dogma",
-      "translatedName": "Iron Dogma",
+      "translatedName": "Dogma de Ferro",
       "summary": "Hardens declared faith into supernatural resistance against contradiction.",
       "source": "Better Feared: Nosferatu",
       "page": 42,
@@ -3427,13 +3454,23 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "While the Charmed Condition lasts",
-      "effect": "The victim treats the vampire's opinions, arguments, and beliefs as intrinsically true and cannot be convinced otherwise. Attempts to persuade the victim that the vampire lied suffer a penalty equal to the vampire's Majesty dots; halve this penalty, rounding up, when the victim is shown direct evidence such as photographs or video."
+      "effect": "The victim treats the vampire's opinions, arguments, and beliefs as intrinsically true and cannot be convinced otherwise. Attempts to persuade the victim that the vampire lied suffer a penalty equal to the vampire's Majesty dots; halve this penalty, rounding up, when the victim is shown direct evidence such as photographs or video.",
+      "presentationPt": {
+        "prerequisites": "Majestade ••, Resiliência •",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro deve impor a Condição Encantado(Membro) à vítima na mesma cena.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Enquanto durar a Condição Encantado(Membro)",
+        "summary": "Fortalece a fé declarada contra contradições por meio de resistência sobrenatural.",
+        "effect": "A vítima trata as opiniões, argumentos e crenças do vampiro como verdades intrínsecas e não pode ser convencida do contrário. Tentativas de persuadi-la de que o vampiro mentiu sofrem penalidade igual aos pontos de Majestade dele; reduza essa penalidade à metade, arredondando para cima, se a vítima receber provas diretas, como fotografias ou vídeos."
+      }
     },
     {
       "id": "devotion-kingdom-of-heaven",
       "kind": "devotion",
       "name": "Kingdom of Heaven",
-      "translatedName": "Kingdom of Heaven",
+      "translatedName": "Reino dos Céus",
       "summary": "Extends selected Majesty powers across every witness inside the vampire's Oubliette.",
       "source": "Better Feared: Nosferatu",
       "page": 42,
@@ -3446,7 +3483,17 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Night",
-      "effect": "The vampire can use Confidant, Green Eyes, Loyalty, and Iron Dogma on groups, provided every victim can see and hear him and is wholly within his Oubliette. A group of humans resists using the highest appropriate Resistance Attribute among them; each Kindred present rolls separately. Green Eyes, Iron Dogma, and Loyalty require their Vitae cost only once per activation, regardless of the number of targets."
+      "effect": "The vampire can use Confidant, Green Eyes, Loyalty, and Iron Dogma on groups, provided every victim can see and hear him and is wholly within his Oubliette. A group of humans resists using the highest appropriate Resistance Attribute among them; each Kindred present rolls separately. Green Eyes, Iron Dogma, and Loyalty require their Vitae cost only once per activation, regardless of the number of targets.",
+      "presentationPt": {
+        "prerequisites": "Majestade •••••, Ofuscação •••••",
+        "cost": "1 de Força de Vontade",
+        "requirement": "O vampiro deve estar dentro de sua Masmorra do Esquecimento ao ativar esta Devoção.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "summary": "Estende poderes específicos de Majestade a todos os espectadores dentro da Masmorra do Esquecimento do vampiro.",
+        "effect": "O vampiro pode usar Confidente, Olhos Verdes, Lealdade e Dogma de Ferro em grupos, desde que todas as vítimas possam vê-lo e ouvi-lo e estejam inteiramente dentro de sua Masmorra do Esquecimento. Um grupo de humanos resiste usando o maior Atributo de Resistência apropriado entre seus integrantes; cada Membro presente faz seu próprio teste. Olhos Verdes, Dogma de Ferro e Lealdade exigem o custo em Vitae apenas uma vez por ativação, independentemente da quantidade de alvos."
+      }
     },
     {
       "id": "devotion-master-of-the-maze",
