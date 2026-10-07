@@ -9153,7 +9153,7 @@
       "translatedName": "Blodtrell",
       "summary": "Marks another person as a blood-bound instrument of Norvegi vengeance.",
       "source": "Strange Shades: Mekhet",
-      "page": 52,
+      "page": 51,
       "manualOnly": true,
       "bloodlineId": "norvegi",
       "experienceCost": 5,
@@ -9163,24 +9163,42 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Night",
-      "effect": "In a special ritual, the Norvegus spends a Willpower and then feeds each of his ghouls two Vitae. This does not add to their reserves. Instead, the blood takes the form of a slithering worm that wriggles down their throats, transforming them into nightmarish creatures called blodtrells. The Norvegus adds his Protean dots to a blodtrell’s Physical Attributes or Size, distributing them as he wishes. Alternatively, he can grant the creature a point of general armor for every two dots. These mutations can raise a blodtrell’s Attributes above 5, but they suffer a lethal damage per excess dot when the Devotion ends, as their body collapses from the strain. The physical effect of this transformation is terrifying and grotesque: bones elongate and reshape to allow greater speed, muscles swell to unnatural proportions, and flesh thickens to absorb impacts. Even under heavy layers of clothing, an observer will notice something is off about the blodtrell. If the vampire knows Frakka, below, she can spend two additional Vitae to implant a dart of crystallized blood into a blodtrell’s hand, allowing them to throw a “sturdy” dart as per that Devotion. For the reduration, the Norvegus can see through the eyes of his blodtrells and direct them telepathically, and can coordinate devastating strikes on his enemies. As an instant action, the vampire can designate a number of blodtrells equal to his Blood Potency to act in concert. For one turn, these thralls ignore a single victim’s Defense equal to the vampire’s Auspex dots. The connection between the vampire and his blodtrells is incredibly intimate, and the death of one is a breaking point at Humanity 2 and higher."
+      "effect": "In a special ritual, the Norvegus spends a Willpower and then feeds each of his ghouls two Vitae. This does not add to their reserves. Instead, the blood takes the form of a slithering worm that wriggles down their throats, transforming them into nightmarish creatures called blodtrells. The Norvegus adds his Protean dots to a blodtrell’s Physical Attributes or Size, distributing them as he wishes. Alternatively, he can grant the creature a point of general armor for every two dots. These mutations can raise a blodtrell’s Attributes above 5, but they suffer a lethal damage per excess dot when the Devotion ends, as their body collapses from the strain. The physical effect of this transformation is terrifying and grotesque: bones elongate and reshape to allow greater speed, muscles swell to unnatural proportions, and flesh thickens to absorb impacts. Even under heavy layers of clothing, an observer will notice something is off about the blodtrell. If the vampire knows Frakka, below, she can spend two additional Vitae to implant a dart of crystallized blood into a blodtrell’s hand, allowing them to throw a “sturdy” dart as per that Devotion. For the reduration, the Norvegus can see through the eyes of his blodtrells and direct them telepathically, and can coordinate devastating strikes on his enemies. As an instant action, the vampire can designate a number of blodtrells equal to his Blood Potency to act in concert. For one turn, these thralls ignore a single victim’s Defense equal to the vampire’s Auspex dots. The connection between the vampire and his blodtrells is incredibly intimate, and the death of one is a breaking point at Humanity 2 and higher.",
+      "presentationPt": {
+        "summary": "Marca outra pessoa como instrumento ligado pelo sangue à vingança Norvegi.",
+        "prerequisites": "Auspícios ••••, Metamorfose ••••, Ímpeto •••",
+        "cost": "1 ponto de Força de Vontade e 2 Vitae por alvo",
+        "requirement": "Os alvos precisam ser ghouls da vampira.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Uma noite",
+        "effect": "Em um ritual especial, o Norvegus gasta um ponto de Força de Vontade e alimenta cada um de seus ghouls com duas Vitae. Isso não aumenta suas reservas. O sangue assume a forma de um verme que se contorce ao descer pela garganta, transformando-os em criaturas de pesadelo chamadas blodtrells. O Norvegus adiciona seus pontos em Metamorfose aos Atributos Físicos ou ao Tamanho de um blodtrell, distribuindo-os como desejar. Como alternativa, pode conceder um ponto de armadura geral a cada dois pontos. Essas mutações podem elevar os Atributos de um blodtrell acima de 5, mas ele sofre um ponto de dano letal por ponto excedente quando a Devoção termina, pois seu corpo cede ao esforço. A transformação é aterradora e grotesca: ossos se alongam e se remodelam para aumentar a velocidade, músculos incham até proporções sobrenaturais e a carne engrossa para absorver impactos. Mesmo sob camadas grossas de roupa, um observador percebe que há algo errado com o blodtrell. Se a vampira conhece Frakka, pode gastar outras duas Vitae para implantar um dardo de sangue cristalizado na mão de um blodtrell, permitindo que ele arremesse um dardo “reforçado” conforme aquela Devoção. Durante o efeito, o Norvegus pode ver pelos olhos de seus blodtrells e dirigi-los telepaticamente, coordenando ataques devastadores. Como ação instantânea, pode designar um número de blodtrells igual à sua Potência de Sangue para agir em conjunto. Por um turno, esses servos ignoram a Defesa de uma única vítima em um valor igual aos pontos de Auspícios da vampira. A ligação com os blodtrells é extremamente íntima, e a morte de um deles é um Ponto de Ruptura em Humanidade 2 ou mais."
+      }
     },
     {
       "id": "devotion-frakka",
       "kind": "devotion",
       "name": "Frakka",
       "translatedName": "Frakka",
-      "summary": "Turns outlaw blood into a concealed predatory weapon.",
+      "summary": "Hurls razor-sharp darts of crystallized Vitae.",
       "source": "Strange Shades: Mekhet",
       "page": 52,
       "manualOnly": true,
       "bloodlineId": "norvegi",
-      "experienceCost": 5,
+      "experienceCost": 3,
       "prerequisites": "Celerity ••, Protean ••••",
       "cost": "1 or 2 Vitae",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "The vampire must strike her victim with a dart using a throw attack, rolling Dexterity + Athletics – Defense. Darts have a base damage of +1L supernatural damage and have a short range equal to Strength + Athletics + Celerity in meters. Medium range is double that; long range is triple. If the vampire is within close range, she can instead use the dart with the Weaponry Skill. By default, these shards are incredibly brittle and shatter upon impact. If not used within a minute of their creation, they dissolve into puddles of cloudy, pink plasma. However, if the vampire invests two Vitae into a shard instead of one, it sticks in flesh until removed. Being hit with a sturdier dart imposes a 2-die penalty on combat actions due to the pain. This penalty is not cumulative, but might compound into a Wrack Tilt at Storyteller discretion. The vampire can use a solid dart to pin a victim’s limb against a wall or object. To do so, she takes an additional penalty for attacking a specified target, and must equal the victim’s Stamina in successes if she wants to pierce a limb directly, rather than clothing. If successful, this imposes the Pinned Tilt ( p. 53)."
+      "effect": "The vampire must strike her victim with a dart using a throw attack, rolling Dexterity + Athletics – Defense. Darts have a base damage of +1L supernatural damage and have a short range equal to Strength + Athletics + Celerity in meters. Medium range is double that; long range is triple. If the vampire is within close range, she can instead use the dart with the Weaponry Skill. By default, these shards are incredibly brittle and shatter upon impact. If not used within a minute of their creation, they dissolve into puddles of cloudy, pink plasma. However, if the vampire invests two Vitae into a shard instead of one, it sticks in flesh until removed. Being hit with a sturdier dart imposes a 2-die penalty on combat actions due to the pain. This penalty is not cumulative, but might compound into a Wrack Tilt at Storyteller discretion. The vampire can use a solid dart to pin a victim’s limb against a wall or object. To do so, she takes an additional penalty for attacking a specified target, and must equal the victim’s Stamina in successes if she wants to pierce a limb directly, rather than clothing. If successful, this imposes the Pinned Tilt ( p. 53).",
+      "presentationPt": {
+        "summary": "Arremessa dardos afiados de Vitae cristalizada.",
+        "prerequisites": "Celeridade ••, Metamorfose ••••",
+        "cost": "1 ou 2 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "A vampira precisa atingir a vítima com um dardo em um ataque de arremesso, testando Destreza + Atletismo – Defesa. Dardos possuem dano básico de +1L sobrenatural e alcance curto igual a Força + Atletismo + Celeridade em metros. O alcance médio é o dobro e o longo é o triplo. A curta distância, a vampira pode usar o dardo com a Perícia Armas Brancas. Normalmente, esses fragmentos são extremamente frágeis e se quebram no impacto. Se não forem usados em até um minuto após sua criação, dissolvem-se em poças de plasma rosa turvo. Entretanto, se a vampira investir duas Vitae em um fragmento em vez de uma, ele permanece na carne até ser removido. Ser atingido por um dardo reforçado impõe uma penalidade de 2 dados em ações de combate devido à dor. Essa penalidade não é cumulativa, mas pode resultar em uma Complicação de Lesão a critério do Narrador. A vampira pode usar um dardo sólido para prender um membro da vítima a uma parede ou objeto. Para isso, sofre a penalidade adicional por atacar um alvo específico e precisa obter sucessos iguais ao Vigor da vítima para perfurar diretamente um membro em vez da roupa. Em caso de sucesso, impõe a Complicação Preso (p. 53)."
+      }
     },
     {
       "id": "devotion-tordenvaer",
@@ -9189,7 +9207,7 @@
       "translatedName": "Tordenvaer",
       "summary": "Strikes with the sudden violence of a storm.",
       "source": "Strange Shades: Mekhet",
-      "page": 53,
+      "page": 52,
       "manualOnly": true,
       "bloodlineId": "norvegi",
       "experienceCost": 3,
@@ -9202,6 +9220,19 @@
         "exceptionalSuccess": "As above, but victims also suffer one of the following Tilts: Blinded (one eye), Leg Wrack (one leg), Arm Wrack (one arm), or Pinned.",
         "failure": "The vampire fails to summon his blades.",
         "dramaticFailure": "The vampire suffers a point of aggravated damage as his blades grow inward, inflicting the Insensate Tilt from the agony."
+      },
+      "presentationPt": {
+        "summary": "Golpeia com a violência súbita de uma tempestade.",
+        "prerequisites": "Celeridade •••, Metamorfose ••••",
+        "cost": "2 Vitae",
+        "dicePool": "Força + Atletismo + Celeridade",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "A vampira sofre um ponto de dano agravado enquanto Vitae cristalizada explode de seu corpo, causando dano letal sobrenatural igual aos sucessos a tudo dentro de Celeridade metros. Defesa mundana não se aplica ao ataque, mas vítimas aplicam armadura normalmente e podem realizar uma ação de Esquiva se ainda não tiverem agido. Objetos rebaixam um número de sucessos de dano igual à Durabilidade, e os sucessos restantes afetam Estrutura. Cada metro além do epicentro reduz o dano pela metade, arredondando para baixo. Se usada enquanto agarra um oponente, o dano contra essa vítima é dobrado.",
+          "exceptionalSuccess": "Como acima, mas as vítimas também sofrem uma das seguintes Complicações: Cego em um olho, Perna Lesionada em uma perna, Braço Lesionado em um braço ou Preso.",
+          "failure": "A vampira não consegue invocar suas lâminas.",
+          "dramaticFailure": "A vampira sofre um ponto de dano agravado enquanto suas lâminas crescem para dentro, impondo a Complicação Insensível devido à agonia."
+        }
       }
     },
     {
@@ -9209,17 +9240,25 @@
       "kind": "devotion",
       "name": "Tyvshand",
       "translatedName": "Tyvshand",
-      "summary": "Steals an advantage through a touch or sleight of hand.",
+      "summary": "Absorbs blood through hollow needle-like hairs on hands and feet.",
       "source": "Strange Shades: Mekhet",
       "page": 53,
       "manualOnly": true,
       "bloodlineId": "norvegi",
-      "experienceCost": 5,
+      "experienceCost": 2,
       "prerequisites": "Protean ••, Vigor •",
       "cost": "None",
       "dicePool": "None",
       "action": "None",
-      "effect": "When he manifests his Predatory Aspects, the vampire can choose to also grow patches of hair-thin needles on his hands and feet. This stacks with any other forms he assumes. These hairs are hollow and function like syringes, allowing the Norvegus to apply the Feed move in a grapple without inflicting a bite. In addition, if the vampire succeeds on a Brawl attack with his bare hands, he can choose to steal a Vitae on a successful hit, assuming the blow wasn’t absorbed by armor or Resilience. This inflicts an additional lethal damage on mortals, and drains a Vitae directly from a vampire’s blood pool. The vampire can also absorb any dry blood he touches, including bloodstains and blood splatter, making it an efficient way to clean up a crime scene. Stale blood yields one Vitae, or two if the stain/pool is greater than Size 4. This does not bypass Blood Potency feeding restrictions. If a victim Breaks Free of the grapple, he suffers a mundane point of lethal damage as the scopulae tear her skin away."
+      "effect": "When he manifests his Predatory Aspects, the vampire can choose to also grow patches of hair-thin needles on his hands and feet. This stacks with any other forms he assumes. These hairs are hollow and function like syringes, allowing the Norvegus to apply the Feed move in a grapple without inflicting a bite. In addition, if the vampire succeeds on a Brawl attack with his bare hands, he can choose to steal a Vitae on a successful hit, assuming the blow wasn’t absorbed by armor or Resilience. This inflicts an additional lethal damage on mortals, and drains a Vitae directly from a vampire’s blood pool. The vampire can also absorb any dry blood he touches, including bloodstains and blood splatter, making it an efficient way to clean up a crime scene. Stale blood yields one Vitae, or two if the stain/pool is greater than Size 4. This does not bypass Blood Potency feeding restrictions. If a victim Breaks Free of the grapple, he suffers a mundane point of lethal damage as the scopulae tear her skin away.",
+      "presentationPt": {
+        "summary": "Absorve sangue por pelos ocos semelhantes a agulhas nas mãos e nos pés.",
+        "prerequisites": "Metamorfose ••, Ímpeto •",
+        "cost": "Nenhum",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "effect": "Ao manifestar seus Aspectos Predatórios, a vampira pode escolher também criar placas de agulhas finas como pelos nas mãos e nos pés. Isso se acumula com outras formas que assumir. Esses pelos são ocos e funcionam como seringas, permitindo ao Norvegus usar a manobra Alimentar em um agarrão sem morder. Além disso, ao obter sucesso em um ataque de Briga com as mãos nuas, pode escolher roubar uma Vitae no acerto, desde que o golpe não tenha sido absorvido por armadura ou Resiliência. Isso causa um ponto adicional de dano letal a mortais e drena uma Vitae diretamente da reserva de um vampiro. A vampira também pode absorver qualquer sangue seco que toque, inclusive manchas e respingos, tornando o poder uma maneira eficiente de limpar uma cena de crime. Sangue velho fornece uma Vitae, ou duas se a mancha ou poça for maior que Tamanho 4. Isso não contorna as restrições de alimentação por Potência de Sangue. Se uma vítima se Libertar do agarrão, sofre um ponto de dano letal mundano enquanto as cerdas arrancam sua pele."
+      }
     },
     {
       "id": "devotion-taharah",
