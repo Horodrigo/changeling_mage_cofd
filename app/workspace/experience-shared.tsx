@@ -325,7 +325,7 @@ export function ExperienceMeritPicker({
                 ratings = item.unbounded
                 ? meritRatingsFor(
                     item,
-                    Math.max(1, ...instances.map(({ owned }) => owned.dots + 1)),
+                    Math.max(Math.min(...item.ratings), ...instances.map(({ owned }) => owned.dots + 1)),
                   )
                 : meritRatingsFor(item),
                 draft = meritDrafts[item.id] ?? {newInstance:repeatable&&!instances.length,instanceIndex:instances[0]?.index??-1,dots:instances[0]?.owned.dots??ratings[0]??1},

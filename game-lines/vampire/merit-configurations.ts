@@ -4,9 +4,13 @@ import {
 } from "@/app/builder/common-merit-configurations";
 
 import type { MeritConfigDefinition } from "@/lib/core/character/merit-configuration";
+import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
+import { translate, type Locale } from "@/lib/i18n";
+import { BLOODCRAFTING_ID, BLOODCRAFTING_ENHANCEMENTS, bloodcraftingChoices } from "./bloodcrafting";
 
 export const VAMPIRE_MERIT_CONFIGURATIONS: readonly MeritConfigDefinition[] = [
   ...COMMON_MERIT_CONFIGURATIONS,
+  { id: BLOODCRAFTING_ID, name: "Bloodcrafting", line: "VtR", fields: [{ key: "subject", label: "ui.specialty", kind: "text" }, { key: "enhancements", label: "ui.bloodcraftingEnhancements", kind: "list" }] },
   { id: "h-vtr-fire-revolution:hobbyist-clique-advanced", name: "Hobbyist Clique (Advanced)", line: "VtR", fields: [{ key: "skill", label: "ui.skill", kind: "text" }] },
   { id: "h-vtr-fire-revolution:devotion-experimenter-advanced", name: "Devotion Experimenter (Advanced)", line: "VtR", fields: [{ key: "clan", label: "ui.clan", kind: "select", options: ["daeva", "gangrel", "mekhet", "nosferatu", "ventrue"].map(value => ({ value, label: value[0].toUpperCase() + value.slice(1) })) }] },
   { id: "h-vtr-agony-ecstasy:reviled", name: "Reviled", line: "VtR", fields: [{ key: "group", label: "ui.meritConfig.clanCovenantOrCity", kind: "text" }] },
@@ -75,4 +79,16 @@ export function isVampireInlineMeritConfiguration(id: string) {
     isCommonInlineMeritConfiguration(id) ||
     VAMPIRE_MERIT_CONFIGURATIONS.some(item => item.id === id && item.line === "VtR" && item.fields.length === 1)
   );
+}
+
+export function vampireExpandedConfigurationLines(id: string | undefined, value: unknown, locale: Locale) {
+  if (id !== BLOODCRAFTING_ID) return undefined;
+  const subject = String(normalizeMeritConfiguration(value).subject ?? "");
+  return [
+    ...(subject ? [`${translate(locale, "ui.specialty")}: ${subject}`] : []),
+    ...bloodcraftingChoices(value).map(id => {
+      const item = BLOODCRAFTING_ENHANCEMENTS.find(item => item.id === id);
+      return item ? `${translate(locale, item.label)} (${item.cost})` : id;
+    }),
+  ];
 }

@@ -3,6 +3,8 @@ import { refundMeritDots, subtractDots } from "@/lib/experience-refunds";
 import type { VampirePowers } from "./catalog-types";
 import { stringArray, vampireAutomaticDevotionIds, vampireDevotionPrerequisitesMet, vampirePaidDevotionIds } from "./creation-rules";
 import type { DefinitionIdentity } from "@/lib/merit-identity";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
+import { BLOODCRAFTING_ID, bloodcraftingConfigurationMet } from "./bloodcrafting";
 
 export type VampireAdvancementUndo =
   | { kind: "trait"; group: "attributes" | "skills"; name: string; amount?: number }
@@ -29,6 +31,13 @@ const withoutMany = (value: unknown, ids: readonly string[]) =>
 export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdvancementUndo, powers?: Pick<VampirePowers, "disciplines" | "devotions">, meritCatalog: readonly DefinitionIdentity[] = []) {
   const next = structuredClone(sheet);
   if (!applyVampireAdvancementUndo(next, undo)) return false;
+  if (next.merits.some(merit => {
+    if (resolveMeritDefinition(merit, meritCatalog)?.id !== BLOODCRAFTING_ID || !merit.instanceId) return false;
+    if (merit.dots < 2) return true;
+    const previous = sheet.merits.find(item => item.instanceId === merit.instanceId);
+    return previous && bloodcraftingConfigurationMet(previous.dots, previous.configuration, sheet.specializations)
+      && !bloodcraftingConfigurationMet(merit.dots, merit.configuration, next.specializations);
+  })) return false;
   const retained = stringArray(next.line_data.devotion_ids);
   const paid = vampirePaidDevotionIds(sheet);
   const automatic = powers ? vampireAutomaticDevotionIds(sheet, powers) : new Set<string>();

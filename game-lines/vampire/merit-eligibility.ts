@@ -4,6 +4,7 @@ import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { canonicalTrait, requirementTrait, textRequirementMet } from "@/lib/merit-requirements";
 import { VAMPIRE_DISCIPLINES } from "./creation-rules";
 import type { VampireCovenantDefinition, VampirePurchasablePower } from "./catalog-types";
+import { BLOODCRAFTING_ID, bloodcraftingConfigurationMet } from "./bloodcrafting";
 
 export type VampireMeritContext = MeritPrerequisiteContext & {
   bloodlineId?: string;
@@ -159,6 +160,7 @@ export function zirnitraMortalMeritCount(context: MeritPrerequisiteContext) {
 }
 
 export function vampireMeritEligible(merit: MeritDefinition, context: VampireMeritContext, zirnitraRating: number) {
+  if (merit.id === BLOODCRAFTING_ID && context.configuration !== undefined && !bloodcraftingConfigurationMet(context.selectedDots ?? 2, context.configuration, context.specializations)) return false;
   if (merit.sourceId === "h-vtr-fire-revolution" && merit.category === "Carthian Movement" && (context.selectedDots ?? Math.min(...merit.ratings)) <= 2 && !["h-vtr-fire-revolution:enforcement", "h-vtr-fire-revolution:firebomber", "h-vtr-fire-revolution:fire-branded"].includes(merit.id) && ownedMerits(context, "h-vtr-fire-revolution:sophocrat").length) context = { ...context, statusSubstitution: Math.max(requirementTrait("Academics", context), requirementTrait("Science", context)) };
   if (!meritPrerequisitesMet(merit, { ...context, mortalMeritsAllowed: context.gameLine === "VtR" && zirnitraRating > 0 }, vampireTextPrerequisitesMet)) return false;
   if (merit.sourceId === "h-vtr-agony-ecstasy" && merit.id !== "vtr-sotc:chorister" && ["Circle of the Crone", "Tradition", "Crúac Style"].includes(merit.category) && !context.archetypes?.includes("circle-of-the-crone")) return false;

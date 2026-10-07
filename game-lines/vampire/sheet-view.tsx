@@ -4,7 +4,7 @@ import { vampirePowerPresentation } from "./power-presentation";
 
 import { type ReactNode, useEffect, useState } from "react";
 import { Link2, Plus, Trash2 } from "lucide-react";
-import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
+import { VampireMeritConfigurationEditor } from "./merit-configuration-editor";
 import {
   CharacterPaperShell,
   EditableList,
@@ -99,7 +99,7 @@ import {
   vampireOwnedCoilRuleEffects,
   vampireRuleEffectsFor,
 } from "./power-rule-effects";
-import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
+import { VAMPIRE_MERIT_CONFIGURATIONS, vampireExpandedConfigurationLines } from "./merit-configurations";
 import { BloodlineJoinDialog, BloodlinePage } from "./bloodline-page";
 import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
@@ -2214,7 +2214,7 @@ function VampireExpandedMeritList({
         const presented = definition && meritPresentation(definition, locale);
         const displayName = presented?.name ?? merit.name;
         const detail = meritConfigurationTitle(merit.configuration);
-        const configured = configuredDefinitionLines(
+        const configured = vampireExpandedConfigurationLines(definition?.id, merit.configuration, locale) ?? (configuredDefinitionLines(
           configDefinition,
           merit.dots,
           merit.configuration,
@@ -2232,14 +2232,14 @@ function VampireExpandedMeritList({
               merit.configuration,
               locale,
               catalog,
-            ) ?? []);
+            ) ?? []));
         const meritIndex = character.merits.indexOf(merit);
         const editor =
           configDefinition &&
           !["Vampire Template", "Vampire Shadow Cult"].includes(
             String(merit.grantedBy ?? ""),
           ) ? (
-            <MeritConfigurationEditor
+            <VampireMeritConfigurationEditor
               compact
               specialtyContext={vampireMeritContextForSheet(character, catalog, [])}
               merit={merit}
