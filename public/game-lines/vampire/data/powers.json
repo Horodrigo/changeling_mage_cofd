@@ -10531,19 +10531,38 @@
       "id": "devotion-hold-together",
       "kind": "devotion",
       "name": "Hold Together",
-      "translatedName": "Hold Together",
+      "translatedName": "Manter Inteiro",
       "summary": "Keeps a damaged Ride functioning past ordinary failure.",
       "source": "Wild Hunt: Gangrel",
-      "page": 63,
+      "page": 61,
       "manualOnly": true,
       "bloodlineId": "verlice",
       "experienceCost": 2,
       "prerequisites": "Resilience ••",
-      "cost": "2 Vitae",
-      "dicePool": "None",
+      "cost": "1 Vitae",
+      "dicePool": "Dexterity + Drive + Resilience",
       "action": "Instant",
-      "duration": "Scenes equal to successes Roll Results Success: The vampire’s Resilience dots are applied to the vehicle’s Durability, and he ignores penalties from environ mental hazards on Drive actions. This also obviates the effect of any moderate damage to the Ride, though it can’t account for grievous damage like missing tires or a removed brake line. Exceptional Success: The Verlice and his vehicle are truly one, operating at peak efficiency. The duration lasts for the current night and the next. Failure: The car is no worse for wear, but it’s no better either. Dramatic Failure: Something critical within the vehicle breaks instead of being protected. Reduce the Ride’s dice modifier by three until it can be repaired. Know Road ( A u s p e x •••) When all you have is the road, knowing where you’re going and how to get there becomes life and death. Verlice in remote areas know they can’t rely on technology to save them, so they cultivate this Devotion to fill that gap.",
-      "effect": "The vampire gains an understanding of any obstacles on the road in her path, which might take the form of downed trees, spike strips, serious ice or snow, or anything else that could slow her progress. This understanding extends for roughly (Auspex × 5) miles and allows the vampire to exceptionally succeed on three successes for Drive actions to navigate obstructions. The vampire also gains an inherent understanding of the route she needs to take regardless of distance. This under standing manifests as a fundamental feeling that the route is correct, but it doesn’t impart knowledge of the areas she needs to move through. She gains her Auspex dots as a bonus to any actions related to navigating to her destination, and she cannot be surprised en route."
+      "duration": "Scenes equal to successes",
+      "presentationPt": {
+        "summary": "Mantém um Veículo danificado funcionando além de seus limites normais.",
+        "prerequisites": "Resiliência ••",
+        "cost": "1 Vitae",
+        "dicePool": "Destreza + Condução + Resiliência",
+        "action": "Instantânea",
+        "duration": "Cenas iguais aos sucessos",
+        "rollResults": {
+          "success": "Os pontos de Resiliência do vampiro são aplicados à Durabilidade do veículo, e ele ignora penalidades de riscos ambientais nas ações de Condução. Isso também anula os efeitos de danos moderados no Veículo, mas não pode compensar danos graves como pneus ausentes ou um cabo de freio removido.",
+          "exceptionalSuccess": "O Verlice e seu veículo são um só e operam com eficiência máxima. A duração se estende pela noite atual e pela seguinte.",
+          "failure": "O carro não está pior, mas também não está melhor.",
+          "dramaticFailure": "Algo crucial no veículo quebra em vez de ser protegido. Reduza o modificador de dados do Veículo em três até que seja reparado."
+        }
+      },
+      "rollResults": {
+        "success": "The vampire’s Resilience dots are applied to the vehicle’s Durability, and he ignores penalties from environmental hazards on Drive actions. This also obviates the effect of any moderate damage to the Ride, though it cannot account for grievous damage like missing tires or a removed brake line.",
+        "exceptionalSuccess": "The Verlice and his vehicle are truly one, operating at peak efficiency. The duration lasts for the current night and the next.",
+        "failure": "The car is no worse for wear, but it is no better either.",
+        "dramaticFailure": "Something critical within the vehicle breaks instead of being protected. Reduce the Ride’s dice modifier by three until it can be repaired."
+      }
     },
     {
       "id": "devotion-murmur",
