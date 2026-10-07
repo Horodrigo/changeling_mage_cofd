@@ -13032,15 +13032,20 @@
       "id": "cruac-gwydions-curse",
       "kind": "cruac-rite",
       "name": "Gwydion's Curse",
-      "translatedName": "Gwydion's Curse",
-      "rating": 5,
+      "translatedName": "Maldição de Gwydion",
+      "rating": 4,
       "experienceCost": 2,
       "targetSuccesses": 10,
-      "summary": "Animate nearby plants to attack intruders until sunrise.",
+      "summary": "Animate nearby trees and large plants to attack until sunrise with a bashing damage bonus of 1.",
       "source": "Thousand Years of Night",
       "page": 78,
       "duration": "Until sunrise",
-      "effect": "Vitae soaked into the earth animates trees and large plants within Potency meters. They attack anyone in reach using Blood Potency for all pools, deal 1 bashing, have Durability 2 and no Willpower, and share a Vitae pool equal to the sacrifice as the ritualist chooses. They may spend one Vitae per turn to heal two Structure."
+      "effect": "The ritualist soaks the earth with sacrificed Vitae, animating trees and other large plants within a radius of ritual Potency yards (meters) and prompting them to attack anyone within reach. Animated plants use the vampire’s Blood Potency for all dice pools, have a damage bonus of 1 Bashing on attacks, take damage as inanimate objects with Durability 2, and have no Willpower score. They share a Vitae pool equal to the Vitae the ritualist spent, divided among the plants as the vampire wishes. They may spend one Vitae per turn to heal two points of Structure damage. This curse lasts until the next sunrise.",
+      "presentationPt": {
+        "summary": "Anima árvores e plantas grandes próximas para atacar até o nascer do sol, com bônus de dano contundente 1.",
+        "duration": "Até o nascer do sol",
+        "effect": "A Vitae absorvida pela terra anima árvores e plantas grandes em um raio de jardas (metros) igual à Potência do ritual, fazendo-as atacar quem estiver ao alcance. As plantas usam a Potência de Sangue da vampira em todas as paradas, têm bônus de dano contundente 1 nos ataques, sofrem dano como objetos inanimados com Durabilidade 2 e não têm Força de Vontade. Compartilham uma reserva de Vitae igual à Vitae sacrificada, dividida entre as plantas como a vampira desejar. Podem gastar uma Vitae por turno para curar dois pontos de dano de Estrutura. A maldição dura até o próximo nascer do sol."
+      }
     },
     {
       "id": "cruac-manananggals-working",
@@ -14442,8 +14447,8 @@
       "id": "theban-orison-voices",
       "kind": "theban-miracle",
       "name": "Orison of Voices",
-      "translatedName": "Orison of Voices",
-      "rating": 5,
+      "translatedName": "Prece das Vozes",
+      "rating": 4,
       "experienceCost": 2,
       "targetSuccesses": 8,
       "sacrament": "Rosary beads",
@@ -14451,21 +14456,32 @@
       "source": "Thousand Years of Night",
       "page": 79,
       "duration": "Three nights",
-      "effect": "Whenever any voice anywhere speaks the ritualist's name, she hears it along with enough surrounding context to understand the speaker's intent."
+      "effect": "Whenever any voice anywhere speaks the ritualist's name, she hears it along with enough surrounding context to understand the speaker's intent.",
+      "presentationPt": {
+        "sacrament": "Contas de rosário",
+        "summary": "Por três noites, ouve falas de qualquer lugar que invoquem seu nome.",
+        "duration": "Três noites",
+        "effect": "Sempre que qualquer voz, em qualquer lugar, disser o nome da ritualista, ela ouve a fala com contexto suficiente para compreender a intenção de quem falou."
+      }
     },
     {
       "id": "theban-sins-ancestors",
       "kind": "theban-miracle",
       "name": "Sins of the Ancestors",
-      "translatedName": "Sins of the Ancestors",
-      "rating": 5,
+      "translatedName": "Pecados dos Ancestrais",
+      "rating": 4,
       "experienceCost": 2,
       "targetSuccesses": 6,
-      "sacrament": "A quantity of the victim's blood",
+      "sacrament": "At least 1 Vitae of a vampire target’s blood or blood corresponding to 2 lethal Health levels of a mortal target",
       "summary": "Ask simple questions about members of the victim's blood lineage.",
       "source": "Thousand Years of Night",
       "page": 79,
-      "effect": "Consecrate the subject's blood and ask simple questions equal to Potency about close blood relatives. For Kindred this includes vampires once or twice removed by blood sympathy and the direct sire/childe line; for mortals, relatives up to two degrees removed and the direct parent/child line. Direct mortal descendants of Kindred also count. Each answer must fit one short sentence; complex questions may consume several questions or be rejected."
+      "effect": "Consecrate the subject's blood and ask simple questions equal to Potency about close blood relatives. For Kindred this includes vampires once or twice removed by blood sympathy and the direct sire/childe line; for mortals, relatives up to two degrees removed and the direct parent/child line. Direct mortal descendants of Kindred also count. Each answer must fit one short sentence; complex questions may consume several questions or be rejected.",
+      "presentationPt": {
+        "sacrament": "Ao menos 1 Vitae do sangue do alvo vampiro ou sangue correspondente a 2 níveis de dano letal à Vitalidade do alvo mortal",
+        "summary": "Faz perguntas simples sobre parentes da linhagem sanguínea da vítima.",
+        "effect": "Consagra o sangue do sujeito e faz um número de perguntas simples igual à Potência sobre parentes de sangue próximos. Para Membros, isso inclui vampiros a um ou dois graus de Simpatia de Sangue e a linha direta de senhor e cria; para mortais, parentes de até dois graus e a linha direta entre pais e filhos. Descendentes mortais diretos de alvos Membros também contam. Cada resposta deve caber em uma frase curta; perguntas complexas podem consumir várias perguntas ou ser recusadas."
+      }
     },
     {
       "id": "theban-blandishment-sin",
