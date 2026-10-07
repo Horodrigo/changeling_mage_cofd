@@ -82,7 +82,8 @@ test("Vampire catalogs group core, historical, and uncommon Clans", async () => 
   assert.ok(merits.length >= 45);
   assert.equal(powers.disciplines.length, 23);
   assert.equal(powers.ritualDisciplines.length, 5);
-  assert.equal(powers.devotions.length, 357);
+  assert.equal(powers.devotions.length, 358);
+  assert.equal(powers.devotions.find(item => item.id === "devotion-treasured-servant")?.source, "False Gods: Ventrue", "The independently printed p. 110 Devotion is no longer merged into Soul Transfer");
   assert.equal(powers.lashes.length, 2);
   assert.equal(powers.cruacRites.length, 76);
   assert.equal(powers.thebanMiracles.length, 32);
@@ -592,7 +593,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   assert.deepEqual(counts, {
     "h-vtr-sin-again": 91,
     "h-vtr-wild-hunt": 93,
-    "h-vtr-false-gods": 106,
+    "h-vtr-false-gods": 107,
     "h-vtr-strange-shades": 89,
     "h-vtr-better-feared": 92,
     "h-vtr-agony-ecstasy": 95,
@@ -608,7 +609,9 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
     "h-vtr-better-feared": ["Acteius", "Candymen", "Gethsemani", "Keepers of the Dark", "Lygos", "The Cockscomb Society", "Von Schreck Family", "Yagnatia"],
     "h-vtr-false-gods": ["Adrestoi", "Gottlings", "Keravnos", "Malkovians", "Malocusians", "Melissidae", "Rotgrafen", "Typhos", "Warumono"],
   });
-  assert.equal(items.some((item) => ["Risen Beast", "Disciple of Dis", "Igor", "Pack Omega", "Predator-Marked", "Treasured Servant", "Beast King", "Show Breed", "Crashes"].includes(item.name)), false);
+  assert.equal(items.some((item) => ["Risen Beast", "Disciple of Dis", "Igor", "Pack Omega", "Predator-Marked", "Beast King", "Show Breed", "Crashes"].includes(item.name)), false);
+  assert.equal(merits.some(item => item.name === "Treasured Servant"), false, "The independently printed Vampire Devotion is not a Ghoul Merit");
+  assert.equal(powers.devotions.find(item => item.id === "devotion-treasured-servant")?.prerequisites, "Resilience ••");
   assert.ok(["Hag Blood", "Constituent", "I Know a Guy (Advanced)", "Raise the Witch's Familiar", "Sharing the Familiar's Form", "Uplift", "Childe of Dis"].every((name) => items.some((item) => item.name === name)));
   assert.equal(items.some((item) => ["Ghoulish Caucus", "Forensic Psychometry"].includes(item.name)), false);
   assert.deepEqual(coreMerits.filter((item) => item.sourceId === "h-vtr-agony-ecstasy").map((item) => item.name).sort(), ["Carousing", "Mythologist", "Poisoner's Garden", "Roughing It"]);
