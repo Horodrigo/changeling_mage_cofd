@@ -828,6 +828,7 @@ test("Devotion access and learning discounts use canonical affiliations and know
   const sheet = { line_data: { clan_id: "gangrel", bloodline_id: "", covenant_ids: [], devotion_ids: [] } };
   for (const [id, condition, cost] of [
     ["devotion-encode-vitae", { bloodline_id: "mnemosyne" }, 2],
+    ["devotion-shadow-in-the-land", { bloodline_id: "csalad" }, 4],
     ["devotion-night-life", { clan_id: "daeva", bloodline_id: "erzsebet" }, 0],
     ["devotion-kiss-of-death", { bloodline_id: "moda-mortale" }, 1],
     ["devotion-form-of-the-trickster", { bloodline_id: "rotgrafen" }, 1],

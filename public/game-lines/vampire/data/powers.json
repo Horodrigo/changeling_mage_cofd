@@ -9615,7 +9615,7 @@
       "kind": "devotion",
       "name": "Kuroko",
       "translatedName": "Kuroko",
-      "summary": "Moves as an ignored stagehand while enabling another's action.",
+      "summary": "Attacks without witnesses recognizing the vampire as the assailant.",
       "source": "Strange Shades: Mekhet",
       "page": 88,
       "manualOnly": true,
@@ -9625,13 +9625,22 @@
       "requirement": "The vampire activates this Devotion at the beginning of the turn she attacks her victim.",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "The vampire attacks her victim, but neither he nor any bystanders will recognize that she did the deed. They might see an illusory assailant make a run for it, or just a quick blur and a blood spatter. This attack is incredibly disorienting, inflicting the victim with the Stunned Tilt. This Devotion only applies once per victim in a scene, and does not work on attacks that require sustained contact, such as grappling or feeding."
+      "effect": "The vampire attacks her victim, but neither he nor any bystanders will recognize that she did the deed. They might see an illusory assailant make a run for it, or just a quick blur and a blood spatter. This attack is incredibly disorienting, inflicting the victim with the Stunned Tilt. This Devotion only applies once per victim in a scene, and does not work on attacks that require sustained contact, such as grappling or feeding.",
+      "presentationPt": {
+        "summary": "Ataca sem que as testemunhas reconheçam a vampira como agressora.",
+        "prerequisites": "Celeridade ••, Ofuscação ••••",
+        "cost": "1 Vitae",
+        "requirement": "A vampira ativa esta Devoção no início do turno em que ataca a vítima.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "A vampira ataca a vítima, mas nem ela nem os observadores reconhecem que foi a vampira quem o fez. Podem ver um agressor ilusório fugir ou apenas um borrão rápido e respingos de sangue. O ataque é extremamente desorientador e impõe à vítima a Complicação Atordoado. Esta Devoção só se aplica uma vez por vítima em uma cena e não funciona em ataques que exijam contato prolongado, como agarrar ou alimentar-se."
+      }
     },
     {
       "id": "devotion-out-of-sight-out-of-mind",
       "kind": "devotion",
       "name": "Out of Sight, Out of Mind",
-      "translatedName": "Out of Sight, Out of Mind",
+      "translatedName": "Longe dos Olhos, Longe da Mente",
       "summary": "Makes absence erode witnesses' attention and memory.",
       "source": "Strange Shades: Mekhet",
       "page": 88,
@@ -9646,15 +9655,65 @@
         "success": "The vampire spends a Willpower and activates this Devotion as she leaves an area. If successful, everyone in the scene forgets she was ever present, gaining the False Memories Condition. All traces of her passing erode: security tapes glitch, written materials vanish or are inexplicably destroyed, and superficial damage to the environment is displaced onto another phenomenon (maybe it was local hoodlums who vandalized the prince’s classic car). Even someone physically harmed by the vampire will be hard pressed to remember what she looked like, defaulting to their own personal prejudices and assumptions. The vampire can choose to exempt specific individuals or items from this Devotion.",
         "exceptionalSuccess": "The power of the vampire’s Obfuscate wipes away all physical records of her presence, including superficial damage or alterations she inflicted on material items. Any item she damaged but did not destroy “forgets” that it was ever harmed. Scratches and chips replace themselves, paint fades from walls, and cracked glass repairs itself. This does not affect dead or living creatures, who retain any damage inflicted.",
         "failure": "The vampire is exactly as memorable as normal.",
-        "dramaticFailure": "The vampire internalizes her attempt to be forgotten and instead loses her own memory of the previous scene. She suffers the Confused Condition. Sample Modifiers: Groups greater than five (–1), groups greater than ten (–2), groups greater than 20 (–3), the vampire did significant damage or violence in the scene (–5)."
+        "dramaticFailure": "The vampire internalizes her attempt to be forgotten and instead loses her own memory of the previous scene. She suffers the Confused Condition."
+      },
+      "suggestedModifiers": [
+        {
+          "modifier": "–1",
+          "situation": "Groups greater than five"
+        },
+        {
+          "modifier": "–2",
+          "situation": "Groups greater than ten"
+        },
+        {
+          "modifier": "–3",
+          "situation": "Groups greater than 20"
+        },
+        {
+          "modifier": "–5",
+          "situation": "The vampire did significant damage or violence in the scene"
+        }
+      ],
+      "presentationPt": {
+        "summary": "Faz a ausência apagar a atenção e a memória das testemunhas.",
+        "prerequisites": "Dominação ••••, Ofuscação •••••",
+        "cost": "1 Vitae e 1 ponto de Força de Vontade",
+        "requirement": "A vampira deve espalhar um ponto de Vitae, incluído no custo, em um ponto central da área antes do fim da cena. Se essa Vitae for removida por lavagem de alguma forma, a Devoção não funciona.",
+        "dicePool": "Manipulação + Furtividade + Ofuscação contra a maior Perseverança + Potência de Sangue",
+        "action": "Instantânea",
+        "rollResults": {
+          "success": "A vampira gasta um ponto de Força de Vontade e ativa esta Devoção ao sair de uma área. Em caso de sucesso, todos na cena esquecem que ela esteve presente e recebem a Condição Falsas Memórias. Todos os vestígios de sua passagem se deterioram: gravações de segurança falham, materiais escritos desaparecem ou são inexplicavelmente destruídos, e danos superficiais ao ambiente são atribuídos a outro fenômeno, como delinquentes locais que vandalizaram o carro clássico do príncipe. Mesmo alguém ferido fisicamente pela vampira terá dificuldade de lembrar sua aparência, recorrendo aos próprios preconceitos e suposições. A vampira pode escolher indivíduos ou objetos específicos para isentar da Devoção.",
+          "exceptionalSuccess": "O poder da Ofuscação da vampira apaga todos os registros físicos de sua presença, incluindo danos superficiais ou alterações que causou em objetos materiais. Qualquer objeto que tenha danificado, mas não destruído, “esquece” que foi ferido. Arranhões e lascas se recompõem, tinta desaparece das paredes e vidro rachado se repara. Isso não afeta criaturas mortas ou vivas, que conservam qualquer dano sofrido.",
+          "failure": "A vampira é tão memorável quanto de costume.",
+          "dramaticFailure": "A vampira internaliza sua tentativa de ser esquecida e perde a própria memória da cena anterior. Sofre a Condição Confuso."
+        },
+        "suggestedModifiers": [
+          {
+            "modifier": "–1",
+            "situation": "Grupos com mais de cinco pessoas"
+          },
+          {
+            "modifier": "–2",
+            "situation": "Grupos com mais de dez pessoas"
+          },
+          {
+            "modifier": "–3",
+            "situation": "Grupos com mais de 20 pessoas"
+          },
+          {
+            "modifier": "–5",
+            "situation": "A vampira causou danos significativos ou violência na cena"
+          }
+        ]
       }
     },
     {
       "id": "devotion-shadow-in-the-land",
       "kind": "devotion",
       "name": "Shadow in the Land",
-      "translatedName": "Shadow in the Land",
-      "summary": "Projects perception through the surrounding territory.",
+      "translatedName": "Sombra na Terra",
+      "summary": "Manifests a Twilight projection in the material world as a translucent ghost.",
       "source": "Strange Shades: Mekhet",
       "page": 88,
       "manualOnly": true,
@@ -9665,16 +9724,32 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "The vampire’s Twilight form manifests in the material world as a translucent ghost. She can’t touch or manipulate things, but she can inflict any mental or social Discipline she knows as long as it doesn’t require her to spill blood. Others cannot affect her with Disciplines or attacks unless they have the means to do so on ephemeral beings. The vampire can return to Twilight with an instant action."
+      "effect": "The vampire’s Twilight form manifests in the material world as a translucent ghost. She can’t touch or manipulate things, but she can inflict any mental or social Discipline she knows as long as it doesn’t require her to spill blood. Others cannot affect her with Disciplines or attacks unless they have the means to do so on ephemeral beings. The vampire can return to Twilight with an instant action.",
+      "experienceDiscounts": [
+        {
+          "bloodlineId": "csalad",
+          "cost": 4
+        }
+      ],
+      "presentationPt": {
+        "summary": "Manifesta uma projeção no Crepúsculo no mundo material como um fantasma translúcido.",
+        "prerequisites": "Auspícios •••••, Ofuscação ••••",
+        "cost": "1 ponto de Força de Vontade",
+        "requirement": "A vampira está usando Projeção Crepuscular.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "A forma da vampira no Crepúsculo manifesta-se no mundo material como um fantasma translúcido. Não pode tocar ou manipular coisas, mas pode aplicar qualquer Disciplina Mental ou Social que conheça, desde que não exija derramar sangue. Outros não podem afetá-la com Disciplinas ou ataques, a menos que tenham meios de fazê-lo contra seres efêmeros. A vampira pode voltar ao Crepúsculo com uma ação instantânea."
+      }
     },
     {
       "id": "devotion-terminator",
       "kind": "devotion",
       "name": "Terminator",
-      "translatedName": "Terminator",
+      "translatedName": "Exterminador",
       "summary": "Pursues a designated target with tireless precision.",
       "source": "Strange Shades: Mekhet",
-      "page": 89,
+      "page": 88,
       "manualOnly": true,
       "experienceCost": 2,
       "prerequisites": "Auspex •, Celerity •",
@@ -9683,7 +9758,17 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "The vampire choses a single mortal and pursues him at a steady walk. While this Devotion is active, the Mekhet keeps pace with the target, no matter how fast he runs. If the victim hides or escapes line of sight, the vampire instinctively knows which way to go and will catch up with him the next time he slows his pace or catches his breath. This Devotion only functions if the victim remains on foot. However, if he uses a vehicle to escape the immediate area, the vampire still knows which direction to head. At the Storyteller’s discretion, if the victim hasn’t left the immediate area, the vampire might still be able to reach him at a stoplight or in dense traffic. If your chronicle uses the rules for Chases ( Chronicles of Darkness, p. 84), the following system applies: The vampire seizes the Edge for the rest of the scene, no matter how well the victim rolls. The number of successes required to escape the vampire is increased by her Celerity dots."
+      "effect": "The vampire choses a single mortal and pursues him at a steady walk. While this Devotion is active, the Mekhet keeps pace with the target, no matter how fast he runs. If the victim hides or escapes line of sight, the vampire instinctively knows which way to go and will catch up with him the next time he slows his pace or catches his breath. This Devotion only functions if the victim remains on foot. However, if he uses a vehicle to escape the immediate area, the vampire still knows which direction to head. At the Storyteller’s discretion, if the victim hasn’t left the immediate area, the vampire might still be able to reach him at a stoplight or in dense traffic. If your chronicle uses the rules for Chases ( Chronicles of Darkness, p. 84), the following system applies: The vampire seizes the Edge for the rest of the scene, no matter how well the victim rolls. The number of successes required to escape the vampire is increased by her Celerity dots.",
+      "presentationPt": {
+        "summary": "Persegue um alvo designado com precisão incansável.",
+        "prerequisites": "Auspícios •, Celeridade •",
+        "cost": "1 Vitae",
+        "requirement": "A vítima deve estar na linha de visão.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "A vampira escolhe um único mortal e o persegue caminhando em ritmo constante. Enquanto a Devoção estiver ativa, a Mekhet acompanha o alvo, por mais rápido que ele corra. Se a vítima se esconder ou sair da linha de visão, a vampira sabe instintivamente qual caminho seguir e a alcança na próxima vez que reduzir o ritmo ou parar para recuperar o fôlego. Esta Devoção só funciona se a vítima continuar a pé. Entretanto, se usar um veículo para fugir da área imediata, a vampira ainda sabe em que direção seguir. A critério do Narrador, se a vítima não tiver saído da área imediata, a vampira ainda pode alcançá-la em um semáforo ou no trânsito intenso. Se a crônica usar as regras de Perseguições (Chronicles of Darkness, p. 84), a vampira assume a Vantagem pelo restante da cena, independentemente do resultado das jogadas da vítima. O número de sucessos necessários para escapar da vampira aumenta em seus pontos de Celeridade."
+      }
     },
     {
       "id": "devotion-timing-is-everything",
