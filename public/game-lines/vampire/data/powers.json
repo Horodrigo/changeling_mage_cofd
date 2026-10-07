@@ -13802,52 +13802,69 @@
       "id": "h-vtr-agony-ecstasy:rite:fount-of-ma-at",
       "kind": "cruac-rite",
       "name": "Fount of Ma'at",
-      "translatedName": "Fount of Ma'at",
+      "translatedName": "Fonte de Ma'at",
       "rating": 4,
       "experienceCost": 2,
       "targetSuccesses": 9,
-      "summary": "Creates a source of divinatory truth and judgment through consecrated blood.",
+      "summary": "Drain Skill dots instead of Vitae and use them for the session.",
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 103,
       "duration": "One chapter",
-      "effect": "Fill a bowl with blood and identify a victim. Feeding from them that night may drain up to one Skill dot per Potency instead of the same amount of Vitae. The ritualist chooses Skills before learning their ratings and may use the stolen ratings and Specialties instead of, never in addition to, her own; the victim loses them for the duration.",
+      "effect": "Fill a bowl with blood and identify a victim. Feeding from them that night, even if their blood would not normally provide sustenance, may drain up to one Skill dot per Potency instead of the same amount of Vitae. The ritualist chooses Skills before learning their ratings and may use the stolen ratings and Specialties instead of, never in addition to, her own; the victim loses them for the duration.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Drena pontos de Perícias em lugar de Vitae e permite à ritualista usá-los durante a sessão.",
+        "resistedBy": "Perseverança",
+        "duration": "Uma sessão",
+        "effect": "Encha uma tigela com sangue e identifique uma vítima. Alimentar-se dela naquela noite, mesmo que normalmente não pudesse obter sustento de seu sangue, permite drenar até um ponto de Perícia por Potência no lugar da mesma quantidade de Vitae. A ritualista escolhe as Perícias antes de descobrir suas graduações e pode usar os pontos e Especializações roubados no lugar dos próprios, sem somá-los; a vítima os perde durante a duração."
+      },
+      "resistedBy": "Resolve"
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:childe-of-dis",
       "kind": "cruac-rite",
       "name": "Childe of Dis",
-      "translatedName": "Childe of Dis",
+      "translatedName": "Cria de Dis",
       "rating": 4,
       "experienceCost": 2,
-      "targetSuccesses": 9,
+      "targetSuccesses": 10,
       "summary": "Prepares the eyes of a crow or rat so its shadow serves as a Potency 1 Strix with Owl Eyes while the ritualist carries them.",
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 103,
-      "duration": "One month or until the rite is repeated or the pouch is lost",
-      "effect": "Prepare a crow's or rat's eyes in a carried leather pouch. Its shadow serves as a Shadow Potency 1 Strix with Owl Eyes (or Enhanced Senses), fueled only by Vitae the vampire supplies. It obeys the spirit of commands but will not directly oppose true Strix and may scheme independently. It may be retained indefinitely as the three-dot Servant of Dis Merit. At Crúac ••••• with two more successes, create one for another character.",
+      "duration": "One month or until the rite is repeated or the pouch is left behind, taken, or destroyed",
+      "effect": "Prepare a crow’s or rat’s eyes in a carried leather pouch. Its shadow serves as a Shadow Potency 1 Strix with Owl Eyes (or Enhanced Senses), fueled only by Vitae the vampire supplies. It obeys the spirit of commands but will not directly oppose true Strix and may scheme independently without contradicting its orders. The caster may retain it indefinitely by purchasing the three-dot Servant of Dis Merit, only once and possibly provoking a breaking point at the Storyteller’s discretion; this allows her to create another without destroying the first. At Crúac ••••• with two additional successes, create one for another character, who may also purchase it as a Merit.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Prepara os olhos de um corvo ou rato para que sua sombra sirva como Strix de Potência 1 com Olhos de Coruja enquanto a ritualista os carrega.",
+        "duration": "Um mês ou até o rito ser repetido ou a bolsa ser deixada para trás, tomada ou destruída",
+        "effect": "Prepare os olhos de um corvo ou rato em uma bolsa de couro que precisa carregar. A sombra serve como Strix de Potência de Sombra 1 com Olhos de Coruja ou Sentidos Aprimorados, alimentada somente pela Vitae fornecida pela vampira. Obedece ao espírito das ordens, mas não se opõe diretamente às Strix verdadeiras e pode tramar por conta própria sem contrariar suas instruções. Pode mantê-la indefinidamente comprando Servo de Dis de três pontos, somente uma vez, o que pode causar um Ponto de Ruptura a critério do Narrador; isso permite criar outra sem destruir a primeira. Com Crúac ••••• e dois sucessos adicionais, pode criar uma para outro personagem, que também pode comprá-la como Mérito."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:idol-of-false-life",
       "kind": "cruac-rite",
       "name": "Idol of False Life",
-      "translatedName": "Idol of False Life",
+      "translatedName": "Ídolo da Falsa Vida",
       "rating": 4,
       "experienceCost": 2,
       "targetSuccesses": 10,
-      "summary": "Builds a grisly false life that can act as a supernatural servant.",
+      "summary": "Bind a subject to an organic idol, transferring equipment benefits and aggravated damage suffered by the object.",
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
-      "page": 103,
+      "page": 104,
       "duration": "A year and a day",
       "effect": "Use both parties' blood to bind a present subject to an organic idol. Unpowered equipment placed on the idol affects the subject as though worn or wielded, but each Structure lost by the idol inflicts the same aggravated damage on the subject, ignoring armor and Resilience. A character may have only one idol and cannot normally break the bond early.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Vincula um sujeito a um ídolo orgânico, transferindo os efeitos de equipamentos e o dano agravado sofrido pelo objeto.",
+        "duration": "Um ano e um dia",
+        "effect": "Use o sangue de ambas as partes para vincular um sujeito presente a um ídolo orgânico. Equipamentos que não exigem energia, combustível ou munição colocados no ídolo afetam o sujeito como se fossem usados ou empunhados por ele; cada ponto de Estrutura perdido pelo ídolo causa o mesmo dano agravado ao sujeito, ignorando armadura e Resiliência. Um personagem só pode ter um ídolo e normalmente não pode romper o vínculo antes do fim da duração."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:bounty-of-the-false-god",
@@ -13943,7 +13960,7 @@
       "id": "h-vtr-agony-ecstasy:rite:your-goddess-listens",
       "kind": "cruac-rite",
       "name": "Your Goddess Listens",
-      "translatedName": "Your Goddess Listens",
+      "translatedName": "Sua Deusa Escuta",
       "rating": 5,
       "experienceCost": 2,
       "targetSuccesses": 17,
@@ -13952,9 +13969,14 @@
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 105,
       "duration": "A year and a day",
-      "effect": "Mark a city with Vitae sigils that supernatural living beings recognize as the Witch's name and a prayer. She hears any prayer using them and gains a link to the supplicant. During that night, she may activate one Discipline effect, including a blood-sorcery ritual, against the supplicant as though present, touching them, or meeting their gaze.",
+      "effect": "Mark a city with Vitae sigils that living beings with any supernatural awareness recognize as the Witch’s name and a prayer that can reach her. She hears such prayers and gains a link to the supplicant. During the same night she receives a prayer, she may activate one Discipline effect, including a blood-sorcery ritual, affecting the supplicant as though present, touching them, or meeting their gaze.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Marca uma cidade com o nome divino da ritualista para ouvir preces e responder a uma delas à distância com uma Disciplina.",
+        "duration": "Um ano e um dia",
+        "effect": "Marque uma cidade com sigilos de Vitae que seres vivos com qualquer percepção sobrenatural reconhecem como o nome da Bruxa e uma prece capaz de alcançá-la. Ela ouve essas preces e recebe um vínculo com quem as fez. Na mesma noite em que recebe uma prece, pode ativar um efeito de Disciplina, inclusive um ritual de Feitiçaria de Sangue, que afete o suplicante como se estivesse presente, tocando-o ou olhando em seus olhos."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:errata:mantle-amorous-fire",
