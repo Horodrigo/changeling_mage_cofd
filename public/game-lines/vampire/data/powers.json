@@ -12065,9 +12065,9 @@
       "id": "h-vtr-fire-revolution:devotion:death-mask",
       "kind": "devotion",
       "name": "Death Mask",
-      "translatedName": "Death Mask",
+      "translatedName": "Máscara Mortuária",
       "prerequisites": "Protean ••; Resilience •",
-      "experienceCost": 3,
+      "experienceCost": 1,
       "summary": "Feigns Final Death to natural and supernatural senses for a week.",
       "sourceId": "h-vtr-fire-revolution",
       "source": "Fire & Revolution: Carthians",
@@ -12078,15 +12078,24 @@
       "action": "Reflexive",
       "duration": "Week",
       "dicePool": "None",
-      "effect": "The vampire seems to all supernatural and natural senses to have met her Final Death. Her body begins to rot and decay as it would according to her true age, stopping just short of turning to ash, instead leaving behind a desiccated corpse. She can end this effect at any point with a reflexive action, and her body will regenerate back into its formerly undead state. The vampire can still move while this Devotion is active without ending it, though the effect will be rather alarming to bystanders. If the vampire also knows Auspex 3, she can purchase an upgraded version of this Devotion for 3 Experiences. If anyone attempts to pry through her memories or uncover the means of her “Final Death” through supernatural means, she can falsify the information the investigator uncovers with Manipulation + Subterfuge + Auspex, contested by the investigator’s Resolve + Blood Potency."
+      "effect": "The vampire seems to all supernatural and natural senses to have met her Final Death. Her body begins to rot and decay as it would according to her true age, stopping just short of turning to ash, instead leaving behind a desiccated corpse. She can end this effect at any point with a reflexive action, and her body will regenerate back into its formerly undead state. The vampire can still move while this Devotion is active without ending it, though the effect will be rather alarming to bystanders. If the vampire also knows Auspex 3, she can purchase an upgraded version of this Devotion for 3 Experiences. If anyone attempts to pry through her memories or uncover the means of her “Final Death” through supernatural means, she can falsify the information the investigator uncovers with Manipulation + Subterfuge + Auspex, contested by the investigator’s Resolve + Blood Potency.",
+      "presentationPt": {
+        "prerequisites": "Metamorfose ••; Resiliência •",
+        "summary": "Simula a Morte Final perante sentidos naturais e sobrenaturais por uma semana.",
+        "cost": "2 Vitae e 1 de Força de Vontade",
+        "action": "Reflexiva",
+        "duration": "Semana",
+        "dicePool": "Nenhuma",
+        "effect": "O vampiro parece ter sofrido a Morte Final perante todos os sentidos naturais e sobrenaturais. Seu corpo apodrece conforme sua idade real, mas para antes de virar cinzas, deixando um cadáver ressecado. Pode encerrar o efeito a qualquer momento como ação reflexiva, regenerando o corpo ao estado morto-vivo anterior. Ainda pode se mover sem encerrar a Devoção, embora isso alarme observadores. Se também conhecer Auspícios 3, pode comprar uma versão aprimorada por 3 Experiências. Se alguém tentar vasculhar suas memórias ou descobrir a causa de sua “Morte Final” por meios sobrenaturais, pode falsificar a informação com Manipulação + Subterfúgio + Auspícios, disputado por Perseverança + Potência de Sangue do investigador."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:husk",
       "kind": "devotion",
       "name": "Husk",
-      "translatedName": "Husk",
+      "translatedName": "Carcaça",
       "prerequisites": "Celerity •; Vigor •",
-      "experienceCost": 2,
+      "experienceCost": 1,
       "summary": "Accelerates feeding dramatically, at the risk of leaving a conspicuous and potentially lethal wound.",
       "sourceId": "h-vtr-fire-revolution",
       "source": "Fire & Revolution: Carthians",
@@ -12098,7 +12107,17 @@
       "dicePool": "None",
       "action": "None",
       "duration": "Permanent",
-      "effect": "The vampire adds the lower of their Celerity or Vigor to her Blood Potency when determining the amount of Vitae she can take from a human victim per turn during violent feeding, though she can choose not to use this effect. This is an extraordinarily violent, cruel method of feeding, doubling all penalties from the Scarred Condition. If the vampire chooses to take three more Vitae than her Blood Potency in one turn, the bite leaves a gaping wound that’s both noticeable and potentially lethal. Until the victim receives medical attention, she must make a Resolve + Stamina roll every 10 minutes or will suffer another point of lethal damage as they bleed out."
+      "effect": "The vampire adds the lower of their Celerity or Vigor to her Blood Potency when determining the amount of Vitae she can take from a human victim per turn during violent feeding, though she can choose not to use this effect. This is an extraordinarily violent, cruel method of feeding, doubling all penalties from the Scarred Condition. If the vampire chooses to take three more Vitae than her Blood Potency in one turn, the bite leaves a gaping wound that’s both noticeable and potentially lethal. Until the victim receives medical attention, she must make a Resolve + Stamina roll every 10 minutes or will suffer another point of lethal damage as they bleed out.",
+      "presentationPt": {
+        "prerequisites": "Celeridade •; Ímpeto •",
+        "summary": "Acelera drasticamente a alimentação, com risco de deixar uma ferida evidente e potencialmente letal.",
+        "cost": "Nenhum",
+        "requirement": "Precisa ser usada para modificar a manobra Alimentar.",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Permanente",
+        "effect": "Ao determinar quanto de Vitae pode tomar de uma vítima humana por turno durante alimentação violenta, o vampiro soma o menor valor entre Celeridade e Ímpeto à sua Potência de Sangue, mas pode escolher não usar o efeito. O método é extremamente violento e cruel e dobra todas as penalidades da Condição Marcado por Cicatrizes. Se tomar três Vitae a mais que sua Potência de Sangue em um turno, a mordida deixa uma ferida aberta, evidente e potencialmente letal. Até receber atendimento médico, a vítima precisa testar Perseverança + Vigor a cada 10 minutos ou sofre mais um ponto de dano letal pelo sangramento."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:got-my-back",
@@ -12172,9 +12191,9 @@
       "id": "h-vtr-fire-revolution:devotion:just-fucking-book-it",
       "kind": "devotion",
       "name": "Just Fucking Book It",
-      "translatedName": "Just Fucking Book It",
+      "translatedName": "Só Corre, Porra",
       "prerequisites": "Celerity •; Resilience • or Vigor •",
-      "experienceCost": 2,
+      "experienceCost": 1,
       "summary": "Combines speed and endurance to escape a losing confrontation.",
       "sourceId": "h-vtr-fire-revolution",
       "source": "Fire & Revolution: Carthians",
@@ -12184,7 +12203,15 @@
       "cost": "1 Vitae and 1 Willpower",
       "action": "Reflexive",
       "duration": "Scene",
-      "effect": "As long as the vampire keeps running and takes no instant actions, she ignores the Vitae-per-turn costs of using Celerity, Resilience, and Vigor. Should she take any other instant action beyond running, this effect ends."
+      "effect": "As long as the vampire keeps running and takes no instant actions, she ignores the Vitae-per-turn costs of using Celerity, Resilience, and Vigor. Should she take any other instant action beyond running, this effect ends.",
+      "presentationPt": {
+        "prerequisites": "Celeridade •; Resiliência • ou Ímpeto •",
+        "summary": "Combina velocidade e resistência para escapar de um confronto perdido.",
+        "cost": "1 Vitae e 1 de Força de Vontade",
+        "action": "Reflexiva",
+        "duration": "Cena",
+        "effect": "Enquanto continuar correndo e não realizar ações instantâneas, o vampiro ignora os custos de Vitae por turno de Celeridade, Resiliência e Ímpeto. Se realizar qualquer outra ação instantânea além de correr, o efeito termina."
+      }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:knockout",
