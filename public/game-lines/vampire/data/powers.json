@@ -12544,28 +12544,37 @@
       "id": "cruac-clothos-skein",
       "kind": "cruac-rite",
       "name": "Clotho's Skein",
-      "translatedName": "Clotho's Skein",
+      "translatedName": "Meada de Clotho",
       "rating": 5,
       "experienceCost": 2,
       "targetSuccesses": 9,
-      "contestedBy": "Resolve + Supernatural Tolerance",
       "summary": "Dreamwalk through daysleep connections to implant a suggestion.",
       "source": "Night Horrors: Spilled Blood",
       "page": 40,
-      "effect": "The next time the ritualist rests, her mind remains aware and perceives the dream-threads of every Kindred within one mile. She may designate one target during casting, making that thread obvious, or choose later from vague dream impressions. Success implants one thought or idea: a goal or a changed opinion. It cannot compel self-harm, though it may provoke violence against others, and the target pursues it in their own customary way."
+      "effect": "The next time the ritualist rests, her mind remains aware and perceives the dream-threads of every Kindred within one mile. She may designate one target during casting, making that thread obvious, or choose later from vague dream impressions. Success implants one thought or idea: a goal or a changed opinion. It cannot compel self-harm, though it may provoke violence against others, and the target pursues it in their own customary way.",
+      "presentationPt": {
+        "summary": "Percorre conexões oníricas durante o Sono Diurno para implantar uma sugestão.",
+        "resistedBy": "Perseverança + Potência de Sangue",
+        "effect": "Na próxima vez que a ritualista repousar, sua mente permanece consciente e percebe os fios oníricos de todos os Membros em um raio de uma milha. Pode indicar um alvo ao conjurar, tornando o fio dele evidente, ou escolhê-lo depois entre impressões vagas dos sonhos. O sucesso implanta um único pensamento ou ideia: um objetivo ou uma mudança de opinião. Não pode levar o alvo a ferir a si mesmo, mas pode provocar violência contra outras pessoas; ele busca realizar a ideia por seus meios habituais."
+      },
+      "resistedBy": "Resolve + Blood Potency"
     },
     {
       "id": "cruac-sanguine-augur",
       "kind": "cruac-rite",
       "name": "Sanguine Augur",
-      "translatedName": "Sanguine Augur",
+      "translatedName": "Áugure Sanguíneo",
       "rating": 1,
       "experienceCost": 2,
       "targetSuccesses": 6,
       "summary": "Dream cryptic revelations about the last vessel you fed from.",
       "source": "Night Horrors: Spilled Blood",
       "page": 40,
-      "effect": "At the next daysleep, receive a cryptic vision revealing one previously unknown fact about the most recent vessel. Each additional Vitae spent either reveals another fact or makes the original vision less cryptic, never both. For Kindred this may reveal Touchstones, bloodline, Merits, or lineage back a number of generations equal to Crúac; for mortals it may reveal life details or Vinculum strength."
+      "effect": "At the next daysleep, receive a cryptic vision revealing one previously unknown fact about the most recent vessel. The ritual may target other vampires, with the usual risks of drinking another vampire’s Vitae. Each additional Vitae spent either reveals another fact or makes the vision less cryptic; the caster can benefit from only one of these types of effect in the same evening, never both. For Kindred this may reveal Touchstones, bloodline, Merits, or lineage back a number of generations equal to Crúac; for mortals it may reveal life details or the strength of any Vinculum they possess.",
+      "presentationPt": {
+        "summary": "Recebe revelações oníricas enigmáticas sobre a última fonte de que se alimentou.",
+        "effect": "No próximo Sono Diurno, recebe uma visão enigmática que revela uma informação desconhecida sobre a fonte mais recente. Pode usar o rito com outros vampiros, sujeitando-se aos riscos habituais de beber sua Vitae. Cada Vitae adicional pode revelar outra informação ou tornar a visão menos enigmática; só pode se beneficiar de um desses tipos de efeito na mesma noite, nunca de ambos. Para Membros, pode revelar Touchstones, Bloodline, Méritos ou ascendência por um número de gerações igual a Crúac; para mortais, detalhes de sua vida ou a força de um Vinculum que possuam."
+      }
     },
     {
       "id": "cruac-wisdom-blood",
