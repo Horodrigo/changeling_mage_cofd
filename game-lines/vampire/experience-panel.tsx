@@ -276,6 +276,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     add(t("ui.dicePool"), item.dicePool);
     add(t("ui.cost"), item.cost); add(t("ui.requirement"), item.requirement); add(t("ui.condition"), item.condition);
     add(t("ui.action"), item.action); add(t("ui.duration"), item.duration); add(t("ui.contestedBy"), item.contestedBy); add(t("ui.resistedBy"), item.resistedBy);
+    add(t("ui.procedure"), item.procedure); add(t("ui.outcome"), item.outcome);
+    add(t("ui.sacrament"), item.sacrament); add(t("ui.targetSuccesses"), item.targetSuccesses);
     const footerDetails = mechanicsDetails(item).filter(({ label }) => [t("ui.dramaticFailure"), t("ui.failure"), t("ui.success"), t("ui.exceptionalSuccess")].includes(label) || label.startsWith(`${t("ui.suggestedModifiers")} `));
     const quote = vampireDevotionExperienceCost(definition, character, powers, definition.id === chosen ? confirmationId : undefined);
     if (quote !== undefined) footerDetails.push({ label: t("ui.experienceCost"), value: `${quote} ${t("ui.xp")}` });

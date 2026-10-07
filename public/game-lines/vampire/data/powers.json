@@ -9488,7 +9488,7 @@
       "id": "devotion-encode-vitae",
       "kind": "devotion",
       "name": "Encode Vitae",
-      "translatedName": "Encode Vitae",
+      "translatedName": "Codificar Vitae",
       "summary": "Stores a message or pattern in blood.",
       "source": "Strange Shades: Mekhet",
       "page": 87,
@@ -9504,14 +9504,89 @@
         "success": "When and if the ghoul injects the prepared Vitae, he encodes the message in his blood rather than reciting it. Once the ghoul reaches his intended recipient, they must feed from this messenger before the end of the scene, or else the message fades from the blood. Once they feed, they receive the message as if they were experiencing it outside the normal flow of time. This vision can be significantly more detailed than the usual effect of mnemonic ghouls; the only limit is the Mekhet’s creativity or recall.",
         "exceptionalSuccess": "The experience of receiving this message is enlightening, and the recipient refreshes a spent Willpower.",
         "failure": "The Vitae becomes dead blood. The vampire must begin again.",
-        "dramaticFailure": "The message is garbled and wrong, and the vampire won’t know it. Sample Modifiers: A year old memory (–1), a decade old memory –2, the message is complex or academic (–2), a century old memory (–3), the message is longer than five minutes (–3), the vampire has the Eidetic Memory Merit (+2)"
+        "dramaticFailure": "The message is garbled and wrong, and the vampire won’t know it."
+      },
+      "experienceDiscounts": [
+        {
+          "bloodlineId": "mnemosyne",
+          "cost": 2
+        }
+      ],
+      "procedure": "The vampire prepares a vial of Vitae for the purposes of creating a message with a mnemonic ghoul, then activates this Devotion.",
+      "suggestedModifiers": [
+        {
+          "modifier": "–1",
+          "situation": "A year old memory"
+        },
+        {
+          "modifier": "–2",
+          "situation": "A decade old memory"
+        },
+        {
+          "modifier": "–2",
+          "situation": "The message is complex or academic"
+        },
+        {
+          "modifier": "–3",
+          "situation": "A century old memory"
+        },
+        {
+          "modifier": "–3",
+          "situation": "The message is longer than five minutes"
+        },
+        {
+          "modifier": "+2",
+          "situation": "The vampire has the Eidetic Memory Merit"
+        }
+      ],
+      "presentationPt": {
+        "summary": "Armazena uma mensagem ou um padrão no sangue.",
+        "prerequisites": "Auspícios ••••, Dominação •••",
+        "cost": "2 Vitae",
+        "requirement": "O mensageiro já deve ter sido usado com sucesso como ghoul mnemônico ao menos uma vez.",
+        "procedure": "A vampira prepara um frasco de Vitae para criar uma mensagem com um ghoul mnemônico e então ativa esta Devoção.",
+        "dicePool": "Inteligência + Ocultismo + Auspícios",
+        "action": "Instantânea",
+        "duration": "Indefinida",
+        "rollResults": {
+          "success": "Quando e se o ghoul injetar a Vitae preparada, codifica a mensagem no sangue em vez de recitá-la. Ao chegar ao destinatário, este deve alimentar-se do mensageiro antes do fim da cena; caso contrário, a mensagem desaparece do sangue. Ao se alimentar, recebe a mensagem como se a vivenciasse fora do fluxo normal do tempo. Essa visão pode ser muito mais detalhada que o efeito habitual dos ghouls mnemônicos; o único limite é a criatividade ou a memória da Mekhet.",
+          "exceptionalSuccess": "Receber a mensagem é uma experiência esclarecedora, e o destinatário recupera um ponto de Força de Vontade gasto.",
+          "failure": "A Vitae se torna sangue morto. A vampira precisa começar novamente.",
+          "dramaticFailure": "A mensagem fica distorcida e incorreta, e a vampira não saberá disso."
+        },
+        "suggestedModifiers": [
+          {
+            "modifier": "–1",
+            "situation": "Uma memória de um ano atrás"
+          },
+          {
+            "modifier": "–2",
+            "situation": "Uma memória de uma década atrás"
+          },
+          {
+            "modifier": "–2",
+            "situation": "A mensagem é complexa ou acadêmica"
+          },
+          {
+            "modifier": "–3",
+            "situation": "Uma memória de um século atrás"
+          },
+          {
+            "modifier": "–3",
+            "situation": "A mensagem dura mais de cinco minutos"
+          },
+          {
+            "modifier": "+2",
+            "situation": "A vampira possui o Mérito Memória Eidética"
+          }
+        ]
       }
     },
     {
       "id": "devotion-familiars-eyes",
       "kind": "devotion",
       "name": "Familiar's Eyes",
-      "translatedName": "Familiar's Eyes",
+      "translatedName": "Olhos do Familiar",
       "prerequisites": "Animalism ••; Auspex ••••",
       "experienceCost": 3,
       "summary": "Experience the world through the senses of a familiar or animal ghoul.",
@@ -9523,7 +9598,17 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "The vampire projects his senses into a familiar or animal ghoul, experiencing whatever it does. The vampire can’t influence the animal directly with this power, but it stills respond to Animalism commands or training as normal. However, this Devotion limits the vampire’s own perceptions. He loses any sense projected into the animal, but he can be selective. If the animal is exposed to a sensation that would evoke frenzy, such as exposure to fire or sunlight, the vampire must resist as normal, but with a +2 modifier."
+      "effect": "The vampire projects his senses into a familiar or animal ghoul, experiencing whatever it does. The vampire can’t influence the animal directly with this power, but it stills respond to Animalism commands or training as normal. However, this Devotion limits the vampire’s own perceptions. He loses any sense projected into the animal, but he can be selective. If the animal is exposed to a sensation that would evoke frenzy, such as exposure to fire or sunlight, the vampire must resist as normal, but with a +2 modifier.",
+      "presentationPt": {
+        "summary": "Vivencia o mundo pelos sentidos de um familiar ou ghoul animal.",
+        "prerequisites": "Animalismo ••; Auspícios ••••",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro deve alimentar o animal com um ponto de Vitae, incluído no custo.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "O vampiro projeta seus sentidos em um familiar ou ghoul animal, vivenciando tudo que ele percebe. Não pode influenciar o animal diretamente com este poder, mas ele continua respondendo normalmente a comandos de Animalismo ou ao treinamento. Entretanto, esta Devoção limita as percepções do próprio vampiro. Ele perde qualquer sentido projetado no animal, mas pode escolher quais projetar. Se o animal for exposto a uma sensação que provocaria frenesi, como fogo ou luz solar, o vampiro deve resistir normalmente, mas com um modificador de +2."
+      }
     },
     {
       "id": "devotion-kuroko",
