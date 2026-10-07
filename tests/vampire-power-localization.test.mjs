@@ -103,6 +103,13 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.match(devotions.find(item => item.id === "devotion-celebrity").effect, /inflicted Enthralled.*automatically succeeds.*may still roll.*failed result/);
   assert.match(devotions.find(item => item.id === "devotion-crush-years").requirement, /Blood Potency × 2.*less than one hundred.*Roll once.*separately/);
   assert.match(devotions.find(item => item.id === "devotion-frog-prince").dicePool, /\(if unwilling\)$/);
+  for (const id of ["devotion-look", "devotion-give-take", "devotion-one-got-away", "devotion-pledge"]) {
+    const siphon = devotions.find(item => item.id === id);
+    assert.equal(siphon.bloodlineId, "liderc");
+    assert.equal(siphon.page, id === "devotion-look" ? 27 : 28);
+    assert.match(siphon.effect, /do not work on vampires or negate the Daeva clan bane.*Except for The Look.*one victim at a time/);
+    assert.match(siphon.presentationPt.effect, /não afetam vampiros nem anulam.*Daeva.*Exceto O Olhar.*uma vítima por vez/);
+  }
   const donning = rites.find(item => item.id === "cruac-donning-beasts-flesh");
   assert.equal(donning.cost, "1 Vitae");
   assert.equal(donning.action, "Three turns to transform");
