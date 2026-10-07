@@ -8734,8 +8734,8 @@
       "id": "devotion-annals-death",
       "kind": "devotion",
       "name": "Annals of Death",
-      "translatedName": "Annals of Death",
-      "prerequisites": "Auspex ••••",
+      "translatedName": "Anais da Morte",
+      "prerequisites": "Auspex •••",
       "experienceCost": 1,
       "dicePool": "Intelligence + Occult + Auspex",
       "summary": "Answer questions about death in a location and foresee deaths.",
@@ -8748,7 +8748,22 @@
         "failure": "The vampire can glean no bloody history from the place. Could it be that pristine?",
         "success": "The player can ask the Storyteller one question per success about the history of her current location, as it pertains to the deaths of people, creatures, or supernatural beings. For purposes of this Devotion, a location encompasses a single building or other discrete area of roughly equivalent size, although she may focus on a smaller area such as a single room if she likes. Also, for purposes of this Devotion, “death” includes the Embrace, as well as Final Death. As with similar uses of Auspex, the Beast within provides images and sensations that convey the history. The questions below are samples; the player may — with Storyteller permission — come up with others that fit the criteria. The player may also spend successes to learn who or what will be next to die in her location, if nothing interferes with the pattern in the interim. Each success she spends this way allows her to ask the Storyteller one question about the next death to come, similar to the sample questions given for past deaths. She may mix and match successes to gain information about both the past and the future with one use of this Discipline.",
         "exceptionalSuccess": "The elder can extrapolate more subtle moments of tragedy from patterns of ruin. For each answer the Storyteller provides, the vampire also learns the nature of any breaking points, Touchstones, and Vices that were or will be involved in the deaths she sees or predicts. Sample Questions • Who was the first (or last) person to die here? The ghostly image of a face in the mirror with a bullet hole in its head. Last words scrawled in blood across the wall. • Is there a factor that connects multiple deaths in this location? A hand reaching out from the shadows to direct the knife. Shimmering lines connecting objects and spaces as if on a map. • Did someone die here within [a given time period]? A set of bloodstained, turn-of-the-century style clothes draped over the arm of a chair. The pages of a calendar flipping backward to a particular date. • Who was the last person to die here that I know personally? The victim’s voice calling out to the vampire for help. A pair of glaring eyes that accuse the vampire from the detached head of a corpse. • What was the predominant emotion surrounding [a specific person’s] death? The seductive scent of heady perfume. A room tinged with the green of envy."
-      }
+      },
+      "presentationPt": {
+        "prerequisites": "Auspícios •••",
+        "cost": "Nenhum",
+        "dicePool": "Inteligência + Ocultismo + Auspícios",
+        "action": "Instantânea",
+        "summary": "Responde perguntas sobre mortes em um local e prevê mortes futuras.",
+        "requirement": "Um mesmo local só pode ser alvo desta Devoção uma vez por cena.",
+        "rollResults": {
+          "dramaticFailure": "A jogadora faz uma pergunta como se tivesse obtido sucesso; o Narrador fornece informações falsas ou enganosas.",
+          "failure": "O vampiro não consegue perceber nenhuma história sangrenta do lugar. Será que ele é tão intocado?",
+          "success": "A jogadora pode fazer ao Narrador uma pergunta por sucesso sobre a história do local atual relacionada à morte de pessoas, criaturas ou seres sobrenaturais. O local abrange um único edifício ou outra área de tamanho equivalente, mas ela pode se concentrar em uma área menor, como um cômodo. Morte inclui o Abraço e a Morte Final. Como em outros usos de Auspícios, a Fera fornece imagens e sensações que revelam a história. As perguntas abaixo são exemplos; com permissão do Narrador, a jogadora pode propor outras que atendam aos critérios. Também pode gastar sucessos para descobrir quem ou o que será o próximo a morrer no local, se nada interferir no padrão. Cada sucesso gasto assim permite uma pergunta sobre a próxima morte, semelhante às perguntas sobre mortes passadas. É possível combinar informações sobre passado e futuro em um único uso desta Disciplina.",
+          "exceptionalSuccess": "O ancião percebe tragédias mais sutis nos padrões de ruína. Para cada resposta do Narrador, o vampiro também descobre a natureza de Pontos de Ruptura, Pedras de Toque e Vícios que estiveram ou estarão envolvidos nas mortes vistas ou previstas. Perguntas de exemplo: • Quem foi a primeira ou última pessoa a morrer aqui? Uma imagem espectral de um rosto no espelho, com uma perfuração de bala na cabeça; últimas palavras escritas com sangue na parede. • Há algo que conecta várias mortes neste local? Uma mão sai das sombras para guiar a faca; linhas cintilantes ligam objetos e espaços como em um mapa. • Alguém morreu aqui durante um período específico? Roupas manchadas de sangue da virada do século sobre uma cadeira; páginas de um calendário voltam até uma data. • Quem foi a última pessoa que conheço pessoalmente a morrer aqui? A voz da vítima pede ajuda; olhos acusadores encaram o vampiro na cabeça decepada de um cadáver. • Qual foi a emoção predominante na morte de uma pessoa específica? O aroma sedutor de perfume inebriante; um cômodo tingido pelo verde da inveja."
+        }
+      },
+      "requirement": "A particular location can only be targeted with this Devotion once per scene."
     },
     {
       "id": "devotion-bones-mountain",
@@ -8822,14 +8837,14 @@
       "id": "devotion-consumption",
       "kind": "devotion",
       "name": "Consumption",
-      "translatedName": "Consumption",
+      "translatedName": "Consumição",
       "prerequisites": "Dominate •••••",
       "experienceCost": 4,
-      "cost": "1 Vitae + 1 Willpower",
-      "summary": "Possess a victim over any distance using only your voice.",
+      "cost": "5 Vitae + 1 Willpower",
+      "summary": "Destroy a possessed victim’s will, allowing further possession at any distance through your voice.",
       "source": "Thousand Years of Night",
       "page": 74,
-      "requirement": "The vampire must be currently possessing a valid target using the Dominate Discipline.",
+      "requirement": "The vampire must be currently possessing a valid target using the Dominate Discipline. Only mortals without Supernatural Tolerance are valid targets.",
       "dicePool": "Intelligence + Intimidation + Dominate vs. Resolve",
       "action": "Contested",
       "rollResults": {
@@ -8837,6 +8852,20 @@
         "failure": "The vampire continues to possess the victim, but nothing more happens. He can try again at a cumulative onedie penalty for each attempt.",
         "success": "The vampire destroys the victim’s will and leaves her vulnerable to further possession. The victim gains the persistent Enslaved Condition (Vampire: The Requiem Second Edition, p. 303). As long as that Condition persists, the vampire may possess the victim again at a cost of 1 Vitae without a roll and without spending the Willpower cost. As long as the victim can hear his voice, he may possess her from any distance.",
         "exceptionalSuccess": "Whenever the vampire possesses the victim’s body he gains a faint impression of her memories, giving him a +2 bonus to any Social rolls he makes while deliberately posing as the victim among people who may know her."
+      },
+      "presentationPt": {
+        "prerequisites": "Dominação •••••",
+        "cost": "5 Vitae + 1 de Força de Vontade",
+        "summary": "Destrói a vontade de uma vítima possuída, permitindo possuí-la novamente à distância pela voz.",
+        "requirement": "O vampiro precisa estar possuindo um alvo válido com Dominação. Somente mortais sem Tolerância Sobrenatural são alvos válidos.",
+        "dicePool": "Inteligência + Intimidação + Dominação contra Perseverança",
+        "action": "Disputada",
+        "rollResults": {
+          "dramaticFailure": "O livre-arbítrio da vítima se impõe violentamente, encerrando imediatamente a possessão e qualquer outro efeito ou Condição que o vampiro tenha causado com Dominação ou Devoções que exijam Dominação.",
+          "failure": "O vampiro continua possuindo a vítima, mas nada mais acontece. Pode tentar novamente com penalidade cumulativa de um dado por tentativa.",
+          "success": "O vampiro destrói a vontade da vítima e a deixa vulnerável a novas possessões. Ela recebe a Condição persistente Escravizado (Vampire: The Requiem Second Edition, p. 303). Enquanto a Condição persistir, ele pode possuí-la novamente por 1 Vitae, sem teste nem custo de Força de Vontade. Desde que ela ouça sua voz, pode possuí-la a qualquer distância.",
+          "exceptionalSuccess": "Sempre que possui o corpo da vítima, o vampiro percebe uma impressão tênue de suas memórias e recebe +2 em testes Sociais ao se passar deliberadamente por ela diante de pessoas que possam conhecê-la."
+        }
       }
     },
     {
@@ -8936,16 +8965,24 @@
       "id": "devotion-pass-yesteryear",
       "kind": "devotion",
       "name": "Pass Into Yesteryear",
-      "translatedName": "Pass Into Yesteryear",
+      "translatedName": "Passar ao Passado",
       "prerequisites": "Obfuscate •••, Nightmare •",
       "experienceCost": 2,
-      "cost": "2 Vitae + 1 Willpower",
+      "cost": "3 Vitae + 1 Willpower",
       "summary": "Make others forget those bound to you by Vinculum.",
       "source": "Thousand Years of Night",
       "page": 76,
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "Whenever the elder feeds his blood to someone, he may bolster it with this Devotion to infuse his own history of self-inflicted ostracism. If his victim suffers the onset or strengthening of the Vinculum from this drink, she gains the Forgotten Condition (see p. 136)."
+      "effect": "Whenever the elder feeds his blood to someone, he may bolster it with this Devotion to infuse his own history of self-inflicted ostracism. If his victim suffers the onset or strengthening of the Vinculum from this drink, she gains the Forgotten Condition (see p. 136).",
+      "presentationPt": {
+        "prerequisites": "Ofuscação •••, Pesadelo •",
+        "cost": "3 Vitae + 1 de Força de Vontade",
+        "summary": "Faz os outros esquecerem quem está vinculado a você pelo Vinculum.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Sempre que o ancião dá seu sangue a alguém, pode fortalecê-lo com esta Devoção e sua história de isolamento autoimposto. Se a bebida iniciar ou fortalecer o Vinculum na vítima, ela recebe a Condição Esquecido (p. 136)."
+      }
     },
     {
       "id": "devotion-preternatural-instinct",
