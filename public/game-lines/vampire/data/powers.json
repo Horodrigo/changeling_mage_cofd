@@ -5189,8 +5189,8 @@
       "id": "devotion-messenger-s-blessing",
       "kind": "devotion",
       "name": "Messenger's Blessing",
-      "translatedName": "Messenger's Blessing",
-      "summary": "Ensures a command or message reaches its intended recipient intact.",
+      "translatedName": "Bênção do Mensageiro",
+      "summary": "Protect a servant carrying an Entombed Command; would-be attackers must overcome a reflexive resistance roll.",
       "source": "False Gods: Ventrue",
       "page": 109,
       "manualOnly": true,
@@ -5201,13 +5201,23 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Night",
-      "effect": "Anyone who attempts to harm the vampire’s servant must first succeed on a reflexive Resolve + Blood Potency roll, penalized by the vampire’s Dominate dots. On a failure, they cannot attack, wasting a turn. This aura applies a number of times equal to the Ventrue’s Resilience. Once the total averted attacks against the messenger equal the vampire’s Discipline dots, or the sun rises (whichever comes first), the effect ends."
+      "effect": "Anyone who attempts to harm the vampire’s servant must first succeed on a reflexive Resolve + Blood Potency roll, penalized by the vampire’s Dominate dots. On a failure, they cannot attack, wasting a turn. This aura applies a number of times equal to the Ventrue’s Resilience. Once the total averted attacks against the messenger equal the vampire’s Discipline dots, or the sun rises (whichever comes first), the effect ends.",
+      "presentationPt": {
+        "prerequisites": "Dominação ••, Resiliência ••",
+        "summary": "Protege um servo que recebeu Comando Sepultado, exigindo que possíveis agressores superem um teste de resistência reflexivo.",
+        "cost": "2 Vitae",
+        "requirement": "A vampira precisa usar Comando Sepultado em seu servo.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "effect": "Qualquer pessoa que tentar ferir o servo da vampira precisa primeiro obter sucesso em um teste reflexivo de Perseverança + Potência de Sangue, com penalidade igual aos pontos de Dominação da vampira. Se falhar, não pode atacar e desperdiça um turno. Essa aura se aplica um número de vezes igual à Resiliência da Ventrue. Quando o total de ataques evitados contra o mensageiro igualar os pontos de Disciplina da vampira, ou o sol nascer, o que ocorrer primeiro, o efeito termina."
+      }
     },
     {
       "id": "devotion-rope-a-dope",
       "kind": "devotion",
       "name": "Rope-a-Dope",
-      "translatedName": "Rope-a-Dope",
+      "translatedName": "Nas Cordas",
       "summary": "Absorbs an opponent's pressure before turning it back.",
       "source": "False Gods: Ventrue",
       "page": 109,
@@ -5223,6 +5233,20 @@
         "exceptionalSuccess": "The victim also suffers the Drained Condition.",
         "failure": "The victim feels a moment of enervation, but ignores it.",
         "dramaticFailure": "The victim is energized and takes a +2 on all attacks against the vampire for the rest of the scene."
+      },
+      "presentationPt": {
+        "prerequisites": "Resiliência •••, Ímpeto ••",
+        "summary": "Acumula penalidades nas ações Físicas do adversário ao sofrer seus ataques e as converte em bônus para um contra-ataque.",
+        "cost": "2 Vitae",
+        "dicePool": "Presença + Atletismo + Resiliência contra Vigor + Potência de Sangue",
+        "action": "Reflexiva",
+        "duration": "Cena",
+        "rollResults": {
+          "success": "A vampira drena vitalidade por meio dos ataques que a vítima lhe inflige. Cada vez que sofre um ferimento causado pelo adversário, impõe a ele um modificador cumulativo de –1 às ações Físicas, levando-o à exaustão. A qualquer momento, ou quando essa penalidade ultrapassaria –5, a vampira pode golpear o adversário, recebendo o valor da penalidade como bônus ao ataque. Quando o ataca dessa forma, o efeito da Devoção termina.",
+          "exceptionalSuccess": "A vítima também sofre a Condição Drenado.",
+          "failure": "A vítima sente um instante de fraqueza, mas o ignora.",
+          "dramaticFailure": "A vítima se revigora e recebe +2 em todos os ataques contra a vampira pelo resto da cena."
+        }
       }
     },
     {
@@ -5252,8 +5276,8 @@
       "id": "devotion-rumor-of-dread",
       "kind": "devotion",
       "name": "Rumor of Dread",
-      "translatedName": "Rumor of Dread",
-      "summary": "Spreads fear through reputation before the vampire arrives.",
+      "translatedName": "Rumor de Pavor",
+      "summary": "Use a subject to spread a designed rumor that radiates supernatural fear.",
       "source": "False Gods: Ventrue",
       "page": 110,
       "manualOnly": true,
@@ -5268,6 +5292,20 @@
         "exceptionalSuccess": "The vampire’s rumor is particularly insidious. The duration lasts for his Blood Potency dots in additional nights.",
         "failure": "The vampire’s rumor is a nonstarter.",
         "dramaticFailure": "The rumor is about the vampire, as determined by the Storyteller."
+      },
+      "presentationPt": {
+        "prerequisites": "Dominação •••, Pesadelo •",
+        "summary": "Usa um sujeito para propagar um rumor escolhido, irradiando medo sobrenatural em torno dessa ideia.",
+        "cost": "2 Vitae",
+        "dicePool": "Manipulação + Intimidação + Dominação contra Compostura + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Noite",
+        "rollResults": {
+          "success": "A vítima se torna uma fonte viral de rumores. Quem a encontrar experimenta um efeito semelhante a Presença Aterradora (Vampire, p. 135), mas o centro desse medo é um rumor criado pela vampira, e não a própria vítima. Os sujeitos inventam justificativas frágeis para onde ouviram a fofoca ou usam uma lógica tortuosa para explicar como a conceberam ou descobriram. Assim como em Presença Aterradora, as testemunhas não podem gastar Força de Vontade para contestar o rumor até que a vítima original se afaste de sua presença. Pelo resto da noite, somam os pontos de Pesadelo da Ventrue a qualquer teste para espalhá-lo como fofoca. A vampira não controla onde ou como o sujeito passará a noite, embora possa facilmente usar Dominação para fazê-lo seguir um trajeto específico.",
+          "exceptionalSuccess": "O rumor da vampira é particularmente insidioso. A duração se estende por um número de noites adicionais igual aos seus pontos de Potência de Sangue.",
+          "failure": "O rumor da vampira não se espalha.",
+          "dramaticFailure": "O rumor é sobre a vampira, conforme determinado pelo Narrador."
+        }
       }
     },
     {
