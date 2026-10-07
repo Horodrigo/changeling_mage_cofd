@@ -10512,19 +10512,40 @@
       "id": "devotion-murmur",
       "kind": "devotion",
       "name": "Murmur",
-      "translatedName": "Murmur",
-      "summary": "Reads an omen from the behavior of a flock.",
+      "translatedName": "O Murmúrio",
+      "summary": "Gain a prophecy granting Advanced Action on future rolls related to it, with options to transfer the benefits to another character.",
       "source": "Wild Hunt: Gangrel",
       "page": 67,
       "manualOnly": true,
       "bloodlineId": "wickers",
-      "experienceCost": 2,
+      "experienceCost": 0,
       "prerequisites": "Auspex ••, Nightmare ••",
-      "cost": "A Humanity breaking point based on six minus uses this story",
+      "cost": "Upon successfully using this Devotion, subtract the number of times the vampire has used the effect in the current story from six. She suffers a breaking point at that level if it equals or is lower than her current Humanity. If the resulting number is negative, she takes a Humanity 1 breaking point with the difference as a penalty to her player’s roll.",
       "dicePool": "Wits + Occult + Auspex",
       "action": "Reflexive",
       "duration": "One night per Blood Potency",
-      "effect": "Each success grants the Advanced Action quality to one future roll related to the prophecy. The Devotion cannot be used again until its duration ends or all granted actions are spent. Dread Presence can give one action to another character, while Face of the Beast can transfer all of them. Exceptional success also grants 8-again to one action; dramatic failure attracts a Strix before the story ends."
+      "effect": "A Hawk can mingle her mind with the fragmented consciousness of her bloodline brethren, granting access to various memories, patterns, and esoteric secrets. This augury takes the form of a horrifying, existential vision, a deluge of fragmentary images tainted by cajoling whispers. The prophecy requires decoding once her connection to the Murmur is severed, but it contains the ability to disrupt fate in a significant way, including preventing an event, a disastrous decision, or even a death.",
+      "presentationPt": {
+        "summary": "Obtém uma profecia que concede Ação Avançada a testes futuros relacionados a ela, podendo transmitir os benefícios a outra pessoa.",
+        "prerequisites": "Auspícios ••, Pesadelo ••",
+        "cost": "Após usar esta Devoção com sucesso, subtraia de seis o número de vezes que o vampiro usou o efeito nesta história. Sofre um Ponto de Ruptura nesse nível se ele for igual ou inferior à Humanidade atual. Se o resultado for negativo, sofre um Ponto de Ruptura em Humanidade 1, com a diferença como penalidade ao teste da jogadora.",
+        "dicePool": "Raciocínio + Ocultismo + Auspícios",
+        "action": "Reflexiva",
+        "duration": "Uma noite por ponto de Potência de Sangue",
+        "effect": "A vampira pode misturar sua mente à consciência fragmentada de seus irmãos de Bloodline, acessando memórias, padrões e segredos esotéricos. A previsão assume a forma de uma visão existencial horrível: uma enxurrada de imagens fragmentadas contaminadas por sussurros persuasivos. A profecia precisa ser decifrada depois que a conexão com o Murmúrio termina, mas contém a possibilidade de interferir de modo significativo no destino, inclusive evitando um evento, uma decisão desastrosa ou até uma morte.",
+        "rollResults": {
+          "success": "O Murmúrio revela o futuro aos fragmentos. Para cada sucesso no teste de ativação, a vampira recebe Ação Avançada em um teste futuro relacionado à profecia durante a duração. A jogadora realiza a ação duas vezes e usa o melhor resultado. Não pode usar esta Devoção novamente até a duração terminar ou todas as Ações Avançadas serem gastas, o que ocorrer primeiro. A Wicker também pode conceder uma única Ação Avançada a outro personagem usando Presença Aterradora para impor um vislumbre da profecia terrível. Se usar Face da Fera, pode conceder todas as ações a outro personagem, que pode dispensar a resistência habitual se consentir.",
+          "exceptionalSuccess": "As vozes gritam em uníssono. A vampira também recebe 8-novamente em uma dessas ações.",
+          "failure": "O Murmúrio fica em silêncio.",
+          "dramaticFailure": "A vampira alcança o bando errado: chamou a atenção de uma Coruja, que chegará antes do fim da história atual. Se este poder provocar a Fraqueza da Bloodline da vampira, duas Strix virão atrás dela."
+        }
+      },
+      "rollResults": {
+        "success": "The Murmur reveals the future in fits and starts. For each success on the activation roll, the vampire gains the Advanced Action quality on a number of future dice pools for the duration relating to the prophecy she gained. That is, the player rolls the action twice and takes the better result of the two. She cannot use this Devotion again until the duration expires or she uses all of her Advanced Actions, whichever comes first. The Wicker can also bestow a single Advanced Action on another character by using Dread Presence to inflict a glimpse of her awful prophecy on the subject. If she uses Face of the Beast, she can bestow all the actions on another character (who can forgo the usual resistance if they consent).",
+        "exceptionalSuccess": "The voices screech in unity. The vampire also gains the 8-again quality on one of these actions.",
+        "failure": "The Murmur is silent.",
+        "dramaticFailure": "The vampire taps into the wrong flock: she’s caught an Owl’s attention, and it will arrive before the end of the current story. If this power then triggers the vampire’s bloodline bane, that means two Strix are coming for her."
+      }
     },
     {
       "id": "devotion-wisdom-of-crowds",

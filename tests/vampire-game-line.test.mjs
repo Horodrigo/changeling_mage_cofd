@@ -771,6 +771,7 @@ test("canonical additional Devotion prerequisites and refunds preserve paid depe
   freeSheet.skills.Occult = 2;
   freeSheet.line_data.bloodline_id = "test";
   freeSheet.line_data.devotion_ids = ["free"];
+  freeSheet.line_data.automatic_devotion_ids = ["free"];
   assert.equal(refundVampireAdvancement(freeSheet, { kind: "trait", group: "skills", name: "Occult" }, freePowers), true);
   assert.deepEqual(synchronizeAutomaticBloodlineDevotions(freeSheet, freePowers).line_data.devotion_ids, [], "Free Bloodline grants can be recomposed after a refund");
 });
@@ -840,6 +841,57 @@ test("Devotion access and learning discounts use canonical affiliations and know
   const hive = powers.devotions.find(item => item.id === "devotion-hive-nexus-gestalt");
   assert.equal(vampireDevotionExperienceCost(hive, { line_data: { ...sheet.line_data, bloodline_id: "melissidae", covenant_ids: ["carthian-movement"] } }, powers), 4, "Printed affiliation discounts never stack");
   assert.equal(vampireDevotionExperienceCost(hive, { line_data: { ...sheet.line_data, bloodline_id: "Melissid", covenant_ids: ["Movimento Cartiano"] } }, powers), 5, "Display names never grant canonical affiliation discounts");
+});
+
+test("new explicit-zero Devotions track grants without reclassifying older purchases or opaque choices", async () => {
+  const { synchronizeAutomaticBloodlineDevotions, vampireAutomaticDevotionIds } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const { refundVampireAdvancement } = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
+  const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
+  const { removeVampireBloodline } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const bloodlines = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/bloodlines.json`, "utf8"));
+  const id = "devotion-murmur", bloodline = bloodlines.find(item => item.id === "wickers");
+  const buyer = blankPrintCharacter("VtR");
+  buyer.line_data = { ...buyer.line_data, clan_id: "gangrel", bloodline_id: "wickers", disciplines: { Auspex: 2, Nightmare: 2 }, devotion_ids: ["authored-choice"] };
+  buyer.current_state = { ...buyer.current_state, experience_available: 10, experience_spent: 4, experience_total: 14, vampire_experience_history: [{ id: "authored", label: "Texto autoral de compra", cost: 4 }] };
+  assert.equal(powers.devotions.find(item => item.id === id).experienceCost, 0);
+  assert.deepEqual([...vampireAutomaticDevotionIds(buyer, powers)].sort(), ["devotion-infectious-bite", "devotion-city-attunement", "devotion-hounds-hell", "devotion-udjat", "devotion-purification", "devotion-spore"].sort(), "The schema-2 bridge is limited to the six formerly free identities");
+  const before = JSON.stringify(buyer);
+  const granted = synchronizeAutomaticBloodlineDevotions(buyer, powers);
+  assert.deepEqual(granted.line_data.devotion_ids, ["authored-choice", id]);
+  assert.deepEqual(granted.line_data.automatic_devotion_ids, [id]);
+  assert.deepEqual(granted.current_state, buyer.current_state);
+  assert.equal(JSON.stringify(buyer), before);
+  assert.equal(synchronizeAutomaticBloodlineDevotions(granted, powers), granted);
+  const left = removeVampireBloodline(granted, bloodline, powers);
+  assert.deepEqual(left.line_data.devotion_ids, ["authored-choice"]);
+  assert.deepEqual(left.line_data.automatic_devotion_ids, []);
+  assert.deepEqual(left.current_state, buyer.current_state);
+  const refunded = structuredClone(granted);
+  assert.equal(refundVampireAdvancement(refunded, { kind: "discipline", name: "Auspex" }, powers), true);
+  assert.deepEqual(synchronizeAutomaticBloodlineDevotions(refunded, powers).line_data.devotion_ids, ["authored-choice"]);
+  const unavailable = { ...powers, devotions: powers.devotions.filter(item => item.id !== id) };
+  assert.equal(synchronizeAutomaticBloodlineDevotions(granted, unavailable), granted, "An unavailable definition cannot revoke a saved choice");
+  for (const paid of [false, true]) {
+    const old = structuredClone(buyer);
+    old.line_data.devotion_ids.push(id);
+    if (paid) {
+      old.line_data.automatic_devotion_ids = [id];
+      old.current_state.vampire_experience_history.push({ id: "old-murmur", label: "Compra antiga autoral", cost: 2, undo: { kind: "devotion", id } });
+    } else assert.equal(synchronizeAutomaticBloodlineDevotions(old, powers), old, "An opaque older choice never acquires a free marker");
+    const oldBefore = JSON.stringify(old);
+    assert.equal(refundVampireAdvancement(old, { kind: "discipline", name: "Auspex" }, powers), false, "Retained paid or untracked choices protect prerequisites even at today's zero price");
+    assert.equal(JSON.stringify(old), oldBefore);
+    const oldLeft = removeVampireBloodline(old, bloodline, powers);
+    assert.deepEqual(oldLeft.line_data.devotion_ids, old.line_data.devotion_ids);
+    assert.deepEqual(oldLeft.current_state, old.current_state);
+  }
+  const namesake = { ...powers.devotions.find(item => item.id === id), id: "homebrew:vampire:devotion-udjat", name: "Udjat" };
+  const homebrew = structuredClone(buyer);
+  homebrew.line_data.devotion_ids = [namesake.id];
+  const homebrewPowers = { ...powers, devotions: [namesake] };
+  assert.equal(synchronizeAutomaticBloodlineDevotions(homebrew, homebrewPowers), homebrew, "A free Homebrew namesake never enters the canonical schema-2 bridge");
+  assert.equal(refundVampireAdvancement(homebrew, { kind: "discipline", name: "Auspex" }, homebrewPowers), false);
 });
 
 test("conditional free Devotions track only new grants and preserve paid or opaque older choices", async () => {

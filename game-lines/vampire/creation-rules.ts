@@ -212,22 +212,36 @@ export function vampirePaidDevotionIds(character: Pick<CharacterSheet, "current_
   }));
 }
 
+// Production schema-2 bridge for the six definitions already free before grant
+// tracking existed. Synchronization and refunds share this identity list; remove
+// the bridge when untracked schema-2 grants are no longer supported.
+const LEGACY_FREE_DEVOTION_IDS = new Set([
+  "devotion-infectious-bite", "devotion-city-attunement", "devotion-hounds-hell",
+  "devotion-udjat", "devotion-purification", "devotion-spore",
+]);
+
+export function vampireAutomaticDevotionIds(character: Pick<CharacterSheet, "line_data">, powers: Pick<VampirePowers, "devotions">) {
+  return new Set([
+    ...stringArray(character.line_data.automatic_devotion_ids),
+    ...powers.devotions.filter((item) => item.experienceCost === 0 && LEGACY_FREE_DEVOTION_IDS.has(item.id)).map((item) => item.id),
+  ]);
+}
+
 export function synchronizeAutomaticBloodlineDevotions(character: CharacterSheet, powers: Pick<VampirePowers, "disciplines" | "devotions">, meritCatalog: readonly DefinitionIdentity[] = []) {
   const automatic = powers.devotions.filter((item) => item.bloodlineId && (item.experienceCost === 0 || item.experienceDiscounts?.some((discount) => discount.cost === 0)));
   const current = stringArray(character.line_data.devotion_ids);
   const tracked = stringArray(character.line_data.automatic_devotion_ids);
   const paid = vampirePaidDevotionIds(character);
-  // Existing explicit-zero grants keep their schema-2 bridge. Conditional
-  // grants remove only IDs this synchronizer actually granted; old purchases
-  // and opaque, untracked choices never become free just from today's quote.
-  const automaticIds = new Set(automatic.filter((item) => item.experienceCost === 0 || tracked.includes(item.id)).map((item) => item.id));
+  // Today's free quote cannot identify an old purchase or opaque choice.
+  const provenance = vampireAutomaticDevotionIds(character, powers);
+  const automaticIds = new Set(automatic.filter((item) => provenance.has(item.id)).map((item) => item.id));
   const next = current.filter((id) => !automaticIds.has(id) || paid.has(id));
   const nextTracked = tracked.filter((id) => next.includes(id) && !paid.has(id));
   const bloodlineId = String(character.line_data.bloodline_id ?? "");
   for (const item of automatic) {
     if (item.bloodlineId !== bloodlineId || vampireDevotionExperienceCost(item, character, powers) !== 0 || !vampireDevotionPrerequisitesMet(item, character, powers, meritCatalog) || next.includes(item.id)) continue;
     next.push(item.id);
-    if (item.experienceCost !== 0) nextTracked.push(item.id);
+    nextTracked.push(item.id);
   }
   const devotionIds = [...new Set(next)];
   const trackedIds = [...new Set(nextTracked)];
