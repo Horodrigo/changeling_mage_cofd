@@ -4782,7 +4782,7 @@
       "id": "devotion-psycho-mantle",
       "kind": "devotion",
       "name": "Psycho Mantle",
-      "translatedName": "Psycho Mantle",
+      "translatedName": "Manto do Psicopata",
       "prerequisites": "Nightmare ••, Resilience •",
       "covenantIds": [
         "carthian-movement"
@@ -4794,7 +4794,15 @@
       "cost": "1 Vitae",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "When another character lashes out, the vampire adds Nightmare to her retaliatory Monstrous Beast pool. Success inflicts both Bestial and Frightened rather than only Bestial."
+      "effect": "When another character lashes out, the vampire adds Nightmare to her retaliatory Monstrous Beast pool. Success inflicts both Bestial and Frightened rather than only Bestial.",
+      "presentationPt": {
+        "prerequisites": "Pesadelo ••, Resiliência •",
+        "summary": "Revida com uma Aura Predatória aterrorizante.",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Quando outro personagem Incita a Fera, o vampiro acrescenta Pesadelo à sua parada de resposta com a Fera Monstruosa. O sucesso impõe Bestial e Assustado, em vez de apenas Bestial."
+      }
     },
     {
       "id": "devotion-punching-fucking",
@@ -4990,7 +4998,7 @@
       "id": "devotion-under-my-skin-2",
       "kind": "devotion",
       "name": "Under My Skin",
-      "translatedName": "Under My Skin",
+      "translatedName": "Sob Minha Pele",
       "prerequisites": "Protean •••, Majesty ••",
       "covenantIds": [
         "carthian-movement"
@@ -5002,13 +5010,21 @@
       "cost": "1 Vitae",
       "dicePool": "Manipulation + Empathy + Protean",
       "action": "Instant",
-      "effect": "A victim carrying a Majesty-derived Condition from the vampire becomes the template for her shape. The vampire copies the victim's appearance and applicable physical Merits, may use up to two dots of the victim's Social Merits per Majesty Condition, and gains +2 per such Condition, maximum +5, to impersonate the victim or defeat scrutiny."
+      "effect": "A victim carrying a Majesty-derived Condition from the vampire becomes the template for her shape. The vampire copies the victim's appearance and applicable physical Merits, may use up to two dots of the victim's Social Merits per Majesty Condition, and gains +2 per such Condition, maximum +5, to impersonate the victim or defeat scrutiny.",
+      "presentationPt": {
+        "prerequisites": "Metamorfose •••, Majestade ••",
+        "summary": "Assume a aparência de alguém sob sua Majestade.",
+        "cost": "1 Vitae",
+        "dicePool": "Manipulação + Empatia + Metamorfose",
+        "action": "Instantânea",
+        "effect": "Uma vítima com uma Condição derivada da Majestade do vampiro serve de modelo para sua forma. O vampiro copia a aparência e os Méritos Físicos aplicáveis da vítima, pode usar até dois pontos dos Méritos Sociais dela por Condição de Majestade e recebe +2 por Condição, até o máximo de +5, para se passar pela vítima ou superar uma análise atenta."
+      }
     },
     {
       "id": "devotion-under-my-skin-3",
       "kind": "devotion",
       "name": "Under My Skin (Greater)",
-      "translatedName": "Under My Skin (Greater)",
+      "translatedName": "Sob Minha Pele (Superior)",
       "prerequisites": "Protean ••••, Majesty •••",
       "covenantIds": [
         "carthian-movement"
@@ -5020,13 +5036,21 @@
       "cost": "1 Vitae",
       "dicePool": "Manipulation + Empathy + Protean",
       "action": "Instant",
-      "effect": "Provides every benefit of Under My Skin and may instead make a willing subject look and act like the vampire, as though that subject possessed and used the basic Devotion on her."
+      "effect": "Provides every benefit of Under My Skin and may instead make a willing subject look and act like the vampire, as though that subject possessed and used the basic Devotion on her.",
+      "presentationPt": {
+        "prerequisites": "Metamorfose ••••, Majestade •••",
+        "summary": "Troca aparências com um alvo sob sua Majestade.",
+        "cost": "1 Vitae",
+        "dicePool": "Manipulação + Empatia + Metamorfose",
+        "action": "Instantânea",
+        "effect": "Concede todos os benefícios de Sob Minha Pele e pode, em vez disso, fazer um alvo que consinta parecer e agir como o vampiro, como se esse alvo possuísse e usasse a Devoção básica nele."
+      }
     },
     {
       "id": "devotion-violent-coercion",
       "kind": "devotion",
       "name": "Violent Coercion",
-      "translatedName": "Violent Coercion",
+      "translatedName": "Coerção Violenta",
       "prerequisites": "Majesty ••, Vigor •",
       "covenantIds": [
         "carthian-movement"
@@ -5038,7 +5062,15 @@
       "cost": "1 Vitae",
       "dicePool": "Presence + Intimidation + Majesty vs. Composure + Blood Potency",
       "action": "Contested; resistance is reflexive",
-      "effect": "Issue a clear task the subject can complete within one hour without realistically risking death or torpor. Success inflicts Coerced. Completing or refusing the task resolves it; refusal or waiting out the hour deals lethal damage equal to Vigor. A subject may carry only one Coerced instance from each vampire, and multiple instances cannot contradict one another."
+      "effect": "Issue a clear task the subject can complete within one hour without realistically risking death or torpor. Success inflicts Coerced. Completing or refusing the task resolves it; refusal or waiting out the hour deals lethal damage equal to Vigor. A subject may carry only one Coerced instance from each vampire, and multiple instances cannot contradict one another.",
+      "presentationPt": {
+        "prerequisites": "Majestade ••, Ímpeto •",
+        "summary": "Coage um alvo a realizar uma tarefa sob ameaça de violência.",
+        "cost": "1 Vitae",
+        "dicePool": "Presença + Intimidação + Majestade contra Compostura + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "effect": "Dê uma tarefa clara que o alvo possa cumprir em uma hora sem risco realista de morte ou torpor. O sucesso impõe Coagido(Membro). Cumprir ou recusar a tarefa resolve a Condição; recusar ou deixar a hora passar causa dano letal igual ao Ímpeto. Um alvo só pode ter uma instância de Coagido(Membro) de cada vampiro, e múltiplas instâncias não podem contradizer umas às outras."
+      }
     },
     {
       "id": "devotion-borrowed-talent",
