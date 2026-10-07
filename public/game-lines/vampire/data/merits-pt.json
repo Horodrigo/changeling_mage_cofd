@@ -405,9 +405,14 @@
     "description": "Transforma uma linhagem ou senhor infame em vantagem entre Membros que temem essa associação.",
     "prerequisites": "Nenhum ponto em Boa Linhagem"
   },
+  "vtr-false-gods:beast-king": {
+    "name": "Rei das Feras",
+    "description": "O personagem não precisa gastar Força de Vontade para criar ghouls animais.",
+    "prerequisites": "Empatia com Animais ••"
+  },
   "vtr-false-gods:best-fiend": {
     "name": "Melhor Monstro",
-    "description": "Torna um aliado escolhido no Réquiem excepcionalmente eficaz ao promover um objetivo compartilhado."
+    "description": "Trata um inimigo escolhido como Âncora adicional. Defender o vínculo com essa relação recupera um ponto de Força de Vontade; agir na rivalidade para melhorar sua posição na All Night Society recupera toda a Força de Vontade. O Narrador não pode matar o inimigo sem permissão. Se o personagem destruir esse inimigo de forma duradoura, ganha uma Experiência; a Santidade dos Méritos se aplica. Desvantagem: o inimigo também possui este Mérito."
   },
   "vtr-false-gods:born-leader": {
     "name": "Líder Nato",

@@ -13,8 +13,8 @@ const portuguese = read("public/game-lines/vampire/data/merits-pt.json");
 const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#x27;");
 
 test("Vampire Portuguese Merits cover applicable fields, level identities and numeric limits in both official and Homebrew records", () => {
-  assert.equal(canonical.length, 397);
-  assert.equal(Object.keys(portuguese).length, 397);
+  assert.equal(canonical.length, 398);
+  assert.equal(Object.keys(portuguese).length, 398);
   for (const [id, presented] of Object.entries(portuguese)) {
     const definition = canonical.find(item => item.id === id);
     assert.ok(definition, id);
@@ -31,8 +31,16 @@ test("Vampire Portuguese Merits cover applicable fields, level identities and nu
     }
   }
   const localized = canonical.filter(item => portuguese[item.id]);
-  assert.equal(localized.filter(item => item.homebrew).length, 243);
+  assert.equal(localized.filter(item => item.homebrew).length, 244);
   assert.equal(localized.filter(item => !item.homebrew).length, 154);
+  const beast = canonical.find(item => item.id === "vtr-false-gods:beast-king");
+  assert.deepEqual(beast.ratings, [2]);
+  assert.equal(beast.page, 111);
+  assert.equal(beast.line, "VtR");
+  assert.equal(beast.prerequisites, "Animal Ken ••");
+  const fiend = canonical.find(item => item.id === "vtr-false-gods:best-fiend");
+  assert.match(fiend.descriptionEn, /enemy as an additional Anchor.*restores one Willpower.*restores all Willpower.*character destroys that enemy.*enemy has this Merit too/);
+  assert.match(portuguese[fiend.id].description, /inimigo escolhido como Âncora.*recupera um ponto.*recupera toda.*personagem destruir esse inimigo.*inimigo também possui/);
 });
 
 test("active Vampire errata preserve canonical and schema-2 identities plus inherited locale fields", async () => {
@@ -45,6 +53,12 @@ test("active Vampire errata preserve canonical and schema-2 identities plus inhe
     const { meritPresentation } = await vite.ssrLoadModule("/lib/merit-presentation.ts");
     const { vampireExperienceLabel } = await vite.ssrLoadModule("/game-lines/vampire/experience-presentation.ts");
     const catalog = await vampireMeritsCatalogGroup.load({ getCatalog: async id => id === "merits-vampire" ? canonical : portuguese });
+    const { meritPrerequisitesMet } = await vite.ssrLoadModule("/lib/merits.ts");
+    const beast = catalog.find(item => item.id === "vtr-false-gods:beast-king");
+    for (const gameLine of ["CofD", "CtL", "MtA", "WtF", "VtR"]) {
+      assert.equal(meritPrerequisitesMet(beast, { gameLine, skills: { "Animal Ken": 2 }, merits: [], meritCatalog: catalog }), gameLine === "VtR", "False Gods p. 111's Merit belongs to Vampire");
+    }
+    assert.equal(meritPrerequisitesMet(beast, { gameLine: "VtR", skills: { "Animal Ken": 1 }, merits: [], meritCatalog: catalog }), false);
     const errata = catalog.filter(item => item.errataFor);
     assert.equal(errata.length, 9);
     const owned = errata.map(item => {

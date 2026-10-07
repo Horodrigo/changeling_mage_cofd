@@ -891,6 +891,24 @@
     ]
   },
   {
+    "id": "vtr-false-gods:beast-king",
+    "name": "Beast King",
+    "ratings": [
+      2
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-false-gods",
+    "source": "False Gods: Ventrue",
+    "category": "Kindred",
+    "priority": 10,
+    "translatedName": "Beast King",
+    "description": "The character does not need to spend Willpower to create animal ghouls.",
+    "descriptionEn": "The character does not need to spend Willpower to create animal ghouls.",
+    "page": 111,
+    "homebrew": true,
+    "prerequisites": "Animal Ken ••"
+  },
+  {
     "id": "vtr-false-gods:best-fiend",
     "name": "Best Fiend",
     "ratings": [
@@ -902,8 +920,8 @@
     "category": "Kindred",
     "priority": 10,
     "translatedName": "Best Fiend",
-    "description": "Makes a chosen ally in the Requiem exceptionally effective when advancing a shared agenda.",
-    "descriptionEn": "Makes a chosen ally in the Requiem exceptionally effective when advancing a shared agenda.",
+    "description": "Treat a chosen enemy as an additional Anchor. Defending the attachment to this relationship restores one Willpower point; acting on the rivalry to improve your standing in the All Night Society restores all Willpower. The Storyteller cannot kill the enemy without permission. If the character destroys that enemy in a lasting way, gain one Experience; Sanctity of Merits applies. Drawback: The enemy has this Merit too.",
+    "descriptionEn": "Treat a chosen enemy as an additional Anchor. Defending the attachment to this relationship restores one Willpower point; acting on the rivalry to improve your standing in the All Night Society restores all Willpower. The Storyteller cannot kill the enemy without permission. If the character destroys that enemy in a lasting way, gain one Experience; Sanctity of Merits applies. Drawback: The enemy has this Merit too.",
     "page": 111,
     "homebrew": true
   },
