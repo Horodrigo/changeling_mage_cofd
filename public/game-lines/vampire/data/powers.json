@@ -4290,7 +4290,7 @@
       "id": "devotion-terrible-will",
       "kind": "devotion",
       "name": "Terrible Will",
-      "translatedName": "Terrible Will",
+      "translatedName": "Vontade Terrível",
       "prerequisites": "Nightmare •; Resilience ••",
       "experienceCost": 2,
       "summary": "Harden the vampire against passive and active supernatural fear.",
@@ -4298,16 +4298,25 @@
       "page": 100,
       "cost": "1 Willpower",
       "duration": "Scene",
-      "effect": "The vampire is immune to the effect of Dread Presence, or similar passive powers of fear. Any rolls to use Nightmare against her are penalized by Resilience dots. Immunity to Dread Presence extends to enhancing any higher tiers of Nightmare.",
+      "effect": "This Devotion costs 2 Experiences to learn, or 1 if the character has a Carthian teacher. The vampire is immune to the effect of Dread Presence, or similar passive powers of fear. Any rolls to use Nightmare against her are penalized by Resilience dots. Immunity to Dread Presence extends to enhancing any higher tiers of Nightmare.",
       "manualOnly": true,
       "dicePool": "None",
-      "action": "None"
+      "action": "None",
+      "presentationPt": {
+        "prerequisites": "Pesadelo •; Resiliência ••",
+        "cost": "1 ponto de Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Cena",
+        "summary": "Protege o vampiro contra formas passivas e ativas de medo sobrenatural.",
+        "effect": "Esta Devoção custa 2 Experiências para aprender, ou 1 se o personagem tiver um professor Carthiano. O vampiro é imune aos efeitos de Presença Aterradora e de poderes passivos de medo semelhantes. Testes para usar Pesadelo contra ele sofrem penalidade igual aos seus pontos de Resiliência. A imunidade a Presença Aterradora também abrange seu uso para aprimorar os níveis superiores de Pesadelo."
+      }
     },
     {
       "id": "devotion-this-awful-grip",
       "kind": "devotion",
       "name": "This Awful Grip",
-      "translatedName": "This Awful Grip",
+      "translatedName": "Esta Pegada Medonha",
       "prerequisites": "Nightmare •; Vigor •",
       "experienceCost": 1,
       "summary": "Bring monstrous strength to bear against objects and armor.",
@@ -4317,13 +4326,21 @@
       "action": "Reflexive",
       "effect": "The vampire’s muscles bloat as she brings her fists to bear on a target. When taking a Brawl or Weaponry action against an object, she ignores Durability equal to her Vigor dots. This applies to general armor in a violent encounter. This strength performance is always alarming. Anyone witnessing a successful use of this Devotion must make a reflexive Resolve + Composure: on a success, they swallow their fear; on a failure, they suffer the Shaken Condition. Unless this is an exceptional success, a victim must resist this fear each time the vampire uses the Devotion in the scene. As this aura of fear is a function of Dread Presence, the vampire can choose not to inflict it on chosen bystanders.",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "prerequisites": "Pesadelo •; Ímpeto •",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "summary": "Aplica uma força monstruosa contra objetos e armaduras.",
+        "effect": "Os músculos do vampiro incham quando ele prepara os punhos contra um alvo. Ao realizar uma ação de Briga ou Armas Brancas contra um objeto, ignora Durabilidade igual aos seus pontos de Ímpeto. Isso também se aplica à armadura geral em um confronto violento. Essa demonstração de força sempre é alarmante. Quem testemunhar um uso bem-sucedido da Devoção deve testar Perseverança + Compostura como ação reflexiva: em caso de sucesso, contém o medo; em caso de falha, recebe a Condição Abalado. A menos que obtenha sucesso excepcional, a vítima deve resistir a esse medo a cada uso da Devoção na cena. Como essa aura de medo é uma função de Presença Aterradora, o vampiro pode escolher não afetar determinados espectadores."
+      }
     },
     {
       "id": "devotion-wicked-grasp",
       "kind": "devotion",
       "name": "Wicked Grasp",
-      "translatedName": "Wicked Grasp",
+      "translatedName": "Agarrão Perverso",
       "prerequisites": "Nightmare ••; Vigor •",
       "experienceCost": 2,
       "summary": "Distend the vampire's limbs into a terrifying, constricting grapple.",
@@ -4335,13 +4352,23 @@
       "effect": "The victim feels sheer terror as the vampire’s limbs wrap around him. If he has not already acted, his effective Initiative is treated as 1 for the rest of the turn. Once the grapple moves into contested rounds, as long as the vampire holds on, the victim suffers Nightmare dots as a penalty on all rolls to control the grapple.",
       "manualOnly": true,
       "requirement": "The vampire must activate this Devotion on the same turn she initiates a grapple.",
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "prerequisites": "Pesadelo ••; Ímpeto •",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Enquanto durar o agarrão",
+        "requirement": "O vampiro deve ativar esta Devoção no mesmo turno em que inicia um agarrão.",
+        "summary": "Estica e deforma os membros do vampiro para prender a vítima em um agarrão aterrorizante.",
+        "effect": "A vítima sente puro terror quando os membros do vampiro a envolvem. Se ainda não tiver agido, sua Iniciativa efetiva é tratada como 1 pelo restante do turno. Quando o agarrão passa a turnos disputados, enquanto o vampiro mantiver a presa, ela sofre os pontos de Pesadelo dele como penalidade em todos os testes para controlar o agarrão."
+      }
     },
     {
       "id": "devotion-wretched-bite",
       "kind": "devotion",
       "name": "Wretched Bite",
-      "translatedName": "Wretched Bite",
+      "translatedName": "Mordida Desoladora",
       "prerequisites": "Nightmare •••",
       "experienceCost": 2,
       "summary": "Infect a bitten victim with supernatural despair.",
@@ -4349,10 +4376,19 @@
       "page": 101,
       "cost": "2 Vitae",
       "action": "Reflexive",
-      "effect": "With his bite, the vampire sends his victim into a spiral of bleak sadness. Assuming she survives the wound, she gains the Despondent Condition.",
+      "effect": "This Devotion costs 2 Experiences to learn, or 1 if the character is a member of a Necropolis. With his bite, the vampire sends his victim into a spiral of bleak sadness. Assuming she survives the wound, she gains the Despondent Condition.",
       "manualOnly": true,
       "requirement": "The vampire inflicts damage with a bite in a grapple, or while feeding.",
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "prerequisites": "Pesadelo •••",
+        "cost": "2 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "requirement": "O vampiro deve causar dano com uma mordida durante um agarrão ou enquanto se alimenta.",
+        "summary": "Contamina uma vítima mordida com um desespero sobrenatural.",
+        "effect": "Esta Devoção custa 2 Experiências para aprender, ou 1 se o personagem for membro de uma Necrópole. Com a mordida, o vampiro lança a vítima em uma espiral de profunda tristeza. Se sobreviver ao ferimento, ela recebe a Condição Desolado."
+      }
     },
     {
       "id": "devotion-nightmare-journey",
