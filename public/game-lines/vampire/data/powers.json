@@ -12268,10 +12268,10 @@
       "id": "h-vtr-fire-revolution:devotion:lying-eyes",
       "kind": "devotion",
       "name": "Lying Eyes",
-      "translatedName": "Lying Eyes",
+      "translatedName": "Olhos Mentirosos",
       "prerequisites": "Majesty •; Obfuscate ••",
       "experienceCost": 1,
-      "summary": "Makes a sincerely believed statement supernaturally convincing and can impose Contrary on a doubter.",
+      "summary": "Make a true statement seem untrustworthy and inflict Contrary on the victim.",
       "sourceId": "h-vtr-fire-revolution",
       "source": "Fire & Revolution: Carthians",
       "page": 91,
@@ -12286,16 +12286,30 @@
         "exceptionalSuccess": "The vampire adds his Obfuscate dots to his Subterfuge score for the rest of the scene.",
         "failure": "The vampire is recognized for his honesty. For once.",
         "dramaticFailure": "The Devotion turns on the vampire. He’s incapable of actively lying for the rest of the scene."
+      },
+      "presentationPt": {
+        "prerequisites": "Majestade •; Ofuscação ••",
+        "summary": "Faz uma afirmação verdadeira parecer suspeita e impõe Contrário à vítima.",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro precisa afirmar algo que sabe ou acredita ser verdade. Não pode ser um fato objetivo como “o céu é azul” ou “Membros bebem sangue”; precisa ser algo ao menos parcialmente discutível.",
+        "dicePool": "Presença + Subterfúgio + Ofuscação contra Compostura + Potência de Sangue",
+        "action": "Disputada; resistência reflexiva",
+        "rollResults": {
+          "success": "O vampiro parece indigno de confiança. A vítima recebe a Condição Contrário.",
+          "exceptionalSuccess": "O vampiro soma seus pontos de Ofuscação a Subterfúgio pelo resto da cena.",
+          "failure": "O vampiro é reconhecido por sua honestidade. Ao menos desta vez.",
+          "dramaticFailure": "A Devoção se volta contra o vampiro. Ele é incapaz de mentir ativamente pelo resto da cena."
+        }
       }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:operant-conditioning",
       "kind": "devotion",
       "name": "Operant Conditioning",
-      "translatedName": "Operant Conditioning",
+      "translatedName": "Condicionamento Operante",
       "prerequisites": "Nightmare •••",
       "experienceCost": 2,
-      "summary": "Conditions a subject to react violently to a chosen trigger.",
+      "summary": "Instill dread of repeating a Discipline used against the vampire, penalizing its rolls and denying access after failure.",
       "sourceId": "h-vtr-fire-revolution",
       "source": "Fire & Revolution: Carthians",
       "page": 91,
@@ -12311,16 +12325,31 @@
         "exceptionalSuccess": "The repulsion is overpowering. The victim must spend a point of Willpower each time they even attempt to use the affected Devotion.",
         "failure": "A brief shudder runs down the subject’s spine, but any sense of fear is gone as fast as it came.",
         "dramaticFailure": "The dread the vampire intended to evoke turns inward. If she uses Nightmare or a derived Devotion before the end of the scene, she gains the Frightened Condition."
+      },
+      "presentationPt": {
+        "prerequisites": "Pesadelo •••",
+        "summary": "Impõe medo de repetir uma Disciplina usada contra o vampiro, penalizando seus testes e bloqueando-a após uma falha.",
+        "cost": "1 de Força de Vontade",
+        "requirement": "O vampiro só pode usar o efeito depois de ser alvo de uma Disciplina ou Devoção, seja mental, física ou social. O personagem não precisa estar ciente do efeito, mas a jogadora pode invocá-lo em seu nome.",
+        "dicePool": "Presença + Intimidação + Pesadelo contra Compostura + Potência de Sangue",
+        "action": "Reflexiva",
+        "duration": "Cena",
+        "rollResults": {
+          "success": "O vampiro provoca um temor persistente no inimigo, associado à Disciplina usada contra ele. Se o outro vampiro tentar usar essa Disciplina ou uma Devoção derivada dela na cena, sofre os pontos de Pesadelo do usuário como penalidade ao teste. Se falhar em usá-la, perde acesso a ela até a próxima cena. O vampiro pode aprender uma versão aprimorada ao adquirir outro ponto de Pesadelo e pagar uma Experiência adicional. Isso estende todas as durações para uma noite, mas também exige gastar uma Vitae.",
+          "exceptionalSuccess": "A repulsa é avassaladora. A vítima precisa gastar um ponto de Força de Vontade a cada tentativa de usar a Devoção afetada.",
+          "failure": "Um breve arrepio percorre a espinha do alvo, mas o medo desaparece tão rápido quanto surgiu.",
+          "dramaticFailure": "O temor se volta contra o próprio vampiro. Se usar Pesadelo ou uma Devoção derivada antes do fim da cena, recebe a Condição Assustado."
+        }
       }
     },
     {
       "id": "h-vtr-fire-revolution:devotion:power-in-a-union",
       "kind": "devotion",
       "name": "Power in a Union",
-      "translatedName": "Power in a Union",
+      "translatedName": "A União Faz a Força",
       "prerequisites": "Majesty •; Vigor ••",
       "experienceCost": 2,
-      "summary": "Strengthens physical teamwork and leaves the group coordinated for the rest of the night.",
+      "summary": "Strengthen Physical teamwork actions for one turn.",
       "sourceId": "h-vtr-fire-revolution",
       "source": "Fire & Revolution: Carthians",
       "page": 92,
@@ -12335,6 +12364,20 @@
         "exceptionalSuccess": "Each member within the teamwork action also takes the Steadfast Condition.",
         "failure": "Like herding cats, man.",
         "dramaticFailure": "The Beast rages against the idea of acknowledging lesser predators. The vampire cannot participate in any teamwork actions with the other characters for the rest of the night."
+      },
+      "presentationPt": {
+        "prerequisites": "Majestade •; Ímpeto ••",
+        "summary": "Fortalece as ações físicas de trabalho em equipe por um turno.",
+        "cost": "1 de Força de Vontade",
+        "requirement": "O vampiro precisa usar esta Devoção junto de uma ação de trabalho em equipe com um Atributo Físico, na qual seja o participante principal.",
+        "action": "Reflexiva",
+        "duration": "Turno",
+        "rollResults": {
+          "success": "Cada personagem que participa do trabalho em equipe, exceto o vampiro, recebe os pontos de Ímpeto dele como bônus às próprias ações.",
+          "exceptionalSuccess": "Cada participante também recebe a Condição Resoluto.",
+          "failure": "É como tentar pastorear gatos.",
+          "dramaticFailure": "A Fera se enfurece diante da ideia de reconhecer predadores inferiores. O vampiro não pode participar de ações de trabalho em equipe com os outros personagens pelo resto da noite."
+        }
       }
     },
     {
