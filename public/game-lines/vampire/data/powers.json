@@ -6803,13 +6803,17 @@
       "id": "devotion-hounds-hell",
       "kind": "devotion",
       "name": "Hounds of Hell",
-      "translatedName": "Hounds of Hell",
+      "translatedName": "Cães do Inferno",
       "bloodlineId": "kerberos",
       "experienceCost": 0,
       "summary": "Hone the Predatory Aura through the Kerberos Beast.",
       "effect": "When pursuing the Beast's aspect after using Predatory Aura, replace the usual +2 bonus with Blood Potency and add the relevant Three Heads of Kerberos rating to lashing-out pools.",
       "source": "Onyx Path Blog: The Jaws of the Beast",
-      "page": 0
+      "page": 0,
+      "presentationPt": {
+        "summary": "Apura a Aura Predatória por meio da Fera de Kerberos.",
+        "effect": "Ao seguir o aspecto de sua Fera na cena em que usou Aura Predatória, substitua o bônus habitual de +2 pela Potência de Sangue. Acrescente a pontuação relevante de As Três Cabeças de Kerberos às paradas para Incitar a Fera."
+      }
     },
     {
       "id": "devotion-ba",
@@ -6838,7 +6842,14 @@
       "summary": "Slip between contiguous shadows and empower a Dodge.",
       "effect": "Emerge anywhere along the same patch of shadow; once per scene a Dodge using Iteru gains rote quality.",
       "source": "Onyx Path Blog: The Shadow and the Asp",
-      "page": 0
+      "page": 0,
+      "presentationPt": {
+        "prerequisites": "Celeridade ••",
+        "cost": "1 Vitae",
+        "action": "Reflexiva",
+        "summary": "Passa entre sombras contíguas e aprimora uma Esquiva.",
+        "effect": "Surja em qualquer ponto da mesma área de sombra; uma vez por cena, uma Esquiva usando Iteru recebe a qualidade de Rotina."
+      }
     },
     {
       "id": "devotion-pseshkf",
@@ -6866,9 +6877,16 @@
       "cost": "1+ Vitae",
       "action": "Instant",
       "summary": "Expel and shape a cloud of supernatural darkness.",
-      "effect": "The cloud extends Blood Potency yards per Vitae spent; the Khaibit may shape all connected shadows to distract or deceive.",
+      "effect": "Release a shadow cloud from an open wound or the mouth. Each 1 Vitae expands its radius by Blood Potency yards (or meters). Shape, absorb, or manipulate all connected shadows; they have no physical presence, but can distract or deceive.",
       "source": "Onyx Path Blog: The Shadow and the Asp",
-      "page": 0
+      "page": 0,
+      "presentationPt": {
+        "prerequisites": "Ímpeto ••",
+        "cost": "1+ Vitae",
+        "action": "Instantânea",
+        "summary": "Expele e molda uma nuvem de escuridão sobrenatural.",
+        "effect": "Libere uma nuvem de sombras por uma ferida aberta ou pela boca. Cada 1 Vitae amplia seu raio em Potência de Sangue jardas (ou metros). Molde, absorva ou manipule todas as sombras conectadas; elas não têm presença física, mas podem distrair ou enganar."
+      }
     },
     {
       "id": "devotion-udjat",
