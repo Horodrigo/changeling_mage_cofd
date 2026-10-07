@@ -9261,13 +9261,50 @@
       }
     },
     {
+      "id": "devotion-but-i-wanted-you-to-be-a-doctor",
+      "kind": "devotion",
+      "name": "But I Wanted You to Be a Doctor",
+      "translatedName": "Mas Eu Queria que Você Fosse Médico",
+      "summary": "Instills a short-term goal as a temporary long-term Aspiration, penalizing unrelated actions.",
+      "source": "Strange Shades: Mekhet",
+      "page": 58,
+      "manualOnly": true,
+      "bloodlineId": "qedeshah",
+      "experienceCost": 1,
+      "prerequisites": "Majesty •••",
+      "cost": "2 Vitae, or free if the victim is one of the vampire’s anointed",
+      "dicePool": "Manipulation + Persuasion + Majesty vs. Composure + Blood Potency",
+      "action": "Instant",
+      "duration": "Nights equal to Blood Potency",
+      "rollResults": {
+        "success": "The vampire instills her victim with a desire to accomplish a specific short-term goal. The victim is under no obligation to follow this impulse, but doing so feels right: temporarily replace her long-term Aspiration with this task. Storyteller characters effectively gain an Aspiration and can fulfill it for a Willpower point. Conversely, working toward other goals and interests feels wrong. All actions that do not contribute to this new Aspiration suffer a –1 modifier. This does not apply to reflexive actions or rolls to manage the necessities of day-to-day life, or those to enact self-preservation, such as defense against violence. This impulse lasts until the victim meets the goal or the duration expires, whichever comes first.",
+        "exceptionalSuccess": "The victim feels an urgent impulse to follow the vampire’s advice, gaining the Tasked Condition for the rest of the night.",
+        "failure": "Children never listen.",
+        "dramaticFailure": "The Qedeshah feels immense guilt for trying to force her child to do something she did not want to and decides to make it up to her in the future. She gains the Leveraged Condition (Chronicles of Darkness, p. 289)."
+      },
+      "presentationPt": {
+        "summary": "Inspira uma meta de curto prazo como Aspiração de longo prazo temporária, penalizando ações sem relação com ela.",
+        "prerequisites": "Majestade •••",
+        "cost": "2 Vitae, ou gratuito se a vítima for uma das ungidas da vampira",
+        "dicePool": "Manipulação + Persuasão + Majestade contra Compostura + Potência de Sangue",
+        "action": "Instantânea",
+        "duration": "Noites iguais à Potência de Sangue",
+        "rollResults": {
+          "success": "A vampira inspira na vítima o desejo de realizar uma meta específica de curto prazo. A vítima não é obrigada a seguir esse impulso, mas fazê-lo parece certo: substitua temporariamente sua Aspiração de longo prazo por essa tarefa. Personagens do Narrador efetivamente recebem uma Aspiração e podem cumpri-la para recuperar um ponto de Força de Vontade. Por outro lado, perseguir outras metas e interesses parece errado. Todas as ações que não contribuem para a nova Aspiração sofrem um modificador de –1. Isso não se aplica a ações reflexivas, jogadas para lidar com necessidades cotidianas ou ações de autopreservação, como defender-se de violência. O impulso dura até a vítima cumprir a meta ou a duração terminar, o que ocorrer primeiro.",
+          "exceptionalSuccess": "A vítima sente um impulso urgente de seguir o conselho da vampira e recebe a Condição Incumbido pelo restante da noite.",
+          "failure": "Os filhos nunca escutam.",
+          "dramaticFailure": "A Qedeshah sente imensa culpa por tentar forçar sua filha a fazer algo que não queria e decide compensá-la no futuro. Recebe a Condição Coagido (Chronicles of Darkness, p. 289)."
+        }
+      }
+    },
+    {
       "id": "devotion-taharah",
       "kind": "devotion",
       "name": "Taharah",
       "translatedName": "Taharah",
-      "summary": "Purifies and protects an anointed attachment.",
+      "summary": "Creates a protected sanctum that suppresses frenzy and discourages violence.",
       "source": "Strange Shades: Mekhet",
-      "page": 58,
+      "page": 59,
       "manualOnly": true,
       "bloodlineId": "qedeshah",
       "experienceCost": 5,
@@ -9277,14 +9314,24 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "One week per dot of Blood Potency",
-      "effect": "The sanctum gains the following benefits: • C haracters cannot be provoked to frenzy while inside the sanctum, and entry ends any active frenzies, even those caused by a dramatic failure. If a supernatural power induces frenzy (such as the Coil of the Wyrm) a Clash of Wills takes place. • I nitiating an act of violence within the sanctum costs a Willpower point, which does not add +3 to the roll. Effectively, any violent character is automatically Beaten Down (Vampire, p. 175). This also applies to the Qedeshah. • N o Kindred, except those among the Qedeshah’s anointed, can enter the sanctum without her permission. Crossing the threshold without consent incurs a provocation to fear frenzy, with the vampire’s Majesty dots as a penalty. If the intruder fails, he flees. This effect can only apply to one sanctum at a time. Using the Devotion again dismisses the effect of a sanctum that’s already in effect. However, the vampire can renew this Devotion before its usual expiration."
+      "effect": "The sanctum gains the following benefits: • Characters cannot be provoked to frenzy while inside the sanctum, and entry ends any active frenzies, even those caused by a dramatic failure. If a supernatural power induces frenzy (such as the Coil of the Wyrm) a Clash of Wills takes place. • Initiating an act of violence within the sanctum costs a Willpower point, which does not add +3 to the roll. Effectively, any violent character is automatically Beaten Down (Vampire, p. 175). This also applies to the Qedeshah. • No Kindred, except those among the Qedeshah’s anointed, can enter the sanctum without her permission. Crossing the threshold without consent incurs a provocation to fear frenzy, with the vampire’s Majesty dots as a penalty. If the intruder fails, he flees. This effect can only apply to one sanctum at a time. Using the Devotion again dismisses the effect of a sanctum that’s already in effect. However, the vampire can renew this Devotion before its usual expiration.",
+      "presentationPt": {
+        "summary": "Cria um santuário protegido que suprime frenesis e desencoraja a violência.",
+        "prerequisites": "Majestade •••••, Ofuscação •••••",
+        "cost": "3 Vitae e 1 ponto de Força de Vontade",
+        "requirement": "A vampira deve ungir um espaço fechado com seu sangue, incluído no custo. O espaço pode ter aproximadamente o tamanho de um apartamento médio.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Uma semana por ponto de Potência de Sangue",
+        "effect": "O santuário recebe os seguintes benefícios: • Personagens não podem ser provocados a entrar em frenesi dentro dele; entrar encerra qualquer frenesi ativo, mesmo os causados por falha dramática. Se um poder sobrenatural induzir frenesi, como a Espiral da Serpente, ocorre um Confronto de Vontades. • Iniciar um ato de violência dentro do santuário custa um ponto de Força de Vontade, que não acrescenta +3 à jogada. Na prática, qualquer personagem violento fica automaticamente Derrotado (Vampire, p. 175). Isso também se aplica à Qedeshah. • Nenhum Membro, exceto os ungidos da Qedeshah, pode entrar no santuário sem sua permissão. Cruzar o limiar sem consentimento provoca frenesi de medo, com os pontos de Majestade da vampira como penalidade. Se o intruso falhar, foge. O efeito só pode se aplicar a um santuário por vez. Usar a Devoção novamente encerra o efeito de um santuário já ativo. Entretanto, a vampira pode renovar esta Devoção antes de seu término habitual."
+      }
     },
     {
       "id": "devotion-lebonah",
       "kind": "devotion",
       "name": "Lebonah",
       "translatedName": "Lebonah",
-      "summary": "Carries influence through sacred scent and smoke.",
+      "summary": "Produces intoxicating smoke that impairs coordination but helps resist frenzy.",
       "source": "Strange Shades: Mekhet",
       "page": 59,
       "manualOnly": true,
@@ -9295,7 +9342,16 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "The vampire vomits up a mouthful of boiling Vitae that burns with a citrusy white smoke. This inflicts the Qedeshah with a point of bashing damage as her throat and mouth blister. Anyone who smells this smoke (other than the vampire herself) must roll Stamina + Blood Potency – Obfuscate every minute they remain in its presence. Those who fail this roll feel lightheaded and uncoordinated, suffering the Drugged Tilt in any subsequent combat, but gain a +3 on any frenzy provocations. This intoxicating effect is potent but fast acting, purging from a victim’s system at the end of the scene, along with the smoke."
+      "effect": "The vampire vomits up a mouthful of boiling Vitae that burns with a citrusy white smoke. This inflicts the Qedeshah with a point of bashing damage as her throat and mouth blister. Anyone who smells this smoke (other than the vampire herself) must roll Stamina + Blood Potency – Obfuscate every minute they remain in its presence. Those who fail this roll feel lightheaded and uncoordinated, suffering the Drugged Tilt in any subsequent combat, but gain a +3 on any frenzy provocations. This intoxicating effect is potent but fast acting, purging from a victim’s system at the end of the scene, along with the smoke.",
+      "presentationPt": {
+        "summary": "Produz fumaça intoxicante que prejudica a coordenação, mas ajuda a resistir ao frenesi.",
+        "prerequisites": "Majestade •, Ofuscação ••",
+        "cost": "1 Vitae e 1 ponto de Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "A vampira vomita uma porção de Vitae fervente que queima com uma fumaça branca de aroma cítrico. A Qedeshah sofre um ponto de dano contundente enquanto sua boca e garganta formam bolhas. Qualquer pessoa que sinta o cheiro dessa fumaça, exceto a própria vampira, deve testar Vigor + Potência de Sangue – Ofuscação a cada minuto que permanecer em sua presença. Quem falha fica tonto e descoordenado, sofrendo a Complicação Drogado em qualquer combate subsequente, mas recebe +3 em qualquer provocação de frenesi. O efeito intoxicante é potente, mas passa rapidamente, sendo eliminado do organismo da vítima no fim da cena, junto com a fumaça."
+      }
     },
     {
       "id": "devotion-arcane-sight",

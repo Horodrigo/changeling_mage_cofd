@@ -82,7 +82,7 @@ test("Vampire catalogs group core, historical, and uncommon Clans", async () => 
   assert.ok(merits.length >= 45);
   assert.equal(powers.disciplines.length, 23);
   assert.equal(powers.ritualDisciplines.length, 5);
-  assert.equal(powers.devotions.length, 357);
+  assert.equal(powers.devotions.length, 358);
   assert.equal(powers.devotions.find(item => item.id === "devotion-treasured-servant")?.source, "False Gods: Ventrue", "The independently printed p. 110 Devotion is no longer merged into Soul Transfer");
   assert.equal(powers.lashes.length, 2);
   assert.equal(powers.cruacRites.length, 76);
@@ -594,7 +594,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
     "h-vtr-sin-again": 91,
     "h-vtr-wild-hunt": 93,
     "h-vtr-false-gods": 108,
-    "h-vtr-strange-shades": 89,
+    "h-vtr-strange-shades": 90,
     "h-vtr-better-feared": 92,
     "h-vtr-agony-ecstasy": 96,
     "h-vtr-fire-revolution": 90,
