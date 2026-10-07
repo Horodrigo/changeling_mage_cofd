@@ -4414,7 +4414,7 @@
       "id": "devotion-22-solid",
       "kind": "devotion",
       "name": ".22 Solid",
-      "translatedName": ".22 Solid",
+      "translatedName": ".22 Sólido",
       "prerequisites": "Protean ••, Resilience •",
       "covenantIds": [
         "carthian-movement"
@@ -4427,13 +4427,22 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "Each incoming attack downgrades lethal damage equal to Resilience into bashing after armor. This stacks with Resilience's normal downgrade, so aggravated damage first reduced to lethal may then become bashing. It affects only new damage received while active."
+      "effect": "Each incoming attack downgrades lethal damage equal to Resilience into bashing after armor. This stacks with Resilience's normal downgrade, so aggravated damage first reduced to lethal may then become bashing. It affects only new damage received while active.",
+      "presentationPt": {
+        "prerequisites": "Metamorfose ••, Resiliência •",
+        "cost": "1 Vitae",
+        "summary": "Amplia a redução da gravidade do dano de Resiliência.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "Cada ataque recebido converte dano letal igual à Resiliência em contundente, após a armadura. Isso se acumula com a redução habitual de Resiliência: dano agravado primeiro reduzido a letal pode então se tornar contundente. Afeta apenas dano novo recebido enquanto estiver ativa."
+      }
     },
     {
       "id": "devotion-aegis-defiance",
       "kind": "devotion",
       "name": "Aegis of Defiance",
-      "translatedName": "Aegis of Defiance",
+      "translatedName": "Égide da Rebeldia",
       "prerequisites": "Dominate •••, Resilience ••",
       "covenantIds": [
         "carthian-movement"
@@ -4445,7 +4454,15 @@
       "cost": "1 Vitae",
       "dicePool": "Resolve + Intimidation + Dominate; special",
       "action": "Reflexive",
-      "effect": "While under a supernatural behavioral influence, the vampire names a contrary action and rolls against the original activation successes, or the attacker's supernatural potency when no roll was made. Winning permits the action and ends the influence unless it is applied again. If she detects a contested influence as it is used, this pool may replace her normal resistance and completely reject the effect."
+      "effect": "While under a supernatural behavioral influence, the vampire names a contrary action and rolls against the original activation successes, or the attacker's supernatural potency when no roll was made. Winning permits the action and ends the influence unless it is applied again. If she detects a contested influence as it is used, this pool may replace her normal resistance and completely reject the effect.",
+      "presentationPt": {
+        "prerequisites": "Dominação •••, Resiliência ••",
+        "cost": "1 Vitae",
+        "summary": "Desafia efeitos que alteram a mente, agindo de forma contrária a eles.",
+        "dicePool": "Perseverança + Intimidação + Dominação; especial",
+        "action": "Reflexiva",
+        "effect": "Sob uma influência sobrenatural sobre seu comportamento, o vampiro declara uma ação contrária e joga contra os sucessos da ativação original, ou contra a potência sobrenatural do agressor se não houve jogada. Vencer permite realizar a ação e encerra a influência, a menos que seja aplicada novamente. Se perceber uma influência disputada no momento em que ela é usada, esta parada pode substituir sua resistência habitual e rejeitar completamente o efeito."
+      }
     },
     {
       "id": "devotion-aura-cursive-seduction",
@@ -4535,7 +4552,15 @@
       "cost": "1 Willpower; special",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "The vampire spends a full turn and Willpower preparing, without spending Vitae. On later turns she may bank Vitae up to her per-turn limit while doing nothing except defending without Dodge. The final Brawl or Weaponry attack gains +2 dice per banked Vitae, adds Celerity, may receive normal Willpower, adds Vigor as weapon damage, and becomes lethal even to Kindred. The vampire then suffers one bashing damage per Vitae banked."
+      "effect": "The vampire spends a full turn and Willpower preparing, without spending Vitae. On later turns she may bank Vitae up to her per-turn limit while doing nothing except defending without Dodge. Vitae spent on Celerity during these later turns does not count toward the banked total. The final Brawl or Weaponry attack gains +2 dice per banked Vitae, adds Celerity, may receive normal Willpower, adds Vigor as weapon damage, and becomes lethal even to Kindred. The vampire then suffers one bashing damage per Vitae banked.",
+      "presentationPt": {
+        "prerequisites": "Celeridade •, Ímpeto •",
+        "cost": "1 Força de Vontade; especial",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "summary": "Acumula Vitae ao longo dos turnos antes de desferir um ataque fortalecido.",
+        "effect": "O vampiro gasta um turno inteiro e Força de Vontade se preparando, sem gastar Vitae. Nos turnos seguintes, pode acumular Vitae até seu limite por turno enquanto apenas se defende, sem Esquivar. Vitae gasto em Celeridade nesses turnos posteriores não conta para o total acumulado. O ataque final de Briga ou Armas Brancas recebe +2 dados por Vitae acumulado, acrescenta Celeridade, pode receber Força de Vontade normalmente, acrescenta Ímpeto como dano de arma e se torna letal mesmo contra Membros. O vampiro então sofre um ponto de dano contundente por Vitae acumulado."
+      }
     },
     {
       "id": "devotion-holdout",
@@ -4672,7 +4697,7 @@
       "id": "devotion-preserved-blood",
       "kind": "devotion",
       "name": "Preserved Blood",
-      "translatedName": "Preserved Blood",
+      "translatedName": "Sangue Preservado",
       "prerequisites": "Resilience •••, Protean •",
       "covenantIds": [
         "carthian-movement"
@@ -4684,7 +4709,15 @@
       "cost": "Special",
       "dicePool": "Stamina + Occult + Protean",
       "action": "Instant",
-      "effect": "The vampire places one Vitae in a vessel, rolls, and on success may spend additional Vitae up to successes to determine preservation: one for a night, two for a week, three for a month, four for a year, or five indefinitely. Until that duration expires or it is consumed, the stored blood retains all Kindred properties; failure makes it inert."
+      "effect": "The vampire places one Vitae in a vessel, rolls, and on success may spend additional Vitae up to successes to determine preservation: one for a night, two for a week, three for a month, four for a year, or five indefinitely. Until that duration expires or it is consumed, the stored blood retains all Kindred properties; failure makes it inert.",
+      "presentationPt": {
+        "prerequisites": "Resiliência •••, Metamorfose •",
+        "cost": "Especial",
+        "summary": "Armazena seu Vitae para uso posterior.",
+        "dicePool": "Vigor + Ocultismo + Metamorfose",
+        "action": "Instantânea",
+        "effect": "O vampiro coloca um Vitae em um recipiente e joga. Com sucesso, pode gastar Vitae adicional até o número de sucessos para determinar a preservação: um para uma noite, dois para uma semana, três para um mês, quatro para um ano ou cinco indefinidamente. Até esse prazo expirar ou o sangue ser consumido, ele conserva todas as propriedades do sangue dos Membros; falhar o torna inerte."
+      }
     },
     {
       "id": "devotion-psycho-mantle",
