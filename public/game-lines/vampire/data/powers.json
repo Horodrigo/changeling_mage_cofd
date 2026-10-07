@@ -8785,7 +8785,7 @@
       "id": "devotion-beasts-measure",
       "kind": "devotion",
       "name": "Beasts' Measure",
-      "translatedName": "Beasts' Measure",
+      "translatedName": "Medida das Feras",
       "summary": "Judges another Beast through the Kuufukuji's disciplined hunger.",
       "source": "Strange Shades: Mekhet",
       "page": 35,
@@ -8801,13 +8801,26 @@
         "exceptionalSuccess": "The Storyteller must provide an exact number on the victim’s current Vitae pool.",
         "failure": "The Beast does not give up its secrets so easily. The vampire cannot use this Devotion on the same subject for the rest of the scene.",
         "dramaticFailure": "The Celibate’s poise cracks as the Beast rages at its failure. In addition to the above, the vampire takes the Tempted Condition."
+      },
+      "presentationPt": {
+        "summary": "Avalia outra Fera através da fome disciplinada do Kuufukuji.",
+        "prerequisites": "Auspícios ••, Celeridade •",
+        "cost": "Nenhum",
+        "dicePool": "Raciocínio + Empatia + Auspícios",
+        "action": "Reflexiva",
+        "rollResults": {
+          "success": "O Kuufukuji faz uma avaliação fulminante de outro vampiro. Pode estimar quanta Vitae ele possui, como reserva cheia, quase cheia, pela metade, com fome ou faminto, e se entrou em frenesi nas últimas 24 horas.",
+          "exceptionalSuccess": "O Narrador precisa informar a quantidade exata de Vitae na reserva atual da vítima.",
+          "failure": "A Fera não entrega seus segredos tão facilmente. A vampira não pode usar esta Devoção no mesmo alvo pelo resto da cena.",
+          "dramaticFailure": "A compostura da Celibatária se rompe enquanto a Fera se enfurece com a falha. Além do efeito acima, a vampira recebe a Condição Tentado."
+        }
       }
     },
     {
       "id": "devotion-wave-form",
       "kind": "devotion",
       "name": "Wave Form",
-      "translatedName": "Wave Form",
+      "translatedName": "Forma de Onda",
       "summary": "Lets the starving vampire yield and redirect force like water.",
       "source": "Strange Shades: Mekhet",
       "page": 35,
@@ -8820,16 +8833,26 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "Turn",
-      "effect": "The vampire benefits from a single active effect of both Celerity and Resilience as if she had one fewer dots in both Disciplines. For example, with Celerity 3 she could only perform an interrupt action twice in a scene using this Devotion, though she could perform a third with the normal application of Celerity. This does not apply to persistent effects. If the vampire successfully strikes her opponent, he suffers the Knocked Down Tilt from the momentum of her blow. She cannot use the normal effects of these Disciplines in the same turn as she activates Wave Form."
+      "effect": "The vampire benefits from a single active effect of both Celerity and Resilience as if she had one fewer dots in both Disciplines. For example, with Celerity 3 she could only perform an interrupt action twice in a scene using this Devotion, though she could perform a third with the normal application of Celerity. This does not apply to persistent effects. If the vampire successfully strikes her opponent, he suffers the Knocked Down Tilt from the momentum of her blow. She cannot use the normal effects of these Disciplines in the same turn as she activates Wave Form.",
+      "presentationPt": {
+        "summary": "Permite à vampira faminta ceder e redirecionar a força como água.",
+        "prerequisites": "Celeridade •••, Resiliência •••",
+        "cost": "1 Vitae",
+        "requirement": "A vampira precisa ativar esta Devoção no mesmo turno em que faz um ataque em combate corpo a corpo. Não pode realizar nenhuma outra ação.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Um turno",
+        "effect": "A vampira se beneficia de um único efeito ativo de Celeridade e de Resiliência como se tivesse um ponto a menos em cada Disciplina. Por exemplo, com Celeridade 3 só poderia realizar uma ação de interrupção duas vezes na cena usando esta Devoção, embora pudesse realizar uma terceira com a aplicação normal de Celeridade. Isso não se aplica aos efeitos persistentes. Se atingir o oponente, ele sofre a Complicação Derrubado devido ao impulso do golpe. Ela não pode usar os efeitos normais dessas Disciplinas no mesmo turno em que ativa Forma de Onda."
+      }
     },
     {
       "id": "devotion-foot-in-the-door",
       "kind": "devotion",
       "name": "Foot in the Door",
-      "translatedName": "Foot in the Door",
+      "translatedName": "Pé na Porta",
       "summary": "Creates an opening for a Leandros fixation.",
       "source": "Strange Shades: Mekhet",
-      "page": 40,
+      "page": 39,
       "manualOnly": true,
       "bloodlineId": "leandros",
       "experienceCost": 2,
@@ -8838,22 +8861,31 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "One turn of a Social maneuver",
-      "effect": "The vampire bypasses a victim’s social defenses. Each time the Leandros activates this Devotion, she gains a perfect Impression in Social maneuvering, regardless of her actual first impression. This power must be activated each turn of the Social maneuver, or else the impression reverts to its normal level."
+      "effect": "The vampire bypasses a victim’s social defenses. Each time the Leandros activates this Devotion, she gains a perfect Impression in Social maneuvering, regardless of her actual first impression. This power must be activated each turn of the Social maneuver, or else the impression reverts to its normal level.",
+      "presentationPt": {
+        "summary": "Cria uma abertura para uma fixação Leandros.",
+        "prerequisites": "Majestade ••, Ímpeto •",
+        "cost": "1 ponto de Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Um turno de uma Manobra Social",
+        "effect": "A vampira contorna as defesas sociais da vítima. Cada vez que o Leandros ativa esta Devoção, recebe uma Impressão perfeita em Manobras Sociais, independentemente de sua primeira impressão real. O poder precisa ser ativado em cada turno da Manobra Social; caso contrário, a impressão retorna ao nível normal."
+      }
     },
     {
       "id": "devotion-heart-thief",
       "kind": "devotion",
       "name": "Heart Thief",
-      "translatedName": "Heart Thief",
-      "summary": "Steals emotional priority from a subject's existing attachments.",
+      "translatedName": "Ladrão de Corações",
+      "summary": "Steals her lover’s light to endure sunlight at a terrible price.",
       "source": "Strange Shades: Mekhet",
-      "page": 40,
+      "page": 39,
       "manualOnly": true,
       "bloodlineId": "leandros",
-      "experienceCost": 2,
+      "experienceCost": 3,
       "prerequisites": "Majesty •••••, Vigor ••",
       "cost": "1 Willpower",
-      "requirement": "The victim must have the Soulmate Condition. Use of this Devotion ends without resolving Soulmate.",
+      "requirement": "The vampire must touch her victim to use this Devotion (Vampire, p. 177). The victim must have the Soulmate Condition. Use of this Devotion ends without resolving Soulmate.",
       "dicePool": "Presence + Empathy + Majesty – Stamina",
       "action": "Instant",
       "duration": "Nights equal to Blood Potency",
@@ -8862,6 +8894,21 @@
         "exceptionalSuccess": "In addition to the usual duration, the effect extends by a week.",
         "failure": "The vampire’s heart can’t take the pain.",
         "dramaticFailure": "The victim takes the Scorned Condition, but the vampire takes no benefit."
+      },
+      "presentationPt": {
+        "summary": "Rouba a luz de seu amante para suportar a luz solar a um preço terrível.",
+        "prerequisites": "Majestade •••••, Ímpeto ••",
+        "cost": "1 ponto de Força de Vontade",
+        "requirement": "A vampira precisa tocar sua vítima para usar esta Devoção (Vampire, p. 177). A vítima precisa ter a Condição Alma Gêmea. Usar esta Devoção encerra Alma Gêmea sem resolvê-la.",
+        "dicePool": "Presença + Empatia + Majestade – Vigor",
+        "action": "Instantânea",
+        "duration": "Noites iguais à Potência de Sangue",
+        "rollResults": {
+          "success": "O Leandros drena a luz do coração da vítima. O mortal sofre dano letal igual aos sucessos da vampira e recebe a Condição Desprezado se sobreviver. Durante a duração acima, o dano básico da vampira causado pela luz solar passa a ser apenas um ponto de dano contundente, independentemente de sua Humanidade. A frequência do dano ainda é determinada pela Potência de Sangue, mas, se ela não se expuser diretamente à luz solar, por exemplo usando roupas grossas, essa característica é reduzida pela metade, arredondando para baixo, ao determinar a frequência (Vampire, p. 102). O Leandros ainda precisa gastar Vitae para “despertar” à noite, mas não precisa resistir ao Sono Diurno e não recebe Letárgico.",
+          "exceptionalSuccess": "Além da duração habitual, o efeito se estende por uma semana.",
+          "failure": "O coração da vampira não suporta a dor.",
+          "dramaticFailure": "A vítima recebe a Condição Desprezado, mas a vampira não recebe nenhum benefício."
+        }
       }
     },
     {
