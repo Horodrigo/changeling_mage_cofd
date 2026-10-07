@@ -3892,7 +3892,7 @@
       "id": "devotion-hell-beast",
       "kind": "devotion",
       "name": "Hell Beast",
-      "translatedName": "Hell Beast",
+      "translatedName": "Fera Infernal",
       "prerequisites": "Animalism ••; Nightmare •; Vigor ••",
       "experienceCost": 3,
       "summary": "Warp a raised animal familiar into a larger and more frightening undead beast.",
@@ -3904,13 +3904,23 @@
       "manualOnly": true,
       "requirement": "The vampire spends an additional Vitae (included in the cost) as she uses Raise the Familiar.",
       "dicePool": "None",
-      "action": "None"
+      "action": "None",
+      "presentationPt": {
+        "prerequisites": "Animalismo ••; Pesadelo •; Ímpeto ••",
+        "cost": "1 Vitae adicional com Erguer o Familiar",
+        "requirement": "O vampiro gasta uma Vitae adicional, incluída no custo, ao usar Erguer o Familiar.",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Como Erguer o Familiar",
+        "summary": "Transforma um familiar animal reanimado em uma fera morta-viva maior e mais aterradora.",
+        "effect": "O Nosferatu aprimora seu familiar. Ele ganha um ponto de Tamanho, esticando a pele morta sobre ossos salientes e músculos retorcidos, e distribui metade da Potência de Sangue do vampiro entre Força, Destreza e Vigor, arredondando para cima. Também soma os pontos de Pesadelo do vampiro à sua Perícia Intimidação, mesmo que ultrapasse o máximo. A criatura recebe permanentemente Presença Aterradora, embora suas ilusões sejam mais rudimentares que as de um vampiro. O próprio Nosferatu é imune a esse efeito. O vampiro deve renovar esta Devoção junto com Erguer o Familiar; caso contrário, a forma do cadáver colapsa e não pode ser reanimada. Se conhecer Familiar Imortal (Vampire, p. 148), pode gastar uma Vitae adicional ao usar essa Devoção para garantir que seu ghoul se erga imediatamente como fera infernal se morrer em um confronto violento. Se conhecer Rosto na Multidão, pode investir uma Experiência adicional nesta Devoção para conceder esse efeito à criatura, fazendo os mortais ignorarem sua aparência monstruosa até ela atacar."
+      }
     },
     {
       "id": "devotion-iron-facade",
       "kind": "devotion",
       "name": "Iron Façade",
-      "translatedName": "Iron Façade",
+      "translatedName": "Fachada de Ferro",
       "prerequisites": "Nightmare •; Obfuscate ••; Resilience •",
       "experienceCost": 1,
       "summary": "Conceal all wounds and make the first use of Resilience demoralize attackers.",
@@ -3921,13 +3931,22 @@
       "duration": "Scene",
       "effect": "For the rest of the scene, any wounds the vampire takes do not appear on his body, no matter how grievous; even severed limbs seem to hold together. The vampire doesn’t gain any physical advantage, but it’s an easy way to demoralize foes. Furthermore, the first time the vampire uses Resilience in the scene, witnesses must succeed on a reflexive Resolve + Composure – Blood Potency roll before attacking him. On a failure, they lose the 10-again quality on the attack.",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "prerequisites": "Pesadelo •; Ofuscação ••; Resiliência •",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "summary": "Oculta todos os ferimentos e faz o primeiro uso de Resiliência desmoralizar os atacantes.",
+        "effect": "Pelo restante da cena, os ferimentos sofridos pelo vampiro não aparecem em seu corpo, por mais graves que sejam; até membros decepados parecem permanecer ligados. Isso não concede vantagem física, mas pode desmoralizar os inimigos. Além disso, na primeira vez que usar Resiliência na cena, as testemunhas precisam obter sucesso em um teste reflexivo de Perseverança + Compostura – Potência de Sangue antes de atacá-lo. Uma falha remove a qualidade 10-novamente desse ataque."
+      }
     },
     {
       "id": "devotion-jump-scare",
       "kind": "devotion",
       "name": "Jump Scare",
-      "translatedName": "Jump Scare",
+      "translatedName": "Susto Repentino",
       "prerequisites": "Nightmare •; Obfuscate •; Vigor •",
       "experienceCost": 2,
       "summary": "Appear from concealment at a victim's most vulnerable instant.",
@@ -3939,13 +3958,23 @@
       "manualOnly": true,
       "cost": "None",
       "requirement": "The victim must know the vampire is nearby, but not visible.",
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "prerequisites": "Pesadelo •; Ofuscação •; Ímpeto •",
+        "cost": "Nenhum",
+        "requirement": "A vítima deve saber que o vampiro está por perto, mas não pode vê-lo.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Turno",
+        "summary": "Surge de seu esconderijo no momento em que a vítima está mais vulnerável.",
+        "effect": "O vampiro libera uma aura de pavor que distrai sua presa, depois aparece diante dela no auge de sua vulnerabilidade. Pelo restante do turno, ignora a Defesa da vítima, e seu primeiro ataque recebe 8-novamente. Só pode usar esta Devoção em uma mesma vítima uma vez por cena."
+      }
     },
     {
       "id": "devotion-living-nightmare",
       "kind": "devotion",
       "name": "Living Nightmare",
-      "translatedName": "Living Nightmare",
+      "translatedName": "Pesadelo Vivo",
       "prerequisites": "Auspex •; Nightmare •••••; Obfuscate ••••",
       "experienceCost": 5,
       "summary": "Project an autonomous, intangible horror that channels the vampire's non-physical powers.",
@@ -3956,7 +3985,16 @@
       "duration": "Scene",
       "effect": "The vampire projects an animate horror into the world. This creature is as ephemeral as any other illusion created with Nightmare or Obfuscate, but it can act independently of the vampire and follow simple commands. As a rule of thumb, it shouldn’t be bigger than a large human. As an extension of the Beast, the vampire maintains a mental link with the creature, and can channel her nonphysical Disciplines and Devotions through it. She can’t perceive what the creature does directly, but she has an impression of what it sees and hears, like a memory rather than direct observation. It can pass through walls and other barriers, and does not appear on video, audio, or any other kind of recording. It can also reflexively use the effect of Cloak of Night on itself. Any mortal who sees the living nightmare suffers a breaking point penalized by the vampire’s Blood Potency. A vampire can only create one living nightmare at a time.",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "presentationPt": {
+        "prerequisites": "Auspícios •; Pesadelo •••••; Ofuscação ••••",
+        "cost": "1 Vitae e 1 de Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "summary": "Projeta um horror autônomo e intangível que canaliza os poderes não Físicos do vampiro.",
+        "effect": "O vampiro projeta um horror animado no mundo. A criatura é tão efêmera quanto outras ilusões de Pesadelo ou Ofuscação, mas pode agir independentemente e seguir ordens simples. Em geral, não deve ser maior que um humano grande. Como extensão da Fera, mantém um vínculo mental com o vampiro, que pode canalizar Disciplinas e Devoções não Físicas através dela. Ele não percebe diretamente o que a criatura percebe, mas recebe uma impressão do que ela vê e ouve, semelhante a uma lembrança. Ela pode atravessar paredes e outras barreiras e não aparece em vídeo, áudio ou qualquer outra gravação. Também pode usar Manto da Noite reflexivamente em si mesma. Qualquer mortal que veja o pesadelo vivo sofre um Ponto de Ruptura penalizado pela Potência de Sangue do vampiro. Um vampiro só pode criar um pesadelo vivo por vez."
+      }
     },
     {
       "id": "devotion-mania",
