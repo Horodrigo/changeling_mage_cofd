@@ -6824,10 +6824,20 @@
       "bloodlineId": "khaibit",
       "experienceCost": 2,
       "cost": "3 Vitae",
-      "summary": "Wear a shadow and become a Twilight being.",
-      "effect": "Become immaterial while touching a shadow at least your Size. Move at half Speed along solid objects; only fire, sunlight, Pseshkf, ephemeral attacks, and effects that harm ephemera can affect you, but harmful effects inflict two extra lethal damage.",
+      "summary": "Become living shadow.",
+      "effect": "Move at half Speed along solid objects, blocked only by what stops light. You cannot directly affect the environment, but may use Pseshkf to attack ephemera. You are immune to abjuration and ordinary attacks; fire, sunlight, Pseshkf, ephemera, and effects that harm ephemera can affect you. Harm inflicts 2 additional damage, preserving its type.",
       "source": "Onyx Path Blog: The Shadow and the Asp",
-      "page": 0
+      "page": 0,
+      "requirement": "Touch a shadow at least your Size, including your own or one created by Tyet.",
+      "action": "At least 1 instant action; more if the 3 Vitae cannot be spent in a single turn.",
+      "presentationPt": {
+        "prerequisites": "Ofuscação ••",
+        "cost": "3 Vitae",
+        "summary": "Torna-se uma sombra viva.",
+        "requirement": "Toque uma sombra pelo menos tão grande quanto seu Tamanho, incluindo a própria ou uma criada por Tyet.",
+        "action": "Pelo menos 1 ação instantânea; mais se os 3 Vitae não puderem ser gastos em um único turno.",
+        "effect": "Mova-se com metade da Velocidade ao longo de objetos sólidos, impedido apenas pelo que bloqueia a luz. Não pode afetar diretamente o ambiente, mas pode usar Pseshkf para atacar seres efêmeros. É imune à abjuração e a ataques comuns; fogo, luz solar, Pseshkf, seres efêmeros e efeitos que os ferem podem afetá-lo. O dano aumenta em 2, mantendo seu tipo."
+      }
     },
     {
       "id": "devotion-iteru",
@@ -6861,10 +6871,17 @@
       "experienceCost": 2,
       "cost": "1+ Vitae",
       "action": "Instant",
-      "summary": "Coat an object in frozen darkness and wield it through Tyet.",
-      "effect": "Add Blood Potency to Durability and Vitae spent to Structure. Coated weapons gain +1 weapon rating against physical targets and Blood Potency weapon rating against noncorporeal targets.",
+      "summary": "Make shadows tangible to coat a tool or weapon.",
+      "effect": "Add Blood Potency to Durability and Vitae spent to Structure. Coated weapons inflict 1 additional lethal damage on physical targets, including Kindred, or Blood Potency lethal damage on noncorporeal targets, including spirits and Strix. With Tyet, manipulate the coated object as if holding it.",
       "source": "Onyx Path Blog: The Shadow and the Asp",
-      "page": 0
+      "page": 0,
+      "presentationPt": {
+        "prerequisites": "Ímpeto ••",
+        "cost": "1+ Vitae",
+        "action": "Instantânea",
+        "summary": "Torna sombras tangíveis para revestir uma ferramenta ou arma.",
+        "effect": "Acrescente Potência de Sangue à Durabilidade e Vitae gasto à Estrutura. Armas revestidas causam 1 ponto adicional de dano letal a alvos físicos, incluindo Membros, ou dano letal igual à Potência de Sangue a alvos incorpóreos, incluindo espíritos e Strix. Com Tyet, manipule o objeto revestido como se o segurasse."
+      }
     },
     {
       "id": "devotion-tyet",
@@ -6898,9 +6915,15 @@
       "summary": "See perfectly in total darkness and ignore blindness from injury or supernatural powers.",
       "cost": "Optional 1 Vitae",
       "duration": "Scene when Vitae is spent",
-      "effect": "Spending Vitae reveals spirits, Strix, angels, and other Twilight beings and prevents Strix possession for the scene. The first clear manifestation of Obtenebration forces witnesses to roll Resolve + Composure or gain Shaken.",
+      "effect": "Spending Vitae reveals spirits, Strix, angels, and other immaterial beings, including those in Twilight, and prevents Strix possession for the scene. The first clear manifestation of Obtenebration forces witnesses to roll Resolve + Composure or gain Shaken.",
       "source": "Onyx Path Blog: The Shadow and the Asp",
-      "page": 0
+      "page": 0,
+      "presentationPt": {
+        "summary": "Enxerga perfeitamente na escuridão total e ignora cegueira causada por lesões ou poderes sobrenaturais.",
+        "cost": "1 Vitae opcional",
+        "duration": "Uma cena quando Vitae é gasto",
+        "effect": "Gastar Vitae revela espíritos, Strix, anjos e outros seres imateriais, incluindo os que estão no Crepúsculo, e impede possessão por Strix durante a cena. A primeira manifestação clara de Obtenebração exige das testemunhas uma jogada de Perseverança + Compostura; falhar causa Abalado."
+      }
     },
     {
       "id": "devotion-bitter-blossom",
