@@ -8417,8 +8417,8 @@
       "id": "devotion-brick",
       "kind": "devotion",
       "name": "Brick",
-      "translatedName": "Brick",
-      "summary": "Disables or locks a target device through supernatural access.",
+      "translatedName": "Peso de Papel",
+      "summary": "Use the Beast to disable electronic devices in the immediate area.",
       "source": "Strange Shades: Mekhet",
       "page": 23,
       "manualOnly": true,
@@ -8429,14 +8429,23 @@
       "dicePool": "None",
       "action": "None",
       "duration": "Scene",
-      "effect": "The vampire spends a Vitae and Lashes Out (Vampire, p. 92). If successful, she disables all electronic devices in the immediate area with Durability equal to or lower than her successes. The devices power down and refuses to work for the duration. The Oracle can spend a Willpower on success to ensure the effect lasts the night. If someone tries to repair this device before the power expires, Crafts rolls are penalized by the vampire’s Blood Potency."
+      "effect": "The vampire spends a Vitae and Lashes Out (Vampire, p. 92). If successful, she disables all electronic devices in the immediate area with Durability equal to or lower than her successes. The devices power down and refuses to work for the duration. The Oracle can spend a Willpower on success to ensure the effect lasts the night. If someone tries to repair this device before the power expires, Crafts rolls are penalized by the vampire’s Blood Potency.",
+      "presentationPt": {
+        "prerequisites": "Interface ••, Ofuscação ••",
+        "cost": "1 Vitae (e 1 ponto de Força de Vontade, opcional)",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Cena",
+        "summary": "Usa a Fera para inutilizar aparelhos eletrônicos na área imediata.",
+        "effect": "O vampiro gasta uma Vitae e incita a Fera (Vampire, p. 92). Se obtiver sucesso, desativa todos os aparelhos eletrônicos na área imediata cuja Durabilidade seja igual ou inferior aos sucessos. Eles desligam e não funcionam durante a duração do poder. Após um sucesso, o Oráculo pode gastar Força de Vontade para prolongar o efeito por toda a noite. Tentativas de consertar um aparelho antes de o poder terminar sofrem, nos testes de Ofícios, penalidade igual à Potência de Sangue do vampiro."
+      }
     },
     {
       "id": "devotion-reach-out-and-touch-someone",
       "kind": "devotion",
       "name": "Reach Out and Touch Someone",
-      "translatedName": "Reach Out and Touch Someone",
-      "summary": "Projects Interface through a remote connection.",
+      "translatedName": "Estenda a Mão e Toque Alguém",
+      "summary": "Discharge electricity from a device to inflict lethal damage and render it non-functional.",
       "source": "Strange Shades: Mekhet",
       "page": 23,
       "manualOnly": true,
@@ -8447,16 +8456,25 @@
       "requirement": "The victim must first use Digital Whispers on the device.",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "A brief burst of electricity lashes out from the device with a range of (Interface) meters, inflicting lethal damage equal to Vigor on a victim, even a vampire. Keen observers or highspeed cameras will see this energy is shaped like raking claws or a striking fist."
+      "effect": "This renders the device non-functional. A brief burst of electricity lashes out from the device with a range of (Interface) meters, inflicting lethal damage equal to Vigor on a victim, even a vampire. Keen observers or highspeed cameras will see this energy is shaped like raking claws or a striking fist.",
+      "presentationPt": {
+        "prerequisites": "Interface ••••, Ímpeto ••",
+        "cost": "1 ponto de Força de Vontade",
+        "requirement": "A vítima deve primeiro usar Sussurros Digitais no aparelho.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "summary": "Descarrega eletricidade de um aparelho para causar dano letal e inutilizá-lo.",
+        "effect": "O uso deixa o aparelho inutilizável. Uma breve descarga elétrica parte dele, com alcance de Interface em metros, causando dano letal igual ao Ímpeto a uma vítima, mesmo que seja um vampiro. Observadores atentos ou câmeras de alta velocidade percebem que a energia tem a forma de garras que rasgam ou de um punho que golpeia."
+      }
     },
     {
       "id": "devotion-catfish",
       "kind": "devotion",
       "name": "Catfish",
-      "translatedName": "Catfish",
-      "summary": "Constructs a convincing digital identity that resists scrutiny.",
+      "translatedName": "Identidade Falsa",
+      "summary": "Alter the appearance and voice perceived through electronic media to imitate a chosen identity.",
       "source": "Strange Shades: Mekhet",
-      "page": 24,
+      "page": 23,
       "manualOnly": true,
       "bloodlineId": "connected",
       "experienceCost": 2,
@@ -8466,16 +8484,26 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "The vampire alters her appearance and voice to resemble whoever she wants over electronic media. To observers she remains the same, but all technology perceives her as a flawless copy of her chosen target, be it a specific person or a general ideal; see The Familiar Stranger for guidelines ( Vampire, p. 138). If she uses this Devotion to copy a specific person, it can even to fool devices like digital fingerprint readers and retinal scanners, but the vampire must have fed on the victim of her identity theft at some point in the night."
+      "effect": "The vampire alters her appearance and voice to resemble whoever she wants over electronic media. To observers she remains the same, but all technology perceives her as a flawless copy of her chosen target, be it a specific person or a general ideal; see The Familiar Stranger for guidelines ( Vampire, p. 138). If she uses this Devotion to copy a specific person, it can even to fool devices like digital fingerprint readers and retinal scanners, but the vampire must have fed on the victim of her identity theft at some point in the night.",
+      "presentationPt": {
+        "prerequisites": "Interface •, Ofuscação ••••",
+        "cost": "2 Vitae",
+        "requirement": "Para copiar uma pessoa específica, o vampiro deve estudá-la por pelo menos dez minutos.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "summary": "Altera a aparência e a voz percebidas por meios eletrônicos para imitar uma identidade escolhida.",
+        "effect": "O vampiro altera sua aparência e voz para parecer quem quiser por meios eletrônicos. Para observadores, continua igual, mas toda tecnologia o percebe como uma cópia perfeita do alvo escolhido, seja uma pessoa específica ou um ideal genérico; veja O Estranho Familiar (Vampire, p. 138) para orientações. Ao copiar uma pessoa específica, pode enganar até leitores digitais de impressão digital e scanners de retina, mas deve ter se alimentado da vítima do roubo de identidade em algum momento daquela noite."
+      }
     },
     {
       "id": "devotion-re-search",
       "kind": "devotion",
       "name": "Re: Search",
-      "translatedName": "Re: Search",
-      "summary": "Searches connected systems with preternatural speed and intuition.",
+      "translatedName": "Re: Busca",
+      "summary": "Use the victim’s device to obtain supernatural answers about the vampire’s prey.",
       "source": "Strange Shades: Mekhet",
-      "page": 24,
+      "page": 23,
       "manualOnly": true,
       "bloodlineId": "connected",
       "experienceCost": 2,
@@ -8490,6 +8518,21 @@
         "exceptionalSuccess": "The vampire gains the Informed Condition regarding her prey.",
         "failure": "Connection timed out.",
         "dramaticFailure": "The device provides false information and leaves a traceable data trail back to the vampire."
+      },
+      "presentationPt": {
+        "prerequisites": "Auspícios •••, Interface •",
+        "cost": "2 Vitae",
+        "requirement": "O vampiro deve marcar a vítima ou a casa dela com 1 Vitae, já incluída no custo.",
+        "dicePool": "Presença + Computação + Auspícios",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "summary": "Usa o aparelho da vítima para obter respostas sobrenaturais sobre sua presa.",
+        "rollResults": {
+          "success": "Enquanto a vítima estiver no mesmo cômodo que seu aparelho, pelo restante da noite o jogador pode fazer ao Narrador uma pergunta por sucesso no teste de ativação. As perguntas podem vir da lista de Percepção Sobrenatural ou ser uma destas: Onde minha vítima está agora? O que ela está fazendo? Quem está com ela? Para onde ela está indo?",
+          "exceptionalSuccess": "O vampiro recebe a Condição Informado a respeito de sua presa.",
+          "failure": "O tempo limite da conexão foi excedido.",
+          "dramaticFailure": "O aparelho fornece informações falsas e deixa um rastro de dados que permite chegar ao vampiro."
+        }
       }
     },
     {
