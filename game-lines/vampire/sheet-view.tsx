@@ -1,4 +1,6 @@
 "use client";
+
+import { storedDevotionTarget, devotionTargetName } from "./linked-devotions";
 import { vampireAnchorPresentation, vampireBloodlinePresentation, vampireClanPresentation } from "./reference-presentation";
 import { vampirePowerPresentation } from "./power-presentation";
 
@@ -2465,6 +2467,7 @@ function PurchasedPowers({
                     {experienceCost} {t("ui.xp")}
                   </p>
                 )}
+                {item.linkedPower && <p><strong>{t("ui.linkedPower")}:</strong>{" "}{devotionTargetName(storedDevotionTarget(character.line_data, item.id), powers, locale) ?? t("ui.linkedPowerUnrecorded")}</p>}
                 <PowerMechanics mechanics={item} />
                 {item.levels
                   ?.filter((level) => level.rating <= Number(rating ?? 0))

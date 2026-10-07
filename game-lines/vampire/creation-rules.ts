@@ -5,6 +5,8 @@ import { vampireMeritId } from "./merit-identities";
 import { requirementMet } from "@/lib/merit-requirements";
 import { resolveMeritDefinition, type DefinitionIdentity } from "@/lib/merit-identity";
 
+import { linkedDevotionQuote, type DevotionTarget } from "./linked-devotions";
+
 export const VAMPIRE_CREATION_DISCIPLINES = [
   "Animalism", "Auspex", "Celerity", "Dominate", "Majesty",
   "Nightmare", "Obfuscate", "Protean", "Resilience", "Vigor", "Praestantia", "Vitiate", "Triadic Evolution",
@@ -172,11 +174,17 @@ export function vampireDisciplinePrerequisitesMet(prerequisites: string | undefi
   });
 }
 
-export function vampireDevotionPrerequisitesMet(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "skills" | "line_data" | "merits">, powers: Pick<VampirePowers, "disciplines" | "devotions">, meritCatalog: readonly DefinitionIdentity[] = []) {
+export function vampireDevotionPrerequisitesMet(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "skills" | "line_data" | "merits">, powers: Pick<VampirePowers, "disciplines" | "devotions">, meritCatalog: readonly DefinitionIdentity[] = [], target?: DevotionTarget): boolean {
   if (!definition) return false;
   const names = powers.disciplines.map((item) => item.name);
   const disciplines = recordRatings(character.line_data.disciplines, names, 10);
   const known = stringArray(character.line_data.devotion_ids);
+  if (definition.linkedPower) {
+    const quote = linkedDevotionQuote(definition, character, powers, target);
+    const discipline = powers.disciplines.find(item => item.id === definition.linkedPower!.disciplineId);
+    return Boolean(quote && discipline && Number(disciplines[discipline.name] ?? 0) >= quote.required
+      && (quote.target.kind !== "devotion" || vampireDevotionPrerequisitesMet(quote.power as VampirePurchasablePower, character, powers, meritCatalog)));
+  }
   return vampireDisciplinePrerequisitesMet(definition.prerequisites, disciplines, names)
     && Object.entries(definition.requiredDisciplines ?? {}).every(([id, rating]) => {
       const discipline = powers.disciplines.find(item => item.id === id);
@@ -202,7 +210,8 @@ export function vampireDisciplineOptionPrerequisitesMet(definition: VampirePurch
     && (definition.requiredDevotionIds ?? []).every(id => vampireDevotionPrerequisitesMet(powers.devotions.find(item => item.id === id), character, powers, meritCatalog));
 }
 
-export function vampireDevotionExperienceCost(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "line_data"> & Partial<Pick<CharacterSheet, "merits">>, powers: Pick<VampirePowers, "devotions">, confirmationId?: string, meritCatalog: readonly DefinitionIdentity[] = []) {
+export function vampireDevotionExperienceCost(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "line_data"> & Partial<Pick<CharacterSheet, "merits">>, powers: Pick<VampirePowers, "devotions"> & Partial<Pick<VampirePowers, "disciplines">>, confirmationId?: string, meritCatalog: readonly DefinitionIdentity[] = [], target?: DevotionTarget) {
+  if (definition?.linkedPower) return linkedDevotionQuote(definition, character, powers, target)?.cost;
   const base = definition?.experienceCost;
   if (typeof base !== "number" || !Number.isFinite(base) || base < 0) return undefined;
   const known = stringArray(character.line_data.devotion_ids);

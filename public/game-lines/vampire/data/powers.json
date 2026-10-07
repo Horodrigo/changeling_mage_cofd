@@ -4858,19 +4858,30 @@
       "id": "devotion-rapidity",
       "kind": "devotion",
       "name": "Rapidity",
-      "translatedName": "Rapidity",
+      "translatedName": "Rapidez",
       "prerequisites": "Celerity • to •••••",
       "covenantIds": [
         "carthian-movement"
       ],
-      "experienceCost": 1,
       "summary": "Modify another Devotion so it can activate reflexively.",
       "source": "David A. Hill Jr. Pastebin",
       "page": 0,
       "cost": "1 Vitae",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "Assign Rapidity to a suitable instant-action Devotion when purchased; required Celerity equals that Devotion's Experience cost. Paying the extra Vitae makes the linked Devotion reflexive, but only one Rapidity-linked power may activate per turn. Complex speech or physical procedures are ineligible. Rapidity's Experience cost rises from one to three with its Celerity requirement and cannot modify a Devotion costing six or more."
+      "effect": "Assign Rapidity to a suitable instant-action Devotion when purchased; required Celerity equals that Devotion's Experience cost. Paying the extra Vitae makes the linked Devotion reflexive, but only one Rapidity-linked power may activate per turn. Complex speech or physical procedures are ineligible. Rapidity's Experience cost rises from one to three with its Celerity requirement and cannot modify a Devotion costing six or more.",
+      "linkedPower": {
+        "disciplineId": "celerity",
+        "disciplinePowers": false
+      },
+      "presentationPt": {
+        "prerequisites": "Celeridade • a •••••; conforme a Devoção vinculada",
+        "summary": "Modifica outra Devoção para permitir ativação reflexiva.",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Ao comprar, vincule Rapidez a uma Devoção instantânea adequada; a Celeridade exigida é igual ao preço habitual dessa Devoção em Experiências. Pagar a Vitae adicional torna a Devoção vinculada reflexiva, mas apenas um poder modificado por Rapidez pode ser ativado por turno. Falas ou procedimentos físicos complexos não são elegíveis. O aprendizado custa uma Experiência para Celeridade um ou dois, duas para três ou quatro e três para cinco. Rapidez não pode modificar uma Devoção que normalmente custe seis Experiências ou mais."
+      }
     },
     {
       "id": "devotion-rock-is-dead",
@@ -4902,19 +4913,30 @@
       "id": "devotion-slow-steady",
       "kind": "devotion",
       "name": "Slow and Steady",
-      "translatedName": "Slow and Steady",
+      "translatedName": "Devagar e Sempre",
       "prerequisites": "Resilience • to •••••",
       "covenantIds": [
         "carthian-movement"
       ],
-      "experienceCost": 1,
       "summary": "Slow a power to convert its Attribute dice into successes.",
       "source": "David A. Hill Jr. Pastebin",
       "page": 0,
       "cost": "1 Vitae",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "Assign this to an instant Discipline power or Devotion when purchased; required Resilience equals the linked power's rating or Experience cost. Activation replaces the instant action with 30 minutes of preparation while any target remains present. The final pool omits the Attribute and converts its dots into automatic successes; resistance remains normal. Cost rises from one to three Experiences with required Resilience and cannot modify a Devotion costing six or more."
+      "effect": "Assign this to an instant Discipline power or Devotion when purchased; required Resilience equals the linked power's rating or Experience cost. Activation replaces the instant action with 30 minutes of preparation while any target remains present. The final pool omits the Attribute and converts its dots into automatic successes; resistance remains normal. Cost rises from one to three Experiences with required Resilience and cannot modify a Devotion costing six or more.",
+      "linkedPower": {
+        "disciplineId": "resilience",
+        "disciplinePowers": true
+      },
+      "presentationPt": {
+        "prerequisites": "Resiliência • a •••••; conforme o poder vinculado",
+        "summary": "Retarda um poder para converter os dados de Atributo em sucessos.",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Ao comprar, vincule esta Devoção a um poder instantâneo de Disciplina ou a uma Devoção instantânea. A Resiliência exigida é igual ao nível do poder ou ao preço habitual da Devoção em Experiências. A ativação substitui a ação instantânea por 30 minutos de preparação, durante os quais qualquer alvo deve permanecer presente. A parada final omite o Atributo e converte seus pontos em sucessos automáticos; a resistência permanece normal. O aprendizado custa uma Experiência para Resiliência um ou dois, duas para três ou quatro e três para cinco. Não pode modificar uma Devoção que normalmente custe seis Experiências ou mais."
+      }
     },
     {
       "id": "devotion-straight-up-murderer",

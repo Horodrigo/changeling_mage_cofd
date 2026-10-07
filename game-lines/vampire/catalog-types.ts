@@ -197,6 +197,7 @@ export type VampirePurchasablePower = VampireMechanics & {
   requiredSkills?: Record<string, number>;
   requiredDevotionIds?: string[];
   requiredMerits?: Array<{ definitionId: string; dots: number }>;
+  linkedPower?: { disciplineId: string; disciplinePowers: boolean };
   experienceCost?: number;
   experienceDiscounts?: Array<{ cost: number } & ({ bloodlineId: string; xiaoFaction?: "apostates" | "ascended" } | { covenantId: string } | { devotionIds: string[] } | { cultInitiation: { definitionId: string; cultId: string; dots: number } } | { confirmation: { id: string; label: string; labelPt: string } })>;
   bloodlineId?: string;

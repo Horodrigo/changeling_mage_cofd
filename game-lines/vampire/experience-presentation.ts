@@ -6,6 +6,7 @@ import type { MeritDefinition } from "@/lib/merits";
 import { systemTerm } from "@/lib/system-terms";
 import type { VampirePowers } from "./catalog-types";
 import type { VampireAdvancementUndo } from "./experience-refunds";
+import { devotionTargetName } from "./linked-devotions";
 
 export type VampireExperienceEntry = {
   id: string; cost: number; createdAt: string; undo?: VampireAdvancementUndo;
@@ -49,6 +50,7 @@ export function vampireExperienceLabel(entry: VampireExperienceEntry, character:
       : undo.kind === "devotion" ? powers.devotions : undo.kind === "discipline-option" ? powers.disciplineOptions ?? [] : undo.kind === "lash" ? powers.lashes : undo.kind === "coil" ? powers.coils : undo.kind === "scale" ? powers.scales : undo.kind === "detournement" ? powers.detournements : [];
     const item = groups.find(item => item.id === undo.id);
     const title = item ? name(item) : undo.id;
+    if (undo.kind === "devotion" && undo.target) return `${title}: ${devotionTargetName(undo.target, powers, locale) ?? undo.target.id}`;
     return undo.kind === "coil" ? rated(title, undo.amount) : title;
   }
   return fallback;

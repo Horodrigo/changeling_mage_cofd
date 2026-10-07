@@ -64,6 +64,9 @@ export const vampireMessages = {
       "otherPowers": "Outros Poderes"
     },
     "ui": {
+      "linkedPower": "Poder vinculado",
+      "linkedPowerReview": "Escolha um poder instantâneo. O Narrador avalia sua adequação; Rapidez exclui falas ou procedimentos físicos complexos.",
+      "linkedPowerUnrecorded": "Poder vinculado não registrado",
       "vampireTitle": "VAMPIRE",
       "disciplineOptions": "Opções de Disciplina",
       "cruac": "Crúac",
@@ -519,6 +522,9 @@ export const vampireMessages = {
       "otherPowers": "Other Powers"
     },
     "ui": {
+      "linkedPower": "Linked power",
+      "linkedPowerReview": "Choose an instant power. The Storyteller reviews suitability; Rapidity excludes complex speech or physical procedures.",
+      "linkedPowerUnrecorded": "Linked power not recorded",
       "vampireTitle": "VAMPIRE",
       "disciplineOptions": "Discipline Options",
       "cruac": "Crúac",
