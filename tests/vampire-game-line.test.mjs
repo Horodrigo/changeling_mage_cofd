@@ -1179,3 +1179,41 @@ test("Better Feared Lessons require their printed Truth rank without inventing a
     assert.equal(vampireDevotionPrerequisitesMet(definition, sheet, powers), false, "Presentation never replaces the canonical parser input");
   }
 });
+
+test("Lithopedia rites require their canonical Discipline rank and preserve paid dependencies on refund", async () => {
+  const { vampireDevotionPrerequisitesMet: eligible, vampireDevotionExperienceCost: cost, synchronizeAutomaticBloodlineDevotions: synchronize } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const { refundVampireAdvancement: refund } = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
+  const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const sheet = blankPrintCharacter("VtR");
+  sheet.line_data = { ...sheet.line_data, bloodline_id: "csalad", devotion_ids: ["authored-choice"], disciplines: {} };
+  const ranks = { "devotion-kin-to-the-land": 3, "devotion-lair-of-the-beast": 1, "devotion-nowhere-to-hide": 4, "devotion-nowhere-to-run": 3, "devotion-prince-s-wrath": 3, "devotion-taste-the-land": 1, "devotion-territory-s-wisdom": 2, "devotion-urban-unrest": 2, "devotion-red-tide": 5, "devotion-tie-to-the-land": 5 };
+  assert.equal(powers.devotions.filter(item => item.category === "Lithopedia Rites").length, 10);
+  for (const [id, rank] of Object.entries(ranks)) {
+    const definition = powers.devotions.find(item => item.id === id);
+    assert.equal(definition.rating, rank);
+    assert.deepEqual(definition.requiredDisciplines, { lithopedia: rank });
+    for (let dots = 0; dots <= 5; dots++) {
+      sheet.line_data.disciplines = { Lithopedia: dots };
+      const before = JSON.stringify(sheet);
+      assert.equal(eligible(definition, sheet, powers), dots >= rank, id);
+      assert.equal(cost(definition, sheet, powers), undefined, "No printed price becomes an invented free grant");
+      assert.deepEqual(synchronize(sheet, powers).line_data.devotion_ids, ["authored-choice"]);
+      assert.equal(JSON.stringify(sheet), before);
+    }
+    const unavailable = { ...powers, disciplines: powers.disciplines.map(item => item.id === "lithopedia" ? { ...item, id: "homebrew-namesake" } : item) };
+    assert.equal(eligible(definition, sheet, unavailable), false, "A canonical-name namesake cannot replace the unavailable ID");
+    const localized = { ...powers, disciplines: powers.disciplines.map(item => ({ ...item, translatedName: "Authored presentation" })) };
+    assert.equal(eligible(definition, sheet, localized), true);
+  }
+  sheet.line_data.disciplines = { Lithopedia: 3 };
+  sheet.line_data.devotion_ids = ["devotion-kin-to-the-land", "authored-choice"];
+  sheet.current_state.vampire_experience_history = [{ id: "old-rite", label: "Authored receipt", cost: 4, undo: { kind: "devotion", id: "devotion-kin-to-the-land" } }];
+  const before = JSON.stringify(sheet);
+  assert.equal(refund(sheet, { kind: "discipline", name: "Lithopedia" }, powers), false);
+  assert.equal(JSON.stringify(sheet), before, "Failed refund preserves the sheet, XP and receipt");
+  sheet.line_data.disciplines.Lithopedia = 4;
+  assert.equal(refund(sheet, { kind: "discipline", name: "Lithopedia" }, powers), true);
+  assert.equal(sheet.line_data.disciplines.Lithopedia, 3);
+  assert.deepEqual(sheet.current_state.vampire_experience_history, JSON.parse(before).current_state.vampire_experience_history);
+});

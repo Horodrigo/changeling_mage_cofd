@@ -8545,7 +8545,7 @@
       "id": "devotion-kin-to-the-land",
       "kind": "devotion",
       "name": "Kin to the Land",
-      "translatedName": "Kin to the Land",
+      "translatedName": "Parentesco com a Terra",
       "summary": "A 3-dot Lithopedia rite binding the Család to the history and behavior of territory.",
       "source": "Strange Shades: Mekhet",
       "page": 29,
@@ -8555,13 +8555,21 @@
       "category": "Lithopedia Rites",
       "prerequisites": "•••",
       "targetSuccesses": 8,
-      "effect": "To use this ritual, the vampire spreads the sacrifice at four equidistant corners within her territory, usually art cross streets. This forms the epicenter of the rite. If successful, for the rest of the scene, all mortal residents of the territory are considered thrice removed from the vampire in terms of Blood Sympathy. Those in the epicenter are twice removed. Anyone with a natural blood tie to the vampire finds it goes down a step of removal, or one lower than the one imposed by the ritual if it was higher. This is a one-way connection. It doesn’t allow other Kindred to use Blood Sympathy with the Család if they didn’t have it already. Vampires in the area feel this false connection form, and can reflexively contest it with Stamina + Blood Potency, minus the spell’s Potency. For as long as victims remain in the area, the vampire does not need to spend Willpower to force sympathy."
+      "effect": "To use this ritual, the vampire spreads the sacrifice at four equidistant corners within her territory, usually art cross streets. This forms the epicenter of the rite. If successful, for the rest of the scene, all mortal residents of the territory are considered thrice removed from the vampire in terms of Blood Sympathy. Those in the epicenter are twice removed. Anyone with a natural blood tie to the vampire finds it goes down a step of removal, or one lower than the one imposed by the ritual if it was higher. This is a one-way connection. It doesn’t allow other Kindred to use Blood Sympathy with the Család if they didn’t have it already. Vampires in the area feel this false connection form, and can reflexively contest it with Stamina + Blood Potency, minus the spell’s Potency. For as long as victims remain in the area, the vampire does not need to spend Willpower to force sympathy.",
+      "requiredDisciplines": {
+        "lithopedia": 3
+      },
+      "presentationPt": {
+        "summary": "Um rito de Lithopedia de 3 pontos que vincula o Család à história e ao comportamento do território.",
+        "prerequisites": "Lithopedia •••",
+        "effect": "Para realizar este ritual, a vampira espalha o sacrifício em quatro pontos equidistantes dentro de seu território, geralmente em cruzamentos. Isso forma o epicentro do rito. Em caso de sucesso, pelo resto da cena, todos os residentes mortais do território são considerados parentes de três graus da vampira para a Simpatia de Sangue. Os que estão no epicentro são parentes de dois graus. Quem possui um laço de sangue natural com a vampira tem seu grau de parentesco reduzido em um, ou para um grau abaixo do imposto pelo ritual se era maior. Essa ligação funciona em apenas um sentido. Ela não permite que outros Membros usem Simpatia de Sangue com o Család caso ainda não pudessem fazê-lo. Vampiros na área sentem a formação dessa falsa ligação e podem contestá-la reflexivamente com Vigor + Potência de Sangue, menos a Potência do feitiço. Enquanto as vítimas permanecerem na área, a vampira não precisa gastar Força de Vontade para forçar a simpatia."
+      }
     },
     {
       "id": "devotion-lair-of-the-beast",
       "kind": "devotion",
       "name": "Lair of the Beast",
-      "translatedName": "Lair of the Beast",
+      "translatedName": "Covil da Fera",
       "summary": "A 1-dot Lithopedia rite binding the Család to the history and behavior of territory.",
       "source": "Strange Shades: Mekhet",
       "page": 29,
@@ -8571,13 +8579,21 @@
       "category": "Lithopedia Rites",
       "prerequisites": "•",
       "targetSuccesses": 4,
-      "effect": "The vampire smears her Vitae over a central point of her territory. If the casting is successful, for the rest of the night the Család extends her Predatory Aura over the area. Vampires constantly feel her Beast’s presence, and even humans sense a certain atavistic unease. If she remains within the bounds of the territory, the Család can feel trespassing predators touch her aura if they aren’t Obfuscated, and she can lash out at them from a distance by spending a Vitae along with the usual cost, though the victim can still respond. The ritualist can extend this spell’s duration by a night per additional Potency."
+      "effect": "The vampire smears her Vitae over a central point of her territory. If the casting is successful, for the rest of the night the Család extends her Predatory Aura over the area. Vampires constantly feel her Beast’s presence, and even humans sense a certain atavistic unease. If she remains within the bounds of the territory, the Család can feel trespassing predators touch her aura if they aren’t Obfuscated, and she can lash out at them from a distance by spending a Vitae along with the usual cost, though the victim can still respond. The ritualist can extend this spell’s duration by a night per additional Potency.",
+      "requiredDisciplines": {
+        "lithopedia": 1
+      },
+      "presentationPt": {
+        "summary": "Um rito de Lithopedia de 1 ponto que vincula o Család à história e ao comportamento do território.",
+        "prerequisites": "Lithopedia •",
+        "effect": "A vampira espalha sua Vitae sobre um ponto central de seu território. Se a conjuração obtiver sucesso, pelo resto da noite o Család estende sua Aura Predatória por toda a área. Vampiros sentem constantemente a presença de sua Fera, e até humanos percebem uma inquietação atávica. Enquanto permanecer dentro dos limites do território, o Család sente predadores invasores tocarem sua aura, caso não estejam ocultos por Ofuscação, e pode Incitar a Fera contra eles à distância gastando uma Vitae além do custo habitual, embora a vítima ainda possa responder. A ritualista pode estender a duração do feitiço em uma noite por ponto adicional de Potência."
+      }
     },
     {
       "id": "devotion-nowhere-to-hide",
       "kind": "devotion",
       "name": "Nowhere to Hide",
-      "translatedName": "Nowhere to Hide",
+      "translatedName": "Sem Esconderijo",
       "summary": "A 4-dot Lithopedia rite binding the Család to the history and behavior of territory.",
       "source": "Strange Shades: Mekhet",
       "page": 29,
@@ -8587,13 +8603,21 @@
       "category": "Lithopedia Rites",
       "prerequisites": "••••",
       "targetSuccesses": 10,
-      "effect": "The vampire marks an open-air part of the territory with the sacrifice; removing the mark ends the effect. If successful, Stealth actions in the territory automatically fail for the rest of the night, and Obfuscate doesn’t work unless the actor prevails in a Clash of Wills, penalized by the rite’s Potency. This does not apply to the vampire, and she can obviate the effect on anyone she anoints with a Vitae at casting. Protection ends if they wipe away the blood."
+      "effect": "The vampire marks an open-air part of the territory with the sacrifice; removing the mark ends the effect. If successful, Stealth actions in the territory automatically fail for the rest of the night, and Obfuscate doesn’t work unless the actor prevails in a Clash of Wills, penalized by the rite’s Potency. This does not apply to the vampire, and she can obviate the effect on anyone she anoints with a Vitae at casting. Protection ends if they wipe away the blood.",
+      "requiredDisciplines": {
+        "lithopedia": 4
+      },
+      "presentationPt": {
+        "summary": "Um rito de Lithopedia de 4 pontos que vincula o Család à história e ao comportamento do território.",
+        "prerequisites": "Lithopedia ••••",
+        "effect": "A vampira marca uma parte a céu aberto do território com o sacrifício; remover a marca encerra o efeito. Em caso de sucesso, ações de Furtividade no território falham automaticamente pelo resto da noite, e Ofuscação não funciona a menos que o usuário vença um Confronto de Vontades, penalizado pela Potência do rito. Isso não se aplica à vampira, que também pode isentar qualquer pessoa que unja com uma Vitae durante a conjuração. A proteção termina se a pessoa remover o sangue."
+      }
     },
     {
       "id": "devotion-nowhere-to-run",
       "kind": "devotion",
       "name": "Nowhere to Run",
-      "translatedName": "Nowhere to Run",
+      "translatedName": "Sem Escapatória",
       "summary": "A 3-dot Lithopedia rite binding the Család to the history and behavior of territory.",
       "source": "Strange Shades: Mekhet",
       "page": 29,
@@ -8603,23 +8627,34 @@
       "category": "Lithopedia Rites",
       "prerequisites": "•••",
       "targetSuccesses": 6,
-      "effect": "The vampire pours Vitae over a map of her territory and draws symbols of protection and the elements. If the ritual is successful, she can impose an Environmental Tilt on a small section marked on the map, up to the size of a large room or a cross-street. She can use any Environmental Tilt listed in the Chronicles of Darkness Rulebook except Extreme Heat. If the Tilt has degrees of severity, the rite defaults to the lowest, but the vampire can spend additional Vitae to increase it, up to limit equal to her Lithopedia dots. Once the ritual is complete, the vampire must take an instant at some point in the evening to inflict this Tilt on the marked area. This Tilt lasts a scene. The vampire is immune to the Tilt, as is anyone whose name she marked on the map when she cast the spell."
+      "effect": "The vampire pours Vitae over a map of her territory and draws symbols of protection and the elements. If the ritual is successful, she can impose an Environmental Tilt on a small section marked on the map, up to the size of a large room or a cross-street. She can use any Environmental Tilt listed in the Chronicles of Darkness Rulebook except Extreme Heat. If the Tilt has degrees of severity, the rite defaults to the lowest, but the vampire can spend additional Vitae to increase it, up to limit equal to her Lithopedia dots. Once the ritual is complete, the vampire must take an instant at some point in the evening to inflict this Tilt on the marked area. This Tilt lasts a scene. The vampire is immune to the Tilt, as is anyone whose name she marked on the map when she cast the spell.",
+      "requiredDisciplines": {
+        "lithopedia": 3
+      },
+      "presentationPt": {
+        "summary": "Um rito de Lithopedia de 3 pontos que vincula o Család à história e ao comportamento do território.",
+        "prerequisites": "Lithopedia •••",
+        "effect": "A vampira derrama Vitae sobre um mapa de seu território e desenha símbolos de proteção e dos elementos. Se o ritual obtiver sucesso, pode impor uma Complicação Ambiental em uma pequena seção marcada no mapa, até o tamanho de uma sala grande ou de um cruzamento. Pode usar qualquer Complicação Ambiental listada no Chronicles of Darkness Rulebook, exceto Calor Extremo. Se a Complicação possui graus de severidade, o rito usa o mais baixo, mas a vampira pode gastar Vitae adicional para aumentá-lo, até um limite igual aos seus pontos em Lithopedia. Depois de concluir o ritual, a vampira precisa realizar uma ação instantânea em algum momento daquela noite para impor a Complicação na área marcada. Ela dura uma cena. A vampira é imune à Complicação, assim como qualquer pessoa cujo nome tenha marcado no mapa durante a conjuração."
+      }
     },
     {
       "id": "devotion-prince-s-wrath",
       "kind": "devotion",
       "name": "Prince's Wrath",
       "translatedName": "Prince's Wrath",
-      "summary": "A 4-dot Lithopedia rite binding the Család to the history and behavior of territory.",
+      "summary": "A 3-dot Lithopedia rite binding the Család to the history and behavior of territory.",
       "source": "Strange Shades: Mekhet",
       "page": 29,
       "manualOnly": true,
       "bloodlineId": "csalad",
-      "rating": 4,
+      "rating": 3,
       "category": "Lithopedia Rites",
-      "prerequisites": "••••",
+      "prerequisites": "•••",
       "targetSuccesses": 10,
-      "effect": "Officially, only Hunyadi Dorján has mastered this ritual, but he suspects one of his eldest childer has mastered it as well. Whether she wishes to share it with her own disciples is another matter. To perform this ritual, the Család must stab her shadow at a central point in the territory. This inflicts her with lethal damage equal to (5 – Blood Potency), to a minimum of one point. She then expends the ritual’s Vitae cost through the wound and onto the ground. She must bear this damage for as long as the ritual lasts, or else the spell is broken. In the event a Hollow Mekhet knows this rite, she must stab her Ka to affect it. If successful, for the rest of the night the ritualist infuses the area with a nightmarish manifestation of her Beast. Every window seems to carry her reflection at the edge of peripheral vision, and predatory animals will attack people at the slightest provocation. The vampire herself is the epicenter of this horror, and gains several benefits. People subconsciously recognize her as the master of the territory, and cannot spend Willpower to defy her in any way. Furthermore, attacking the ritualist is a breaking point at Humanity 3 and higher, or with a –3 modifier in the case of mortals. She can also spend a Willpower to extend social and mental Discipline effects through inanimate objects within her line of sight. In addition, vampires can only choose a flight response if the Család lashes out at them, and any fear frenzy provocations suffer the rite’s Potency as an additional penalty."
+      "effect": "Officially, only Hunyadi Dorján has mastered this ritual, but he suspects one of his eldest childer has mastered it as well. Whether she wishes to share it with her own disciples is another matter. To perform this ritual, the Család must stab her shadow at a central point in the territory. This inflicts her with lethal damage equal to (5 – Blood Potency), to a minimum of one point. She then expends the ritual’s Vitae cost through the wound and onto the ground. She must bear this damage for as long as the ritual lasts, or else the spell is broken. In the event a Hollow Mekhet knows this rite, she must stab her Ka to affect it. If successful, for the rest of the night the ritualist infuses the area with a nightmarish manifestation of her Beast. Every window seems to carry her reflection at the edge of peripheral vision, and predatory animals will attack people at the slightest provocation. The vampire herself is the epicenter of this horror, and gains several benefits. People subconsciously recognize her as the master of the territory, and cannot spend Willpower to defy her in any way. Furthermore, attacking the ritualist is a breaking point at Humanity 3 and higher, or with a –3 modifier in the case of mortals. She can also spend a Willpower to extend social and mental Discipline effects through inanimate objects within her line of sight. In addition, vampires can only choose a flight response if the Család lashes out at them, and any fear frenzy provocations suffer the rite’s Potency as an additional penalty.",
+      "requiredDisciplines": {
+        "lithopedia": 3
+      }
     },
     {
       "id": "devotion-taste-the-land",
@@ -8635,7 +8670,10 @@
       "category": "Lithopedia Rites",
       "prerequisites": "•",
       "targetSuccesses": 7,
-      "effect": "The vampire must feed from a resident of the area before she casts this rite, using his stolen Vitae in the cost. If successful, she receives a vision of the local population and all their various emotions. The Storyteller must provide a general mood for the area as it stands for the night. Typically, a word or short phrase will do: “Tense”, “Bored”, “On the brink”, etc. For the rest of the night, the vampire adds her Lithopedia dots to any Empathy or Persuasion rolls with mortal residents, and can ignore the first door in any Social maneuver if she exploits this mood."
+      "effect": "The vampire must feed from a resident of the area before she casts this rite, using his stolen Vitae in the cost. If successful, she receives a vision of the local population and all their various emotions. The Storyteller must provide a general mood for the area as it stands for the night. Typically, a word or short phrase will do: “Tense”, “Bored”, “On the brink”, etc. For the rest of the night, the vampire adds her Lithopedia dots to any Empathy or Persuasion rolls with mortal residents, and can ignore the first door in any Social maneuver if she exploits this mood.",
+      "requiredDisciplines": {
+        "lithopedia": 1
+      }
     },
     {
       "id": "devotion-territory-s-wisdom",
@@ -8651,7 +8689,10 @@
       "category": "Lithopedia Rites",
       "prerequisites": "••",
       "targetSuccesses": 5,
-      "effect": "The vampire feeds on an employee of a business in her territory, spending the blood gained into the cost of this ritual. If successful, she can choose a Mental or Social Skill most appropriate to the site (Medicine for a hospital, Socialize for a nightclub, etc.). For as long as she remains in the bounds of her territory, for the rest of the night she can draw on her sympathetic link to the site, allowing her to spend Vitae on that Skill as she were using Physical Intensity. However, her per turn rate of Vitae expenditure for this effect is determined by Blood Potency or Lithopedia, whichever is lower."
+      "effect": "The vampire feeds on an employee of a business in her territory, spending the blood gained into the cost of this ritual. If successful, she can choose a Mental or Social Skill most appropriate to the site (Medicine for a hospital, Socialize for a nightclub, etc.). For as long as she remains in the bounds of her territory, for the rest of the night she can draw on her sympathetic link to the site, allowing her to spend Vitae on that Skill as she were using Physical Intensity. However, her per turn rate of Vitae expenditure for this effect is determined by Blood Potency or Lithopedia, whichever is lower.",
+      "requiredDisciplines": {
+        "lithopedia": 2
+      }
     },
     {
       "id": "devotion-urban-unrest",
@@ -8667,7 +8708,10 @@
       "category": "Lithopedia Rites",
       "prerequisites": "••",
       "targetSuccesses": 7,
-      "effect": "A variation of Taste the Land, the vampire can alter the mood of the people in her domain rather than reading it. Just as with that ritual, she must feed from a resident before she casts the spell. If successful, she can instill the area with a mood, as defined above. For the rest of the night, the Család succeeds with three successes instead of five on any roll to exploit this mood in the territory, though this only applies to groups rather than individuals. For example, if she imposes a violent mood, this rite can enhance actions to incite a riot."
+      "effect": "A variation of Taste the Land, the vampire can alter the mood of the people in her domain rather than reading it. Just as with that ritual, she must feed from a resident before she casts the spell. If successful, she can instill the area with a mood, as defined above. For the rest of the night, the Család succeeds with three successes instead of five on any roll to exploit this mood in the territory, though this only applies to groups rather than individuals. For example, if she imposes a violent mood, this rite can enhance actions to incite a riot.",
+      "requiredDisciplines": {
+        "lithopedia": 2
+      }
     },
     {
       "id": "devotion-red-tide",
@@ -8683,7 +8727,10 @@
       "category": "Lithopedia Rites",
       "prerequisites": "•••••",
       "targetSuccesses": 10,
-      "effect": "To cast this rite, in addition to the usual cost, the vampire must sacrifice a dot of Blood Potency. This returns at the end of the month. As such, characters with only a dot of Blood Potency cannot cast this ritual. Once the ritual is complete, the vampire makes the territory an extension of her Vitae for the night. Dark blood pools in sinks, faucets, and cracks in the infrastructure, and mortals who take lethal damage bleed this substance. Vampires feeding on blood from inanimate objects treat it as cold mortal blood, and every half square mile of the area has about a corpse’s worth of Vitae, give or take. Feeding from wounded mortals works as usual. This blood has an enticing scent, almost like a coppery candy. Anyone drinking it gains a first step blood bond to the caster, but an existent blood bond cannot be extended any further. Vampires in the presence of this blood must resist frenzy as if they were hungry (or starving if they are addicted to Vitae), and even humans must succeed on a Resolve + Composure roll to resist tasting it."
+      "effect": "To cast this rite, in addition to the usual cost, the vampire must sacrifice a dot of Blood Potency. This returns at the end of the month. As such, characters with only a dot of Blood Potency cannot cast this ritual. Once the ritual is complete, the vampire makes the territory an extension of her Vitae for the night. Dark blood pools in sinks, faucets, and cracks in the infrastructure, and mortals who take lethal damage bleed this substance. Vampires feeding on blood from inanimate objects treat it as cold mortal blood, and every half square mile of the area has about a corpse’s worth of Vitae, give or take. Feeding from wounded mortals works as usual. This blood has an enticing scent, almost like a coppery candy. Anyone drinking it gains a first step blood bond to the caster, but an existent blood bond cannot be extended any further. Vampires in the presence of this blood must resist frenzy as if they were hungry (or starving if they are addicted to Vitae), and even humans must succeed on a Resolve + Composure roll to resist tasting it.",
+      "requiredDisciplines": {
+        "lithopedia": 5
+      }
     },
     {
       "id": "devotion-tie-to-the-land",
@@ -8699,7 +8746,10 @@
       "category": "Lithopedia Rites",
       "prerequisites": "•••••",
       "targetSuccesses": 11,
-      "effect": "Resisted by: highest Composure in the area To use this ritual, the vampire must kill a resident of the area, spreading his blood at five equidistant points around her territory. At the geographic center of this pentagon, the vampire spills her own blood. Once complete, the vampire forms a false blood bond with her subjects. All mortal residents of the area gain a first step Vinculum to the vampire or the Vitae donor, or a second step bond if they reside in the epicenter. This lasts the rest of the night. Kindred residents resist the formation of this false bond with a successful Resolve + Blood Potency roll, minus the spell’s Potency. The Coil of the Voivode applies to these bonds, and the vampire can use Kin to the Land to enhance blood ties further."
+      "effect": "Resisted by: highest Composure in the area To use this ritual, the vampire must kill a resident of the area, spreading his blood at five equidistant points around her territory. At the geographic center of this pentagon, the vampire spills her own blood. Once complete, the vampire forms a false blood bond with her subjects. All mortal residents of the area gain a first step Vinculum to the vampire or the Vitae donor, or a second step bond if they reside in the epicenter. This lasts the rest of the night. Kindred residents resist the formation of this false bond with a successful Resolve + Blood Potency roll, minus the spell’s Potency. The Coil of the Voivode applies to these bonds, and the vampire can use Kin to the Land to enhance blood ties further.",
+      "requiredDisciplines": {
+        "lithopedia": 5
+      }
     },
     {
       "id": "devotion-beasts-measure",

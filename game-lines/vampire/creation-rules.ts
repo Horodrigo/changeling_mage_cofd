@@ -178,6 +178,10 @@ export function vampireDevotionPrerequisitesMet(definition: VampirePurchasablePo
   const disciplines = recordRatings(character.line_data.disciplines, names, 10);
   const known = stringArray(character.line_data.devotion_ids);
   return vampireDisciplinePrerequisitesMet(definition.prerequisites, disciplines, names)
+    && Object.entries(definition.requiredDisciplines ?? {}).every(([id, rating]) => {
+      const discipline = powers.disciplines.find(item => item.id === id);
+      return Boolean(discipline) && Number(disciplines[discipline!.name] ?? 0) >= rating;
+    })
     && Object.entries(definition.requiredSkills ?? {}).every(([skill, rating]) => Number(character.skills?.[skill] ?? 0) >= rating)
     && (definition.requiredDevotionIds ?? []).every((id) => known.includes(id) && powers.devotions.some((item) => item.id === id))
     && (definition.requiredMerits ?? []).every(({ definitionId, dots }) => meritCatalog.some((item) => item.id === definitionId)

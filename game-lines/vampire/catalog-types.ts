@@ -193,6 +193,7 @@ export type VampirePurchasablePower = VampireMechanics & {
   translatedName: string;
   rating?: number;
   prerequisites?: string;
+  requiredDisciplines?: Record<string, number>;
   requiredSkills?: Record<string, number>;
   requiredDevotionIds?: string[];
   requiredMerits?: Array<{ definitionId: string; dots: number }>;
