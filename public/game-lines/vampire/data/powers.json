@@ -4522,7 +4522,7 @@
       "id": "devotion-colossus",
       "kind": "devotion",
       "name": "Colossus",
-      "translatedName": "Colossus",
+      "translatedName": "Colosso",
       "prerequisites": "Vigor •••••, Resilience ••••",
       "covenantIds": [
         "invictus"
@@ -4534,7 +4534,15 @@
       "cost": "6 Vitae",
       "dicePool": "Stamina + Athletics + Resilience",
       "action": "Instant",
-      "effect": "Each activation success empowers one Brawl or Weaponry attack. Empowered attacks ignore armor, knock ordinary victims back by Strength + Vigor yards or meters, knock them down, and inflict automatic bashing equal to Vigor in addition to normal damage. Against targets at least twice the vampire's Size, the strike instead ignores Durability and adds Vigor as automatic lethal Structure damage."
+      "effect": "Each activation success empowers one Brawl or Weaponry attack. Empowered attacks ignore armor, knock ordinary victims back by Strength + Vigor yards or meters, knock them down, and inflict automatic bashing equal to Vigor in addition to normal damage. Against targets at least twice the vampire's Size, the strike instead ignores Durability and adds Vigor as automatic lethal Structure damage.",
+      "presentationPt": {
+        "prerequisites": "Ímpeto •••••, Resiliência ••••",
+        "summary": "Aumenta imensamente o poder de seus golpes.",
+        "cost": "6 Vitae",
+        "dicePool": "Vigor + Atletismo + Resiliência",
+        "action": "Instantânea",
+        "effect": "Cada sucesso de ativação fortalece um ataque de Briga ou Armas Brancas. Ataques fortalecidos ignoram armadura, arremessam vítimas comuns para trás por Força + Ímpeto jardas ou metros, derrubam-nas e causam dano contundente automático igual ao Ímpeto, além do dano normal. Contra alvos com pelo menos o dobro do Tamanho do vampiro, o golpe ignora Durabilidade e acrescenta Ímpeto como dano letal automático à Estrutura."
+      }
     },
     {
       "id": "devotion-hekireki",
@@ -4566,7 +4574,7 @@
       "id": "devotion-holdout",
       "kind": "devotion",
       "name": "Holdout",
-      "translatedName": "Holdout",
+      "translatedName": "Esconderijo",
       "prerequisites": "Protean •, Resilience •",
       "covenantIds": [
         "carthian-movement"
@@ -4578,13 +4586,21 @@
       "cost": "1 Vitae per Size",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "The vampire absorbs an inorganic object into her body. She may hold one object one Size below her, two objects two Sizes below, four objects three Sizes below, or a reasonable number of smaller items. Expelling one is reflexive and may come from any body part; forcing it into a target is a likely surprise attack using Protean + Blood Potency."
+      "effect": "The vampire absorbs an inorganic object into her body. She may hold one object one Size below her, two objects two Sizes below, four objects three Sizes below, or a reasonable number of smaller items. Expelling one is reflexive and may come from any body part; forcing it into a target is a likely surprise attack using Protean + Blood Potency.",
+      "presentationPt": {
+        "prerequisites": "Metamorfose •, Resiliência •",
+        "summary": "Funde objetos ao seu corpo.",
+        "cost": "1 Vitae por Tamanho",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "O vampiro absorve um objeto inorgânico em seu corpo. Pode guardar um objeto de um Tamanho abaixo do seu, dois objetos de dois Tamanhos abaixo, quatro objetos de três Tamanhos abaixo ou uma quantidade razoável de itens menores. Expulsar um objeto é reflexivo e pode ocorrer por qualquer parte do corpo; lançá-lo contra um alvo provavelmente constitui um ataque surpresa usando Metamorfose + Potência de Sangue."
+      }
     },
     {
       "id": "devotion-if-you-cant-duck-it",
       "kind": "devotion",
       "name": "If You Can't Duck It",
-      "translatedName": "If You Can't Duck It",
+      "translatedName": "Se Não Puder Desviar",
       "prerequisites": "Four dots divided among Celerity, Resilience, and Vigor",
       "covenantIds": [
         "carthian-movement"
@@ -4597,7 +4613,16 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "Blood smeared on an object grants Celerity as a modifier to its primary action, twice Resilience as added Structure, and Vigor as added Durability; a weapon so blessed deals lethal damage to Kindred. An object can carry only one use of this Devotion at a time."
+      "effect": "Blood smeared on an object grants Celerity as a modifier to its primary action, twice Resilience as added Structure, and Vigor as added Durability; a weapon so blessed deals lethal damage to Kindred. An object can carry only one use of this Devotion at a time.",
+      "presentationPt": {
+        "prerequisites": "Quatro pontos divididos entre Celeridade, Resiliência e Ímpeto",
+        "summary": "Abençoa um objeto com o poder de Disciplinas Físicas.",
+        "cost": "1 Vitae e 1 Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "Sangue espalhado sobre um objeto concede Celeridade como modificador à sua ação principal, o dobro de Resiliência como Estrutura adicional e Ímpeto como Durabilidade adicional; uma arma assim abençoada causa dano letal a Membros. Um objeto só pode receber um uso desta Devoção por vez."
+      }
     },
     {
       "id": "devotion-in-vitae-veritas",
@@ -4615,7 +4640,15 @@
       "cost": "10 Vitae",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "The vampire immediately follows activation with a single-target Dominate or Majesty power against a Kindred. That power propagates through the target's blood sympathy; subtract each relative's steps of removal from the original successes, then resolve resistance independently. Resisted effects become contested with the same resistance Attribute plus Blood Potency. If the original power fails or gains only one success, the Vitae is wasted."
+      "effect": "The vampire immediately follows activation with a single-target Dominate or Majesty power against a Kindred. That power propagates through the target's blood sympathy; subtract each relative's steps of removal from the original successes, then resolve resistance independently. Resisted effects become contested with the same resistance Attribute plus Blood Potency. If the original power fails or gains only one success, the Vitae is wasted.",
+      "presentationPt": {
+        "prerequisites": "Majestade •••••, Dominação ou Pesadelo ••••",
+        "summary": "Propaga efeitos de Disciplinas pelas linhagens dos Membros.",
+        "cost": "10 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "Imediatamente após a ativação, o vampiro usa um poder de Dominação ou Majestade de alvo único contra um Membro. Esse poder se propaga pela simpatia de sangue do alvo: subtraia os graus de parentesco de cada parente dos sucessos originais e resolva cada resistência separadamente. Efeitos resistidos passam a ser disputados com o mesmo Atributo de resistência mais Potência de Sangue. Se o poder original falhar ou obtiver apenas um sucesso, o Vitae é desperdiçado."
+      }
     },
     {
       "id": "devotion-kissing-cousins",
