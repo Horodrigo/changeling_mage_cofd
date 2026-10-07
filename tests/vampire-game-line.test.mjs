@@ -82,7 +82,7 @@ test("Vampire catalogs group core, historical, and uncommon Clans", async () => 
   assert.ok(merits.length >= 45);
   assert.equal(powers.disciplines.length, 23);
   assert.equal(powers.ritualDisciplines.length, 5);
-  assert.equal(powers.devotions.length, 358);
+  assert.equal(powers.devotions.length, 357);
   assert.equal(powers.devotions.find(item => item.id === "devotion-treasured-servant")?.source, "False Gods: Ventrue", "The independently printed p. 110 Devotion is no longer merged into Soul Transfer");
   assert.equal(powers.lashes.length, 2);
   assert.equal(powers.cruacRites.length, 76);

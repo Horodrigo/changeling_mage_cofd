@@ -4411,29 +4411,6 @@
       ]
     },
     {
-      "id": "devotion-nightmare-journey",
-      "kind": "devotion",
-      "name": "Nightmare Journey",
-      "translatedName": "Jornada de Pesadelo",
-      "prerequisites": "Auspex •••••",
-      "experienceCost": 3,
-      "cost": "1 Vitae and 1 Willpower",
-      "summary": "Project into the Primordial Dream and feed from dream forms.",
-      "source": "Dark Eras 2",
-      "page": 143,
-      "dicePool": "None",
-      "action": "Instant",
-      "effect": "While using Twilight Projection, the div enters an unclaimed Chamber in the local Hive and gains a Dream Form capable of using Disciplines and physically interacting in Astral realms. Her body falls into true torpor and loses Blood Potency normally over time, but reaching Blood Potency 0 does not cause Final Death. In Dream Form she may feed from Dreamborn, Horrors, and other Dream Form travelers at one Vitae per two damage, travel through Astral realms normally, and return by reaching the entry Chamber and ending the Devotion, which also ends the torpor.",
-      "presentationPt": {
-        "prerequisites": "Auspícios •••••",
-        "cost": "1 Vitae e 1 de Força de Vontade",
-        "summary": "Projeta-se no Sonho Primordial e se alimenta de formas oníricas.",
-        "dicePool": "Nenhuma",
-        "action": "Instantânea",
-        "effect": "Enquanto usa Projeção Crepuscular, o div entra em uma Câmara não reivindicada na Colmeia local e recebe uma Forma Onírica capaz de usar Disciplinas e interagir fisicamente nos reinos Astrais. Seu corpo entra em torpor verdadeiro e perde Potência de Sangue normalmente com o passar do tempo, mas chegar a Potência de Sangue 0 não causa a Morte Final. Em Forma Onírica, ela pode se alimentar de Nascidos do Sonho, Horrores e outros viajantes em Forma Onírica, recebendo uma Vitae a cada dois pontos de dano; pode viajar normalmente pelos reinos Astrais e retornar ao alcançar a Câmara de entrada e encerrar a Devoção, o que também encerra o torpor."
-      }
-    },
-    {
       "id": "devotion-22-solid",
       "kind": "devotion",
       "name": ".22 Solid",
@@ -7362,8 +7339,8 @@
       "id": "devotion-inure",
       "kind": "devotion",
       "name": "Inure",
-      "translatedName": "Inure",
-      "summary": "Hardens the vampire against a repeated source of extreme sensation.",
+      "translatedName": "Insensibilizar",
+      "summary": "Dulls a vampire’s or mortal’s senses against overstimulation. On an Inflamed mortal, stretches the capacity to provide blood; use effective Stamina (Stamina + Resilience) for the trauma threshold that resolves Inflamed.",
       "source": "Sin Again: Daeva",
       "page": 30,
       "manualOnly": true,
@@ -7374,7 +7351,16 @@
       "dicePool": "Strength + Medicine + Majesty vs. Stamina + Blood Potency (if unwilling)",
       "action": "None",
       "duration": "Scene",
-      "effect": "Used on a vampire or a mortal without Inflamed, the Duchagne mutes her subject’s senses. He gains a bonus equal to the vampire’s Resilience dots on all Resistance rolls to resist overstimulation, whether from taste, touch, sight, smell, or sound. This includes rolls to resist frenzy. This does not protect him against damage; it only increases his ability to endure pain or discomfort. Used on a mortal with the Inflamed Condition, the Duchagne instead stretches out his capacity for providing blood. She the vampire’s Resilience dots to Stamina for the purposes of preventing the Inflamed Condition from resolving."
+      "effect": "On a vampire or mortal without Inflamed, the subject gains the user’s Resilience dots as a bonus to Resistance rolls against sensory overstimulation, including frenzy. This does not protect against damage. On an Inflamed mortal, stretches the capacity to provide blood: effective Stamina is Stamina + Resilience for the physical trauma threshold that resolves Inflamed.",
+      "presentationPt": {
+        "summary": "Amortece os sentidos de um vampiro ou mortal contra estímulos excessivos. Em um mortal Inflamado, amplia a capacidade de fornecer sangue; o limite de trauma que resolve Inflamado usa Vigor efetivo (Vigor + Resiliência).",
+        "prerequisites": "Resiliência ••",
+        "cost": "1 Força de Vontade",
+        "dicePool": "Força + Medicina + Majestade vs. Vigor + Potência de Sangue (se involuntário)",
+        "action": "Nenhuma",
+        "duration": "Cena",
+        "effect": "Em um vampiro ou mortal sem Inflamado, o alvo recebe os pontos de Resiliência do usuário como bônus nas jogadas de Resistência contra estímulos sensoriais excessivos, incluindo frenesi. Isso não protege contra dano. Em um mortal Inflamado, amplia a capacidade de fornecer sangue: o limite de trauma físico que resolve Inflamado usa Vigor efetivo, igual a Vigor + Resiliência."
+      }
     },
     {
       "id": "devotion-night-life",
@@ -7905,7 +7891,7 @@
         "summary": "Usa beleza sobrenatural para atrapalhar a próxima ação Física de um oponente.",
         "prerequisites": "Celeridade ••, Majestade ••",
         "cost": "2 Vitae",
-        "dicePool": "Presença + Expressão + Majestade – Autocontrole",
+        "dicePool": "Presença + Expressão + Majestade – Compostura",
         "action": "Instantânea",
         "rollResults": {
           "success": "A concentração da vítima é abalada. Ela sofre uma penalidade igual aos sucessos na próxima ação Física.",
@@ -9695,21 +9681,21 @@
       "name": "Dead Man's Reprieve",
       "translatedName": "Trégua do Morto",
       "prerequisites": "Obfuscate •",
-      "experienceCost": 1,
+      "experienceCost": 4,
       "cost": "1 Vitae",
       "summary": "Prepare a bath that cloaks its occupants' presence.",
       "source": "Thousand Years of Night",
       "page": 128,
       "dicePool": "Resolve + Occult",
       "action": "Extended; each roll takes 15 minutes",
-      "effect": "The vampire prepares a rare plant in a boiling ritual bath. On success, each success grants one bather Cloak of Night for four hours. Exceptional success instead grants every bather Cloak of Night and Resilience •• for six hours. Failure produces an impure mixture; dramatic failure destroys part of the plant supply, kills one bather, penalizes the next attempt made within a week, and inflicts Fugue on the ritualist.",
+      "effect": "The vampire prepares a rare plant in a boiling ritual bath. On success, each success grants one bather Cloak of Night for four hours. Exceptional success instead grants every bather Cloak of Night and Resilience •• for six hours. Failure produces an impure mixture. Dramatic failure destroys one fifth of the plants, kills one bather, applies −2 to the next attempt within a week, and inflicts Fugue on the Kitamba.",
       "presentationPt": {
         "prerequisites": "Ofuscação •",
         "cost": "1 Vitae",
         "summary": "Prepara um banho que oculta a presença de seus ocupantes.",
         "dicePool": "Perseverança + Ocultismo",
         "action": "Prolongada; cada teste leva 15 minutos",
-        "effect": "O vampiro prepara uma planta rara em um banho ritual fervente. Em um sucesso, cada sucesso concede Manto da Noite a uma pessoa no banho por quatro horas. Um sucesso excepcional concede Manto da Noite e Resiliência •• a todos no banho por seis horas. Uma falha produz uma mistura impura; uma falha dramática destrói parte do estoque de plantas, mata uma pessoa no banho, penaliza a próxima tentativa feita em até uma semana e inflige Fuga ao ritualista."
+        "effect": "O vampiro prepara uma planta rara em um banho ritual fervente. Em um sucesso, cada sucesso concede Manto da Noite a uma pessoa no banho por quatro horas. Um sucesso excepcional concede Manto da Noite e Resiliência •• a todos no banho por seis horas. Uma falha produz uma mistura impura. Uma falha dramática destrói um quinto das plantas, mata um participante do banho, impõe −2 à próxima tentativa em até uma semana e inflige Fuga ao Kitamba."
       }
     },
     {
@@ -11058,17 +11044,17 @@
       "cost": "1 Willpower",
       "requirement": "The vampire merges into her vehicle using Unmarked Grave.",
       "dicePool": "None",
-      "action": "Night",
-      "effect": "As long as she benefits from Unmarked Grave or until the next sunset (whichever comes first), the Verlice can control the vehicle she resides in, allowing her to perceive her surroundings and operate the vehicle as if they were in the passenger seat. This allows her the added protection of a metal frame, as well as the ability to move about in the daylight, provided she can remain awake.",
+      "effect": "As long as she benefits from Unmarked Grave or until the next sunrise (whichever comes first), the Verlice can control the vehicle she resides in, allowing her to perceive her surroundings and operate the vehicle as if they were in the passenger seat. This allows her the added protection of a metal frame, as well as the ability to move about in the daylight, provided she can remain awake.",
       "presentationPt": {
         "summary": "Controla o Veículo por dentro ao se fundir com ele usando Túmulo Sem Marca.",
         "prerequisites": "Auspícios •, Metamorfose •",
         "cost": "1 de Força de Vontade",
         "requirement": "O vampiro se funde com seu veículo usando Túmulo Sem Marca.",
         "dicePool": "Nenhuma",
-        "action": "Noite",
-        "effect": "Enquanto se beneficiar de Túmulo Sem Marca ou até o próximo pôr do sol, o que ocorrer primeiro, o Verlice pode controlar o veículo em que está, percebendo os arredores e operando o veículo como se estivesse no banco do passageiro. Isso lhe proporciona a proteção adicional de uma estrutura de metal e a possibilidade de se deslocar à luz do dia, desde que consiga permanecer acordado."
-      }
+        "effect": "Enquanto se beneficiar de Túmulo Sem Marca ou até o próximo nascer do sol, o que ocorrer primeiro, o Verlice pode controlar o veículo em que está, percebendo os arredores e operando o veículo como se estivesse no banco do passageiro. Isso lhe proporciona a proteção adicional de uma estrutura de metal e a possibilidade de se deslocar à luz do dia, desde que consiga permanecer acordado.",
+        "duration": "Até o próximo nascer do sol"
+      },
+      "duration": "Until the next sunrise"
     },
     {
       "id": "devotion-know-the-road",
@@ -11879,7 +11865,9 @@
       "name": "Aura of the Crone",
       "translatedName": "Aura da Anciã",
       "prerequisites": "Majesty •••; Occult ••",
-      "requiredSkills": {"Occult": 2},
+      "requiredSkills": {
+        "Occult": 2
+      },
       "experienceCost": 2,
       "summary": "Lets nearby blood sorcerers use the vampire's Majesty as ritual Potency, or increase equal Potency by one.",
       "sourceId": "h-vtr-agony-ecstasy",
@@ -12333,7 +12321,7 @@
       "cost": "None",
       "dicePool": "None",
       "action": "None",
-      "effect": "The vampire memorizes the shape of any animal ghoul she creates without draining it and may immediately replace a Beast's Skin form by spending the usual Vitae. Existing animal ghouls can be memorized when next fed. The learned forms may be prey animals or reach Size 10. With Sheep's Clothing, one additional Experience upgrades the Devotion to human ghouls, whose forms also require one Willpower to memorize.",
+      "effect": "The vampire memorizes the shape of any animal ghoul she creates without draining it and may immediately replace a Beast's Skin form by spending the usual Vitae. Existing animal ghouls can be memorized when next fed. The learned forms may be prey animals or reach Size 10. With Sheep's Clothing, one additional Experience upgrades the Devotion to human ghouls, whose forms also require one Willpower to memorize. Learning costs 1 Experience for a ghoul who knows Taste of the Wild, rather than the vampire’s 2 Experiences. Memorizing a human form requires 1 additional Willpower beyond the usual ghoul creation cost.",
       "presentationPt": {
         "prerequisites": "Animalismo •, Metamorfose •••",
         "cost": "Nenhum",
@@ -12341,7 +12329,7 @@
         "duration": "Permanente",
         "dicePool": "Nenhuma",
         "action": "Nenhuma",
-        "effect": "O vampiro memoriza a forma de qualquer ghoul animal que criar sem drená-lo e pode substituir imediatamente uma forma de Pele da Fera gastando a Vitae habitual. As formas de ghouls animais já existentes podem ser memorizadas na próxima vez que forem alimentados. As formas aprendidas podem ser de animais que servem de presa ou alcançar Tamanho 10. Com Pele de Cordeiro, uma Experiência adicional aprimora a Devoção para incluir ghouls humanos, cujas formas também exigem um ponto de Força de Vontade para memorizar."
+        "effect": "O vampiro memoriza a forma de qualquer ghoul animal que criar sem drená-lo e pode substituir imediatamente uma forma de Pele da Fera gastando a Vitae habitual. As formas de ghouls animais já existentes podem ser memorizadas na próxima vez que forem alimentados. As formas aprendidas podem ser de animais que servem de presa ou alcançar Tamanho 10. Com Pele de Cordeiro, uma Experiência adicional aprimora a Devoção para incluir ghouls humanos, cujas formas também exigem um ponto de Força de Vontade para memorizar. Para um ghoul que conhece Sabor do Selvagem, o aprendizado custa 1 Experiência, em vez das 2 do vampiro. Memorizar uma forma humana exige 1 Força de Vontade adicional ao custo habitual de criar o ghoul."
       }
     },
     {
@@ -13010,7 +12998,9 @@
       "name": "Trick Shot",
       "translatedName": "Tiro de Mestre",
       "prerequisites": "Celerity •••; Quicken Sight",
-      "requiredDevotionIds": ["devotion-quicken-sight"],
+      "requiredDevotionIds": [
+        "devotion-quicken-sight"
+      ],
       "experienceCost": 2,
       "summary": "Executes an extraordinary Firearms maneuver before a target can retaliate.",
       "sourceId": "h-vtr-fire-revolution",
