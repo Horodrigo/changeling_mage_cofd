@@ -6012,8 +6012,10 @@
         "cost": "1 Vitae",
         "summary": "Toca a cidade para ver por seus olhos e permitir outras Devoções dos Descendentes.",
         "action": "Instantânea",
-        "effect": "Ao gastar uma Vitae e apoiar uma ou ambas as mãos na parte externa de um edifício ou em uma rua pavimentada dentro da cidade, o Arauto renova seu vínculo com Ela. A maioria dos Arautos faz isso ao sair de seus refúgios a cada noite. Arautos não podem estar vinculados a mais de uma cidade por vez. No caso de uma metrópole, o Arauto se vincula à metrópole inteira, e não a um bairro específico: Ela não é Fishtown, Ela é Philadelphia. Todos os Scions of the First City podem aprender esta habilidade sem custo."
-      }
+        "effect": "Ao gastar uma Vitae e apoiar uma ou ambas as mãos na parte externa de um edifício ou em uma rua pavimentada dentro da cidade, o Arauto renova seu vínculo com Ela. A maioria dos Arautos faz isso ao sair de seus refúgios a cada noite. Arautos não podem estar vinculados a mais de uma cidade por vez. No caso de uma metrópole, o Arauto se vincula à metrópole inteira, e não a um bairro específico: Ela não é Fishtown, Ela é Philadelphia. Todos os Scions of the First City podem aprender esta habilidade sem custo.",
+        "requirement": "A cidade precisa ter ao menos 10.000 habitantes."
+      },
+      "requirement": "The city must have at least 10,000 inhabitants."
     },
     {
       "id": "devotion-incriminating-evidence",
@@ -6043,16 +6045,25 @@
       "id": "devotion-our-mothers-mind",
       "kind": "devotion",
       "name": "Our Mother's Mind",
-      "translatedName": "Our Mother's Mind",
+      "translatedName": "A Mente de Nossa Mãe",
       "prerequisites": "Auspex •••••",
       "bloodlineId": "scions-of-the-first-city",
       "experienceCost": 3,
       "cost": "2 Vitae",
       "summary": "Seek and impede a quarry through your city.",
       "source": "Night Horrors: Spilled Blood",
-      "page": 44,
+      "page": 45,
       "action": "Instant",
-      "effect": "The Harbinger smears her Vitae onto her feet and walks barefoot through the City, following Her signs toward a single target. The player declares a target to the Storyteller in a short phrase, for example: “Randall the Gangrel” or “that mime I saw last night” or “the person responsible for the fire downtown.” The City guides the Harbinger with Her sounds and sights; the Storyteller is encouraged to lead her as with Incriminating Evidence. The surface thoughts of passersby leak into her mind in a traceable trajectory. Sirens wail to her left when she should turn. Motor oil trails up an exit ramp like a neon arrow. For every success, she is led her Blood Potency number of city blocks toward her target, following the city’s directions like a bloodhound on a scent. If the target leaves the city, she is led to where they exited. Upon failure, the Harbinger is aware she has failed; she receives no guidance from the City. In addition, the City acts to impede the Harbinger’s target: for every success, the target’s non-combat dice pools and Speed are reduced by 1 for the duration of the effect. Lights change against him and those sirens are a distracting wail which keeps him from noticing the Harbinger in pursuit. This devotion leaves traces of the Harbinger’s vitae on the ground, which may pose a danger to her from the city’s other denizens. Drawback: To perfect the City, the Scion must be willing to destroy imperfections at every personal cost. For each success, the Harbinger must temporarily sacrifice access to a level of Contacts, Allies, Retainer, or Resources. The Storyteller determines how access to these merits is temporarily lost and is encouraged to be creative: a Retainer hospitalized due to a car accident; bank accounts temporarily frozen due to administrative error or Police Allies jailed. The Scion regains access to these merits one week after use of this devotion. Players may choose not to utilize all their successes."
+      "effect": "The Harbinger smears her Vitae onto her feet and walks barefoot through the City, following Her signs toward a single target. The player declares a target to the Storyteller in a short phrase, for example: “Randall the Gangrel” or “that mime I saw last night” or “the person responsible for the fire downtown.” The City guides the Harbinger with Her sounds and sights; the Storyteller is encouraged to lead her as with Incriminating Evidence. The surface thoughts of passersby leak into her mind in a traceable trajectory. Sirens wail to her left when she should turn. Motor oil trails up an exit ramp like a neon arrow. For every success, she is led her Blood Potency number of city blocks toward her target, following the city’s directions like a bloodhound on a scent. If the target leaves the city, she is led to where they exited. Upon failure, the Harbinger is aware she has failed; she receives no guidance from the City. In addition, the City acts to impede the Harbinger’s target: for every success, the target’s non-combat dice pools and Speed are reduced by 1 for the duration of the effect. Lights change against him and those sirens are a distracting wail which keeps him from noticing the Harbinger in pursuit. This devotion leaves traces of the Harbinger’s vitae on the ground, which may pose a danger to her from the city’s other denizens. Drawback: To perfect the City, the Scion must be willing to destroy imperfections at every personal cost. For each success, the Harbinger must temporarily sacrifice access to a level of Contacts, Allies, Retainer, or Resources. The Storyteller determines how access to these merits is temporarily lost and is encouraged to be creative: a Retainer hospitalized due to a car accident; bank accounts temporarily frozen due to administrative error or Police Allies jailed. The Scion regains access to these merits one week after use of this devotion. Players may choose not to utilize all their successes.",
+      "presentationPt": {
+        "prerequisites": "Auspícios •••••",
+        "cost": "2 Vitae",
+        "summary": "Busca e atrapalha um alvo através da cidade.",
+        "dicePool": "Inteligência + Ocultismo + Auspícios contra Potência de Sangue + Perseverança",
+        "action": "Instantânea",
+        "effect": "A Arauta espalha sua Vitae nos pés e anda descalça pela Cidade, seguindo os sinais Dela em direção a um único alvo. A jogadora descreve o alvo ao Narrador em uma frase curta, como “Randall, o Gangrel”, “o mímico que vi ontem à noite” ou “a pessoa responsável pelo incêndio no centro”. A Cidade a guia por sons e imagens, como em Evidência Incriminatória: pensamentos superficiais de transeuntes revelam uma trajetória, sirenes indicam onde virar e óleo de motor parece uma seta brilhante. Por sucesso, ela percorre um número de quarteirões igual à sua Potência de Sangue na direção do alvo. Se ele deixar a cidade, chega ao lugar por onde saiu. Na falha, sabe que falhou e não recebe orientação. Além disso, por sucesso, as paradas de dados do alvo fora de combate e seu Deslocamento são reduzidos em 1 pela duração do efeito. Sinais de trânsito se fecham e sirenes distraem o alvo para que não perceba a perseguição. A Devoção deixa traços de Vitae no chão, que podem expô-la a outros habitantes da cidade. Desvantagem: para aperfeiçoar a Cidade, a Descendente precisa estar disposta a destruir imperfeições a qualquer custo pessoal. Por sucesso, sacrifica temporariamente acesso a um nível de Contatos, Aliados, Lacaio ou Recursos. O Narrador determina como esse acesso é perdido: um Lacaio hospitalizado após um acidente, contas bancárias congeladas por erro administrativo ou Aliados na polícia presos. O acesso retorna uma semana depois do uso. A jogadora pode escolher não usar todos os sucessos."
+      },
+      "dicePool": "Intelligence + Occult + Auspex vs. Blood Potency + Resolve"
     },
     {
       "id": "devotion-shapeshifting",
@@ -6165,17 +6176,26 @@
       "id": "devotion-null-space",
       "kind": "devotion",
       "name": "Null Space",
-      "translatedName": "Null Space",
+      "translatedName": "Espaço Nulo",
       "prerequisites": "Animalism ••••• or Obfuscate •••••, Vitiate •••",
       "experienceCost": 4,
-      "summary": "Use Vitiate without touch inside Lord of the Land or Oubliette.",
+      "summary": "Force unwelcome visitors to spend Willpower or suffer Beaten Down if violence breaks out in the area.",
       "source": "Night Horrors: Spilled Blood",
       "page": 89,
       "cost": "Half the Vitae spent on Lord of the Land or Oubliette (round up)",
       "requirement": "The vampire marks an area for the purposes of Lord of the Land or Oubliette",
       "dicePool": "None",
       "duration": "One week per dot of Blood Potency",
-      "effect": "An unwelcome visitor entering the area must spend a Willpower. If he does not or cannot, he gains the Beaten Down Tilt if violence breaks out. Once every 10 minutes, if she’s present, the vampire can spend a Vitae to force this choice again."
+      "effect": "An unwelcome visitor entering the area must spend a Willpower. If he does not or cannot, he gains the Beaten Down Tilt if violence breaks out. Once every 10 minutes, if she’s present, the vampire can spend a Vitae to force this choice again.",
+      "presentationPt": {
+        "prerequisites": "Animalismo ••••• ou Ofuscação •••••, Debilitação •••",
+        "summary": "Força visitantes indesejados a gastar Força de Vontade ou sofrer Derrotado se houver violência na área.",
+        "cost": "Metade da Vitae gasta em Senhor da Terra ou Masmorra do Esquecimento, arredondada para cima",
+        "requirement": "O vampiro marca uma área para Senhor da Terra ou Masmorra do Esquecimento.",
+        "dicePool": "Nenhuma",
+        "duration": "Uma semana por ponto de Potência de Sangue",
+        "effect": "Um visitante indesejado que entre na área precisa gastar um ponto de Força de Vontade. Se não quiser ou não puder, recebe a Complicação Derrotado caso haja violência. Uma vez a cada 10 minutos, se estiver presente, o vampiro pode gastar uma Vitae para forçar essa escolha novamente."
+      }
     },
     {
       "id": "devotion-flesh-form",
