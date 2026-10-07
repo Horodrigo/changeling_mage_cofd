@@ -5253,10 +5253,10 @@
       "id": "devotion-the-message",
       "kind": "devotion",
       "name": "The Message",
-      "translatedName": "The Message",
-      "summary": "Embeds supernatural authority in a transmitted communication.",
+      "translatedName": "A Mensagem",
+      "summary": "Make listeners know when a Mesmerized subject is lying, according to what the subject believes is true.",
       "source": "False Gods: Ventrue",
-      "page": 109,
+      "page": 108,
       "manualOnly": true,
       "experienceCost": 2,
       "prerequisites": "Auspex ••, Dominate ••",
@@ -5270,6 +5270,21 @@
         "exceptionalSuccess": "The effect applies to lies of omission, as others get a nagging feeling they haven’t heard the whole story.",
         "failure": "The subject can tell as many lies or truths as she likes.",
         "dramaticFailure": "The vampire curses herself with this effect for the rest of the scene."
+      },
+      "presentationPt": {
+        "prerequisites": "Auspícios ••, Dominação ••",
+        "summary": "Faz os ouvintes perceberem quando um sujeito Mesmerizado está mentindo, conforme o que ele acredita ser verdade.",
+        "cost": "1 Vitae",
+        "requirement": "A vampira precisa ter imposto a Condição Mesmerizado à vítima.",
+        "dicePool": "Presença + Expressão + Dominação contra Compostura + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Noite",
+        "rollResults": {
+          "success": "A vampira amaldiçoa ou abençoa o sujeito, fazendo com que qualquer pessoa com quem ele fale saiba quando está dizendo a verdade; qualquer resultado inferior a sucesso excepcional em um teste de Subterfúgio é tratado como falha. O efeito não se aplica a mentiras por omissão e considera apenas o que o sujeito acredita ser um fato. Se ele realmente achar que o céu é verde, isso soará verdadeiro. Se estiver usando a Bloodline opcional dos Malkovians (p. 96), esta Devoção não afeta testes penalizados por sua Maldição.",
+          "exceptionalSuccess": "O efeito se aplica a mentiras por omissão, pois os demais sentem uma dúvida persistente de que não ouviram a história toda.",
+          "failure": "O sujeito pode contar quantas mentiras ou verdades quiser.",
+          "dramaticFailure": "A vampira amaldiçoa a si mesma com este efeito pelo resto da cena."
+        }
       }
     },
     {
@@ -5364,8 +5379,8 @@
       "id": "devotion-unseen-master",
       "kind": "devotion",
       "name": "Unseen Master",
-      "translatedName": "Unseen Master",
-      "summary": "Issues effective commands without revealing the commander.",
+      "translatedName": "Mestre Invisível",
+      "summary": "Conceal the vampire’s soul during Possession and hinder detection of changes in the subject’s behavior.",
       "source": "False Gods: Ventrue",
       "page": 110,
       "manualOnly": true,
@@ -5375,16 +5390,25 @@
       "dicePool": "None",
       "action": "None",
       "duration": "As with Possession",
-      "effect": "The vampire activates this Devotion when she succeeds in taking a victim’s body with Possession, creating a cloak around her soul while she controls her meat puppet. Anyone with supernatural powers of perception or revelation must engage in a Clash of Wills to reveal her presence, but even then, this only applies to active searching; passive effects simply fail. In addition, those who might be clued-in by odd behavior from the victim suffer the Ventrue’s Obfuscate dots on mundane Empathy rolls to notice any personality changes, or any other out-of-character behavior."
+      "effect": "The vampire activates this Devotion when she succeeds in taking a victim’s body with Possession, creating a cloak around her soul while she controls her meat puppet. Anyone with supernatural powers of perception or revelation must engage in a Clash of Wills to reveal her presence, but even then, this only applies to active searching; passive effects simply fail. In addition, those who might be clued-in by odd behavior from the victim suffer the Ventrue’s Obfuscate dots on mundane Empathy rolls to notice any personality changes, or any other out-of-character behavior.",
+      "presentationPt": {
+        "prerequisites": "Dominação •••••, Ofuscação ••••",
+        "summary": "Oculta a presença da alma do vampiro durante Possessão e dificulta perceber mudanças no comportamento do sujeito.",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Nenhuma",
+        "duration": "Como em Possessão",
+        "effect": "A vampira ativa esta Devoção quando consegue tomar o corpo de uma vítima com Possessão, envolvendo a própria alma em um manto enquanto controla sua marionete de carne. Quem possuir poderes sobrenaturais de percepção ou revelação precisa enfrentar um Confronto de Vontades para revelar sua presença, e isso só se aplica a buscas ativas; efeitos passivos simplesmente falham. Além disso, quem desconfiar pelo comportamento estranho da vítima sofre uma penalidade igual aos pontos de Ofuscação da Ventrue nos testes mundanos de Empatia para perceber mudanças de personalidade ou qualquer comportamento fora do habitual."
+      }
     },
     {
       "id": "devotion-voice-in-the-blood",
       "kind": "devotion",
       "name": "Voice in the Blood",
-      "translatedName": "Voice in the Blood",
-      "summary": "Carries a command through blood sympathy.",
+      "translatedName": "Voz no Sangue",
+      "summary": "Implant an Iron Edict in a mortal’s blood to command the first vampire who feeds from the vessel.",
       "source": "False Gods: Ventrue",
-      "page": 111,
+      "page": 110,
       "manualOnly": true,
       "experienceCost": 2,
       "prerequisites": "Dominate ••, Resilience •••",
@@ -5392,25 +5416,44 @@
       "requirement": "The vampire inflicts the Mesmerized Condition on a mortal, then feeds them a point of Vitae (included in the cost).",
       "dicePool": "None",
       "action": "Instant",
-      "duration": "The implanted command endures in the mortal’s",
-      "effect": "blood for nights equal to Blood Potency, or until someone feeds from them, whichever comes first. The vampire implants an Iron Edict into the mortal victim’s blood. The first vampire to feed from the vessel can resist the command with Resolve + Blood Potency, contested by the number of successes the Ventrue gained when inflicting Mesmerized on the vessel. On a failure, the vampire consuming the imprinted blood gains the Dominated Condition. The Ventrue is immune to her own uses of this Devotion."
+      "duration": "The implanted command endures in the mortal’s blood for nights equal to Blood Potency, or until someone feeds from them, whichever comes first.",
+      "effect": "The vampire implants an Iron Edict into the mortal victim’s blood. The first vampire to feed from the vessel can resist the command with Resolve + Blood Potency, contested by the number of successes the Ventrue gained when inflicting Mesmerized on the vessel. On a failure, the vampire consuming the imprinted blood gains the Dominated Condition. The Ventrue is immune to her own uses of this Devotion.",
+      "presentationPt": {
+        "prerequisites": "Dominação ••, Resiliência •••",
+        "summary": "Implanta um Édito de Ferro no sangue de um mortal para comandar o primeiro vampiro que dele se alimentar.",
+        "cost": "2 Vitae",
+        "requirement": "A vampira impõe a Condição Mesmerizado a um mortal e depois lhe dá um ponto de Vitae, incluído no custo.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "A ordem implantada permanece no sangue do mortal por um número de noites igual à Potência de Sangue, ou até que alguém dele se alimente, o que ocorrer primeiro.",
+        "effect": "A vampira implanta um Édito de Ferro no sangue da vítima mortal. O primeiro vampiro que se alimentar da fonte pode resistir à ordem com Perseverança + Potência de Sangue, disputada pelo número de sucessos que a Ventrue obteve ao impor Mesmerizado à fonte. Se falhar, o vampiro que consumir o sangue marcado recebe a Condição Dominado. A Ventrue é imune aos próprios usos desta Devoção."
+      }
     },
     {
       "id": "devotion-what-s-mine-is-mine",
       "kind": "devotion",
       "name": "What's Mine Is Mine",
-      "translatedName": "What's Mine Is Mine",
+      "translatedName": "O Que É Meu É Meu",
       "prerequisites": "Dominate •, Resilience •",
       "cost": "1 Vitae",
       "dicePool": "None",
       "action": "Instant",
       "duration": "Indefinite",
       "effect": "The vampire bleeds on an object and forms a pseudo–blood tie with it. The vampire is mystically aware if the object is disturbed from the last place she left it. She can maintain a number of connections equal to twice her Blood Potency and can remove a connection by creating another.",
-      "summary": "Asserts supernatural ownership over a person, place, or object.",
+      "summary": "Form mystical ties to objects and notice when they are moved from the last place the vampire left them.",
       "source": "False Gods: Ventrue",
       "page": 111,
       "manualOnly": true,
-      "experienceCost": 1
+      "experienceCost": 1,
+      "presentationPt": {
+        "prerequisites": "Dominação •, Resiliência •",
+        "summary": "Forma vínculos místicos com objetos e percebe quando são movidos do último lugar em que os deixou.",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Indefinida",
+        "effect": "A vampira derrama seu sangue sobre um objeto e forma um pseudovínculo de sangue com ele. Percebe misticamente se o objeto for movido do último lugar em que o deixou. Pode manter um número de conexões igual ao dobro de sua Potência de Sangue e remover uma conexão criando outra."
+      }
     },
     {
       "id": "devotion-aerial-cocoon",
