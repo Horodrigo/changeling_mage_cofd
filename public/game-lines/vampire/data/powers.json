@@ -9796,7 +9796,7 @@
       "id": "devotion-twist-of-fate",
       "kind": "devotion",
       "name": "Twist of Fate",
-      "translatedName": "Twist of Fate",
+      "translatedName": "Reviravolta do Destino",
       "summary": "Turns a narrowly failed moment toward a different outcome.",
       "source": "Strange Shades: Mekhet",
       "page": 89,
@@ -9811,17 +9811,31 @@
         "success": "The vampire attunes to the immediate future. Before the end of the night, the player can treat a single reflexive or instant action as an exceptional success without rolling. The vampire can only access Twist of Fate once per night, and it does not apply to resisted or contested actions, including attack rolls.",
         "exceptionalSuccess": "The vampire gains unique insight into his immediate future. She gains the Steadfast Condition.",
         "failure": "Reply hazy, ask again later.",
-        "dramaticFailure": "Fate delights in laying low the arrogant. One future action this chapter is reduced to a chance die, as determined by the Storyteller."
+        "dramaticFailure": "Fate delights in laying low the arrogant. One future action this session is reduced to a chance die, as determined by the Storyteller."
+      },
+      "presentationPt": {
+        "summary": "Inclina um momento por pouco malsucedido para outro desfecho.",
+        "prerequisites": "Auspícios ••",
+        "cost": "2 Vitae",
+        "dicePool": "Inteligência + Ocultismo + Auspícios",
+        "action": "Reflexiva",
+        "duration": "Noite",
+        "rollResults": {
+          "success": "A vampira se sintoniza com o futuro imediato. Antes do fim da noite, o jogador pode tratar uma única ação reflexiva ou instantânea como um sucesso excepcional sem jogar dados. A vampira só pode acessar Reviravolta do Destino uma vez por noite, e o efeito não se aplica a ações resistidas ou disputadas, inclusive ataques.",
+          "exceptionalSuccess": "A vampira recebe uma percepção singular de seu futuro imediato. Ganha a Condição Resoluto.",
+          "failure": "A resposta é nebulosa; pergunte novamente mais tarde.",
+          "dramaticFailure": "O destino se deleita em derrubar os arrogantes. Uma ação futura nesta sessão é reduzida a um dado de sorte, conforme determinado pelo Narrador."
+        }
       }
     },
     {
       "id": "devotion-wolf-s-clothing",
       "kind": "devotion",
       "name": "Wolf's Clothing",
-      "translatedName": "Wolf's Clothing",
+      "translatedName": "Pele de Lobo",
       "summary": "Conceals predatory nature behind a borrowed presentation.",
       "source": "Strange Shades: Mekhet",
-      "page": 90,
+      "page": 89,
       "manualOnly": true,
       "prerequisites": "Auspex ••, Obfuscate ••••",
       "cost": "2 Vitae",
@@ -9834,6 +9848,22 @@
         "exceptionalSuccess": "The vampire’s disguise is so perfect that she gains the 9-again quality on contested rolls to fool supernatural powers, and mundane actions that might reveal her true nature. On resisted actions, the actor suffers the vampire’s Obfuscate dots as a penalty.",
         "failure": "The vampire is what she is, for better or worse.",
         "dramaticFailure": "The vampire’s lie is exposed, but she is unaware of this fact and leaves herself wide open. The next action the intended dupes take against the vampire ignores her Defense, or her Resistance if it’s a supernatural power."
+      },
+      "experienceCost": 3,
+      "presentationPt": {
+        "summary": "Oculta a natureza predatória sob uma aparência emprestada.",
+        "prerequisites": "Auspícios ••, Ofuscação ••••",
+        "cost": "2 Vitae",
+        "requirement": "A vampira deve ter estudado o tipo de criatura que tenta imitar com Percepção Sobrenatural.",
+        "dicePool": "Manipulação + Socialização + Ofuscação contra a maior Compostura + Tolerância Sobrenatural",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Cena",
+        "rollResults": {
+          "success": "A vampira se oculta entre integrantes de um grupo sobrenatural. Para sentidos mundanos e sobrenaturais básicos, parece ser uma deles. Cheira como um lobisomem, é percebida como um Changeling ou possui a aura sutil de um mago. Pode até usar o efeito para transmitir a impressão de Clans ou Bloodlines específicos, se desejar. Não adquire conhecimento da cultura, terminologia ou etiqueta do grupo, mas não chama atenção se permanecer passiva. Se outra criatura usar um poder sobrenatural para investigar sua verdadeira natureza, isso provoca um Confronto de Vontades.",
+          "exceptionalSuccess": "O disfarce da vampira é tão perfeito que ela recebe a qualidade 9-novamente em jogadas disputadas para enganar poderes sobrenaturais e em ações mundanas que poderiam revelar sua verdadeira natureza. Em ações resistidas, quem age sofre uma penalidade igual aos pontos de Ofuscação da vampira.",
+          "failure": "A vampira é o que é, para o bem ou para o mal.",
+          "dramaticFailure": "A mentira da vampira é exposta, mas ela não percebe isso e fica completamente vulnerável. A próxima ação que os alvos do engano realizarem contra ela ignora sua Defesa, ou sua Resistência se for um poder sobrenatural."
+        }
       }
     },
     {
