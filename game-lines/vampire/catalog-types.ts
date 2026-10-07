@@ -196,7 +196,7 @@ export type VampirePurchasablePower = VampireMechanics & {
   requiredDevotionIds?: string[];
   requiredMerits?: Array<{ definitionId: string; dots: number }>;
   experienceCost?: number;
-  experienceDiscounts?: Array<{ cost: number } & ({ bloodlineId: string } | { covenantId: string } | { devotionIds: string[] })>;
+  experienceDiscounts?: Array<{ cost: number } & ({ bloodlineId: string; xiaoFaction?: "apostates" | "ascended" } | { covenantId: string } | { devotionIds: string[] })>;
   bloodlineId?: string;
   additionalClanIds?: string[];
   bloodlineExclusive?: boolean;

@@ -7306,19 +7306,35 @@
       "id": "devotion-ripples-still-water",
       "kind": "devotion",
       "name": "Ripples in Still Water",
-      "translatedName": "Ripples in Still Water",
+      "translatedName": "Ondulações em Águas Paradas",
       "bloodlineId": "xiao",
       "prerequisites": "Majesty •, Nightmare •",
       "experienceCost": 2,
       "summary": "Recognize supernatural emotional manipulation and, with enough successes, identify its source.",
       "source": "Sin Again: Daeva",
-      "page": 62,
+      "page": 61,
       "cost": "1 Vitae",
       "action": "Instant",
       "duration": "One scene",
-      "effect": "The vampire gains a heightened awareness of her own emotional state. Whenever she resists a supernatural power meant to manipulate her emotions (Majesty, Nightmare, etc.), if she fails the contested action but achieves at least one success on the roll, she becomes aware that she’s being manipulated. If she wins the contested action to resist, she also becomes aware of the source of the influence if it wouldn’t normally be obvious. Note that this knowledge does nothing to counter the effects of a power, but it may grant some leeway in how the vampire reacts to it.",
+      "effect": "The vampire gains a heightened awareness of her own emotional state. Whenever she resists a supernatural power meant to manipulate her emotions (Majesty, Nightmare, etc.), if she fails the contested action but achieves at least one success on the roll, she becomes aware that she’s being manipulated. If she wins the contested action to resist, she also becomes aware of the source of the influence if it wouldn’t normally be obvious. Note that this knowledge does nothing to counter the effects of a power, but it may grant some leeway in how the vampire reacts to it. Apostates learn this Devotion for free when they meet its prerequisites.",
       "manualOnly": true,
-      "dicePool": "None"
+      "dicePool": "None",
+      "experienceDiscounts": [
+        {
+          "bloodlineId": "xiao",
+          "xiaoFaction": "apostates",
+          "cost": 0
+        }
+      ],
+      "presentationPt": {
+        "prerequisites": "Majestade •, Pesadelo •",
+        "summary": "Reconhece manipulação emocional sobrenatural e, com sucessos suficientes, identifica sua origem.",
+        "cost": "1 Vitae",
+        "action": "Instantânea",
+        "duration": "Uma cena",
+        "dicePool": "Nenhuma",
+        "effect": "O vampiro fica mais atento ao próprio estado emocional. Sempre que resistir a um poder sobrenatural destinado a manipular suas emoções (Majestade, Pesadelo etc.), se perder a ação disputada, mas obtiver ao menos um sucesso no teste, percebe que está sendo manipulado. Se vencer a ação disputada para resistir, também percebe a origem da influência, caso ela normalmente não fosse óbvia. Esse conhecimento não neutraliza os efeitos de um poder, mas pode dar alguma margem na maneira como o vampiro reage a ele. Apóstatas aprendem esta Devoção gratuitamente ao cumprir seus requisitos."
+      }
     },
     {
       "id": "devotion-silence-depths",

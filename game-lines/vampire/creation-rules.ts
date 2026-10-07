@@ -197,7 +197,7 @@ export function vampireDevotionExperienceCost(definition: VampirePurchasablePowe
   if (typeof base !== "number" || !Number.isFinite(base) || base < 0) return undefined;
   const known = stringArray(character.line_data.devotion_ids);
   const discounts = definition?.experienceDiscounts?.filter((item) => Number.isFinite(item.cost) && item.cost >= 0 && (
-    "bloodlineId" in item ? item.bloodlineId === character.line_data.bloodline_id
+    "bloodlineId" in item ? item.bloodlineId === character.line_data.bloodline_id && (!item.xiaoFaction || item.bloodlineId === "xiao" && item.xiaoFaction === character.line_data.xiao_faction)
       : "covenantId" in item ? vampireCovenantIds(character.line_data).includes(item.covenantId)
         : item.devotionIds.some((id) => known.includes(id) && powers.devotions.some((power) => power.id === id))
   )).map((item) => item.cost) ?? [];

@@ -29,13 +29,18 @@ function replaceFavoredAttributes(character: CharacterSheet, previous: readonly 
   return { ...next, attributes };
 }
 
-export function joinVampireBloodline(character: CharacterSheet, definition: VampireBloodlineDefinition, favoredAttribute: string, powers: VampirePowers, clan?: VampireReference["clans"][number], meritCatalog: readonly DefinitionIdentity[] = []) {
+export function setVampireXiaoFaction(character: CharacterSheet, faction: string, powers: VampirePowers, meritCatalog: readonly DefinitionIdentity[] = []) {
+  if (character.line_data.bloodline_id !== "xiao" || !["", "apostates", "ascended"].includes(faction)) return character;
+  return synchronizeAutomaticBloodlineDevotions({ ...character, line_data: { ...character.line_data, xiao_faction: faction } }, powers, meritCatalog);
+}
+
+export function joinVampireBloodline(character: CharacterSheet, definition: VampireBloodlineDefinition, favoredAttribute: string, powers: VampirePowers, clan?: VampireReference["clans"][number], meritCatalog: readonly DefinitionIdentity[] = [], xiaoFaction = "") {
   if (!vampireBloodlineFavoredAttributes(definition, clan).includes(favoredAttribute)) return character;
   const previous = character.line_data.bloodline_id
     ? [String(character.line_data.bloodline_favored_attribute ?? "")]
     : stringArray(character.line_data.favored_attributes).length ? stringArray(character.line_data.favored_attributes) : [String(character.line_data.favored_attribute ?? "")];
   const next = replaceFavoredAttributes(character, previous, [favoredAttribute]);
-  next.line_data = { ...next.line_data, bloodline_id: definition.id, bloodline_favored_attribute: favoredAttribute };
+  next.line_data = { ...next.line_data, bloodline_id: definition.id, bloodline_favored_attribute: favoredAttribute, xiao_faction: definition.id === "xiao" && ["apostates", "ascended"].includes(xiaoFaction) ? xiaoFaction : "" };
   return synchronizeAutomaticBloodlineDevotions(next, powers, meritCatalog);
 }
 
@@ -49,7 +54,7 @@ export function removeVampireBloodline(character: CharacterSheet, definition?: V
   const refund = refunded.reduce((sum, entry) => sum + Math.max(0, Number(entry.cost ?? 0)), 0);
   const disciplines = next.line_data.disciplines && typeof next.line_data.disciplines === "object" ? { ...next.line_data.disciplines as Record<string, unknown> } : {};
   for (const name of exclusive) disciplines[name] = 0;
-  next.line_data = { ...next.line_data, bloodline_id: "", bloodline_favored_attribute: "", disciplines, lash_ids: [], blood_tether_pack_active: false };
+  next.line_data = { ...next.line_data, bloodline_id: "", bloodline_favored_attribute: "", xiao_faction: "", disciplines, lash_ids: [], blood_tether_pack_active: false };
   next.current_state = { ...next.current_state, experience_available: Math.max(0, Number(next.current_state.experience_available ?? 0)) + refund, experience_spent: Math.max(0, Number(next.current_state.experience_spent ?? 0) - refund), vampire_experience_history: history.filter((entry) => !refunded.includes(entry)) };
   return powers ? synchronizeAutomaticBloodlineDevotions(next, powers, meritCatalog) : next;
 }
@@ -63,12 +68,13 @@ export function BloodlineJoinDialog({ open, onOpenChange, onJoined, character, u
   const available = alphabetical(bloodlines.filter((item) => homebrewContentActive(preferences, item.id, item.sourceId) && vampireBloodlineAvailable(item, character, reference)), (item) => catalogDisplayName(item, locale, undefined, "pt-BR"), locale);
   const [previewId, setPreviewId] = useState("");
   const [favoredAttribute, setFavoredAttribute] = useState("");
+  const [xiaoFaction, setXiaoFaction] = useState("");
   const [editorOpen, setEditorOpen] = useState(false);
   const preview = available.find((item) => item.id === previewId) ?? available[0];
   const clan = reference.clans.find((item) => item.id === character.line_data.clan_id);
   const favoredAttributes = preview ? vampireBloodlineFavoredAttributes(preview, clan) : [];
   const choose = (id: string) => {
-    if (id !== "__create__") { setPreviewId(id); setFavoredAttribute(""); return; }
+    if (id !== "__create__") { setPreviewId(id); setFavoredAttribute(""); setXiaoFaction(""); return; }
     onOpenChange(false); setEditorOpen(true);
   };
   const saveCustom = (definition: VampireBloodlineDefinition) => {
@@ -78,7 +84,7 @@ export function BloodlineJoinDialog({ open, onOpenChange, onJoined, character, u
   };
   const join = () => {
     if (!preview || !favoredAttributes.includes(favoredAttribute)) return;
-    updateSheet(joinVampireBloodline(character, preview, favoredAttribute, powers, clan, meritCatalog)); onOpenChange(false); onJoined();
+    updateSheet(joinVampireBloodline(character, preview, favoredAttribute, powers, clan, meritCatalog, xiaoFaction)); onOpenChange(false); onJoined();
   };
   return <>
     <Dialog open={open} onOpenChange={onOpenChange}><DialogContent className="homebrew-dialog vampire-bloodline-join-dialog vtr-dialog">
@@ -87,6 +93,7 @@ export function BloodlineJoinDialog({ open, onOpenChange, onJoined, character, u
       <JoiningNote />
       {preview && <label>{t("ui.bloodlineFavoredAttribute")}<Select value={favoredAttribute || undefined} onValueChange={setFavoredAttribute}><SelectTrigger><SelectValue placeholder={t("ui.chooseAttribute")} /></SelectTrigger><SelectContent>{favoredAttributes.map((name) => <SelectItem key={name} value={name}>{systemTerm(name, locale)}</SelectItem>)}</SelectContent></Select></label>}
       {preview && <BloodlineDetails definition={preview} powers={powers} />}
+      {preview?.id === "xiao" && <XiaoFactionSelect value={xiaoFaction} onChange={setXiaoFaction} />}
       <DialogFooter><Button type="button" variant="outline" onClick={() => onOpenChange(false)}>{t("common.cancel")}</Button><Button type="button" disabled={!preview || !favoredAttributes.includes(favoredAttribute)} onClick={join}>{t("ui.joinBloodline")}</Button></DialogFooter>
     </DialogContent></Dialog>
     <BloodlineHomebrewEditor key={editorOpen ? "open" : "closed"} open={editorOpen} onOpenChange={(next) => { setEditorOpen(next); if (!next) onOpenChange(true); }} clans={reference.clans} onSave={saveCustom} />
@@ -104,7 +111,13 @@ export function BloodlinePage({ character, updateSheet, bloodlines, powers, onRe
   return <div className="affiliation-page bloodline-page">
     <header className="affiliation-title"><div><h2>{currentName}</h2><p>{current.source}{current.page ? ` · p. ${current.page}` : ""}</p></div><ConfirmAction trigger={<Button type="button" size="sm" className="builder-add-action" variant="destructive">{t("ui.leaveBloodline")}</Button>} title={t("ui.leaveNamedBloodline", { name: currentName })} description={t("ui.leaveBloodlineConsequences")} action={t("ui.leaveBloodline")} onConfirm={remove} /></header>
     <BloodlineDetails definition={current} powers={powers} />
+    {current.id === "xiao" && <XiaoFactionSelect value={String(character.line_data.xiao_faction ?? "")} onChange={(value) => updateSheet(setVampireXiaoFaction(character, value, powers, meritCatalog))} />}
   </div>;
+}
+
+function XiaoFactionSelect({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  const { t } = useLanguage();
+  return <label className="affiliation-select">{t("ui.xiaoFaction")}<Select value={["apostates", "ascended"].includes(value) ? value : "__none__"} onValueChange={(value) => onChange(value === "__none__" ? "" : value ?? "")}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="__none__">{t("ui.xiaoFactionUnknown")}</SelectItem><SelectItem value="apostates">{t("ui.xiaoApostates")}</SelectItem><SelectItem value="ascended">{t("ui.xiaoAscended")}</SelectItem></SelectContent></Select><small>{t("ui.xiaoFactionBenefit")}</small></label>;
 }
 
 function JoiningNote() {

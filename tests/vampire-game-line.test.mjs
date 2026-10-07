@@ -958,6 +958,59 @@ test("conditional free Devotions track only new grants and preserve paid or opaq
   }
 });
 
+test("Xiao faction selection grants Ripples only to explicit eligible Apostates and preserves older purchases", async () => {
+  const { synchronizeAutomaticBloodlineDevotions, vampireDevotionExperienceCost, vampireDevotionAvailable } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const { setVampireXiaoFaction, joinVampireBloodline, removeVampireBloodline } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");
+  const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
+  const { normalizeStoredSheet } = await vite.ssrLoadModule("/lib/character-persistence.ts");
+  const { vampireRules } = await vite.ssrLoadModule("/game-lines/vampire/rules.ts");
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const bloodlines = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/bloodlines.json`, "utf8"));
+  const id = "devotion-ripples-still-water", definition = powers.devotions.find(item => item.id === id), xiao = bloodlines.find(item => item.id === "xiao");
+  assert.equal(definition.page, 61);
+  assert.deepEqual(definition.experienceDiscounts, [{ bloodlineId: "xiao", xiaoFaction: "apostates", cost: 0 }]);
+  const buyer = blankPrintCharacter("VtR");
+  buyer.line_data = { ...buyer.line_data, clan_id: "daeva", bloodline_id: "xiao", disciplines: { Majesty: 1, Nightmare: 1 }, devotion_ids: ["authored-choice"] };
+  buyer.current_state = { ...buyer.current_state, experience_available: 10, experience_spent: 2, vampire_experience_history: [{ id: "authored", label: "Original receipt", cost: 2 }] };
+  const before = JSON.stringify(buyer);
+  for (const faction of [undefined, "", "ascended", "Apostates", "Apóstatas", "unknown"]) {
+    const old = { ...buyer, line_data: { ...buyer.line_data, xiao_faction: faction } };
+    assert.equal(vampireDevotionExperienceCost(definition, old, powers), 2);
+    assert.equal(synchronizeAutomaticBloodlineDevotions(old, powers), old);
+    assert.equal(vampireDevotionAvailable(definition, old), true, "Faction does not restrict access to Xiao powers");
+  }
+  assert.equal(setVampireXiaoFaction(buyer, "Apóstatas", powers), buyer);
+  const granted = setVampireXiaoFaction(buyer, "apostates", powers);
+  assert.deepEqual(granted.line_data.devotion_ids, ["authored-choice", id]);
+  assert.deepEqual(granted.line_data.automatic_devotion_ids, [id]);
+  assert.deepEqual(granted.current_state, buyer.current_state);
+  assert.equal(normalizeStoredSheet(granted).line_data.xiao_faction, "apostates");
+  assert.equal(vampireRules.normalizeCharacter(granted).line_data.xiao_faction, "apostates");
+  assert.deepEqual(setVampireXiaoFaction(granted, "ascended", powers).line_data.devotion_ids, ["authored-choice"]);
+  assert.deepEqual(setVampireXiaoFaction(granted, "", powers).line_data.devotion_ids, ["authored-choice"]);
+  const low = { ...buyer, line_data: { ...buyer.line_data, disciplines: { Majesty: 0, Nightmare: 1 } } };
+  assert.deepEqual(setVampireXiaoFaction(low, "apostates", powers).line_data.devotion_ids, ["authored-choice"]);
+  const other = { ...granted, line_data: { ...granted.line_data, bloodline_id: "homebrew:xiao" } };
+  assert.equal(vampireDevotionExperienceCost(definition, other, powers), 2);
+  assert.equal(setVampireXiaoFaction(other, "ascended", powers), other);
+  assert.deepEqual(joinVampireBloodline(buyer, xiao, xiao.favoredAttributes[0], powers, undefined, [], "apostates").line_data.automatic_devotion_ids, [id]);
+  const left = removeVampireBloodline(granted, xiao, powers);
+  assert.equal(left.line_data.xiao_faction, "");
+  assert.deepEqual(left.line_data.devotion_ids, ["authored-choice"]);
+  assert.deepEqual(left.current_state, buyer.current_state);
+  for (const paid of [false, true]) {
+    const old = structuredClone(buyer);
+    old.line_data.devotion_ids.push(id);
+    if (paid) old.current_state.vampire_experience_history.push({ id: "old-paid-ripples", label: "Original title", cost: 2, undo: { kind: "devotion", id } });
+    const updated = setVampireXiaoFaction(old, "apostates", powers);
+    assert.deepEqual(updated.line_data.devotion_ids, old.line_data.devotion_ids);
+    assert.equal(updated.line_data.automatic_devotion_ids, undefined);
+    assert.deepEqual(setVampireXiaoFaction(updated, "ascended", powers).line_data.devotion_ids, old.line_data.devotion_ids);
+    assert.deepEqual(updated.current_state, old.current_state);
+  }
+  assert.equal(JSON.stringify(buyer), before);
+});
+
 test("Malocusian Devotions require a canonical Haven instance and preserve paid dependencies on refunds", async () => {
   const { vampireDevotionPrerequisitesMet, synchronizeAutomaticBloodlineDevotions } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
   const { refundVampireAdvancement } = await vite.ssrLoadModule("/game-lines/vampire/experience-refunds.ts");
