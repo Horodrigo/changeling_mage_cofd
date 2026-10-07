@@ -4512,7 +4512,7 @@
       "id": "devotion-call-me-maybe",
       "kind": "devotion",
       "name": "Call Me Maybe",
-      "translatedName": "Call Me Maybe",
+      "translatedName": "Me Ligue, Talvez",
       "prerequisites": "Majesty ••, Resilience •",
       "covenantIds": [
         "carthian-movement"
@@ -4524,7 +4524,15 @@
       "cost": "None",
       "dicePool": "Manipulation + Socialize + Majesty",
       "action": "Instant",
-      "effect": "At a social gathering where the vampire has a Good or better Impression, each success becomes one temporary Herd dot, even above five. These dots cannot be used in the current or following scene and expire after one use or at chapter end. Only one reserve created by this Devotion may exist at a time."
+      "effect": "At a social gathering where the vampire has a Good or better Impression, each success becomes one temporary Herd dot, even above five. These dots cannot be used in the current or following scene and expire after one use or at session end. Only one reserve created by this Devotion may exist at a time.",
+      "presentationPt": {
+        "prerequisites": "Majestade ••, Resiliência •",
+        "summary": "Cria um Rebanho temporário.",
+        "cost": "Nenhum",
+        "dicePool": "Manipulação + Socialização + Majestade",
+        "action": "Instantânea",
+        "effect": "Em um encontro social onde o vampiro tenha uma Impressão Boa ou melhor, cada sucesso se torna um ponto temporário de Rebanho, mesmo acima de cinco. Esses pontos não podem ser usados na cena atual nem na seguinte e expiram após um uso ou ao fim da sessão. Só pode existir uma reserva criada por esta Devoção de cada vez."
+      }
     },
     {
       "id": "devotion-colossus",
@@ -4718,7 +4726,7 @@
       "id": "devotion-manic-depression",
       "kind": "devotion",
       "name": "Manic Depression",
-      "translatedName": "Manic Depression",
+      "translatedName": "Depressão Maníaca",
       "prerequisites": "Majesty ••, Nightmare ••",
       "covenantIds": [
         "carthian-movement"
@@ -4731,7 +4739,16 @@
       "dicePool": "Manipulation + Empathy + Nightmare vs. Composure + Blood Potency",
       "action": "Instant",
       "duration": "One week per success",
-      "effect": "The vampire chooses Manic or Melancholic for the victim. Resolving either Condition replaces it with the other until the duration expires. Manic rewards repeating an action but penalizes switching and ends in exhaustion after failure; Melancholic penalizes actions made without Willpower, weakens Speed, Initiative, and Defense, prevents Willpower recovery, and resolves when the last Willpower is spent."
+      "effect": "The vampire chooses Manic or Melancholic for the victim. Resolving either Condition replaces it with the other until the duration expires. Manic rewards repeating an action but penalizes switching and ends in exhaustion after failure; Melancholic penalizes actions made without Willpower, weakens Speed, Initiative, and Defense, prevents Willpower recovery, and resolves when the last Willpower is spent.",
+      "presentationPt": {
+        "prerequisites": "Majestade ••, Pesadelo ••",
+        "summary": "Força uma vítima a oscilar rapidamente entre extremos emocionais.",
+        "cost": "1 Vitae",
+        "dicePool": "Manipulação + Empatia + Pesadelo contra Compostura + Potência de Sangue",
+        "action": "Instantânea",
+        "duration": "Uma semana por sucesso",
+        "effect": "O vampiro escolhe Maníaco ou Melancólico para a vítima. Resolver qualquer uma dessas Condições a substitui pela outra até a duração expirar. Maníaco recompensa repetir uma ação, mas penaliza mudar de ação e termina em exaustão após uma falha; Melancólico penaliza ações realizadas sem Força de Vontade, reduz Velocidade, Iniciativa e Defesa, impede recuperar Força de Vontade e é resolvido quando o último ponto de Força de Vontade é gasto."
+      }
     },
     {
       "id": "devotion-natural-born-killer",
@@ -4852,7 +4869,7 @@
       "id": "devotion-rock-is-dead",
       "kind": "devotion",
       "name": "Rock Is Dead",
-      "translatedName": "Rock Is Dead",
+      "translatedName": "O Rock Está Morto",
       "prerequisites": "Vigor ••, Majesty •",
       "covenantIds": [
         "carthian-movement"
@@ -4864,7 +4881,15 @@
       "cost": "1 Willpower",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "Spend Willpower with Awe. Other characters suffer the vampire's Majesty as a penalty to Dominate, Majesty, and Nightmare. A character whose Condition from one of those Disciplines currently affects the vampire is immune, and only one Rock Is Dead penalty applies at once."
+      "effect": "Spend Willpower with Awe. Other characters suffer the vampire's Majesty as a penalty to Dominate, Majesty, and Nightmare. A character whose Condition from one of those Disciplines currently affects the vampire is immune, and only one Rock Is Dead penalty applies at once.",
+      "presentationPt": {
+        "prerequisites": "Ímpeto ••, Majestade •",
+        "summary": "Fortalece Fascínio enquanto enfraquece presenças rivais.",
+        "cost": "1 Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "Gaste Força de Vontade com Fascínio. Outros personagens sofrem a Majestade do vampiro como penalidade em Dominação, Majestade e Pesadelo. Um personagem cuja Condição de uma dessas Disciplinas esteja afetando o vampiro é imune, e apenas uma penalidade de O Rock Está Morto se aplica por vez."
+      }
     },
     {
       "id": "devotion-slow-steady",
@@ -5014,7 +5039,7 @@
       "id": "devotion-tune-in-out",
       "kind": "devotion",
       "name": "Tune In, Tune Out",
-      "translatedName": "Tune In, Tune Out",
+      "translatedName": "Sintonize, Desligue",
       "prerequisites": "Auspex ••, Obfuscate ••",
       "covenantIds": [
         "carthian-movement"
@@ -5027,7 +5052,16 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "Scene",
-      "effect": "Choose one heightened sense and suppress at least one of sight, hearing, touch, smell, balance, or taste. Each suppressed sense adds one die to the heightened sense, which also gains 8-again; actions using a suppressed sense suffer –5. Extreme stimulus overloads and removes the heightened sense, deals one bashing, and allows a Stamina roll each turn to recover it. The Devotion cannot be ended early."
+      "effect": "Choose one heightened sense and suppress at least one of sight, hearing, touch, smell, balance, or taste. Each suppressed sense adds one die to the heightened sense, which also gains 8-again; actions using a suppressed sense suffer –5. Extreme stimulus overloads and removes the heightened sense, deals one bashing, and allows a Stamina roll each turn to recover it. The Devotion cannot be ended early.",
+      "presentationPt": {
+        "prerequisites": "Auspícios ••, Ofuscação ••",
+        "summary": "Suprime os demais sentidos para ampliar ao extremo um deles.",
+        "cost": "Nenhum",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Cena",
+        "effect": "Escolha um sentido ampliado e suprima pelo menos um entre visão, audição, tato, olfato, equilíbrio ou paladar. Cada sentido suprimido acrescenta um dado ao sentido ampliado, que também recebe 8-novamente; ações que usam um sentido suprimido sofrem –5. Um estímulo extremo sobrecarrega e elimina o sentido ampliado, causa um ponto de dano contundente e permite uma jogada de Vigor a cada turno para recuperá-lo. A Devoção não pode ser encerrada antes da hora."
+      }
     },
     {
       "id": "devotion-under-my-skin-2",
