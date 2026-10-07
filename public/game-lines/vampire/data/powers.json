@@ -8915,10 +8915,10 @@
       "id": "devotion-mr-perfect",
       "kind": "devotion",
       "name": "Mr. Perfect",
-      "translatedName": "Mr. Perfect",
+      "translatedName": "Senhor Perfeito",
       "summary": "Presents the exact romantic persona a subject wants to see.",
       "source": "Strange Shades: Mekhet",
-      "page": 41,
+      "page": 40,
       "manualOnly": true,
       "bloodlineId": "leandros",
       "experienceCost": 3,
@@ -8932,16 +8932,30 @@
         "exceptionalSuccess": "The vampire has until the end of the night to use up her Advanced Actions.",
         "failure": "The victim sees through the vampire’s cheap tricks.",
         "dramaticFailure": "The vampire humiliates herself, taking on the appearance of the exact opposite of what her victim wants to see."
+      },
+      "presentationPt": {
+        "summary": "Apresenta exatamente a personalidade romântica que o alvo deseja ver.",
+        "prerequisites": "Majestade •, Ofuscação ••••",
+        "cost": "1 Vitae",
+        "dicePool": "Manipulação + Subterfúgio + Ofuscação contra Perseverança + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Uma cena",
+        "rollResults": {
+          "success": "A vampira manipula a vítima para que acredite que ela é tudo o que deseja, tanto social quanto fisicamente. A vampira recebe a qualidade de Ação Avançada em um número de ações Sociais mundanas com a vítima igual à Ofuscação.",
+          "exceptionalSuccess": "A vampira tem até o fim da noite para usar suas Ações Avançadas.",
+          "failure": "A vítima percebe os truques baratos da vampira.",
+          "dramaticFailure": "A vampira se humilha, assumindo a aparência do exato oposto do que sua vítima deseja ver."
+        }
       }
     },
     {
       "id": "devotion-only-you",
       "kind": "devotion",
       "name": "Only You",
-      "translatedName": "Only You",
+      "translatedName": "Apenas Você",
       "summary": "Makes one attachment eclipse all alternatives.",
       "source": "Strange Shades: Mekhet",
-      "page": 41,
+      "page": 40,
       "manualOnly": true,
       "bloodlineId": "leandros",
       "experienceCost": 2,
@@ -8950,16 +8964,25 @@
       "requirement": "The mortal must be the vampire’s “one” for the purposes of her clan bane.",
       "dicePool": "None",
       "action": "Instant",
-      "effect": "The mortal and vampire express their mutual, undying love. This must be consensual, and cannot be supernaturally compelled through Majesty, Dominate, the blood bond, or any other coercive means. Sealed with a kiss, both gain the Soulmate Condition."
+      "effect": "The mortal and vampire express their mutual, undying love. This must be consensual, and cannot be supernaturally compelled through Majesty, Dominate, the blood bond, or any other coercive means. Sealed with a kiss, both gain the Soulmate Condition.",
+      "presentationPt": {
+        "summary": "Faz um vínculo eclipsar todas as alternativas.",
+        "prerequisites": "Majestade •••",
+        "cost": "1 ponto de Força de Vontade",
+        "requirement": "O mortal precisa ser a pessoa “única” da vampira para efeito da Maldição de seu Clan.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "effect": "O mortal e a vampira expressam seu amor mútuo e eterno. Isso precisa ser consensual e não pode ser imposto sobrenaturalmente por Majestade, Dominação, Laço de Sangue ou qualquer outro meio coercitivo. Selado com um beijo, ambos recebem a Condição Alma Gêmea."
+      }
     },
     {
       "id": "devotion-shared-experience",
       "kind": "devotion",
       "name": "Shared Experience",
-      "translatedName": "Shared Experience",
-      "summary": "Shares sensation and emotion across the Leandros bond.",
+      "translatedName": "Experiência Compartilhada",
+      "summary": "Creates a false memory of shared intimacy.",
       "source": "Strange Shades: Mekhet",
-      "page": 41,
+      "page": 40,
       "manualOnly": true,
       "bloodlineId": "leandros",
       "experienceCost": 3,
@@ -8973,6 +8996,20 @@
         "exceptionalSuccess": "The victim is so enamored with the vampire that he gains the Swooning Condition.",
         "failure": "The vampire tries to spark a false memory in her victim, but it refuses to catch.",
         "dramaticFailure": "The vampire believes she and her victim really have shared an experience and references it to the point where she comes off as creepy. She gains the Delusional Condition for the rest of the scene."
+      },
+      "presentationPt": {
+        "summary": "Cria uma falsa memória de intimidade compartilhada.",
+        "prerequisites": "Auspícios ••••, Majestade ••",
+        "cost": "2 Vitae",
+        "dicePool": "Manipulação + Persuasão + Auspícios contra Perseverança + Potência de Sangue",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Uma noite",
+        "rollResults": {
+          "success": "A vítima recebe a Condição Falsas Memórias pelo resto da noite, acreditando que ela e a vampira compartilharam uma experiência íntima no passado. Se a vampira obtiver sucesso em um teste de Empatia ou Persuasão com a vítima que também evoque essa memória, trata o resultado como um sucesso excepcional.",
+          "exceptionalSuccess": "A vítima fica tão enamorada da vampira que recebe a Condição Enamorado.",
+          "failure": "A vampira tenta despertar uma falsa memória na vítima, mas ela não se fixa.",
+          "dramaticFailure": "A vampira acredita que ela e a vítima realmente compartilharam uma experiência e faz tantas referências a ela que se torna sinistra. Recebe a Condição Delirante pelo resto da cena."
+        }
       }
     },
     {
