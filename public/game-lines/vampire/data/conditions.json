@@ -4,15 +4,18 @@
     "name": "Overwhelming Hunger",
     "originalName": "Overwhelming Hunger",
     "category": "Vampire",
-    "description": "The Candyman's preparation creates a consuming appetite for the specified treated food, drug, or blood.",
+    "description": "You must eat as much as possible of a particular kind of food before the scene ends, such as candy, pastry, or raw meat. Unless you consume at least the equivalent of Size 2, this Condition ends and is replaced by Deprived.",
     "source": "Better Feared: Nosferatu",
     "sourceCode": "h-vtr-better-feared",
     "sourceId": "h-vtr-better-feared",
     "homebrew": true,
-    "page": 29,
-    "persistent": true,
-    "resolution": "Satisfy or break the supernatural appetite under the originating effect.",
-    "beat": "Pursue the craving despite danger or obligation."
+    "page": 31,
+    "resolution": "Consume the required amount of food.",
+    "presentationPt": {
+      "name": "Fome Avassaladora",
+      "description": "Você deve consumir o máximo possível de um tipo específico de alimento antes do fim da cena, como doces, confeitos ou carne crua. Se não consumir ao menos o equivalente a Tamanho 2, esta Condição termina e é substituída por Privado.",
+      "resolution": "Consumir a quantidade exigida de alimento."
+    }
   },
   {
     "id": "vtr-better-feared:despondent",
@@ -157,7 +160,10 @@
     "id": "oathbreaker-invictus",
     "name": "Oathbreaker",
     "originalName": "Oathbreaker",
-    "nameQualifier": {"en-US":"Kindred","pt-BR":"Membro"},
+    "nameQualifier": {
+      "en-US": "Kindred",
+      "pt-BR": "Membro"
+    },
     "category": "Vampire",
     "description": "The character suffers Invictus censure for breaking a blood oath.",
     "penalty": "Two dots of Invictus Status and one dot from Resources, Allies, Contacts, Herd, or Mentor become inaccessible; failed Social actions among the Invictus become dramatic failures.",
@@ -229,30 +235,46 @@
     "name": "Scorned",
     "originalName": "Scorned",
     "category": "Vampire",
-    "description": "Romantic rejection turns a Leandros fixation toward humiliation, resentment, and retaliation.",
+    "description": "A Leandros has stolen your light. Sunlight damages you as a Blood Potency 1 vampire, substituting Integrity for Humanity. Actions aimed at killing or harming the vampire who imposed this Condition do not cause breaking points. You are immune to that vampire’s mental and social Disciplines, including Auspex and Obfuscate.",
     "source": "Strange Shades: Mekhet",
     "sourceCode": "h-vtr-strange-shades",
     "sourceId": "h-vtr-strange-shades",
     "homebrew": true,
     "page": 40,
     "persistent": true,
-    "resolution": "Sever or decisively transform the relationship.",
-    "beat": "The fixation causes a harmful or humiliating choice."
+    "resolution": "Kill the vampire, destroy one of their Touchstones, or ruin their reputation.",
+    "beat": "Risk your life to endanger the vampire or damage their standing in the All Night Society.",
+    "penalty": "Virtue cannot restore Willpower while this Condition lasts.",
+    "presentationPt": {
+      "name": "Desprezado",
+      "description": "Um Leandros roubou sua luz. A luz solar causa dano a você como a um vampiro de Potência de Sangue 1, usando Integridade no lugar de Humanidade. Ações destinadas a matar ou ferir o vampiro que impôs esta Condição não causam Pontos de Ruptura. Você é imune às Disciplinas mentais e sociais desse vampiro, incluindo Auspícios e Ofuscação.",
+      "penalty": "A Virtude não pode recuperar Força de Vontade enquanto esta Condição durar.",
+      "resolution": "Matar o vampiro, destruir um de seus Touchstones ou arruinar sua reputação.",
+      "beat": "Arriscar sua vida para pôr o vampiro em perigo ou prejudicar sua posição na Sociedade da Noite."
+    }
   },
   {
     "id": "vtr-strange-shades:soulmate",
     "name": "Soulmate",
     "originalName": "Soulmate",
     "category": "Vampire",
-    "description": "A Leandros fixation makes one subject feel uniquely necessary and all other relationships secondary.",
+    "description": "The vampire and a mortal have promised lasting love. The mortal is immune to existing and new blood bonds and adds the vampire’s Majesty to Presence rolls. Once per night, feeding on this mortal fulfills an Anchor: inflicting damage greater than their Stamina restores one Willpower, while drinking more than their Size restores all Willpower.",
     "source": "Strange Shades: Mekhet",
     "sourceCode": "h-vtr-strange-shades",
     "sourceId": "h-vtr-strange-shades",
     "homebrew": true,
     "page": 40,
     "persistent": true,
-    "resolution": "The bond ends under the bloodline power's terms.",
-    "beat": "Choose the soulmate over an important obligation."
+    "resolution": "The vampire fails to damage a mortal’s relationship within the required time, the mortal ends the relationship, or either partner dies.",
+    "beat": "Either partner suffers lethal damage protecting their Soulmate. The mortal reveals the truth about their lover to another human. The vampire injures, kills, or otherwise removes someone or something close to the mortal.",
+    "penalty": "Each month, the vampire must damage a significant relationship in the mortal’s life.",
+    "presentationPt": {
+      "name": "Alma Gêmea",
+      "description": "O vampiro e um mortal prometeram amor duradouro. O mortal é imune a Laços de Sangue novos ou existentes e acrescenta a Majestade do vampiro às jogadas de Presença. Uma vez por noite, alimentar-se desse mortal satisfaz uma Âncora: causar dano maior que seu Vigor recupera um ponto de Força de Vontade, enquanto beber mais que seu Tamanho recupera toda a Força de Vontade.",
+      "penalty": "A cada mês, o vampiro deve prejudicar uma relação significativa na vida do mortal.",
+      "resolution": "O vampiro deixa de prejudicar uma relação do mortal dentro do prazo exigido, o mortal encerra a relação ou um dos parceiros morre.",
+      "beat": "Qualquer parceiro sofre dano letal protegendo sua Alma Gêmea. O mortal revela a verdade sobre seu amante a outro humano. O vampiro fere, mata ou de outra forma afasta alguém ou algo próximo do mortal."
+    }
   },
   {
     "id": "elder-anchored-heart",
@@ -405,7 +427,10 @@
     "id": "addicted",
     "name": "Addicted",
     "originalName": "Addicted",
-    "nameQualifier": {"en-US":"Kindred","pt-BR":"Membro"},
+    "nameQualifier": {
+      "en-US": "Kindred",
+      "pt-BR": "Membro"
+    },
     "category": "Vampire",
     "description": "Choose a substance or destructive behavior. The character must indulge the addiction regularly; going without it inflicts Deprived.",
     "persistent": true,
@@ -431,7 +456,10 @@
     "id": "charmed",
     "name": "Charmed",
     "originalName": "Charmed",
-    "nameQualifier": {"en-US":"Kindred","pt-BR":"Membro"},
+    "nameQualifier": {
+      "en-US": "Kindred",
+      "pt-BR": "Membro"
+    },
     "category": "Vampire",
     "description": "A vampire's supernatural personality makes the character eager to please and unable to recognize the vampire's lies or true motives without overcoming a Clash of Wills. The vampire adds Majesty to Manipulation against the character; attempts to detect deception suffer the same rating as a penalty. It normally lasts one hour per Blood Potency.",
     "persistent": true,
@@ -601,7 +629,10 @@
     "id": "humbled",
     "name": "Humbled",
     "originalName": "Humbled",
-    "nameQualifier": {"en-US":"Kindred","pt-BR":"Membro"},
+    "nameQualifier": {
+      "en-US": "Kindred",
+      "pt-BR": "Membro"
+    },
     "category": "Vampire",
     "description": "Divine judgment leaves the vampire feeling unworthy and unable to regain Willpower from the Requiem.",
     "penalty": "−2 to Resolve rolls.",
@@ -652,7 +683,10 @@
     "id": "lethargic",
     "name": "Lethargic",
     "originalName": "Lethargic",
-    "nameQualifier": {"en-US":"Kindred","pt-BR":"Membro"},
+    "nameQualifier": {
+      "en-US": "Kindred",
+      "pt-BR": "Membro"
+    },
     "category": "Vampire",
     "description": "Remaining active during the day compounds supernatural exhaustion.",
     "penalty": "Accumulates penalties to actions and resistance as described by daysleep rules.",
@@ -770,7 +804,10 @@
     "id": "thrall",
     "name": "Thrall",
     "originalName": "Thrall",
-    "nameQualifier": {"en-US":"Kindred","pt-BR":"Membro"},
+    "nameQualifier": {
+      "en-US": "Kindred",
+      "pt-BR": "Membro"
+    },
     "category": "Vampire",
     "description": "Complete soul loss leaves the character unable to spend Willpower, use Defense, or spend Experiences, and also inflicts the effects of Broken. The character should remain playable only while there is a chance of regaining the soul.",
     "persistent": true,

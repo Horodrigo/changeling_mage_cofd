@@ -1,0 +1,89 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { createServer } from "vite";
+
+const root = fileURLToPath(new URL("..", import.meta.url));
+const read = path => JSON.parse(readFileSync(new URL(`../${path}`, import.meta.url), "utf8"));
+const conditions = read("public/game-lines/vampire/data/conditions.json");
+const localized = conditions.filter(item => item.presentationPt);
+const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
+
+test("VtR Better Feared p. 31 and Strange Shades p. 40 Conditions retain their complete verified rules and IDs", () => {
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
+  for (const item of localized) {
+    for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
+      assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
+      assert.deepEqual(item.presentationPt[field].match(/\d+/g) ?? [], item[field].match(/\d+/g) ?? []);
+    }
+    assert.equal(item.name, item.originalName);
+    assert.equal(Boolean(item.presentationPt.beat), Boolean(item.beat));
+  }
+  const hunger = localized[0], scorned = localized[1], soulmate = localized[2];
+  assert.equal(hunger.page, 31);
+  assert.equal(hunger.persistent, undefined);
+  assert.equal(hunger.beat, undefined);
+  assert.match(hunger.description, /scene ends.*Size 2.*Deprived/);
+  assert.match(scorned.description, /Blood Potency 1.*Integrity for Humanity.*do not cause breaking points.*that vampire/);
+  assert.match(scorned.resolution, /Kill.*Touchstones.*reputation/);
+  assert.match(soulmate.description, /existing and new blood bonds.*Majesty.*Once per night.*greater than their Stamina.*more than their Size/);
+  assert.match(soulmate.penalty, /Each month/);
+  assert.match(soulmate.beat, /Either partner.*The mortal.*The vampire/);
+});
+
+test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/EN without changing saved instances", async () => {
+  const before = JSON.stringify(conditions);
+  for (const locale of ["en-US", "pt-BR", "en-US"]) {
+    let mobile = false;
+    const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] }, plugins: [{ name: "condition-surfaces", enforce: "pre", transform(code, id) {
+      const path = id.replaceAll("\\", "/");
+      if (path.endsWith("/hooks/use-mobile.ts")) return "export let mobile = false; export const setTestMobile = value => { mobile = value; }; export const useIsMobile = () => mobile;";
+      if (path.endsWith("/components/ui/tabs.tsx")) return code.replace("<TabsPrimitive.Content", "<TabsPrimitive.Content forceMount");
+      if (locale === "pt-BR" && path.endsWith("/lib/i18n.tsx")) return code.replace('const serverLocale = ():Locale => "en-US";', 'const serverLocale = ():Locale => "pt-BR";');
+    } }] });
+    try {
+      const { vampireConditionPresentation: present } = await vite.ssrLoadModule("/game-lines/vampire/condition-presentation.ts");
+      const { vampireConditionsCatalogGroup } = await vite.ssrLoadModule("/game-lines/vampire/catalogs/conditions.ts");
+      const { freezeCatalogData } = await vite.ssrLoadModule("/lib/catalog/catalog-service.ts");
+      const requests = [];
+      const catalog = freezeCatalogData(await vampireConditionsCatalogGroup.load({ getCatalog: async id => { requests.push(id); return conditions; } }));
+      assert.deepEqual(requests, ["vampire-conditions"]);
+      const { activeVampireItems } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
+      assert.equal(activeVampireItems(catalog, { disabledIds: ["h-vtr-strange-shades"] }).some(item => item.id === localized[1].id), false);
+      const base = localized[0], errata = { ...base, id: "homebrew:errata", errataFor: base.id, description: "Authored replacement stays.", presentationPt: undefined };
+      const replacement = activeVampireItems([base, errata], { disabledIds: [] })[0];
+      assert.equal(present(replacement, locale).description, errata.description, "An untranslated replacement never inherits obsolete PT");
+      const authored = { ...base, id: "homebrew:authored", name: "Authored name", description: "Authored effect", presentationPt: undefined };
+      assert.equal(present(authored, locale), authored);
+      const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
+      const { VampireCharacterPaper } = await vite.ssrLoadModule("/game-lines/vampire/sheet-view.tsx");
+      const { vampireHomebrew } = await vite.ssrLoadModule("/game-lines/vampire/homebrew.tsx");
+      const { setTestMobile } = await vite.ssrLoadModule("/hooks/use-mobile.ts");
+      const { LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
+      const reference = Object.fromEntries(["clans", "covenants", "anchors", "blood-potency", "torpor", "bloodlines"].map(group => [group === "blood-potency" ? "bloodPotency" : group, read(`public/game-lines/vampire/data/${group}.json`)]));
+      const catalogs = { get: id => ({ "vampire-powers": read("public/game-lines/vampire/data/powers.json"), "vampire-reference": reference, "core-merits": [], "vampire-merits": [], "core-reference": { conditions: [], presentation: {} }, "vampire-conditions": catalog })[id] };
+      const character = blankPrintCharacter("VtR");
+      character.line_data.clan_id = "daeva";
+      character.current_state.conditions = localized.map(item => ({ id: item.id, instanceId: `saved:${item.id}`, persistent: Boolean(item.persistent), notes: "Authored note" }));
+      const saved = JSON.stringify(character);
+      const noMutation = () => { throw new Error("Render mutated the saved character"); };
+      const render = (Component, props) => renderToStaticMarkup(createElement(LanguageProvider, null, createElement(Component, props)));
+      const homebrew = render(vampireHomebrew.Component, { catalogs });
+      for (mobile of [false, true]) {
+        setTestMobile(mobile);
+        const sheet = render(VampireCharacterPaper, { character, updateState: noMutation, updateSheet: noMutation, catalogs });
+        for (const item of localized.map(item => present(item, locale))) {
+          assert.equal(item.id, conditions.find(canonical => canonical.id === item.id).id);
+          for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])])
+            for (const html of [sheet, homebrew]) assert.ok(html.includes(escape(item[field])), `${locale}/${mobile ? "mobile" : "desktop"}: ${item.id}.${field}`);
+        }
+      }
+      assert.equal(JSON.stringify(character), saved);
+      assert.equal(JSON.stringify(conditions), before);
+      assert.equal(Object.isFrozen(catalog[0].presentationPt), true);
+    } finally { await vite.close(); }
+  }
+});

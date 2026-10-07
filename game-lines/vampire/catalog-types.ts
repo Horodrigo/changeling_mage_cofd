@@ -234,6 +234,7 @@ export type VampirePowers = {
 };
 
 export type VampireCondition = {
+  presentationPt?: Partial<Pick<VampireCondition, "name" | "category" | "description" | "penalty" | "resolution" | "beat">>;
   id: string;
   name: string;
   originalName: string;

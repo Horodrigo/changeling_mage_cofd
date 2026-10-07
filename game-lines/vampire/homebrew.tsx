@@ -16,6 +16,7 @@ import { systemTerm } from "@/lib/system-terms";
 import type { MeritDefinition } from "@/lib/merits";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { vampireBloodlinePresentation, vampireClanPresentation, vampireCovenantPresentation } from "./reference-presentation";
+import { vampireConditionPresentation } from "./condition-presentation";
 import { vampirePowerPresentation } from "./power-presentation";
 import { vampireDisciplineDisplayName } from "./creation-rules";
 import { BloodlineHomebrewEditor } from "./bloodline-homebrew-editor";
@@ -122,7 +123,7 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
     const item = vampirePowerPresentation(definition, locale);
     add(item, bloodSorcery, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)]);
   });
-  conditions.forEach((item) => add(item, t("ui.conditions"), [...detail(t("ui.descriptionLabel"), item.description), ...detail(t("ui.penalty"), item.penalty), ...detail(t("ui.persistent"), item.persistent ? t("ui.yes") : ""), ...detail(t("ui.resolution"), item.resolution), ...detail(t("ui.beat"), item.beat)]));
+  conditions.map(item => vampireConditionPresentation(item, locale)).forEach((item) => add(item, t("ui.conditions"), [...detail(t("ui.descriptionLabel"), item.description), ...detail(t("ui.penalty"), item.penalty), ...detail(t("ui.persistent"), item.persistent ? t("ui.yes") : ""), ...detail(t("ui.resolution"), item.resolution), ...detail(t("ui.beat"), item.beat)]));
   listed.push({ id: SIMPLIFIED_HOLLOW_ID, sourceId: "h-vtr-strange-shades", source: "Strange Shades: Mekhet", kind: "Errata", name: t("ui.simplifiedHollow"), details: detail(t("ui.effect"), t("ui.simplifiedHollowHomebrewEffect")) });
   listed.sort((left, right) => left.name.localeCompare(right.name, locale));
   const sources = [...new Map(listed.map((item) => [item.sourceId, item.source])).entries()].sort((left, right) => left[1].localeCompare(right[1], locale));

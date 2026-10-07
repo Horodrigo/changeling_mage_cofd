@@ -2,6 +2,7 @@
 
 import { storedDevotionTarget, devotionTargetName } from "./linked-devotions";
 import { vampireAnchorPresentation, vampireBloodlinePresentation, vampireClanPresentation } from "./reference-presentation";
+import { vampireConditionPresentation } from "./condition-presentation";
 import { vampirePowerPresentation } from "./power-presentation";
 
 import { type ReactNode, useEffect, useState } from "react";
@@ -1072,7 +1073,7 @@ export function VampireCharacterPaper({
   const vampireConditions = activeVampireItems(
     catalogs.get<readonly VampireCondition[]>("vampire-conditions"),
     preferences,
-  ) as readonly ConditionDefinition[];
+  ).map(condition => vampireConditionPresentation(condition, locale)) as readonly ConditionDefinition[];
   const conditionCatalog = [...coreConditions, ...vampireConditions];
   const data = character.line_data;
   const bloodSorcery =
