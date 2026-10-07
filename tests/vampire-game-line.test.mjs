@@ -596,7 +596,7 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
     "h-vtr-false-gods": 108,
     "h-vtr-strange-shades": 89,
     "h-vtr-better-feared": 92,
-    "h-vtr-agony-ecstasy": 95,
+    "h-vtr-agony-ecstasy": 96,
     "h-vtr-fire-revolution": 90,
   });
   for (const [id, minimum] of Object.entries({ "vampire-bloodlines": 13, "merits-vampire": 12, "vampire-powers": 26, "vampire-conditions": 7 }))

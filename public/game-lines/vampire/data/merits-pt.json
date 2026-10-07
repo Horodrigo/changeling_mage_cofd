@@ -2033,5 +2033,9 @@
   "h-vtr-fire-revolution:mobilize-outrage-errata": {
     "name": "Mobilizar a Indignação — Errata",
     "description": "Inquebrável deve ser declarado antes do turno de combate e compromete a próxima ação instantânea com violência física contra o agressor."
+  },
+  "h-vtr-agony-ecstasy:servant-of-dis": {
+    "name": "Servo de Dis",
+    "description": "Conserva indefinidamente uma criatura já criada com Cria de Dis. Este Mérito só pode ser comprado uma vez e pode provocar um Ponto de Ruptura a critério do Narrador. Conservar a criação permite à ritualista criar outra sem destruir a primeira. O destinatário da versão avançada do rito também pode comprar a criatura como este Mérito; não precisa ser a ritualista. A criatura mantém as habilidades e limitações de Cria de Dis."
   }
 }

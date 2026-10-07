@@ -13,8 +13,8 @@ const portuguese = read("public/game-lines/vampire/data/merits-pt.json");
 const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#x27;");
 
 test("Vampire Portuguese Merits cover applicable fields, level identities and numeric limits in both official and Homebrew records", () => {
-  assert.equal(canonical.length, 398);
-  assert.equal(Object.keys(portuguese).length, 398);
+  assert.equal(canonical.length, 399);
+  assert.equal(Object.keys(portuguese).length, 399);
   for (const [id, presented] of Object.entries(portuguese)) {
     const definition = canonical.find(item => item.id === id);
     assert.ok(definition, id);
@@ -31,8 +31,15 @@ test("Vampire Portuguese Merits cover applicable fields, level identities and nu
     }
   }
   const localized = canonical.filter(item => portuguese[item.id]);
-  assert.equal(localized.filter(item => item.homebrew).length, 244);
+  assert.equal(localized.filter(item => item.homebrew).length, 245);
   assert.equal(localized.filter(item => !item.homebrew).length, 154);
+  const servant = canonical.find(item => item.id === "h-vtr-agony-ecstasy:servant-of-dis");
+  assert.deepEqual(servant.ratings, [3]);
+  assert.equal(servant.page, 103);
+  assert.equal(servant.repeatable, false);
+  assert.equal(servant.prerequisites, undefined, "The recipient is not required to know Crúac or belong to the Circle");
+  assert.match(servant.descriptionEn, /already created with Childe of Dis.*only be purchased once.*breaking point.*recipient.*need not be the ritualist/);
+  assert.match(portuguese[servant.id].description, /já criada com Cria de Dis.*uma vez.*Ponto de Ruptura.*destinatário.*não precisa ser a ritualista/);
   const beast = canonical.find(item => item.id === "vtr-false-gods:beast-king");
   assert.deepEqual(beast.ratings, [2]);
   assert.equal(beast.page, 111);

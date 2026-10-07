@@ -21,11 +21,13 @@ const owned = (id, dots = 5, configuration) => ({ definitionId: id, instanceId: 
 const ctx = { gameLine: "VtR", meritCatalog: catalog, covenants, archetypes: ["vampire", "mekhet", "carthian-movement", "circle-of-the-crone"], clanId: "mekhet", creation: true, attributes: { Presence: 3, Resolve: 3, Composure: 3 }, skills: { Politics: 2, Socialize: 2, Occult: 3, Science: 3, Crafts: 3, AnimalKen: 3 }, traits: { ...vampireMeritTraits({}), Humanity: 5 }, merits: [], specializations: [] };
 const buy = (id, changes = {}, zirnitra = 0) => eligible(get(id), { ...ctx, ...changes }, zirnitra);
 
-test("all 265 distributed Vampire homebrew Merits evaluate printed prerequisites", () => {
+test("all 266 distributed Vampire homebrew Merits evaluate printed prerequisites", () => {
   const sources = new Set(["h-vtr-agony-ecstasy", "h-vtr-fire-revolution", "h-vtr-sin-again", "h-vtr-wild-hunt", "h-vtr-strange-shades", "h-vtr-better-feared", "h-vtr-false-gods", "vtr-sin-again", "vtr-wild-hunt", "vtr-strange-shades", "vtr-better-feared", "vtr-false-gods"]);
   const rows = catalog.filter(item => sources.has(item.sourceId) && item.homebrew);
-  assert.equal(rows.length, 265);
+  assert.equal(rows.length, 266);
   assert.ok(rows.some(item => item.id === "vtr-false-gods:beast-king"));
+  const servant = get("h-vtr-agony-ecstasy:servant-of-dis");
+  assert.equal(eligible(servant, { ...ctx, archetypes: ["vampire"], traits: vampireMeritTraits({}), merits: [], creation: false }, 0), true, "An advanced-rite recipient need not know Crúac or belong to the Circle");
   assert.ok(rows.every(item => !item.descriptivePrerequisites));
   const traits = { ...Object.fromEntries(Object.keys(ctx.attributes).map(name => [name, 10])), ...vampireMeritTraits({}), Humanity: 10, "Blood Potency": 10 };
   const skills = Object.fromEntries(["Academics", "Computer", "Crafts", "Investigation", "Medicine", "Occult", "Politics", "Science", "Athletics", "Brawl", "Drive", "Firearms", "Larceny", "Stealth", "Survival", "Weaponry", "Animal Ken", "Empathy", "Expression", "Intimidation", "Persuasion", "Socialize", "Streetwise", "Subterfuge"].map(name => [name, 10]));

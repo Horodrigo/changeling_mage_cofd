@@ -8215,5 +8215,23 @@
     "defaultDisabled": true,
     "errataFor": "vtr-sotc:mobilize-outrage",
     "errataForName": "Mobilize Outrage"
+  },
+  {
+    "id": "h-vtr-agony-ecstasy:servant-of-dis",
+    "name": "Servant of Dis",
+    "ratings": [
+      3
+    ],
+    "line": "VtR",
+    "sourceId": "h-vtr-agony-ecstasy",
+    "source": "Agony & Ecstasy: Circle of the Crone",
+    "category": "Kindred",
+    "priority": 10,
+    "translatedName": "Servant of Dis",
+    "description": "Keep a creature already created with Childe of Dis indefinitely. This Merit can only be purchased once and may provoke a breaking point at the Storyteller’s discretion. Retaining this creation allows the ritualist to create another without destroying the first. A recipient of the advanced rite may also purchase the creature as this Merit; the recipient need not be the ritualist. The creature retains the abilities and limitations of Childe of Dis.",
+    "descriptionEn": "Keep a creature already created with Childe of Dis indefinitely. This Merit can only be purchased once and may provoke a breaking point at the Storyteller’s discretion. Retaining this creation allows the ritualist to create another without destroying the first. A recipient of the advanced rite may also purchase the creature as this Merit; the recipient need not be the ritualist. The creature retains the abilities and limitations of Childe of Dis.",
+    "page": 103,
+    "homebrew": true,
+    "repeatable": false
   }
 ]
