@@ -87,7 +87,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const customMerits=useMeritHomebrews("VtR",true),homebrewPreferences=useHomebrewPreferences();
   const customCatalog = useVampireCatalogHomebrews();
   const reference = mergeVampireReference(catalogs.get<VampireReference>("vampire-reference"), customCatalog);
-  const powers = activeVampirePowers(mergeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), customCatalog), homebrewPreferences);
+  const completePowers = mergeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), customCatalog);
+  const powers = activeVampirePowers(completePowers, homebrewPreferences);
   const disciplineNames = powers.disciplines.map((item) => item.name);
   const meritCatalog = activeMeritCatalog([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("vampire-merits")],customMerits,homebrewPreferences,character.merits);
   const [amountDraft, setAmountDraft] = useState<string | null>(null);
@@ -296,7 +297,13 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     const item = vampirePowerPresentation(definition, locale);
     const prerequisiteMet = purchase !== "discipline-option" || vampireDisciplineOptionPrerequisitesMet(definition, character, powers, meritCatalog);
     const details = mechanicsDetails(item, prerequisiteMet).map((detail) => purchase === "scale" && detail.label === t("ui.experienceCost") ? { ...detail, value: `${coilPrerequisiteMet(definition.prerequisites, coilRatings) ? 1 : 2} ${t("ui.xp")}` } : detail);
-    return [{ id: item.id, name: option.label, category: item.rating === undefined ? purchaseLabel(purchase, locale) : `${t("ui.level")} ${item.rating}`, description: purchase === "discipline-option" ? item.effect ?? item.summary : item.summary, meta: `${item.source} · p. ${item.page || "—"}`, disabled: !prerequisiteMet, details: [...details, ...(purchase === "discipline-option" ? (definition.requiredDevotionIds ?? []).map(id => ({ label: t("ui.prerequisites"), value: powers.devotions.find(item => item.id === id) ? powerName(powers.devotions.find(item => item.id === id)!, locale) : id, warning: !knownDevotions.has(id) })) : [])] }];
+    const dependencies = purchase === "discipline-option" ? (definition.requiredDevotionIds ?? []).map(id => {
+      const reference = powers.devotions.find(item => item.id === id);
+      const prerequisite = reference ? vampirePowerPresentation(reference, locale).prerequisites : undefined;
+      return { label: t("ui.prerequisites"), value: reference ? [powerName(reference, locale), prerequisite].filter(Boolean).join(": ") : id,
+        warning: !knownDevotions.has(id) || !vampireDevotionPrerequisitesMet(reference, character, powers, meritCatalog) };
+    }) : [];
+    return [{ id: item.id, name: option.label, category: item.rating === undefined ? purchaseLabel(purchase, locale) : `${t("ui.level")} ${item.rating}`, description: purchase === "discipline-option" ? item.effect ?? item.summary : item.summary, meta: `${item.source} · p. ${item.page || "—"}`, disabled: !prerequisiteMet, details: [...details, ...dependencies] }];
   }) : [];
   const bloodlineDiscipline = powers.disciplines.find((item) => item.name === chosen)?.bloodlineId === bloodlineId;
   const cost = purchase === "attribute" ? 4 * ratingAmount : purchase === "skill" ? 2 * ratingAmount : purchase === "specialty" ? 1 : purchase === "merit" ? Math.max(0, Number(nextMeritRating ?? 0) - Number(ownedMerit?.dots ?? 0)) : purchase === "discipline" ? (selectedRitualDiscipline ? 4 : selectedCoil ? coilInMystery ? 3 : 4 : clan?.disciplines.includes(chosen) || bloodlineDiscipline ? 3 : 4) * ratingAmount : purchase === "blood-potency" ? 5 * ratingAmount : purchase === "humanity" ? 2 * ratingAmount : purchase === "willpower" ? ratingAmount : purchase === "devotion" ? Number(vampireDevotionExperienceCost(selectedPower, character, powers, confirmationId) ?? 0) : (purchase === "detournement" || purchase === "discipline-option") ? Number(selectedPower?.experienceCost ?? 0) : purchase === "lash" ? bloodTetherRating >= Number(selectedPower?.rating ?? 0) ? 1 : 2 : purchase === "rite" || purchase === "miracle" || purchase === "formula" || purchase === "sacrilege" || purchase === "invocation" ? 2 : purchase === "scale" ? (coilPrerequisiteMet(selectedPower?.prerequisites, coilRatings) ? 1 : 2) : 0;
@@ -457,12 +464,18 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     setSpecialtyName("");
   };
   const revert = (entry: HistoryEntry) => {
-    const recorded = history.find(item => item.id === entry.id);
+    const matches = history.filter(item => item.id === entry.id);
+    if (matches.length > 1) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
+    const recorded = matches[0];
     if (!recorded) return;
-    if (entry.undo?.kind === "discipline-option" && (entry.cost !== recorded.cost || JSON.stringify(entry.undo) !== JSON.stringify(recorded.undo))) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
+    if ((entry.undo?.kind === "discipline-option" || recorded.undo?.kind === "discipline-option") && (entry.cost !== recorded.cost || JSON.stringify(entry.undo) !== JSON.stringify(recorded.undo))) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
     if (!entry.undo || !Number.isInteger(entry.cost) || entry.cost < 0 || (entry.undo.kind === "merit" && entry.cost !== entry.undo.dots) || (entry.undo.kind === "discipline-option" && entry.cost !== entry.undo.cost)) return setFeedback(t("ui.thisOlderPurchaseDoesNotContainEnoughData"));
     const next = structuredClone(character);
-    if (!refundVampireAdvancement(next, entry.undo, powers, meritCatalog)) return setFeedback(t("ui.refundVampirePurchaseUnavailable"));
+    // Activation hides choices; it does not discard paid dependencies or identities.
+    const refundPowers = { ...powers, disciplines: completePowers.disciplines, disciplineOptions: completePowers.disciplineOptions ?? [],
+      devotions: completePowers.devotions.filter(item => !item.errataFor).map(item => powers.devotions.find(active => active.id === item.id) ?? item),
+    };
+    if (!refundVampireAdvancement(next, entry.undo, refundPowers, meritCatalog)) return setFeedback(t("ui.refundVampirePurchaseUnavailable"));
     next.derived = vampireDerived(next.attributes, next.skills, recordRatings(next.line_data.disciplines, disciplineNames, 10), Number(next.line_data.blood_potency ?? 1), reference);
     next.current_state = {
       ...next.current_state,
@@ -472,14 +485,14 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
       vampire_experience_history: history.filter((item) => item.id !== entry.id),
     };
     updateSheet(synchronizeBloodTetherPack(synchronizeAutomaticBloodlineDevotions(synchronizeVampireBuilderMeritGrants(next), powers, meritCatalog)));
-    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: vampireExperienceLabel(entry, character, meritCatalog, powers, locale), p2: entry.cost }));
+    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: vampireExperienceLabel(entry, character, meritCatalog, completePowers, locale), p2: entry.cost }));
   };
   const commitAvailableExperience = () => {
     const nextAvailable = Math.max(0, Math.trunc(Number(amount) || 0));
     setAmountDraft(null);
     saveState({ experience_available: nextAvailable, experience_spent: spent, experience_total: nextAvailable + spent });
   };
-  const historyPanel = <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry) => <p key={entry.id}><span>{vampireExperienceLabel(entry, character, meritCatalog, powers, locale)}</span><strong>{entry.cost} {t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revert(entry)}><RotateCcw /> {t("ui.refund")}</Button></p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>;
+  const historyPanel = <details className="experience-history"><summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary><div>{history.length ? [...history].reverse().map((entry) => <p key={entry.id}><span>{vampireExperienceLabel(entry, character, meritCatalog, completePowers, locale)}</span><strong>{entry.cost} {t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small><Button type="button" size="sm" variant="ghost" disabled={!entry.undo} onClick={() => revert(entry)}><RotateCcw /> {t("ui.refund")}</Button></p>) : <em>{t("ui.noExpensesRecorded")}</em>}</div></details>;
   return <section className="experience-panel vampire-experience-panel">
     <div className="experience-title"><div><span>{builderMode ? t("ui.creationAdvancement") : t("ui.beatsAndExperience")}</span><small>{builderMode ? t("ui.creationAdvancementDescription") : t("ui.beatsAreTrackedSeparatelyFromExperience")}</small></div></div>
     <div className="experience-totals">

@@ -98,6 +98,10 @@ function VampireHomebrew({ catalogs }: GameLineHomebrewProps) {
     const item = vampirePowerPresentation(definition, locale);
     add(item, t("ui.disciplineOptions"), [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...detail(t("ui.experienceCost"), item.experienceCost), ...mechanics(item)]);
   });
+  (powers.tilts ?? []).forEach(item => {
+    const presented = locale === "pt-BR" ? { ...item, ...item.presentationPt } : item;
+    add(item, t("combat.tilts"), [...detail(t("ui.descriptionLabel"), presented.description), ...detail(t("ui.effect"), presented.effect), ...detail(t("combat.causingTiltLabel"), presented.causing), ...detail(t("combat.endingTiltLabel"), presented.ending)]);
+  });
   powers.lashes.forEach((definition) => {
     const item = vampirePowerPresentation(definition, locale);
     add(item, disciplines, [...detail(t("ui.summary"), item.summary), ...detail(t("ui.prerequisites"), item.prerequisites), ...mechanics(item)], "blood-tether");

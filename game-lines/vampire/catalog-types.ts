@@ -1,4 +1,5 @@
 import type { CatalogNameQualifier } from "@/lib/localized-catalog";
+import type { TiltDefinition } from "@/lib/tilts";
 
 export type VampireClanDefinition = {
   id: string;
@@ -218,6 +219,7 @@ export type VampirePowers = {
   ritualDisciplines: VampireRitualDisciplineDefinition[];
   devotions: VampirePurchasablePower[];
   disciplineOptions: VampirePurchasablePower[];
+  tilts: TiltDefinition[];
   lashes: VampirePurchasablePower[];
   cruacRites: VampirePurchasablePower[];
   thebanMiracles: VampirePurchasablePower[];

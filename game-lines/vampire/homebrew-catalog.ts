@@ -52,6 +52,7 @@ export function activeVampirePowers(powers: VampirePowers, preferences: Homebrew
     ...powers,
     devotions: activeVampireItems(powers.devotions, preferences),
     disciplineOptions: activeVampireItems(powers.disciplineOptions ?? [], preferences),
+    tilts: activeVampireItems(powers.tilts ?? [], preferences),
     lashes: activeVampireItems(powers.lashes, preferences),
     cruacRites: activeVampireItems(powers.cruacRites, preferences),
     thebanMiracles: activeVampireItems(powers.thebanMiracles, preferences),

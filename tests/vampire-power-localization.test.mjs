@@ -314,6 +314,8 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       const experienceModule = await vite.ssrLoadModule("/game-lines/vampire/experience-panel.tsx");
       const { VampireExperiencePanel } = experienceModule;
       const { DisciplineCards, RitualDisciplines, PurchasedPowers } = await vite.ssrLoadModule("/game-lines/vampire/sheet-view.tsx");
+      const { CombatPage } = await vite.ssrLoadModule("/app/workspace/combat-page.tsx");
+      const { TILTS, tiltPresentation } = await vite.ssrLoadModule("/lib/tilts.ts");
       const { vampireBuilder } = await vite.ssrLoadModule("/game-lines/vampire/builder.tsx");
       const { vampireHomebrew } = await vite.ssrLoadModule("/game-lines/vampire/homebrew.tsx");
       const { normalizeVampireCatalogHomebrew } = await vite.ssrLoadModule("/game-lines/vampire/catalog-homebrews.ts");
@@ -1093,7 +1095,8 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         buyer.character.name = option.id;
         buyer.line_data = { ...buyer.line_data, disciplines: Object.fromEntries(catalog.disciplines.map(item => [item.name, 5])), devotion_ids: [...new Set(option.requiredDevotionIds.flatMap(id => [id, ...(catalog.devotions.find(item => item.id === id).requiredDevotionIds ?? [])]))] };
         buyer.skills.Medicine = 5;
-        buyer.current_state = { ...buyer.current_state, experience_available: 10, experience_spent: 5, experience_total: 15 };
+        const baseReceipt = { id: `base-${option.id}`, cost: catalog.devotions.find(item => item.id === option.requiredDevotionIds[0]).experienceCost, undo: { kind: "devotion", id: option.requiredDevotionIds[0] } };
+        buyer.current_state = { ...buyer.current_state, experience_available: 10, experience_spent: 5, experience_total: 15, vampire_experience_history: [baseReceipt] };
         const updates = [];
         const html = render(VampireExperiencePanel, { character: buyer, updateSheet: sheet => updates.push(sheet), catalogs });
         const title = locale === "pt-BR" ? option.translatedName : option.name;
@@ -1111,12 +1114,40 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         assert.deepEqual(purchased.line_data.devotion_ids, buyer.line_data.devotion_ids);
         assert.deepEqual(purchased.line_data.discipline_option_ids, [option.id]);
         assert.ok(render(PurchasedPowers, { character: purchased, powers: catalog, locale }).includes(escape(presented.effect)));
+        const sourceId = vampireHomebrewSourceId(option);
+        if (sourceId) {
+          setTestHomebrewPreferences({ disabledIds: [sourceId] });
+          try {
+            const hiddenRefunds = [];
+            const hiddenHistory = render(VampireExperiencePanel, { character: purchased, updateSheet: sheet => hiddenRefunds.push(sheet), catalogs });
+            assert.ok(hiddenHistory.includes(escape(title)), "Historical identity stays localized while the source is disabled");
+            experienceModule.testRevert(baseReceipt);
+            assert.equal(hiddenRefunds.length, 0, "Disabled Homebrew still protects paid dependencies");
+            experienceModule.testRevert(receipt);
+            assert.equal(hiddenRefunds.length, 1, "Disabled Homebrew retains exact refundable identity");
+            assert.equal(hiddenRefunds[0].current_state.experience_available, 10);
+            assert.deepEqual(hiddenRefunds[0].line_data.discipline_option_ids, []);
+            assert.deepEqual(hiddenRefunds[0].line_data.devotion_ids, buyer.line_data.devotion_ids);
+          } finally { setTestHomebrewPreferences({ disabledIds: [] }); }
+        }
+        const historical = structuredClone(purchased);
+        const historicalReceipt = historical.current_state.vampire_experience_history.at(-1);
+        historicalReceipt.cost += 1; historicalReceipt.undo.cost += 1;
+        historical.current_state.experience_available -= 1;
+        historical.current_state.experience_spent += 1;
+        const historicalRefunds = [];
+        render(VampireExperiencePanel, { character: historical, updateSheet: sheet => historicalRefunds.push(sheet), catalogs });
+        experienceModule.testRevert(historicalReceipt);
+        assert.equal(historicalRefunds.length, 1);
+        assert.equal(historicalRefunds[0].current_state.experience_available, 10, "Refund the recorded payment, even when today's price differs");
         const refunds = [];
         render(VampireExperiencePanel, { character: purchased, updateSheet: sheet => refunds.push(sheet), catalogs });
         experienceModule.testRevert({ ...receipt, cost: receipt.cost + 1 });
         assert.equal(refunds.length, 0, "Mismatched recorded costs cannot create XP");
         experienceModule.testRevert({ ...receipt, cost: receipt.cost + 1, undo: { ...receipt.undo, cost: receipt.cost + 1 } });
         assert.equal(refunds.length, 0, "A coherent forged receipt cannot replace the persisted purchase");
+        experienceModule.testRevert({ ...receipt, undo: { kind: "devotion", id: "forged:missing-devotion" } });
+        assert.equal(refunds.length, 0, "Changing the undo kind cannot bypass the persisted option receipt");
         experienceModule.testRevert(receipt);
         assert.equal(refunds.length, 1);
         assert.equal(refunds[0].current_state.experience_available, 10);
@@ -1131,6 +1162,16 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         const hidden = activeVampirePowers(catalog, { disabledIds: [option.id] });
         assert.equal(hidden.disciplineOptions.some(item => item.id === option.id), !vampireHomebrewSourceId(option), "Only Homebrew content can be disabled");
       }
+      const swarmCharacter = blankPrintCharacter("VtR");
+      swarmCharacter.line_data.combat_tilts = [catalog.tilts[0].id];
+      const swarmBefore = JSON.stringify(swarmCharacter);
+      const swarm = tiltPresentation(catalog.tilts[0], locale);
+      const combat = render(CombatPage, { character: swarmCharacter, derived: {}, updateSheet: noMutation, tiltCatalog: [...TILTS, ...catalog.tilts] });
+      for (const field of ["description", "effect", "causing", "ending"]) assert.ok(combat.includes(escape(swarm[field])));
+      const coreCombat = render(CombatPage, { character: swarmCharacter, derived: {}, updateSheet: noMutation });
+      assert.equal(coreCombat.includes(escape(swarm.description)), false);
+      assert.ok(homebrew.includes(escape(swarm.description)));
+      assert.equal(JSON.stringify(swarmCharacter), swarmBefore);
       const authoredFormula = normalizeVampireCatalogHomebrew({ entryType: "power", kind: "kimiya-formula", id: "homebrew:vampire:authored-formula", name: "Ebony Horse", summary: "Authored formula stays.", effect: "Authored formula effect stays." });
       assert.equal(vampirePowerPresentation(authoredFormula, locale), authoredFormula);
       const custom = normalizeVampireCatalogHomebrew({ entryType: "discipline", id: "homebrew:vampire:authored", name: "Animalism", summary: "Authored English stays.", levels: [{ rating: 1, name: "Feral Whispers", summary: "Authored level stays.", effect: "Authored effect stays." }] });

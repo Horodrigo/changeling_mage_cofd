@@ -21,7 +21,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | --- | --- | --- |
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
 | V04 — Méritos | 399 (154 não Homebrew, 245 Homebrew), 80 níveis; nove erratas incluídas | Apresentações existentes completas, nove erratas ativadas e correções de fonte aprovadas verificadas; Beast King recuperado e Best Fiend alinhado a False Gods p. 111; Servo de Dis recuperado conforme Agony p. 103 |
-| V05 — Poderes | 548 registros, 140 níveis internos | 23/23 Disciplinas, seus 110 níveis, 5/5 Disciplinas Rituais, 2/2 Açoites, 5/5 fórmulas de Kimiya, 7/7 Sacrilégios de Therion, 10/10 Invocações de Gaiola Dourada, 5/5 Detournements, 6/6 Espirais com 30 níveis e 19/19 Escamas e 76/76 ritos de Crúac e 32/32 milagres Tebanos e 281/357 Devoções com PT. Restam 77 registros |
+| V05 — Poderes | 553 poderes, 140 níveis internos; 1 Tilt da linha | 23/23 Disciplinas, seus 110 níveis, 5/5 Disciplinas Rituais, 2/2 Açoites, 5/5 fórmulas de Kimiya, 7/7 Sacrilégios de Therion, 10/10 Invocações de Gaiola Dourada, 5/5 Detournements, 6/6 Espirais com 30 níveis e 19/19 Escamas e 76/76 ritos de Crúac e 32/32 milagres Tebanos e 281/357 Devoções com PT. Restam 76 Devoções |
 | V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | Nome, descrição, resolução e Ato, quando aplicáveis; incluir Agonized (Guide to the Night p. 135) e Promised (Spilled Blood p. 28), referenciadas por Devoções mas ausentes do catálogo atual |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
 | G01 — Spells | 360 | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
@@ -40,7 +40,9 @@ Méritos: `merits-vampire-pt` em `merits-pt.json` é carregado junto do catálog
 | --- | ---: | ---: |
 | Disciplines | 23 | 110 |
 | Ritual Disciplines | 5 | — |
-| Devotions | 358 | — |
+| Devotions | 357 | — |
+| Discipline Options | 6 | — |
+| Tilts da linha | 1 | — |
 | Lashes | 2 | — |
 | Crúac Rites | 76 | — |
 | Theban Miracles | 32 | — |
@@ -321,11 +323,10 @@ As questões anteriores foram respondidas em 2026-10-07 e estão separadas abaix
 | Registro / fonte | Trabalho restante |
 | --- | --- |
 | Fome Avassaladora — Better Feared p. 31 | Condition já existente por ID `vtr-better-feared:overwhelming-hunger`, ainda no lote V06. A revisão visual confirma consumir ao menos Tamanho 2 do alimento até o fim da cena; caso contrário, a Condition termina e vira Privado. Resolução: comer a quantidade exigida. Corrigir página 29 para 31 e retirar persistência/Ato inventados do catálogo ao alinhar EN/PT; não é pergunta pendente. |
-| Dance of the Swarm — Agony & Ecstasy pp. 86–87 | A falha dramática cita a Complicação Swarm na “p. XX” no próprio PDF. Campos existentes localizados como Dança do Enxame, conservando esse marcador sem presumir uma página ou criar uma nova Complicação. Conferir a referência quando houver fonte completa. |
 
 ## Decisões respondidas em 2026-10-07
 
-Nenhuma das questões abaixo aguarda resposta. Os aprimoramentos opcionais têm implementação descrita abaixo; Enxame continua no quadro de implementação até seu gate.
+Nenhuma das questões abaixo aguarda resposta. As melhorias opcionais e Enxame estão implementados e descritos abaixo; os gates finais constam na verificação atual.
 
 | Registro / fonte | Decisão e aplicação |
 | --- | --- |
@@ -342,7 +343,7 @@ Nenhuma das questões abaixo aguarda resposta. Os aprimoramentos opcionais têm 
 
 ## Auditoria de Discipline Options — 2026-10-07
 
-Revisados todos os efeitos/resumos e níveis do catálogo Vampire com referências a Experiência e os trechos de fonte dos aprimoramentos identificados. Seis opções de aprendizado permanente estão cadastradas em EN/PT, por IDs canônicos independentes, com dependências de compra/estorno e cards Desktop/Mobile. A compra mantém o poder-base e seu recibo. Versões avançadas usam preço total impresso menos o preço canônico básico; recibos antigos nunca são reprecificados. As 60 regressões de catálogo/linha passaram, seguidas de 3/3 verificações finais de requisitos, estorno e integração EN/PT/EN, incluindo recibos adulterados e instâncias duplicadas; lint e TypeScript aprovados.
+Revisados todos os efeitos/resumos e níveis do catálogo Vampire com referências a Experiência e os trechos de fonte dos aprimoramentos identificados. Seis opções de aprendizado permanente estão cadastradas em EN/PT, por IDs canônicos independentes, com dependências de compra/estorno e cards Desktop/Mobile. A compra mantém o poder-base e seu recibo. Desativar Homebrew esconde escolhas novas, mas conserva identidades no histórico e dependências de estorno; as erratas ativas têm prioridade nas identidades ainda presentes. Recibos de opções precisam corresponder à entrada única persistida, inclusive tipo, ID e preço. Preços atuais nunca substituem o pagamento registrado. Versões avançadas usam preço total impresso menos o preço canônico básico; recibos antigos nunca são reprecificados. As 60 regressões de catálogo/linha passaram, seguidas de 3/3 verificações finais de requisitos, estorno e integração EN/PT/EN, incluindo recibos adulterados e instâncias duplicadas; lint e TypeScript aprovados.
 
 | Opção / fonte | Requisitos e custo adicional |
 | --- | --- |
@@ -355,16 +356,22 @@ Revisados todos os efeitos/resumos e níveis do catálogo Vampire com referênci
 
 Não pertencem à nova categoria: Maçã do Éden concede características a um destinatário humano; Espiral de Zirnitra altera compras de Méritos; Rapidity/Slow and Steady são Devoções independentes vinculadas a um poder escolhido, exigindo sua própria configuração no lote pendente, e não aprimoramentos de uma única identidade. Usos de Vitae/Força de Vontade, recompensas de XP, concessões gratuitas e descontos de aprendizado não criam compras permanentes adicionais. Nenhuma referência indisponível foi transformada em alias. Não restam outras melhorias permanentes semelhantes identificadas no catálogo atual; omissões de conteúdo ainda não cadastrado permanecem na auditoria das fontes.
 
+## Enxame — adaptação aprovada em 2026-10-07
+
+Tilt ambiental `vtr-agony-ecstasy:swarm` cadastrado em EN/PT no catálogo de Vampire, a partir de Forma de Enxame (Vampire p. 114) para a falha dramática de Dança do Enxame (Agony & Ecstasy pp. 86–87). A apresentação identifica expressamente a extrapolação do projeto. Distraído persistente enquanto dentro do enxame, ataques por Força + Briga ignorando Defesa com armadura, limite de dano contra o enxame de 1/2 e ataques de área normais; área/características e dano dos insetos ficam com o Narrador. Insetos comuns não recebem alimentação ou poderes vampíricos. Encerramento por fuga, dispersão ou destruição. Referência “p. XX” removida de Dança do Enxame sem inventar página.
+
+CombatPage recebe o catálogo explicitamente composto pela linha; as 35 Complicações compartilhadas existentes permanecem intactas. Vampire respeita a ativação da fonte Homebrew e da entrada individual. Seleção por ID, resumo de combate, detalhes de adição e catálogo Homebrew funcionam em EN/PT/EN sem reescrever fichas.
+
 ## Verificação atual
 
 - **399/399 Méritos Vampire**, incluindo os 80 níveis, e **56 Bloodlines** com apresentação PT completa. As nove erratas ativadas conservam identidades e campos herdados; conteúdo autoral não é traduzido automaticamente.
 - **23/23 Disciplinas Vampire, 110 níveis, 5/5 Disciplinas Rituais, 2/2 Açoites, 5/5 fórmulas de Kimiya, 7/7 Sacrilégios de Therion, 10/10 Invocações de Gaiola Dourada, 5/5 Detournements, 6/6 Espirais com 30 níveis e 19/19 Escamas e 76/76 ritos de Crúac e 32/32 milagres Tebanos e 281/357 Devoções** apresentados em PT. Restam as 76 Devoções; Conditions, Breaking Points, presets e Mage permanecem no backlog inicial.
 - As quatro decisões finais estão aplicadas: Choke Hold e Curse Effigy em EN/PT; Swarm Form com Metamorfose 3/Pele da Fera; Fire & Revolution com oito páginas e quatro requisitos corrigidos conforme o PDF. Apenas os campos autorizados foram alterados; IDs, compras, XP, estornos e textos autorais permanecem preservados.
-- Manifesto `catalogVersion` **217**; recursos Core de Méritos **17/19**, Changeling **6/8**, `merits-vampire` **18**, `merits-vampire-pt` **28**, `vampire-bloodlines` **15**, `vampire-powers` **156**.
-- **Última suíte completa: 600/600 testes seriais aprovados**, no lote de Artesanato de Sangue, incluindo compras, melhorias e estornos de instâncias independentes em EN/PT/EN, escolha explícita de facção Xiao, 399 Méritos Vampire/266 distribuídos, 239 Devoções em PT e a procedência de concessões gratuitas. Nenhuma falha, omissão ou cancelamento. Gates proporcionais posteriores estão discriminados abaixo.
+- Manifesto `catalogVersion` **218**; recursos Core de Méritos **17/19**, Changeling **6/8**, `merits-vampire` **18**, `merits-vampire-pt` **28**, `vampire-bloodlines` **15**, `vampire-powers` **157**.
+- **Última suíte completa: 603/603 testes seriais aprovados em 2026-10-07**, incluindo Core, interface, todas as linhas, as seis Discipline Options, Enxame, dependências com Homebrew desativado, recibos adulterados, preços históricos, identidades indisponíveis e preservação de fichas/XP/histórico em EN/PT/EN. Nenhuma falha, omissão ou cancelamento. Lint, TypeScript e build normal aprovados; carimbos gerados pela build não entram no commit.
 - Integração EN/PT/EN cobre criação, XP, cards Desktop/Mobile e Homebrew dos grupos traduzidos, incluindo acesso por Clan/Bloodline/Coalizão, campos mecânicos existentes, Sucessos Alvo, modificadores e níveis adquiridos. Compras, recibos, estornos por ID e textos autorais preservados. O seletor de XP inclui o sacramento dos milagres.
 - Últimos gates de lint, TypeScript, build e comparação canônica aprovados. Corrigidos somente os campos de regras/fonte autorizados nas decisões acima; os lotes de localização alteram apresentação e limpam artefatos de extração apenas quando documentados e confirmados visualmente.
 - As seis cirurgias Typhos passaram para Core no trabalho paralelo, com IDs e PT preservados: 208 Méritos Core e 399 Vampire, sem registros PT órfãos.
-- **Gate dirigido:** 72/72 aprovados no lote de confirmação explícita dos descontos narrativos de Better Feared, seguido de 2/2 verificações finais de apresentação e integração EN/PT/EN. Inclui os 76 ritos, 32 milagres e 281 Devoções em PT. Connected passou antes 71/71 e revisão final de léxico 2/2. Criação, XP, Desktop/Mobile, Homebrew, números, pontos, textos autorais, compras e 358 identidades de Devoções conferidos.
+- **Gates deste lote:** decisões de fonte passaram 72/72; melhorias passaram pelas regressões de catálogo/linha e 3/3 verificações finais; ajustes de Enxame/Core e estornos com fontes desativadas passaram 7/7, seguidos da suíte completa 603/603. As duas verificações finais dos valores aprovados também passaram. O antigo teste textual preso ao catálogo fixo de Tilts foi removido: a cobertura real de Core e do catálogo explicitamente recebido pela linha verifica o comportamento em EN/PT/EN. São 357 Devoções ativas; Jornada de Pesadelo permanece comentada e suas identidades históricas são preservadas.
 - Regressões de fontes aprovadas verificam Espiral de Zirnitra, os cinco conflitos Crúac, os seis conflitos Tebanos, o familiar Lacaio (Ghoul) 5 com três pontos totais e os cinco alcances de Lithopedia. Comparações canônicas dos lotes confirmam somente as correções autorizadas e a remoção do rodapé de Quicken Sight. Potência de Sangue e demais termos seguem o léxico vigente; os demais campos canônicos e textos autorais permanecem intactos.
 - Alterações autorais dos commits `a6a28a1` e `7268e69` preservadas. Meta retomada pelo usuário em 2026-10-05; continuar pelo backlog inicial. Sem smoke de navegador; a meta integral ainda não está concluída.

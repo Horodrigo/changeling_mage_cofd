@@ -16,6 +16,7 @@ import {
   updateLineData,
 } from "@/app/workspace/character-paper-shell";
 import { CombatPage } from "@/app/workspace/combat-page";
+import { TILTS } from "@/lib/tilts";
 import {
   ConditionManager,
   type ConditionDefinition,
@@ -1512,6 +1513,7 @@ export function VampireCharacterPaper({
         character={character}
         derived={combatDerived}
         updateSheet={updateSheet}
+        tiltCatalog={[...TILTS, ...(powers.tilts ?? [])]}
       />
       <FrenzyPanel
         setState={setState}

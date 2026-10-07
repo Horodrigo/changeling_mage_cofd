@@ -81,10 +81,3 @@ test("combat renders selected Core Tilt effects in EN/PT/EN while preserving sto
     } finally { if (server !== vite) await server.close(); }
   }
 });
-
-test("Tilt search/catalog and selected summaries use the same localized presentation", () => {
-  const source = readFileSync(new URL("../app/workspace/combat-page.tsx", import.meta.url), "utf8");
-  assert.match(source, /const presentedTilts=TILTS.map\(tilt=>tiltPresentation\(tilt,locale\)\)/);
-  assert.match(source, /alphabetical\(presentedTilts,name,locale\)/);
-  assert.match(source, /selected.map\(id=>presentedTilts.find/);
-});

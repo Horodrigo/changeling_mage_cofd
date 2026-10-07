@@ -10,7 +10,7 @@ import { catalogDisplayName } from "@/lib/localized-catalog";
 import { alphabetical } from "@/lib/option-order";
 import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
 import { VEHICLES, vehiclePresentation } from "@/lib/companions";
-import { TILTS, tiltPresentation } from "@/lib/tilts";
+import { TILTS, tiltPresentation, type TiltDefinition } from "@/lib/tilts";
 import { RuleSelect } from "./rule-select";
 import { CompactValues, SheetHeading, signed, stringList } from "./sheet-primitives";
 import { LoadoutCatalog } from "./loadout-catalog";
@@ -18,10 +18,12 @@ export function CombatPage({
   character,
   derived,
   updateSheet,
+  tiltCatalog = TILTS,
 }: {
   character: CharacterSheet;
   derived: Record<string, number>;
   updateSheet: (sheet: CharacterSheet) => void;
+  tiltCatalog?: readonly TiltDefinition[];
 }) {
   const { locale, t } = useLanguage();
   const weaponIds = stringList(character.line_data.combat_weapons),
@@ -78,7 +80,7 @@ export function CombatPage({
           </article>
         </div>
         <SheetHeading>{t("combat.tilts")}</SheetHeading>
-        <TiltManager selected={tiltIds} onChange={(value) => setData("combat_tilts", value)} />
+        <TiltManager selected={tiltIds} onChange={(value) => setData("combat_tilts", value)} tiltCatalog={tiltCatalog} />
       </section>
       <section className="loadout-section">
         <SheetHeading>{t("combat.armor")}</SheetHeading>
@@ -181,10 +183,10 @@ export function CombatPage({
   );
 }
 
-function TiltManager({selected,onChange}:{selected:string[];onChange:(value:string[])=>void}) {
+function TiltManager({selected,onChange,tiltCatalog}:{selected:string[];onChange:(value:string[])=>void;tiltCatalog:readonly TiltDefinition[]}) {
   const {locale,t}=useLanguage();
   const [search,setSearch]=useState(""), [category,setCategory]=useState("All");
-  const presentedTilts=TILTS.map(tilt=>tiltPresentation(tilt,locale));
+  const presentedTilts=tiltCatalog.map(tilt=>tiltPresentation(tilt,locale));
   const name=(tilt:(typeof TILTS)[number])=>catalogDisplayName(tilt,locale);
   const filtered=alphabetical(presentedTilts,name,locale).filter((tilt)=>(category==="All"||tilt.category===category)&&`${name(tilt)} ${tilt.name} ${tilt.translatedName} ${tilt.description} ${tilt.effect}`.toLocaleLowerCase(locale).includes(search.toLocaleLowerCase(locale)));
   const categoryLabel=(category:string)=>category === "Personal" ? t("combat.personal") : t("combat.environmental");

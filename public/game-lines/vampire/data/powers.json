@@ -11971,7 +11971,7 @@
         "success": "The swarm responds to the vampire and flies or crawls off in every direction. They return within minutes, using pheromones, waggle dances, or other basic means to communicate a general map of the area to her. This provides the Acolyte with the layout of about a neighborhood’s worth of space, including anything that might be notable to that particular insect — bees will reveal flowering plants, for instance. For the rest of the night, add Animalism to any roll to navigate, search, or spot danger within the area.",
         "exceptionalSuccess": "The insects convey more intricate details, revealing secret compartments, hidden predators, and perhaps hints of the supernatural that prickle their instincts.",
         "failure": "The swarm ignores the vampire.",
-        "dramaticFailure": "The Acolyte comes off as a threat. The insects are likely to attack her (see the Swarm Tilt on p. XX), or at least cause a distraction."
+        "dramaticFailure": "The Acolyte comes off as a threat. The insects are likely to attack her (see the Swarm Tilt), or at least cause a distraction."
       },
       "presentationPt": {
         "prerequisites": "Animalismo •••",
@@ -11984,7 +11984,7 @@
           "success": "O enxame responde ao vampiro e voa ou rasteja em todas as direções. Os insetos retornam em minutos, usando feromônios, danças ou outros meios simples para lhe comunicar um mapa geral da área. Isso fornece à Acólita a disposição de uma área de aproximadamente uma vizinhança, incluindo qualquer coisa que possa ser relevante para aquele tipo de inseto — abelhas revelam plantas com flores, por exemplo. Pelo resto da noite, some Animalismo a qualquer teste para se orientar, procurar algo ou perceber perigo na área.",
           "exceptionalSuccess": "Os insetos comunicam detalhes mais complexos, revelando compartimentos secretos, predadores escondidos e talvez indícios do sobrenatural que alertem seus instintos.",
           "failure": "O enxame ignora o vampiro.",
-          "dramaticFailure": "A Acólita parece uma ameaça. É provável que os insetos a ataquem (veja a Complicação Enxame na p. XX) ou, pelo menos, causem uma distração."
+          "dramaticFailure": "A Acólita parece uma ameaça. É provável que os insetos a ataquem (veja a Complicação Enxame) ou, pelo menos, causem uma distração."
         }
       }
     },
@@ -17270,6 +17270,27 @@
         "dicePool": "Manipulação + Dissimulação + Auspícios vs. Perseverança + Potência de Sangue"
       },
       "dicePool": "Manipulation + Subterfuge + Auspex vs. Resolve + Blood Potency"
+    }
+  ],
+  "tilts": [
+    {
+      "id": "vtr-agony-ecstasy:swarm",
+      "name": "Swarm",
+      "translatedName": "Enxame",
+      "category": "Environmental",
+      "source": "Agony & Ecstasy: Circle of the Crone",
+      "sourceCode": "A&E (adaptation)",
+      "page": 87,
+      "description": "An attacking swarm surrounds the area. Project adaptation of Swarm Form (Vampire: The Requiem, p. 114) for Dance of the Swarm, not an official Core Tilt.",
+      "effect": "Characters inside the swarm have the persistent Distracted Condition until they escape. Swarm attacks use Strength + Brawl, ignore Defense, and apply armor; divide the attack among affected targets as appropriate to the swarm. Attacks against the swarm inflict at most 1 damage after armor and other modifiers, or 2 on an exceptional success. Fire, explosions and other attacks affecting a large area inflict damage normally. The Storyteller supplies the swarm’s traits and appropriate damage type.",
+      "causing": "A hostile swarm attacks, including a dramatic failure with Dance of the Swarm. Its area and traits depend on the actual insects; do not grant vampire feeding or blood powers to ordinary insects.",
+      "ending": "Escape the swarm’s area or disperse or destroy it.",
+      "presentationPt": {
+        "description": "Um enxame hostil envolve a área. Adaptação do projeto a partir de Forma de Enxame (Vampire: The Requiem, p. 114) para Dança do Enxame; não é uma Complicação oficial de Core.",
+        "effect": "Personagens dentro do enxame recebem a Condição Distraído persistente até escaparem. Ataques do enxame usam Força + Briga, ignoram Defesa e aplicam armadura; distribua o ataque entre os alvos afetados conforme o enxame. Ataques contra o enxame infligem no máximo 1 dano após armadura e outros modificadores, ou 2 em um sucesso excepcional. Fogo, explosões e outros ataques que afetam uma área grande causam dano normalmente. O Narrador fornece as características do enxame e o tipo de dano apropriado.",
+        "causing": "Um enxame hostil ataca, inclusive em uma falha dramática de Dança do Enxame. Sua área e características dependem dos insetos presentes; insetos comuns não recebem alimentação ou poderes de sangue de vampiros.",
+        "ending": "Escape da área do enxame, disperse-o ou destrua-o."
+      }
     }
   ]
 }

@@ -15,6 +15,11 @@ test('Discipline Options enforce canonical prerequisites and refund exact indepe
   const { vampireExperienceLabel } = await vite.ssrLoadModule('/game-lines/vampire/experience-presentation.ts');
   const { vampireRules } = await vite.ssrLoadModule('/game-lines/vampire/rules.ts');
   const { blankPrintCharacter } = await vite.ssrLoadModule('/app/workspace/blank-print-character.ts');
+  for (const id of ['devotion-null-space', 'devotion-kin-maker', 'devotion-dead-mans-reprieve']) assert.equal(powers.devotions.find(item => item.id === id).experienceCost, 4, 'Approved learning cost');
+  const christine = powers.devotions.find(item => item.id === 'devotion-christine');
+  assert.equal(christine.action, undefined);
+  assert.equal(christine.duration, 'Until the next sunrise');
+  assert.equal(powers.devotions.some(item => item.id === 'devotion-nightmare-journey'), false);
   assert.equal(powers.disciplineOptions.length, 6);
   assert.deepEqual(powers.disciplineOptions.map(x => x.experienceCost), [1, 1, 1, 1, 3, 2]);
   for (const option of powers.disciplineOptions) {
@@ -63,4 +68,27 @@ test('Discipline Options enforce canonical prerequisites and refund exact indepe
   assert.ok(normalized.line_data.devotion_ids.includes('devotion-nightmare-journey'));
   assert.deepEqual(normalized.current_state.vampire_experience_history, [receipt]);
   assert.deepEqual(normalized.line_data.discipline_option_ids, sheet.line_data.discipline_option_ids);
+});
+
+test('Swarm remains a Vampire-owned adaptation with source activation and unchanged Core Tilts', async () => {
+  const { TILTS, tiltPresentation } = await vite.ssrLoadModule('/lib/tilts.ts');
+  const { activeVampirePowers } = await vite.ssrLoadModule('/game-lines/vampire/homebrew-catalog.ts');
+  assert.equal(TILTS.length, 35);
+  assert.ok(!TILTS.some(item => item.id === 'vtr-agony-ecstasy:swarm'));
+  assert.equal(powers.tilts.length, 1);
+  const swarm = powers.tilts[0];
+  assert.equal(swarm.id, 'vtr-agony-ecstasy:swarm');
+  assert.equal(swarm.category, 'Environmental');
+  assert.match(swarm.description, /adaptation.*Swarm Form.*114.*not an official Core Tilt/);
+  assert.match(swarm.effect, /persistent Distracted.*ignore Defense.*1 damage.*2.*Fire, explosions/);
+  for (const locale of ['en-US', 'pt-BR', 'en-US']) {
+    const presented = tiltPresentation(swarm, locale);
+    assert.equal(presented.id, swarm.id);
+    assert.deepEqual(presented.effect.match(/\d+/g), swarm.effect.match(/\d+/g));
+  }
+  assert.equal(activeVampirePowers(powers, { disabledIds: [] }).tilts.length, 1);
+  assert.equal(activeVampirePowers(powers, { disabledIds: ['h-vtr-agony-ecstasy'] }).tilts.length, 0);
+  assert.equal(activeVampirePowers(powers, { disabledIds: [swarm.id] }).tilts.length, 0);
+  const dance = powers.devotions.find(item => item.id === 'h-vtr-agony-ecstasy:devotion:dance-of-the-swarm');
+  assert.equal(JSON.stringify(dance).includes('p. XX'), false);
 });
