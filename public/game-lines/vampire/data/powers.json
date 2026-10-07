@@ -13736,24 +13736,29 @@
       "id": "h-vtr-agony-ecstasy:rite:suborn-the-outer-realms",
       "kind": "cruac-rite",
       "name": "Suborn the Outer Realms",
-      "translatedName": "Suborn the Outer Realms",
+      "translatedName": "Subornar os Reinos Exteriores",
       "rating": 3,
       "experienceCost": 2,
       "targetSuccesses": 12,
-      "summary": "Creates a lasting protective charm that binds aid from an ephemeral realm.",
+      "summary": "Create a lasting protective charm that imposes a mural-depicted action on an intruder from another realm.",
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 102,
       "duration": "Indefinite while the charm survives",
       "effect": "Place a protective charm over a mural in a Safe Place or other Merit-defined location. An alien being entering from another realm or Twilight contests with Resistance + Rank or Resolve + Supernatural Tolerance, penalized by Potency. Failure imposes Dominated, requiring the simple achievable action depicted in the mural, with no memory erasure.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Cria um amuleto protetor duradouro que impõe ao invasor de outro reino uma ação representada em um mural.",
+        "duration": "Indefinida enquanto o amuleto permanecer intacto",
+        "effect": "Coloque um amuleto protetor sobre um pequeno mural em um Local Seguro ou outro local definido por um Mérito. Um ser alienígena que entrar de outro reino ou do Crepúsculo disputa com Resistência + Graduação ou Perseverança + Tolerância Sobrenatural, com penalidade igual à Potência. A falha impõe Dominado, exigindo a ação simples e realizável representada no mural, sem apagar memórias."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:blood-mask",
       "kind": "cruac-rite",
       "name": "Blood Mask",
-      "translatedName": "Blood Mask",
+      "translatedName": "Máscara de Sangue",
       "rating": 4,
       "experienceCost": 2,
       "targetSuccesses": 8,
@@ -13762,26 +13767,36 @@
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 102,
       "duration": "One night per Crúac dot",
-      "effect": "Mark a reflection with the target's image or name. The first bite and drink that night yields no Vitae but transforms the ritualist into the target, granting Potency as bonus dice to impersonate them. Clothing, powers, and traits do not change; animal features may function externally. At Crúac ••••• with one more success, draining the target dry makes the form indefinite and may replace the vampire's Physical Attributes and Skills for the duration.",
+      "effect": "Mark a reflection with the target’s image or name. The first bite and drink of their blood that night yields no Vitae but transforms the ritualist into the target, granting Potency as bonus dice to impersonate them. Clothing, powers, and other traits do not change, but taking the form of a living creature with blood may change Size and Health. Outward physical features like wings or fangs may be used, but not internal features like venom. At Crúac ••••• with one additional success, draining the target to death makes the form indefinite, ended by the vampire’s instant action; she may also replace her Physical Attributes and Skills with the target’s for the duration, rather than adding them to her own.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Assume a aparência de uma vítima mordida por várias noites.",
+        "duration": "Uma noite por ponto de Crúac",
+        "effect": "Marque um reflexo com a imagem ou o nome do alvo. A primeira mordida e ingestão de seu sangue naquela noite não rende Vitae, mas transforma a ritualista no alvo, concedendo a Potência como dados de bônus para imitá-lo. Roupas, poderes e demais Traços não mudam, mas assumir uma criatura viva com sangue pode alterar Tamanho e Vitalidade. Características físicas externas, como asas ou presas, podem ser usadas, mas não características internas como veneno. Com Crúac ••••• e um sucesso adicional, drenar o alvo até a morte torna a forma indefinida, encerrada por uma ação instantânea da vampira; também pode substituir seus Atributos e Perícias Físicos pelos do alvo durante a duração, sem somá-los aos próprios."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:brigid-s-sacrifice",
       "kind": "cruac-rite",
       "name": "Brigid's Sacrifice",
-      "translatedName": "Brigid's Sacrifice",
+      "translatedName": "Sacrifício de Brigid",
       "rating": 4,
       "experienceCost": 2,
       "targetSuccesses": 9,
-      "summary": "Drains Skills from a fed-upon victim in place of Vitae and lends them to the ritualist.",
+      "summary": "Heal a living creature and remove afflictions through an obsidian blade and a sapient sacrifice.",
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 102,
       "duration": "Instant",
       "effect": "Enchant an obsidian blade, sacrifice a sapient being that night at the cost of one Humanity dot (still gaining a Beat), and harmlessly stab a living subject's heart. Removing the blade heals all damage, removes diseases, toxins, negative Tilts and Conditions including persistent ones, restores all Willpower, and makes one Potency-bonus Clash against every harmful supernatural power, removing each one defeated.",
       "homebrew": true,
-      "manualOnly": true
+      "manualOnly": true,
+      "presentationPt": {
+        "summary": "Cura uma criatura viva e remove aflições por meio de uma lâmina de obsidiana e um sacrifício sapiente.",
+        "duration": "Instantânea",
+        "effect": "Encante uma lâmina de obsidiana, sacrifique um ser sapiente naquela noite ao custo de um ponto de Humanidade, ainda recebendo um Ato, e perfure o coração de um sujeito vivo sem lhe causar dano. Remover a lâmina cura todo o dano, remove doenças, toxinas, Complicações e Condições negativas, inclusive persistentes, restaura toda a Força de Vontade e provoca um único Confronto de Vontades com bônus de Potência contra cada poder sobrenatural prejudicial, removendo todos os efeitos derrotados."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:rite:fount-of-ma-at",
