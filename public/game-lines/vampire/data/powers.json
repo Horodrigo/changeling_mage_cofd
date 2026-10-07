@@ -3597,8 +3597,8 @@
       "id": "devotion-bloody-good-flick",
       "kind": "devotion",
       "name": "Bloody Good Flick",
-      "translatedName": "Bloody Good Flick",
-      "summary": "Turns a staged horror scene into a stronger supernatural performance.",
+      "translatedName": "Um Filme Sangrentamente Bom",
+      "summary": "A film inflicts Spooked and lets the vampire use Disciplines on its viewers without cost for one week.",
       "source": "Better Feared: Nosferatu",
       "page": 58,
       "manualOnly": true,
@@ -3610,14 +3610,24 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "One month",
-      "effect": "Victims who watch the entire movie suffer the Spooked Condition, as every subconscious fear seems to leap from the shadows. Viewers can try to stop watching with a Resolve + Composure roll, penalized by the Nosferatu’s Blood Potency dots, but failure means they remain enrapt for the runtime. Even after Spooked ends, the audience can’t stop thinking about it. For one week, the vampire can inflict Discipline powers on a victim of her movie without paying the cost, using their lingering fears and fascination to fuel her tricks."
+      "effect": "Victims who watch the entire movie suffer the Spooked Condition, as every subconscious fear seems to leap from the shadows. Viewers can try to stop watching with a Resolve + Composure roll, penalized by the Nosferatu’s Blood Potency dots, but failure means they remain enrapt for the runtime. Even after Spooked ends, the audience can’t stop thinking about it. For one week, the vampire can inflict Discipline powers on a victim of her movie without paying the cost, using their lingering fears and fascination to fuel her tricks.",
+      "presentationPt": {
+        "prerequisites": "Pesadelo ••",
+        "cost": "1 Vitae",
+        "requirement": "O vampiro deve usar seu dom de Linhagem em uma cópia de seu filme.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Um mês",
+        "summary": "Um filme impõe Assombrado e permite usar Disciplinas sem custo em seus espectadores por uma semana.",
+        "effect": "Vítimas que assistirem ao filme inteiro recebem a Condição Assombrado, enquanto seus medos subconscientes parecem saltar das sombras. Os espectadores podem tentar parar de assistir com Perseverança + Compostura, penalizado pelos pontos de Potência de Sangue do Nosferatu; uma falha os mantém absortos até o final. Mesmo depois de Assombrado terminar, o público não consegue parar de pensar no filme. Por uma semana, o vampiro pode usar poderes de Disciplina em uma vítima de seu filme sem pagar o custo, alimentando seus truques com os medos e o fascínio persistentes dela."
+      }
     },
     {
       "id": "devotion-death-by-cliche",
       "kind": "devotion",
       "name": "Death by Cliché",
-      "translatedName": "Death by Cliché",
-      "summary": "Makes a familiar horror trope dangerously real.",
+      "translatedName": "Morte por Clichê",
+      "summary": "Inflicts Walking Cliché on those entering the area, impairing reason and cooperation.",
       "source": "Better Feared: Nosferatu",
       "page": 58,
       "manualOnly": true,
@@ -3634,14 +3644,31 @@
         "exceptionalSuccess": "The vampire delights in her victims’ turmoil so much she regains a point of spent Willpower when she springs her trap.",
         "failure": "The vampire herself is the only cliché present.",
         "dramaticFailure": "The vampire suffers the Walking Cliché Tilt for the rest of the scene."
-      }
+      },
+      "presentationPt": {
+        "prerequisites": "Pesadelo •••",
+        "cost": "2 Vitae",
+        "requirement": "O vampiro deve espalhar sua Vitae em um ponto central da área de efeito.",
+        "dicePool": "Presença + Intimidação + Pesadelo",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "summary": "Impõe Clichê Ambulante a quem entrar na área, prejudicando o raciocínio e a cooperação.",
+        "rollResults": {
+          "success": "Quem entrar na área começa a agir como se estivesse em um filme B. O efeito alcança até 10 × Potência de Sangue metros. Os personagens podem disputar esta Devoção com Perseverança + Potência de Sangue, mas precisam superar os sucessos da ativação do vampiro. Quem falhar recebe a Complicação Clichê Ambulante. Quem estiver sob o dom de Linhagem do vampiro não pode fazer um teste de resistência: ele já está em sua mente.",
+          "exceptionalSuccess": "O vampiro se deleita tanto com a aflição das vítimas que recupera um ponto gasto de Força de Vontade ao acionar sua armadilha.",
+          "failure": "O único clichê presente é o próprio vampiro.",
+          "dramaticFailure": "O vampiro recebe a Complicação Clichê Ambulante pelo restante da cena."
+        },
+        "effect": "Clichê Ambulante é uma Complicação Pessoal. Ações Mentais sofrem −3. Trabalho em equipe, ações estendidas e outras ações que dependam de bom senso também sofrem penalidade igual aos pontos de Pesadelo do vampiro, cumulativa com a penalidade Mental. A Complicação termina ao escapar do vampiro, quando outra vítima é morta ou quando uma lesão faz o alvo recobrar o juízo."
+      },
+      "effect": "Walking Cliché is a Personal Tilt. Mental actions suffer −3. Teamwork, extended actions and other actions relying on common sense also suffer a penalty equal to the vampire’s Nightmare dots, stacking with the Mental penalty. The Tilt ends upon escaping the vampire, when another victim is killed or when an injury knocks sense back into the subject."
     },
     {
       "id": "devotion-timeless-classic",
       "kind": "devotion",
       "name": "Timeless Classic",
-      "translatedName": "Timeless Classic",
-      "summary": "Preserves a performance's supernatural impact across generations.",
+      "translatedName": "Clássico Atemporal",
+      "summary": "Transfers an injury that would cause torpor or Final Death to a copy of the film.",
       "source": "Better Feared: Nosferatu",
       "page": 59,
       "manualOnly": true,
@@ -3653,33 +3680,53 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Indefinite",
-      "effect": "If the vampire is about to take an injury that would knock her into torpor or cause Final Death, she can choose to have her connected film take the brunt of the attack instead, refreshing the Willpower point she invested into the object. This is a reflexive action, and destroys the chosen copy of the movie. This Devotion doesn’t protect the vampire from further violence, but merely transfers the fatal blow, perhaps giving her enough time to escape. A vampire can only have one instance of this Devotion active at a time."
+      "effect": "If the vampire is about to take an injury that would knock her into torpor or cause Final Death, she can choose to have her connected film take the brunt of the attack instead, refreshing the Willpower point she invested into the object. This is a reflexive action, and destroys the chosen copy of the movie. This Devotion doesn’t protect the vampire from further violence, but merely transfers the fatal blow, perhaps giving her enough time to escape. A vampire can only have one instance of this Devotion active at a time.",
+      "presentationPt": {
+        "prerequisites": "Majestade •••••",
+        "cost": "1 de Força de Vontade",
+        "requirement": "O vampiro deve usar seu dom de Linhagem em uma cópia de seu filme.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Indefinida",
+        "summary": "Transfere para uma cópia do filme uma lesão que causaria torpor ou Morte Final.",
+        "effect": "Se o vampiro estiver prestes a sofrer uma lesão que o levaria ao torpor ou causaria Morte Final, pode fazer seu filme vinculado receber o golpe em seu lugar, recuperando o ponto de Força de Vontade investido no objeto. Isso é uma ação reflexiva e destrói a cópia escolhida do filme. A Devoção não protege contra violência posterior: apenas transfere o golpe fatal, talvez concedendo tempo para fugir. Um vampiro só pode manter uma instância desta Devoção ativa por vez."
+      }
     },
     {
       "id": "devotion-watch-party",
       "kind": "devotion",
       "name": "Watch Party",
-      "translatedName": "Watch Party",
-      "summary": "Draws power from a live audience consuming the same horror.",
+      "translatedName": "Sessão Coletiva",
+      "summary": "Remotely drains blood from the film’s viewers within the permitted range.",
       "source": "Better Feared: Nosferatu",
       "page": 59,
       "manualOnly": true,
       "bloodlineId": "von-schreck-family",
-      "experienceCost": 1,
+      "experienceCost": 2,
       "prerequisites": "Vigor •••",
       "cost": "1 Willpower per victim",
       "requirement": "The vampire must use her bloodline gift on a copy of her film.",
       "dicePool": "None",
       "action": "Instant",
       "duration": "One week per Blood Potency",
-      "effect": "The vampire inherently knows when anyone watches her movie, and if she’s within (Blood Potency) miles of its location, she can extract a terrible price of admission. As the victims watch, the vampire can drink their blood as if she were physically present, at a rate of one Vitae per turn; for bookkeeping purposes, this is considered a violent feeding (Vampire, p. 94). This requires the Von Schreck to spend a Willpower per victim. This draining effect lasts (Vigor) turns per vessel. However, the vampire can only do this once per person in a night. As the body begins to drain, victims who want to look away from the screen must succeed a Resolve + Composure roll, penalized by the vampire’s Blood Potency dots. Success means the vampire can’t feed from them anymore. If the film is also subject to Bloody Good Flick, treat this as a single resistance action. If a victim is a vampire, the Vinculum and blood addiction applies as usual. This Devotion is an exception to the bloodline’s bane."
+      "effect": "The vampire inherently knows when anyone watches her movie, and if she’s within (Blood Potency) miles of its location, she can extract a terrible price of admission. As the victims watch, the vampire can drink their blood as if she were physically present, at a rate of one Vitae per turn; for bookkeeping purposes, this is considered a violent feeding (Vampire, p. 94). This requires the Von Schreck to spend a Willpower per victim. This draining effect lasts (Vigor) turns per vessel. However, the vampire can only do this once per person in a night. As the body begins to drain, victims who want to look away from the screen must succeed a Resolve + Composure roll, penalized by the vampire’s Blood Potency dots. Success means the vampire can’t feed from them anymore. If the film is also subject to Bloody Good Flick, treat this as a single resistance action. If a victim is a vampire, the Vinculum and blood addiction applies as usual. This Devotion is an exception to the bloodline’s bane.",
+      "presentationPt": {
+        "prerequisites": "Ímpeto •••",
+        "cost": "1 de Força de Vontade por vítima",
+        "requirement": "O vampiro deve usar seu dom de Linhagem em uma cópia de seu filme.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Uma semana por ponto de Potência de Sangue",
+        "summary": "Drena remotamente o sangue de espectadores do filme, dentro do alcance permitido.",
+        "effect": "O vampiro sabe instintivamente quando alguém assiste ao seu filme. Se estiver dentro de um alcance, em milhas, igual à sua Potência de Sangue, pode cobrar um terrível preço de ingresso. Enquanto as vítimas assistem, pode beber seu sangue como se estivesse presente, à razão de uma Vitae por turno; isso conta como alimentação violenta (Vampire, p. 94). O Von Schreck deve gastar Força de Vontade por vítima. A drenagem dura Ímpeto turnos por fonte, e só pode ocorrer uma vez por pessoa em uma noite. Quando o corpo começa a ser drenado, uma vítima que queira desviar o olhar da tela precisa obter sucesso em Perseverança + Compostura, penalizado pelos pontos de Potência de Sangue do vampiro. Um sucesso impede novas drenagens dessa vítima. Se o filme também estiver sob Um Filme Sangrentamente Bom, trate isso como uma única ação de resistência. Se a vítima for um vampiro, Vinculum e vício em sangue se aplicam normalmente. Esta Devoção é uma exceção à Maldição da Linhagem."
+      }
     },
     {
       "id": "devotion-mission-from-the-gods",
       "kind": "devotion",
       "name": "Mission from the Gods",
-      "translatedName": "Mission from the Gods",
-      "summary": "Receives a binding omen or task from the powers honored by the Yagnatia.",
+      "translatedName": "Missão dos Deuses",
+      "summary": "Implants an obsession with a task and helps others manipulate the victim into completing it.",
       "source": "Better Feared: Nosferatu",
       "page": 65,
       "manualOnly": true,
@@ -3689,7 +3736,17 @@
       "requirement": "Use Entombed Command on the victim, then activate this Devotion.",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "Instead of implanting a complete order, the vampire gives the victim an obsession and the Tasked Condition for the duration of Entombed Command or until it resolves. While it lasts, attempts to manipulate the victim into pursuing that goal exceptionally succeed on three successes."
+      "effect": "Instead of implanting a complete order, the vampire gives the victim an obsession and the Tasked Condition for the duration of Entombed Command or until it resolves. While it lasts, attempts to manipulate the victim into pursuing that goal exceptionally succeed on three successes.",
+      "presentationPt": {
+        "prerequisites": "Dominação •••",
+        "cost": "1 Vitae",
+        "requirement": "Usar Comando Sepultado na vítima e então ativar esta Devoção.",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "summary": "Implanta uma obsessão por uma tarefa e facilita manipular a vítima para cumpri-la.",
+        "effect": "Em vez de implantar uma ordem completa, o vampiro impõe à vítima uma obsessão e a Condição Incumbido pela duração de Comando Sepultado ou até sua resolução. Enquanto durar, tentativas de manipular a vítima para cumprir esse objetivo obtêm sucesso excepcional com três sucessos."
+      },
+      "experienceCost": 1
     },
     {
       "id": "devotion-brain-dead",
