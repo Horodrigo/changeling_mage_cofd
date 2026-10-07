@@ -11509,19 +11509,27 @@
       "id": "h-vtr-agony-ecstasy:devotion:lost-in-hindsight",
       "kind": "devotion",
       "name": "Lost in Hindsight",
-      "translatedName": "Lost in Hindsight",
+      "translatedName": "Perdido em Retrospecto",
       "prerequisites": "Auspex ••; Obfuscate •••",
       "experienceCost": 3,
-      "summary": "Warns of an unseen hostile observer and reflexively enables a known Obfuscate power.",
+      "summary": "Warns of an unknown hostile observer and permits activating Obfuscate in response.",
       "sourceId": "h-vtr-agony-ecstasy",
       "source": "Agony & Ecstasy: Circle of the Crone",
       "page": 88,
       "homebrew": true,
       "manualOnly": true,
       "cost": "None or 1 Vitae",
-      "action": "Reflexive",
+      "action": "None",
       "duration": "Permanent",
-      "effect": "Roll Wits + Empathy + Auspex as a reflexive action whenever someone with hostile intent for the vampire (whom she’s not already aware of) lays eyes upon her or otherwise is about to sense her, including through supernatural means. On a success, she becomes aware of the wicked gaze and can spend a Vitae to activate any of the first four levels of Obfuscate that she knows (in addition to its usual cost). This works like Dodging; it consumes her instant action for the turn but can be done in response to someone else’s action. On an exceptional success, this is reflexive."
+      "effect": "Roll Wits + Empathy + Auspex as a reflexive action whenever someone with hostile intent for the vampire (whom she’s not already aware of) lays eyes upon her or otherwise is about to sense her, including through supernatural means. On a success, she becomes aware of the wicked gaze and can spend a Vitae to activate any of the first four levels of Obfuscate that she knows (in addition to its usual cost). This works like Dodging; it consumes her instant action for the turn but can be done in response to someone else’s action. On an exceptional success, this is reflexive.",
+      "presentationPt": {
+        "prerequisites": "Auspícios ••; Ofuscação •••",
+        "summary": "Percebe um observador hostil desconhecido e permite ativar Ofuscação em resposta.",
+        "cost": "Nenhum ou 1 Vitae",
+        "action": "Nenhuma",
+        "duration": "Permanente",
+        "effect": "Teste Raciocínio + Empatia + Auspícios como ação reflexiva sempre que alguém com intenção hostil, de quem a vampira ainda não tenha conhecimento, a vir ou estiver prestes a percebê-la, inclusive por meios sobrenaturais. Com sucesso, ela percebe o olhar hostil e pode gastar uma Vitae para ativar qualquer um dos primeiros quatro níveis de Ofuscação que conheça, além do custo habitual. Como Esquiva, isso consome sua ação instantânea do turno, mas pode responder à ação de outra pessoa. Com sucesso excepcional, a ativação é reflexiva."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:maiden-s-innocence",
@@ -11576,7 +11584,7 @@
       "manualOnly": true,
       "cost": "1 Vitae",
       "dicePool": "Manipulation + Subterfuge + Nightmare vs. Composure + Blood Potency",
-      "action": "Contested",
+      "action": "Contested; resistance is reflexive",
       "duration": "Night",
       "requirement": "The vampire must be touching the victim.",
       "rollResults": {
@@ -11590,7 +11598,7 @@
         "cost": "1 Vitae",
         "summary": "Marca uma vítima que esteja tocando para que os outros percebam uma narrativa falsa e assustadora ou repugnante sobre ela.",
         "dicePool": "Manipulação + Subterfúgio + Pesadelo contra Compostura + Potência de Sangue",
-        "action": "Disputada",
+        "action": "Disputada; resistência reflexiva",
         "duration": "Noite",
         "requirement": "O vampiro precisa estar tocando a vítima.",
         "rollResults": {
@@ -11631,7 +11639,7 @@
       "id": "h-vtr-agony-ecstasy:devotion:raise-the-witch-s-familiar",
       "kind": "devotion",
       "name": "Raise the Witch's Familiar",
-      "translatedName": "Raise the Witch's Familiar",
+      "translatedName": "Erguer o Familiar da Bruxa",
       "prerequisites": "Animalism ••; Obfuscate ••••",
       "experienceCost": 3,
       "summary": "Enhances a corpse animated with Raise the Familiar, granting access to the vampire's Obfuscate and supernatural danger sense.",
@@ -11644,8 +11652,16 @@
       "action": "Instant",
       "requirement": "The vampire must feed an extra Vitae (included in the cost) to a corpse animated with Raise the Familiar.",
       "dicePool": "None",
-      "duration": "Permanent",
-      "effect": "The vampire can memorize the shape of any animal ghoul he creates without needing to drain it, and he can immediately exchange one of his forms for a new one without resting in his Unmarked Grave, though he must still spend 1 Vitae as normal. If he created an animal ghoul before learning this Devotion, he can memorize its form the next time he feeds it Vitae. This Devotion also allows the vampire to take on the shapes of animals normally inaccessible to the Beast’s Skin, such as prey animals or animals that exceed the normal Size limit (to a limit of 10). A vampire with Sheep’s Clothing ( Wild Hunt: Gangrel , p. 106) can spend an additional Experience to upgrade this Devotion to apply to his human ghouls as well, though he must spend a point of Willpower to memorize their forms, in addition to the usual Willpower cost of creating a ghoul."
+      "effect": "The risen familiar can access the vampire’s Obfuscate dots, including acting invisibly or disguising itself as a living animal. It develops a sixth sense for danger: when able to warn her, it grants the benefit of Danger Sense or adds +2 if she already has that Merit. Through the familiar, the vampire can also sense invisible or long-distance harm. This does not immediately reveal the invisible creature about to attack, but warns her that something is wrong so she can use other abilities to investigate.",
+      "presentationPt": {
+        "prerequisites": "Animalismo ••; Ofuscação ••••",
+        "summary": "Aprimora um cadáver animado com Erguer Familiar, concedendo acesso à Ofuscação da vampira e percepção sobrenatural de perigo.",
+        "cost": "2 Vitae",
+        "action": "Instantânea",
+        "requirement": "A vampira precisa alimentar com uma Vitae adicional, incluída no custo, um cadáver animado com Erguer Familiar.",
+        "dicePool": "Nenhuma",
+        "effect": "O familiar reanimado pode usar os pontos de Ofuscação da vampira, incluindo agir invisivelmente ou disfarçar-se como animal vivo. Desenvolve um sexto sentido para perigo: quando puder alertá-la, ela recebe o benefício de Sentido de Perigo ou +2 se já possuir esse Mérito. Através do familiar, a vampira também percebe dano invisível ou distante. Isso não revela imediatamente a criatura invisível prestes a atacar, mas avisa que algo está errado, permitindo usar outras habilidades para investigar."
+      }
     },
     {
       "id": "h-vtr-agony-ecstasy:devotion:sharing-the-familiar-s-form",
