@@ -9017,7 +9017,7 @@
       "kind": "devotion",
       "name": "Claritudo",
       "translatedName": "Claritudo",
-      "summary": "Clarifies a stolen or damaged memory.",
+      "summary": "Dispels or suppresses mind-altering effects on the vampire or a subject.",
       "source": "Strange Shades: Mekhet",
       "page": 46,
       "manualOnly": true,
@@ -9034,6 +9034,21 @@
         "exceptionalSuccess": "As above, but protection lasts the night.",
         "failure": "The subject’s mind is too clouded, and the vampire fails to cleanse it.",
         "dramaticFailure": "Rather than empowering her subject’s brain, the vampire weakens it instead. He gains the Confused Condition."
+      },
+      "presentationPt": {
+        "summary": "Dissipa ou suprime efeitos que alteram a mente da vampira ou de um alvo.",
+        "prerequisites": "Auspícios •, Celeridade •, Ofuscação •",
+        "cost": "1 ponto de Força de Vontade (1 Vitae, opcional)",
+        "requirement": "Para usar em outra pessoa, a vampira precisa alimentar o alvo com um ponto de Vitae.",
+        "dicePool": "Inteligência + Medicina + Celeridade contra Perseverança + Potência de Sangue, se o alvo não consentir",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Uma cena",
+        "rollResults": {
+          "success": "A vampira limpa a mente de influências externas. Isso funciona tanto em substâncias mundanas que alteram a mente, como álcool ou antidepressivos, quanto em efeitos sobrenaturais como Ofuscação ou Majestade, embora estes provoquem um Confronto de Vontades. Claritudo pode até suprimir o falso amor do Vinculum, mas apenas no primeiro e no segundo estágios, inclusive em Laços de Sangue formados ao usar esta Devoção. Novas tentativas sobrenaturais de alterar a mente do alvo provocam um Confronto de Vontades; consumir substâncias que alteram a mente ou causam dependência, bem como Vitae, não produz efeito, embora elas possam permanecer no organismo. Qualquer efeito com duração maior que Claritudo retorna quando esta Devoção termina.",
+          "exceptionalSuccess": "Como acima, mas a proteção dura a noite.",
+          "failure": "A mente do alvo está turva demais, e a vampira não consegue purificá-la.",
+          "dramaticFailure": "Em vez de fortalecer o cérebro do alvo, a vampira o enfraquece. Ele recebe a Condição Confuso."
+        }
       }
     },
     {
@@ -9041,9 +9056,9 @@
       "kind": "devotion",
       "name": "Memoria Sanguinis",
       "translatedName": "Memoria Sanguinis",
-      "summary": "Reads a memory preserved in blood.",
+      "summary": "Preserves memories in a draught of Vitae for others to experience.",
       "source": "Strange Shades: Mekhet",
-      "page": 46,
+      "page": 45,
       "manualOnly": true,
       "bloodlineId": "mnemosyne",
       "experienceCost": 1,
@@ -9051,36 +9066,55 @@
       "cost": "1 Vitae (1 Willpower, optional)",
       "dicePool": "None",
       "action": "Instant",
-      "duration": "Nights equal to Blood Potency, or until consumed",
-      "effect": "if the vampire spends a Willpower. The Keeper concentrates on a memory he wishes to preserve and spills a point of Vitae into a sealable container, keeping up to a full day’s worth of memories. Anyone drinking the blood gains the memories contained within as if she had just experienced them herself, though she is aware this is not her true recollection. This does not risk blood addiction or the Vinculum. The vampire cannot use draughts on himself. A subject can only benefit from one draught until the associated effect or Condition ends. Depending on the memory bottled, one of the following effects occurs. Neutral memories do not apply a Condition. • E uphoria: Appropriate for memories of pleasure or joy, the drinker experiences a surge of bliss. If the drinker is Kindred, they gain the Sated Condition as the Beast’s growls are muffled by waves of contentment. If mortal, they gain Inspired. • De spair: Memories of horrific acts or terrible loss feel as real as if they had just occurred. The drinker gains the Shaken Condition from the sudden onrush of awful memories. • D istress: The Mnemosyne heightens the emotional impact of memories containing provocative or frightening imagery in order to rouse the Beast. The drinker gains the Tempted Condition or can choose to succumb to the appropriate form of frenzy (such as to ride the wave). If the drinker is mortal, they gain the Bestial Condition. If the vampire knows Esuritio Lethes (below), he can bottle memories earned with that Devotion for the above effects, or create the one listed below. Feeding a draught of stolen memories to the original victim of that Devotion ends (but does not resolve) Amnesia. • E xpertise: By concentrating on stolen memories, the vampire can bottle a benefit gained from Esuritio Lethes. He loses those benefits for himself in the process, but anyone drinking the potion will then gain them, along with attached memories. This is no substitute for actual training or getting to know someone, however, and these bonuses will fade in nights equal to the Keeper’s Blood Potency."
+      "duration": "Nights equal to Blood Potency, or until consumed, if the vampire spends a Willpower.",
+      "effect": "The Keeper concentrates on a memory he wishes to preserve and spills a point of Vitae into a sealable container, keeping up to a full day’s worth of memories. Anyone drinking the blood gains the memories contained within as if she had just experienced them herself, though she is aware this is not her true recollection. This does not risk blood addiction or the Vinculum. The vampire cannot use draughts on himself. A subject can only benefit from one draught until the associated effect or Condition ends. Depending on the memory bottled, one of the following effects occurs. Neutral memories do not apply a Condition. • Euphoria: Appropriate for memories of pleasure or joy, the drinker experiences a surge of bliss. If the drinker is Kindred, they gain the Sated Condition as the Beast’s growls are muffled by waves of contentment. If mortal, they gain Inspired. • Despair: Memories of horrific acts or terrible loss feel as real as if they had just occurred. The drinker gains the Shaken Condition from the sudden onrush of awful memories. • Distress: The Mnemosyne heightens the emotional impact of memories containing provocative or frightening imagery in order to rouse the Beast. The drinker gains the Tempted Condition or can choose to succumb to the appropriate form of frenzy (such as to ride the wave). If the drinker is mortal, they gain the Bestial Condition. If the vampire knows Esuritio Lethes (below), he can bottle memories earned with that Devotion for the above effects, or create the one listed below. Feeding a draught of stolen memories to the original victim of that Devotion ends (but does not resolve) Amnesia. • Expertise: By concentrating on stolen memories, the vampire can bottle a benefit gained from Esuritio Lethes. He loses those benefits for himself in the process, but anyone drinking the potion will then gain them, along with attached memories. This is no substitute for actual training or getting to know someone, however, and these bonuses will fade in nights equal to the Keeper’s Blood Potency.",
+      "presentationPt": {
+        "summary": "Preserva memórias em uma dose de Vitae para outras pessoas vivenciarem.",
+        "prerequisites": "Auspícios ••, Dominação •",
+        "cost": "1 Vitae (1 ponto de Força de Vontade, opcional)",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noites iguais à Potência de Sangue, ou até ser consumida, se a vampira gastar um ponto de Força de Vontade.",
+        "effect": "O Guardião se concentra em uma memória que deseja preservar e derrama um ponto de Vitae em um recipiente que possa ser fechado, guardando até um dia inteiro de memórias. Quem beber o sangue recebe as memórias contidas nele como se acabasse de vivenciá-las, embora saiba que não são suas recordações reais. Isso não oferece risco de dependência de sangue nem de Vinculum. A vampira não pode usar doses em si mesma. Um alvo só pode se beneficiar de uma dose até que o efeito ou a Condição associada termine. Conforme a memória engarrafada, ocorre um dos efeitos seguintes. Memórias neutras não impõem uma Condição. • Euforia: adequada a memórias de prazer ou alegria, faz quem bebe experimentar uma onda de felicidade. Membros recebem a Condição Saciado enquanto ondas de contentamento abafam os rosnados da Fera; mortais recebem Inspirado. • Desespero: memórias de atos horríveis ou perdas terríveis parecem tão reais quanto se tivessem acabado de acontecer. Quem bebe recebe a Condição Abalado devido à súbita torrente de memórias atrozes. • Angústia: o Mnemosyne intensifica o impacto emocional de memórias com imagens provocativas ou assustadoras para despertar a Fera. Quem bebe recebe a Condição Tentado ou pode escolher sucumbir à forma apropriada de frenesi, por exemplo para Cavalgar a Onda. Mortais recebem Bestial. Se a vampira conhece Esuritio Lethes, pode engarrafar memórias obtidas com essa Devoção para os efeitos acima ou criar o efeito abaixo. Dar uma dose de memórias roubadas à vítima original de Esuritio Lethes encerra Amnésia, mas não a resolve. • Conhecimento Especializado: ao se concentrar nas memórias roubadas, a vampira pode engarrafar um benefício obtido com Esuritio Lethes. Perde esses benefícios para si no processo, mas quem beber a poção os recebe junto com as memórias associadas. Isso não substitui treinamento real nem conhecer alguém; os bônus desaparecem após um número de noites igual à Potência de Sangue do Guardião."
+      }
     },
     {
       "id": "devotion-esuritio-lethes",
       "kind": "devotion",
       "name": "Esuritio Lethes",
       "translatedName": "Esuritio Lethes",
-      "summary": "Creates a hunger for forgetting.",
+      "summary": "Steals memories or Mental Skill knowledge by drinking the victim’s blood.",
       "source": "Strange Shades: Mekhet",
-      "page": 47,
+      "page": 46,
       "manualOnly": true,
       "bloodlineId": "mnemosyne",
-      "experienceCost": 1,
+      "experienceCost": 4,
       "prerequisites": "Auspex ••••, Dominate ••••",
       "cost": "1 Willpower",
       "requirement": "The vampire must impose the Amnesia Condition with The Lying Mind, and then consume a Vitae. This does not break Mesmerized if she only takes one point for the purposes of this Devotion. This risks the Vinculum and blood addiction as usual.",
       "dicePool": "None",
       "action": "Instant",
       "duration": "Nights equal to Blood Potency",
-      "effect": "The Mnemosyne steals memories from the victim. This can be as specific as the password to a secure email server, or as general as what happened to them at last night’s party. The vampire must know roughly what she’s looking for, unless she wants to fish for memories with Dominate. Once she feeds, the vampire gains her victim’s memory as if she had just experienced it herself. This Devotion has two specific effects, depending upon the intention of the vampire. Only one can apply per stolen memory: • T heft of Memory: The vampire steals a piece of information the victim possesses or a stretch of time spanning no longer than twenty-four hours. This process creates an intimate connection between the Mnemosyne and her victim, providing her insight into the victim’s psychology. The vampire learns the victim’s Virtue and Vice (or equivalents) as well as any Persistent Conditions, and gains the 8-again quality on Social rolls with him related to these stolen memories. This also counts as a form of Hard Leverage. • T heft of Skill: The Mind-Thief drains his victim of hours of practice and study, stealing that knowledge for himself. The vampire chooses a Mental Skill the victim has dots in. If the Mnemosyne has no dots in that Skill, he no longer suffers an unskilled penalty. If he does have dots in this Skill, he acquires a Specialty related to her victim’s area of expertise. For the duration of Amnesia, the victim suffers the vampire’s Blood Potency dots divided by two (rounding up) on all uses of the chosen Skill. The mechanical benefits of memories remain for the duration, but a victim does not regain them until he resolves Amnesia, and any penalty from Theft of Skill remains. Should the vampire wish, he can preserve these memories with Memoria Sanguinis, but he must do so before Esuritio Lethes expires. A victim can only be subject to one instance of this Devotion at a time, for as long as Amnesia lasts."
+      "effect": "The Mnemosyne steals memories from the victim. This can be as specific as the password to a secure email server, or as general as what happened to them at last night’s party. The vampire must know roughly what she’s looking for, unless she wants to fish for memories with Dominate. Once she feeds, the vampire gains her victim’s memory as if she had just experienced it herself. This Devotion has two specific effects, depending upon the intention of the vampire. Only one can apply per stolen memory: • Theft of Memory: The vampire steals a piece of information the victim possesses or a stretch of time spanning no longer than twenty-four hours. This process creates an intimate connection between the Mnemosyne and her victim, providing her insight into the victim’s psychology. The vampire learns the victim’s Virtue and Vice (or equivalents) as well as any Persistent Conditions, and gains the 8-again quality on Social rolls with him related to these stolen memories. This also counts as a form of Hard Leverage. • Theft of Skill: The Mind-Thief drains his victim of hours of practice and study, stealing that knowledge for himself. The vampire chooses a Mental Skill the victim has dots in. If the Mnemosyne has no dots in that Skill, he no longer suffers an unskilled penalty. If he does have dots in this Skill, he acquires a Specialty related to her victim’s area of expertise. For the duration of Amnesia, the victim suffers the vampire’s Blood Potency dots divided by two (rounding up) on all uses of the chosen Skill. The mechanical benefits of memories remain for the duration, but a victim does not regain them until he resolves Amnesia, and any penalty from Theft of Skill remains. Should the vampire wish, he can preserve these memories with Memoria Sanguinis, but he must do so before Esuritio Lethes expires. A victim can only be subject to one instance of this Devotion at a time, for as long as Amnesia lasts.",
+      "presentationPt": {
+        "summary": "Rouba memórias ou conhecimento de uma Perícia Mental ao beber o sangue da vítima.",
+        "prerequisites": "Auspícios ••••, Dominação ••••",
+        "cost": "1 ponto de Força de Vontade",
+        "requirement": "A vampira precisa impor a Condição Amnésia com A Mente Mentirosa e depois consumir uma Vitae. Isso não encerra Mesmerizado se tomar apenas um ponto para esta Devoção. Há risco de Vinculum e dependência de sangue normalmente.",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noites iguais à Potência de Sangue",
+        "effect": "O Mnemosyne rouba memórias da vítima. Isso pode ser tão específico quanto a senha de um servidor de e-mail seguro ou tão geral quanto o que aconteceu na festa da noite anterior. A vampira precisa saber aproximadamente o que procura, a menos que queira vasculhar memórias com Dominação. Ao se alimentar, recebe a memória da vítima como se acabasse de vivenciá-la. Esta Devoção possui dois efeitos específicos, conforme a intenção da vampira; apenas um se aplica a cada memória roubada. • Roubo de Memória: a vampira rouba uma informação que a vítima possui ou um período de no máximo vinte e quatro horas. Isso cria uma ligação íntima entre o Mnemosyne e a vítima, oferecendo compreensão de sua psicologia. A vampira descobre a Virtude e o Vício da vítima, ou equivalentes, além de suas Condições Persistentes, e recebe 8-novamente em testes Sociais com ela relacionados às memórias roubadas. Isso também conta como Alavancagem Dura. • Roubo de Perícia: o Ladrão de Mentes drena horas de prática e estudo da vítima, roubando esse conhecimento para si. Escolhe uma Perícia Mental na qual a vítima possui pontos. Se o Mnemosyne não possui pontos nessa Perícia, deixa de sofrer a penalidade por falta de treinamento; se possui, recebe uma Especialização relacionada à área de conhecimento da vítima. Enquanto Amnésia durar, a vítima sofre penalidade igual à metade dos pontos de Potência de Sangue da vampira, arredondando para cima, em todos os usos da Perícia escolhida. Os benefícios mecânicos das memórias duram pelo período indicado, mas a vítima só as recupera quando resolve Amnésia, e qualquer penalidade de Roubo de Perícia permanece até lá. A vampira pode preservar essas memórias com Memoria Sanguinis, mas precisa fazê-lo antes de Esuritio Lethes terminar. Uma vítima só pode estar sujeita a uma instância desta Devoção por vez, enquanto Amnésia durar."
+      }
     },
     {
       "id": "devotion-sanguis-veritatis",
       "kind": "devotion",
       "name": "Sanguis Veritatis",
       "translatedName": "Sanguis Veritatis",
-      "summary": "Tests a remembered event against truth carried in Vitae.",
+      "summary": "Restores memories lost to mundane trauma or supernatural interference.",
       "source": "Strange Shades: Mekhet",
-      "page": 47,
+      "page": 46,
       "manualOnly": true,
       "bloodlineId": "mnemosyne",
       "experienceCost": 2,
@@ -9090,7 +9124,27 @@
       "dicePool": "Manipulation + Empathy + Auspex vs. Resolve + Blood Potency, if unwilling",
       "action": "Instant",
       "duration": "Permanent",
-      "effect": "Success reveals the extent and cause of the subject's damaged or altered memories and removes False Memories and Amnesia; supernatural alteration also requires a Clash of Wills. The restoration is all-or-nothing, cannot target the user, cannot remove the Mnemosyne bane's False Memories, and cannot recover memories lost naturally to time. Exceptional success restores one Willpower to vampire and subject; dramatic failure gives the vampire False Memories drawn from the subject for a scene."
+      "rollResults": {
+        "success": "The vampire drains the haze, learning how much of the subject’s memory is damaged or altered and the source: disease, physical injury, mental trauma, magic, etc. This removes any instances of False Memories or Amnesia. Restoring memories altered by Dominate or supernatural powers requires prevailing in a Clash of Wills. Restoring memories destroyed by mundane methods feels natural and can bring relief; recovering memories altered supernaturally can be jarring, especially if the deletion was traumatic. The Keeper cannot pick and choose: restoration is all-or-nothing. The vampire cannot use this power on herself or remove False Memories caused by the Mnemosyne bloodline bane. It cannot restore memories lost to the passage of time, though creative use of Dominate might.",
+        "exceptionalSuccess": "Restoration brings a powerful sense of triumph. Both the vampire and the subject regain a point of Willpower.",
+        "failure": "The subject’s mind is too fractured for the vampire’s attempts to repair it, though she can try again.",
+        "dramaticFailure": "The vampire botches the attempt, damaging her own mind instead of restoring the subject’s. For the next scene, the Mnemosyne gains False Memories, believing some of the subject’s memories to be her own."
+      },
+      "presentationPt": {
+        "summary": "Restaura memórias perdidas por trauma mundano ou interferência sobrenatural.",
+        "prerequisites": "Auspícios ••, Celeridade ••",
+        "cost": "1 Vitae",
+        "requirement": "Beber e gastar uma Vitae do alvo; os riscos normais de Vinculum e dependência se aplicam.",
+        "dicePool": "Manipulação + Empatia + Auspícios contra Perseverança + Potência de Sangue, se o alvo não consentir",
+        "action": "Instantânea",
+        "duration": "Permanente",
+        "rollResults": {
+          "success": "A vampira dissipa a névoa mental, descobrindo quanto da memória do alvo foi danificado ou alterado e a origem do efeito, como doença, ferimento físico, trauma mental ou magia. Isso remove todas as instâncias de Falsas Memórias ou Amnésia. Restaurar memórias alteradas por Dominação ou poderes sobrenaturais exige vencer um Confronto de Vontades. Recuperar memórias destruídas por meios mundanos parece natural e pode trazer alívio; recuperar memórias alteradas sobrenaturalmente pode ser perturbador, sobretudo quando o apagamento foi traumático. O Guardião não pode selecionar quais memórias restaurar: o efeito é tudo ou nada. A vampira não pode usar este poder em si mesma nem remover Falsas Memórias causadas pela Maldição da Bloodline Mnemosyne. Não pode restaurar memórias perdidas pela passagem do tempo, embora usos criativos de Dominação possam fazê-lo.",
+          "exceptionalSuccess": "A restauração traz uma poderosa sensação de triunfo. A vampira e o alvo recuperam um ponto de Força de Vontade cada.",
+          "failure": "A mente do alvo está fragmentada demais para a vampira repará-la, mas ela pode tentar novamente.",
+          "dramaticFailure": "A vampira estraga a tentativa, danificando a própria mente em vez de restaurar a do alvo. Pela próxima cena, o Mnemosyne recebe Falsas Memórias, acreditando que algumas das memórias do alvo são suas."
+        }
+      }
     },
     {
       "id": "devotion-blodtrell",
