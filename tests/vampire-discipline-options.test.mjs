@@ -70,7 +70,7 @@ test('Discipline Options enforce canonical prerequisites and refund exact indepe
   assert.deepEqual(normalized.line_data.discipline_option_ids, sheet.line_data.discipline_option_ids);
 });
 
-test('Swarm remains a Vampire-owned adaptation with source activation and unchanged Core Tilts', async () => {
+test('Swarm uses the supplied rules in both locales with source activation and unchanged Core Tilts', async () => {
   const { TILTS, tiltPresentation } = await vite.ssrLoadModule('/lib/tilts.ts');
   const { activeVampirePowers } = await vite.ssrLoadModule('/game-lines/vampire/homebrew-catalog.ts');
   assert.equal(TILTS.length, 35);
@@ -79,12 +79,23 @@ test('Swarm remains a Vampire-owned adaptation with source activation and unchan
   const swarm = powers.tilts[0];
   assert.equal(swarm.id, 'vtr-agony-ecstasy:swarm');
   assert.equal(swarm.category, 'Environmental');
-  assert.match(swarm.description, /adaptation.*Swarm Form.*114.*not an official Core Tilt/);
-  assert.match(swarm.effect, /persistent Distracted.*ignore Defense.*1 damage.*2.*Fire, explosions/);
+  assert.match(swarm.description, /Size 1.*radius in meters/);
+  assert.match(swarm.effect, /1 point of bashing damage per turn.*half of its full area.*1 additional point/);
+  assert.match(swarm.effect, /8 meters.*2 bashing.*4-meter.*3 bashing.*2-meter.*4 bashing.*1-meter/);
+  assert.match(swarm.effect, /full body.*half its rating.*−2 dice on all rolls.*not specifically attacked/);
+  assert.match(swarm.causing, /Summon the Hunt.*Kindred and non-Kindred.*nest of bees/);
+  assert.match(swarm.ending, /cannot be attacked with fists, clubs, swords, or guns.*Only area-affect.*Each point of damage.*halves.*below a 1-yard radius/);
+  assert.doesNotMatch(swarm.effect, /Distracted|Strength \+ Brawl|exceptional success/);
   for (const locale of ['en-US', 'pt-BR', 'en-US']) {
     const presented = tiltPresentation(swarm, locale);
     assert.equal(presented.id, swarm.id);
-    assert.deepEqual(presented.effect.match(/\d+/g), swarm.effect.match(/\d+/g));
+    for (const field of ['description', 'effect', 'ending']) assert.deepEqual(presented[field].match(/\d+/g), swarm[field].match(/\d+/g));
+    if (locale === 'pt-BR') {
+      const summon = powers.disciplines.flatMap(item => item.levels).find(item => item.name === 'Summon the Hunt');
+      assert.ok(presented.causing.includes(summon.translatedName));
+      assert.match(presented.effect, /dano contundente.*corpo inteiro.*metade de sua pontuação.*−2 dados.*mesmo quando não são atacados/);
+      assert.match(presented.ending, /não pode ser atacado.*Cada ponto de dano.*pela metade.*abaixo de 1 jarda/);
+    }
   }
   assert.equal(activeVampirePowers(powers, { disabledIds: [] }).tilts.length, 1);
   assert.equal(activeVampirePowers(powers, { disabledIds: ['h-vtr-agony-ecstasy'] }).tilts.length, 0);

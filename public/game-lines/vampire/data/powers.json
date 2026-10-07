@@ -17279,17 +17279,17 @@
       "translatedName": "Enxame",
       "category": "Environmental",
       "source": "Agony & Ecstasy: Circle of the Crone",
-      "sourceCode": "A&E (adaptation)",
+      "sourceCode": "A&E",
       "page": 87,
-      "description": "An attacking swarm surrounds the area. Project adaptation of Swarm Form (Vampire: The Requiem, p. 114) for Dance of the Swarm, not an official Core Tilt.",
-      "effect": "Characters inside the swarm have the persistent Distracted Condition until they escape. Swarm attacks use Strength + Brawl, ignore Defense, and apply armor; divide the attack among affected targets as appropriate to the swarm. Attacks against the swarm inflict at most 1 damage after armor and other modifiers, or 2 on an exceptional success. Fire, explosions and other attacks affecting a large area inflict damage normally. The Storyteller supplies the swarm’s traits and appropriate damage type.",
-      "causing": "A hostile swarm attacks, including a dramatic failure with Dance of the Swarm. Its area and traits depend on the actual insects; do not grant vampire feeding or blood powers to ordinary insects.",
-      "ending": "Escape the swarm’s area or disperse or destroy it.",
+      "description": "Animals of Size 1 are generally best represented by swarms, flocks, and other groupings of animals. Swarms are measured by their radius in meters.",
+      "effect": "A swarm inflicts 1 point of bashing damage per turn to anyone within its radius. Every time it condenses to cover half of its full area, it inflicts 1 additional point of damage per turn. A swarm of 8 meters in radius inflicts 2 bashing damage per turn if it constricts to a 4-meter radius, 3 bashing if it halves that again to a 2-meter radius, and 4 bashing damage per turn if it condenses to a 1-meter radius. Armor is effective only if it covers one’s full body, and even then provides only half its rating. Targets suffer −2 dice on all rolls within the radius, even if they are not specifically attacked.",
+      "causing": "Summon the Hunt can cause this Tilt, as can similar powers from Kindred and non-Kindred sources. It can occur naturally if someone disturbs a nest of bees.",
+      "ending": "The swarm cannot be attacked with fists, clubs, swords, or guns. Only area-affect attacks such as a torch affect it. Each point of damage inflicted by a flame or other applicable attack halves the swarm’s size. Once reduced below a 1-yard radius, either all animals are dead or the few remaining disperse.",
       "presentationPt": {
-        "description": "Um enxame hostil envolve a área. Adaptação do projeto a partir de Forma de Enxame (Vampire: The Requiem, p. 114) para Dança do Enxame; não é uma Complicação oficial de Core.",
-        "effect": "Personagens dentro do enxame recebem a Condição Distraído persistente até escaparem. Ataques do enxame usam Força + Briga, ignoram Defesa e aplicam armadura; distribua o ataque entre os alvos afetados conforme o enxame. Ataques contra o enxame infligem no máximo 1 dano após armadura e outros modificadores, ou 2 em um sucesso excepcional. Fogo, explosões e outros ataques que afetam uma área grande causam dano normalmente. O Narrador fornece as características do enxame e o tipo de dano apropriado.",
-        "causing": "Um enxame hostil ataca, inclusive em uma falha dramática de Dança do Enxame. Sua área e características dependem dos insetos presentes; insetos comuns não recebem alimentação ou poderes de sangue de vampiros.",
-        "ending": "Escape da área do enxame, disperse-o ou destrua-o."
+        "description": "Animais de Tamanho 1 geralmente são melhor representados por enxames, bandos e outros agrupamentos de animais. Enxames são medidos pelo raio em metros.",
+        "effect": "Um enxame causa 1 ponto de dano contundente por turno a qualquer pessoa dentro de seu raio. Cada vez que se concentra para cobrir metade de sua área total, causa 1 ponto adicional de dano por turno. Um enxame de 8 metros de raio causa 2 pontos de dano contundente por turno ao se contrair para um raio de 4 metros, 3 ao reduzi-lo novamente pela metade, para 2 metros, e 4 ao se concentrar em um raio de 1 metro. Armadura só é eficaz se cobrir o corpo inteiro e, mesmo assim, fornece apenas metade de sua pontuação. Alvos sofrem −2 dados em todas as jogadas dentro do raio, mesmo quando não são atacados especificamente.",
+        "causing": "Convocar a Caçada pode causar esta Complicação, assim como poderes semelhantes de Membros e outras fontes. Ela também pode ocorrer naturalmente quando alguém perturba uma colmeia de abelhas.",
+        "ending": "O enxame não pode ser atacado com punhos, clavas, espadas ou armas de fogo. Apenas ataques que afetam uma área, como uma tocha, o afetam. Cada ponto de dano causado por uma chama ou outro ataque aplicável reduz o tamanho do enxame pela metade. Quando seu raio fica abaixo de 1 jarda, todos os animais estão mortos ou os poucos restantes se dispersam."
       }
     }
   ]
