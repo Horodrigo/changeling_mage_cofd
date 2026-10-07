@@ -3,7 +3,7 @@ import type { BloodPotencyRow, VampireBloodlineDefinition, VampireClanDefinition
 import { translate, type Locale } from "@/lib/i18n";
 import { vampireMeritId } from "./merit-identities";
 import { requirementMet } from "@/lib/merit-requirements";
-import type { DefinitionIdentity } from "@/lib/merit-identity";
+import { resolveMeritDefinition, type DefinitionIdentity } from "@/lib/merit-identity";
 
 export const VAMPIRE_CREATION_DISCIPLINES = [
   "Animalism", "Auspex", "Celerity", "Dominate", "Majesty",
@@ -202,14 +202,18 @@ export function vampireDisciplineOptionPrerequisitesMet(definition: VampirePurch
     && (definition.requiredDevotionIds ?? []).every(id => vampireDevotionPrerequisitesMet(powers.devotions.find(item => item.id === id), character, powers, meritCatalog));
 }
 
-export function vampireDevotionExperienceCost(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "line_data">, powers: Pick<VampirePowers, "devotions">, confirmationId?: string) {
+export function vampireDevotionExperienceCost(definition: VampirePurchasablePower | undefined, character: Pick<CharacterSheet, "line_data"> & Partial<Pick<CharacterSheet, "merits">>, powers: Pick<VampirePowers, "devotions">, confirmationId?: string, meritCatalog: readonly DefinitionIdentity[] = []) {
   const base = definition?.experienceCost;
   if (typeof base !== "number" || !Number.isFinite(base) || base < 0) return undefined;
   const known = stringArray(character.line_data.devotion_ids);
+  // Quotes retain the schema-2 cult key "Moirai" without rewriting it. Remove
+  // case folding when those legacy configured Cult rows are no longer supported.
   const discounts = definition?.experienceDiscounts?.filter((item) => Number.isFinite(item.cost) && item.cost >= 0 && (
     "confirmation" in item ? Boolean(confirmationId) && item.confirmation.id === confirmationId
       : "bloodlineId" in item ? item.bloodlineId === character.line_data.bloodline_id && (!item.xiaoFaction || item.bloodlineId === "xiao" && item.xiaoFaction === character.line_data.xiao_faction)
       : "covenantId" in item ? vampireCovenantIds(character.line_data).includes(item.covenantId)
+      : "cultInitiation" in item ? (character.merits ?? []).some(merit => resolveMeritDefinition(merit, meritCatalog)?.id === item.cultInitiation.definitionId
+        && Number(merit.dots) >= item.cultInitiation.dots && String(merit.configuration?.cult ?? "").toLocaleLowerCase("en-US") === item.cultInitiation.cultId)
         : item.devotionIds.some((id) => known.includes(id) && powers.devotions.some((power) => power.id === id))
   )).map((item) => item.cost) ?? [];
   return Math.min(base, ...discounts);
@@ -250,7 +254,7 @@ export function synchronizeAutomaticBloodlineDevotions(character: CharacterSheet
   const nextTracked = tracked.filter((id) => next.includes(id) && !paid.has(id));
   const bloodlineId = String(character.line_data.bloodline_id ?? "");
   for (const item of automatic) {
-    if (item.bloodlineId !== bloodlineId || vampireDevotionExperienceCost(item, character, powers) !== 0 || !vampireDevotionPrerequisitesMet(item, character, powers, meritCatalog) || next.includes(item.id)) continue;
+    if (item.bloodlineId !== bloodlineId || vampireDevotionExperienceCost(item, character, powers, undefined, meritCatalog) !== 0 || !vampireDevotionPrerequisitesMet(item, character, powers, meritCatalog) || next.includes(item.id)) continue;
     next.push(item.id);
     nextTracked.push(item.id);
   }

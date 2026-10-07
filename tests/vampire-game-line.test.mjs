@@ -586,18 +586,18 @@ test("every published Vampire homebrew item is inventoried and can be disabled b
   const { homebrewContentActive } = await vite.ssrLoadModule("/lib/homebrew.ts");
   const { activeVampireItems, activeVampirePowers, SIMPLIFIED_HOLLOW_ID, vampireHomebrewSourceId, vampireHomebrewContentActive } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
   const items = [
-    ...bloodlines, ...covenants, ...conditions, ...coreMerits, ...merits, ...powers.disciplines, ...powers.ritualDisciplines, ...powers.devotions, ...powers.lashes,
+    ...bloodlines, ...covenants, ...conditions, ...coreMerits, ...merits, ...powers.disciplines, ...powers.ritualDisciplines, ...powers.devotions, ...powers.disciplineOptions, ...powers.lashes,
     ...powers.cruacRites, ...powers.thebanMiracles, ...powers.gildedInvocations, ...powers.detournements,
   ].filter((item) => vampireHomebrewSourceId(item)?.startsWith("h-vtr-"));
   const counts = Object.fromEntries(Object.entries(Object.groupBy(items, vampireHomebrewSourceId)).map(([sourceId, entries]) => [sourceId, entries.length]));
   assert.deepEqual(counts, {
     "h-vtr-sin-again": 91,
-    "h-vtr-wild-hunt": 93,
+    "h-vtr-wild-hunt": 94,
     "h-vtr-false-gods": 108,
-    "h-vtr-strange-shades": 90,
-    "h-vtr-better-feared": 92,
-    "h-vtr-agony-ecstasy": 96,
-    "h-vtr-fire-revolution": 90,
+    "h-vtr-strange-shades": 91,
+    "h-vtr-better-feared": 93,
+    "h-vtr-agony-ecstasy": 98,
+    "h-vtr-fire-revolution": 91,
   });
   for (const [id, minimum] of Object.entries({ "vampire-bloodlines": 13, "merits-vampire": 12, "vampire-powers": 26, "vampire-conditions": 7 }))
     assert.ok(manifest.catalogs[id].version >= minimum, id);

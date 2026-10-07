@@ -9471,8 +9471,8 @@
       "id": "devotion-cutting-the-strings",
       "kind": "devotion",
       "name": "Cutting the Strings",
-      "translatedName": "Cutting the Strings",
-      "summary": "Severs a supernatural command or attachment.",
+      "translatedName": "Cortando os Fios",
+      "summary": "Detects supernatural divinations and lets the vampire lash out at the observer.",
       "source": "Strange Shades: Mekhet",
       "page": 87,
       "manualOnly": true,
@@ -9482,7 +9482,26 @@
       "dicePool": "None",
       "action": "Instant",
       "duration": "Night",
-      "effect": "While this Devotion is active, the vampire is aware of any attempts to use Auspex on her, or any other supernatural divinations. Any readings trigger a vision of the aggressor. She can spend a Vitae to reflexively lash out at this effect, but the aggressor can choose to respond if he is Kindred, or if he has access to an effect that’s similar to the Predatory Aura."
+      "effect": "While this Devotion is active, the vampire is aware of any attempts to use Auspex on her, or any other supernatural divinations. Any readings trigger a vision of the aggressor. She can spend a Vitae to reflexively lash out at this effect, but the aggressor can choose to respond if he is Kindred, or if he has access to an effect that’s similar to the Predatory Aura.",
+      "experienceDiscounts": [
+        {
+          "cost": 2,
+          "cultInitiation": {
+            "definitionId": "core-2ed:mystery-cult-initiation",
+            "cultId": "moirai",
+            "dots": 1
+          }
+        }
+      ],
+      "presentationPt": {
+        "summary": "Detecta adivinhações sobrenaturais e permite Incitar a Fera contra o observador.",
+        "prerequisites": "Auspícios •, Ofuscação •••",
+        "cost": "1 ponto de Força de Vontade",
+        "dicePool": "Nenhuma",
+        "action": "Instantânea",
+        "duration": "Noite",
+        "effect": "Enquanto esta Devoção estiver ativa, a vampira percebe qualquer tentativa de usar Auspícios nela ou qualquer outra adivinhação sobrenatural. Toda leitura provoca uma visão do agressor. Ela pode gastar uma Vitae para Incitar a Fera contra esse efeito como ação reflexiva, mas o agressor pode optar por reagir se for um Membro ou tiver acesso a um efeito semelhante à Aura Predatória."
+      }
     },
     {
       "id": "devotion-encode-vitae",
@@ -9774,8 +9793,8 @@
       "id": "devotion-timing-is-everything",
       "kind": "devotion",
       "name": "Timing Is Everything",
-      "translatedName": "Timing Is Everything",
-      "summary": "Acts at the exact instant an opening appears.",
+      "translatedName": "O Momento é Tudo",
+      "summary": "Sends a telepathic message at a predefined point in the night.",
       "source": "Strange Shades: Mekhet",
       "page": 89,
       "manualOnly": true,
@@ -9789,7 +9808,77 @@
         "success": "At a predefined point in the night, the subject receives a telepathic message from the vampire, no longer than a sentence or two. This message can impose a Condition as with Lay Open the Mind, but this costs an additional Vitae.",
         "exceptionalSuccess": "The vampire can impose a Condition for no cost, if she chooses.",
         "failure": "Lost in the mail.",
-        "dramaticFailure": "The message finds its way to the nearest vampire or ghoul. If the vampire knows Dominate 3 (Entombed Command), she can pay an additional Experience to enhance this Devotion. She can now choose to set a condition for the message to arrive rather than a specific time: meeting a certain individual, encountering a code phrase, etc. Sample Modifiers: More than an hour (–1), more than two hours (–2), more than three hours (–3), subject is a ghoul (+1), subject is the same clan (+2)."
+        "dramaticFailure": "The message finds its way to the nearest vampire or ghoul."
+      },
+      "experienceDiscounts": [
+        {
+          "cost": 2,
+          "cultInitiation": {
+            "definitionId": "core-2ed:mystery-cult-initiation",
+            "cultId": "moirai",
+            "dots": 1
+          }
+        }
+      ],
+      "requirement": "The vampire must know the subject and have met him in person within the last week. The subject must be within Celerity miles of her location when she sends the message, but if he shares a blood tie with her, she can send it from anywhere in the city.",
+      "suggestedModifiers": [
+        {
+          "modifier": "–1",
+          "situation": "More than an hour"
+        },
+        {
+          "modifier": "–2",
+          "situation": "More than two hours"
+        },
+        {
+          "modifier": "–3",
+          "situation": "More than three hours"
+        },
+        {
+          "modifier": "+1",
+          "situation": "Subject is a ghoul"
+        },
+        {
+          "modifier": "+2",
+          "situation": "Subject is the same clan"
+        }
+      ],
+      "presentationPt": {
+        "summary": "Envia uma mensagem telepática em um momento predeterminado da noite.",
+        "prerequisites": "Auspícios ••••, Celeridade ••",
+        "cost": "1 ou 2 Vitae",
+        "requirement": "A vampira deve conhecer o sujeito e tê-lo encontrado pessoalmente na última semana. O sujeito deve estar a até Celeridade milhas de sua localização quando ela enviar a mensagem; se compartilhar um laço de sangue com ela, a mensagem pode ser enviada de qualquer lugar da cidade.",
+        "dicePool": "Inteligência + Expressão + Auspícios contra Compostura + Potência de Sangue, se o sujeito não consentir",
+        "action": "Disputada; a resistência é reflexiva",
+        "duration": "Até uma noite",
+        "rollResults": {
+          "success": "Em um momento predeterminado da noite, o sujeito recebe uma mensagem telepática da vampira, com no máximo uma ou duas frases. A mensagem pode impor uma Condição como em Abrir a Mente, mas isso custa uma Vitae adicional.",
+          "exceptionalSuccess": "A vampira pode impor uma Condição sem custo, se desejar.",
+          "failure": "A mensagem se perdeu no caminho.",
+          "dramaticFailure": "A mensagem chega ao vampiro ou ghoul mais próximo."
+        },
+        "suggestedModifiers": [
+          {
+            "modifier": "–1",
+            "situation": "Mais de uma hora"
+          },
+          {
+            "modifier": "–2",
+            "situation": "Mais de duas horas"
+          },
+          {
+            "modifier": "–3",
+            "situation": "Mais de três horas"
+          },
+          {
+            "modifier": "+1",
+            "situation": "O sujeito é um ghoul"
+          },
+          {
+            "modifier": "+2",
+            "situation": "O sujeito é do mesmo Clan"
+          }
+        ]
       }
     },
     {
@@ -17827,6 +17916,30 @@
         "dicePool": "Manipulação + Dissimulação + Auspícios vs. Perseverança + Potência de Sangue"
       },
       "dicePool": "Manipulation + Subterfuge + Auspex vs. Resolve + Blood Potency"
+    },
+    {
+      "id": "devotion-timing-is-everything:trigger",
+      "kind": "discipline-option",
+      "name": "Timing Is Everything: Conditional Message",
+      "translatedName": "O Momento é Tudo: Mensagem por Gatilho",
+      "requiredDevotionIds": [
+        "devotion-timing-is-everything"
+      ],
+      "requiredDisciplines": {
+        "dominate": 3
+      },
+      "prerequisites": "Dominate •••",
+      "experienceCost": 1,
+      "summary": "Set a triggering condition for the telepathic message instead of a specific time. Costs 1 additional Experience.",
+      "effect": "With Dominate 3 (Entombed Command), the vampire can pay 1 additional Experience to enhance Timing Is Everything. She can then set a condition for the message to arrive instead of a specific time, such as meeting a certain individual or encountering a code phrase.",
+      "source": "Strange Shades: Mekhet",
+      "page": 89,
+      "manualOnly": true,
+      "presentationPt": {
+        "prerequisites": "Dominação •••",
+        "summary": "Define um gatilho para a mensagem telepática em vez de um horário específico. Custa 1 Experiência adicional.",
+        "effect": "Com Dominação 3 (Comando Sepultado), a vampira pode pagar 1 Experiência adicional para aprimorar O Momento é Tudo. Pode então definir uma condição para a mensagem chegar em vez de um horário específico, como encontrar uma pessoa determinada ou ouvir uma frase-código."
+      }
     }
   ],
   "tilts": [

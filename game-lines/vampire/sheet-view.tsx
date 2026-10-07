@@ -1442,7 +1442,7 @@ export function VampireCharacterPaper({
         bloodSorcery={bloodSorcery}
         locale={locale}
       />
-      <PurchasedPowers character={character} powers={powers} locale={locale} />
+      <PurchasedPowers character={character} powers={powers} locale={locale} meritCatalog={merits} />
       <TricksOfTheDamned
         character={character}
         bloodPotency={bloodPotency}
@@ -2406,10 +2406,12 @@ function PurchasedPowers({
   character,
   powers,
   locale,
+  meritCatalog = [],
 }: {
   character: CharacterSheet;
   powers: VampirePowers;
   locale: string;
+  meritCatalog?: readonly MeritDefinition[];
 }) {
   const { t } = useLanguage();
   const ids = new Set(stringList(character.line_data.devotion_ids));
@@ -2436,7 +2438,7 @@ function PurchasedPowers({
       <div className="vampire-power-grid">
         {selected.map((item) => {
           const rating = item.rating;
-          const experienceCost = item.kind === "devotion" ? vampireDevotionExperienceCost(item, character, powers) : item.experienceCost;
+          const experienceCost = item.kind === "devotion" ? vampireDevotionExperienceCost(item, character, powers, undefined, meritCatalog) : item.experienceCost;
           return (
             <details
               className="rule-power-card vampire-discipline-card"

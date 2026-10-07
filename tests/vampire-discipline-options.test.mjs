@@ -20,8 +20,8 @@ test('Discipline Options enforce canonical prerequisites and refund exact indepe
   assert.equal(christine.action, undefined);
   assert.equal(christine.duration, 'Until the next sunrise');
   assert.equal(powers.devotions.some(item => item.id === 'devotion-nightmare-journey'), false);
-  assert.equal(powers.disciplineOptions.length, 6);
-  assert.deepEqual(powers.disciplineOptions.map(x => x.experienceCost), [1, 1, 1, 1, 3, 2]);
+  assert.equal(powers.disciplineOptions.length, 7);
+  assert.deepEqual(powers.disciplineOptions.map(x => x.experienceCost), [1, 1, 1, 1, 3, 2, 1]);
   for (const option of powers.disciplineOptions) {
     const sheet = blankPrintCharacter('VtR');
     sheet.line_data.disciplines = Object.fromEntries(powers.disciplines.map(x => [x.name, 5]));
@@ -68,6 +68,52 @@ test('Discipline Options enforce canonical prerequisites and refund exact indepe
   assert.ok(normalized.line_data.devotion_ids.includes('devotion-nightmare-journey'));
   assert.deepEqual(normalized.current_state.vampire_experience_history, [receipt]);
   assert.deepEqual(normalized.line_data.discipline_option_ids, sheet.line_data.discipline_option_ids);
+});
+
+test('Moirai discounts resolve canonical configured Merit instances and protect conditional message prerequisites', async () => {
+  const { vampireDevotionExperienceCost: quote, vampireDisciplineOptionPrerequisitesMet: eligible } = await vite.ssrLoadModule('/game-lines/vampire/creation-rules.ts');
+  const { refundVampireAdvancement: refund } = await vite.ssrLoadModule('/game-lines/vampire/experience-refunds.ts');
+  const { blankPrintCharacter } = await vite.ssrLoadModule('/app/workspace/blank-print-character.ts');
+  const core = JSON.parse(readFileSync(new URL('../public/shared/data/merits.json', import.meta.url), 'utf8'));
+  const cult = core.find(item => item.id === 'core-2ed:mystery-cult-initiation');
+  const selection = { definitionId: cult.id, instanceId: 'moirai', name: 'Título renomeado', dots: 1, creationDots: 1, sourceId: cult.sourceId, configuration: { cult: 'moirai' } };
+  const sheet = blankPrintCharacter('VtR');
+  sheet.merits = [selection];
+  const before = JSON.stringify(sheet);
+  for (const id of ['devotion-cutting-the-strings', 'devotion-timing-is-everything']) {
+    const definition = powers.devotions.find(item => item.id === id);
+    assert.equal(quote(definition, sheet, powers, undefined, core), 2);
+    assert.equal(quote(definition, sheet, powers), 3, 'Unavailable canonical identity fails closed');
+    assert.equal(quote(definition, sheet, powers, undefined, core.filter(item => item.id !== cult.id)), 3);
+    for (const row of [
+      { ...selection, dots: 0 },
+      { ...selection, configuration: { cult: 'inconnu' } },
+      { ...selection, definitionId: 'homebrew:cult-namesake', name: cult.name },
+      { ...selection, definitionId: 'missing:identity', name: cult.name },
+      { ...selection, definitionId: undefined, name: 'Iniciação em Culto dos Mistérios' },
+      { ...selection, definitionId: undefined, name: cult.name, sourceId: 'other-source' },
+    ]) assert.equal(quote(definition, { ...sheet, merits: [row] }, powers, undefined, [...core, { ...cult, id: 'homebrew:cult-namesake' }]), 3);
+    const legacy = { ...selection, definitionId: undefined, name: cult.name, configuration: { cult: 'Moirai' } };
+    assert.equal(quote(definition, { ...sheet, merits: [legacy] }, powers, undefined, core), 2, 'Canonical schema-2 bridge preserves existing case variants');
+    const needsTwo = { ...definition, experienceDiscounts: [{ cost: 2, cultInitiation: { definitionId: cult.id, cultId: 'moirai', dots: 2 } }] };
+    assert.equal(quote(needsTwo, { ...sheet, merits: [selection, { ...selection, instanceId: 'second' }] }, powers, undefined, core), 3, 'Separate instances never combine ratings');
+    assert.equal(quote({ ...definition, experienceCost: undefined }, sheet, powers, undefined, core), undefined);
+  }
+  assert.equal(JSON.stringify(sheet), before, 'Pricing never rewrites choices or receipts');
+  const option = powers.disciplineOptions.find(item => item.id === 'devotion-timing-is-everything:trigger');
+  assert.equal(option.experienceCost, 1);
+  assert.deepEqual(option.requiredDisciplines, { dominate: 3 });
+  sheet.line_data.devotion_ids = option.requiredDevotionIds;
+  sheet.line_data.discipline_option_ids = [option.id];
+  sheet.line_data.disciplines = { Auspex: 4, Celerity: 2, Dominate: 3 };
+  assert.equal(eligible(option, sheet, powers, core), true);
+  assert.equal(eligible(option, sheet, { ...powers, disciplines: powers.disciplines.filter(item => item.id !== 'dominate') }, core), false);
+  const dependencyBefore = JSON.stringify(sheet);
+  assert.equal(refund(sheet, { kind: 'discipline', name: 'Dominate' }, powers, core), false);
+  assert.equal(JSON.stringify(sheet), dependencyBefore);
+  assert.equal(refund(sheet, { kind: 'discipline-option', id: option.id, cost: 1 }, powers, core), true);
+  assert.equal(refund(sheet, { kind: 'discipline', name: 'Dominate' }, powers, core), true);
+  assert.equal(eligible(option, sheet, powers, core), false);
 });
 
 test('Swarm uses the supplied rules in both locales with source activation and unchanged Core Tilts', async () => {
