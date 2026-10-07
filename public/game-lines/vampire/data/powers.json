@@ -6169,8 +6169,10 @@
           "exceptionalSuccess": "A Condição dura pelo resto da noite.",
           "failure": "O fantasma recusa o chamado.",
           "dramaticFailure": "O vampiro inflige a Condição Aberto a si mesmo."
-        }
-      }
+        },
+        "requirement": "O vampiro precisa estar na presença da Âncora do fantasma."
+      },
+      "requirement": "The vampire must be in the presence of the ghost’s Anchor."
     },
     {
       "id": "devotion-null-space",
@@ -6219,8 +6221,10 @@
         "dicePool": "Nenhuma",
         "action": "Instantânea",
         "duration": "Indefinida",
-        "effect": "A Nhang fica idêntica à vítima em aparência e voz, mas não necessariamente consegue adotar seus modos ou atitudes sem estudo prévio. A transformação dura até que ela decida retornar à forma original. A Nhang precisa gastar o custo de Vitae para manter a forma a cada noite quando desperta; caso contrário, volta ao estado normal. A cada semana em que permanece na forma roubada, o corpo envelhece uma década. Ela não pode impedir isso, pois a carne consumida se decompõe dentro dela. A Serpente Aquática pode conservar a forma muito depois de ela morrer naturalmente nesse ritmo de envelhecimento, mas logo começa a parecer um cadáver cambaleante."
-      }
+        "effect": "A Nhang fica idêntica à vítima em aparência e voz, mas não necessariamente consegue adotar seus modos ou atitudes sem estudo prévio. A transformação dura até que ela decida retornar à forma original. A Nhang precisa gastar o custo de Vitae para manter a forma a cada noite quando desperta; caso contrário, volta ao estado normal. A cada semana em que permanece na forma roubada, o corpo envelhece uma década. Ela não pode impedir isso, pois a carne consumida se decompõe dentro dela. A Serpente Aquática pode conservar a forma muito depois de ela morrer naturalmente nesse ritmo de envelhecimento, mas logo começa a parecer um cadáver cambaleante.",
+        "requirement": "A Nhang precisa drenar todo o sangue da vítima e devorar o corpo para assumir sua forma."
+      },
+      "requirement": "The Nhang must drain the victim of all blood and devour the body to take their shape."
     },
     {
       "id": "devotion-water-hibernation",
@@ -6256,7 +6260,7 @@
       "translatedName": "Nada Tão Especial",
       "prerequisites": "Obfuscate ••, Vigor •••",
       "experienceCost": 2,
-      "cost": "1+ Vitae",
+      "cost": "1 Vitae per Discipline dot nullified",
       "summary": "Suppress another vampire's Clan-specific Disciplines.",
       "source": "Night Horrors: Spilled Blood",
       "page": 105,
@@ -6266,13 +6270,15 @@
       "effect": "If successful, the victim cannot access a number of dots in the chosen Discipline per Vitae spent, starting with the highest level. This also affects associated Devotions. If a Discipline effect is already active, this provokes a Clash of Wills. The effect continues if the victim wins the clash, but he cannot activate the power again if it expires naturally. Conditions inflicted with a Discipline (e.g., Mesmerized) do not count as active effects.",
       "presentationPt": {
         "prerequisites": "Ofuscação ••, Ímpeto •••",
-        "cost": "1+ Vitae",
+        "cost": "1 Vitae por ponto de Disciplina anulado",
         "summary": "Suprime as Disciplinas exclusivas do Clã de outro vampiro.",
         "dicePool": "Perseverança + Ocultismo + Ímpeto contra Potência de Sangue + Vigor",
         "action": "Disputada; a resistência é Reflexiva",
         "duration": "Minutos iguais aos sucessos",
-        "effect": "Se obtiver sucesso, a vítima perde acesso a pontos da Disciplina escolhida por Vitae gasta, começando pelo nível mais alto. Isso também afeta Devoções associadas. Se um efeito de Disciplina já estiver ativo, ocorre um Confronto de Vontades. O efeito continua se a vítima vencer o Confronto, mas ela não pode ativar o poder novamente se ele terminar naturalmente. Condições infligidas por uma Disciplina, como Mesmerizado, não contam como efeitos ativos."
-      }
+        "effect": "Se obtiver sucesso, a vítima perde acesso a pontos da Disciplina escolhida por Vitae gasta, começando pelo nível mais alto. Isso também afeta Devoções associadas. Se um efeito de Disciplina já estiver ativo, ocorre um Confronto de Vontades. O efeito continua se a vítima vencer o Confronto, mas ela não pode ativar o poder novamente se ele terminar naturalmente. Condições infligidas por uma Disciplina, como Mesmerizado, não contam como efeitos ativos.",
+        "requirement": "O vampiro precisa tocar a vítima. A Devoção só afeta a Disciplina exclusiva do Clan do alvo; não pode afetar Animalismo, Ofuscação nem Disciplinas Físicas."
+      },
+      "requirement": "The vampire must touch the victim. This Devotion only affects the subject’s unique clan Discipline; it cannot affect Animalism, Obfuscate or physical Disciplines."
     },
     {
       "id": "devotion-sea-witch-gift",

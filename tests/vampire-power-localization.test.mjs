@@ -110,6 +110,11 @@ test("Vampire official and Homebrew power presentations cover existing fields an
     assert.match(siphon.effect, /do not work on vampires or negate the Daeva clan bane.*Except for The Look.*one victim at a time/);
     assert.match(siphon.presentationPt.effect, /não afetam vampiros nem anulam.*Daeva.*Exceto O Olhar.*uma vítima por vez/);
   }
+  assert.match(devotions.find(item => item.id === "devotion-seance").requirement, /presence of the ghost’s Anchor/);
+  assert.match(devotions.find(item => item.id === "devotion-flesh-form").requirement, /victim of all blood.*devour the body/);
+  const notSoSpecial = devotions.find(item => item.id === "devotion-not-so-special");
+  assert.equal(notSoSpecial.cost, "1 Vitae per Discipline dot nullified");
+  assert.match(notSoSpecial.requirement, /touch the victim.*unique clan Discipline.*cannot affect Animalism, Obfuscate or physical Disciplines/);
   const donning = rites.find(item => item.id === "cruac-donning-beasts-flesh");
   assert.equal(donning.cost, "1 Vitae");
   assert.equal(donning.action, "Three turns to transform");
