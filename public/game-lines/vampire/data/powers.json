@@ -4737,7 +4737,7 @@
       "id": "devotion-natural-born-killer",
       "kind": "devotion",
       "name": "Natural Born Killer",
-      "translatedName": "Natural Born Killer",
+      "translatedName": "Assassino por Natureza",
       "prerequisites": "Celerity •••, Auspex ••",
       "covenantIds": [
         "carthian-movement"
@@ -4750,7 +4750,16 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "Turn",
-      "effect": "Activate on the first combat turn or in response to surprise. Add Celerity to detecting the ambush, add Auspex as well as Celerity to Initiative, and add Auspex as weapon damage to one successful Firearms or thrown-weapon attack that turn. It may be used only once per scene."
+      "effect": "Activate on the first combat turn or in response to surprise. Add Celerity to detecting the ambush, add Auspex as well as Celerity to Initiative, and add Auspex as weapon damage to one successful Firearms or thrown-weapon attack that turn. It may be used only once per scene.",
+      "presentationPt": {
+        "prerequisites": "Celeridade •••, Auspícios ••",
+        "summary": "Lê oponentes intuitivamente e responde com disparos.",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Turno",
+        "effect": "Ative no primeiro turno de combate ou em resposta a uma surpresa. Acrescente Celeridade para detectar a emboscada, acrescente Auspícios além de Celeridade à Iniciativa e acrescente Auspícios como dano de arma a um ataque bem-sucedido de Armas de Fogo ou com arma arremessada nesse turno. Só pode ser usado uma vez por cena."
+      }
     },
     {
       "id": "devotion-preserved-blood",
@@ -4897,7 +4906,7 @@
       "id": "devotion-strength-empire",
       "kind": "devotion",
       "name": "Strength of Empire",
-      "translatedName": "Strength of Empire",
+      "translatedName": "Força do Império",
       "prerequisites": "Dominate ••••, Majesty •••, Vigor or Resilience ••",
       "covenantIds": [
         "invictus"
@@ -4910,13 +4919,22 @@
       "dicePool": "Intelligence + Occult + Dominate – Resolve",
       "action": "Instant",
       "duration": "Scene",
-      "effect": "At any distance, each success removes one Discipline dot from a third-stage blood-bound vampire or ghoul and grants it to the user. Nonphysical Disciplines cannot exceed the subject's original rating; Celerity, Resilience, and Vigor may reach the combined ratings, at most one above the user's trait maximum. Normal activation costs remain. A stolen Devotion costs successes equal to its highest prerequisite and is available only while all prerequisites are held. Everything returns when the scene ends."
+      "effect": "At any distance, each success removes one Discipline dot from a third-stage blood-bound vampire or ghoul and grants it to the user. Nonphysical Disciplines cannot exceed the subject's original rating; Celerity, Resilience, and Vigor may reach the combined ratings, at most one above the user's trait maximum. Normal activation costs remain. A stolen Devotion costs successes equal to its highest prerequisite and is available only while all prerequisites are held. Everything returns when the scene ends.",
+      "presentationPt": {
+        "prerequisites": "Dominação ••••, Majestade •••, Ímpeto ou Resiliência ••",
+        "summary": "Rouba temporariamente uma Disciplina Física de um servo sob Vinculum.",
+        "cost": "1 Força de Vontade",
+        "dicePool": "Inteligência + Ocultismo + Dominação – Perseverança",
+        "action": "Instantânea",
+        "duration": "Cena",
+        "effect": "A qualquer distância, cada sucesso remove um ponto de Disciplina de um vampiro ou ghoul sob Laço de Sangue de terceiro estágio e o concede ao usuário. Disciplinas não físicas não podem exceder a pontuação original do alvo; Celeridade, Resiliência e Ímpeto podem alcançar as pontuações combinadas, até no máximo um ponto acima do limite de características do usuário. Os custos normais de ativação permanecem. Roubar uma Devoção custa sucessos iguais ao seu requisito mais alto, e ela só fica disponível enquanto todos os requisitos forem atendidos. Tudo retorna ao fim da cena."
+      }
     },
     {
       "id": "devotion-sudden-strength",
       "kind": "devotion",
       "name": "Sudden Strength",
-      "translatedName": "Sudden Strength",
+      "translatedName": "Força Súbita",
       "prerequisites": "Celerity ••, Vigor ••",
       "covenantIds": [
         "carthian-movement"
@@ -4929,7 +4947,16 @@
       "dicePool": "None",
       "action": "Reflexive",
       "duration": "Turn",
-      "effect": "After activating Celerity, add up to Celerity dots to Strength for all pools and derived traits that turn. Strength above the Blood Potency trait limit inflicts one bashing per excess dot at turn end; Vigor's normal Strength bonus does not count toward that limit. If Vitae-per-turn prevents simultaneous activation, Celerity may be paid on the prior turn and both benefits occur on the second."
+      "effect": "After activating Celerity, add up to Celerity dots to Strength for all pools and derived traits that turn. Strength above the Blood Potency trait limit inflicts one bashing per excess dot at turn end; Vigor's normal Strength bonus does not count toward that limit. If Vitae-per-turn prevents simultaneous activation, Celerity may be paid on the prior turn and both benefits occur on the second.",
+      "presentationPt": {
+        "prerequisites": "Celeridade ••, Ímpeto ••",
+        "summary": "Acrescenta Celeridade à Força enquanto Celeridade está ativa.",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "duration": "Turno",
+        "effect": "Após ativar Celeridade, acrescente até seus pontos de Celeridade à Força para todas as paradas e características derivadas nesse turno. Força acima do limite de características da Potência de Sangue causa um ponto de dano contundente por ponto excedente ao fim do turno; o bônus habitual de Força de Ímpeto não conta para esse limite. Se o limite de Vitae por turno impedir a ativação simultânea, Celeridade pode ser paga no turno anterior e ambos os benefícios ocorrem no segundo."
+      }
     },
     {
       "id": "devotion-talking-circles",
@@ -4961,7 +4988,7 @@
       "id": "devotion-gun-show",
       "kind": "devotion",
       "name": "The Gun Show",
-      "translatedName": "The Gun Show",
+      "translatedName": "Mostrando os Músculos",
       "prerequisites": "Vigor •••, Majesty •",
       "covenantIds": [
         "carthian-movement"
@@ -4973,7 +5000,15 @@
       "cost": "1 Vitae and 1 Willpower",
       "dicePool": "N/A",
       "action": "Reflexive",
-      "effect": "After committing to and succeeding at a feat of strength, the next Majesty activation in the scene gains Vigor as automatic successes. Neither the feat nor the Majesty roll may receive Willpower dice."
+      "effect": "After committing to and succeeding at a feat of strength, the next Majesty activation in the scene gains Vigor as automatic successes. Neither the feat nor the Majesty roll may receive Willpower dice.",
+      "presentationPt": {
+        "prerequisites": "Ímpeto •••, Majestade •",
+        "summary": "Fortalece Majestade após uma façanha de força.",
+        "cost": "1 Vitae e 1 Força de Vontade",
+        "dicePool": "Não se aplica",
+        "action": "Reflexiva",
+        "effect": "Após se comprometer com uma façanha de força e realizá-la com sucesso, a próxima ativação de Majestade na cena recebe Ímpeto como sucessos automáticos. Nem a façanha nem a jogada de Majestade podem receber dados de Força de Vontade."
+      }
     },
     {
       "id": "devotion-tune-in-out",

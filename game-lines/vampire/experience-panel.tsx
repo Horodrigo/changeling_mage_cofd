@@ -271,7 +271,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     const item = vampirePowerPresentation(definition, locale);
     const prerequisitesMet = vampireDevotionPrerequisitesMet(definition, character, powers, meritCatalog);
     const details: Array<{ label: string; value: string; warning?: boolean }> = [];
-    const add = (label: string, value: unknown, warning = false) => { if (value !== undefined && value !== "" && String(value).trim().toLocaleLowerCase() !== "none") details.push({ label, value: String(value), warning }); };
+    const add = (label: string, value: unknown, warning = false) => { if (value !== undefined && value !== "") details.push({ label, value: String(value), warning }); };
     add(t("ui.prerequisites"), item.prerequisites, !prerequisitesMet);
     add(t("ui.dicePool"), item.dicePool);
     add(t("ui.cost"), item.cost); add(t("ui.requirement"), item.requirement); add(t("ui.condition"), item.condition);
