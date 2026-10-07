@@ -293,7 +293,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       const path = id.replaceAll("\\", "/");
       if (path.endsWith("/app/use-homebrew.ts")) return 'let preferences = { disabledIds: [] }; export const useHomebrewPreferences = () => preferences; export const setTestHomebrewPreferences = value => { preferences = value; };';
       if (path.endsWith("/game-lines/vampire/sheet-view.tsx")) return `${code}\nexport { DisciplineCards, RitualDisciplines, PurchasedPowers };`;
-      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return ("export let testBuy, testRevert;\n" + code).replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "devotion-test" ? "devotion" : character.character.concept === "rite-test" ? "rite" : character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : character.character.concept === "formula-test" ? "formula" : character.character.concept === "invocation-test" ? "invocation" : character.character.concept === "detournement-test" ? "detournement" : character.character.concept === "scale-test" ? "scale" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : character.character.concept === "devotion-test" ? character.character.name : "");').replace("  return <", "  testBuy = buy; testRevert = revert;\n  return <");
+      if (path.endsWith("/game-lines/vampire/experience-panel.tsx")) return ("export let testBuy, testRevert;\n" + code).replace('useState<PurchaseType>("attribute")', 'useState<PurchaseType>(character.character.concept === "devotion-test" ? "devotion" : character.character.concept === "rite-test" ? "rite" : character.character.concept === "sacrilege-test" ? "sacrilege" : character.character.concept === "miracle-test" ? "miracle" : character.character.concept === "lash-test" ? "lash" : character.character.concept === "formula-test" ? "formula" : character.character.concept === "invocation-test" ? "invocation" : character.character.concept === "detournement-test" ? "detournement" : character.character.concept === "scale-test" ? "scale" : "discipline")').replace('const [target, setTarget] = useState("");', 'const [target, setTarget] = useState(character.character.concept === "therion-upgrade-test" ? "therion" : character.character.concept === "devotion-test" ? character.character.name : "");') .replace('useState<{ powerId: string; confirmationId: string } | null>(null)', 'useState<{ powerId: string; confirmationId: string } | null>(character.character.player ? { powerId: character.character.chronicle || character.character.name, confirmationId: character.character.player } : null)').replace("  return <", "  testBuy = buy; testRevert = revert;\n  return <");
       if (path.endsWith("/components/ui/dialog.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Dialog, Wrapper as DialogTrigger, Wrapper as DialogPortal, Wrapper as DialogClose, Wrapper as DialogOverlay, Wrapper as DialogContent, Wrapper as DialogHeader, Wrapper as DialogFooter, Wrapper as DialogTitle, Wrapper as DialogDescription };';
       if (path.endsWith("/components/ui/select.tsx")) return 'import { createElement } from "react"; const Wrapper = ({ children }) => createElement("div", null, children); export { Wrapper as Select, Wrapper as SelectContent, Wrapper as SelectGroup, Wrapper as SelectItem, Wrapper as SelectLabel, Wrapper as SelectSeparator, Wrapper as SelectTrigger, Wrapper as SelectValue };';
       if (path.endsWith("/components/ui/tabs.tsx")) return code.replace("<TabsPrimitive.Content", "<TabsPrimitive.Content forceMount");
@@ -796,7 +796,7 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         }
         assert.equal(JSON.stringify(buyer), before);
       }
-      for (const [id, condition, expectedCost] of [
+      for (const [id, condition, expectedCost, confirmation = "", confirmationPower = id] of [
         ["devotion-bad-trip", { bloodline_id: "candymen", clan_id: "nosferatu" }, 2],
         ["devotion-everlasting-blood-doll", { bloodline_id: "candymen", clan_id: "nosferatu" }, 5],
         ["devotion-sugar-rush", { bloodline_id: "candymen", clan_id: "nosferatu" }, 2],
@@ -828,6 +828,12 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         ["devotion-sign-of-terror", {}, 4],
         ["devotion-sign-of-terror", { bloodline_id: "keepers-of-the-dark", clan_id: "nosferatu" }, 3],
         ["devotion-terrible-will", {}, 2],
+        ["devotion-terrible-will", { covenant_ids: ["carthian-movement"] }, 2],
+        ["devotion-terrible-will", {}, 1, "carthian-teacher"],
+        ["devotion-terrible-will", {}, 2, "necropolis-member"],
+        ["devotion-terrible-will", {}, 2, "carthian-teacher", "devotion-wretched-bite"],
+        ["devotion-wretched-bite", {}, 1, "necropolis-member"],
+
         ["devotion-this-awful-grip", {}, 1],
         ["devotion-wicked-grasp", {}, 2],
         ["devotion-wretched-bite", {}, 2],
@@ -869,6 +875,8 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
       ]) {
         const buyer = structuredClone(devotionBuyer);
         buyer.character.name = id;
+        buyer.character.player = confirmation;
+        buyer.character.chronicle = confirmationPower;
         buyer.line_data = { ...buyer.line_data, ...condition };
         buyer.current_state = { ...buyer.current_state, experience_available: 10, experience_spent: 4, experience_total: 14, vampire_experience_history: [{ id: "authored", label: "Authored receipt", cost: 4 }] };
         const before = JSON.stringify(buyer);
@@ -880,6 +888,11 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         assert.ok(start >= 0, `${locale}: accessible ${id}`);
         const card = html.slice(start, html.indexOf("</article>", start));
         assert.ok(card.includes(`${expectedCost} ${translate(locale, "ui.xp")}`), `${locale}: quoted price ${id}`);
+        for (const discount of definition.experienceDiscounts ?? []) if (discount.confirmation) {
+          assert.ok(html.includes(escape(locale === "pt-BR" ? discount.confirmation.labelPt : discount.confirmation.label)));
+          assert.ok(html.includes('type="checkbox"'));
+        }
+
         experienceModule.testBuy();
         assert.equal(updates.length, 1, `${locale}: buy ${id}`);
         const purchased = updates[0];

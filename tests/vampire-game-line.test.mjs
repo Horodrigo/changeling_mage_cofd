@@ -958,6 +958,21 @@ test("conditional free Devotions track only new grants and preserve paid or opaq
   }
 });
 
+test("narrative Devotion learning discounts require a canonical explicit choice and never infer teachers from affiliation", async () => {
+  const { vampireDevotionExperienceCost } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
+  const powers = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/powers.json`, "utf8"));
+  const buyer = { line_data: { covenant_ids: ["carthian-movement"], notes: "Member of a Necropolis with a Carthian teacher" } };
+  const before = JSON.stringify(buyer);
+  for (const [id, choice, other] of [["devotion-terrible-will", "carthian-teacher", "necropolis-member"], ["devotion-wretched-bite", "necropolis-member", "carthian-teacher"]]) {
+    const definition = powers.devotions.find(item => item.id === id);
+    for (const value of [undefined, "", other, "Membro de uma Necrópole", "Learned from a Carthian teacher"]) assert.equal(vampireDevotionExperienceCost(definition, buyer, powers, value), 2);
+    assert.equal(vampireDevotionExperienceCost(definition, buyer, powers, choice), 1);
+    assert.equal(vampireDevotionExperienceCost({ ...definition, experienceCost: undefined }, buyer, powers, choice), undefined);
+    assert.equal(vampireDevotionExperienceCost({ ...definition, experienceDiscounts: [{ ...definition.experienceDiscounts[0], cost: -1 }] }, buyer, powers, choice), 2);
+  }
+  assert.equal(JSON.stringify(buyer), before);
+});
+
 test("Xiao faction selection grants Ripples only to explicit eligible Apostates and preserves older purchases", async () => {
   const { synchronizeAutomaticBloodlineDevotions, vampireDevotionExperienceCost, vampireDevotionAvailable } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
   const { setVampireXiaoFaction, joinVampireBloodline, removeVampireBloodline } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");

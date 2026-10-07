@@ -4310,7 +4310,17 @@
         "duration": "Cena",
         "summary": "Protege o vampiro contra formas passivas e ativas de medo sobrenatural.",
         "effect": "Esta Devoção custa 2 Experiências para aprender, ou 1 se o personagem tiver um professor Carthiano. O vampiro é imune aos efeitos de Presença Aterradora e de poderes passivos de medo semelhantes. Testes para usar Pesadelo contra ele sofrem penalidade igual aos seus pontos de Resiliência. A imunidade a Presença Aterradora também abrange seu uso para aprimorar os níveis superiores de Pesadelo."
-      }
+      },
+      "experienceDiscounts": [
+        {
+          "cost": 1,
+          "confirmation": {
+            "id": "carthian-teacher",
+            "label": "Learned from a Carthian teacher",
+            "labelPt": "Aprendeu com um professor Carthiano"
+          }
+        }
+      ]
     },
     {
       "id": "devotion-this-awful-grip",
@@ -4388,7 +4398,17 @@
         "requirement": "O vampiro deve causar dano com uma mordida durante um agarrão ou enquanto se alimenta.",
         "summary": "Contamina uma vítima mordida com um desespero sobrenatural.",
         "effect": "Esta Devoção custa 2 Experiências para aprender, ou 1 se o personagem for membro de uma Necrópole. Com a mordida, o vampiro lança a vítima em uma espiral de profunda tristeza. Se sobreviver ao ferimento, ela recebe a Condição Desolado."
-      }
+      },
+      "experienceDiscounts": [
+        {
+          "cost": 1,
+          "confirmation": {
+            "id": "necropolis-member",
+            "label": "Member of a Necropolis",
+            "labelPt": "Membro de uma Necrópole"
+          }
+        }
+      ]
     },
     {
       "id": "devotion-nightmare-journey",
