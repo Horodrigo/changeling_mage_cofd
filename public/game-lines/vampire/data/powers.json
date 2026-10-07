@@ -4486,7 +4486,7 @@
       "id": "devotion-bffs",
       "kind": "devotion",
       "name": "BFFs",
-      "translatedName": "BFFs",
+      "translatedName": "Melhores Amigos Para Sempre",
       "prerequisites": "Majesty ••, Dominate ••",
       "covenantIds": [
         "carthian-movement"
@@ -4498,7 +4498,15 @@
       "cost": "1 Vitae",
       "dicePool": "Manipulation + Empathy + Majesty vs. Composure + Blood Potency",
       "action": "Instant",
-      "effect": "Each success creates one temporary dot of Allies, Contacts, or Mentor represented by the subject. Acting directly against the vampire becomes a Humanity or Integrity 4 violation, or 6 for indirect action; the vampire gains +2 on Social actions and Disciplines against the subject and begins Social Maneuvering one impression better. The subject can break free by spending Willpower equal to activation successes, or freely if the vampire attacks or seriously endangers them."
+      "effect": "Each success creates one temporary dot of Allies, Contacts, or Mentor represented by the subject. Acting directly against the vampire becomes a Humanity or Integrity 4 violation, or 6 for indirect action; the vampire gains +2 on Social actions and Disciplines against the subject and begins Social Maneuvering one impression better. The subject can break free by spending Willpower equal to activation successes, or freely if the vampire attacks or seriously endangers them.",
+      "presentationPt": {
+        "prerequisites": "Majestade ••, Dominação ••",
+        "summary": "Cria a fachada convincente de uma amizade antiga.",
+        "cost": "1 Vitae",
+        "dicePool": "Manipulação + Empatia + Majestade contra Compostura + Potência de Sangue",
+        "action": "Instantânea",
+        "effect": "Cada sucesso cria um ponto temporário de Aliados, Contatos ou Mentor representado pelo alvo. Agir diretamente contra o vampiro passa a ser uma violação de Humanidade ou Integridade 4, ou 6 para uma ação indireta; o vampiro recebe +2 em ações Sociais e Disciplinas contra o alvo e começa Manobras Sociais com uma Impressão um nível melhor. O alvo pode se libertar gastando Força de Vontade igual aos sucessos de ativação, ou gratuitamente se o vampiro atacá-lo ou colocá-lo em perigo grave."
+      }
     },
     {
       "id": "devotion-call-me-maybe",
@@ -4654,7 +4662,7 @@
       "id": "devotion-kissing-cousins",
       "kind": "devotion",
       "name": "Kissing Cousins",
-      "translatedName": "Kissing Cousins",
+      "translatedName": "Primos Íntimos",
       "prerequisites": "Majesty ••, Vigor ••",
       "covenantIds": [
         "invictus"
@@ -4667,13 +4675,22 @@
       "dicePool": "Manipulation + Occult + Majesty vs. Composure + Blood Potency, if unwilling",
       "action": "Instant",
       "duration": "One night per success",
-      "effect": "Two vampires drink from each other and touch the activating Vitae, accepting normal bond and addiction risks. Either may contest if unwilling. Success makes the pair one step closer for blood sympathy; sacrificing one Humanity makes this permanent. Cross-clan targets can never become closer than four steps and cannot be made permanent. The user may be one target."
+      "effect": "Two vampires drink from each other and touch the activating Vitae, accepting normal bond and addiction risks. Either may contest if unwilling. Success makes the pair one step closer for blood sympathy; sacrificing one Humanity makes this permanent. Cross-clan targets can never become closer than four steps and cannot be made permanent. The user may be one target.",
+      "presentationPt": {
+        "prerequisites": "Majestade ••, Ímpeto ••",
+        "summary": "Faz dois vampiros contarem como parentes de sangue.",
+        "cost": "1 Vitae",
+        "dicePool": "Manipulação + Ocultismo + Majestade contra Compostura + Potência de Sangue, se não consentir",
+        "action": "Instantânea",
+        "duration": "Uma noite por sucesso",
+        "effect": "Dois vampiros bebem um do outro e tocam o Vitae de ativação, aceitando os riscos normais de Laço de Sangue e dependência. Qualquer um pode disputar se não consentir. O sucesso aproxima o par em um grau para a simpatia de sangue; sacrificar um ponto de Humanidade torna isso permanente. Alvos de Clans diferentes nunca podem se aproximar além de quatro graus, e o efeito não pode se tornar permanente entre eles. O usuário pode ser um dos alvos."
+      }
     },
     {
       "id": "devotion-knight-commander",
       "kind": "devotion",
       "name": "Knight Commander",
-      "translatedName": "Knight Commander",
+      "translatedName": "Cavaleiro Comandante",
       "prerequisites": "Majesty ••, Vigor ••",
       "covenantIds": [
         "invictus"
@@ -4686,7 +4703,16 @@
       "dicePool": "Presence + Brawl or Weaponry + Majesty",
       "action": "Instant",
       "duration": "One turn per success",
-      "effect": "Choose affected allies. Each Vinculum stage toward the vampire grants +1 die to combat actions; Charmed allies ignore the first bashing or lethal point from each successful attack; Enthralled allies may spend one Willpower per turn without losing it. If the vampire exceptionally succeeds on an attack during the duration, affected witnesses also gain Inspired."
+      "effect": "Choose affected allies. Each Vinculum stage toward the vampire grants +1 die to combat actions; Charmed allies ignore the first bashing or lethal point from each successful attack; Enthralled allies may spend one Willpower per turn without losing it. If the vampire exceptionally succeeds on an attack during the duration, affected witnesses also gain Inspired.",
+      "presentationPt": {
+        "prerequisites": "Majestade ••, Ímpeto ••",
+        "summary": "Inspira aliados com Encantado(Membro) à grandeza em combate.",
+        "cost": "1 Vitae",
+        "dicePool": "Presença + Briga ou Armas Brancas + Majestade",
+        "action": "Instantânea",
+        "duration": "Um turno por sucesso",
+        "effect": "Escolha os aliados afetados. Cada estágio de Vinculum em relação ao vampiro concede +1 dado em ações de combate; aliados com Encantado(Membro) ignoram o primeiro ponto de dano contundente ou letal de cada ataque bem-sucedido; aliados com Cativado podem gastar um ponto de Força de Vontade por turno sem perdê-lo. Se o vampiro obtiver sucesso excepcional em um ataque durante a duração, as testemunhas afetadas também recebem Inspirado."
+      }
     },
     {
       "id": "devotion-manic-depression",
@@ -4901,7 +4927,7 @@
       "id": "devotion-talking-circles",
       "kind": "devotion",
       "name": "Talking Circles",
-      "translatedName": "Talking Circles",
+      "translatedName": "Falando em Círculos",
       "prerequisites": "Celerity •••, Majesty •",
       "covenantIds": [
         "carthian-movement"
@@ -4913,7 +4939,15 @@
       "cost": "1 Vitae",
       "dicePool": "None",
       "action": "Reflexive",
-      "effect": "Either interrupt another character's Social action with a Social action of the vampire's own, as Celerity can interrupt physical actions, or immediately advance one stage of Social Maneuvering without waiting for the current Impression interval."
+      "effect": "Either interrupt another character's Social action with a Social action of the vampire's own, as Celerity can interrupt physical actions, or immediately advance one stage of Social Maneuvering without waiting for the current Impression interval.",
+      "presentationPt": {
+        "prerequisites": "Celeridade •••, Majestade •",
+        "summary": "Acelera uma conversa e interrompe um oponente.",
+        "cost": "1 Vitae",
+        "dicePool": "Nenhuma",
+        "action": "Reflexiva",
+        "effect": "Interrompa a ação Social de outro personagem com uma ação Social própria, como Celeridade permite interromper ações físicas, ou avance imediatamente um estágio de Manobras Sociais sem esperar o intervalo da Impressão atual."
+      }
     },
     {
       "id": "devotion-gun-show",
