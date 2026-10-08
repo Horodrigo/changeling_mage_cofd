@@ -8,11 +8,20 @@ const vite = await createServer({ appType: "custom", configFile: false, root, se
 after(() => vite.close());
 
 test("Detachment catalog exposes one selectable row per canonical Breaking Point", async () => {
-  const { DETACHMENT_BREAKING_POINT_TIERS, DETACHMENT_BREAKING_POINT_OPTIONS } = await vite.ssrLoadModule("/game-lines/vampire/detachment.ts");
+  const { DETACHMENT_BREAKING_POINT_TIERS, DETACHMENT_BREAKING_POINT_OPTIONS, VAST_DYNASTY_EMBRACE_BREAKING_POINT, vampireBreakingPointLabel } = await vite.ssrLoadModule("/game-lines/vampire/detachment.ts");
   assert.equal(DETACHMENT_BREAKING_POINT_TIERS.length, 10);
-  assert.ok(DETACHMENT_BREAKING_POINT_OPTIONS.length > 10);
+  assert.equal(DETACHMENT_BREAKING_POINT_OPTIONS.length, 41);
   assert.equal(new Set(DETACHMENT_BREAKING_POINT_OPTIONS.map((item) => item.id)).size, DETACHMENT_BREAKING_POINT_OPTIONS.length);
   assert.ok(DETACHMENT_BREAKING_POINT_TIERS.every((tier) => tier.breakingPoints.every((point) => point.level === tier.level)));
+  const points = [...DETACHMENT_BREAKING_POINT_OPTIONS, VAST_DYNASTY_EMBRACE_BREAKING_POINT];
+  const saved = JSON.stringify(points);
+  for (const locale of ["en-US", "pt-BR", "en-US"]) for (const point of points) {
+    assert.ok(point.labelPt?.trim(), point.id);
+    assert.equal(vampireBreakingPointLabel(point, locale), locale === "pt-BR" ? point.labelPt : point.label);
+    assert.deepEqual(point.labelPt.match(/\d+/g) ?? [], point.label.match(/\d+/g) ?? []);
+  }
+  assert.equal(vampireBreakingPointLabel(undefined, "pt-BR"), undefined);
+  assert.equal(JSON.stringify(points), saved);
 });
 
 test("Banes reduce Detachment pool by one each, to a maximum of three", async () => {

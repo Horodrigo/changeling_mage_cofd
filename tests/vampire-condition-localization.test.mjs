@@ -346,6 +346,9 @@ test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/E
       if (path.endsWith("/lib/homebrew.ts")) return code.replace("export const EMPTY_HOMEBREW_PREFERENCES: HomebrewPreferences = { disabledIds: [] };", `export const EMPTY_HOMEBREW_PREFERENCES: HomebrewPreferences = { disabledIds: [], enabledIds: ${JSON.stringify(enabledErrata)} };`);
       if (path.endsWith("/hooks/use-mobile.ts")) return "export let mobile = false; export const setTestMobile = value => { mobile = value; }; export const useIsMobile = () => mobile;";
       if (path.endsWith("/components/ui/tabs.tsx")) return code.replace("<TabsPrimitive.Content", "<TabsPrimitive.Content forceMount");
+      // Reveal closed portal content for presentation checks; interaction smoke remains separate.
+      if (path.endsWith("/components/ui/dialog.tsx")) return ["Dialog", "DialogClose", "DialogContent", "DialogDescription", "DialogFooter", "DialogHeader", "DialogOverlay", "DialogPortal", "DialogTitle", "DialogTrigger"].map(name => `export const ${name} = ({children}) => children;`).join("\n");
+      if (path.endsWith("/components/ui/popover.tsx")) return ["Popover", "PopoverTrigger", "PopoverContent", "PopoverAnchor", "PopoverHeader", "PopoverTitle", "PopoverDescription"].map(name => `export const ${name} = ({children}) => children;`).join("\n");
       if (locale === "pt-BR" && path.endsWith("/lib/i18n.tsx")) return code.replace('const serverLocale = ():Locale => "en-US";', 'const serverLocale = ():Locale => "pt-BR";');
     } }] });
     try {
@@ -371,6 +374,13 @@ test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/E
       const catalogs = { get: id => ({ "vampire-powers": read("public/game-lines/vampire/data/powers.json"), "vampire-reference": reference, "core-merits": [], "vampire-merits": [], "core-reference": { conditions: read("public/shared/data/conditions.json"), presentation: read("public/shared/data/conditions-pt.json") }, "vampire-conditions": catalog })[id] };
       const character = blankPrintCharacter("VtR");
       character.line_data.clan_id = "daeva";
+      character.line_data.humanity = 10;
+      const powers = catalogs.get("vampire-powers");
+      const dynasty = powers.coils.find(item => item.levels.some(level => level.ruleEffects?.some(effect => effect.rule === "embrace-humanity")));
+      character.line_data.ordo_dracul = { ...character.line_data.ordo_dracul, coil_ratings: { [dynasty.id]: 5 } };
+      const detachment = read("game-lines/vampire/catalog-data/detachment.json");
+      const breakingPoints = [...detachment.tiers.flatMap(item => item.breakingPoints), detachment.vastDynastyEmbrace];
+      character.line_data.banes = [breakingPoints[0], breakingPoints[40], detachment.vastDynastyEmbrace].map((point, index) => ({ id: `authored:${index}`, name: `Authored bane ${index}`, breaking_point_id: point.id, breaking_point_level: point.level }));
       character.current_state.conditions = localized.map(item => ({ id: item.errataFor ?? item.id, instanceId: `saved:${item.id}`, persistent: Boolean(item.persistent), notes: "Authored note" }));
       const saved = JSON.stringify(character);
       const noMutation = () => { throw new Error("Render mutated the saved character"); };
@@ -379,6 +389,8 @@ test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/E
       for (mobile of [false, true]) {
         setTestMobile(mobile);
         const sheet = render(VampireCharacterPaper, { character, updateState: noMutation, updateSheet: noMutation, catalogs });
+        for (const point of breakingPoints) assert.ok(sheet.includes(`<span>${escape(locale === "pt-BR" ? point.labelPt : point.label)}</span>`), `${locale}/${mobile ? "mobile" : "desktop"}: Breaking Point menu ${point.id}`);
+        for (const point of [breakingPoints[0], breakingPoints[40], detachment.vastDynastyEmbrace]) assert.ok(sheet.includes(`title="${escape(locale === "pt-BR" ? point.labelPt : point.label)}"`), "Linked Bane titles use the same localized label");
         const active = activeVampireItems(catalog, { disabledIds: [], enabledIds: enabledErrata });
         for (const errata of localized.filter(item => item.errataFor)) {
           assert.ok(active.some(item => item.id === errata.errataFor));

@@ -7,17 +7,20 @@
         {
           "id": "humanity-10-1",
           "level": 10,
-          "label": "One night without human contact"
+          "label": "One night without human contact",
+          "labelPt": "Uma noite sem contato humano"
         },
         {
           "id": "humanity-10-2",
           "level": 10,
-          "label": "Lying in defense of the Masquerade"
+          "label": "Lying in defense of the Masquerade",
+          "labelPt": "Mentir em defesa da Máscara"
         },
         {
           "id": "humanity-10-3",
           "level": 10,
-          "label": "Spending more than one Vitae in a night"
+          "label": "Spending more than one Vitae in a night",
+          "labelPt": "Gastar mais de um ponto de Vitae em uma noite"
         }
       ]
     },
@@ -28,27 +31,32 @@
         {
           "id": "humanity-9-1",
           "level": 9,
-          "label": "Watching humans eat a meal"
+          "label": "Watching humans eat a meal",
+          "labelPt": "Observar humanos fazendo uma refeição"
         },
         {
           "id": "humanity-9-2",
           "level": 9,
-          "label": "Committing a superhuman feat of physical prowess"
+          "label": "Committing a superhuman feat of physical prowess",
+          "labelPt": "Realizar uma façanha física sobre-humana"
         },
         {
           "id": "humanity-9-3",
           "level": 9,
-          "label": "Feeding from the unwilling or unknowing"
+          "label": "Feeding from the unwilling or unknowing",
+          "labelPt": "Alimentar-se de alguém que não consente ou não sabe disso"
         },
         {
           "id": "humanity-9-4",
           "level": 9,
-          "label": "Urging another's behavior with a Discipline"
+          "label": "Urging another's behavior with a Discipline",
+          "labelPt": "Influenciar o comportamento de outra pessoa com uma Disciplina"
         },
         {
           "id": "humanity-9-5",
           "level": 9,
-          "label": "Spending an hour in the sun"
+          "label": "Spending an hour in the sun",
+          "labelPt": "Passar uma hora ao sol"
         }
       ]
     },
@@ -59,27 +67,32 @@
         {
           "id": "humanity-8-1",
           "level": 8,
-          "label": "Creating a ghoul"
+          "label": "Creating a ghoul",
+          "labelPt": "Criar um carniçal"
         },
         {
           "id": "humanity-8-2",
           "level": 8,
-          "label": "Rejected by a human"
+          "label": "Rejected by a human",
+          "labelPt": "Ser rejeitado por um humano"
         },
         {
           "id": "humanity-8-3",
           "level": 8,
-          "label": "Riding the wave of frenzy"
+          "label": "Riding the wave of frenzy",
+          "labelPt": "Cavalgar a Onda do frenesi"
         },
         {
           "id": "humanity-8-4",
           "level": 8,
-          "label": "Depriving another of consent with a Discipline"
+          "label": "Depriving another of consent with a Discipline",
+          "labelPt": "Privar outra pessoa de consentimento com uma Disciplina"
         },
         {
           "id": "humanity-8-5",
           "level": 8,
-          "label": "Spending most of a day in the sun"
+          "label": "Spending most of a day in the sun",
+          "labelPt": "Passar a maior parte de um dia ao sol"
         }
       ]
     },
@@ -90,17 +103,20 @@
         {
           "id": "humanity-7-1",
           "level": 7,
-          "label": "One week active without human contact"
+          "label": "One week active without human contact",
+          "labelPt": "Uma semana de atividade sem contato humano"
         },
         {
           "id": "humanity-7-2",
           "level": 7,
-          "label": "Surviving something that would hospitalize a human"
+          "label": "Surviving something that would hospitalize a human",
+          "labelPt": "Sobreviver a algo que levaria um humano ao hospital"
         },
         {
           "id": "humanity-7-3",
           "level": 7,
-          "label": "Injuring someone over blood"
+          "label": "Injuring someone over blood",
+          "labelPt": "Ferir alguém por causa de sangue"
         }
       ]
     },
@@ -111,22 +127,26 @@
         {
           "id": "humanity-6-1",
           "level": 6,
-          "label": "Falling into torpor"
+          "label": "Falling into torpor",
+          "labelPt": "Entrar em torpor"
         },
         {
           "id": "humanity-6-2",
           "level": 6,
-          "label": "Feeding from a child"
+          "label": "Feeding from a child",
+          "labelPt": "Alimentar-se de uma criança"
         },
         {
           "id": "humanity-6-3",
           "level": 6,
-          "label": "Reading your own obituary"
+          "label": "Reading your own obituary",
+          "labelPt": "Ler seu próprio obituário"
         },
         {
           "id": "humanity-6-4",
           "level": 6,
-          "label": "Experiencing a car crash or other immense physical trauma"
+          "label": "Experiencing a car crash or other immense physical trauma",
+          "labelPt": "Sofrer um acidente de carro ou outro trauma físico imenso"
         }
       ]
     },
@@ -137,22 +157,26 @@
         {
           "id": "humanity-5-1",
           "level": 5,
-          "label": "Two weeks active without human contact"
+          "label": "Two weeks active without human contact",
+          "labelPt": "Duas semanas de atividade sem contato humano"
         },
         {
           "id": "humanity-5-2",
           "level": 5,
-          "label": "Reaching Blood Potency 3"
+          "label": "Reaching Blood Potency 3",
+          "labelPt": "Atingir Potência de Sangue 3"
         },
         {
           "id": "humanity-5-3",
           "level": 5,
-          "label": "Death of a mortal family member"
+          "label": "Death of a mortal family member",
+          "labelPt": "Morte de um familiar mortal"
         },
         {
           "id": "humanity-5-4",
           "level": 5,
-          "label": "Joining a covenant to the point of gaining Status for it"
+          "label": "Joining a covenant to the point of gaining Status for it",
+          "labelPt": "Ingressar em uma Coalizão a ponto de obter Status nela"
         }
       ]
     },
@@ -163,27 +187,32 @@
         {
           "id": "humanity-4-1",
           "level": 4,
-          "label": "Learning a dot of Crúac"
+          "label": "Learning a dot of Crúac",
+          "labelPt": "Aprender um ponto de Crúac"
         },
         {
           "id": "humanity-4-2",
           "level": 4,
-          "label": "Impassioned violence"
+          "label": "Impassioned violence",
+          "labelPt": "Violência movida por emoção"
         },
         {
           "id": "humanity-4-3",
           "level": 4,
-          "label": "Spending a year or more in torpor"
+          "label": "Spending a year or more in torpor",
+          "labelPt": "Passar um ano ou mais em torpor"
         },
         {
           "id": "humanity-4-4",
           "level": 4,
-          "label": "Surviving a century"
+          "label": "Surviving a century",
+          "labelPt": "Sobreviver a um século"
         },
         {
           "id": "humanity-4-5",
           "level": 4,
-          "label": "Accidentally killing"
+          "label": "Accidentally killing",
+          "labelPt": "Matar acidentalmente"
         }
       ]
     },
@@ -194,22 +223,26 @@
         {
           "id": "humanity-3-1",
           "level": 3,
-          "label": "One month active without human contact"
+          "label": "One month active without human contact",
+          "labelPt": "Um mês de atividade sem contato humano"
         },
         {
           "id": "humanity-3-2",
           "level": 3,
-          "label": "Reaching Blood Potency 6"
+          "label": "Reaching Blood Potency 6",
+          "labelPt": "Atingir Potência de Sangue 6"
         },
         {
           "id": "humanity-3-3",
           "level": 3,
-          "label": "Death of a mortal spouse or child"
+          "label": "Death of a mortal spouse or child",
+          "labelPt": "Morte de um cônjuge ou filho mortal"
         },
         {
           "id": "humanity-3-4",
           "level": 3,
-          "label": "Impassioned killing"
+          "label": "Impassioned killing",
+          "labelPt": "Matar movido por emoção"
         }
       ]
     },
@@ -220,27 +253,32 @@
         {
           "id": "humanity-2-1",
           "level": 2,
-          "label": "One year active without human contact"
+          "label": "One year active without human contact",
+          "labelPt": "Um ano de atividade sem contato humano"
         },
         {
           "id": "humanity-2-2",
           "level": 2,
-          "label": "Premeditated killing"
+          "label": "Premeditated killing",
+          "labelPt": "Matar de forma premeditada"
         },
         {
           "id": "humanity-2-3",
           "level": 2,
-          "label": "Seeing a culture that did not exist when you were alive"
+          "label": "Seeing a culture that did not exist when you were alive",
+          "labelPt": "Ver uma cultura que não existia quando você estava vivo"
         },
         {
           "id": "humanity-2-4",
           "level": 2,
-          "label": "Surviving 500 years"
+          "label": "Surviving 500 years",
+          "labelPt": "Sobreviver a 500 anos"
         },
         {
           "id": "humanity-2-5",
           "level": 2,
-          "label": "Creating a revenant"
+          "label": "Creating a revenant",
+          "labelPt": "Criar um revenante"
         }
       ]
     },
@@ -251,17 +289,20 @@
         {
           "id": "humanity-1-1",
           "level": 1,
-          "label": "One decade active without human contact"
+          "label": "One decade active without human contact",
+          "labelPt": "Uma década de atividade sem contato humano"
         },
         {
           "id": "humanity-1-2",
           "level": 1,
-          "label": "Heinous, spree, or mass murder"
+          "label": "Heinous, spree, or mass murder",
+          "labelPt": "Assassinato hediondo, em sequência ou em massa"
         },
         {
           "id": "humanity-1-3",
           "level": 1,
-          "label": "Killing your Touchstone"
+          "label": "Killing your Touchstone",
+          "labelPt": "Matar sua Touchstone"
         }
       ]
     }
@@ -269,6 +310,7 @@
   "vastDynastyEmbrace": {
     "id": "voivode-vast-dynasty-embrace",
     "level": 3,
-    "label": "Embrace (The Vast Dynasty)"
+    "label": "Embrace (The Vast Dynasty)",
+    "labelPt": "Abraço (A Vasta Dinastia)"
   }
 }

@@ -4,6 +4,7 @@ export type VampireDetachmentBreakingPoint = {
   id: string;
   level: number;
   label: string;
+  labelPt?: string;
 };
 
 export type VampireDetachmentTier = {
@@ -25,6 +26,10 @@ export const DETACHMENT_BREAKING_POINTS = DETACHMENT_BREAKING_POINT_TIERS.map((i
 }));
 
 export const DETACHMENT_BREAKING_POINT_OPTIONS = DETACHMENT_BREAKING_POINT_TIERS.flatMap((item) => item.breakingPoints);
+
+export function vampireBreakingPointLabel(point: VampireDetachmentBreakingPoint | undefined, locale: string) {
+  return point && (locale === "pt-BR" ? point.labelPt ?? point.label : point.label);
+}
 
 export function vampireDetachmentBaseDice(level: number) {
   const normalized = Math.max(1, Math.min(10, Math.trunc(Number(level) || 1)));

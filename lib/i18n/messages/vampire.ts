@@ -326,7 +326,7 @@ export const vampireMessages = {
       "bestial": "Bestial",
       "competitive": "Competitivo",
       "wanton": "Lascivo",
-      "detachmentDramaticFailure": "−1 Humanidade e Jaded.",
+      "detachmentDramaticFailure": "−1 Humanidade e Calejado.",
       "detachmentFailure": "−1 Humanidade e {p1}.",
       "detachmentSuccess": "Humanidade mantida; recebe {p1}.",
       "detachmentExceptionalSuccess": "Humanidade mantida; recebe Inspirado.",

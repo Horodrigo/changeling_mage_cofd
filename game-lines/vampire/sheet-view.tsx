@@ -97,6 +97,7 @@ import {
   DETACHMENT_BREAKING_POINT_OPTIONS,
   DETACHMENT_BREAKING_POINT_TIERS,
   VAST_DYNASTY_EMBRACE_BREAKING_POINT,
+  vampireBreakingPointLabel,
   vampireDetachmentBaseDice,
 } from "./detachment";
 import {
@@ -256,7 +257,7 @@ function HumanityTrack({
   clanBaneActive?: boolean;
   bloodlineId?: string;
 }) {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
   const baseSlot =
     String(character.line_data.clan_id ?? "") === "ventrue" && clanBaneActive
       ? 7
@@ -652,7 +653,7 @@ function HumanityTrack({
                               onChange={() => setBreakingPointId(point.id)}
                             />
 
-                            <span>{point.label}</span>
+                            <span>{vampireBreakingPointLabel(point, locale)}</span>
 
                             {protectedByBane && (
                               <small>{t("ui.protectedByBane")}</small>
@@ -833,7 +834,7 @@ function BaneEditor({
   clanBaneActive: boolean;
   bloodlineBane?: { name: string; summary: string };
 }) {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
 
   const rows = Array.from(
     { length: 3 },
@@ -912,9 +913,11 @@ function BaneEditor({
                       className="vampire-bane-reference"
                       aria-label={t("ui.linkBreakingPoint")}
                       title={
-                        DETACHMENT_BREAKING_POINT_OPTIONS.find(
-                          (point) => point.id === breakingPointId,
-                        )?.label ?? t("ui.linkBreakingPoint")
+                        vampireBreakingPointLabel(
+                          [...DETACHMENT_BREAKING_POINT_OPTIONS, VAST_DYNASTY_EMBRACE_BREAKING_POINT].find(
+                            (point) => point.id === breakingPointId,
+                          ), locale,
+                        ) ?? t("ui.linkBreakingPoint")
                       }
                     >
                       <Link2 />
@@ -963,7 +966,7 @@ function BaneEditor({
                             })
                           }
                         >
-                          <span>{point.label}</span>
+                          <span>{vampireBreakingPointLabel(point, locale)}</span>
                           <small>
                             {t("ui.humanity")} {point.level}
                           </small>
