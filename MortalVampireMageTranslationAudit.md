@@ -24,13 +24,13 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
 | V04 — Méritos | 399 (154 não Homebrew, 245 Homebrew), 80 níveis; nove erratas incluídas | Apresentações existentes completas, nove erratas ativadas e correções de fonte aprovadas verificadas; Beast King recuperado e Best Fiend alinhado a False Gods p. 111; Servo de Dis recuperado conforme Agony p. 103 |
 | V05 — Poderes | 555 poderes, 140 níveis internos; 1 Tilt da linha | 23/23 Disciplinas, seus 110 níveis, 5/5 Disciplinas Rituais, 2/2 Açoites, 5/5 fórmulas de Kimiya, 7/7 Sacrilégios de Therion, 10/10 Invocações de Gaiola Dourada, 5/5 Detournements, 6/6 Espirais com 30 níveis e 19/19 Escamas e 76/76 ritos de Crúac e 32/32 milagres Tebanos e 357/358 Devoções com PT. Resta 1 Devoção |
-| V06 — Conditions | 68, incluindo 19 Homebrew, das quais duas erratas | 68/68 do catálogo atual com PT completa e regras conferidas; lacunas adicionais e decisão de escopo permanecem no backlog |
+| V06 — Conditions | 69, incluindo 19 Homebrew, das quais duas erratas | 69/69 do catálogo atual com PT completa e regras conferidas; lacunas adicionais e decisão de escopo permanecem no backlog |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
 | G01 — Spells | 360 | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
 | G02 — Méritos | 71 (61 principais, dez suplementares), 31 níveis | Nome, requisitos, descrição e níveis |
 | G03 — Organizações | 17 Orders, 44 Factions, 12 Ministries | 11 Orders sem descrição PT; Factions/Tool Yantras e Ministries/Patron Exarchs |
 | G04 — Legacies | 16, 43 Attainments | Nomes, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções |
-| G05 — Conditions | 24 | Nome, descrição, resolução e Ato; nomes de Húbris já vinculados ao catálogo por ID |
+| G05 — Conditions | 25 | Sem Alma traduzida e conferida; restam 24. Nome, descrição, resolução e Ato; nomes de Húbris já vinculados ao catálogo por ID |
 
 ### Vampire — execução pendente
 
@@ -45,7 +45,6 @@ Dados em `public/game-lines/vampire/data/`. Traduzir os campos existentes: resum
 - **Aura of Cursive Seduction / Quelled:** título PT aguardando escolha entre Aura de Sedução Sinuosa, Aura de Sedução Cursiva ou o original. Quelled é uma Condition própria ainda ausente; não substituir por outra Condition. A reprodução pública descreve persistência, +5 para resistir ao frenesi, proibição de Ride the Wave, perda da Potência de Sangue na resistência a poderes, resolução vinculada a Enthralled e Ato por revés relevante; verificar a publicação original do autor antes de cadastrar esses efeitos.
 - **V06 — Manic / Melancholic:** referências PT Maníaco / Melancólico em Depressão Maníaca, sem entradas cadastradas. Conferir o texto completo de Hidden Devotions antes de criar efeitos, resolução e Atos; manter os resumos canônicos e não substituir por Conditions homônimas de outras fontes.
 - **V06 — apêndice de anciões / escopo:** `tests/vampire-game-line.test.mjs:398` exclui Children of the Blood, Curated, Leveraged e Weak Vitae por dependência de carniçais/revenantes. A revisão visual de Thousand Years of Night pp. 135–137 mostra que essas quatro afetam o vampiro; esclarecimento solicitado em 2026-10-08 para preservar a exclusão ou cadastrar apenas os textos. Até a resposta, não ampliar o catálogo. Leveraged é distinto da Condição Core homônima; nenhuma automação desses subsistemas faz parte da localização.
-- **Sem Alma — cobertura Core/Vampire:** a revisão visual de Vampire p. 306 encontrou efeitos ausentes no registro compartilhado `soulless`, que contém apenas um resumo genérico. A página Core 290 citada pelo índice offline/catálogo foi inspecionada e não contém Sem Alma; localizar/corrigir a fonte antes de completar a apresentação aplicável sem trocar IDs salvos: impedimentos de abjuração/proteção/vinculação, resistência à possessão, recuperação de Força de Vontade e Ponto de Ruptura de Humanidade 2 para vampiros. Não automatizar perda de alma nem misturar mecânicas da linha no mecanismo Core.
 - **Consistência de características:** a ficha apresenta Athletics como **Atletismo** e Composure como **Compostura**. Revisar apresentações anteriores que ainda dizem Esportes (incluindo Preso no catálogo Core) ou Autocontrole em lugar desses rótulos, sem alterar IDs ou efeitos.
 - **Presets:** `game-lines/vampire/catalog-data/detachment.json` contém 41 entradas e `vastDynastyEmbrace`; `shadow-cults.json` contém os seis cultos. Preservar escolhas e Especializações autorais.
 
@@ -212,13 +211,13 @@ Decisões aplicadas; nenhuma destas questões aguarda resposta.
 
 ## Conditions Vampire — catálogo atual traduzido
 
-As 68 entradas atuais possuem apresentação PT completa, aplicada depois da composição de errata na ficha Desktop/Mobile e em Homebrew. IDs, instâncias, persistência salva e textos autorais são preservados; substituições sem tradução não herdam PT obsoleto. Os lotes corrigem dados, sem automatizar escolhas, modificadores, progressão, dano, concessões ou companheiros. Lacunas externas ao inventário atual permanecem no backlog.
+As 69 entradas atuais possuem apresentação PT completa, aplicada depois da composição de errata na ficha Desktop/Mobile e em Homebrew. IDs, instâncias, persistência salva e textos autorais são preservados; substituições sem tradução não herdam PT obsoleto. Os lotes corrigem dados, sem automatizar escolhas, modificadores, progressão, dano, concessões ou companheiros. Lacunas externas ao inventário atual permanecem no backlog.
 
 Fontes conferidas visualmente:
 
 | Fonte | Cobertura |
 | --- | --- |
-| Vampire pp. 301–307 | 32 entradas próprias, incluindo nomes com qualificadores de linha; duração, resolução, persistência e Atos alinhados ao livro. |
+| Vampire pp. 301–307 | 33 entradas próprias, incluindo nomes com qualificadores de linha; duração, resolução, persistência e Atos alinhados ao livro. |
 | Thousand Years of Night pp. 135–137 | 12 entradas incluídas. Resumos completos de vínculos, Ka, Linhagem e Vitae; sessão aplicada conforme decisão. Exclusões anteriores aguardam esclarecimento no backlog. |
 | Spilled Blood pp. 23, 28; Guide to the Night p. 135; Secrets of the Covenants pp. 184, 189 | Cinco entradas; Agonizado e Prometido antes ausentes recuperados, sem alterar referências existentes. |
 | Better Feared pp. 31, 98, 101, 107 | Quatro entradas; efeitos e limites conferidos, sem restrições inventadas. |
@@ -227,6 +226,8 @@ Fontes conferidas visualmente:
 | Wild Hunt p. 39; Fire & Revolution pp. 91, 114–115; Agony & Ecstasy p. 107 | Sem Besta, Contrário e duas erratas opcionais; ativação e identidade-alvo preservadas. |
 
 Detalhes completos de efeitos e traduções estão no catálogo e nos testes, sem repetir o histórico de cada lote nesta auditoria.
+
+**Sem Alma:** revisão visual de Mage p. 318 e Vampire p. 306 recupera resistência à possessão, recuperação de Força de Vontade e inversão de Virtude/Vício. A referência Core p. 290 era incorreta: o registro compartilhado agora cita Mage p. 318 e mantém apenas a regra neutra de Integridade. Vampire possui sua variante com restrições a abjuração/proteção/vinculação e Ponto de Ruptura de Humanidade 2; Mage possui a variante de Húbris com um dado, exceto Sabedoria 1. As fichas preferem a definição da linha para o mesmo ID `soulless`, sem migrar instâncias ou automatizar efeitos. O Ato de Vampire conserva a perda de Integridade impressa no livro.
 
 ## Compras adicionais e Enxame — concluídos
 
@@ -250,7 +251,7 @@ Maçã do Éden (benefícios ao destinatário humano) e Espiral de Zirnitra (pre
 ## Evidência atual
 
 - Última suíte completa: **603/603 testes seriais aprovados em 2026-10-07**, sem falhas, omissões ou cancelamentos; lint, TypeScript e build normal aprovados. Log: `work/ritual-localization-20261005/final-verified-full-suite.log`.
-- Último lote V06 — Thousand Years of Night p. 137, 68/68 Conditions do catálogo atual com PT completa: **73/73 testes dirigidos aprovados** (`work/ritual-localization-20261005/vampire-conditions-elder-lineage-gate.log`). Incluem catálogo congelado, composição de errata, fontes desativadas, texto autoral, qualificadores de linha e renderização das fichas completas Desktop/Mobile em EN/PT/EN sem alterar instâncias; as entradas Homebrew são verificadas também na respectiva superfície. Lote restrito a dados e verificações; lint, TypeScript e build normal do mecanismo de apresentação aprovados no lote inicial (`vampire-conditions-first-lint.log`, `vampire-conditions-first-types.log`, `vampire-conditions-first-build.log`). A suíte completa acima antecede esses lotes.
+- Último lote — Sem Alma Core/Mage/Vampire, **69/69 Conditions Vampire com PT completa**: 48 verificações de catálogo, apresentação e arquitetura aprovadas em `work/ritual-localization-20261005/soulless-gate.log`; a expectativa antiga de contagem Vampire foi corrigida e seus **48/48 testes** passaram em `soulless-vampire-gate.log`. Fichas completas Mage/Vampire Desktop/Mobile em EN/PT/EN preservam instâncias, texto autoral e catálogos congelados; errata e Homebrew Vampire continuam cobertos. **Lint, TypeScript e build normal aprovados** (`soulless-lint.log`, `soulless-types.log`, `soulless-build.log`), com separação de linhas reconferida no manifesto gerado (`soulless-built-manifest-gate.log`). A suíte completa acima antecede os lotes de Conditions.
 - Integração automatizada EN → PT → EN cobre criação, XP, cards Desktop/Mobile e Homebrew dos grupos já traduzidos, incluindo compras, estornos, identidades indisponíveis, fontes desativadas e preservação de textos autorais. Smoke de navegador permanece a cargo do usuário.
 - Inventário e versões são mantidos nos catálogos e em `public/shared/data/catalog-manifest.json`; não duplicar carimbos ou históricos de gates nesta auditoria.
 - **Meta integral ainda pendente:** concluir V05, V06 e Mage conforme o backlog. As auditorias com trabalho aberto permanecem; decisões já implementadas não voltam a ser perguntas.

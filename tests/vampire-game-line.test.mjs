@@ -371,15 +371,16 @@ test("Vampire exposes every line-owned core-book Condition and reuses Core Swoon
   const added = [
     "Addicted", "Charmed", "Confused", "Delusional", "Distracted", "Dominated", "Drained", "Ecstatic", "Enervated", "Enslaved",
     "False Memories", "Frightened", "Humbled", "Intoxicated", "Mesmerized", "Raptured", "Sated", "Scarred", "Stumbled",
-    "Subservient", "Tainted", "Tasked", "Thrall",
+    "Subservient", "Tainted", "Tasked", "Thrall", "Soulless",
   ];
 
-  assert.equal(coreBook.length, 32);
+  assert.equal(coreBook.length, 33);
   assert.deepEqual(added.filter((name) => !coreBook.some((item) => item.name === name)), []);
   assert.ok(core.some((item) => item.id === "swooned" && item.name === "Swooned"));
   assert.equal(conditions.some((item) => item.name === "Swooning"), false);
-  assert.equal(new Set([...core, ...conditions].map((item) => item.id)).size, core.length + conditions.length);
-  for (const name of ["Addicted", "Charmed", "Humbled", "Thrall"]) {
+  assert.deepEqual(conditions.filter(item => core.some(shared => shared.id === item.id)).map(item => item.id), ["soulless"]);
+  assert.equal(new Set([...core, ...conditions].map((item) => item.id)).size, core.length + conditions.length - 1);
+  for (const name of ["Addicted", "Charmed", "Humbled", "Thrall", "Soulless"]) {
     const vampireVersion = conditions.find((item) => item.name === name);
     const mageVersion = mage.find((item) => item.name === name);
     assert.ok(vampireVersion && mageVersion, name);

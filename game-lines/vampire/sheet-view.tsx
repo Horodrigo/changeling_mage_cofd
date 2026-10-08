@@ -1074,7 +1074,10 @@ export function VampireCharacterPaper({
     catalogs.get<readonly VampireCondition[]>("vampire-conditions"),
     preferences,
   ).map(condition => vampireConditionPresentation(condition, locale)) as readonly ConditionDefinition[];
-  const conditionCatalog = [...coreConditions, ...vampireConditions];
+  const conditionCatalog = [
+    ...coreConditions.filter(condition => !vampireConditions.some(item => item.id === condition.id)),
+    ...vampireConditions,
+  ];
   const data = character.line_data;
   const bloodSorcery =
     data.blood_sorcery &&

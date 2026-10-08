@@ -14,8 +14,8 @@ const CHANGELING_CONDITIONS=[
   ...JSON.parse(readFileSync(new URL("../public/game-lines/changeling/data/conditions.json",import.meta.url),"utf8")),
 ];
 const MAGE_CONDITIONS=[
-  ...coreConditions,
   ...JSON.parse(readFileSync(new URL("../public/game-lines/mage/data/conditions.json",import.meta.url),"utf8")),
+  ...coreConditions,
 ].filter((item,index,array)=>array.findIndex((other)=>other.id===item.id)===index);
 const findById=(catalog,id)=>catalog.find((item)=>item.id===id);
 const conditionIndex=JSON.parse(readFileSync(new URL("./fixtures/official-conditions-index.json",import.meta.url),"utf8"));
@@ -27,11 +27,11 @@ test("line catalogs match the approved offline Condition index",()=>{
   assert.equal(changelingOfficial.length,65);
   assert.equal(MAGE_CONDITIONS.length,58);
   assert.ok(CHANGELING_CONDITIONS.every((item)=>item.name===item.originalName));
-  assert.deepEqual(Object.fromEntries(["CofD","HL","CTL 2e","Kith","OA&T"].map((code)=>[code,changelingOfficial.filter((item)=>item.sourceCode===code).length])),{
-    CofD:25,HL:9,"CTL 2e":20,Kith:9,"OA&T":2,
+  assert.deepEqual(Object.fromEntries(["CofD","HL","MTA 2e","CTL 2e","Kith","OA&T"].map((code)=>[code,changelingOfficial.filter((item)=>item.sourceCode===code).length])),{
+    CofD:24,HL:9,"MTA 2e":1,"CTL 2e":20,Kith:9,"OA&T":2,
   });
   assert.deepEqual(Object.fromEntries(["CofD","HL","MTA 2e","NH-NA","DE","DEC"].map((code)=>[code,MAGE_CONDITIONS.filter((item)=>item.sourceCode===code).length])),{
-    CofD:25,HL:9,"MTA 2e":14,"NH-NA":6,DE:3,DEC:1,
+    CofD:24,HL:9,"MTA 2e":15,"NH-NA":6,DE:3,DEC:1,
   });
 });
 
@@ -55,7 +55,7 @@ test("official Conditions are unique, English-first, and mechanically complete",
       assert.ok(!discardedFallbacks.some((text)=>item.resolution.includes(text)),`${item.id} still uses a generic fallback`);
       assert.ok(!("portuguese" in item),`${item.id} leaks presentation metadata into canonical data`);
     }
-    assert.doesNotMatch(JSON.stringify(catalog),/\b(?:não|personagem|condição|recupere|ganhe|sofra|perseverança|compostura)\b/i);
+    assert.doesNotMatch(JSON.stringify(catalog.map(({presentationPt,...canonical})=>canonical)),/\b(?:não|personagem|condição|recupere|ganhe|sofra|perseverança|compostura)\b/i);
   }
 });
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 260,
+  "catalogVersion": 261,
   "catalogs": {
     "werewolf-totem-powers": { "version": 2, "url": "/game-lines/werewolf/data/totem-powers.json" },
     "werewolf-totem-powers-pt": { "version": 2, "url": "/game-lines/werewolf/data/totem-powers-pt.json" },
@@ -55,8 +55,8 @@
     "merits-changeling-pt": { "version": 8, "url": "/game-lines/changeling/data/merits-pt.json" },
     "merits-mage": { "version": 3, "url": "/game-lines/mage/data/merits.json" },
     "merits-mage-supplements": { "version": 2, "url": "/game-lines/mage/data/merits-supplements.json" },
-    "core-conditions": { "version": 1, "url": "/shared/data/conditions.json" },
-    "core-conditions-pt": { "version": 3, "url": "/shared/data/conditions-pt.json" },
+    "core-conditions": { "version": 2, "url": "/shared/data/conditions.json" },
+    "core-conditions-pt": { "version": 4, "url": "/shared/data/conditions-pt.json" },
     "changeling-conditions": { "version": 2, "url": "/game-lines/changeling/data/conditions.json" },
     "changeling-conditions-pt": { "version": 2, "url": "/game-lines/changeling/data/conditions-pt.json" },
     "changeling-courts": { "version": 1, "url": "/game-lines/changeling/data/courts.json" },
@@ -64,7 +64,7 @@
     "changeling-entitlements-pt": { "version": 2, "url": "/game-lines/changeling/data/entitlements-pt.json" },
     "changeling-kiths": { "version": 1, "url": "/game-lines/changeling/data/kiths.json" },
     "changeling-kiths-pt": { "version": 2, "url": "/game-lines/changeling/data/kiths-pt.json" },
-    "mage-conditions": { "version": 2, "url": "/game-lines/mage/data/conditions.json" },
+    "mage-conditions": { "version": 3, "url": "/game-lines/mage/data/conditions.json" },
     "vampire-clans": { "version": 6, "url": "/game-lines/vampire/data/clans.json" },
     "vampire-covenants": { "version": 6, "url": "/game-lines/vampire/data/covenants.json" },
     "vampire-anchors": { "version": 2, "url": "/game-lines/vampire/data/anchors.json" },
@@ -74,6 +74,6 @@
     "merits-vampire-pt": { "version": 28, "url": "/game-lines/vampire/data/merits-pt.json" },
     "merits-vampire": { "version": 18, "url": "/game-lines/vampire/data/merits.json" },
     "vampire-powers": { "version": 180, "url": "/game-lines/vampire/data/powers.json" },
-    "vampire-conditions": { "version": 26, "url": "/game-lines/vampire/data/conditions.json" }
+    "vampire-conditions": { "version": 27, "url": "/game-lines/vampire/data/conditions.json" }
   }
 }

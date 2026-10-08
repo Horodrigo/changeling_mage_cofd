@@ -1279,5 +1279,31 @@
     "defaultDisabled": true,
     "errataFor": "vtr-core:carthian-backup",
     "errataForName": "Army of One backup rules"
+  },
+  {
+    "id": "soulless",
+    "name": "Soulless",
+    "originalName": "Soulless",
+    "category": "Vampire",
+    "description": "Without a soul, you cannot attempt abjuration, warding, or binding. Soul loss prevents Willpower recovery through surrender or rest and reverses Virtue and Vice. Fulfilling Virtue without risk restores 1 Willpower per scene; fulfilling Vice in a way that threatens you restores all Willpower once per session. Regaining Willpower through Vice is an Integrity breaking point with −5 unless Integrity is already 1. For a vampire, regaining Willpower through Vice is a Humanity 2 breaking point.",
+    "penalty": "−2 to dice pools resisting takeover or possession by another entity.",
+    "persistent": true,
+    "source": "Vampire: The Requiem Second Edition",
+    "sourceCode": "VtR",
+    "page": 306,
+    "resolution": "Regain a soul.",
+    "beat": "Lose Integrity because you indulged your Vice.",
+    "nameQualifier": {
+      "en-US": "Kindred",
+      "pt-BR": "Membro"
+    },
+    "presentationPt": {
+      "name": "Sem Alma",
+      "category": "Sobrenatural",
+      "description": "Sem uma alma, você não pode tentar abjuração, proteção ou vinculação. A perda da alma impede recuperar Força de Vontade por rendição ou descanso e inverte Virtude e Vício. Agir de acordo com a Virtude sem correr risco recupera 1 Força de Vontade por cena; agir de acordo com o Vício de modo que o ameace recupera toda a Força de Vontade uma vez por sessão. Recuperar Força de Vontade pelo Vício constitui um Ponto de Ruptura de Integridade com −5, a menos que a Integridade já seja 1. Para um vampiro, recuperar Força de Vontade pelo Vício constitui um Ponto de Ruptura de Humanidade 2.",
+      "penalty": "−2 nas paradas para resistir ao domínio ou à possessão por outra entidade.",
+      "resolution": "Recuperar uma alma.",
+      "beat": "Perder Integridade por se entregar ao Vício."
+    }
   }
 ]

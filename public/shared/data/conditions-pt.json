@@ -235,8 +235,9 @@
   "soulless": {
     "name": "Sem Alma",
     "category": "Sobrenatural",
-    "description": "A perda da alma corrói lentamente a vontade, a identidade e a capacidade de resistir à degeneração.",
+    "description": "A perda da alma impede recuperar Força de Vontade por rendição ou descanso e inverte Virtude e Vício. Agir de acordo com a Virtude sem correr risco recupera 1 Força de Vontade por cena; agir de acordo com o Vício de modo que o ameace recupera toda a Força de Vontade uma vez por sessão. Recuperar Força de Vontade pelo Vício constitui um Ponto de Ruptura de Integridade com −5, a menos que a Integridade já seja 1.",
+    "penalty": "−2 nas paradas para resistir ao domínio ou à possessão por outra entidade.",
     "resolution": "Recuperar uma alma.",
-    "beat": "Perder Integridade ou Lucidez porque o personagem se entregou ao Vício ou à Âncora equivalente."
+    "beat": "Perder Integridade por se entregar ao Vício."
   }
 }

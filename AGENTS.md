@@ -144,6 +144,8 @@ The mutation entry points are test-only. Unlike the removed Condition adapters, 
 
 The former mutable Changeling/Mage Condition adapters have already been removed; do not recreate them.
 
+Core Condition membership is defined by its catalog group, not by the cited book. Mage and Vampire in-app sheets prefer their own Condition definition when it shares a Core ID, preserving saved IDs and instances. This keeps the neutral Integrity version of Soulless in Core while each line owns its Wisdom/Humanity exception. Mage applies inline Portuguese Condition presentation through its own `condition-presentation.ts`; shared Condition controls remain neutral.
+
 ## Merit Architecture and Invariants
 
 Core may own generic Merit storage, ratings, rendering, configuration plumbing, neutral requirements, and extension dispatch. Line-specific eligibility, automatic grants, synchronization, special configuration, and derived effects belong to the line.

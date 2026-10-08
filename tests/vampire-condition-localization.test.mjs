@@ -15,7 +15,7 @@ const enabledErrata = conditions.filter(item => item.errataFor).map(item => item
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id).sort(), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened", "humbled", "intoxicated", "jaded", "languid", "lethargic", "mesmerized", "raptured", "sated", "scarred", "stumbled", "subservient", "tainted", "tasked", "tempted", "thrall", "wanton", "vtr-wild-hunt:beastless", "h-vtr-fire-revolution:contrary", "h-vtr-agony-ecstasy:errata:seed-of-her-divinity", "h-vtr-fire-revolution:errata:carthian-backup", "elder-anchored-heart", "elder-beasts-bargain", "elder-beloved-enemy", "elder-crushed", "elder-forgotten", "elder-immutable-heart", "elder-imprisoned-echo", "elder-living-legend", "elder-lost-lineage", "elder-quiet-echo", "elder-synchronized", "elder-vitaes-resoluteness"].sort());
+  assert.deepEqual(localized.map(item => item.id).sort(), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened", "humbled", "intoxicated", "jaded", "languid", "lethargic", "mesmerized", "raptured", "sated", "scarred", "stumbled", "subservient", "tainted", "tasked", "tempted", "thrall", "wanton", "vtr-wild-hunt:beastless", "h-vtr-fire-revolution:contrary", "h-vtr-agony-ecstasy:errata:seed-of-her-divinity", "h-vtr-fire-revolution:errata:carthian-backup", "elder-anchored-heart", "elder-beasts-bargain", "elder-beloved-enemy", "elder-crushed", "elder-forgotten", "elder-immutable-heart", "elder-imprisoned-echo", "elder-living-legend", "elder-lost-lineage", "elder-quiet-echo", "elder-synchronized", "elder-vitaes-resoluteness", "soulless"].sort());
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -329,6 +329,11 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.equal(vitae.beat, undefined);
   assert.match(vitae.description, /Addicted \(vitae\) and Languid.*when you gain Languid.*only in scenes when you drink vitae.*torpor.*Humanity were 2 dots lower/);
   assert.equal(vitae.resolution, "Wake from torpor.");
+  const soulless = conditions.find(item => item.id === "soulless");
+  assert.equal(soulless.page, 306);
+  assert.equal(soulless.persistent, true);
+  assert.match(soulless.description, /cannot attempt abjuration, warding, or binding.*Virtue and Vice.*1 Willpower per scene.*once per session.*Integrity breaking point with −5.*Integrity is already 1.*Humanity 2 breaking point/);
+  assert.match(soulless.penalty, /−2.*possession/);
   assert.equal(localized.length, conditions.length, "Every currently included Vampire Condition has complete PT presentation");
 });
 
@@ -363,7 +368,7 @@ test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/E
       const { setTestMobile } = await vite.ssrLoadModule("/hooks/use-mobile.ts");
       const { LanguageProvider } = await vite.ssrLoadModule("/lib/i18n.tsx");
       const reference = Object.fromEntries(["clans", "covenants", "anchors", "blood-potency", "torpor", "bloodlines"].map(group => [group === "blood-potency" ? "bloodPotency" : group, read(`public/game-lines/vampire/data/${group}.json`)]));
-      const catalogs = { get: id => ({ "vampire-powers": read("public/game-lines/vampire/data/powers.json"), "vampire-reference": reference, "core-merits": [], "vampire-merits": [], "core-reference": { conditions: [], presentation: {} }, "vampire-conditions": catalog })[id] };
+      const catalogs = { get: id => ({ "vampire-powers": read("public/game-lines/vampire/data/powers.json"), "vampire-reference": reference, "core-merits": [], "vampire-merits": [], "core-reference": { conditions: read("public/shared/data/conditions.json"), presentation: read("public/shared/data/conditions-pt.json") }, "vampire-conditions": catalog })[id] };
       const character = blankPrintCharacter("VtR");
       character.line_data.clan_id = "daeva";
       character.current_state.conditions = localized.map(item => ({ id: item.errataFor ?? item.id, instanceId: `saved:${item.id}`, persistent: Boolean(item.persistent), notes: "Authored note" }));

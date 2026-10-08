@@ -414,12 +414,13 @@
     "name": "Soulless",
     "originalName": "Soulless",
     "category": "Supernatural",
-    "description": "The loss of the soul slowly erodes will, identity, and the ability to resist degeneration.",
+    "description": "Soul loss prevents Willpower recovery through surrender or rest and reverses Virtue and Vice. Fulfilling Virtue without risk restores 1 Willpower per scene; fulfilling Vice in a way that threatens you restores all Willpower once per session. Regaining Willpower through Vice is an Integrity breaking point with −5 unless Integrity is already 1.",
+    "penalty": "−2 to dice pools resisting takeover or possession by another entity.",
     "persistent": true,
-    "source": "Chronicles of Darkness",
-    "sourceCode": "CofD",
-    "page": 290,
+    "source": "Mage: The Awakening Second Edition",
+    "sourceCode": "MTA 2e",
+    "page": 318,
     "resolution": "Regain a soul.",
-    "beat": "Lose Integrity or Clarity because the character indulged their Vice or equivalent anchor."
+    "beat": "Lose Integrity because you indulged your Vice."
   }
 ]

@@ -107,6 +107,7 @@ import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 import { mergeSpellHomebrews } from "./spell-homebrews";
 import { useSpellHomebrews } from "./use-spell-homebrews";
 import type { MageFactionDefinition } from "./factions";
+import { mageConditionPresentation, type MageConditionDefinition } from "./condition-presentation";
 export function MageCharacterPaper({
   character,
   updateState,
@@ -135,9 +136,11 @@ export function MageCharacterPaper({
   const coreConditions = coreReference.conditions.map(condition =>
     locale === "pt-BR" ? { ...condition, ...coreReference.presentation[condition.id] } : condition,
   );
+  const mageConditions = catalogs.get<readonly MageConditionDefinition[]>("mage-reference")
+    .map(condition => mageConditionPresentation(condition, locale));
   const conditionCatalog = [
-    ...coreConditions.filter(condition => condition.sourceCode === "CofD" || condition.sourceCode === "HL"),
-    ...catalogs.get<readonly ConditionDefinition[]>("mage-reference"),
+    ...coreConditions.filter(condition => !mageConditions.some(item => item.id === condition.id)),
+    ...mageConditions,
   ];
   const isMobile = useIsMobile();
   const [mobileTab, setMobileTab] = useState({
