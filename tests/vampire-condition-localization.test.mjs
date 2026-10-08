@@ -13,7 +13,7 @@ const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "primeval-truths", "oathbreaker-invictus", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -22,7 +22,7 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
     assert.equal(item.name, item.originalName);
     assert.equal(Boolean(item.presentationPt.beat), Boolean(item.beat));
   }
-  const [hunger, despondent, frantic, curse, subsumed, chronic, terminal, pareidolia, directive, radio, primeval, oathbreaker, scorned, soulmate] = localized;
+  const [hunger, despondent, frantic, curse, subsumed, chronic, terminal, pareidolia, directive, radio, primeval, oathbreaker, depressed, loathing, inflamed, firedUp, scorned, soulmate] = localized;
   assert.equal(hunger.page, 31);
   assert.equal(hunger.persistent, undefined);
   assert.equal(hunger.beat, undefined);
@@ -78,6 +78,24 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.match(oathbreaker.penalty, /2 dots of Invictus Status.*1 dot each of Resources, Allies, Contacts, Herd, and Mentor.*if you have.*dramatic failures/);
   assert.match(oathbreaker.resolution, /Final Death for an Invictus member.*member or the Invictus at large/);
   assert.deepEqual(oathbreaker.nameQualifier, { "en-US": "Kindred", "pt-BR": "Membro" });
+  assert.equal(depressed.page, 24);
+  assert.equal(depressed.persistent, true);
+  assert.match(depressed.description, /10-again.*instant Mental and Social.*Nightmare dots.*Manipulation.*ends without resolving.*hours.*exceptional success.*nights/);
+  assert.match(depressed.resolution, /short-term Aspiration.*restitution/);
+  assert.equal(loathing.page, 25);
+  assert.equal(loathing.persistent, true);
+  assert.match(loathing.description, /cannot spend or regain Willpower.*extended actions automatically fail.*ends without resolving.*nights.*Blood Potency/);
+  assert.match(loathing.beat, /Tell the vampire.*dangerous for anyone/);
+  assert.equal(inflamed.page, 30);
+  assert.equal(inflamed.persistent, undefined);
+  assert.equal(inflamed.beat, undefined);
+  assert.match(inflamed.description, /Celerity dots.*all Composure- and Stamina-based.*Induce.*Vigor is higher.*ends without resolving.*scene.*exceptional success.*night/);
+  assert.match(inflamed.resolution, /greater than your Stamina.*mortal affected by Inure.*Stamina \+ Resilience/);
+  assert.equal(firedUp.page, 41);
+  assert.equal(firedUp.persistent, undefined);
+  assert.equal(firedUp.beat, undefined);
+  assert.match(firedUp.description, /\+3.*Physical and Social.*−2.*physical violence or destruction.*3 successes instead of 5.*ends without resolving.*night/);
+  assert.match(firedUp.resolution, /5 bashing or 2 lethal or aggravated damage to another person/);
   assert.match(scorned.description, /Blood Potency 1.*Integrity for Humanity.*do not cause breaking points.*that vampire/);
   assert.match(scorned.resolution, /Kill.*Touchstones.*reputation/);
   assert.match(soulmate.description, /existing and new blood bonds.*Majesty.*Once per night.*greater than their Stamina.*more than their Size/);

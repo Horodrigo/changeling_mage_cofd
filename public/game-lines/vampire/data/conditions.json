@@ -247,56 +247,78 @@
     "name": "Depressed",
     "originalName": "Depressed",
     "category": "Vampire",
-    "description": "The subject loses 10-again on instant Mental and Social actions and is easier for the vampire to manipulate through grief.",
+    "description": "You lose 10-again on instant Mental and Social actions. The vampire who inflicted this Condition adds her Nightmare dots to Manipulation rolls made to exploit your emotional state. It ends without resolving after a number of hours equal to that vampire's Blood Potency; Bitter Blossom's exceptional success changes hours to nights.",
     "source": "Sin Again: Daeva",
     "sourceCode": "h-vtr-sin-again",
     "sourceId": "h-vtr-sin-again",
     "homebrew": true,
     "page": 24,
     "persistent": true,
-    "resolution": "Abandon an important task or make restitution for a significant wrong.",
-    "beat": "Follow the vampire's advice despite the consequences."
+    "resolution": "Abandon an important task, such as a short-term Aspiration, or make restitution for a past misdeed.",
+    "beat": "Follow the vampire's advice to shake off your depression, however unintuitive it seems.",
+    "presentationPt": {
+      "name": "Deprimido",
+      "description": "Você perde 10-de-novo em ações Mentais e Sociais instantâneas. O vampiro que impôs esta Condição acrescenta seus pontos de Pesadelo aos testes de Manipulação para explorar seu estado emocional. Ela termina sem resolução após um número de horas igual à Potência de Sangue desse vampiro; o sucesso excepcional de Flor Amarga troca horas por noites.",
+      "resolution": "Abandonar uma tarefa importante, como uma Aspiração de curto prazo, ou reparar um erro do passado.",
+      "beat": "Seguir o conselho do vampiro para se livrar da depressão, por menos intuitivo que pareça."
+    }
   },
   {
     "id": "vtr-sin-again:self-loathing",
     "name": "Self-Loathing",
     "originalName": "Self-Loathing",
     "category": "Vampire",
-    "description": "The subject cannot spend or regain Willpower, and extended actions automatically fail.",
+    "description": "You cannot spend or regain Willpower, and all extended actions automatically fail. This Condition ends without resolving after a number of nights equal to the vampire's Blood Potency.",
     "source": "Sin Again: Daeva",
     "sourceCode": "h-vtr-sin-again",
     "sourceId": "h-vtr-sin-again",
     "homebrew": true,
     "page": 25,
     "persistent": true,
-    "resolution": "Meaningfully sabotage yourself.",
-    "beat": "Reveal a dangerous secret because you believe you deserve the consequences."
+    "resolution": "Sabotage yourself, such as confessing your crimes to someone you wronged or destroying a carefully planned scheme or long-term Aspiration.",
+    "beat": "Tell the vampire a secret about yourself that would be dangerous for anyone to know.",
+    "presentationPt": {
+      "name": "Autodesprezo",
+      "description": "Você não pode gastar nem recuperar Força de Vontade, e todas as ações estendidas falham automaticamente. Esta Condição termina sem resolução após um número de noites igual à Potência de Sangue do vampiro.",
+      "resolution": "Sabotar a si mesmo, como confessar seus crimes a alguém que você prejudicou ou destruir um plano cuidadosamente elaborado ou uma Aspiração de longo prazo.",
+      "beat": "Contar ao vampiro um segredo sobre você que seria perigoso qualquer pessoa conhecer."
+    }
   },
   {
     "id": "vtr-sin-again:inflamed",
     "name": "Inflamed",
     "originalName": "Inflamed",
     "category": "Vampire",
-    "description": "Subtract the inflicting vampire's Celerity from Composure and Stamina used to resist coercion or pain.",
+    "description": "A vampire has overloaded your responses to stimuli. Subtract her Celerity dots from all Composure- and Stamina-based resistance rolls. If Induce is used and her Vigor is higher than Celerity, use Vigor instead. This Condition ends without resolving at the end of the scene; Incite's exceptional success makes it last the rest of the night.",
     "source": "Sin Again: Daeva",
     "sourceCode": "h-vtr-sin-again",
     "sourceId": "h-vtr-sin-again",
     "homebrew": true,
     "page": 30,
-    "resolution": "Take damage greater than Stamina or allow the scene to end."
+    "resolution": "Take damage greater than your Stamina as physical trauma resets your system. On an Inflamed mortal affected by Inure, use effective Stamina (Stamina + Resilience) for this threshold.",
+    "presentationPt": {
+      "name": "Inflamado",
+      "description": "Um vampiro sobrecarregou suas respostas a estímulos. Subtraia os pontos de Celeridade dele de todos os testes de resistência baseados em Compostura e Vigor. Se Induzir for usada e o Ímpeto dele for maior que a Celeridade, use Ímpeto em vez dela. Esta Condição termina sem resolução ao fim da cena; o sucesso excepcional de Incitar faz com que dure o restante da noite.",
+      "resolution": "Sofrer dano superior ao seu Vigor, pois o trauma físico reinicia seu sistema. Em um mortal Inflamado afetado por Insensibilizar, use Vigor efetivo (Vigor + Resiliência) para esse limite."
+    }
   },
   {
     "id": "vtr-sin-again:fired-up",
     "name": "Fired Up!",
     "originalName": "Fired Up!",
     "category": "Vampire",
-    "description": "Gain +3 on violent Physical and confrontational Social actions, but −2 to resist impulsive confrontation.",
+    "description": "You are eager to fight. Gain +3 on Physical and Social actions involving violence or conflict, but suffer −2 on actions to resist impulsive or confrontational behavior. Attempts to persuade you to commit physical violence or destruction achieve exceptional success with 3 successes instead of 5. This Condition ends without resolving at the end of the night.",
     "source": "Sin Again: Daeva",
     "sourceCode": "h-vtr-sin-again",
     "sourceId": "h-vtr-sin-again",
     "homebrew": true,
     "page": 41,
-    "resolution": "Deal at least five bashing or two lethal or aggravated damage."
+    "resolution": "Deal at least 5 bashing or 2 lethal or aggravated damage to another person.",
+    "presentationPt": {
+      "name": "Exaltado!",
+      "description": "Você está ansioso para brigar. Receba +3 em ações Físicas e Sociais envolvendo violência ou conflito, mas sofra −2 em ações para resistir a comportamentos impulsivos ou confrontadores. Tentativas de convencer você a cometer violência física ou destruição obtêm sucesso excepcional com 3 sucessos em vez de 5. Esta Condição termina sem resolução ao fim da noite.",
+      "resolution": "Causar ao menos 5 de dano contundente ou 2 de dano letal ou agravado a outra pessoa."
+    }
   },
   {
     "id": "vtr-strange-shades:scorned",
