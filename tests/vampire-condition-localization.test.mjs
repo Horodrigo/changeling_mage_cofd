@@ -13,7 +13,7 @@ const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -112,6 +112,25 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.match(soulmate.description, /existing and new blood bonds.*Majesty.*Once per night.*greater than their Stamina.*more than their Size/);
   assert.match(soulmate.penalty, /Each month/);
   assert.match(soulmate.beat, /Either partner.*The mortal.*The vampire/);
+  const [addicted, bestial, charmed, competitive] = localized.slice(20);
+  assert.equal(addicted.page, 301);
+  assert.equal(addicted.persistent, true);
+  assert.match(addicted.description, /may cause Deprived.*multiple times for different addictions/);
+  assert.match(addicted.resolution, /Integrity.*exceptional success.*breaking-point/);
+  assert.equal(bestial.page, 301);
+  assert.equal(bestial.persistent, undefined);
+  assert.equal(bestial.beat, undefined);
+  assert.match(bestial.penalty, /−2.*frenzy or physical impulses.*−2 to Defense.*3 successes instead of 5/);
+  assert.match(bestial.description, /nights.*winner.*own Blood Potency.*After resolving.*full month/);
+  assert.equal(bestial.resolution, "Cause damage in someone's last 3 Health boxes.");
+  assert.equal(charmed.page, 301);
+  assert.equal(charmed.persistent, true);
+  assert.match(charmed.description, /Majesty dots.*Manipulation.*Wits \+ Empathy or Wits \+ Subterfuge.*Supernatural lie detection requires a Clash.*expires without resolving.*hour per dot/);
+  assert.equal(competitive.page, 302);
+  assert.equal(competitive.persistent, undefined);
+  assert.equal(competitive.beat, undefined);
+  assert.match(competitive.description, /direct competition.*do not spend Willpower suffer −2.*contested and extended.*3 successes instead of 5.*nights.*After resolving.*full month/);
+  assert.match(competitive.resolution, /competition.*someone reaches a breaking point/);
 });
 
 test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/EN without changing saved instances", async () => {

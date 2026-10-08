@@ -557,25 +557,37 @@
       "pt-BR": "Membro"
     },
     "category": "Vampire",
-    "description": "Choose a substance or destructive behavior. The character must indulge the addiction regularly; going without it inflicts Deprived.",
+    "description": "Choose an addiction to a substance, gambling, or another destructive behavior. You must indulge it regularly to keep it under control; being unable to do so may cause Deprived. This Condition may be taken multiple times for different addictions.",
     "persistent": true,
     "resolution": "Regain or lose a dot of Integrity, or achieve an exceptional success on a breaking-point roll.",
     "beat": "Choose to indulge the addiction instead of fulfilling an obligation.",
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
-    "page": 301
+    "page": 301,
+    "presentationPt": {
+      "name": "Viciado",
+      "description": "Escolha um vício em uma substância, jogos de azar ou outro comportamento destrutivo. Você precisa satisfazê-lo regularmente para mantê-lo sob controle; não conseguir fazê-lo pode causar Privado. Esta Condição pode ser recebida várias vezes para vícios diferentes.",
+      "resolution": "Recuperar ou perder um ponto de Integridade, ou obter sucesso excepcional em um teste de Ponto de Ruptura.",
+      "beat": "Escolher satisfazer o vício em vez de cumprir uma obrigação."
+    }
   },
   {
     "id": "bestial",
     "name": "Bestial",
     "originalName": "Bestial",
     "category": "Vampire",
-    "description": "The Beast pushes the character toward immediate, violent gratification and makes measured restraint difficult.",
-    "penalty": "Apply the Condition's listed penalty to actions that do not pursue the Beast's immediate impulse.",
-    "resolution": "Cause significant harm while pursuing the Beast's impulse or otherwise satisfy the listed resolution.",
+    "description": "You act on primal physical impulses, fleeing frightening things and meeting aggression with violence. This Condition fades after a number of nights equal to the causing vampire's Blood Potency: the winner of a predatory aura conflict, or your own Blood Potency when caused by a detachment test. After resolving it, you cannot receive Bestial again for a full month.",
+    "penalty": "Suffer −2 on rolls to resist frenzy or physical impulses, and −2 to Defense. Rolls to compel impulsive aggression or escape achieve exceptional success with 3 successes instead of 5, including applicable uses of Nightmare or Dominate.",
+    "resolution": "Cause damage in someone's last 3 Health boxes.",
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
-    "page": 301
+    "page": 301,
+    "presentationPt": {
+      "name": "Bestial",
+      "description": "Você age por impulsos físicos primitivos, fugindo do que assusta e respondendo à agressão com violência. Esta Condição desaparece após um número de noites igual à Potência de Sangue do vampiro que a causou: o vencedor de um conflito de aura predatória, ou sua própria Potência de Sangue quando causada por um teste de Distanciamento. Após resolvê-la, você não pode receber Bestial novamente por um mês inteiro.",
+      "penalty": "Sofra −2 em testes para resistir ao frenesi ou a impulsos físicos, e −2 na Defesa. Testes para compelir agressão impulsiva ou fuga obtêm sucesso excepcional com 3 sucessos em vez de 5, incluindo usos apropriados de Pesadelo ou Dominação.",
+      "resolution": "Causar dano nas últimas 3 caixas de Vitalidade de alguém."
+    }
   },
   {
     "id": "charmed",
@@ -586,24 +598,35 @@
       "pt-BR": "Membro"
     },
     "category": "Vampire",
-    "description": "A vampire's supernatural personality makes the character eager to please and unable to recognize the vampire's lies or true motives without overcoming a Clash of Wills. The vampire adds Majesty to Manipulation against the character; attempts to detect deception suffer the same rating as a penalty. It normally lasts one hour per Blood Potency.",
+    "description": "A vampire's supernatural personality makes you eager to please him and reluctant to believe his lies or recognize his true intentions. He adds his Majesty dots to Manipulation rolls against you; your Wits + Empathy or Wits + Subterfuge rolls to detect his lies or motives suffer the same penalty. Supernatural lie detection requires a Clash of Wills. You do favors as for a close friend and do not feel deceived until the Condition resolves. It normally expires without resolving after an hour per dot of his Blood Potency.",
     "persistent": true,
     "resolution": "The vampire tries to seriously harm the character or someone close to them, or the character makes a significant financial or physical sacrifice for the vampire.",
     "beat": "Divulge a secret or perform a favor for the vampire.",
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
-    "page": 301
+    "page": 301,
+    "presentationPt": {
+      "name": "Encantado",
+      "description": "A personalidade sobrenatural de um vampiro deixa você ansioso para agradá-lo e relutante em acreditar que ele mente ou em reconhecer suas verdadeiras intenções. Ele acrescenta seus pontos de Majestade aos testes de Manipulação contra você; seus testes de Raciocínio + Empatia ou Raciocínio + Subterfúgio para detectar suas mentiras ou intenções sofrem a mesma penalidade. Detectar mentiras por meios sobrenaturais exige um Confronto de Vontades. Você faz favores como faria para um amigo próximo e não se sente enganado até a Condição ser resolvida. Ela normalmente expira sem resolução após uma hora por ponto da Potência de Sangue dele.",
+      "resolution": "O vampiro tenta ferir gravemente você ou alguém próximo, ou você faz um sacrifício financeiro ou físico significativo por ele.",
+      "beat": "Revelar um segredo ou fazer um favor ao vampiro."
+    }
   },
   {
     "id": "competitive",
     "name": "Competitive",
     "originalName": "Competitive",
     "category": "Vampire",
-    "description": "The character turns the current situation into a contest that must be won.",
-    "resolution": "Win or decisively lose the contest, or suffer a meaningful consequence for pursuing it.",
+    "description": "You must assert dominance and superiority. In direct competition with another character, rolls on which you do not spend Willpower suffer −2, including contested and extended rolls. Attempts to tempt or coerce you into competition achieve exceptional success with 3 successes instead of 5. This Condition fades after a number of nights equal to the causing vampire's Blood Potency: the winner of a predatory aura conflict, or your own Blood Potency when caused by a detachment test. After resolving it, you cannot receive Competitive again for a full month.",
+    "resolution": "Win or lose a competition in which someone reaches a breaking point.",
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
-    "page": 302
+    "page": 302,
+    "presentationPt": {
+      "name": "Competitivo",
+      "description": "Você precisa afirmar domínio e superioridade. Em competição direta com outro personagem, testes nos quais você não gasta Força de Vontade sofrem −2, incluindo testes disputados e estendidos. Tentativas de tentar ou coagir você a competir obtêm sucesso excepcional com 3 sucessos em vez de 5. Esta Condição desaparece após um número de noites igual à Potência de Sangue do vampiro que a causou: o vencedor de um conflito de aura predatória, ou sua própria Potência de Sangue quando causada por um teste de Distanciamento. Após resolvê-la, você não pode receber Competitivo novamente por um mês inteiro.",
+      "resolution": "Vencer ou perder uma competição em que alguém sofra um Ponto de Ruptura."
+    }
   },
   {
     "id": "confused",
