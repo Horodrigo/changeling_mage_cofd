@@ -270,7 +270,7 @@
     "sourceCode": "VtR",
     "page": 189,
     "presentationPt": {
-      "name": "Perjuro",
+      "name": "Quebrador de Juramento",
       "description": "Você quebrou um Juramento, e o Invictus passa a limitar sua influência e seu avanço.",
       "penalty": "Marque 2 pontos de Status no Invictus e 1 ponto de cada um dos Méritos Recursos, Aliados, Contatos, Rebanho e Mentor, se você os possuir. Você não pode acessar os Méritos marcados enquanto esta Condição durar. Falhas em ações Sociais entre os Invictus se tornam automaticamente falhas dramáticas.",
       "resolution": "Arriscar a Morte Final por um membro do Invictus e ter o sacrifício reconhecido por esse membro ou pelo Invictus como um todo.",
@@ -776,10 +776,16 @@
     "name": "Enslaved",
     "originalName": "Enslaved",
     "category": "Vampire",
-    "description": "The character is completely subject to the vampire who inflicted the Condition. The controller's spoken commands begin Dominate, and the character counts as Mesmerized for Dominate without imposing the normal Resolve penalty on the vampire's dice pool.",
+    "description": "You obey the controlling vampire's instructions and remember what she tells you to remember, unable to distinguish ordinary instructions from Dominate. This counts as Mesmerized for Dominate. Commands require you to hear her voice, but not eye contact. Your Resolve does not penalize her dice pool for Entombed Command and Possession.",
     "persistent": true,
     "resolution": "Kill the controlling vampire or undo the control through supernatural means.",
     "beat": "Obey an instruction to do something the character would not normally do.",
+    "presentationPt": {
+      "name": "Escravizado",
+      "description": "Você obedece às instruções da vampira que o controla e lembra o que ela manda lembrar, sem distinguir instruções comuns de Dominação. Esta Condição conta como Mesmerizado para Dominação. Basta ouvir a voz dela para receber ordens, sem contato visual. Sua Perseverança não penaliza a parada dela para Comando Sepultado e Possessão.",
+      "resolution": "Matar a vampira que o controla ou desfazer o controle por meios sobrenaturais.",
+      "beat": "Obedecer a uma instrução para fazer algo que você normalmente não faria."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 303
@@ -789,8 +795,16 @@
     "name": "Enthralled",
     "originalName": "Enthralled",
     "category": "Vampire",
-    "description": "Supernatural devotion compels the character to protect and please a specified subject.",
-    "resolution": "The originating power ends or the character suffers a serious consequence while serving the subject.",
+    "description": "You are fanatically loyal to a vampire, willingly risking your life for him. The compulsion lasts one night per dot of his Blood Potency. Taking an action against his commands requires 1 Willpower and an immediate Humanity 1 breaking point. Only success allows you to carry out that action; failure makes you back down at the last moment.",
+    "persistent": true,
+    "resolution": "Take more lethal damage than your Stamina while protecting the vampire, or succeed at a breaking-point roll related to this Condition.",
+    "beat": "Put yourself in harm's way to protect the vampire.",
+    "presentationPt": {
+      "name": "Cativado",
+      "description": "Você é fanaticamente leal a um vampiro e arrisca a própria vida por ele de bom grado. A compulsão dura uma noite por ponto da Potência de Sangue dele. Agir contra suas ordens exige 1 Força de Vontade e um Ponto de Ruptura imediato de Humanidade 1. Apenas um sucesso permite realizar essa ação; uma falha faz você recuar no último momento.",
+      "resolution": "Sofrer mais dano letal que seu Vigor ao proteger o vampiro ou obter sucesso em um teste de Ponto de Ruptura relacionado a esta Condição.",
+      "beat": "Colocar-se em perigo para proteger o vampiro."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 303
@@ -800,10 +814,16 @@
     "name": "False Memories",
     "originalName": "False Memories",
     "category": "Vampire",
-    "description": "Supernatural influence has replaced real memories with convincing false ones. Even conclusive evidence is difficult to accept, and discovering the truth may provoke a breaking point.",
+    "description": "You believe false memories regardless of how events actually happened. Even conclusive evidence is difficult to accept. Being confronted with proof that a memory is false is a breaking point at a level set by the Storyteller.",
     "persistent": true,
     "resolution": "Face proof that the memory is false and succeed at the resulting breaking-point roll.",
     "beat": "Trust someone or take a risky action based solely on the false memories.",
+    "presentationPt": {
+      "name": "Falsas Memórias",
+      "description": "Você acredita em memórias falsas, independentemente de como os fatos realmente ocorreram. Até provas conclusivas são difíceis de aceitar. Confrontar provas de que uma memória é falsa constitui um Ponto de Ruptura de nível definido pelo Narrador.",
+      "resolution": "Confrontar provas de que a memória é falsa e obter sucesso no teste de Ponto de Ruptura resultante.",
+      "beat": "Confiar em alguém ou realizar uma ação arriscada com base apenas nas memórias falsas."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 303
@@ -813,8 +833,13 @@
     "name": "Frightened",
     "originalName": "Frightened",
     "category": "Vampire",
-    "description": "Overwhelming fear makes escape the character's only priority. They may fight only past someone blocking their escape, and moving toward the source of fear costs 1 Willpower. Supernatural creatures prone to loss of control must roll to avoid frenzy. The Condition lasts until the scene ends if not resolved sooner.",
+    "description": "Escape is your only priority, even at the expense of belongings, friends, and allies. You fight past anyone blocking your escape, but cannot approach or act against the source of fear. If the only exit requires approaching it, you collapse in terror. Supernatural creatures prone to loss of control, including vampires, must roll to avoid frenzy. The Condition lasts until the scene ends; spending 1 Willpower suppresses all its effects for one turn.",
     "resolution": "Escape from the source of fear.",
+    "presentationPt": {
+      "name": "Assustado",
+      "description": "Fugir é sua única prioridade, mesmo abandonando pertences, amigos e aliados. Você luta para passar por quem bloquear sua fuga, mas não pode se aproximar da fonte do medo nem agir contra ela. Se a única saída exigir essa aproximação, você desaba de terror. Criaturas sobrenaturais sujeitas à perda de controle, incluindo vampiros, devem testar para evitar o frenesi. A Condição dura até o fim da cena; gastar 1 Força de Vontade suprime todos os seus efeitos por um turno.",
+      "resolution": "Escapar da fonte do medo."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 304

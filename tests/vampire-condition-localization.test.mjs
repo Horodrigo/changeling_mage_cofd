@@ -13,7 +13,7 @@ const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated"]);
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -85,6 +85,7 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.match(primeval.description, /cannot regain Willpower.*1 additional Vitae.*each night/);
   assert.match(primeval.resolution, /Humanity detachment.*significant action.*void/);
   assert.equal(oathbreaker.page, 189);
+  assert.equal(oathbreaker.presentationPt.name, "Quebrador de Juramento");
   assert.equal(oathbreaker.persistent, true);
   assert.match(oathbreaker.penalty, /2 dots of Invictus Status.*1 dot each of Resources, Allies, Contacts, Herd, and Mentor.*if you have.*dramatic failures/);
   assert.match(oathbreaker.resolution, /Final Death for an Invictus member.*member or the Invictus at large/);
@@ -163,6 +164,25 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.equal(enervated.persistent, true);
   assert.match(enervated.description, /Integrity is gone.*Soulless.*Virtue, only Vice.*permanent Willpower by 1 dot.*new maximum/);
   assert.equal(enervated.beat, "Lose a dot of permanent Willpower.");
+  const [enslaved, enthralled, memories, frightened] = localized.slice(32);
+  assert.equal(enslaved.page, 303);
+  assert.equal(enslaved.persistent, true);
+  assert.match(enslaved.description, /remember what she tells.*Mesmerized.*hear her voice, but not eye contact.*Resolve does not penalize.*Entombed Command and Possession/);
+  assert.match(enslaved.resolution, /Kill.*supernatural means/);
+  assert.equal(enthralled.page, 303);
+  assert.equal(enthralled.persistent, true);
+  assert.match(enthralled.description, /risking your life.*one night per dot.*1 Willpower.*Humanity 1 breaking point.*Only success.*failure.*back down/);
+  assert.match(enthralled.resolution, /more lethal damage than your Stamina.*protecting the vampire.*succeed.*breaking-point/);
+  assert.equal(enthralled.beat, "Put yourself in harm's way to protect the vampire.");
+  assert.equal(memories.page, 303);
+  assert.equal(memories.persistent, true);
+  assert.match(memories.description, /proof that a memory is false is a breaking point.*level set by the Storyteller/);
+  assert.match(memories.resolution, /proof.*succeed/);
+  assert.equal(frightened.page, 304);
+  assert.equal(frightened.persistent, undefined);
+  assert.equal(frightened.beat, undefined);
+  assert.match(frightened.description, /cannot approach or act against.*only exit.*collapse in terror.*roll to avoid frenzy.*scene ends.*1 Willpower suppresses all its effects for one turn/);
+  assert.equal(frightened.resolution, "Escape from the source of fear.");
 });
 
 test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/EN without changing saved instances", async () => {
