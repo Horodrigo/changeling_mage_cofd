@@ -15,7 +15,7 @@ const enabledErrata = conditions.filter(item => item.errataFor).map(item => item
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id).sort(), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened", "humbled", "intoxicated", "jaded", "languid", "lethargic", "mesmerized", "raptured", "sated", "scarred", "stumbled", "subservient", "tainted", "tasked", "tempted", "thrall", "wanton", "vtr-wild-hunt:beastless", "h-vtr-fire-revolution:contrary", "h-vtr-agony-ecstasy:errata:seed-of-her-divinity", "h-vtr-fire-revolution:errata:carthian-backup", "elder-anchored-heart", "elder-beasts-bargain", "elder-beloved-enemy", "elder-crushed"].sort());
+  assert.deepEqual(localized.map(item => item.id).sort(), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened", "humbled", "intoxicated", "jaded", "languid", "lethargic", "mesmerized", "raptured", "sated", "scarred", "stumbled", "subservient", "tainted", "tasked", "tempted", "thrall", "wanton", "vtr-wild-hunt:beastless", "h-vtr-fire-revolution:contrary", "h-vtr-agony-ecstasy:errata:seed-of-her-divinity", "h-vtr-fire-revolution:errata:carthian-backup", "elder-anchored-heart", "elder-beasts-bargain", "elder-beloved-enemy", "elder-crushed", "elder-forgotten", "elder-immutable-heart", "elder-imprisoned-echo", "elder-living-legend"].sort());
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -298,6 +298,20 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.equal(crushed.beat, undefined);
   assert.match(crushed.description, /cannot regain Willpower.*two points.*one/);
   assert.match(crushed.resolution, /breaking point.*lethal or aggravated.*three rightmost Health boxes/);
+  const [forgotten, immutable, imprisoned, legend] = ["elder-forgotten", "elder-immutable-heart", "elder-imprisoned-echo", "elder-living-legend"].map(id => conditions.find(item => item.id === id));
+  for (const item of [forgotten, immutable, imprisoned, legend]) assert.equal(item.page, 136);
+  for (const item of [forgotten, immutable, legend]) assert.equal(item.persistent, true);
+  assert.match(forgotten.description, /always under Face in the Crowd.*acquaintances.*1 Willpower.*scene.*Only your regnant, your own thralls.*Conditions with Dominate or Majesty/);
+  assert.match(forgotten.resolution, /blood bond.*Humanity or Integrity/);
+  assert.match(immutable.description, /first Touchstone.*\+3.*additional Touchstones.*\+4.*cannot be replaced/);
+  assert.match(immutable.resolution, /Languid.*abandon.*detachment/);
+  assert.equal(imprisoned.persistent, undefined);
+  assert.equal(imprisoned.beat, undefined);
+  assert.match(imprisoned.description, /Rank.*escape captivity, including grapples, or flee danger.*ends after nights.*next full session.*penalty equal to its Rank/);
+  assert.match(imprisoned.resolution, /Break the mirror.*dramatically failing a Social roll.*immediately interferes/);
+  assert.doesNotMatch(imprisoned.description, /chapter|turns failed Social actions into dramatic failures/);
+  assert.match(legend.description, /Kindred.*−1.*Invictus.*−2.*not cumulative.*mortals.*\+2/);
+  assert.equal(legend.resolution, "Separate your identity from the fictional character.");
 });
 
 test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/EN without changing saved instances", async () => {

@@ -479,10 +479,16 @@
     "name": "Forgotten",
     "originalName": "Forgotten",
     "category": "Elder",
-    "description": "Everyone who knew the elder assumes they are gone, dead, or unreachable. Familiar people can recognize the elder with effort, while strangers require the elder to spend Willpower to make a lasting impression for the scene.",
+    "description": "People who know you assume you are dead, gone, or out of touch. You are always under Face in the Crowd. Even when you attract acquaintances' attention, they see a stranger unless you spend 1 Willpower to restore recognition for the scene. Only your regnant, your own thralls, and anyone on whom you inflicted Conditions with Dominate or Majesty notice and recognize you normally.",
     "persistent": true,
     "resolution": "Break the blood bond to the regnant, or lose Humanity or Integrity while forcing someone to recognize the elder.",
     "beat": "Suffer a setback or cause harm while trying to gain attention and recognition.",
+    "presentationPt": {
+      "name": "Esquecido",
+      "description": "Quem conhece você presume que morreu, partiu ou perdeu contato. Você está sempre sob Rosto na Multidão. Mesmo quando chama a atenção de conhecidos, eles veem um estranho, a menos que você gaste 1 Força de Vontade para recuperar o reconhecimento durante a cena. Apenas seu regente, seus próprios servos e aqueles em quem você infligiu Condições com Dominação ou Majestade notam e reconhecem você normalmente.",
+      "resolution": "Romper seu Laço de Sangue com o regente ou perder Humanidade ou Integridade ao obrigar alguém a ver e reconhecer você.",
+      "beat": "Sofrer um revés ou causar dano a alguém ao tentar obter atenção e reconhecimento."
+    },
     "source": "Thousand Years of Night",
     "sourceCode": "TY",
     "page": 136
@@ -496,6 +502,12 @@
     "persistent": true,
     "resolution": "Lose the Touchstone and take Languid, or willingly abandon it and immediately face detachment before attempting to establish another.",
     "beat": "Risk the elder's existence to protect the Touchstone.",
+    "presentationPt": {
+      "name": "Coração Imutável",
+      "description": "Você está plenamente envolvido com uma instituição ou modo de vida mortal. Sua primeira Touchstone deve refletir esse vínculo e concede +3 nos testes de Desapego; Touchstones adicionais elevam o bônus total a +4, mas não podem ser substituídas.",
+      "resolution": "Perder a Touchstone e receber Lânguido, ou abandoná-la voluntariamente, apagando-a e enfrentando um teste imediato de Desapego antes de tentar estabelecer outra.",
+      "beat": "Arriscar sua existência para proteger a Touchstone."
+    },
     "source": "Thousand Years of Night",
     "sourceCode": "TY",
     "page": 136
@@ -505,8 +517,13 @@
     "name": "Imprisoned Echo",
     "originalName": "Imprisoned Echo",
     "category": "Elder",
-    "description": "The elder's Ka is trapped in a mirror. It grants a bonus equal to its Rank to escape captivity but turns failed Social actions into dramatic failures and interferes afterward; if not released, it escapes after a number of nights equal to Blood Potency.",
-    "resolution": "Break the mirror and release the Ka.",
+    "description": "Your Ka is trapped in a mirror. Its desperation grants a bonus equal to its Rank to rolls to escape captivity, including grapples, or flee danger. If you do not release it, this Condition ends after nights equal to your Blood Potency; all Social rolls for the next full session then suffer a penalty equal to its Rank as it takes revenge.",
+    "resolution": "Break the mirror and release the Ka, automatically dramatically failing a Social roll as it immediately interferes in your affairs.",
+    "presentationPt": {
+      "name": "Eco Aprisionado",
+      "description": "Seu Ka está preso em um espelho. O desespero dele concede um bônus igual ao seu Posto nos testes para escapar do cativeiro, incluindo agarrões, ou fugir do perigo. Se você não o libertar, esta Condição termina após um número de noites igual à sua Potência de Sangue; todos os testes Sociais durante a próxima sessão inteira sofrem então uma penalidade igual ao Posto dele, enquanto se vinga.",
+      "resolution": "Quebrar o espelho e libertar o Ka, sofrendo automaticamente uma falha dramática em um teste Social enquanto ele interfere imediatamente em seus assuntos."
+    },
     "source": "Thousand Years of Night",
     "sourceCode": "TY",
     "page": 136
@@ -516,10 +533,16 @@
     "name": "Living Legend",
     "originalName": "Living Legend",
     "category": "Elder",
-    "description": "The elder has been immortalized in popular vampire fiction. Kindred who know the resemblance impose −1 on Social rolls, or −2 among the Invictus, while mortals grant +2.",
+    "description": "You are immortalized in vampire fiction. Social interactions with Kindred who know what you have done suffer −1, and interactions with Invictus suffer −2 instead; these penalties are not cumulative. Social interactions with mortals gain +2.",
     "persistent": true,
-    "resolution": "Publicly separate the elder's identity from the fictional character.",
+    "resolution": "Separate your identity from the fictional character.",
     "beat": "The fictional portrayal threatens the Masquerade.",
+    "presentationPt": {
+      "name": "Lenda Viva",
+      "description": "Você foi imortalizado na ficção sobre vampiros. Interações Sociais com Membros que sabem o que você fez sofrem −1, e interações com Invictus sofrem −2 em vez disso; essas penalidades não são cumulativas. Interações Sociais com mortais recebem +2.",
+      "resolution": "Separar sua identidade da personagem fictícia.",
+      "beat": "A representação fictícia ameaça a Máscara."
+    },
     "source": "Thousand Years of Night",
     "sourceCode": "TY",
     "page": 136
