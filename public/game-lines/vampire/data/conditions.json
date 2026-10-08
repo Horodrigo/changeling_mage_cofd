@@ -638,45 +638,69 @@
     "resolution": "Spend half an hour focusing and clearing the mind, or suffer any amount of lethal damage.",
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
-    "page": 302
+    "page": 302,
+    "presentationPt": {
+      "name": "Confuso",
+      "description": "Você não consegue pensar com clareza devido a trauma ou influência sobrenatural.",
+      "penalty": "−2 em testes de Inteligência e Raciocínio.",
+      "resolution": "Passar meia hora se concentrando e clareando a mente, ou sofrer qualquer quantidade de dano letal."
+    }
   },
   {
     "id": "delusional",
     "name": "Delusional",
     "originalName": "Delusional",
     "category": "Vampire",
-    "description": "The character accepts a specific false belief as real even when confronted with convincing evidence. Spend 1 Willpower to suppress the belief long enough to explain it to someone else, but the delusion still does not apply to one specified situation.",
+    "description": "You believe something false without actually hallucinating images that reinforce it. You cannot truly suppress this belief. Spending 1 Willpower lets you invent an explanation, which may sound irrational to others, for why your delusion does not apply to a specific situation.",
     "persistent": true,
     "resolution": "Completely disprove the delusion or destroy the vampire responsible for it.",
     "beat": "Act on the delusion despite evidence to the contrary.",
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
-    "page": 302
+    "page": 302,
+    "presentationPt": {
+      "name": "Delirante",
+      "description": "Você acredita em algo falso sem realmente alucinar imagens que reforcem essa crença. Não consegue suprimi-la de verdade. Gastar 1 de Força de Vontade permite inventar uma explicação, que pode parecer irracional a outras pessoas, para seu delírio não se aplicar a uma situação específica.",
+      "resolution": "Refutar completamente seu delírio ou destruir o vampiro responsável por ele.",
+      "beat": "Agir conforme o delírio apesar das evidências contrárias."
+    }
   },
   {
     "id": "dependent",
     "name": "Dependent",
     "originalName": "Dependent",
     "category": "Vampire",
-    "description": "The character is emotionally dependent on a specified person and prioritizes that relationship.",
+    "description": "You are obsessed with a mortal, craving both attention and blood. You suffer all effects of a second-stage blood bond as though bound to that mortal (p. 100).",
     "persistent": true,
-    "resolution": "The subject of the dependency dies or the originating effect specifies another resolution.",
-    "beat": "The dependency causes the character to make a harmful or inconvenient choice.",
+    "resolution": "The mortal dies.",
+    "beat": "Suffer a loss because you avoided your responsibilities for this obsession.",
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
-    "page": 302
+    "page": 302,
+    "presentationPt": {
+      "name": "Dependente",
+      "description": "Você está obcecado por um mortal, desejando tanto atenção quanto sangue. Sofre todos os efeitos de um Laço de Sangue de segundo estágio como se estivesse vinculado a esse mortal (p. 100).",
+      "resolution": "O mortal morre.",
+      "beat": "Sofrer uma perda por ter evitado suas responsabilidades devido a essa obsessão."
+    }
   },
   {
     "id": "distracted",
     "name": "Distracted",
     "originalName": "Distracted",
     "category": "Vampire",
-    "description": "Constant confusion prevents the character from taking extended actions.",
+    "description": "Constant confusion and distractions prevent you from taking extended actions. Resolving this Condition does not grant a Beat.",
     "penalty": "−2 to rolls involving perception, concentration, or precision.",
-    "resolution": "Leave the supernatural swarm or effect causing the distraction.",
+    "resolution": "Leave the swarm.",
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
-    "page": 302
+    "page": 302,
+    "presentationPt": {
+      "name": "Distraído",
+      "description": "Confusão e distrações constantes impedem você de realizar ações estendidas. Resolver esta Condição não concede um Ato.",
+      "penalty": "−2 em testes envolvendo percepção, concentração ou precisão.",
+      "resolution": "Sair do enxame."
+    }
   },
   {
     "id": "dominated",

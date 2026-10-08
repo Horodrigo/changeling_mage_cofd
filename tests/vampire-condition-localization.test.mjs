@@ -13,7 +13,7 @@ const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive"]);
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -131,6 +131,22 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.equal(competitive.beat, undefined);
   assert.match(competitive.description, /direct competition.*do not spend Willpower suffer −2.*contested and extended.*3 successes instead of 5.*nights.*After resolving.*full month/);
   assert.match(competitive.resolution, /competition.*someone reaches a breaking point/);
+  const [confused, delusional, dependent, distracted] = localized.slice(24);
+  assert.equal(confused.page, 302);
+  assert.equal(confused.persistent, undefined);
+  assert.equal(confused.beat, undefined);
+  assert.match(confused.penalty, /−2 to Intelligence and Wits/);
+  assert.match(confused.resolution, /half an hour.*any amount of lethal damage/);
+  assert.equal(delusional.persistent, true);
+  assert.match(delusional.description, /without actually hallucinating.*cannot truly suppress.*1 Willpower.*explanation.*does not apply to a specific situation/);
+  assert.equal(dependent.persistent, true);
+  assert.match(dependent.description, /mortal.*attention and blood.*all effects of a second-stage blood bond.*p\. 100/);
+  assert.equal(dependent.resolution, "The mortal dies.");
+  assert.equal(distracted.persistent, undefined);
+  assert.equal(distracted.beat, undefined);
+  assert.match(distracted.description, /extended actions.*does not grant a Beat/);
+  assert.match(distracted.penalty, /−2.*perception, concentration, or precision/);
+  assert.equal(distracted.resolution, "Leave the swarm.");
 });
 
 test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/EN without changing saved instances", async () => {
