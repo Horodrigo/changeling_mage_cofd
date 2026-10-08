@@ -13,7 +13,7 @@ const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -22,7 +22,7 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
     assert.equal(item.name, item.originalName);
     assert.equal(Boolean(item.presentationPt.beat), Boolean(item.beat));
   }
-  const [hunger, despondent, frantic, curse, subsumed, chronic, terminal, pareidolia, directive, radio, primeval, oathbreaker, depressed, loathing, inflamed, firedUp, scorned, soulmate] = localized;
+  const [hunger, despondent, frantic, curse, subsumed, chronic, terminal, pareidolia, directive, radio, agonized, promised, primeval, oathbreaker, depressed, loathing, inflamed, firedUp, scorned, soulmate] = localized;
   assert.equal(hunger.page, 31);
   assert.equal(hunger.persistent, undefined);
   assert.equal(hunger.beat, undefined);
@@ -68,6 +68,17 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.doesNotMatch(directive.description, /chapter/);
   assert.equal(radio.page, 23);
   assert.match(radio.description, /Mental rolls, Stealth rolls.*combat suffer −1.*each week.*maximum of −5.*fatal/);
+  assert.equal(agonized.page, 135);
+  assert.equal(agonized.source, "Guide to the Night");
+  assert.equal(agonized.persistent, undefined);
+  assert.equal(agonized.beat, undefined);
+  assert.match(agonized.description, /All rolls suffer −3/);
+  assert.match(agonized.resolution, /instant action.*Resolve \+ Composure.*negate the penalty.*turns equal to your successes.*scene ends.*incapacitated/);
+  assert.equal(promised.page, 28);
+  assert.equal(promised.persistent, true);
+  assert.match(promised.description, /mortal gains Merit dots equal to.*Majesty.*Allies, Resources, or Status.*cannot use Siphon.*anyone else.*exceptional success.*restores 1 Willpower/);
+  assert.match(promised.resolution, /mortal loses Integrity.*any level of Vinculum.*Humanity 1 breaking point.*mortal dies/);
+  assert.match(promised.beat, /rightmost Health box.*Siphon feeding.*vampire goes a week.*another vessel/);
   assert.equal(primeval.page, 184);
   assert.equal(primeval.persistent, undefined);
   assert.equal(primeval.beat, undefined);

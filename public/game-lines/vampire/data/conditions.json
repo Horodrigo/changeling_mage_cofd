@@ -202,6 +202,41 @@
     }
   },
   {
+    "id": "agonized",
+    "name": "Agonized",
+    "originalName": "Agonized",
+    "category": "Vampire",
+    "description": "Extreme pain clouds your thoughts and hampers physical action. All rolls suffer −3 until the Condition is resolved.",
+    "resolution": "Take an instant action and roll Resolve + Composure to negate the penalty for a number of turns equal to your successes. Otherwise, the penalty lasts until the scene ends or you are incapacitated.",
+    "source": "Guide to the Night",
+    "sourceCode": "VtR",
+    "page": 135,
+    "presentationPt": {
+      "name": "Agonizado",
+      "description": "Uma dor extrema turva seus pensamentos e dificulta ações físicas. Todos os testes sofrem −3 até a Condição ser resolvida.",
+      "resolution": "Usar uma ação instantânea e testar Perseverança + Compostura para anular a penalidade por um número de turnos igual aos sucessos. Caso contrário, ela dura até o fim da cena ou até você ficar incapacitado."
+    }
+  },
+  {
+    "id": "promised",
+    "name": "Promised",
+    "originalName": "Promised",
+    "category": "Vampire",
+    "description": "A vampire and a consenting mortal pledge love or friendship. While this Condition lasts, the mortal gains Merit dots equal to the vampire's Majesty to distribute among Allies, Resources, or Status. The vampire cannot use Siphon Devotions on anyone else, but an exceptional success on a roll to incite the promised mortal's emotions automatically restores 1 Willpower.",
+    "persistent": true,
+    "resolution": "The mortal loses Integrity because of the relationship, the vampire imposes any level of Vinculum on the mortal, the vampire chooses to end the relationship at the cost of a Humanity 1 breaking point, or the mortal dies.",
+    "beat": "The mortal takes damage in the rightmost Health box from Siphon feeding. The vampire goes a week without feeding from another vessel.",
+    "source": "Night Horrors: Spilled Blood",
+    "sourceCode": "VtR",
+    "page": 28,
+    "presentationPt": {
+      "name": "Prometido",
+      "description": "Um vampiro e um mortal que consente prometem amor ou amizade. Enquanto esta Condição durar, o mortal recebe pontos de Méritos iguais à Majestade do vampiro para distribuir entre Aliados, Recursos ou Status. O vampiro não pode usar Devoções de Sifão em nenhuma outra pessoa, mas um sucesso excepcional em um teste para incitar as emoções do mortal prometido recupera automaticamente 1 de Força de Vontade.",
+      "resolution": "O mortal perde Integridade devido à relação, o vampiro impõe qualquer nível de Vinculum ao mortal, o vampiro escolhe encerrar a relação ao custo de um Ponto de Ruptura de Humanidade 1 ou o mortal morre.",
+      "beat": "O mortal sofre dano na caixa de Vitalidade mais à direita devido à alimentação de Sifão. O vampiro passa uma semana sem se alimentar de outro receptáculo."
+    }
+  },
+  {
     "id": "primeval-truths",
     "name": "Primeval Truths",
     "originalName": "Primeval Truths",

@@ -390,7 +390,7 @@ test("Vampire exposes every line-owned core-book Condition and reuses Core Swoon
 test("known Vampire power and Bloodline Condition references resolve", async () => {
   const conditions = JSON.parse(await readFile(`${root}/public/game-lines/vampire/data/conditions.json`, "utf8"));
   const available = new Set(conditions.map((item) => item.id));
-  for (const id of ["charmed", "dominated", "ecstatic", "enslaved", "false-memories", "humbled", "mesmerized", "raptured", "sated", "subservient", "tainted"]) {
+  for (const id of ["agonized", "promised", "charmed", "dominated", "ecstatic", "enslaved", "false-memories", "humbled", "mesmerized", "raptured", "sated", "subservient", "tainted"]) {
     assert.ok(available.has(id), id);
   }
 });
