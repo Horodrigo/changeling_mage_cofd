@@ -13,7 +13,7 @@ const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened", "humbled", "intoxicated", "jaded", "languid", "lethargic", "mesmerized", "raptured", "sated", "scarred", "stumbled", "subservient", "tainted"]);
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened", "humbled", "intoxicated", "jaded", "languid", "lethargic", "mesmerized", "raptured", "sated", "scarred", "stumbled", "subservient", "tainted", "tasked", "tempted", "thrall", "wanton"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -246,6 +246,24 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.match(tainted.description, /Once per session.*penalize.*victim's Blood Potency.*add that many dice.*separate instances/);
   assert.doesNotMatch(tainted.description, /chapter/);
   assert.match(tainted.resolution, /months.*victim's Blood Potency.*each level of aggravated damage.*one month/);
+  const [tasked, tempted, thrall, wanton] = localized.slice(48);
+  for (const item of [tasked, tempted, thrall, wanton]) assert.equal(item.page, 307);
+  for (const item of [tasked, tempted, wanton]) {
+    assert.equal(item.persistent, undefined);
+    assert.equal(item.beat, undefined);
+  }
+  assert.match(tasked.penalty, /8-again.*related.*unrelated.*10-again/);
+  assert.match(tasked.resolution, /Complete.*fail/);
+  assert.match(tempted.description, /resist frenzy suffer −1.*further successful resistance increases.*until you shed/);
+  assert.equal(tempted.resolution, "Kill, fall into frenzy, or make a meaningful connection with a Touchstone.");
+  assert.equal(thrall.persistent, true);
+  assert.deepEqual(thrall.nameQualifier, { "en-US": "Kindred", "pt-BR": "Membro" });
+  assert.match(thrall.description, /unable to spend Willpower, use Defense, or spend Experiences.*Broken.*chance of regaining the soul/);
+  assert.equal(thrall.beat, "The character is victimized because of the Condition.");
+  assert.match(wanton.description, /Resolve or Composure.*−2.*3 successes instead of 5.*Majesty.*nights.*winner.*own Blood Potency.*After resolving.*full month/);
+  assert.equal(wanton.resolution, "Indulge in something that constitutes a breaking point.");
+  for (const item of [bestial, competitive, wanton]) assert.match(item.presentationPt.description, /teste de Desapego/);
+  assert.doesNotMatch(JSON.stringify(localized.map(item => item.presentationPt)), /Distanciamento/);
 });
 
 test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/EN without changing saved instances", async () => {

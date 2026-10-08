@@ -249,7 +249,7 @@
     "presentationPt": {
       "name": "Verdades Primevas",
       "description": "Olhar para o abismo revela verdades que sua existência terrena não consegue compreender, deixando uma angústia e uma melancolia inquietantes. Você não pode recuperar Força de Vontade e precisa gastar 1 Vitae adicional para despertar a cada noite.",
-      "resolution": "Encarar a escuridão: arriscar Distanciamento da Humanidade ou realizar outra ação significativa em que você encare brevemente o vazio."
+      "resolution": "Encarar a escuridão: arriscar Desapego da Humanidade ou realizar outra ação significativa em que você encare brevemente o vazio."
     }
   },
   {
@@ -584,7 +584,7 @@
     "page": 301,
     "presentationPt": {
       "name": "Bestial",
-      "description": "Você age por impulsos físicos primitivos, fugindo do que assusta e respondendo à agressão com violência. Esta Condição desaparece após um número de noites igual à Potência de Sangue do vampiro que a causou: o vencedor de um conflito de aura predatória, ou sua própria Potência de Sangue quando causada por um teste de Distanciamento. Após resolvê-la, você não pode receber Bestial novamente por um mês inteiro.",
+      "description": "Você age por impulsos físicos primitivos, fugindo do que assusta e respondendo à agressão com violência. Esta Condição desaparece após um número de noites igual à Potência de Sangue do vampiro que a causou: o vencedor de um conflito de aura predatória, ou sua própria Potência de Sangue quando causada por um teste de Desapego. Após resolvê-la, você não pode receber Bestial novamente por um mês inteiro.",
       "penalty": "Sofra −2 em testes para resistir ao frenesi ou a impulsos físicos, e −2 na Defesa. Testes para compelir agressão impulsiva ou fuga obtêm sucesso excepcional com 3 sucessos em vez de 5, incluindo usos apropriados de Pesadelo ou Dominação.",
       "resolution": "Causar dano nas últimas 3 caixas de Vitalidade de alguém."
     }
@@ -624,7 +624,7 @@
     "page": 302,
     "presentationPt": {
       "name": "Competitivo",
-      "description": "Você precisa afirmar domínio e superioridade. Em competição direta com outro personagem, testes nos quais você não gasta Força de Vontade sofrem −2, incluindo testes disputados e estendidos. Tentativas de tentar ou coagir você a competir obtêm sucesso excepcional com 3 sucessos em vez de 5. Esta Condição desaparece após um número de noites igual à Potência de Sangue do vampiro que a causou: o vencedor de um conflito de aura predatória, ou sua própria Potência de Sangue quando causada por um teste de Distanciamento. Após resolvê-la, você não pode receber Competitivo novamente por um mês inteiro.",
+      "description": "Você precisa afirmar domínio e superioridade. Em competição direta com outro personagem, testes nos quais você não gasta Força de Vontade sofrem −2, incluindo testes disputados e estendidos. Tentativas de tentar ou coagir você a competir obtêm sucesso excepcional com 3 sucessos em vez de 5. Esta Condição desaparece após um número de noites igual à Potência de Sangue do vampiro que a causou: o vencedor de um conflito de aura predatória, ou sua própria Potência de Sangue quando causada por um teste de Desapego. Após resolvê-la, você não pode receber Competitivo novamente por um mês inteiro.",
       "resolution": "Vencer ou perder uma competição em que alguém sofra um Ponto de Ruptura."
     }
   },
@@ -1067,6 +1067,12 @@
     "description": "The character's clan, covenant, or family has imposed a duty that carries the weight of lineage.",
     "penalty": "Gain 8-again on rolls related to the task; unrelated rolls lose 10-again.",
     "resolution": "Complete or definitively fail the task.",
+    "presentationPt": {
+      "name": "Incumbido",
+      "description": "Seu clã, Coalizão ou família lhe impôs um dever que carrega o peso da linhagem.",
+      "penalty": "Receba 8-de-novo nos testes relacionados à tarefa; testes sem relação com ela perdem 10-de-novo.",
+      "resolution": "Concluir a tarefa ou fracassar nela."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 307
@@ -1076,8 +1082,13 @@
     "name": "Tempted",
     "originalName": "Tempted",
     "category": "Vampire",
-    "description": "Resisting frenzy leaves the Beast ready to exploit the next relevant provocation.",
-    "resolution": "Give in to the listed temptation or allow the Condition to expire as specified.",
+    "description": "After resisting frenzy, your Beast remains close to the surface. Rolls to resist frenzy suffer −1; each further successful resistance increases this penalty by one until you shed this Condition.",
+    "resolution": "Kill, fall into frenzy, or make a meaningful connection with a Touchstone.",
+    "presentationPt": {
+      "name": "Tentado",
+      "description": "Após resistir ao frenesi, sua Besta permanece perto da superfície. Testes para resistir ao frenesi sofrem −1; cada nova resistência bem-sucedida aumenta a penalidade em um até você se livrar desta Condição.",
+      "resolution": "Matar, entrar em frenesi ou estabelecer uma conexão significativa com uma Touchstone."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 307
@@ -1095,6 +1106,12 @@
     "persistent": true,
     "resolution": "Regain the character's soul.",
     "beat": "The character is victimized because of the Condition.",
+    "presentationPt": {
+      "name": "Subjugado",
+      "description": "A perda completa da alma impede você de gastar Força de Vontade, usar Defesa ou gastar Experiências, e também impõe os efeitos de Quebrado. Continue jogando com o personagem apenas enquanto houver uma chance de recuperar a alma.",
+      "resolution": "Recuperar sua alma.",
+      "beat": "Ser vitimado por causa desta Condição."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 307
@@ -1104,8 +1121,13 @@
     "name": "Wanton",
     "originalName": "Wanton",
     "category": "Vampire",
-    "description": "The character seeks immediate pleasure and indulgence without regard for consequences.",
-    "resolution": "Suffer a meaningful consequence while pursuing indulgence or satisfy the stated impulse.",
+    "description": "Temptation and excess distract you. Resolve or Composure rolls to resist temptation suffer −2. The character who caused this Condition achieves exceptional success with 3 successes instead of 5 on rolls to tempt you, including Majesty and mundane Social rolls. It fades after nights equal to the causing vampire's Blood Potency: the winner of a predatory aura conflict, or your own Blood Potency for a detachment roll. After resolving Wanton, you cannot receive it again for a full month.",
+    "resolution": "Indulge in something that constitutes a breaking point.",
+    "presentationPt": {
+      "name": "Lascivo",
+      "description": "Tentação e excessos distraem você. Testes de Perseverança ou Compostura para resistir à tentação sofrem −2. O personagem que causou esta Condição obtém sucesso excepcional com 3 sucessos em vez de 5 nos testes para tentar você, incluindo Majestade e testes Sociais comuns. Ela desaparece após um número de noites igual à Potência de Sangue do vampiro que a causou: o vencedor de um conflito de aura predatória, ou sua própria Potência de Sangue quando causada por um teste de Desapego. Após resolver Lascivo, você não pode recebê-la novamente por um mês inteiro.",
+      "resolution": "Entregar-se a algo que constitua um Ponto de Ruptura."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 307
