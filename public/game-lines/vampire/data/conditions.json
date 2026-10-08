@@ -552,10 +552,16 @@
     "name": "Lost Lineage",
     "originalName": "Lost Lineage",
     "category": "Elder",
-    "description": "The elder belongs to a forgotten clan or bloodline, gains no Clan Status, and risks losing Social Merits or facing a Blood Hunt if exposed. Define three in-clan Disciplines other than blood sorcery and choose or create an appropriate clan or bloodline bane.",
+    "description": "You belong to a forgotten clan or bloodline and never gain Clan Status. Exposure risks all your Social Merits or a Blood Hunt. With the Storyteller, define the lost lineage, choose 3 in-clan Disciplines excluding Coils, Crúac, and Theban Sorcery, and select or create a Bane. You may instead use a clan or bloodline not currently in play and declare it lost.",
     "persistent": true,
     "resolution": "With Storyteller permission, discover a ritual or other means to be Embraced into a modern clan; normally the Condition has no resolution.",
     "beat": "Suffer a significant loss while protecting the secret lineage.",
+    "presentationPt": {
+      "name": "Linhagem Perdida",
+      "description": "Você pertence a um clã ou Linhagem esquecida e nunca ganha Status de Clã. Ser descoberto põe em risco todos os seus Méritos Sociais ou pode provocar uma Caçada de Sangue. Com o Narrador, defina a linhagem perdida, escolha 3 Disciplinas de clã, excluindo Espirais, Crúac e Feitiçaria Tebana, e selecione ou crie uma Maldição. Como alternativa, use um clã ou Linhagem fora do jogo atual e declare que está perdido.",
+      "resolution": "Com a permissão do Narrador, descobrir um ritual ou outro meio de receber um novo Abraço em um clã moderno; normalmente esta Condição não possui resolução.",
+      "beat": "Sofrer uma perda significativa ao proteger o segredo de sua linhagem."
+    },
     "source": "Thousand Years of Night",
     "sourceCode": "TY",
     "page": 137
@@ -565,8 +571,13 @@
     "name": "Quiet Echo",
     "originalName": "Quiet Echo",
     "category": "Elder",
-    "description": "The elder's Ka may leave its usual prison and walk in Twilight, visible only to the elder. The player has no innate control over it but may influence it through Social maneuvering or Disciplines.",
+    "description": "Your Ka walks in Twilight outside its usual confines, visible only to you and free to act as it pleases. The player chooses when and how it acts; the character has no innate control but may influence it through Social maneuvering or Disciplines. It will not harm itself. This Condition ends without any other effect at the next sunrise if not resolved.",
     "resolution": "Have the Ka perform a significant favor or service; regain 1 Willpower when it does.",
+    "presentationPt": {
+      "name": "Eco Silencioso",
+      "description": "Seu Ka caminha no Crepúsculo fora de seus limites habituais, visível apenas para você e livre para agir como quiser. O jogador escolhe quando e como ele age; o personagem não tem controle inato, mas pode influenciá-lo por Manobras Sociais ou Disciplinas. Ele não fará algo que cause dano a si próprio. Se não for resolvida, esta Condição termina sem outro efeito ao próximo nascer do sol.",
+      "resolution": "O Ka realiza um favor ou serviço significativo para você; recupere 1 Força de Vontade quando isso ocorrer."
+    },
     "source": "Thousand Years of Night",
     "sourceCode": "TY",
     "page": 137
@@ -576,8 +587,13 @@
     "name": "Synchronized",
     "originalName": "Synchronized",
     "category": "Elder",
-    "description": "After feeding too deeply, the elder shares the victim's harm: any damage and Conditions suffered by the victim also affect the elder. A vampire may have only one instance; a new one replaces the old.",
+    "description": "After feeding too deeply, any damage or Conditions the victim suffers also affect you. You still take damage as a vampire: lethal pistol damage to a mortal victim becomes bashing damage to you. You may have only one instance at a time; gaining it by feeding from a different victim replaces the previous instance.",
     "resolution": "The victim dies, the elder gains a dot of Humanity, or the elder replaces this bond with a new instance.",
+    "presentationPt": {
+      "name": "Sincronizado",
+      "description": "Após se alimentar profundamente demais, qualquer dano ou Condição sofrido pela vítima também afeta você. Você ainda recebe dano como um vampiro: dano letal de pistola em uma vítima mortal se torna dano contundente em você. Só pode ter uma instância por vez; receber esta Condição ao se alimentar de outra vítima substitui a instância anterior.",
+      "resolution": "A vítima morre, você ganha um ponto de Humanidade ou substitui o vínculo por uma nova instância."
+    },
     "source": "Thousand Years of Night",
     "sourceCode": "TY",
     "page": 137
@@ -587,9 +603,14 @@
     "name": "Vitae's Resoluteness",
     "originalName": "Vitae's Resoluteness",
     "category": "Elder",
-    "description": "Prerequisite: Addicted (vitae) and Languid. The elder ignores the effects of Languid until entering torpor, when torpor duration is calculated as though Humanity were two dots lower.",
+    "description": "Prerequisites: Addicted (vitae) and Languid. Take this Condition when you gain Languid. Ignore Languid only in scenes when you drink vitae. Once you enter torpor, calculate its effects as though your Humanity were 2 dots lower.",
     "persistent": true,
     "resolution": "Wake from torpor.",
+    "presentationPt": {
+      "name": "Firmeza da Vitae",
+      "description": "Requisitos: Viciado em Vitae e Lânguido. Receba esta Condição quando receber Lânguido. Ignore Lânguido apenas nas cenas em que beber Vitae. Ao entrar em torpor, calcule seus efeitos como se sua Humanidade fosse 2 pontos menor.",
+      "resolution": "Despertar do torpor."
+    },
     "source": "Thousand Years of Night",
     "sourceCode": "TY",
     "page": 137
