@@ -25,6 +25,8 @@ const escape = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").r
 const fields = ["summary", "cost", "requirement", "condition", "dicePool", "action", "duration", "contestedBy", "resistedBy", "sacrament", "effect", "procedure", "outcome", "prerequisites", "statusRequirement", "humanityCapFormula"];
 
 test("Vampire official and Homebrew power presentations cover existing fields and preserve numeric limits", () => {
+  const presentations = Object.values(powers).filter(Array.isArray).flatMap(items => items.flatMap(item => [item.presentationPt, ...(item.levels ?? []).map(level => level.presentationPt)]));
+  assert.doesNotMatch(JSON.stringify(presentations), /\b(?:Esportes|Autocontrole)\b/);
   const call = devotions.find(item => item.id === "devotion-call-me-maybe");
   assert.match(call.effect, /at session end/);
   assert.doesNotMatch(call.effect, /chapter/);

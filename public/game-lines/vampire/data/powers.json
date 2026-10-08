@@ -132,7 +132,7 @@
             "action": "Instantânea",
             "duration": "Noite",
             "rollResults": {
-              "success": "Receber os sucessos, até o máximo de cinco, como dados de bônus em Raciocínio + Compostura para rastrear e em ações de Investigação, Esportes, Sobrevivência e Manha usadas para perseguir a presa cujo sangue foi provado.",
+              "success": "Receber os sucessos, até o máximo de cinco, como dados de bônus em Raciocínio + Compostura para rastrear e em ações de Investigação, Atletismo, Sobrevivência e Manha usadas para perseguir a presa cujo sangue foi provado.",
               "exceptionalSuccess": "Também usar os pontos em Crochan em um Confronto de Vontades para penetrar a ocultação sobrenatural da presa durante a noite.",
               "failure": "O sangue nada revela.",
               "dramaticFailure": "O sangue nada revela, e o vampiro não pode receber os benefícios de Um Gosto de Sangue ou Ungir o Caçador durante a cena."
@@ -818,11 +818,11 @@
           "duration": "One hour",
           "effect": "Add Triadic Evolution dots to running Speed and noncombat physical maneuvers using Athletics. This never adds to Defense.",
           "presentationPt": {
-            "summary": "Soma Evolução Triádica ao Deslocamento e a Esportes fora de combate por uma hora.",
+            "summary": "Soma Evolução Triádica ao Deslocamento e a Atletismo fora de combate por uma hora.",
             "cost": "1 Força de Vontade",
             "dicePool": "Vigor + Ocultismo + Evolução Triádica",
             "action": "Estendida",
-            "effect": "Soma os pontos de Evolução Triádica ao Deslocamento de corrida e a manobras físicas fora de combate que usem Esportes. Isso nunca aumenta a Defesa.",
+            "effect": "Soma os pontos de Evolução Triádica ao Deslocamento de corrida e a manobras físicas fora de combate que usem Atletismo. Isso nunca aumenta a Defesa.",
             "duration": "Uma hora"
           }
         },
@@ -1571,7 +1571,7 @@
             "dicePool": "Nenhuma",
             "action": "Nenhuma (persistente) ou reflexiva (ativa)",
             "duration": "Permanente (persistente) ou um turno (ativo)",
-            "effect": "Soma um dado a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma um como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido. Uma falha dramática não pode ser substituída, a menos que outro efeito ativo primeiro a reduza a uma falha normal."
+            "effect": "Soma um dado a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma um como bônus de arma a ataques com Armas de Fogo, Atletismo e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido. Uma falha dramática não pode ser substituída, a menos que outro efeito ativo primeiro a reduza a uma falha normal."
           }
         },
         {
@@ -1590,7 +1590,7 @@
             "dicePool": "Nenhuma",
             "action": "Nenhuma (persistente) ou reflexiva (ativa)",
             "duration": "Permanente (persistente) ou um turno (ativo)",
-            "effect": "Soma dois dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma dois como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
+            "effect": "Soma dois dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma dois como bônus de arma a ataques com Armas de Fogo, Atletismo e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
           }
         },
         {
@@ -1609,7 +1609,7 @@
             "dicePool": "Nenhuma",
             "action": "Nenhuma (persistente) ou reflexiva (ativa)",
             "duration": "Permanente (persistente) ou um turno (ativo)",
-            "effect": "Soma três dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma três como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
+            "effect": "Soma três dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma três como bônus de arma a ataques com Armas de Fogo, Atletismo e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
           }
         },
         {
@@ -1628,7 +1628,7 @@
             "dicePool": "Nenhuma",
             "action": "Nenhuma (persistente) ou reflexiva (ativa)",
             "duration": "Permanente (persistente) ou um turno (ativo)",
-            "effect": "Soma quatro dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma quatro como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
+            "effect": "Soma quatro dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma quatro como bônus de arma a ataques com Armas de Fogo, Atletismo e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
           }
         },
         {
@@ -1647,7 +1647,7 @@
             "dicePool": "Nenhuma",
             "action": "Nenhuma (persistente) ou reflexiva (ativa)",
             "duration": "Permanente (persistente) ou um turno (ativo)",
-            "effect": "Soma cinco dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma cinco como bônus de arma a ataques com Armas de Fogo, Esportes e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
+            "effect": "Soma cinco dados a testes de Atributos ou Habilidades baseados em Destreza e à Iniciativa; isso pode ultrapassar o limite de Potência de Sangue. Cada Vitae gasto soma cinco como bônus de arma a ataques com Armas de Fogo, Atletismo e Armas Brancas baseados em Destreza neste turno, ou substitui uma ação violenta fracassada por uma ação fundamentalmente diferente, como se a primeira nunca tivesse acontecido."
           }
         }
       ],
@@ -2727,7 +2727,7 @@
       "effect": "Persistent: add Vigor to Strength and multiply jump distance by Vigor + 1. Active: each Vitae buys one distinct effect for the turn — add Vigor as weapon bonus to Athletics/Brawl/Weaponry attacks, or lift and hurl otherwise unwieldy objects using the Discipline's improvised-weapon rules.",
       "presentationPt": {
         "summary": "Força sobrenatural persistente com impulsos ativos de poder destrutivo.",
-        "effect": "Persistente: some Ímpeto à Força e multiplique a distância dos saltos por Ímpeto + 1. Ativo: cada Vitae concede um efeito distinto no turno — somar Ímpeto como bônus de arma a ataques de Esportes, Briga ou Armas Brancas, ou erguer e arremessar objetos que normalmente seriam difíceis de manejar, usando as regras de armas improvisadas da Disciplina.",
+        "effect": "Persistente: some Ímpeto à Força e multiplique a distância dos saltos por Ímpeto + 1. Ativo: cada Vitae concede um efeito distinto no turno — somar Ímpeto como bônus de arma a ataques de Atletismo, Briga ou Armas Brancas, ou erguer e arremessar objetos que normalmente seriam difíceis de manejar, usando as regras de armas improvisadas da Disciplina.",
         "cost": "Nenhum ou 1 Vitae por efeito ativo",
         "dicePool": "Nenhuma",
         "action": "Nenhuma para efeitos persistentes; Reflexiva para efeitos ativos",
@@ -7819,7 +7819,7 @@
       "presentationPt": {
         "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
         "duration": "Cena",
-        "effect": "Quase sem cheiro algum, talvez com um toque de papoulas, esta fragrância foi feita para ser empregada como arma. Qualquer mortal que respire Saudosa Ausência por mais de alguns segundos entra em um estado de fuga, esquecendo completamente que viu o portador ao longo da cena e preenchendo as lacunas da melhor maneira possível. Isso impõe a Condição Amnésia. Membros expostos precisam obter sucesso em um teste de Raciocínio + Autocontrole para detectar a ameaça e parar de respirar antes que ela os afete; caso contrário, são afetados como um humano."
+        "effect": "Quase sem cheiro algum, talvez com um toque de papoulas, esta fragrância foi feita para ser empregada como arma. Qualquer mortal que respire Saudosa Ausência por mais de alguns segundos entra em um estado de fuga, esquecendo completamente que viu o portador ao longo da cena e preenchendo as lacunas da melhor maneira possível. Isso impõe a Condição Amnésia. Membros expostos precisam obter sucesso em um teste de Raciocínio + Compostura para detectar a ameaça e parar de respirar antes que ela os afete; caso contrário, são afetados como um humano."
       }
     },
     {
@@ -7838,7 +7838,7 @@
       "presentationPt": {
         "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
         "duration": "Cena",
-        "effect": "Este odor nocivo e enjoativo serve para repelir. Qualquer pessoa exposta a Despeito da Assombração, exceto o portador, recebe a Condição Abalado, centrada na pessoa ou área de onde vem o aroma. Membros podem resistir com Autocontrole + Potência de Sangue – Ortam para se controlar, mas ainda sofrem –1 para resistir ao frenesi de medo enquanto permanecerem na presença do aroma."
+        "effect": "Este odor nocivo e enjoativo serve para repelir. Qualquer pessoa exposta a Despeito da Assombração, exceto o portador, recebe a Condição Abalado, centrada na pessoa ou área de onde vem o aroma. Membros podem resistir com Compostura + Potência de Sangue – Ortam para se controlar, mas ainda sofrem –1 para resistir ao frenesi de medo enquanto permanecerem na presença do aroma."
       }
     },
     {
@@ -7857,7 +7857,7 @@
       "presentationPt": {
         "summary": "Uma receita Ortam que destila a ressonância de uma Disciplina em um perfume sobrenatural.",
         "duration": "Cena",
-        "effect": "Uma das criações mais populares dos Perfumistas, este aroma doce e sedutor permanece no caminho de quem o usa, convidando quem o sente a segui-lo. Sedução da Serpente impõe a Condição Enamorado a qualquer pessoa exposta por mais de alguns segundos. Ela dura pelo resto da noite. Membros podem resistir com Autocontrole + Potência de Sangue para se livrar dos efeitos, mas ainda sofrem –1 em todos os testes posteriores baseados em Autocontrole enquanto estiverem expostos, mesmo se o teste de resistência tiver sucesso."
+        "effect": "Uma das criações mais populares dos Perfumistas, este aroma doce e sedutor permanece no caminho de quem o usa, convidando quem o sente a segui-lo. Sedução da Serpente impõe a Condição Enamorado a qualquer pessoa exposta por mais de alguns segundos. Ela dura pelo resto da noite. Membros podem resistir com Compostura + Potência de Sangue para se livrar dos efeitos, mas ainda sofrem –1 em todos os testes posteriores baseados em Compostura enquanto estiverem expostos, mesmo se o teste de resistência tiver sucesso."
       }
     },
     {
@@ -8007,7 +8007,7 @@
         "dicePool": "Nenhuma",
         "action": "Instantânea",
         "duration": "Uma semana por ponto de Potência de Sangue, mas os efeitos desta Devoção só terminam quando o vampiro deixa o território depois que a duração expira.",
-        "effect": "Após a conclusão, os habitantes dentro dos limites do Feudo Amaldiçoado encontram o ambiente imbuído do glorioso fascínio de Majestade. Todos os moradores recebem a Condição Delirante, acreditando viver em perfeita harmonia e paz apesar de qualquer evidência em contrário, sejam cenas de violência horrenda ou paisagens macabras. Podem resolver a Condição da maneira habitual ou se mudando para fora do Feudo, mas isso exige gastar um ponto de Força de Vontade e obter sucesso em um teste de Perseverança + Potência de Sangue, penalizado pelos pontos de Majestade do vampiro. Após uma falha, cada tentativa posterior de partir sofre um modificador adicional cumulativo de –1, até o limite de –5. Intrusos percebem o Feudo pelo terror sobrenatural de Pesadelo. Gentilezas ou luxos são ignorados ou esquecidos: visitantes indesejados recebem a Condição Assustado ao entrar no território, a menos que obtenham sucesso em um teste de Autocontrole + Potência de Sangue penalizado pelos pontos de Pesadelo do vampiro. Cada sucesso concede uma hora antes de precisarem testar novamente. Com sucesso excepcional, podem permanecer pelo resto da noite sem medo. O Nelapsi pode usar poderes de Majestade e Pesadelo reflexivamente e a qualquer distância enquanto estiver em seu Feudo. Se outro vampiro já residir na área, pode tentar Incitar a Fera para quebrar o efeito antes que se forme, recebendo qualquer bônus que tenha de Campo de Caça. Por isso, Nelapsi escolhem com cuidado onde se estabelecer ou expulsam Membros indesejáveis de seus territórios preferidos."
+        "effect": "Após a conclusão, os habitantes dentro dos limites do Feudo Amaldiçoado encontram o ambiente imbuído do glorioso fascínio de Majestade. Todos os moradores recebem a Condição Delirante, acreditando viver em perfeita harmonia e paz apesar de qualquer evidência em contrário, sejam cenas de violência horrenda ou paisagens macabras. Podem resolver a Condição da maneira habitual ou se mudando para fora do Feudo, mas isso exige gastar um ponto de Força de Vontade e obter sucesso em um teste de Perseverança + Potência de Sangue, penalizado pelos pontos de Majestade do vampiro. Após uma falha, cada tentativa posterior de partir sofre um modificador adicional cumulativo de –1, até o limite de –5. Intrusos percebem o Feudo pelo terror sobrenatural de Pesadelo. Gentilezas ou luxos são ignorados ou esquecidos: visitantes indesejados recebem a Condição Assustado ao entrar no território, a menos que obtenham sucesso em um teste de Compostura + Potência de Sangue penalizado pelos pontos de Pesadelo do vampiro. Cada sucesso concede uma hora antes de precisarem testar novamente. Com sucesso excepcional, podem permanecer pelo resto da noite sem medo. O Nelapsi pode usar poderes de Majestade e Pesadelo reflexivamente e a qualquer distância enquanto estiver em seu Feudo. Se outro vampiro já residir na área, pode tentar Incitar a Fera para quebrar o efeito antes que se forme, recebendo qualquer bônus que tenha de Campo de Caça. Por isso, Nelapsi escolhem com cuidado onde se estabelecer ou expulsam Membros indesejáveis de seus territórios preferidos."
       }
     },
     {
@@ -10754,7 +10754,7 @@
         "cost": "Nenhum",
         "dicePool": "Presença + Empatia + a menor pontuação entre Majestade e Pesadelo",
         "action": "Instantânea",
-        "effect": "Uma vez ativa, esta Devoção confunde todos na presença imediata da vampira, fazendo suas emoções oscilarem entre adoração e repulsa. Isso causa vários efeitos: • As vítimas ficam confusas e desorientadas, sem saber o que pensar ou sentir. Isso reduz seu Autocontrole efetivo em um ponto. • A vampira torna-se o centro das atenções da multidão. Desviar o olhar exige um teste de Autocontrole + Potência de Sangue, disputado contra os sucessos dela. Basta a vítima igualar os sucessos da vampira. • Testes para resistir a manobras Sociais baseadas em Persuasão ou Intimidação perdem a qualidade de 10-novamente. • Um personagem não pode manter Fascínio ou Presença Aterradora ativos ao mesmo tempo que Contaminação Cruzada."
+        "effect": "Uma vez ativa, esta Devoção confunde todos na presença imediata da vampira, fazendo suas emoções oscilarem entre adoração e repulsa. Isso causa vários efeitos: • As vítimas ficam confusas e desorientadas, sem saber o que pensar ou sentir. Isso reduz seu Compostura efetivo em um ponto. • A vampira torna-se o centro das atenções da multidão. Desviar o olhar exige um teste de Compostura + Potência de Sangue, disputado contra os sucessos dela. Basta a vítima igualar os sucessos da vampira. • Testes para resistir a manobras Sociais baseadas em Persuasão ou Intimidação perdem a qualidade de 10-novamente. • Um personagem não pode manter Fascínio ou Presença Aterradora ativos ao mesmo tempo que Contaminação Cruzada."
       }
     },
     {
@@ -10778,7 +10778,7 @@
         "cost": "10 Vitae",
         "dicePool": "Presença + Socialização + Majestade",
         "action": "Instantânea",
-        "effect": "Em caso de sucesso, esta Devoção espalha os efeitos de Lealdade pela multidão. Ela afeta qualquer personagem cuja soma de Autocontrole + Potência de Sangue seja menor que os sucessos da vampira. Os afetados recebem a Condição Cativado."
+        "effect": "Em caso de sucesso, esta Devoção espalha os efeitos de Lealdade pela multidão. Ela afeta qualquer personagem cuja soma de Compostura + Potência de Sangue seja menor que os sucessos da vampira. Os afetados recebem a Condição Cativado."
       }
     },
     {
@@ -10800,7 +10800,7 @@
         "prerequisites": "Majestade ••••, Ofuscação ••",
         "summary": "Redirecionar Lealdade para outra pessoa, lugar ou objeto.",
         "cost": "1 Vitae",
-        "dicePool": "Manipulação + Empatia + Majestade contra Autocontrole + Potência de Sangue",
+        "dicePool": "Manipulação + Empatia + Majestade contra Compostura + Potência de Sangue",
         "action": "Disputada; a resistência é reflexiva",
         "effect": "Em caso de sucesso, esta Devoção funciona como Lealdade, mas a vampira pode designar um sujeito para a Condição Cativado em vez de concentrá-la em si mesma. Todos os outros parâmetros permanecem iguais, mas a vítima insiste em defender e estimar outra pessoa, lugar ou coisa. A vampira precisa comunicar de alguma forma à vítima o sujeito desejado do Encantamento para esta Devoção funcionar."
       }
@@ -10825,7 +10825,7 @@
         "prerequisites": "Majestade •, Resiliência •",
         "summary": "Trocar pontos de Majestade para suprimir as Disciplinas físicas de uma vítima durante a cena.",
         "cost": "1 Vitae",
-        "dicePool": "Presença + Intimidação + Majestade contra Autocontrole + Potência de Sangue",
+        "dicePool": "Presença + Intimidação + Majestade contra Compostura + Potência de Sangue",
         "action": "Disputada; a resistência é reflexiva",
         "duration": "Cena",
         "effect": "Em caso de sucesso, esta Devoção remove temporariamente pontos de Celeridade, Resiliência e Ímpeto da vítima, na combinação desejada pela vampira. Durante a cena, a vampira perde um ponto de Majestade por ponto removido, até o limite dos sucessos. Por exemplo, ela pode sacrificar três pontos de Majestade, perdendo acesso a eles durante a cena, para remover dois pontos de Ímpeto e um de Resiliência da vítima pelo mesmo período."
@@ -11030,7 +11030,7 @@
         "cost": "10 Vitae",
         "dicePool": "Presença + Empatia com Animais + Majestade",
         "action": "Instantânea",
-        "effect": "Quando ativado, Motim afeta uma área ampla, como um quarteirão ou meia milha, e todos nela. Quem tiver Autocontrole + Potência de Sangue menor que os sucessos da vampira recebe as Condições Bestial, Competitivo e Lascivo. As vítimas passam a agir de maneira agressiva e primitiva. Esse comportamento é destrutivo, imediatista e egoísta, em vez de animalístico, e causa uma carnificina de grandes proporções. Usar esta Devoção é considerado um Ponto de Ruptura de Humanidade 1."
+        "effect": "Quando ativado, Motim afeta uma área ampla, como um quarteirão ou meia milha, e todos nela. Quem tiver Compostura + Potência de Sangue menor que os sucessos da vampira recebe as Condições Bestial, Competitivo e Lascivo. As vítimas passam a agir de maneira agressiva e primitiva. Esse comportamento é destrutivo, imediatista e egoísta, em vez de animalístico, e causa uma carnificina de grandes proporções. Usar esta Devoção é considerado um Ponto de Ruptura de Humanidade 1."
       }
     },
     {
@@ -11647,7 +11647,7 @@
         "prerequisites": "Majestade ••",
         "cost": "1 Vitae",
         "requirement": "O vampiro deve tocar música ou declamar poesia como uma apresentação.",
-        "dicePool": "Presença + Expressão + Majestade contra Autocontrole + Potência de Sangue (o maior valor do grupo)",
+        "dicePool": "Presença + Expressão + Majestade contra Compostura + Potência de Sangue (o maior valor do grupo)",
         "action": "Disputada; a resistência é reflexiva",
         "rollResults": {
           "success": "Quem ouve a música do vampiro é atraído até ele, deslocando-se por qualquer meio disponível até alcançar a origem da melodia. Se o vampiro parar de tocar, o efeito termina.",
@@ -11685,7 +11685,7 @@
         "prerequisites": "Majestade •••",
         "cost": "2 Vitae",
         "requirement": "O vampiro deve se apresentar para a vítima por pelo menos alguns minutos.",
-        "dicePool": "Manipulação + Expressão + Majestade contra Autocontrole + Potência de Sangue",
+        "dicePool": "Manipulação + Expressão + Majestade contra Compostura + Potência de Sangue",
         "action": "Disputada; a resistência é reflexiva",
         "duration": "Cena",
         "rollResults": {
@@ -14817,7 +14817,7 @@
         "name": "Cheval",
         "summary": "Ver e ouvir pelos sentidos de um sujeito tocado.",
         "cost": "2 Vitae",
-        "resistedBy": "Autocontrole",
+        "resistedBy": "Compostura",
         "requirement": "Sujeito presente e tocado fisicamente",
         "duration": "Restante da noite",
         "effect": "O ritualista vê e ouve o que o sujeito vê e ouve, independentemente da distância."
@@ -14841,7 +14841,7 @@
         "name": "Dores de Prosérpina",
         "summary": "Provocar fome sobrenatural em uma vítima distante.",
         "cost": "1 Vitae",
-        "contestedBy": "Autocontrole + Potência de Sangue",
+        "contestedBy": "Compostura + Potência de Sangue",
         "effect": "Uma vítima a até uma milha de distância é considerada faminta no próximo teste para resistir ao Frenesi, independentemente de quando se alimentou."
       }
     },
@@ -14863,7 +14863,7 @@
         "name": "Rigor Mortis",
         "summary": "Suprimir a força reanimadora da Vitae de um vampiro.",
         "cost": "1 Vitae",
-        "resistedBy": "Autocontrole",
+        "resistedBy": "Compostura",
         "effect": "Uma vítima vampira a até uma milha de distância sofre −3 dados na próxima ação física."
       }
     },
@@ -14931,7 +14931,7 @@
         "name": "Preço de Sangue",
         "summary": "Redirecionar para o ritualista o sangue consumido por um sujeito.",
         "cost": "4 Vitae",
-        "contestedBy": "Autocontrole + Potência de Sangue",
+        "contestedBy": "Compostura + Potência de Sangue",
         "requirement": "Sujeito vampiro ou carniçal presente",
         "duration": "Até o próximo nascer do sol",
         "effect": "Sempre que o sujeito bebe sangue, até Potência do ritual pontos de Vitae vão primeiro para o ritualista; o excedente fica com o sujeito."

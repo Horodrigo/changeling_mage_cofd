@@ -322,7 +322,7 @@
   "vtr-false-gods:sea-legs": {
     "name": "Pernas de Marinheiro",
     "description": "Elimina as penalidades comuns de conveses instáveis, águas agitadas e vida a bordo de uma embarcação.",
-    "prerequisites": "Especialidade em Navegação em Esportes"
+    "prerequisites": "Especialidade em Navegação em Atletismo"
   },
   "vtr-lineage": {
     "name": "Linhagem",
@@ -626,7 +626,7 @@
   "vtr-false-gods:ruthless-bastard": {
     "name": "Desgraçado Implacável",
     "description": "Melhora testes de Desapego causados pela busca das Aspirações, ao custo de uma perda permanente de Empatia.",
-    "prerequisites": "Autocontrole •••"
+    "prerequisites": "Compostura •••"
   },
   "vtr-false-gods:saving-face": {
     "name": "Salvar as Aparências",
@@ -1844,7 +1844,7 @@
   "h-vtr-fire-revolution:firebomber": {
     "name": "Bombista Incendiário",
     "description": "Usa o fogo como arma revolucionária enquanto controla o pânico e o risco de danos colaterais.",
-    "prerequisites": "Esportes ••; Perseverança •••; Ímpeto •"
+    "prerequisites": "Atletismo ••; Perseverança •••; Ímpeto •"
   },
   "h-vtr-fire-revolution:fire-branded": {
     "name": "Marcado pelo Fogo",

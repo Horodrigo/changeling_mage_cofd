@@ -41,6 +41,7 @@ test("the 27 Core/Hurt Locker Tilts have complete PT presentation with canonical
 });
 
 test("all 35 shared Tilts have complete PT text and keep approved titles and power references", () => {
+  assert.doesNotMatch(JSON.stringify(TILTS.map(item => item.presentationPt)), /\b(?:Esportes|Autocontrole)\b/);
   for (const item of TILTS) {
     const pt = tiltPresentation(item, "pt-BR");
     assert.deepEqual(Object.keys(item.presentationPt).sort(), fields.toSorted());

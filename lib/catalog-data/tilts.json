@@ -110,7 +110,7 @@
       "description": "Amarras, confinamento ou alguém agarrando o personagem impedem o movimento.",
       "effect": "O personagem não pode se mover, aplicar Defesa ou realizar ações de combate; gastar Força de Vontade pode permitir um ataque limitado contra quem o imobiliza.",
       "causing": "A manobra de imobilização em um agarrão, amarras, confinamento ou uma restrição sobrenatural.",
-      "ending": "Libertar-se do agarrão ou obter sucesso em Força + Esportes com penalidade igual à Durabilidade das amarras, sofrendo 1 de dano contusivo por tentativa."
+      "ending": "Libertar-se do agarrão ou obter sucesso em Força + Atletismo com penalidade igual à Durabilidade das amarras, sofrendo 1 de dano contusivo por tentativa."
     }
   },
   {
@@ -167,7 +167,7 @@
       "description": "O personagem é derrubado no chão.",
       "effect": "Perder a ação atual se ainda não a realizou; ataques feitos do chão sofrem −2, embora a Defesa ainda se aplique.",
       "causing": "Uma arma que cause dano suficiente ou um ataque direcionado às pernas que sacrifique metade do dano.",
-      "ending": "Levantar-se como uma ação, ou obter sucesso reflexivo em Destreza + Esportes antes de agir para evitar a Complicação."
+      "ending": "Levantar-se como uma ação, ou obter sucesso reflexivo em Destreza + Atletismo antes de agir para evitar a Complicação."
     }
   },
   {
@@ -279,7 +279,7 @@
     "sourceCode": "CofD",
     "presentationPt": {
       "description": "Movimentos violentos do solo desestabilizam uma área.",
-      "effect": "Paradas de Destreza e Defesa sofrem de −1 a −5; sofrer de 1 a 3 de dano letal a cada turno, reduzido a contusivo com Vigor + Esportes ou anulado com um sucesso excepcional.",
+      "effect": "Paradas de Destreza e Defesa sofrem de −1 a −5; sofrer de 1 a 3 de dano letal a cada turno, reduzido a contusivo com Vigor + Atletismo ou anulado com um sucesso excepcional.",
       "causing": "Um evento natural, uma grande explosão subterrânea ou um poder sobrenatural tremendo.",
       "ending": "A maioria termina em cerca de dez turnos; caso contrário, sair da área afetada ou interromper a causa sobrenatural."
     }
@@ -507,7 +507,7 @@
     "page": 143,
     "presentationPt": {
       "description": "Um membro ou uma peça de roupa está preso a uma superfície.",
-      "effect": "A vítima não pode se mover, reduz a Defesa à metade e não pode realizar ações que exijam movimento do corpo inteiro, como Esportes.",
+      "effect": "A vítima não pode se mover, reduz a Defesa à metade e não pode realizar ações que exijam movimento do corpo inteiro, como Atletismo.",
       "causing": "Uma arma perfurante mira um membro com −3 e causa dano pelo menos igual ao Vigor, ou mira uma peça de roupa com −5 e obtém um sucesso.",
       "ending": "Arrancar um membro preso com Força + Vigor a −3 e sofrer 1 de dano letal, usar ferramentas com Força + Ofícios a −2 sem sofrer dano ou gastar uma ação para escapar de uma peça de roupa presa."
     }
@@ -602,7 +602,7 @@
     "page": 573,
     "presentationPt": {
       "description": "Solo e estruturas instáveis desabam sob esforço físico.",
-      "effect": "Mover-se acima de metade do Deslocamento exige Destreza + Esportes reflexivo a −3 ou causa 3 de dano contusivo e Derrubado. Uma falha dramática causa 5 de dano contusivo e deixa o personagem preso; escapar dos escombros exige Força + Vigor a −5.",
+      "effect": "Mover-se acima de metade do Deslocamento exige Destreza + Atletismo reflexivo a −3 ou causa 3 de dano contusivo e Derrubado. Uma falha dramática causa 5 de dano contusivo e deixa o personagem preso; escapar dos escombros exige Força + Vigor a −5.",
       "causing": "Um sucesso excepcional ou falha dramática durante uma cena de ação física em um local instável, ou um ataque feito com −2 para impor o perigo a um alvo.",
       "ending": "Termina com a cena, mas volta em cenas de ação posteriores até que obras extensas reparem o local."
     }
@@ -621,7 +621,7 @@
     "page": 576,
     "presentationPt": {
       "description": "Uma multidão tensa explode em violência indiscriminada.",
-      "effect": "A cada turno, testar reflexivamente Vigor + Esportes; uma falha causa 2 de dano contusivo. A destruição mais ampla é determinada pelo Narrador.",
+      "effect": "A cada turno, testar reflexivamente Vigor + Atletismo; uma falha causa 2 de dano contusivo. A destruição mais ampla é determinada pelo Narrador.",
       "causing": "Acontecimentos da história, um ato perigosamente público em uma situação já tensa, um poder sobrenatural apropriado ou Armar a Multidão.",
       "ending": "Normalmente um único personagem não consegue interrompê-la, e ela dura de horas a semanas conforme a multidão e a resposta."
     }
