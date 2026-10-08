@@ -708,46 +708,68 @@
     "originalName": "Dominated",
     "category": "Vampire",
     "description": "A vampire has issued a specific command the character cannot choose to disobey. A naturally limited task ends when completed; otherwise the command ends at sunrise. The character cannot clearly remember events that occurred while obeying.",
-    "resolution": "Take more bashing or lethal damage than Stamina, or experience a breaking point for following the command and succeed at the associated Resolve + Composure roll.",
+    "resolution": "Take more bashing or lethal damage than Stamina, experience a breaking point for following the command and succeed at the associated Resolve + Composure roll, or fulfill the vampire's command.",
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
-    "page": 302
+    "page": 302,
+    "presentationPt": {
+      "name": "Dominado",
+      "description": "Um vampiro deu uma ordem específica que você não pode escolher desobedecer. Uma tarefa com término natural resolve a Condição quando concluída; caso contrário, a ordem termina ao nascer do sol. Você não consegue lembrar claramente dos acontecimentos enquanto obedecia.",
+      "resolution": "Sofrer dano contundente ou letal superior ao Vigor, sofrer um Ponto de Ruptura ao cumprir a ordem e obter sucesso no teste correspondente de Perseverança + Compostura, ou cumprir a ordem do vampiro."
+    }
   },
   {
     "id": "drained",
     "name": "Drained",
     "originalName": "Drained",
     "category": "Vampire",
-    "description": "Severe blood loss leaves the character weak. After a scene of physical exertion, roll Stamina or fall unconscious for at least an hour.",
-    "penalty": "−2 to Physical actions and rolls to stabilize or survive injuries; wound penalties also apply to the exertion roll.",
+    "description": "Extensive feeding leaves you weakened by blood loss. After a scene of physical exertion, roll Stamina or fall unconscious for at least an hour. Taking damage, being fed from, and spending Willpower on a Physical roll all count as physical exertion.",
+    "penalty": "−2 to Physical actions and rolls to stabilize or survive injuries. This penalty does not apply to the exertion Stamina roll, but wound penalties do.",
     "resolution": "Heal all lethal damage through normal means.",
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
-    "page": 303
+    "page": 303,
+    "presentationPt": {
+      "name": "Drenado",
+      "description": "A alimentação excessiva de um vampiro deixa você enfraquecido pela perda de sangue. Após uma cena de esforço físico, teste Vigor ou fique inconsciente por ao menos uma hora. Sofrer dano, servir de alimento e gastar Força de Vontade em um teste Físico contam como esforço físico.",
+      "penalty": "−2 em ações Físicas e testes para estabilizar ou sobreviver a ferimentos. Essa penalidade não se aplica ao teste de Vigor por esforço, mas as penalidades por ferimentos se aplicam.",
+      "resolution": "Curar todo o dano letal por meios normais."
+    }
   },
   {
     "id": "ecstatic",
     "name": "Ecstatic",
     "originalName": "Ecstatic",
     "category": "Vampire",
-    "description": "Blood sorcery has temporarily quieted the Beast. The vampire feeds as though Blood Potency were three dots lower, to a minimum of one, and gains +2 to resist frenzy.",
+    "description": "Blood sorcery has temporarily quieted the Beast. You may feed as though Blood Potency were 3 dots lower, to a minimum of 1, and gain +2 to resist frenzy.",
     "resolution": "Feed, sleep, or successfully resist a frenzy.",
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
-    "page": 303
+    "page": 303,
+    "presentationPt": {
+      "name": "Extático",
+      "description": "A feitiçaria de sangue apaziguou temporariamente a Fera. Você pode se alimentar como se a Potência de Sangue fosse 3 pontos menor, até o mínimo de 1, e recebe +2 para resistir ao frenesi.",
+      "resolution": "Alimentar-se, dormir ou resistir com sucesso a um frenesi."
+    }
   },
   {
     "id": "enervated",
     "name": "Enervated",
     "originalName": "Enervated",
     "category": "Vampire",
-    "description": "Second-stage soul loss prevents Willpower recovery through Virtue; only Vice restores it, and doing so first reduces permanent Willpower by one dot.",
+    "description": "You are in the second stage of soul loss: your Integrity is gone and your Willpower is fading. In addition to Soulless's effects, you cannot regain Willpower through Virtue, only Vice. Each indulgence first reduces permanent Willpower by 1 dot, then restores Willpower points to the new maximum.",
     "persistent": true,
     "resolution": "Regain the character's soul.",
     "beat": "Lose a dot of permanent Willpower.",
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
-    "page": 303
+    "page": 303,
+    "presentationPt": {
+      "name": "Enfraquecido",
+      "description": "Você está no segundo estágio da perda da alma: sua Integridade se foi e sua Força de Vontade está se esvaindo. Além dos efeitos de Sem Alma, você não pode recuperar Força de Vontade pela Virtude, apenas pelo Vício. Cada satisfação do Vício primeiro reduz a Força de Vontade permanente em 1 ponto e depois recupera os pontos de Força de Vontade até o novo máximo.",
+      "resolution": "Recuperar sua alma.",
+      "beat": "Perder um ponto de Força de Vontade permanente."
+    }
   },
   {
     "id": "enslaved",

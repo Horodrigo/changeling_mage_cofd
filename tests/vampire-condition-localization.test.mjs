@@ -13,7 +13,7 @@ const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted"]);
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -147,6 +147,22 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.match(distracted.description, /extended actions.*does not grant a Beat/);
   assert.match(distracted.penalty, /−2.*perception, concentration, or precision/);
   assert.equal(distracted.resolution, "Leave the swarm.");
+  const [dominated, drained, ecstatic, enervated] = localized.slice(28);
+  assert.equal(dominated.page, 302);
+  assert.equal(dominated.persistent, undefined);
+  assert.equal(dominated.beat, undefined);
+  assert.match(dominated.description, /naturally limited task ends when completed.*sunrise.*cannot clearly remember/);
+  assert.match(dominated.resolution, /bashing or lethal damage than Stamina.*Resolve \+ Composure.*fulfill the vampire's command/);
+  assert.equal(drained.page, 303);
+  assert.match(drained.description, /roll Stamina.*unconscious.*hour.*Taking damage, being fed from.*Willpower.*count as physical exertion/);
+  assert.match(drained.penalty, /−2.*does not apply.*Stamina roll.*wound penalties do/);
+  assert.equal(drained.resolution, "Heal all lethal damage through normal means.");
+  assert.equal(ecstatic.page, 303);
+  assert.match(ecstatic.description, /Blood Potency were 3 dots lower.*minimum of 1.*\+2/);
+  assert.equal(enervated.page, 303);
+  assert.equal(enervated.persistent, true);
+  assert.match(enervated.description, /Integrity is gone.*Soulless.*Virtue, only Vice.*permanent Willpower by 1 dot.*new maximum/);
+  assert.equal(enervated.beat, "Lose a dot of permanent Willpower.");
 });
 
 test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/EN without changing saved instances", async () => {
