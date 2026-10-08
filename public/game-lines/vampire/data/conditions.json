@@ -996,6 +996,12 @@
     "description": "A violent Kindred bite leaves the character disturbed, angry, and prone to lashing out. Predatory aura attempts to frighten or intimidate the character gain +2.",
     "penalty": "−2 to resist fear, including Nightmare and Intimidation.",
     "resolution": "Lash out physically and inflict at least three levels of lethal damage on someone.",
+    "presentationPt": {
+      "name": "Marcado por Cicatrizes",
+      "description": "Uma mordida violenta de um Membro o deixa perturbado, furioso e propenso a atacar. Tentativas de assustá-lo ou intimidá-lo feitas por criaturas com aura predatória recebem +2.",
+      "penalty": "−2 para resistir ao medo, incluindo Pesadelo e Intimidação.",
+      "resolution": "Atacar fisicamente alguém, causando pelo menos três níveis de dano letal."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 305
@@ -1005,9 +1011,15 @@
     "name": "Stumbled",
     "originalName": "Stumbled",
     "category": "Vampire",
-    "description": "A complication disrupts an ongoing blood sorcery ritual.",
+    "description": "A complication disrupts an ongoing blood sorcery ritual. Resolving this Condition does not grant a Beat.",
     "penalty": "Each subsequent roll in the ritual's extended action suffers −3.",
     "resolution": "The ritual ends.",
+    "presentationPt": {
+      "name": "Vacilante",
+      "description": "Uma complicação atrapalha um ritual de Feitiçaria de Sangue em andamento. Resolver esta Condição não concede um Ato.",
+      "penalty": "Cada teste posterior na ação estendida do ritual sofre −3.",
+      "resolution": "O ritual termina."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 306
@@ -1017,10 +1029,16 @@
     "name": "Subservient",
     "originalName": "Subservient",
     "category": "Vampire",
-    "description": "A vampire has pressed down on the character's will. The vampire may issue commands as though the character were Mesmerized even when that Condition is absent; the character may spend 1 Willpower to resist. The Condition fades after a week unless renewed.",
+    "description": "A vampire may issue commands as though you were Mesmerized even without that Condition. You may spend 1 Willpower to resist, but she can still Mesmerize you and issue commands that way. Altering your memories still requires Dominate. This Condition fades naturally after a week unless the vampire reapplies it during that time.",
     "persistent": true,
     "resolution": "Take more lethal damage than Stamina while following a command, or experience a breaking point for following it and succeed at the roll.",
     "beat": "Obey the vampire and do something the character would not normally do.",
+    "presentationPt": {
+      "name": "Subserviente",
+      "description": "Uma vampira pode dar ordens como se você estivesse Mesmerizado, mesmo sem essa Condição. Você pode gastar 1 Força de Vontade para resistir, mas ela ainda pode Hipnotizar você e dar ordens por esse meio. Alterar suas memórias ainda exige Dominação. Esta Condição termina naturalmente após uma semana, a menos que a vampira a aplique novamente nesse período.",
+      "resolution": "Sofrer mais dano letal que seu Vigor ao seguir uma ordem ou enfrentar um Ponto de Ruptura por segui-la e obter sucesso no teste.",
+      "beat": "Obedecer à vampira e fazer algo que você normalmente não faria."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 306
@@ -1030,8 +1048,13 @@
     "name": "Tainted",
     "originalName": "Tainted",
     "category": "Vampire",
-    "description": "A soul consumed through diablerie still struggles inside the vampire. Once per chapter, the victim may manifest to penalize one dice pool by the victim's Blood Potency or add that many dice to a pool opposing the vampire. Multiple victims create separate instances.",
+    "description": "A soul consumed through diablerie still struggles inside the vampire. Once per session, the victim may manifest to penalize one dice pool by the victim's Blood Potency or add that many dice to a pool opposing the vampire. Multiple victims create separate instances.",
     "resolution": "Let a number of months pass equal to the victim's Blood Potency; each level of aggravated damage suffered reduces the remaining time by one month.",
+    "presentationPt": {
+      "name": "Maculado",
+      "description": "Uma alma consumida por diablerie ainda luta dentro do vampiro. Uma vez por sessão, a vítima pode se manifestar para penalizar uma parada pelo valor de sua Potência de Sangue ou adicionar essa quantidade de dados a uma parada contra o vampiro. Vítimas diferentes permitem instâncias distintas.",
+      "resolution": "Deixar passar um número de meses igual à Potência de Sangue da vítima; cada nível de dano agravado sofrido reduz o tempo restante em um mês."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 306

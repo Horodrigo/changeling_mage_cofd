@@ -13,7 +13,7 @@ const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened", "humbled", "intoxicated", "jaded", "languid", "lethargic", "mesmerized", "raptured", "sated"]);
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened", "humbled", "intoxicated", "jaded", "languid", "lethargic", "mesmerized", "raptured", "sated", "scarred", "stumbled", "subservient", "tainted"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -223,6 +223,29 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.doesNotMatch(raptured.description, /exceptionally/);
   assert.equal(sated.penalty, "+1 to rolls to resist frenzy.");
   assert.match(sated.resolution, /Enter frenzy.*resist.*−3 or worse/);
+  const [scarred, stumbled, subservient, tainted] = localized.slice(44);
+  assert.equal(scarred.page, 305);
+  assert.equal(scarred.persistent, undefined);
+  assert.equal(scarred.beat, undefined);
+  assert.match(scarred.description, /Predatory aura.*frighten or intimidate.*\+2/);
+  assert.match(scarred.penalty, /−2.*fear.*Nightmare and Intimidation/);
+  assert.match(scarred.resolution, /at least three levels of lethal damage/);
+  assert.equal(stumbled.page, 306);
+  assert.equal(stumbled.persistent, undefined);
+  assert.equal(stumbled.beat, undefined);
+  assert.match(stumbled.description, /does not grant a Beat/);
+  assert.match(stumbled.penalty, /Each subsequent roll.*extended action.*−3/);
+  assert.equal(stumbled.resolution, "The ritual ends.");
+  assert.equal(subservient.page, 306);
+  assert.equal(subservient.persistent, true);
+  assert.match(subservient.description, /Mesmerized even without.*1 Willpower.*still Mesmerize.*memories still requires Dominate.*week unless.*reapplies/);
+  assert.match(subservient.resolution, /more lethal damage than Stamina.*breaking point.*succeed/);
+  assert.equal(tainted.page, 306);
+  assert.equal(tainted.persistent, undefined);
+  assert.equal(tainted.beat, undefined);
+  assert.match(tainted.description, /Once per session.*penalize.*victim's Blood Potency.*add that many dice.*separate instances/);
+  assert.doesNotMatch(tainted.description, /chapter/);
+  assert.match(tainted.resolution, /months.*victim's Blood Potency.*each level of aggravated damage.*one month/);
 });
 
 test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/EN without changing saved instances", async () => {
