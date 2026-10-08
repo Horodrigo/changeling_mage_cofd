@@ -13,7 +13,7 @@ const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened"]);
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened", "humbled", "intoxicated", "jaded", "languid"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -183,6 +183,30 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.equal(frightened.beat, undefined);
   assert.match(frightened.description, /cannot approach or act against.*only exit.*collapse in terror.*roll to avoid frenzy.*scene ends.*1 Willpower suppresses all its effects for one turn/);
   assert.equal(frightened.resolution, "Escape from the source of fear.");
+  const [humbled, intoxicated, jaded, languid] = localized.slice(36);
+  assert.equal(humbled.page, 304);
+  assert.deepEqual(humbled.nameQualifier, { "en-US": "Kindred", "pt-BR": "Membro" });
+  assert.equal(humbled.persistent, undefined);
+  assert.equal(humbled.beat, undefined);
+  assert.match(humbled.description, /unable to regain Willpower from the Requiem/);
+  assert.equal(humbled.penalty, "−2 to Resolve rolls.");
+  assert.match(humbled.resolution, /Willpower.*Mask/);
+  assert.equal(intoxicated.page, 304);
+  assert.equal(intoxicated.persistent, undefined);
+  assert.equal(intoxicated.beat, undefined);
+  assert.match(intoxicated.penalty, /−2 to Dexterity and Wits.*two fewer Doors/);
+  assert.match(intoxicated.resolution, /Sleep.*breaking point/);
+  assert.equal(jaded.page, 304);
+  assert.equal(jaded.persistent, undefined);
+  assert.equal(jaded.beat, undefined);
+  assert.match(jaded.description, /resist frenzy.*capped at your Humanity dots.*cannot spend Willpower.*may still ride the wave/);
+  assert.equal(jaded.resolution, "Meaningful interaction with a Touchstone.");
+  assert.equal(languid.page, 304);
+  assert.equal(languid.persistent, undefined);
+  assert.equal(languid.beat, undefined);
+  assert.match(languid.description, /Each night.*cumulative −1.*all actions.*daysleep.*one Vitae per dot of Blood Potency/);
+  assert.doesNotMatch(languid.description, /final Touchstone/);
+  assert.equal(languid.resolution, "Fall into torpor.");
 });
 
 test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/EN without changing saved instances", async () => {

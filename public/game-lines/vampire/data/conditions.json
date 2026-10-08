@@ -856,6 +856,12 @@
     "description": "Divine judgment leaves the vampire feeling unworthy and unable to regain Willpower from the Requiem.",
     "penalty": "−2 to Resolve rolls.",
     "resolution": "Regain Willpower by acting through the character's Mask.",
+    "presentationPt": {
+      "name": "Humilhado",
+      "description": "O julgamento divino faz o vampiro sentir-se indigno e o impede de recuperar Força de Vontade pelo Réquiem.",
+      "penalty": "−2 nos testes de Perseverança.",
+      "resolution": "Recuperar Força de Vontade por meio de sua Máscara."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 304
@@ -868,6 +874,12 @@
     "description": "Drink, drugs, or another influence dulls the character's reactions and makes them easier to manipulate.",
     "penalty": "−2 to Dexterity and Wits rolls; Social maneuvering against the character faces two fewer Doors.",
     "resolution": "Sleep off the intoxication or face a breaking point.",
+    "presentationPt": {
+      "name": "Intoxicado",
+      "description": "Bebida, drogas ou outra influência prejudicam suas reações e facilitam a manipulação.",
+      "penalty": "−2 nos testes de Destreza e Raciocínio; Manobras Sociais contra você enfrentam duas Portas a menos.",
+      "resolution": "Dormir até passar a intoxicação ou enfrentar um Ponto de Ruptura."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 304
@@ -877,10 +889,13 @@
     "name": "Jaded",
     "originalName": "Jaded",
     "category": "Vampire",
-    "description": "Repeated detachment has numbed the character to human feeling.",
-    "persistent": true,
-    "resolution": "Meaningfully reconnect with Humanity under the Condition's terms.",
-    "beat": "Accept a serious consequence because human concerns no longer move the character.",
+    "description": "You shun mortal society and act only to better yourself, allowing your Beast a stronger hold. Rolls to resist frenzy are capped at your Humanity dots, and you cannot spend Willpower to hold frenzy back. You may still ride the wave.",
+    "resolution": "Meaningful interaction with a Touchstone.",
+    "presentationPt": {
+      "name": "Calejado",
+      "description": "Você evita a sociedade mortal e age apenas em benefício próprio, permitindo que sua Besta o domine mais. Testes para resistir ao frenesi são limitados aos seus pontos de Humanidade, e você não pode gastar Força de Vontade para conter o frenesi. Ainda pode Cavalgar a Onda.",
+      "resolution": "Interagir de forma significativa com uma Touchstone."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 304
@@ -890,10 +905,13 @@
     "name": "Languid",
     "originalName": "Languid",
     "category": "Vampire",
-    "description": "The loss of a final Touchstone leaves the Blood and emotions sluggish.",
-    "persistent": true,
-    "resolution": "Establish the required replacement Touchstone or meet the Condition's Humanity requirement.",
-    "beat": "The character's detachment prevents decisive action or meaningful connection.",
+    "description": "Torpor draws you into the sleep of ages. Each night with this Condition imposes a cumulative −1 penalty to all actions. Rising from daysleep requires one Vitae per dot of Blood Potency.",
+    "resolution": "Fall into torpor.",
+    "presentationPt": {
+      "name": "Lânguido",
+      "description": "O torpor o atrai para o sono das eras. Cada noite com esta Condição impõe uma penalidade cumulativa de −1 em todas as ações. Despertar do sono diurno exige um Vitae por ponto de Potência de Sangue.",
+      "resolution": "Entrar em torpor."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 304
