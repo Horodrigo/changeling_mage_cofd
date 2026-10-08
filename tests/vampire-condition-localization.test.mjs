@@ -13,7 +13,7 @@ const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened", "humbled", "intoxicated", "jaded", "languid"]);
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened", "humbled", "intoxicated", "jaded", "languid", "lethargic", "mesmerized", "raptured", "sated"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -207,6 +207,22 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.match(languid.description, /Each night.*cumulative −1.*all actions.*daysleep.*one Vitae per dot of Blood Potency/);
   assert.doesNotMatch(languid.description, /final Touchstone/);
   assert.equal(languid.resolution, "Fall into torpor.");
+  const [lethargic, mesmerized, raptured, sated] = localized.slice(40);
+  for (const item of [lethargic, mesmerized, raptured, sated]) {
+    assert.equal(item.page, 305);
+    assert.equal(item.persistent, undefined);
+    assert.equal(item.beat, undefined);
+  }
+  assert.deepEqual(lethargic.nameQualifier, { "en-US": "Kindred", "pt-BR": "Membro" });
+  assert.match(lethargic.description, /prevents you from spending Willpower.*six hours.*cumulative −1.*Stamina \+ Resolve with this penalty.*next sunset/);
+  assert.equal(lethargic.resolution, "Sleep for a full day.");
+  assert.match(mesmerized.description, /unusual commands.*After resolving.*\+3.*same scene.*cannot clearly remember.*fading.*does not count as resolving/);
+  assert.doesNotMatch(mesmerized.description, /resist that vampire's further/);
+  assert.match(mesmerized.resolution, /any amount.*bashing or lethal.*breaking point/);
+  assert.match(raptured.description, /no Willpower.*3 successes instead of 5/);
+  assert.doesNotMatch(raptured.description, /exceptionally/);
+  assert.equal(sated.penalty, "+1 to rolls to resist frenzy.");
+  assert.match(sated.resolution, /Enter frenzy.*resist.*−3 or worse/);
 });
 
 test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/EN without changing saved instances", async () => {

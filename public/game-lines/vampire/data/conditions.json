@@ -925,9 +925,15 @@
       "pt-BR": "Membro"
     },
     "category": "Vampire",
-    "description": "Remaining active during the day compounds supernatural exhaustion.",
-    "penalty": "Accumulates penalties to actions and resistance as described by daysleep rules.",
-    "resolution": "Sleep through the day or otherwise remove the supernatural fatigue.",
+    "description": "Exhaustion prevents you from spending Willpower. For every six hours without sleep, take a cumulative −1 penalty to all actions. At each six-hour interval, roll Stamina + Resolve with this penalty; failure puts you to sleep until the next sunset.",
+    "penalty": "Cannot spend Willpower; cumulative −1 to all actions per six hours without sleep, also applied to the Stamina + Resolve roll to stay awake.",
+    "resolution": "Sleep for a full day.",
+    "presentationPt": {
+      "name": "Letárgico",
+      "description": "A exaustão impede você de gastar Força de Vontade. A cada seis horas sem dormir, sofra uma penalidade cumulativa de −1 em todas as ações. A cada intervalo de seis horas, teste Vigor + Perseverança com essa penalidade; uma falha faz você dormir até o próximo pôr do sol.",
+      "penalty": "Não pode gastar Força de Vontade; −1 cumulativo em todas as ações a cada seis horas sem dormir, também aplicado ao teste de Vigor + Perseverança para permanecer acordado.",
+      "resolution": "Dormir por um dia inteiro."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 305
@@ -937,8 +943,13 @@
     "name": "Mesmerized",
     "originalName": "Mesmerized",
     "category": "Vampire",
-    "description": "The character's will is subordinate to a vampire and cannot resist that vampire's commands. The character can otherwise act normally but cannot clearly remember events under the spell. If resolved, the character gains +3 to resist that vampire's further attempts to Mesmerize during the same scene; merely fading after the scene does not count as resolving it.",
+    "description": "The character's will is subordinate to a vampire and cannot resist that vampire's commands. The character otherwise looks and acts normally, though unusual commands may make the hypnosis apparent. After resolving this Condition, the character gains +3 to resist further attempts to Mesmerize during the same scene and cannot clearly remember events under the spell. Merely fading after the scene does not count as resolving it.",
     "resolution": "Suffer any amount of bashing or lethal damage, or experience a breaking point as part of the vampire's command.",
+    "presentationPt": {
+      "name": "Mesmerizado",
+      "description": "Sua vontade está subordinada à de um vampiro, e você não pode resistir às ordens dele. Fora isso, você aparenta e age normalmente, embora ordens incomuns possam tornar a hipnose perceptível. Após resolver esta Condição, receba +3 para resistir a novas tentativas de Hipnotizar na mesma cena e não consiga lembrar com clareza o que ocorreu sob o efeito. A Condição terminar naturalmente após a cena não conta como resolução.",
+      "resolution": "Sofrer qualquer quantidade de dano contundente ou letal, ou enfrentar um Ponto de Ruptura como parte da ordem do vampiro."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 305
@@ -948,8 +959,13 @@
     "name": "Raptured",
     "originalName": "Raptured",
     "category": "Vampire",
-    "description": "Religious fervor places the vampire in harmony with the Beast. Riding the wave costs no Willpower and succeeds exceptionally with three successes.",
+    "description": "The words of Longinus bring you into harmony with your Beast. Riding the wave costs no Willpower and requires 3 successes instead of 5.",
     "resolution": "Fall to frenzy or successfully ride the wave.",
+    "presentationPt": {
+      "name": "Arrebatado",
+      "description": "As palavras de Longinus trazem harmonia com sua Besta. Cavalgar a Onda não custa Força de Vontade e exige 3 sucessos em vez de 5.",
+      "resolution": "Entrar em frenesi ou Cavalgar a Onda com sucesso."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 305
@@ -962,6 +978,12 @@
     "description": "The Beast has received an outlet and is temporarily less likely to drive the vampire into frenzy.",
     "penalty": "+1 to rolls to resist frenzy.",
     "resolution": "Enter frenzy, or resist a significant provocation that imposes a frenzy modifier of −3 or worse.",
+    "presentationPt": {
+      "name": "Saciado",
+      "description": "Sua Besta encontrou uma válvula de escape e fica temporariamente menos propensa a levá-lo ao frenesi.",
+      "penalty": "+1 nos testes para resistir ao frenesi.",
+      "resolution": "Entrar em frenesi ou resistir a uma provocação significativa que imponha um modificador de −3 ou pior ao teste de resistência."
+    },
     "source": "Vampire: The Requiem Second Edition",
     "sourceCode": "VtR",
     "page": 305
