@@ -1137,24 +1137,34 @@
     "name": "Beastless",
     "originalName": "Beastless",
     "category": "Vampire",
-    "description": "The vampire cannot frenzy, lash out, use or benefit from Disciplines or Devotions, or use Kindred senses, and must roll to drink blood.",
+    "description": "Without your Beast, you cannot frenzy, lash out, use or benefit from Disciplines or Devotions, or use Kindred senses. Treat yourself as mortal when targeted by a predatory aura. Drinking blood requires Resolve + Composure; the Storyteller may grant a bonus for hunger or starvation. This Condition ends without resolving at the end of the scene.",
     "source": "Wild Hunt: Gangrel",
     "sourceCode": "h-vtr-wild-hunt",
     "sourceId": "h-vtr-wild-hunt",
     "homebrew": true,
     "page": 39,
-    "resolution": "Reach the end of the scene.",
-    "beat": "Suffer a breaking point from inflicting violence while cut off from the Beast."
+    "resolution": "Suffer a breaking point due to inflicting violence.",
+    "presentationPt": {
+      "name": "Sem Besta",
+      "description": "Sem sua Besta, você não pode entrar em frenesi, investir com a aura predatória, usar ou receber benefícios de Disciplinas ou Devoções, nem usar os sentidos dos Membros. Considere-se mortal quando for alvo de uma aura predatória. Beber sangue exige Perseverança + Compostura; o Narrador pode conceder um bônus por fome ou inanição. Esta Condição termina sem resolução ao fim da cena.",
+      "resolution": "Sofrer um Ponto de Ruptura por infligir violência."
+    }
   },
   {
     "id": "h-vtr-fire-revolution:contrary",
     "name": "Contrary",
     "originalName": "Contrary",
     "category": "Vampire",
-    "description": "A false belief imposed through the Blood drives the character to contradict evidence and act on it.",
+    "description": "You believe the vampire is lying and distrust everything he says. Supernatural abilities to distinguish truth from lies do not work on his machinations. This Condition ends without resolving after hours equal to his Blood Potency.",
     "persistent": true,
     "resolution": "Find evidence that the supposed lie is true after all.",
     "beat": "Cause disruption because of the false belief.",
+    "presentationPt": {
+      "name": "Contrário",
+      "description": "Você acredita que o vampiro está mentindo e não confia em nada que ele diga. Habilidades sobrenaturais para distinguir verdade de mentira não funcionam contra suas maquinações. Esta Condição termina sem resolução após um número de horas igual à Potência de Sangue dele.",
+      "resolution": "Encontrar provas de que a suposta mentira é verdadeira, afinal.",
+      "beat": "Causar perturbação devido à crença falsa."
+    },
     "sourceId": "h-vtr-fire-revolution",
     "source": "Fire & Revolution: Carthians",
     "sourceCode": "h-vtr-fire-revolution",
@@ -1166,8 +1176,13 @@
     "name": "Seed of Her Divinity — Errata",
     "originalName": "Seed of Her Divinity",
     "category": "Errata",
-    "description": "The vampire exceptionally succeeds on three successes instead of five on Social actions with the subject. The Condition fades after nights equal to Presence.",
+    "description": "The vampire achieves exceptional success with 3 successes instead of 5 on all Social actions with you. This Condition ends without resolving after nights equal to the vampire's Presence dots.",
     "resolution": "Successfully share and spread the Acolyte's myth using Presence + Expression.",
+    "presentationPt": {
+      "name": "Semente de Sua Divindade",
+      "description": "O vampiro obtém sucesso excepcional com 3 sucessos em vez de 5 em todas as ações Sociais com você. Esta Condição termina sem resolução após um número de noites igual aos pontos de Presença do vampiro.",
+      "resolution": "Compartilhar e difundir com sucesso o mito do Acólito usando Presença + Expressão."
+    },
     "sourceId": "h-vtr-agony-ecstasy",
     "source": "Agony & Ecstasy: Circle of the Crone",
     "sourceCode": "h-vtr-agony-ecstasy",
@@ -1182,8 +1197,13 @@
     "name": "Carthian Backup — Errata",
     "originalName": "Carthian Backup",
     "category": "Environmental Tilt",
-    "description": "A squad called by Army of One deals the Merit rating in lethal damage to the opposing side each turn; Willpower adds two. Its abstract Health is five plus the Merit rating and damage degrades or disperses it.",
-    "resolution": "The backup flees, is incapacitated, or is destroyed.",
+    "description": "At the start of each turn, a squad deals lethal damage equal to your Army of One dots to the opposing side, including vampires. Spend Willpower to add 2 damage. Distribute damage evenly; when there is not enough for everyone, begin with the lowest Defense, breaking ties by lower Initiative order. Defense does not apply, Resilience works normally, and active Celerity movement can evade it. Army of One or calling in support causes this Environmental Tilt.",
+    "resolution": "The squad has Health equal to 5 + Army of One dots, takes damage like a vampire, has no Defense, cannot heal, and takes at most 1 damage per turn regardless of successes. It falters after damage exceeds the Merit dots. Each lethal damage above 5 reduces its damage rating by one; aggravated damage kills or sends a member into torpor. Full lethal damage means everyone has fled or cannot fight; full aggravated damage means everyone is dead or torpid. Contest or resist Mental or Social Disciplines with Army of One dots; a successful effect counts as a lethal attack, with appropriate narrative consequences.",
+    "presentationPt": {
+      "name": "Reforço Carthiano",
+      "description": "No início de cada turno, o grupo causa ao lado adversário, incluindo vampiros, dano letal igual aos seus pontos em Exército de Um Só. Gaste Força de Vontade para adicionar 2 ao dano. Distribua o dano igualmente; se não houver o suficiente para todos, comece pela menor Defesa, desempate pela posição mais baixa na ordem de Iniciativa. Defesa não se aplica, Resiliência funciona normalmente e o movimento ativo de Celeridade permite evasão. Exército de Um Só ou convocar reforços causa este Tilt Ambiental.",
+      "resolution": "O grupo tem Vitalidade igual a 5 + pontos em Exército de Um Só, recebe dano como um vampiro, não tem Defesa, não pode se curar e sofre no máximo 1 dano por turno, independentemente dos sucessos. Vacila quando o dano excede os pontos do Mérito. Cada dano letal acima de 5 reduz seu dano em um; dano agravado mata ou põe um integrante em torpor. Vitalidade cheia de dano letal significa que todos fugiram ou não podem lutar; cheia de dano agravado, que todos morreram ou estão em torpor. Dispute ou resista a Disciplinas Mentais ou Sociais com os pontos em Exército de Um Só; um efeito bem-sucedido conta como ataque letal, com consequências narrativas apropriadas."
+    },
     "sourceId": "h-vtr-fire-revolution",
     "source": "Fire & Revolution: Carthians",
     "sourceCode": "h-vtr-fire-revolution",
