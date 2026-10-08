@@ -12,8 +12,8 @@ const conditions = read("public/game-lines/vampire/data/conditions.json");
 const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
-test("VtR Better Feared p. 31 and Strange Shades p. 40 Conditions retain their complete verified rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
+test("VtR Better Feared pp. 31, 98, 101, 107 and Strange Shades p. 40 Conditions retain their complete verified rules and IDs", () => {
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -22,11 +22,25 @@ test("VtR Better Feared p. 31 and Strange Shades p. 40 Conditions retain their c
     assert.equal(item.name, item.originalName);
     assert.equal(Boolean(item.presentationPt.beat), Boolean(item.beat));
   }
-  const hunger = localized[0], scorned = localized[1], soulmate = localized[2];
+  const [hunger, despondent, frantic, curse, scorned, soulmate] = localized;
   assert.equal(hunger.page, 31);
   assert.equal(hunger.persistent, undefined);
   assert.equal(hunger.beat, undefined);
   assert.match(hunger.description, /scene ends.*Size 2.*Deprived/);
+  assert.equal(despondent.page, 101);
+  assert.equal(despondent.persistent, true);
+  assert.match(despondent.description, /−3.*3 successes instead of 5.*only to vampires with Nightmare.*bite heals/);
+  assert.match(despondent.resolution, /Integrity or Humanity.*consent/);
+  assert.match(despondent.beat, /Dramatically fail/);
+  assert.equal(frantic.page, 98);
+  assert.equal(frantic.persistent, true);
+  assert.match(frantic.description, /extended action.*1 Willpower.*does not grant \+3.*same Skill suffer −2.*ends without resolving.*hours.*exceptional success.*nights/);
+  assert.match(frantic.resolution, /depressant drugs.*alcohol.*frenzy/);
+  assert.equal(curse.page, 107);
+  assert.equal(curse.persistent, true);
+  assert.match(curse.description, /Choose 2 Skills.*unskilled penalties.*±1 at Humanity 6, ±2 at 5.*Humanity 1.*9-again.*loses 10-again.*only to mundane actions.*do not affect derived/);
+  assert.match(curse.resolution, /not your Touchstone.*Humanity 7/);
+  assert.doesNotMatch(curse.description, /Ease the Curse/);
   assert.match(scorned.description, /Blood Potency 1.*Integrity for Humanity.*do not cause breaking points.*that vampire/);
   assert.match(scorned.resolution, /Kill.*Touchstones.*reputation/);
   assert.match(soulmate.description, /existing and new blood bonds.*Majesty.*Once per night.*greater than their Stamina.*more than their Size/);
@@ -52,7 +66,7 @@ test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/E
       const catalog = freezeCatalogData(await vampireConditionsCatalogGroup.load({ getCatalog: async id => { requests.push(id); return conditions; } }));
       assert.deepEqual(requests, ["vampire-conditions"]);
       const { activeVampireItems } = await vite.ssrLoadModule("/game-lines/vampire/homebrew-catalog.ts");
-      assert.equal(activeVampireItems(catalog, { disabledIds: ["h-vtr-strange-shades"] }).some(item => item.id === localized[1].id), false);
+      assert.equal(activeVampireItems(catalog, { disabledIds: ["h-vtr-strange-shades"] }).some(item => item.id === "vtr-strange-shades:scorned"), false);
       const base = localized[0], errata = { ...base, id: "homebrew:errata", errataFor: base.id, description: "Authored replacement stays.", presentationPt: undefined };
       const replacement = activeVampireItems([base, errata], { disabledIds: [] })[0];
       assert.equal(present(replacement, locale).description, errata.description, "An untranslated replacement never inherits obsolete PT");

@@ -22,43 +22,63 @@
     "name": "Despondent",
     "originalName": "Despondent",
     "category": "Vampire",
-    "description": "Hopelessness suppresses initiative and makes meaningful effort difficult.",
+    "description": "A vampire's bite leaves you in a bleak mood. Actions involving things you normally do for pleasure or happiness suffer −3. Rolls that use negativity against you achieve exceptional success with 3 successes instead of 5. Your wounds carry a faint scent of suffering detectable only to vampires with Nightmare. This Condition ends when the damage from the bite heals.",
     "source": "Better Feared: Nosferatu",
     "sourceCode": "h-vtr-better-feared",
     "sourceId": "h-vtr-better-feared",
     "homebrew": true,
-    "page": 107,
+    "page": 101,
     "persistent": true,
-    "resolution": "Achieve a meaningful success that disproves the character's despair.",
-    "beat": "Abandon an important effort because it seems pointless."
+    "resolution": "Gain a dot of Integrity or Humanity, or consent to a vampire feeding from you.",
+    "beat": "Dramatically fail an action because of your despondence.",
+    "presentationPt": {
+      "name": "Desolado",
+      "description": "A mordida de um vampiro deixa você profundamente desolado. Ações envolvendo coisas que normalmente proporcionam prazer ou felicidade sofrem −3. Testes que usam a negatividade contra você obtêm sucesso excepcional com 3 sucessos em vez de 5. Suas feridas exalam um leve cheiro de sofrimento, perceptível apenas a vampiros com Pesadelo. Esta Condição termina quando o dano da mordida é curado.",
+      "resolution": "Ganhar um ponto de Integridade ou Humanidade, ou consentir que um vampiro se alimente de você.",
+      "beat": "Sofrer uma falha dramática em uma ação por causa de sua desolação."
+    }
   },
   {
     "id": "vtr-better-feared:frantic",
     "name": "Frantic",
     "originalName": "Frantic",
     "category": "Vampire",
-    "description": "Panic scatters attention and makes deliberate action difficult until the immediate threat is escaped.",
+    "description": "Your racing mind cannot focus. Starting an extended action requires spending 1 Willpower, which does not grant +3. After using a Mental Skill once in a scene, subsequent actions with that same Skill suffer −2. This Condition ends without resolving after a number of hours equal to the vampire's Blood Potency; Mania's exceptional success extends it to that many nights.",
     "source": "Better Feared: Nosferatu",
     "sourceCode": "h-vtr-better-feared",
     "sourceId": "h-vtr-better-feared",
     "homebrew": true,
-    "page": 107,
-    "resolution": "Escape or decisively confront the source of panic."
+    "page": 98,
+    "persistent": true,
+    "resolution": "Take strong depressant drugs, drink a lot of alcohol, or enter frenzy.",
+    "beat": "Fail an important task because of your racing mind.",
+    "presentationPt": {
+      "name": "Frenético",
+      "description": "Sua mente acelerada não consegue se concentrar. Iniciar uma ação estendida exige gastar 1 de Força de Vontade, sem conceder +3. Após usar uma Perícia Mental uma vez na cena, ações posteriores com essa mesma Perícia sofrem −2. Esta Condição termina sem resolução após um número de horas igual à Potência de Sangue do vampiro; o sucesso excepcional de Mania prolonga esse prazo para o mesmo número de noites.",
+      "resolution": "Usar drogas depressoras fortes, beber muito álcool ou entrar em frenesi.",
+      "beat": "Falhar em uma tarefa importante por causa de sua mente acelerada."
+    }
   },
   {
     "id": "vtr-better-feared:potent-curse",
     "name": "Potent Curse",
     "originalName": "Potent Curse",
     "category": "Vampire",
-    "description": "The Nosferatu clan curse manifests with exceptional intensity and cannot be dampened by Ease the Curse.",
+    "description": "The Nosferatu's Lonely Curse grants an advantage and a harsher burden. Choose 2 Skills fitting its manifestation: one receives a bonus, the other a penalty. You need not have dots in either, and unskilled penalties still apply. For each Humanity tier below 7, the modifiers increase: ±1 at Humanity 6, ±2 at 5, and so on. At Humanity 1 they stop increasing; instead, the bonus Skill gains 9-again and the penalized Skill loses 10-again. These modifiers apply only to mundane actions and do not affect derived Advantages such as Defense.",
     "source": "Better Feared: Nosferatu",
     "sourceCode": "h-vtr-better-feared",
     "sourceId": "h-vtr-better-feared",
     "homebrew": true,
-    "page": 108,
+    "page": 107,
     "persistent": true,
-    "resolution": "Remove the supernatural effect that intensified the clan curse.",
-    "beat": "The intensified curse causes serious social or physical trouble."
+    "resolution": "Find true love or acceptance from a mortal who is not your Touchstone, or rise to Humanity 7.",
+    "beat": "Suffer humiliation or a major setback because of the intensity of your curse.",
+    "presentationPt": {
+      "name": "Maldição Potente",
+      "description": "A Maldição Solitária do Nosferatu concede uma vantagem e um fardo mais severo. Escolha 2 Perícias coerentes com sua manifestação: uma recebe um bônus, a outra uma penalidade. Não é necessário possuir pontos nelas, e as penalidades por falta de treinamento continuam valendo. A cada nível de Humanidade abaixo de 7, os modificadores aumentam: ±1 em Humanidade 6, ±2 em 5 e assim por diante. Em Humanidade 1 eles deixam de aumentar; em vez disso, a Perícia beneficiada ganha explosão do 9 e a penalizada perde explosão do 10. Os modificadores se aplicam apenas a ações mundanas e não afetam Vantagens derivadas, como Defesa.",
+      "resolution": "Encontrar amor verdadeiro ou aceitação de um mortal que não seja sua Pedra de Toque, ou elevar a Humanidade a 7.",
+      "beat": "Sofrer humilhação ou um grande revés devido à intensidade de sua maldição."
+    }
   },
   {
     "id": "vtr-false-gods:subsumed",

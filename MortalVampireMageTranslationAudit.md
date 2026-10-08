@@ -13,6 +13,8 @@ Apresentação por ID, separada do canônico usado pelas regras e parsers. Troca
 
 Trabalhar em lotes pequenos, verificar EN → PT → EN e gates proporcionais, registrar dúvidas e criar commits locais coerentes. Concluir a meta apenas após implementar e verificar todo o escopo. Smoke de navegador é realizado pelo usuário. `WerewolfAudit.md` permanece porque contém decisões e trabalho adiado; esta meta não reabre as decisões de Contracts Waters of Lethe, Enveloping Sands e Whisperwind.
 
+Decisão de escopo em 2026-10-07: descontos de Devoções conforme a fonte, configuração de Bloodcrafting e vínculos de Rapidity/Slow and Steady aprovados. **Avisar o usuário antes de acrescentar qualquer novo subsistema**, inclusive os fluxos de escolhas de Ortam e Lithopedia; a presença no backlog não dispensa esse aviso.
+
 ## Backlog atual
 
 As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade universal ou deduplicar regras homônimas. Inglês canônico isolado não indica ausência de apresentação PT.
@@ -22,7 +24,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | Vampire — referências | 16 Clans, 23 Covenants, 27 Anchors, 56 Bloodlines | Clans/Covenants/Anchors completos; 56 Bloodlines com textos PT (14 oficiais, 42 Homebrew); Desventurados aprovado e aplicado |
 | V04 — Méritos | 399 (154 não Homebrew, 245 Homebrew), 80 níveis; nove erratas incluídas | Apresentações existentes completas, nove erratas ativadas e correções de fonte aprovadas verificadas; Beast King recuperado e Best Fiend alinhado a False Gods p. 111; Servo de Dis recuperado conforme Agony p. 103 |
 | V05 — Poderes | 555 poderes, 140 níveis internos; 1 Tilt da linha | 23/23 Disciplinas, seus 110 níveis, 5/5 Disciplinas Rituais, 2/2 Açoites, 5/5 fórmulas de Kimiya, 7/7 Sacrilégios de Therion, 10/10 Invocações de Gaiola Dourada, 5/5 Detournements, 6/6 Espirais com 30 níveis e 19/19 Escamas e 76/76 ritos de Crúac e 32/32 milagres Tebanos e 357/358 Devoções com PT. Resta 1 Devoção |
-| V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | 3/66 com PT completa e regras conferidas (Fome Avassaladora, Desprezado, Alma Gêmea); completar nome, descrição, resolução e Ato, quando aplicáveis; incluir Agonized (Guide to the Night p. 135) e Promised (Spilled Blood p. 28), referenciadas por Devoções mas ausentes do catálogo atual |
+| V06 — Conditions | 66, incluindo 19 Homebrew e duas erratas | 6/66 com PT completa e regras conferidas; completar nome, descrição, resolução e Ato, quando aplicáveis; incluir Agonized (Guide to the Night p. 135) e Promised (Spilled Blood p. 28), referenciadas por Devoções mas ausentes do catálogo atual |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Localizar rótulos e benefícios predefinidos; preservar configurações e Specialties autorais |
 | G01 — Spells | 360 | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
 | G02 — Méritos | 71 (61 principais, dez suplementares), 31 níveis | Nome, requisitos, descrição e níveis |
@@ -212,6 +214,8 @@ Decisões aplicadas; nenhuma destas questões aguarda resposta.
 
 Primeiro lote: **Fome Avassaladora** (Better Feared p. 31), **Desprezado** e **Alma Gêmea** (Strange Shades p. 40), revisados visualmente. Fome perde a persistência/Ato inventados e recupera Tamanho 2 até o fim da cena, senão vira Privado. Desprezado recupera dano solar, restrições/imunidades contra o Leandros e suas três resoluções. Alma Gêmea recupera imunidade a Laços de Sangue, Majestade em Presença, alimentação como Âncora uma vez por noite, exigência mensal e Atos distintos por papel. IDs mantidos; não reescrever instâncias existentes.
 
+Better Feared pp. 98, 101, 107: **Frenético**, **Desolado** e **Maldição Potente** com efeitos, resolução e Atos EN/PT conferidos visualmente; páginas corrigidas. Frenético recupera persistência, Força de Vontade para iniciar ações estendidas sem +3, −2 por reutilizar a mesma Perícia Mental e expiração sem resolução (horas/noites conforme Mania). Desolado recupera −3 em atividades prazerosas, sucesso excepcional com três sucessos para negatividade e término ao curar a mordida. Maldição Potente recupera as duas Perícias e os modificadores por Humanidade, sem a restrição inventada de Ease the Curse. São textos de catálogo; nenhuma escolha, modificador de ficha ou regra opcional de aquisição é automatizada neste lote.
+
 ## Compras adicionais e Enxame — concluídos
 
 As sete **Discipline Options** possuem IDs independentes, dependências do poder-base e apresentação EN/PT Desktop/Mobile. Preço adicional das versões avançadas = total impresso menos preço canônico básico; recibos existentes não são reprecificados. Desativar uma fonte esconde novas escolhas, preservando histórico e dependências. Os detalhes de persistência e estorno estão em `AGENTS.md` e nos testes.
@@ -227,14 +231,14 @@ As sete **Discipline Options** possuem IDs independentes, dependências do poder
 | O Momento é Tudo: Mensagem por Gatilho — Strange Shades p. 89 | Devoção-base e Dominação 3 por IDs; +1 XP, independente do desconto Moirai no poder-base. Permite um evento como gatilho em vez de um horário. |
 
 
-Maçã do Éden (benefícios ao destinatário humano) e Espiral de Zirnitra (preço de Méritos) não pertencem a essa categoria. Rapidity/Slow and Steady continuam no backlog V05.
+Maçã do Éden (benefícios ao destinatário humano) e Espiral de Zirnitra (preço de Méritos) não pertencem a essa categoria. A ressalva de fonte original para Rapidity/Slow and Steady está no backlog V05.
 
 **Enxame:** Tilt ambiental `vtr-agony-ecstasy:swarm` atualizado pelo texto completo fornecido pelo usuário em 2026-10-07, substituindo a extrapolação anterior de Forma de Enxame. Dano contundente por turno aumenta com a concentração (exemplo: raios 8/4/2/1 metros causam 1/2/3/4); −2 em todas as jogadas dentro do raio; armadura integral fornece metade da pontuação. Apenas ataques de área o afetam; cada ponto de dano reduz seu tamanho pela metade, dispersando-o abaixo de uma jarda de raio. Conservar as unidades e o exemplo do texto recebido. Summon the Hunt → Convocar a Caçada acompanha o título já cadastrado do poder de Animalismo. Fonte impressa do bloco não informada; Agony & Ecstasy pp. 86–87 é a referência de uso em Dança do Enxame. Catálogo permanece em Vampire com ativação Homebrew e as 35 Complicações compartilhadas intactas.
 
 ## Evidência atual
 
 - Última suíte completa: **603/603 testes seriais aprovados em 2026-10-07**, sem falhas, omissões ou cancelamentos; lint, TypeScript e build normal aprovados. Log: `work/ritual-localization-20261005/final-verified-full-suite.log`.
-- Último lote V06 — três Conditions: **73/73 testes dirigidos aprovados**, incluindo catálogo congelado, composição de errata, fontes desativadas, texto autoral e renderização das fichas completas Desktop/Mobile e Homebrew em EN/PT/EN sem alterar instâncias. Log `work/ritual-localization-20261005/vampire-conditions-first-gate.log`. Lint e TypeScript aprovados (`vampire-conditions-first-lint.log`, `vampire-conditions-first-types.log`); build normal aprovado (`vampire-conditions-first-build.log`). A suíte completa acima antecede esses lotes.
+- Último lote V06 — Better Feared, seis Conditions PT no total: **73/73 testes dirigidos aprovados**, incluindo catálogo congelado, composição de errata, fontes desativadas, texto autoral e renderização das fichas completas Desktop/Mobile e Homebrew em EN/PT/EN sem alterar instâncias. Log `work/ritual-localization-20261005/vampire-conditions-better-gate.log`. Lote restrito a dados e verificações; lint, TypeScript e build normal do mecanismo de apresentação aprovados no lote anterior (`vampire-conditions-first-lint.log`, `vampire-conditions-first-types.log`, `vampire-conditions-first-build.log`). A suíte completa acima antecede esses lotes.
 - Integração automatizada EN → PT → EN cobre criação, XP, cards Desktop/Mobile e Homebrew dos grupos já traduzidos, incluindo compras, estornos, identidades indisponíveis, fontes desativadas e preservação de textos autorais. Smoke de navegador permanece a cargo do usuário.
 - Inventário e versões são mantidos nos catálogos e em `public/shared/data/catalog-manifest.json`; não duplicar carimbos ou históricos de gates nesta auditoria.
 - **Meta integral ainda pendente:** concluir V05, V06 e Mage conforme o backlog. As auditorias com trabalho aberto permanecem; decisões já implementadas não voltam a ser perguntas.
