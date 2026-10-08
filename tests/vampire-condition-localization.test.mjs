@@ -13,7 +13,7 @@ const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified Better Feared, False Gods and Strange Shades Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -22,7 +22,7 @@ test("VtR visually verified Better Feared, False Gods and Strange Shades Conditi
     assert.equal(item.name, item.originalName);
     assert.equal(Boolean(item.presentationPt.beat), Boolean(item.beat));
   }
-  const [hunger, despondent, frantic, curse, subsumed, pareidolia, directive, scorned, soulmate] = localized;
+  const [hunger, despondent, frantic, curse, subsumed, chronic, terminal, pareidolia, directive, scorned, soulmate] = localized;
   assert.equal(hunger.page, 31);
   assert.equal(hunger.persistent, undefined);
   assert.equal(hunger.beat, undefined);
@@ -47,6 +47,17 @@ test("VtR visually verified Better Feared, False Gods and Strange Shades Conditi
   assert.match(subsumed.description, /Pilot.*half your Covenant Status, rounded up.*lose the usual bonus.*ends without resolving/);
   assert.doesNotMatch(subsumed.description, /Adrestoi|Blood Tether/);
   assert.match(subsumed.resolution, /Anchor.*all Willpower.*breaking point.*directive exactly/);
+  assert.equal(chronic.page, 81);
+  assert.equal(chronic.persistent, true);
+  assert.match(chronic.description, /Once per session.*progression.*chance die.*−2.*always a dramatic failure/);
+  assert.match(chronic.description, /Except for the first use.*remaining temporary Willpower.*levels 1 or 2.*level 3 has −1.*level 4 has −2.*level 5 has −3/);
+  assert.match(chronic.description, /dramatic failure counts as 2 failures.*exceptional success removes.*exceeds permanent Willpower.*Terminal Malkavia.*Beat.*Aspiration/);
+  assert.equal(chronic.resolution, "The cure?");
+  assert.equal(terminal.page, 81);
+  assert.equal(terminal.persistent, true);
+  assert.match(terminal.description, /once per scene.*Resolve \+ Composure.*cumulative −1.*maximum of −5.*night ends.*succeed or fail/);
+  assert.match(terminal.description, /no longer costs Willpower.*aggravated damage.*equal to its successes.*frenzy.*cannot end early.*progression resets.*breaking points suffer −2/);
+  assert.match(terminal.beat, /witnesses cannot rationalize/);
   assert.equal(pareidolia.page, 98);
   assert.equal(pareidolia.persistent, true);
   assert.match(pareidolia.description, /Once per night.*\+5.*Investigation.*Social actions.*−3/);

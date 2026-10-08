@@ -75,8 +75,8 @@
     "beat": "Suffer humiliation or a major setback because of the intensity of your curse.",
     "presentationPt": {
       "name": "Maldição Potente",
-      "description": "A Maldição Solitária do Nosferatu concede uma vantagem e um fardo mais severo. Escolha 2 Perícias coerentes com sua manifestação: uma recebe um bônus, a outra uma penalidade. Não é necessário possuir pontos nelas, e as penalidades por falta de treinamento continuam valendo. A cada nível de Humanidade abaixo de 7, os modificadores aumentam: ±1 em Humanidade 6, ±2 em 5 e assim por diante. Em Humanidade 1 eles deixam de aumentar; em vez disso, a Perícia beneficiada ganha explosão do 9 e a penalizada perde explosão do 10. Os modificadores se aplicam apenas a ações mundanas e não afetam Vantagens derivadas, como Defesa.",
-      "resolution": "Encontrar amor verdadeiro ou aceitação de um mortal que não seja sua Pedra de Toque, ou elevar a Humanidade a 7.",
+      "description": "A Maldição Solitária do Nosferatu concede uma vantagem e um fardo mais severo. Escolha 2 Perícias coerentes com sua manifestação: uma recebe um bônus, a outra uma penalidade. Não é necessário possuir pontos nelas, e as penalidades por falta de treinamento continuam valendo. A cada nível de Humanidade abaixo de 7, os modificadores aumentam: ±1 em Humanidade 6, ±2 em 5 e assim por diante. Em Humanidade 1 eles deixam de aumentar; em vez disso, a Perícia beneficiada ganha 9-de-novo e a penalizada perde 10-de-novo. Os modificadores se aplicam apenas a ações mundanas e não afetam Vantagens derivadas, como Defesa.",
+      "resolution": "Encontrar amor verdadeiro ou aceitação de um mortal que não seja seu Touchstone, ou elevar a Humanidade a 7.",
       "beat": "Sofrer humilhação ou um grande revés devido à intensidade de sua maldição."
     }
   },
@@ -103,30 +103,42 @@
     "name": "Chronic Malkavia",
     "originalName": "Chronic Malkavia",
     "category": "Vampire",
-    "description": "Malkavia becomes a persistent psychic illness that repeatedly colors perception and behavior.",
+    "description": "Malkavia gives you access to Dementation and disturbing visions behind material reality. Once per session, before an action other than Dementation, the Storyteller may roll your progression as a dice pool (a chance die if it is 0). Each success imposes −2 on your action, and failing that action is always a dramatic failure. Except for the first use each night, every expenditure of Willpower on Dementation prompts a secret roll using your remaining temporary Willpower, whether the power succeeds or fails; a pool of 0 is a chance die. Apply a penalty based on the effect's required Dementation level: levels 1 or 2 have none, level 3 has −1, level 4 has −2, and level 5 has −3; the Storyteller may apply circumstantial modifiers. Success changes nothing; failure adds to the chronicle's cumulative failed-roll count, dramatic failure counts as 2 failures, and exceptional success removes a previous failure. When progression exceeds permanent Willpower, gain Terminal Malkavia. The Storyteller may let you remove a level of progression when you earn a Beat for grounding yourself in reality, such as fulfilling a long-term Aspiration.",
     "source": "False Gods: Ventrue",
     "sourceCode": "h-vtr-false-gods",
     "sourceId": "h-vtr-false-gods",
     "homebrew": true,
     "page": 81,
     "persistent": true,
-    "resolution": "The source permits resolution only through a profound change in the character's relationship to Malkavia.",
-    "beat": "Malkavia creates a significant complication."
+    "resolution": "The cure?",
+    "beat": "Be significantly mistreated or harmed because of your Affliction.",
+    "presentationPt": {
+      "name": "Malkavia Crônica",
+      "description": "Malkavia concede acesso a Dementação e visões perturbadoras por trás da realidade material. Uma vez por sessão, antes de uma ação diferente de Dementação, o Narrador pode usar sua progressão como parada de dados (um dado de sorte se for 0). Cada sucesso impõe −2 à sua ação, e falhar nessa ação sempre conta como falha dramática. Exceto no primeiro uso de cada noite, cada gasto de Força de Vontade em Dementação exige um teste secreto com sua Força de Vontade temporária restante, tenha o poder sucesso ou falha; uma parada de 0 é um dado de sorte. Aplique uma penalidade conforme o nível de Dementação exigido pelo efeito: níveis 1 ou 2 não têm penalidade, nível 3 sofre −1, nível 4 sofre −2 e nível 5 sofre −3; o Narrador pode aplicar modificadores circunstanciais. Sucesso não altera nada; falha aumenta o total acumulado de testes falhos na crônica, falha dramática conta como 2 falhas e sucesso excepcional remove uma falha anterior. Quando a progressão exceder a Força de Vontade permanente, receba Malkavia Terminal. O Narrador pode permitir remover um nível de progressão ao ganhar um Ato por se reconectar à realidade, como cumprir uma Aspiração de longo prazo.",
+      "resolution": "A cura?",
+      "beat": "Sofrer maus-tratos significativos ou ser prejudicado por causa de sua Aflição."
+    }
   },
   {
     "id": "vtr-false-gods:terminal-malkavia",
     "name": "Terminal Malkavia",
     "originalName": "Terminal Malkavia",
     "category": "Vampire",
-    "description": "The character's Malkavia has reached a terminal, self-destructive stage that dominates the Requiem.",
+    "description": "In addition to Chronic Malkavia's effects, once per scene the Storyteller may require Resolve + Composure to resist using Dementation when it could improve your situation. Each successful resistance imposes a cumulative −1 on later resistance rolls, to a maximum of −5, until the night ends or you attempt Dementation, succeed or fail. Dementation no longer costs Willpower, but each successful use inflicts aggravated damage on you equal to its successes as reality fights back. When next required to resist Dementation, you may instead enter a frenzy that lasts the rest of the scene and cannot end early by any means; the Beast feeds and kills indiscriminately. Afterward, this Condition resolves, Chronic Malkavia's progression resets, and subsequent breaking points suffer −2.",
     "source": "False Gods: Ventrue",
     "sourceCode": "h-vtr-false-gods",
     "sourceId": "h-vtr-false-gods",
     "homebrew": true,
     "page": 81,
     "persistent": true,
-    "resolution": "Resolve only under the exceptional terms established by the Malkavia chronicle.",
-    "beat": "The illness causes grave harm or destroys a valued relationship."
+    "resolution": "Give the Beast its due by entering the scene-long frenzy described above.",
+    "beat": "Alter reality so obviously that witnesses cannot rationalize it.",
+    "presentationPt": {
+      "name": "Malkavia Terminal",
+      "description": "Além dos efeitos de Malkavia Crônica, uma vez por cena o Narrador pode exigir Perseverança + Compostura para resistir a usar Dementação quando ela poderia melhorar sua situação. Cada resistência bem-sucedida impõe −1 cumulativo aos testes de resistência posteriores, até −5, até a noite terminar ou você tentar usar Dementação, com sucesso ou falha. Dementação deixa de custar Força de Vontade, mas cada uso bem-sucedido causa em você dano agravado igual aos sucessos, conforme a realidade reage. Na próxima vez em que precisar resistir a Dementação, você pode entrar em um frenesi que dura o restante da cena e não pode terminar antes por nenhum meio; a Fera se alimenta e mata indiscriminadamente. Depois disso, esta Condição é resolvida, a progressão de Malkavia Crônica é reiniciada e Pontos de Ruptura posteriores sofrem −2.",
+      "resolution": "Dar à Fera o que lhe é devido, entrando no frenesi que dura o restante da cena descrito acima.",
+      "beat": "Alterar a realidade de forma tão evidente que as testemunhas não consigam racionalizá-la."
+    }
   },
   {
     "id": "vtr-false-gods:pareidolia",
