@@ -12,8 +12,8 @@ const conditions = read("public/game-lines/vampire/data/conditions.json");
 const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
-test("VtR visually verified Better Feared, False Gods and Strange Shades Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
+test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "primeval-truths", "oathbreaker-invictus", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -22,7 +22,7 @@ test("VtR visually verified Better Feared, False Gods and Strange Shades Conditi
     assert.equal(item.name, item.originalName);
     assert.equal(Boolean(item.presentationPt.beat), Boolean(item.beat));
   }
-  const [hunger, despondent, frantic, curse, subsumed, chronic, terminal, pareidolia, directive, scorned, soulmate] = localized;
+  const [hunger, despondent, frantic, curse, subsumed, chronic, terminal, pareidolia, directive, radio, primeval, oathbreaker, scorned, soulmate] = localized;
   assert.equal(hunger.page, 31);
   assert.equal(hunger.persistent, undefined);
   assert.equal(hunger.beat, undefined);
@@ -66,6 +66,18 @@ test("VtR visually verified Better Feared, False Gods and Strange Shades Conditi
   assert.equal(directive.persistent, true);
   assert.match(directive.description, /Once per session.*9-again.*Breaking points.*−1.*cannot be resolved.*Lingering Motivation/);
   assert.doesNotMatch(directive.description, /chapter/);
+  assert.equal(radio.page, 23);
+  assert.match(radio.description, /Mental rolls, Stealth rolls.*combat suffer −1.*each week.*maximum of −5.*fatal/);
+  assert.equal(primeval.page, 184);
+  assert.equal(primeval.persistent, undefined);
+  assert.equal(primeval.beat, undefined);
+  assert.match(primeval.description, /cannot regain Willpower.*1 additional Vitae.*each night/);
+  assert.match(primeval.resolution, /Humanity detachment.*significant action.*void/);
+  assert.equal(oathbreaker.page, 189);
+  assert.equal(oathbreaker.persistent, true);
+  assert.match(oathbreaker.penalty, /2 dots of Invictus Status.*1 dot each of Resources, Allies, Contacts, Herd, and Mentor.*if you have.*dramatic failures/);
+  assert.match(oathbreaker.resolution, /Final Death for an Invictus member.*member or the Invictus at large/);
+  assert.deepEqual(oathbreaker.nameQualifier, { "en-US": "Kindred", "pt-BR": "Membro" });
   assert.match(scorned.description, /Blood Potency 1.*Integrity for Humanity.*do not cause breaking points.*that vampire/);
   assert.match(scorned.resolution, /Kill.*Touchstones.*reputation/);
   assert.match(soulmate.description, /existing and new blood bonds.*Majesty.*Once per night.*greater than their Stamina.*more than their Size/);
@@ -117,7 +129,8 @@ test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/E
         for (const item of localized.map(item => present(item, locale))) {
           assert.equal(item.id, conditions.find(canonical => canonical.id === item.id).id);
           for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])])
-            for (const html of [sheet, homebrew]) assert.ok(html.includes(escape(item[field])), `${locale}/${mobile ? "mobile" : "desktop"}: ${item.id}.${field}`);
+            for (const html of item.homebrew ? [sheet, homebrew] : [sheet]) assert.ok(html.includes(escape(item[field])), `${locale}/${mobile ? "mobile" : "desktop"}: ${item.id}.${field}`);
+          if (item.nameQualifier?.[locale]) assert.ok(sheet.includes(escape(`${item.name}(${item.nameQualifier[locale]})`)), "Homonymous Conditions retain their presentation-only line qualifier");
         }
       }
       assert.equal(JSON.stringify(character), saved);
