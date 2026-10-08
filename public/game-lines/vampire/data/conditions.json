@@ -85,13 +85,18 @@
     "name": "Subsumed",
     "originalName": "Subsumed",
     "category": "Vampire",
-    "description": "The subject's identity and initiative are swallowed by an Adrestoi pack master's Blood Tether.",
+    "description": "Your Pilot takes control. Actions contrary to its will suffer a penalty equal to half your Covenant Status, rounded up, and lose the usual bonus to any enhanced Skills involved. This Condition ends without resolving at the end of the night.",
     "source": "False Gods: Ventrue",
     "sourceCode": "h-vtr-false-gods",
     "sourceId": "h-vtr-false-gods",
     "homebrew": true,
     "page": 26,
-    "resolution": "Break free of the Blood Tether's controlling effect."
+    "resolution": "Defend an Anchor enough to recover all Willpower, suffer a breaking point because of the Pilot's desires, or follow its directive exactly.",
+    "presentationPt": {
+      "name": "Suplantado",
+      "description": "Seu Piloto assume o controle. Ações contrárias à vontade dele sofrem uma penalidade igual à metade de seu Status na Coalizão, arredondada para cima, e perdem o bônus habitual das Perícias aprimoradas envolvidas. Esta Condição termina sem resolução ao fim da noite.",
+      "resolution": "Defender uma Âncora a ponto de recuperar toda a Força de Vontade, sofrer um Ponto de Ruptura devido aos desejos do Piloto ou seguir exatamente sua diretiva."
+    }
   },
   {
     "id": "vtr-false-gods:chronic-malkavia",
@@ -128,22 +133,28 @@
     "name": "Pareidolia",
     "originalName": "Pareidolia",
     "category": "Vampire",
-    "description": "Apophenia overwhelms the Malkovian with false patterns that appear as meaningful as genuine insight.",
+    "description": "Coincidences and strange details seem full of meaning as you seek the answer to a question. Once per night, gain +5 on an Investigation roll that advances this search; the insight can arrive at any time through apparently acausal logic. While this Condition lasts, Social actions to share your discoveries suffer −3.",
     "source": "False Gods: Ventrue",
     "sourceCode": "h-vtr-false-gods",
     "sourceId": "h-vtr-false-gods",
     "homebrew": true,
     "page": 98,
     "persistent": true,
-    "resolution": "Disprove or safely disentangle the false pattern.",
-    "beat": "Act on a false pattern and suffer meaningful consequences."
+    "resolution": "Find the answer to your question.",
+    "beat": "Suffer ridicule because of your investigations.",
+    "presentationPt": {
+      "name": "Pareidolia",
+      "description": "Coincidências e detalhes estranhos parecem cheios de significado enquanto você procura a resposta para uma pergunta. Uma vez por noite, receba +5 em um teste de Investigação que faça essa busca avançar; a percepção pode surgir a qualquer momento por uma lógica aparentemente acausal. Enquanto esta Condição durar, ações Sociais para compartilhar suas descobertas sofrem −3.",
+      "resolution": "Encontrar a resposta para sua pergunta.",
+      "beat": "Sofrer ridicularização por causa de suas investigações."
+    }
   },
   {
     "id": "vtr-false-gods:directive",
     "name": "Directive",
     "originalName": "Directive",
     "category": "Vampire",
-    "description": "An implanted behavior or belief grants 9-again once per chapter when obeyed and penalizes breaking points it causes.",
+    "description": "A behavior or belief foreign to your own worldview has been implanted in you. Once per session, gain 9-again on an action directly related to this directive. Breaking points caused by following it suffer −1 as you try to rationalize the imposed belief. This Condition cannot be resolved while you possess Lingering Motivation.",
     "source": "False Gods: Ventrue",
     "sourceCode": "h-vtr-false-gods",
     "sourceId": "h-vtr-false-gods",
@@ -151,7 +162,13 @@
     "page": 113,
     "persistent": true,
     "resolution": "Remove the Lingering Motivation Merit.",
-    "beat": "The implanted belief or behavior causes difficulty for the Requiem."
+    "beat": "The implanted belief or behavior causes difficulty for you and your Requiem.",
+    "presentationPt": {
+      "name": "Diretiva",
+      "description": "Um comportamento ou uma crença alheia à sua visão de mundo foi implantado em você. Uma vez por sessão, receba 9-de-novo em uma ação diretamente relacionada a essa diretiva. Pontos de Ruptura causados por segui-la sofrem −1 enquanto você tenta racionalizar a crença imposta. Esta Condição não pode ser resolvida enquanto você possuir Motivação Persistente.",
+      "resolution": "Remover o Mérito Motivação Persistente.",
+      "beat": "A crença ou o comportamento implantado causa dificuldades para você e seu Réquiem."
+    }
   },
   {
     "id": "radio-sickness",

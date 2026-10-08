@@ -12,8 +12,8 @@ const conditions = read("public/game-lines/vampire/data/conditions.json");
 const localized = conditions.filter(item => item.presentationPt);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
-test("VtR Better Feared pp. 31, 98, 101, 107 and Strange Shades p. 40 Conditions retain their complete verified rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
+test("VtR visually verified Better Feared, False Gods and Strange Shades Conditions retain their complete rules and IDs", () => {
+  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate"]);
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -22,7 +22,7 @@ test("VtR Better Feared pp. 31, 98, 101, 107 and Strange Shades p. 40 Conditions
     assert.equal(item.name, item.originalName);
     assert.equal(Boolean(item.presentationPt.beat), Boolean(item.beat));
   }
-  const [hunger, despondent, frantic, curse, scorned, soulmate] = localized;
+  const [hunger, despondent, frantic, curse, subsumed, pareidolia, directive, scorned, soulmate] = localized;
   assert.equal(hunger.page, 31);
   assert.equal(hunger.persistent, undefined);
   assert.equal(hunger.beat, undefined);
@@ -41,6 +41,20 @@ test("VtR Better Feared pp. 31, 98, 101, 107 and Strange Shades p. 40 Conditions
   assert.match(curse.description, /Choose 2 Skills.*unskilled penalties.*±1 at Humanity 6, ±2 at 5.*Humanity 1.*9-again.*loses 10-again.*only to mundane actions.*do not affect derived/);
   assert.match(curse.resolution, /not your Touchstone.*Humanity 7/);
   assert.doesNotMatch(curse.description, /Ease the Curse/);
+  assert.equal(subsumed.page, 26);
+  assert.equal(subsumed.persistent, undefined);
+  assert.equal(subsumed.beat, undefined);
+  assert.match(subsumed.description, /Pilot.*half your Covenant Status, rounded up.*lose the usual bonus.*ends without resolving/);
+  assert.doesNotMatch(subsumed.description, /Adrestoi|Blood Tether/);
+  assert.match(subsumed.resolution, /Anchor.*all Willpower.*breaking point.*directive exactly/);
+  assert.equal(pareidolia.page, 98);
+  assert.equal(pareidolia.persistent, true);
+  assert.match(pareidolia.description, /Once per night.*\+5.*Investigation.*Social actions.*−3/);
+  assert.equal(pareidolia.resolution, "Find the answer to your question.");
+  assert.equal(directive.page, 113);
+  assert.equal(directive.persistent, true);
+  assert.match(directive.description, /Once per session.*9-again.*Breaking points.*−1.*cannot be resolved.*Lingering Motivation/);
+  assert.doesNotMatch(directive.description, /chapter/);
   assert.match(scorned.description, /Blood Potency 1.*Integrity for Humanity.*do not cause breaking points.*that vampire/);
   assert.match(scorned.resolution, /Kill.*Touchstones.*reputation/);
   assert.match(soulmate.description, /existing and new blood bonds.*Majesty.*Once per night.*greater than their Stamina.*more than their Size/);
