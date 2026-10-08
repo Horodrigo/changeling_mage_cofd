@@ -409,7 +409,13 @@
     "description": "The elder is deeply invested in a mortal and treats that person's success as their own, whether guiding the mortal openly or from the shadows.",
     "persistent": true,
     "resolution": "The mortal dies, or the elder deliberately cuts the mortal loose and faces the resulting detachment roll.",
-    "beat": "The mortal gains a Beat or undergoes a breaking point because of the elder's attention.",
+    "beat": "The mortal gains a Beat or faces a breaking point, regardless of its outcome, through a situation the elder set up.",
+    "presentationPt": {
+      "name": "Coração Ancorado",
+      "description": "Você está profundamente envolvido com um mortal e considera o sucesso dele como seu. Aberta ou secretamente, você o guia rumo à realização pessoal segundo seus próprios critérios.",
+      "resolution": "O mortal morre, ou você decide deixá-lo seguir seu caminho, provocando um teste de Desapego.",
+      "beat": "O mortal ganha um Ato ou enfrenta um Ponto de Ruptura, qualquer que seja o resultado, por uma situação que você preparou."
+    },
     "source": "Thousand Years of Night",
     "sourceCode": "TY",
     "page": 135
@@ -419,10 +425,16 @@
     "name": "Beast's Bargain",
     "originalName": "Beast's Bargain",
     "category": "Elder",
-    "description": "The elder must exploit every safe opportunity to feed, even when already full, but ignores the normal frenzy penalty caused by Hunger.",
+    "description": "You may ignore the frenzy-roll penalty for Hunger, but must feed whenever safe circumstances arise, even when full. Safe means no risk of immediate, significant harm to yourself or the Masquerade; all other consequences are irrelevant to this bargain.",
     "persistent": true,
     "resolution": "Gain or lose a dot of Humanity, or achieve an exceptional success on a breaking-point roll related to the bargain.",
     "beat": "Feed when doing so introduces a severe penalty or personal drawback.",
+    "presentationPt": {
+      "name": "Barganha da Besta",
+      "description": "Você pode ignorar a penalidade por Fome no teste de frenesi, mas deve se alimentar sempre que surgirem circunstâncias seguras, mesmo estando saciado. Seguro significa ausência de risco de dano imediato e significativo a você ou à Máscara; todas as demais consequências são irrelevantes para essa barganha.",
+      "resolution": "Ganhar ou perder um ponto de Humanidade, ou obter sucesso excepcional em um teste de Ponto de Ruptura relacionado à Barganha da Besta.",
+      "beat": "Alimentar-se quando isso introduz uma penalidade severa ou uma desvantagem pessoal."
+    },
     "source": "Thousand Years of Night",
     "sourceCode": "TY",
     "page": 135
@@ -434,8 +446,14 @@
     "category": "Elder",
     "description": "The elder has a nemesis she loves too much to kill. She may undermine him and ruin his Requiem but always pulls short of final destruction.",
     "persistent": true,
-    "resolution": "The enemy permanently stops fighting the elder, or the elder finally kills him and faces the resulting breaking point.",
+    "resolution": "The enemy stops fighting the elder, or the elder finally kills him, which is always a breaking point.",
     "beat": "The enemy significantly harms the elder and she refuses to strike back.",
+    "presentationPt": {
+      "name": "Inimigo Amado",
+      "description": "Você transformou alguém que ama em inimigo. Ele usa tudo o que tem contra você, enquanto você se contém. Pode enfraquecer os recursos dele, prejudicar seu Status na Sociedade da Noite Eterna e dificultar seu Réquiem, mas não consegue matá-lo.",
+      "resolution": "O inimigo deixa de lutar contra você, ou você finalmente o mata, o que sempre constitui um Ponto de Ruptura.",
+      "beat": "O inimigo causa um prejuízo significativo a você, e você não revida."
+    },
     "source": "Thousand Years of Night",
     "sourceCode": "TY",
     "page": 135
@@ -447,6 +465,11 @@
     "category": "Elder",
     "description": "The weight of centuries makes every concern feel meaningless. The elder cannot regain Willpower and must spend two points whenever an effect would normally cost one.",
     "resolution": "Face a breaking point that restores perspective, or suffer lethal or aggravated damage in one of the three rightmost Health boxes.",
+    "presentationPt": {
+      "name": "Esmagado",
+      "description": "O peso dos séculos torna qualquer preocupação insignificante. Você não pode recuperar Força de Vontade por nenhum meio e deve gastar dois pontos sempre que um efeito normalmente exigiria um.",
+      "resolution": "Enfrentar um Ponto de Ruptura que o tire da apatia, ou sofrer dano letal ou agravado em uma das três caixas de Vitalidade mais à direita."
+    },
     "source": "Thousand Years of Night",
     "sourceCode": "TY",
     "page": 135

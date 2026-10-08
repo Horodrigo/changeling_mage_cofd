@@ -10,11 +10,12 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const read = path => JSON.parse(readFileSync(new URL(`../${path}`, import.meta.url), "utf8"));
 const conditions = read("public/game-lines/vampire/data/conditions.json");
 const localized = conditions.filter(item => item.presentationPt);
+const nonElders = localized.filter(item => !item.id.startsWith("elder-"));
 const enabledErrata = conditions.filter(item => item.errataFor).map(item => item.id);
 const escape = value => value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[char]);
 
 test("VtR visually verified official and Homebrew Conditions retain their complete rules and IDs", () => {
-  assert.deepEqual(localized.map(item => item.id), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened", "humbled", "intoxicated", "jaded", "languid", "lethargic", "mesmerized", "raptured", "sated", "scarred", "stumbled", "subservient", "tainted", "tasked", "tempted", "thrall", "wanton", "vtr-wild-hunt:beastless", "h-vtr-fire-revolution:contrary", "h-vtr-agony-ecstasy:errata:seed-of-her-divinity", "h-vtr-fire-revolution:errata:carthian-backup"]);
+  assert.deepEqual(localized.map(item => item.id).sort(), ["vtr-better-feared:overwhelming-hunger", "vtr-better-feared:despondent", "vtr-better-feared:frantic", "vtr-better-feared:potent-curse", "vtr-false-gods:subsumed", "vtr-false-gods:chronic-malkavia", "vtr-false-gods:terminal-malkavia", "vtr-false-gods:pareidolia", "vtr-false-gods:directive", "radio-sickness", "agonized", "promised", "primeval-truths", "oathbreaker-invictus", "vtr-sin-again:depressed", "vtr-sin-again:self-loathing", "vtr-sin-again:inflamed", "vtr-sin-again:fired-up", "vtr-strange-shades:scorned", "vtr-strange-shades:soulmate", "addicted", "bestial", "charmed", "competitive", "confused", "delusional", "dependent", "distracted", "dominated", "drained", "ecstatic", "enervated", "enslaved", "enthralled", "false-memories", "frightened", "humbled", "intoxicated", "jaded", "languid", "lethargic", "mesmerized", "raptured", "sated", "scarred", "stumbled", "subservient", "tainted", "tasked", "tempted", "thrall", "wanton", "vtr-wild-hunt:beastless", "h-vtr-fire-revolution:contrary", "h-vtr-agony-ecstasy:errata:seed-of-her-divinity", "h-vtr-fire-revolution:errata:carthian-backup", "elder-anchored-heart", "elder-beasts-bargain", "elder-beloved-enemy", "elder-crushed"].sort());
   for (const item of localized) {
     for (const field of ["name", "description", "resolution", ...(item.penalty ? ["penalty"] : []), ...(item.beat ? ["beat"] : [])]) {
       assert.ok(item.presentationPt[field]?.trim(), `${item.id}.${field}`);
@@ -23,7 +24,7 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
     assert.equal(item.name, item.errataFor ? `${item.originalName} — Errata` : item.originalName);
     assert.equal(Boolean(item.presentationPt.beat), Boolean(item.beat));
   }
-  const [hunger, despondent, frantic, curse, subsumed, chronic, terminal, pareidolia, directive, radio, agonized, promised, primeval, oathbreaker, depressed, loathing, inflamed, firedUp, scorned, soulmate] = localized;
+  const [hunger, despondent, frantic, curse, subsumed, chronic, terminal, pareidolia, directive, radio, agonized, promised, primeval, oathbreaker, depressed, loathing, inflamed, firedUp, scorned, soulmate] = nonElders;
   assert.equal(hunger.page, 31);
   assert.equal(hunger.persistent, undefined);
   assert.equal(hunger.beat, undefined);
@@ -114,7 +115,7 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.match(soulmate.description, /existing and new blood bonds.*Majesty.*Once per night.*greater than their Stamina.*more than their Size/);
   assert.match(soulmate.penalty, /Each month/);
   assert.match(soulmate.beat, /Either partner.*The mortal.*The vampire/);
-  const [addicted, bestial, charmed, competitive] = localized.slice(20);
+  const [addicted, bestial, charmed, competitive] = nonElders.slice(20);
   assert.equal(addicted.page, 301);
   assert.equal(addicted.persistent, true);
   assert.match(addicted.description, /may cause Deprived.*multiple times for different addictions/);
@@ -133,7 +134,7 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.equal(competitive.beat, undefined);
   assert.match(competitive.description, /direct competition.*do not spend Willpower suffer −2.*contested and extended.*3 successes instead of 5.*nights.*After resolving.*full month/);
   assert.match(competitive.resolution, /competition.*someone reaches a breaking point/);
-  const [confused, delusional, dependent, distracted] = localized.slice(24);
+  const [confused, delusional, dependent, distracted] = nonElders.slice(24);
   assert.equal(confused.page, 302);
   assert.equal(confused.persistent, undefined);
   assert.equal(confused.beat, undefined);
@@ -149,7 +150,7 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.match(distracted.description, /extended actions.*does not grant a Beat/);
   assert.match(distracted.penalty, /−2.*perception, concentration, or precision/);
   assert.equal(distracted.resolution, "Leave the swarm.");
-  const [dominated, drained, ecstatic, enervated] = localized.slice(28);
+  const [dominated, drained, ecstatic, enervated] = nonElders.slice(28);
   assert.equal(dominated.page, 302);
   assert.equal(dominated.persistent, undefined);
   assert.equal(dominated.beat, undefined);
@@ -165,7 +166,7 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.equal(enervated.persistent, true);
   assert.match(enervated.description, /Integrity is gone.*Soulless.*Virtue, only Vice.*permanent Willpower by 1 dot.*new maximum/);
   assert.equal(enervated.beat, "Lose a dot of permanent Willpower.");
-  const [enslaved, enthralled, memories, frightened] = localized.slice(32);
+  const [enslaved, enthralled, memories, frightened] = nonElders.slice(32);
   assert.equal(enslaved.page, 303);
   assert.equal(enslaved.persistent, true);
   assert.match(enslaved.description, /remember what she tells.*Mesmerized.*hear her voice, but not eye contact.*Resolve does not penalize.*Entombed Command and Possession/);
@@ -184,7 +185,7 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.equal(frightened.beat, undefined);
   assert.match(frightened.description, /cannot approach or act against.*only exit.*collapse in terror.*roll to avoid frenzy.*scene ends.*1 Willpower suppresses all its effects for one turn/);
   assert.equal(frightened.resolution, "Escape from the source of fear.");
-  const [humbled, intoxicated, jaded, languid] = localized.slice(36);
+  const [humbled, intoxicated, jaded, languid] = nonElders.slice(36);
   assert.equal(humbled.page, 304);
   assert.deepEqual(humbled.nameQualifier, { "en-US": "Kindred", "pt-BR": "Membro" });
   assert.equal(humbled.persistent, undefined);
@@ -208,7 +209,7 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.match(languid.description, /Each night.*cumulative −1.*all actions.*daysleep.*one Vitae per dot of Blood Potency/);
   assert.doesNotMatch(languid.description, /final Touchstone/);
   assert.equal(languid.resolution, "Fall into torpor.");
-  const [lethargic, mesmerized, raptured, sated] = localized.slice(40);
+  const [lethargic, mesmerized, raptured, sated] = nonElders.slice(40);
   for (const item of [lethargic, mesmerized, raptured, sated]) {
     assert.equal(item.page, 305);
     assert.equal(item.persistent, undefined);
@@ -224,7 +225,7 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.doesNotMatch(raptured.description, /exceptionally/);
   assert.equal(sated.penalty, "+1 to rolls to resist frenzy.");
   assert.match(sated.resolution, /Enter frenzy.*resist.*−3 or worse/);
-  const [scarred, stumbled, subservient, tainted] = localized.slice(44);
+  const [scarred, stumbled, subservient, tainted] = nonElders.slice(44);
   assert.equal(scarred.page, 305);
   assert.equal(scarred.persistent, undefined);
   assert.equal(scarred.beat, undefined);
@@ -247,7 +248,7 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.match(tainted.description, /Once per session.*penalize.*victim's Blood Potency.*add that many dice.*separate instances/);
   assert.doesNotMatch(tainted.description, /chapter/);
   assert.match(tainted.resolution, /months.*victim's Blood Potency.*each level of aggravated damage.*one month/);
-  const [tasked, tempted, thrall, wanton] = localized.slice(48);
+  const [tasked, tempted, thrall, wanton] = nonElders.slice(48);
   for (const item of [tasked, tempted, thrall, wanton]) assert.equal(item.page, 307);
   for (const item of [tasked, tempted, wanton]) {
     assert.equal(item.persistent, undefined);
@@ -265,7 +266,7 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.equal(wanton.resolution, "Indulge in something that constitutes a breaking point.");
   for (const item of [bestial, competitive, wanton]) assert.match(item.presentationPt.description, /teste de Desapego/);
   assert.doesNotMatch(JSON.stringify(localized.map(item => item.presentationPt)), /Distanciamento/);
-  const [beastless, contrary, seed, backup] = localized.slice(52);
+  const [beastless, contrary, seed, backup] = nonElders.slice(52);
   assert.equal(beastless.page, 39);
   assert.equal(beastless.beat, undefined);
   assert.equal(beastless.persistent, undefined);
@@ -285,6 +286,18 @@ test("VtR visually verified official and Homebrew Conditions retain their comple
   assert.match(backup.description, /start of each turn.*lethal.*Army of One dots.*2 damage.*evenly.*lowest Defense.*Initiative.*Defense does not apply.*Resilience.*Celerity/);
   assert.match(backup.resolution, /5 \+ Army of One.*no Defense.*cannot heal.*at most 1 damage.*exceeds.*lethal damage above 5.*aggravated damage.*torpor.*Contest or resist.*lethal attack/);
   assert.match(backup.presentationPt.description, /Exército de Um Só/);
+  const [anchored, bargain, beloved, crushed] = ["elder-anchored-heart", "elder-beasts-bargain", "elder-beloved-enemy", "elder-crushed"].map(id => conditions.find(item => item.id === id));
+  for (const item of [anchored, bargain, beloved, crushed]) assert.equal(item.page, 135);
+  for (const item of [anchored, bargain, beloved]) assert.equal(item.persistent, true);
+  assert.match(anchored.beat, /regardless of its outcome.*situation the elder set up/);
+  assert.match(anchored.resolution, /dies.*cuts.*detachment/);
+  assert.match(bargain.description, /frenzy-roll penalty for Hunger.*even when full.*immediate, significant harm.*Masquerade.*other consequences are irrelevant/);
+  assert.match(beloved.resolution, /stops fighting.*always a breaking point/);
+  assert.doesNotMatch(beloved.resolution, /permanently/);
+  assert.equal(crushed.persistent, undefined);
+  assert.equal(crushed.beat, undefined);
+  assert.match(crushed.description, /cannot regain Willpower.*two points.*one/);
+  assert.match(crushed.resolution, /breaking point.*lethal or aggravated.*three rightmost Health boxes/);
 });
 
 test("Vampire Desktop/Mobile and Homebrew render localized Conditions in EN/PT/EN without changing saved instances", async () => {
