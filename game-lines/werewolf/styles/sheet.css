@@ -162,21 +162,21 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
     transform: translateX(-50%);
     background-repeat: no-repeat, repeat;
   }
-  /* header-ornament.webp: top, width e height ajustam o ornamento baixo do topo. */
+  /* title.webp: top, width e height ajustam o ornamento baixo do topo. */
   .wtf-frame::before {
     top: 3px;
     width: 280px;
     height: 46px;
-    background-image: url("/game-lines/werewolf/images/header-ornament.webp"), url("/game-lines/werewolf/images/paper-texture.webp");
+    background-image: url("/game-lines/werewolf/images/title.webp"), url("/game-lines/werewolf/images/paper-texture.webp");
     background-size: contain, 768px;
     background-position: center;
   }
-  /* title.webp: lobos no rodapé; padding-bottom da folha reserva o espaço do desenho. */
+  /* header-ornament.webp: lobos no rodapé; padding-bottom da folha reserva o espaço do desenho. */
   .wtf-frame::after {
-    bottom: 12px;
+    bottom: 8px;
     width: 300px;
     height: 96px;
-    background-image: url("/game-lines/werewolf/images/title.webp"), url("/game-lines/werewolf/images/paper-texture.webp");
+    background-image: url("/game-lines/werewolf/images/header-ornament.webp"), url("/game-lines/werewolf/images/paper-texture.webp");
     background-size: contain, 768px;
     background-position: center;
   }
