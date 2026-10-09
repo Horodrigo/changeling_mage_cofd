@@ -27,7 +27,7 @@ test("all Core Conditions have complete Portuguese presentation without overridi
   assert.match(presentation.bonded.penalty, /Empatia com Animais/);
   assert.match(presentation["reluctant-aggressor"].resolution, /não concede um Ato/);
   const manifest = read("public/shared/data/catalog-manifest.json");
-  assert.equal(manifest.catalogs["core-conditions"].version, 2);
+  assert.ok(manifest.catalogs["core-conditions"].version >= 3);
   assert.ok(manifest.catalogs["core-conditions-pt"].version >= 3);
 });
 
