@@ -3,7 +3,7 @@ const REGALIA_ALIASES: Record<string, string> = {
   Corcel: "Steed", Espada: "Sword", Cálice: "Chalice", Moeda: "Coin",
   Cetro: "Scepter", Estrelas: "Stars", Espinho: "Thorn",
 };
-const canonicalRegalia = (value: unknown) => {
+export const canonicalRegalia = (value: unknown) => {
   const name = String(value ?? "").trim();
   return REGALIA_ALIASES[name] ?? name;
 };

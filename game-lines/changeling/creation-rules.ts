@@ -103,7 +103,8 @@ export function changelingAnchorDisplayName(
     String(name ?? "")
   );
 }
-export const REGALIA = ["Crown", "Jewels", "Mirror", "Shield", "Steed", "Sword", "Chalice", "Coin", "Scepter", "Stars", "Thorn"];
+export const CORE_REGALIA = ["Crown", "Jewels", "Mirror", "Shield", "Steed", "Sword"];
+export const REGALIA = [...CORE_REGALIA, "Chalice", "Coin", "Scepter", "Stars", "Thorn"];
 export function changelingFrailtySlots(wyrd: number) {
   return 1 + Math.floor(Math.max(1, Math.min(10, Math.trunc(wyrd))) / 2);
 }

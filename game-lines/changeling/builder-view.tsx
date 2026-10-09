@@ -15,12 +15,12 @@ import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@
 import { CHANGELING_MERIT_CONFIGURATIONS, isChangelingInlineMeritConfiguration } from "./builder-merit-configurations";
 import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
 import {
-  CTL_NEEDLE_DEFINITIONS, CTL_THREAD_DEFINITIONS, REGALIA,
+  CTL_NEEDLE_DEFINITIONS, CTL_THREAD_DEFINITIONS, CORE_REGALIA, REGALIA,
   changelingAnchorDisplayName, changelingAnchorRecovery, seemingDisplayName,
 } from "./creation-rules";
 import { SKILLS } from "@/lib/core/character/creation-rules";
 import { canSelectContract, contractCategoryKey } from "./builder-eligibility";
-import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
+import { canonicalRegalia, changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { courtPageCitation, type CourtDefinition } from "@/lib/changeling-courts";
 import { kithSearchText, kithSkillOptions, type KithDefinition } from "@/lib/changeling-kiths";
 import type { EntitlementDefinition } from "@/game-lines/changeling/entitlements";
@@ -92,6 +92,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
   const { locale, t } = useLanguage();
   const homebrewPreferences = useHomebrewPreferences();
   const seemingData = props.seemingCatalog[props.seeming];
+  const automaticRegalia = changelingFavoredRegalia({ primary_regalia: seemingData?.regalia, kith: props.kith, kith_custom: props.customKith });
   const availableRegalia = [
     ...REGALIA,
     ...props.contractCatalog
@@ -100,7 +101,11 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
           item.categoryKind === "Regalia" && !["Independent", "Independente"].includes(item.regalia),
       )
       .map((item: ContractDefinition) => item.regalia),
-  ].filter((item, index, values) => values.indexOf(item) === index);
+  ].map(canonicalRegalia).filter((item, index, values) => values.indexOf(item) === index && !automaticRegalia.includes(item));
+  const regaliaGroups = [
+    { label: t("ui.coreRegalia"), options: availableRegalia.filter(item => CORE_REGALIA.includes(item)) },
+    { label: t("ui.supplementRegalia"), options: availableRegalia.filter(item => !CORE_REGALIA.includes(item)) },
+  ].filter(group => group.options.length);
   const favored = seemingData ? favoredChoices(seemingData.favored).filter((attribute) => Number(props.attributes?.[attribute] ?? 1) < 5) : [];
   const favoredKey = favored.join("|");
   const { favoredAttribute, setFavoredAttribute } = props;
@@ -147,13 +152,14 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
                 : t("ui.chooseASecondFavoredRegaliaToUnlockAnother")}</p>
             </div>
             <div className="regalia-select">
-              <Choice
-                label=""
-                value={props.secondRegalia}
-                setValue={props.setSecondRegalia}
-                options={availableRegalia.filter((item) => item !== seemingData?.regalia)}
-                invalid={props.missing("secondRegalia")}
-              />
+              <Select value={props.secondRegalia} onValueChange={props.setSecondRegalia}>
+                <SelectTrigger aria-label={t("ui.secondFavoredRegalia")} aria-invalid={props.missing("secondRegalia")}><SelectValue placeholder={t("ui.select")} /></SelectTrigger>
+                <SelectContent>{regaliaGroups.map((group, index) => <SelectGroup key={group.label}>
+                  {index > 0 && <SelectSeparator />}
+                  <SelectLabel>{group.label}</SelectLabel>
+                  {group.options.map(item => <SelectItem key={item} value={item}>{systemTerm(item, locale)}</SelectItem>)}
+                </SelectGroup>)}</SelectContent>
+              </Select>
             </div>
           </div>
         </div>

@@ -9,6 +9,8 @@ export const changelingMessages = {
       "Seeming": "Feições"
     },
     "ui": {
+      "coreRegalia": "Core",
+      "supplementRegalia": "Suplementos",
       "mountAbilities": {
         "manyleague": { "name": "Muitas Léguas", "description": "Dobra o Deslocamento; soma os pontos do Mérito à Iniciativa da montaria sozinha ou do dono montado." },
         "chatterbox": { "name": "Tagarela", "description": "Fala e entende claramente o dono e transmite mensagens simples no idioma dele." },
@@ -572,6 +574,8 @@ export const changelingMessages = {
       "Seeming": "Seemings"
     },
     "ui": {
+      "coreRegalia": "Core",
+      "supplementRegalia": "Supplements",
       "mountAbilities": {
         "manyleague": { "name": "Manyleague", "description": "Double Speed; add Merit dots to the mount's Initiative, whether alone or carrying its owner." },
         "chatterbox": { "name": "Chatterbox", "description": "Speaks with and clearly understands its owner and conveys simple messages in the owner's language." },
