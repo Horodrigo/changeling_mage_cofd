@@ -1,3 +1,19 @@
+@font-face {
+  font-family: "Mortal Typewriter";
+  src: url("/game-lines/mortal/fonts/vt-smith-upright.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mortal Horror";
+  src: url("/game-lines/mortal/fonts/you-murderer.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 .line-theme-cofd,
 body:has(.line-theme-cofd) {
   --primary:#315e7a;
@@ -292,4 +308,19 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
   height: 24px;
   flex: 0 0 24px;
   background: url("/game-lines/mortal/images/experience-purchase-icon.webp") center / contain no-repeat;
+}
+
+/* Typewriter headings and character name; rules and numeric tracks keep their reading font. */
+.cofd-sheet .official-heading,
+.cofd-sheet .cofd-title-mark span,
+.cofd-sheet .sheet-identity-grid .official-field:first-child strong {
+  font-family: "Mortal Typewriter", Georgia, serif;
+  font-weight: 400;
+  font-style: normal;
+}
+/* Only the fixed Darkness/Trevas word uses this face: authored text may contain missing accents. */
+.cofd-sheet .cofd-title-mark strong {
+  font-family: "Mortal Horror", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: .04em;
 }

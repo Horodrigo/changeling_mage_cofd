@@ -179,7 +179,11 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const notes = <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={String(state.notes ?? "")} onChange={value => setState("notes", value)}/></>;
   const activeTab = tabs.characterId === character.id ? mobile ? tabs.mobile : tabs.desktop : mobile ? "summary" : "main";
   const setTab = (value: string) => setTabs(previous => ({ ...previous, characterId: character.id, [mobile ? "mobile" : "desktop"]: value }));
-  const frame = <div className="wtf-frame" aria-hidden="true"><span /><span /><span /><span /></div>;
+  const frame = <div className="wtf-frame" aria-hidden="true">
+    <span className="wtf-frame-corner" /><span className="wtf-frame-corner" /><span className="wtf-frame-corner" /><span className="wtf-frame-corner" />
+    <span className="wtf-frame-rail wtf-frame-rail-top" /><span className="wtf-frame-rail wtf-frame-rail-bottom" />
+    <span className="wtf-frame-rail wtf-frame-rail-left" /><span className="wtf-frame-rail wtf-frame-rail-right" />
+  </div>;
   if (mobile) return <CharacterPaperShell line="WtF" mobile title={t("werewolf.title")} subtitle={t("werewolf.forsaken")}>
     {frame}
     <SwipeableSheetTabs value={activeTab} onValueChange={setTab} tabs={[{ value: "summary", label: t("ui.summary") }, { value: "stats", label: t("ui.traits") }, { value: "details", label: t("ui.details") }, { value: "combat", label: t("ui.combat") }, { value: "notes", label: t("ui.notes") }]}>{{

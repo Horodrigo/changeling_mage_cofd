@@ -553,6 +553,7 @@ export function MageCharacterPaper({
           title={t("ui.mage")}
           subtitle={t("ui.theAWAKENING")}
         >
+          <span className="mta-script-ornament" aria-hidden="true" />
           <SwipeableSheetTabs
             value={sheetTab}
             onValueChange={setSheetTab}
@@ -874,6 +875,7 @@ export function MageCharacterPaper({
         title={t("ui.mage")}
         subtitle={t("ui.theAWAKENING")}
       >
+        <span className="mta-script-ornament" aria-hidden="true" />
         {
           <Tabs
             value={sheetTab}

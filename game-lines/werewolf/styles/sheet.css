@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Werewolf Arnova";
+  src: url("/game-lines/werewolf/fonts/arnova.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 .line-theme-wtf,
 body:has(.line-theme-wtf) {
   --primary: #713c31;
@@ -18,7 +26,7 @@ body:has(.line-theme-wtf) {
 .app-shell.line-theme-wtf { background: color-mix(in srgb, var(--line-accent) 5%, var(--background)); }
 .wtf-sheet { --sheet-accent: #713c31; --sheet-ink: #241c19; --sheet-line: #c7beb0; color: var(--sheet-ink); background: #faf7f0; box-shadow: 0 18px 50px #39261f26, inset 0 0 32px #713c3110; }
 .wtf-sheet .cod-sheet-title { justify-content: center; flex-wrap: wrap; gap: 8px; border-bottom: 2px solid var(--sheet-accent); text-align: center; }
-.wtf-sheet .cod-sheet-title > div { flex-wrap: wrap; justify-content: center; }
+.wtf-sheet .cod-sheet-title > div { flex-direction: column; align-items: center; gap: 4px; }
 .wtf-sheet .cod-sheet-title p { width: 100%; }
 .wtf-sheet .official-heading { color: var(--sheet-accent); }
 .wtf-sheet .wtf-skill-stack { display: grid; gap: 1rem; }
@@ -94,11 +102,19 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
 /* Line-owned artwork decorates the shared sheet geometry. */
 @media screen {
   .cod-sheet.wtf-sheet {
-    border: 1px solid #806453;
+    /* Moldura: tamanho dos cantos, encontro dos rulers e respiro do conteúdo. */
+    --wtf-corner-size: 210px;
+    --wtf-rail-inset: 27px;
+    --wtf-rail-start: 188px;
+    --wtf-rule: #713c3199;
+    padding: 48px 52px 60px;
+    border: 2px solid #806453;
     border-radius: 0;
+    /* paper-texture.webp: background-size controla a escala do grão do papel. */
     background: #faf7f0 url("/game-lines/werewolf/images/paper-texture.webp") repeat;
     background-size: 768px 768px;
   }
+  /* background-werewolf.webp: posição, escala e intensidade da marca d'água. */
   .wtf-sheet::after {
     background-image: url("/game-lines/werewolf/images/background-werewolf.webp");
     background-position: center 45%;
@@ -110,26 +126,78 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    border: 1px solid #713c3140;
   }
-  .wtf-frame > span {
+  /* frame-corner.webp: quatro cantos espelhados; ajuste as variáveis da folha acima. */
+  .wtf-frame-corner {
     position: absolute;
-    width: 112px;
-    height: 112px;
+    width: var(--wtf-corner-size);
+    height: var(--wtf-corner-size);
     background: url("/game-lines/werewolf/images/frame-corner.webp") top left / contain no-repeat;
   }
   .wtf-frame > :nth-child(1) { top: 0; left: 0; }
   .wtf-frame > :nth-child(2) { top: 0; right: 0; transform: scaleX(-1); }
   .wtf-frame > :nth-child(3) { bottom: 0; left: 0; transform: scaleY(-1); }
   .wtf-frame > :nth-child(4) { bottom: 0; right: 0; transform: scale(-1); }
-  .wtf-sheet .cod-sheet-title {
-    padding-top: 64px;
-    padding-bottom: 14px;
-    border-bottom: 0;
-    background: url("/game-lines/werewolf/images/title.webp") center top / 180px 60px no-repeat;
+  /* Rulers externos: ligam os braços dos cantos sem atravessar o desenho da lua. */
+  .wtf-frame-rail { position: absolute; }
+  .wtf-frame-rail-top, .wtf-frame-rail-bottom {
+    left: var(--wtf-rail-start);
+    right: var(--wtf-rail-start);
+    border-top: 3px double var(--wtf-rule);
   }
-  .wtf-sheet .cod-sheet-title span { color: #39261f; letter-spacing: .04em; }
-  .wtf-sheet .cod-sheet-title strong { color: var(--sheet-accent); }
+  .wtf-frame-rail-top { top: var(--wtf-rail-inset); }
+  .wtf-frame-rail-bottom { bottom: var(--wtf-rail-inset); }
+  .wtf-frame-rail-left, .wtf-frame-rail-right {
+    top: var(--wtf-rail-start);
+    bottom: var(--wtf-rail-start);
+    border-left: 3px double var(--wtf-rule);
+  }
+  .wtf-frame-rail-left { left: var(--wtf-rail-inset); }
+  .wtf-frame-rail-right { right: var(--wtf-rail-inset); }
+  /* title.webp: largura/altura do emblema e padding-top reservam espaço antes do texto. */
+  .wtf-sheet .cod-sheet-title {
+    padding: 82px 0 18px;
+    margin-bottom: 10px;
+    border-bottom: 3px double var(--wtf-rule);
+    background: url("/game-lines/werewolf/images/title.webp") center top / 240px 77px no-repeat;
+  }
+  .wtf-sheet .cod-sheet-title span {
+    color: #39261f;
+    font: 400 46px/1.1 "Werewolf Arnova", Georgia, serif;
+    letter-spacing: .04em;
+  }
+  .wtf-sheet .cod-sheet-title strong {
+    color: var(--sheet-accent);
+    font: 400 17px/1.2 Georgia, serif;
+    letter-spacing: .2em;
+  }
+  .wtf-sheet .cod-sheet-title p { margin: 4px 0 0; font-size: 11px; }
+  .wtf-sheet :is(.official-heading, .official-trait-block h4, .experience-title > span) {
+    font-family: "Werewolf Arnova", Georgia, serif;
+    font-weight: 400;
+  }
+  /* Rulers internos: separam as três categorias de atributos e as três colunas do Main. */
+  .wtf-sheet .official-trait-grid > .official-trait-block + .official-trait-block,
+  .wtf-sheet .cod-main-columns > section + section {
+    position: relative;
+  }
+  .wtf-sheet .official-trait-grid > .official-trait-block + .official-trait-block::before,
+  .wtf-sheet .cod-main-columns > section + section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -13px;
+    border-left: 3px double var(--wtf-rule);
+    pointer-events: none;
+  }
+  .wtf-sheet .cod-main-columns { align-items: stretch; }
+  .wtf-sheet .cod-main-attributes { padding-bottom: 16px; border-bottom: 3px double var(--wtf-rule); }
+  .wtf-sheet .wtf-skill-stack > .official-trait-block + .official-trait-block {
+    padding-top: 12px;
+    border-top: 3px double var(--wtf-rule);
+  }
+  /* Papel nas abas inativas; padding/gap controlam a faixa de navegação. */
   .wtf-sheet .ctl-sheet-tab-list {
     display: flex;
     width: 100%;
@@ -146,15 +214,20 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
     border-radius: 0;
     color: #513027;
   }
+  /* tab-texture.webp: escala da textura da aba ativa; color é a cor do texto. */
   .wtf-sheet .ctl-sheet-tab-list button[data-state="active"] {
     color: #fffaf2;
     background: #713c31 url("/game-lines/werewolf/images/tab-texture.webp") center / 256px;
     box-shadow: inset 0 -2px #d6b48c;
   }
+  /* section-divider.webp: height ajusta o ornamento; o gradiente mantém o ruler contínuo. */
   .wtf-sheet .official-heading::before,
   .wtf-sheet .official-heading::after {
     height: 13px;
-    background: url("/game-lines/werewolf/images/section-divider.webp") center / 100% 100% no-repeat;
+    background:
+      url("/game-lines/werewolf/images/section-divider.webp") center / 100% 100% no-repeat,
+      linear-gradient(transparent 38%, var(--wtf-rule) 38% 46%, transparent 46% 62%, var(--wtf-rule) 62% 70%, transparent 70%);
+
     opacity: .85;
   }
   .wtf-sheet :is(input, textarea, [data-slot="select-trigger"], button[data-variant]) {
@@ -165,6 +238,7 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
     outline: 2px solid #986551;
     outline-offset: 2px;
   }
+  /* O mesmo paper-texture.webp acompanha os diálogos; escala independente da folha. */
   body:has(.line-theme-wtf) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) {
     border-radius: 0;
     background: #faf7f0 url("/game-lines/werewolf/images/paper-texture.webp") center / 768px;
@@ -191,12 +265,27 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
 }
 @media screen and (max-width: 767px) {
   .wtf-sheet .ctl-sheet-tab-list button { flex: 1 0 auto; }
-  .wtf-frame > span { width: 48px; height: 48px; }
-  .wtf-sheet .cod-sheet-title { padding-top: 48px; background-size: 132px 44px; }
+  /* Mobile: cantos/rulers menores e conteúdo protegido pelas margens laterais. */
+  .cod-sheet.wtf-sheet {
+    --wtf-corner-size: 98px;
+    --wtf-rail-inset: 12px;
+    --wtf-rail-start: 87px;
+    padding: 26px 22px 36px;
+  }
+  .wtf-sheet .cod-sheet-title { padding-top: 61px; background-size: 180px 58px; }
+  .wtf-sheet .cod-sheet-title span { font-size: clamp(27px, 8vw, 36px); }
+  .wtf-sheet .cod-sheet-title strong { font-size: 12px; letter-spacing: .15em; }
+  .wtf-sheet .official-trait-grid > .official-trait-block + .official-trait-block::before,
+  .wtf-sheet .cod-main-columns > section + section::before { display: none; }
+  .wtf-sheet .mobile-attribute-grid > .official-trait-block + .official-trait-block {
+    border-left: 1px solid var(--wtf-rule);
+    padding-left: 6px;
+  }
   .wtf-sheet::after { background-size: 92% auto; opacity: .045; }
   .wtf-sheet .official-heading { gap: 6px; }
 }
 
+/* experience-purchase-icon.webp: dimensão visual do ícone, sem alterar o alvo do botão. */
 .wtf-experience-panel .experience-purchase-icon {
   display: inline-block;
   width: 24px;
