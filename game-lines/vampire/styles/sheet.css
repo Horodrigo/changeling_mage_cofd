@@ -1656,7 +1656,7 @@ body:has(.line-theme-vtr) {
   body.character-printing .vtr-print-page:last-child { break-after: auto; }
 }
 
-.vtr-sheet .experience-purchase-icon {
+.vampire-experience-panel .experience-purchase-icon {
   display: inline-block;
   width: 24px;
   height: 24px;

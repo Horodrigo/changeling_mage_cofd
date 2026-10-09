@@ -286,7 +286,7 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
   body.character-printing .cofd-print-page:last-child { break-after:auto; page-break-after:auto; }
 }
 
-.cofd-sheet .experience-purchase-icon {
+.mortal-experience-panel .experience-purchase-icon {
   display: inline-block;
   width: 24px;
   height: 24px;
