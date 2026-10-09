@@ -2,6 +2,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { BloodPotencyRow, VampireBloodlineDefinition, VampireClanDefinition, VampireCovenantDefinition, VampireDisciplineDefinition, VampirePowers, VampirePurchasablePower, VampireReference } from "./catalog-types";
 import { translate, type Locale } from "@/lib/i18n";
 import { vampireMeritId } from "./merit-identities";
+import { shadowCultGrantId } from "./builder-merit-grants";
 import { requirementMet } from "@/lib/merit-requirements";
 import { resolveMeritDefinition, type DefinitionIdentity } from "@/lib/merit-identity";
 
@@ -222,7 +223,7 @@ export function vampireDevotionExperienceCost(definition: VampirePurchasablePowe
       : "bloodlineId" in item ? item.bloodlineId === character.line_data.bloodline_id && (!item.xiaoFaction || item.bloodlineId === "xiao" && item.xiaoFaction === character.line_data.xiao_faction)
       : "covenantId" in item ? vampireCovenantIds(character.line_data).includes(item.covenantId)
       : "cultInitiation" in item ? (character.merits ?? []).some(merit => resolveMeritDefinition(merit, meritCatalog)?.id === item.cultInitiation.definitionId
-        && Number(merit.dots) >= item.cultInitiation.dots && String(merit.configuration?.cult ?? "").toLocaleLowerCase("en-US") === item.cultInitiation.cultId)
+        && Number(merit.dots) >= item.cultInitiation.dots && (shadowCultGrantId(merit) ?? String(merit.configuration?.cult ?? "").toLocaleLowerCase("en-US")) === item.cultInitiation.cultId)
         : item.devotionIds.some((id) => known.includes(id) && powers.devotions.some((power) => power.id === id))
   )).map((item) => item.cost) ?? [];
   return Math.min(base, ...discounts);
@@ -436,10 +437,12 @@ function normalizeAffiliation(value: string) {
 
 export function vampireCovenantAffiliationDots(sheet: Pick<CharacterSheet, "merits">, covenants: readonly VampireCovenantDefinition[]) {
   const covenantNames = new Set(covenants.flatMap((item) => [item.id, item.name, item.translatedName]).map(normalizeAffiliation));
+  const shadowIds = new Set(covenants.filter(item => item.group === "shadow-cult").map(item => item.id));
   const shadowNames = new Set(covenants.filter((item) => item.group === "shadow-cult").flatMap((item) => [item.id, item.name, item.translatedName]).map(normalizeAffiliation));
   return sheet.merits.reduce((sum, merit) => {
     if (vampireMeritId(merit) === "vtr-kindred-status" && covenantNames.has(normalizeAffiliation(String(merit.configuration?.group ?? "")))) return sum + Math.max(0, Number(merit.dots) || 0);
-    if (vampireMeritId(merit) === "core-2ed:mystery-cult-initiation" && shadowNames.has(normalizeAffiliation(String(merit.configuration?.cult ?? "")))) return sum + Math.max(0, Number(merit.dots) || 0);
+    const cultId = shadowCultGrantId(merit);
+    if (vampireMeritId(merit) === "core-2ed:mystery-cult-initiation" && (cultId !== undefined ? shadowIds.has(cultId) : shadowNames.has(normalizeAffiliation(String(merit.configuration?.cult ?? ""))))) return sum + Math.max(0, Number(merit.dots) || 0);
     return sum;
   }, 0);
 }

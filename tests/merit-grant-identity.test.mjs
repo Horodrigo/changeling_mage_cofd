@@ -433,3 +433,71 @@ test("Vampire leaving a template retains purchased dots, unknown identities and 
   assert.equal(refundMeritDots(sheet, "Unrelated display label", 2, "paid-status", undefined, "vtr-kindred-status"), true);
   assert.ok(sheet.merits.some(item => item.definitionId === "core-2ed:mystery-cult-initiation" && item.grantedBy));
 });
+
+test("Vampire Shadow Cult recomposition preserves authored alternatives, paid instances and refunds across cult changes", () => {
+  const sheet = blankPrintCharacter("VtR");
+  sheet.line_data.covenant_id = "followers-of-seth";
+  vampireGrants.synchronizeVampireBuilderMeritGrants(sheet);
+  const owner = sheet.merits.find(item => item.grantedBy === "Vampire Shadow Cult");
+  Object.assign(owner, { dots: 3, creationDots: 1, experienceDots: 2 });
+  Object.assign(sheet.current_state, { experience_available: 4, experience_spent: 2, experience_total: 6,
+    vampire_experience_history: [{ id: "paid-cult", cost: 2, createdAt: "2026-10-09", rating: 3,
+      undo: { kind: "merit", definitionId: owner.definitionId, instanceId: owner.instanceId, name: owner.name, dots: 2 } }] });
+  Object.assign(owner.configuration, { cult: "Authored cult", level_1_specialty_name: "Strix", level_2_merits: [], level_3_skill: "Weaponry", level_5_custom: "Authored effect" });
+  const configuration = structuredClone(owner.configuration), state = structuredClone(sheet.current_state);
+  vampireGrants.synchronizeVampireBuilderMeritGrants(sheet);
+  assert.deepEqual(sheet.merits.find(item => item.instanceId === owner.instanceId).configuration, configuration);
+  assert.ok(sheet.specializations.some(item => item.name === "Strix"));
+  assert.ok(!sheet.merits.some(item => item.definitionId === "core-2ed:demolisher"));
+  const once = structuredClone(sheet);
+  vampireGrants.synchronizeVampireBuilderMeritGrants(sheet);
+  assert.deepEqual(sheet, once);
+  sheet.line_data.covenant_id = "moirai";
+  vampireGrants.synchronizeVampireBuilderMeritGrants(sheet);
+  const paid = sheet.merits.find(item => item.instanceId === owner.instanceId);
+  assert.equal(paid.grantedBy, undefined);
+  assert.equal(paid.dots, 2);
+  assert.equal(paid.creationDots, 0);
+  assert.equal(paid.experienceDots, 2);
+  assert.deepEqual(paid.configuration, configuration);
+  const fresh = sheet.merits.find(item => item.grantedBy === "Vampire Shadow Cult");
+  assert.notEqual(fresh.instanceId, owner.instanceId);
+  assert.equal(fresh.configuration.shadowCultId, "moirai");
+  assert.equal(fresh.dots, 1);
+  assert.equal(fresh.experienceDots, 0);
+  assert.deepEqual(sheet.current_state, state);
+  assert.equal(refundMeritDots(sheet, "Translated label", 2, paid.instanceId, undefined, paid.definitionId), true);
+  assert.ok(!sheet.merits.some(item => item.instanceId === paid.instanceId));
+  assert.ok(sheet.merits.some(item => item.instanceId === fresh.instanceId));
+});
+
+test("Vampire Shadow Cult creation and legacy producers use cult identity without merging ambiguous or explicit foreign producers", () => {
+  const wanted = vampireGrants.shadowCultMeritGrant("inconnu");
+  const paid = { ...wanted, instanceId: "legacy-instance", dots: 3, creationDots: 1, experienceDots: 2, configuration: { cult: "Inconnu", level_1_specialty_name: "Authored", level_4_merits: [] } };
+  const next = vampireGrants.reconcileVampireTemplateMerits([paid], wanted);
+  assert.equal(next[0].instanceId, paid.instanceId);
+  assert.equal(next[0].configuration.level_1_specialty_name, "Authored");
+  assert.deepEqual(next[0].configuration.level_4_merits, []);
+  const creation = vampireGrants.reconcileVampireCreationMeritGrants([{ ...paid, dots: 1 }], vampireGrants.shadowCultMeritGrant("moirai"));
+  const merged = mergeCreationMerits([paid], creation);
+  assert.equal(merged.find(item => item.instanceId === paid.instanceId).dots, 2);
+  assert.equal(merged.find(item => item.instanceId === paid.instanceId).grantedBy, undefined);
+  for (const current of [
+    [{ ...paid, configuration: { ...paid.configuration, shadowCultId: "unavailable:cult" } }],
+    [paid, { ...paid, instanceId: "other-paid" }],
+  ]) {
+    const result = vampireGrants.reconcileVampireTemplateMerits(current, wanted);
+    for (const original of current) {
+      const retained = result.find(item => item.instanceId === original.instanceId);
+      assert.equal(retained.experienceDots, 2);
+      assert.deepEqual(retained.configuration, original.configuration);
+      assert.equal(retained.grantedBy, undefined);
+    }
+    assert.equal(result.find(item => item.grantedBy === "Vampire Shadow Cult").dots, 1);
+  }
+  const collision = { ...paid, instanceId: wanted.instanceId, grantedBy: undefined };
+  const result = vampireGrants.reconcileVampireTemplateMerits([collision], wanted);
+  assert.deepEqual(result[0], collision);
+  assert.notEqual(result[1].instanceId, collision.instanceId);
+  assert.equal(vampireGrants.shadowCultMeritGrant("faithful-of-propylaia").sourceId, "h-vtr-agony-ecstasy");
+});

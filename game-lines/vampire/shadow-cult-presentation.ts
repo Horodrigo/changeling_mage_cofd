@@ -3,14 +3,14 @@ import { normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core
 import type { Locale } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
-import { isShadowCultId, SHADOW_CULT_SOURCE } from "./builder-merit-grants";
+import { isShadowCultId, shadowCultGrantId, SHADOW_CULT_SOURCE } from "./builder-merit-grants";
 import catalog from "./catalog-data/shadow-cults.json";
 
 type Cult = { name: string; configuration: MeritConfiguration; presentationPt: MeritConfiguration; presentationEn?: MeritConfiguration; notes?: Record<string, string>; notesPt?: Record<string, string> };
 const cults = catalog as Record<keyof typeof catalog, Cult>;
 
 function preset(merit: MeritSelection, cultId: string, merits: readonly MeritDefinition[]) {
-  return isShadowCultId(cultId) && merit.grantedBy === SHADOW_CULT_SOURCE &&
+  return isShadowCultId(cultId) && shadowCultGrantId(merit) === cultId && merit.grantedBy === SHADOW_CULT_SOURCE &&
     resolveMeritDefinition(merit, merits)?.id === "core-2ed:mystery-cult-initiation" ? cults[cultId] : undefined;
 }
 

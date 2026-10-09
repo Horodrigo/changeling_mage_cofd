@@ -83,6 +83,8 @@ test('Moirai discounts resolve canonical configured Merit instances and protect 
   for (const id of ['devotion-cutting-the-strings', 'devotion-timing-is-everything']) {
     const definition = powers.devotions.find(item => item.id === id);
     assert.equal(quote(definition, sheet, powers, undefined, core), 2);
+    assert.equal(quote(definition, { ...sheet, merits: [{ ...selection, configuration: { cult: 'Authored title', shadowCultId: 'moirai' } }] }, powers, undefined, core), 2);
+    assert.equal(quote(definition, { ...sheet, merits: [{ ...selection, configuration: { cult: 'Moirai', shadowCultId: 'missing:cult' } }] }, powers, undefined, core), 3);
     assert.equal(quote(definition, sheet, powers), 3, 'Unavailable canonical identity fails closed');
     assert.equal(quote(definition, sheet, powers, undefined, core.filter(item => item.id !== cult.id)), 3);
     for (const row of [

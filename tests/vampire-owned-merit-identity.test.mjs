@@ -44,6 +44,8 @@ test("Covenant status and affiliation budgets use exact definitions, not renamed
   const before = structuredClone(merits);
   assert.equal(vampireCovenantStatus({ merits }, "Invictus"), 2);
   assert.equal(vampireCovenantAffiliationDots({ merits }, covenants), 5);
+  assert.equal(vampireCovenantAffiliationDots({ merits: [{ ...merits[1], configuration: { cult: "Authored title", shadowCultId: "inconnu" } }] }, covenants), 3);
+  assert.equal(vampireCovenantAffiliationDots({ merits: [{ ...merits[1], configuration: { cult: "Inconnu", shadowCultId: "Inconnu" } }] }, covenants), 0);
   assert.deepEqual(merits, before);
 });
 
