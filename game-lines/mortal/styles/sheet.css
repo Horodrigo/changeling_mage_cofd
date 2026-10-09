@@ -285,3 +285,11 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
   body.character-printing .cofd-print-page { width:210mm!important; min-width:210mm!important; height:297mm!important; margin:0!important; box-shadow:none!important; break-after:page; page-break-after:always; }
   body.character-printing .cofd-print-page:last-child { break-after:auto; page-break-after:auto; }
 }
+
+.cofd-sheet .experience-purchase-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  background: url("/game-lines/mortal/images/experience-purchase-icon.webp") center / contain no-repeat;
+}

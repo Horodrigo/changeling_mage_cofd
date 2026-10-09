@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { History, RotateCcw, ShoppingBag } from "lucide-react";
+import { History, RotateCcw } from "lucide-react";
 import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
@@ -165,7 +165,7 @@ export function MortalExperiencePanel({ character, updateSheet, catalogs, builde
       <div><strong>{total}</strong><span>{t("ui.totalXP")}</span></div><div><strong>{spent}</strong><span>{t("ui.xpSpent")}</span></div>
     </div>
     {!builderMode && <BeatTrack label={t("ui.beats")} value={beats} onChange={(value) => { const change = convertFifthBeat(value, available, total); saveState({ beats: change.beats, experience_available: change.available, experience_spent: spent, experience_total: change.total }); }} />}
-    <div className="experience-actions"><Dialog><DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="catalog-selection-action"><ShoppingBag /> {t("ui.spendExperience")}</Button></DialogTrigger><DialogContent className="experience-dialog">
+    <div className="experience-actions"><Dialog><DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="catalog-selection-action"><span className="experience-purchase-icon" aria-hidden="true" /> {t("ui.spendExperience")}</Button></DialogTrigger><DialogContent className="experience-dialog">
       <DialogHeader><DialogTitle>{t("ui.spendExperience")}</DialogTitle><DialogDescription>{t("ui.mortalExperienceDescription")}</DialogDescription></DialogHeader>
       <div className="experience-purchase-form">
         <label>{t("ui.type")}<RuleSelect value={purchase} onChange={(value) => { setPurchase(value as PurchaseType); setTarget(""); setTargetRating(0); setMeritDots(0); setMeritInstance(-1); setMeritConfiguration({}); setFeedback(""); }} options={groupedPurchaseOptions(PURCHASE_GROUPS, (value) => purchaseLabel(value, locale), locale)} /></label>

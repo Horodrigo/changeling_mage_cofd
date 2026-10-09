@@ -1528,3 +1528,11 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
     print-color-adjust:exact;
   }
 }
+
+.mta-sheet .experience-purchase-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  background: url("/game-lines/mage/images/experience-purchase-icon.webp") center / contain no-repeat;
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { History, RotateCcw, ShoppingBag } from "lucide-react";
+import { History, RotateCcw } from "lucide-react";
 import { VampireMeritConfigurationEditor } from "./merit-configuration-editor";
 import { BeatTrack, ExperienceMeritPicker, ExperiencePowerPicker, ExperienceRatingPicker, convertFifthBeat, experiencePurchaseBalances, groupedPurchaseOptions, isRepeatableDefinition, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
 import { RuleSelect, type RuleSelectOption } from "@/app/workspace/rule-select";
@@ -519,7 +519,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     {!builderMode && <BeatTrack label={t("ui.beats")} value={beats} onChange={(value) => { const change = convertFifthBeat(value, available, total); saveState({ beats: change.beats, experience_available: change.available, experience_spent: spent, experience_total: change.total }); }} />}
     <div className="experience-actions">
       <Dialog>
-        <DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="catalog-selection-action"><ShoppingBag /> {t("ui.spendExperience")}</Button></DialogTrigger>
+        <DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="catalog-selection-action"><span className="experience-purchase-icon" aria-hidden="true" /> {t("ui.spendExperience")}</Button></DialogTrigger>
         <DialogContent className="experience-dialog">
           <DialogHeader><DialogTitle>{t("ui.spendVampireExperience")}</DialogTitle><DialogDescription>{t("ui.chooseATraitAndTheSheetWillRecord")}</DialogDescription></DialogHeader>
           <div className="experience-purchase-form">

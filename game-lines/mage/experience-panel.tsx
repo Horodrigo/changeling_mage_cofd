@@ -1,7 +1,7 @@
 "use client";
 import { meritProblemMessage } from "@/lib/merit-ui";
 import { useState } from "react";
-import { History, RotateCcw, Sparkles } from "lucide-react";
+import { History, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -497,7 +497,7 @@ export function MageExperiencePanel({
         <Dialog>
         <DialogTrigger asChild>
           <Button type="button" variant="outline" size="sm" className="catalog-selection-action">
-            <Sparkles /> {t("ui.purchaseTrait")}
+            <span className="experience-purchase-icon" aria-hidden="true" /> {t("ui.purchaseTrait")}
           </Button>
         </DialogTrigger>
         <DialogContent className="experience-dialog">
