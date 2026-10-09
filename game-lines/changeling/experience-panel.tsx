@@ -60,7 +60,7 @@ type ExperienceUndo =
   | { kind: "clause"; contractId: string; courtId: string }
   | { kind: "wyrd"; previous: number; amount?: number }
   | { kind: "clarityGain" }
-  | { kind: "willpower"; previousLost: number; amount?: number }
+  | { kind: "willpower"; previousLost: number; amount?: number; targetRating?: number }
   | { kind: "willpowerLoss"; previousLost: number };
 type ExperienceEntry = {
   id: string;
@@ -302,7 +302,6 @@ export function ExperiencePanel({
       {
         id: createRandomId(),
         kind: "spend",
-        description: t("ui.permanentLossOfOneWillpowerDot"),
         experience: 0,
         createdAt: new Date().toISOString(),
         undo: { kind: "willpowerLoss", previousLost: lostWillpower },
@@ -321,7 +320,6 @@ export function ExperiencePanel({
     append({
       id: createRandomId(),
       kind: "spend",
-      description: t("ui.permanentGainOfOneClarityBox"),
       experience: 0,
       createdAt: new Date().toISOString(),
       undo: { kind: "clarityGain" },
@@ -352,7 +350,6 @@ export function ExperiencePanel({
       {
         id: createRandomId(),
         kind: "spend",
-        ...(undo.kind === "merit" ? {} : { description }),
         experience: -cost,
         createdAt: new Date().toISOString(),
         undo,
@@ -364,6 +361,23 @@ export function ExperiencePanel({
     setFeedback(
       t("ui.experiencePurchase", { description, cost, plural: cost === 1 ? "" : "s" }),
     );
+  }
+  function historyLabel(entry: ExperienceEntry) {
+    const undo = entry.undo;
+    if (!undo) return entry.description ?? "";
+    if (undo.kind === "merit") return changelingMeritExperienceLabel(entry, character, meritCatalog, locale);
+    if (undo.kind === "trait") return `${systemTerm(undo.name, locale)} ${undo.previous + (undo.amount ?? 1)}`;
+    if (undo.kind === "specialty") return `${t("ui.specialty")} ${systemTerm(undo.skill, locale)}: ${undo.name}`;
+    if (undo.kind === "wyrd") return `${t("ui.wyrd")} ${undo.previous + (undo.amount ?? 1)}`;
+    if (undo.kind === "clarityGain") return t("ui.permanentGainOfOneClarityBox");
+    if (undo.kind === "willpowerLoss") return t("ui.permanentLossOfOneWillpowerDot");
+    if (undo.kind === "willpower") return undo.targetRating === undefined ? entry.description ?? t("ui.lostWillpowerDot") : `${t("ui.willpower")} ${undo.targetRating}`;
+    if (!["contract", "clause", "benefit"].includes(undo.kind)) return entry.description ?? "";
+    const id = undo.kind === "contract" ? undo.id : undo.contractId;
+    const definition = contractsCatalog.find(item => item.id === id);
+    const name = definition ? contractPresentation(definition, locale, reference.contractPresentation).name : id;
+    if (undo.kind === "contract") return `${t("ui.contract")} ${name}`;
+    return undo.kind === "clause" ? `${t("ui.clauseFor")} ${courtDisplayName(undo.courtId, locale)} · ${name}` : `${t("ui.benefitFor")} ${seemingDisplayName(undo.seeming, locale)} · ${name}`;
   }
   function revertPurchase(entry: ExperienceEntry) {
     if (!history.some(item => item.id === entry.id)) return;
@@ -439,7 +453,7 @@ export function ExperiencePanel({
     };
     recalculateCtlDerived(next);
     updateSheet(synchronizeMeritGrants(next, entitlementCatalog));
-    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: entry.description ?? "", p2: refund }));
+    setFeedback(t("ui.wasRefundedExperienceRestored", { p1: historyLabel(entry), p2: refund }));
   }
   function buy() {
     if (purchaseType === "attribute") {
@@ -569,7 +583,7 @@ export function ExperiencePanel({
     spend(
       ratingAmount,
       `${t("ui.willpower")} ${intendedRating}`,
-      { kind: "willpower", previousLost: lostWillpower, amount: ratingAmount },
+      { kind: "willpower", previousLost: lostWillpower, amount: ratingAmount, targetRating: intendedRating },
       (next) => {
         next.current_state = {
           ...next.current_state,
@@ -600,7 +614,7 @@ export function ExperiencePanel({
     <summary><History /> {t("ui.experienceExpenses")} ({history.length})</summary>
     <div>{history.length ? history.slice(0, 12).map(entry => {
       const definition = changelingMeritReceiptDefinition(entry, character, meritCatalog);
-      const label = changelingMeritExperienceLabel(entry, character, meritCatalog, locale);
+      const label = historyLabel(entry);
       const disabled = !entry.undo || (entry.undo.kind === "merit" && !refundChangelingMeritPurchase(character, entry.id, meritCatalog, builderMode));
       const confirmation = definition && ["oak-ash-thorn:entitlement", "ctl-2ed:fae-mount", "h-seemings:fae-pet"].includes(definition.id);
       return <p key={entry.id}><span>{label}</span><strong>{Math.abs(entry.experience)}{t("ui.xp")}</strong><small>{new Date(entry.createdAt).toLocaleDateString(locale)}</small>
