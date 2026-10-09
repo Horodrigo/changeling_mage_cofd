@@ -473,7 +473,7 @@ test("Werewolf compact forms retain equal fluid columns and a smaller transparen
   assert.match(css, /grid-template-columns: repeat\(5, minmax\(0, 1fr\)\)/);
   assert.match(css, /grid-row: span 5; grid-template-rows: subgrid/);
   assert.doesNotMatch(css, /overflow-x:\s*auto|min-width:\s*850px|forms\.png/);
-  assert.match(css, /inset: 3rem 5% \.5rem/);
+  assert.match(css, /grid-row: 1 \/ 5; inset: 3rem 5% \.5rem/);
   assert.match(css, /forms\.webp.*contain no-repeat/);
   assert.match(css, /max-width: 767px.*wtf-form-columns::before.*display: none/);
   const image = readFileSync(new URL("../public/game-lines/werewolf/images/forms.webp", import.meta.url));
@@ -549,7 +549,15 @@ test("Werewolf Harmony renders descending manual selections including zero and p
   assert.match(points, /Toward Flesh — increases Harmony/);
   assert.match(points, /Toward Spirit — decreases Harmony/);
   assert.equal((points.match(/<li[ >]/g) ?? []).length, 20);
-  assert.equal((points.match(/class="wtf-inactive-rule"/g) ?? []).length, 8);
+  for (const harmony of [0, 3, 4, 7, 8, 10]) {
+    const html = render(createElement(BreakingPointReference, { harmony, reference: catalog }));
+    const hidden = [...html.matchAll(/<details class="wtf-rule-disclosure wtf-other-breaking-points">([\s\S]*?)<\/details>/g)].map(match => match[0]).join("");
+    const expected = catalog.breakingPoints.filter(point => (point.minHarmony !== undefined && harmony < point.minHarmony) || (point.maxHarmony !== undefined && harmony > point.maxHarmony)).length;
+    assert.equal((hidden.match(/<li[ >]/g) ?? []).length, expected);
+    assert.doesNotMatch(hidden, /<details[^>]*\bopen/);
+    const visible = html.replace(/<details[\s\S]*?<\/details>/g, "");
+    assert.equal((visible.match(/<li[ >]/g) ?? []).length, 20 - expected);
+  }
   assert.equal(JSON.stringify(catalog), before);
 });
 
@@ -570,14 +578,16 @@ test("Werewolf passives and anchor recovery are native disclosures with distinct
   assert.match(anchor, /Recover one spent Willpower/);
   assert.match(anchor, /Recover all spent Willpower/);
   assert.doesNotMatch(anchor, /<button/);
-  const limits = render(createElement(PrimalUrgeLimits, { reference: catalog, rating: 10 }));
+  const limits = render(createElement(PrimalUrgeLimits, { reference: catalog, rating: 10, harmony: 7 }));
   assert.match(limits, /6 bashing per turn/);
   assert.match(limits, /12 hours/);
   assert.match(limits, /Lunacy penalty/);
   assert.match(limits, /Tracking bonus/);
   assert.ok(limits.includes(translate("en-US", "werewolf.traitMaximum")));
-  assert.doesNotMatch(limits, /<details|<summary|Death Rage|Wasu-Im/);
-  const lowLimits = render(createElement(PrimalUrgeLimits, { reference: catalog, rating: 1 }));
+  assert.doesNotMatch(limits, /<details|<summary|Death Rage/);
+  const lowLimits = render(createElement(PrimalUrgeLimits, { reference: catalog, rating: 1, harmony: 4 }));
+  assert.match(lowLimits, /Wasu-Im control:<\/strong> 5 minutes\. /);
+  assert.match(lowLimits, /per turn\. <\/span>/);
   assert.match(lowLimits, /<strong>Regeneration:<\/strong> 1 bashing per turn/);
   assert.match(lowLimits, /<strong>Basu-Im:<\/strong> 10 minutes/);
   assert.match(lowLimits, /3 months/);

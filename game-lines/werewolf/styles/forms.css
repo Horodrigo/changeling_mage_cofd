@@ -1,7 +1,8 @@
 .wtf-forms-comparison { width: 100%; min-width: 0; }
 .wtf-form-columns { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); grid-template-rows: repeat(5, auto); min-width: 0; position: relative; isolation: isolate; }
 .wtf-form-columns > .wtf-form-column { display: grid; grid-row: span 5; grid-template-rows: subgrid; }
-.wtf-form-columns::before { content: ""; position: absolute; inset: 3rem 5% .5rem; background: url("/game-lines/werewolf/images/forms.webp") center / contain no-repeat; opacity: .12; z-index: -1; pointer-events: none; }
+/* Keep artwork height independent of expanded form details. */
+.wtf-form-columns::before { content: ""; position: absolute; grid-row: 1 / 5; inset: 3rem 5% .5rem; background: url("/game-lines/werewolf/images/forms.webp") center top / contain no-repeat; opacity: .12; z-index: -1; pointer-events: none; }
 .wtf-form-column { padding: 0 .4rem; min-width: 0; font-size: .82rem; }
 .wtf-form-column + .wtf-form-column { border-left: 1px solid var(--sheet-accent, #713c31); }
 .wtf-form-column h4 { font-size: 1.2rem; text-align: center; padding: .5rem 0; border-bottom: 2px solid var(--sheet-accent, #713c31); }

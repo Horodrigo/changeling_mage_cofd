@@ -1,7 +1,13 @@
 .wtf-rule-disclosure { border-bottom: 1px solid var(--sheet-line, #c7beb0); padding: .35rem 0; }
 .wtf-rule-disclosure > summary { cursor: pointer; min-height: 44px; display: list-item; align-content: center; font-weight: 600; }
 .wtf-rule-field { margin: .4rem 0; line-height: 1.45; white-space: pre-line; }
-.wtf-primal-urge-reference { display: flex; flex-wrap: wrap; column-gap: .35rem; row-gap: .1rem; font-size: .75rem; line-height: 1.4; }
+.wtf-primal-urge-reference { display: block; font-size: .75rem; line-height: 1.4; white-space: normal; }
+.wtf-sheet .wtf-harmony { min-width: 0; margin-top: 16px; font-size: 13px; }
+.wtf-sheet .wtf-harmony > .panel-heading { display: flex; flex-direction: row; align-items: center; flex-wrap: wrap; gap: 6px; }
+.wtf-sheet .wtf-harmony .official-heading { flex: 1; margin: 0; font-size: 19px; }
+.wtf-sheet .wtf-harmony > .panel-heading button { min-width: 0; max-width: 100%; height: auto; white-space: normal; padding: 4px 6px; font-size: 12px; line-height: 1.3; }
+.wtf-sheet .wtf-harmony-row > strong { font-size: 13px; }
+.wtf-sheet .wtf-harmony-line input { font-size: 13px; }
 .wtf-rule-disclosure > small { display: block; margin-bottom: .4rem; opacity: .75; }
 .wtf-anchor-field { display: grid; gap: .5rem; }
 .wtf-harmony-row { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr) 32px; align-items: center; gap: .35rem; min-height: 32px; }
@@ -17,11 +23,10 @@
 .wtf-selection-catalog .catalog-filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .75rem; }
 .wtf-selection-catalog .catalog-filters > * { flex: 1 1 150px; }
 .wtf-harmony small, .wtf-breaking-points li small { display: block; font-size: .75rem; }
-.wtf-harmony-dialog { max-height: 90dvh; overflow-y: auto; }
+.wtf-harmony-dialog { max-height: 90dvh; overflow-y: auto; font-size: 14px; }
 .wtf-breaking-points h4 { margin: 1rem 0 .4rem; font-weight: 600; }
 .wtf-breaking-points ul { padding-left: 1.25rem; list-style: disc; }
 .wtf-breaking-points li { margin: .35rem 0; line-height: 1.45; }
-.wtf-inactive-rule { opacity: .65; }
 @media (max-width: 640px) {
   .wtf-harmony { min-width: 0; }
 }

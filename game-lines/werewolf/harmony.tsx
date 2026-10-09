@@ -17,18 +17,25 @@ export function BreakingPointReference({ reference, harmony }: { reference: Were
   const rule = reference.passives.find(item => item.id === "harmony-breaking-points");
   return <div className="wtf-breaking-points">
     {rule && <PassiveRules rule={rule} reference={reference}/>}
-    {(["flesh", "spirit"] as const).map(direction => <section key={direction}>
-      <h4>{t(direction === "flesh" ? "werewolf.towardFlesh" : "werewolf.towardSpirit")}</h4>
-      <ul>{reference.breakingPoints.filter(point => point.direction === direction).map(point => {
-        const applicable = (point.minHarmony === undefined || value >= point.minHarmony) && (point.maxHarmony === undefined || value <= point.maxHarmony);
-        return <li key={point.id} className={applicable ? undefined : "wtf-inactive-rule"}>
-          {locale === "pt-BR" ? reference.presentation[point.id]?.description ?? point.description : point.description}
-          {point.modifier !== 0 && <strong>{` (${point.modifier})`}</strong>}
-          {point.minHarmony !== undefined && <small>{t("werewolf.minimumHarmony", { rating: point.minHarmony })}</small>}
-          {point.maxHarmony !== undefined && <small>{t("werewolf.maximumHarmony", { rating: point.maxHarmony })}</small>}
-        </li>;
-      })}</ul>
-    </section>)}
+    {(["flesh", "spirit"] as const).map(direction => {
+      const points = reference.breakingPoints.filter(point => point.direction === direction);
+      const applicable = (point: typeof points[number]) => (point.minHarmony === undefined || value >= point.minHarmony) && (point.maxHarmony === undefined || value <= point.maxHarmony);
+      const renderPoint = (point: typeof points[number]) => <li key={point.id}>
+        {locale === "pt-BR" ? reference.presentation[point.id]?.description ?? point.description : point.description}
+        {point.modifier !== 0 && <strong>{` (${point.modifier})`}</strong>}
+        {point.minHarmony !== undefined && <small>{t("werewolf.minimumHarmony", { rating: point.minHarmony })}</small>}
+        {point.maxHarmony !== undefined && <small>{t("werewolf.maximumHarmony", { rating: point.maxHarmony })}</small>}
+      </li>;
+      const inactive = points.filter(point => !applicable(point));
+      return <section key={direction}>
+        <h4>{t(direction === "flesh" ? "werewolf.towardFlesh" : "werewolf.towardSpirit")}</h4>
+        <ul>{points.filter(applicable).map(renderPoint)}</ul>
+        {inactive.length > 0 && <details className="wtf-rule-disclosure wtf-other-breaking-points">
+          <summary>{t("werewolf.otherBreakingPoints")}</summary>
+          <ul>{inactive.map(renderPoint)}</ul>
+        </details>}
+      </section>;
+    })}
   </div>;
 }
 

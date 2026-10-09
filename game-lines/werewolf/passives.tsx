@@ -45,12 +45,15 @@ export function KuruthReference({ reference, harmony }: { reference: WerewolfRef
   </PassiveRules>;
 }
 
-export function PrimalUrgeLimits({ reference, rating }: { reference: WerewolfReferenceCatalog; rating: number }) {
+export function PrimalUrgeLimits({ reference, rating, harmony }: { reference: WerewolfReferenceCatalog; rating: number; harmony: number }) {
   const { locale, t } = useLanguage();
   const level = primalUrgeLevel(reference, rating);
   const translated = locale === "pt-BR" ? reference.presentation[level.id] : undefined;
+  const harmonyLevel = reference.harmony.find(item => item.rating === boundedHarmony(harmony));
+  const control = harmonyLevel ? (locale === "pt-BR" ? reference.presentation[harmonyLevel.id]?.control ?? harmonyLevel.control : harmonyLevel.control) : "";
   const rows: [string, string | number, boolean][] = [
     [t("werewolf.regeneration"), t("werewolf.bashingPerTurn", { amount: level.regenerationBashing }), level.regenerationBashing !== 0],
+    [t("werewolf.control"), control, harmonyLevel !== undefined],
     [t("werewolf.basuIm"), translated?.basuImTime ?? level.basuImTime, true],
     [t("werewolf.feeding"), translated?.feedingRestriction ?? level.feedingRestriction, level.feedingRestriction !== "None"],
     [t("werewolf.huntInterval"), translated?.huntTime ?? level.huntTime, level.huntTime !== "None"],
@@ -59,6 +62,6 @@ export function PrimalUrgeLimits({ reference, rating }: { reference: WerewolfRef
     [t("werewolf.traitMaximum"), level.traitMaximum, level.traitMaximum > 5],
   ];
   return <p className="cod-main-power-summary wtf-primal-urge-reference">
-    {rows.filter(([, , visible]) => visible).map(([label, value]) => <span key={label}><strong>{label}:</strong>{" "}{value}.</span>)}
+    {rows.filter(([, , visible]) => visible).map(([label, value]) => <span key={label}><strong>{label}:</strong>{" "}{value}.{" "}</span>)}
   </p>;
 }

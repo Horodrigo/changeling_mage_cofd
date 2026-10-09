@@ -119,7 +119,7 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
     background-image: url("/game-lines/werewolf/images/background-werewolf.webp");
     background-position: center 45%;
     background-size: min(80%, 850px) auto;
-    opacity: .065;
+    opacity: .15;
   }
   .wtf-sheet > .wtf-frame {
     position: absolute;
