@@ -20,6 +20,75 @@ test("current schema normalization preserves character data",()=>{
   const normalized=normalizeStoredSheet(sheet());
   assert.equal(normalized.character.name,"Test");assert.equal(normalized.skills.Occult,3);
 });
+
+test("schema-2 PT Attribute and Skill aliases normalize to English, with existing English values authoritative", async t => {
+  t.mock.method(globalThis, "fetch", async path => {
+    assert.match(String(path), /^\/(shared|game-lines)\//);
+    return new Response(await readFile(new URL(`../public${path}`, import.meta.url), "utf8"));
+  });
+  const attributes = { Inteligência: 2, Raciocínio: 2, Perseverança: 2, Força: 2, Destreza: 3, Vigor: 3, Presença: 2, Manipulação: 2, Compostura: 3,
+    Intelligence: 1, Wits: 2, Resolve: 3, Strength: 3, Dexterity: 2, Stamina: 3, Presence: 3, Manipulation: 3, Composure: 2 };
+  const expected = { Intelligence: 1, Wits: 2, Resolve: 3, Strength: 3, Dexterity: 2, Stamina: 3, Presence: 3, Manipulation: 3, Composure: 2 };
+  const keys = { CofD: "mortal_experience_history", MtA: "mage_experience_history", CtL: "experience_history", VtR: "vampire_experience_history", WtF: "werewolf_experience_history" };
+  for (const [line, key] of Object.entries(keys)) {
+    const current = sheet(line);
+    current.attributes = { ...attributes };
+    current.skills = { Política: 4, Politics: 2, Melee: 3, "Armas Brancas": 2, Weaponry: 1, "Empatia com Animais": 2 };
+    current.specializations = [{ skill: "Armas Brancas", name: "Inteligência", grantedBy: "Autoral" }];
+    current.character.name = "Força";
+    current.merits = [{ definitionId: "homebrew:authored", instanceId: "authored", name: "Força", dots: 1, configuration: { notes: "Não traduzir" } }];
+    current.current_state = { experience_available: 8, experience_spent: 4, experience_total: 12, [key]: [
+      { id: "paid", cost: 4, label: "Texto histórico", undo: { kind: "trait", group: "attributes", name: "Força", amount: 1 }, purchase: { kind: "trait", group: "attributes", name: "Força", target: 3 } },
+      { id: "specialty", cost: 1, undo: { kind: "specialty", skill: "Armas Brancas", name: "Inteligência" } },
+      { id: "opaque", description: "Força", before: { attributes: { Força: 2 } } },
+    ] };
+    const before = structuredClone(current);
+    const normalized = await normalizeGameLineCharacter(normalizeStoredSheet(current));
+    assert.deepEqual(normalized.attributes, expected, line);
+    assert.deepEqual(normalized.skills, { Politics: 2, Weaponry: 1, "Animal Ken": 2 }, line);
+    assert.equal(normalized.character.name, "Força");
+    assert.equal(normalized.merits.find(item => item.instanceId === "authored").name, "Força");
+    assert.deepEqual(normalized.specializations[0], { skill: "Weaponry", name: "Inteligência", grantedBy: "Autoral" });
+    const history = normalized.current_state[key];
+    assert.deepEqual(history[0], { ...before.current_state[key][0], undo: { ...before.current_state[key][0].undo, name: "Strength" }, purchase: { ...before.current_state[key][0].purchase, name: "Strength" } });
+    assert.equal(history[1].undo.skill, "Weaponry");
+    assert.equal(history[1].undo.name, "Inteligência");
+    assert.deepEqual(history[2], before.current_state[key][2], "Opaque historical snapshots are never replayed or rewritten");
+    for (const balance of ["experience_available", "experience_spent", "experience_total"]) assert.equal(normalized.current_state[balance], before.current_state[balance]);
+    const reopened = await normalizeGameLineCharacter(normalizeStoredSheet(JSON.parse(JSON.stringify(normalized))));
+    assert.deepEqual(reopened.attributes, normalized.attributes);
+    assert.deepEqual(reopened.current_state[key], history);
+    const { experienceTraitDots } = await vite.ssrLoadModule("/app/character-builder-shell.tsx");
+    assert.deepEqual(experienceTraitDots(reopened, "attributes", key), { Strength: 1 }, "Reediting subtracts the canonical paid dot only once");
+    if (["CofD", "MtA", "VtR"].includes(line)) {
+      const [path, name] = { CofD: ["mortal/experience-rules", "refundMortalAdvancement"], MtA: ["mage/experience-refunds", "refundMageAdvancement"], VtR: ["vampire/experience-refunds", "refundVampireAdvancement"] }[line];
+      const refund = (await vite.ssrLoadModule(`/game-lines/${path}.ts`))[name];
+      const refunded = structuredClone(reopened);
+      assert.equal(refund(refunded, history[0].undo), true);
+      assert.equal(refunded.attributes.Strength, 2);
+      assert.equal(Object.hasOwn(refunded.attributes, "Força"), false);
+      assert.deepEqual(refunded.current_state[key], history, "Refund helpers do not rewrite receipts");
+    }
+    assert.deepEqual(current, before, "Normalization never mutates its source");
+  }
+  const onlyPortuguese = sheet();
+  onlyPortuguese.attributes = { Força: 4, Vigor: 0 };
+  onlyPortuguese.skills = { Ocultismo: 3 };
+  const normalized = normalizeStoredSheet(onlyPortuguese);
+  assert.deepEqual(normalized.attributes, { Strength: 4, Stamina: 0 }, "Missing English keys inherit the stored value, never a default");
+  assert.deepEqual(normalized.skills, { Occult: 3 });
+});
+
+test("canonical Skill reconciliation does not count as an authored Specialty edit or remove its linked Merit", async () => {
+  const { reconcileSpecialtyMerits } = await vite.ssrLoadModule("/lib/core/character/specialty-merits.ts");
+  const merit = { definitionId: "core-2ed:interdisciplinary-specialty", name: "Interdisciplinary Specialty", sourceId: "core-2ed", instanceId: "paid-link", dots: 1, experienceDots: 1, configuration: { specialty_skill: "Armas Brancas", specialty_name: "Nome autoral" } };
+  const old = [{ skill: "Armas Brancas", name: "Nome autoral" }];
+  const canonical = [{ skill: "Weaponry", name: "Nome autoral" }];
+  const result = reconcileSpecialtyMerits([merit], old, [merit], canonical);
+  assert.deepEqual(result.removed, []);
+  assert.deepEqual(result.merits, [merit]);
+  assert.equal(reconcileSpecialtyMerits([merit], old, [merit], [{ ...canonical[0], name: "Alterado" }]).removed.length, 1, "An actual authored edit still removes the linked instance");
+});
 test("validation rejects old schemas without attempting migration",()=>{
   assert.equal(validateCurrentCharacter({...sheet(),schema_version:1}),"unsupported-schema");
   assert.equal(validateCurrentCharacter({schema_version:2,system:"chronicles-of-darkness",game_line:"VtR"}),"invalid-character");

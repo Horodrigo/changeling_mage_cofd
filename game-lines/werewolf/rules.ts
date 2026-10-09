@@ -1,3 +1,4 @@
+import { canonicalTraitHistory } from "@/lib/core/character/trait-identities";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { asRecord } from "@/lib/core/character/current-character-validation";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
@@ -68,6 +69,7 @@ export function werewolfDerived(character: CharacterSheet, catalogs?: TotemBenef
 export const werewolfRules: GameLineRulesModule = {
   normalizeCharacter(character) {
     if (character.game_line !== "WtF") throw new Error("Werewolf rules received another game line.");
+    character = { ...character, current_state: canonicalTraitHistory(character.current_state, "werewolf_experience_history") };
     const data = character.line_data;
     const totem = totemSelection(data.totem);
     const state = character.current_state.werewolf_totem;

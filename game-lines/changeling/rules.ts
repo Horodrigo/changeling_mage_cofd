@@ -1,3 +1,4 @@
+import { canonicalTraitHistory } from "@/lib/core/character/trait-identities";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import { normalizeChangelingFrailties } from "./creation-rules";
@@ -37,6 +38,7 @@ export const changelingRules: GameLineRulesModule = {
   },
   normalizeCharacter(character) {
     const wyrd = numberValue(character.line_data.wyrd) || 1;
+    character = { ...character, current_state: canonicalTraitHistory(character.current_state, "experience_history") };
     return {
       ...character,
       // Production schema-2 recovery for the former distributed Book of Seemings label.

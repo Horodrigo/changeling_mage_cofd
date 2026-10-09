@@ -1,3 +1,4 @@
+import { canonicalTraitHistory } from "@/lib/core/character/trait-identities";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
@@ -29,6 +30,9 @@ function mageDerived(character: CharacterSheet): CharacterSheet["derived"] {
 
 /** Mage-owned persistence effects run only after the current schema is valid. */
 export const mageRules: GameLineRulesModule = {
+  normalizeCharacter(character) {
+    return { ...character, current_state: canonicalTraitHistory(character.current_state, "mage_experience_history") };
+  },
   onSpecialtyMeritsRemoved(character, removed) {
     return { ...character, merits: removeSpecialtyMeritGrantChoices(character.merits, removed, merit => commonMeritId(merit) ??
       resolveMeritDefinition(merit, [{ id: "mta-2ed:mystery-cult-influence", name: "Mystery Cult Influence", sourceId: "mta-2ed" }])?.id) };

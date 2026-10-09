@@ -33,6 +33,8 @@ The application currently supports the persisted game-line IDs `CofD`, `CtL`, `M
 
 ## Ownership Rules
 
+Persisted character keys and catalog identities use canonical English; localization belongs to presentation. Explicitly authored text, including Homebrew names, remains unchanged. The active localization audit tracks remaining Portuguese derived keys and line-owned catalog values. Core's `trait-identities.ts` supplies a production schema-2 bridge for known Attribute/Skill aliases: an existing English key wins, otherwise the alias value transfers unchanged. Persistence normalizes outer ratings and Specialty Skill IDs; each owning line supplies its history container to reconcile only neutral trait/Specialty `purchase` and `undo` identities. Costs, instance IDs, authored Specialty names and opaque historical snapshots are preserved. Delete this bridge when PT-keyed schema-2 sheets are no longer supported. Specialty-link comparison treats these aliases as the same Skill, so normalization is never an authored edit. JSON export uses the same canonical lifecycle as opening a sheet and never falls back to raw data after a preparation failure.
+
 Core may own behavior that is genuinely common to Chronicles of Darkness characters:
 
 - identity, Attributes, Skills, Specialties, and common derived traits;

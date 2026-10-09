@@ -1,3 +1,4 @@
+import { canonicalTraitHistory } from "@/lib/core/character/trait-identities";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import { boundedIntegrity, mortalDerived } from "./creation-rules";
@@ -17,6 +18,7 @@ function normalizeMortal(character: CharacterSheet): CharacterSheet {
   while (breakingPoints.length < 5) breakingPoints.push("");
   return {
     ...character,
+    current_state: canonicalTraitHistory(character.current_state, "mortal_experience_history"),
     line_data: {
       ...character.line_data,
       age: String(character.line_data.age ?? ""),

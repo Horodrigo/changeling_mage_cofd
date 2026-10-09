@@ -2,14 +2,15 @@ import type { MeritSelection, Specialty } from "./character-types";
 import type { MeritConfiguration } from "./merit-configuration";
 import { decodeMeritGrantChoice } from "./merit-configuration";
 import { commonMeritId } from "./merit-identities";
+import { canonicalTraitId } from "./trait-identities";
 
 export const INTERDISCIPLINARY_SPECIALTY_ID = "core-2ed:interdisciplinary-specialty";
-export const specialtyIdentity = (specialty: Specialty) => JSON.stringify([specialty.skill, specialty.name, specialty.grantedBy ?? ""]);
+export const specialtyIdentity = (specialty: Specialty) => JSON.stringify([canonicalTraitId("skills", specialty.skill), specialty.name, specialty.grantedBy ?? ""]);
 
 export function configuredSpecialty(configuration: MeritConfiguration = {}): Specialty | undefined {
   const skill = configuration.specialty_skill, name = configuration.specialty_name, grantedBy = configuration.specialty_grantedBy;
   return typeof skill === "string" && skill && typeof name === "string" && name.trim() && (grantedBy === undefined || typeof grantedBy === "string")
-    ? { skill, name, ...(grantedBy ? { grantedBy } : {}) } : undefined;
+    ? { skill: canonicalTraitId("skills", skill), name, ...(grantedBy ? { grantedBy } : {}) } : undefined;
 }
 
 /** Duplicate tuples are ambiguous; translated Skill labels never become stored identities. */

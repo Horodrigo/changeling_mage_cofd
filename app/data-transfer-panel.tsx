@@ -23,6 +23,7 @@ import { useLanguage } from "@/lib/i18n";
 import { isCurrentStoredCharacter, type StoredCharacter } from "@/lib/stored-character";
 import { HomebrewTransfer } from "./homebrew-transfer";
 import { downloadJson, TransferAction } from "./data-transfer-shared";
+import { prepareCharacterForOpen } from "./workspace/character-lifecycle";
 
 export type CharacterImportResult = { ok: boolean; message: string; characterId?: string };
 
@@ -46,10 +47,15 @@ export function DataTransferPanel({
   const input = useRef<HTMLInputElement>(null);
   const character = currentCharacters.find((item) => item.id === characterId) ?? null;
 
-  function exportCharacter() {
+  async function exportCharacter() {
     if (!character) return;
-    downloadJson(character, `${slug(character.character.name) || "character"}.json`);
-    setFeedback(t("workspace.characterExported", { name: character.character.name }));
+    try {
+      const canonical = await prepareCharacterForOpen(character);
+      downloadJson(canonical, `${slug(character.character.name) || "character"}.json`);
+      setFeedback(t("workspace.characterExported", { name: character.character.name }));
+    } catch {
+      setFeedback(t("workspace.characterExportFailed"));
+    }
   }
 
   async function importFile(file: File) {

@@ -30,6 +30,7 @@ export type CharacterSheet = {
   game_line: PersistedGameLineId;
   ruleset: { id: string; version: number };
   character: { name: string; concept: string; player: string; chronicle?: string };
+  /** Canonical English trait keys; persistence reconciles known schema-2 PT aliases. */
   attributes: Record<string, number>;
   skills: Record<string, number>;
   specializations: Specialty[];

@@ -1,3 +1,4 @@
+import { canonicalTraitHistory } from "@/lib/core/character/trait-identities";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import type { GameLineValidationIssue } from "@/lib/game-line-contracts/game-line-rules";
@@ -10,7 +11,7 @@ const storedRatingNames = (value: unknown, defaults: readonly string[]) => [
 
 function normalizeVampire(character: CharacterSheet): CharacterSheet {
   const data = character.line_data;
-  const state = character.current_state;
+  const state = canonicalTraitHistory(character.current_state, "vampire_experience_history");
   const humanity = boundedRating(data.humanity, 0, 10, 7);
   const bloodPotency = boundedRating(data.blood_potency, 1, 10, 1);
   const bloodlineId = String(data.bloodline_id ?? "");
