@@ -48,6 +48,7 @@ export function MeritPicker({
   isEligible = meritPrerequisitesMet,
   categoryFor = (definition) => definition.category,
   confirmRemoval = () => false,
+  configurationTitle = (selection) => meritConfigurationTitle(selection.configuration),
 }: {
   merits: MeritSelection[];
   setMerits: (value: MeritSelection[]) => void;
@@ -63,6 +64,7 @@ export function MeritPicker({
   isEligible?: (definition: MeritDefinition, context: MeritPrerequisiteContext) => boolean;
   categoryFor?: (definition: MeritDefinition) => string;
   confirmRemoval?: (definition: MeritDefinition | undefined) => boolean;
+  configurationTitle?: (selection: MeritSelection) => string;
 }) {
   const { locale, t } = useLanguage();
   const meritName = (definition: MeritDefinition) => meritPresentation(definition, locale).name;
@@ -101,7 +103,7 @@ export function MeritPicker({
       const remove = () => setMerits(merits.filter((_, itemIndex) => itemIndex !== index));
       const needsConfirmation = confirmRemoval(definition);
       return <div className="merit-row configurable" key={`${selection.instanceId ?? index}-${selection.name}`} title={definition ? meritTooltip(definition, locale, catalog) : undefined}>
-        <div className="merit-row-main"><div><strong>{definition ? meritName(definition) : selection.name}{meritConfigurationTitle(selection.configuration) ? `: ${meritConfigurationTitle(selection.configuration)}` : ""}</strong>
+        <div className="merit-row-main"><div><strong>{definition ? meritName(definition) : selection.name}{configurationTitle(selection) ? `: ${configurationTitle(selection)}` : ""}</strong>
           <small>{definition ? `${categoryName(categoryFor(definition))} · ${definition.source} · p. ${definition.page || "—"}` : selection.source}{selection.grantedBy ? <> · {t("ui.firstDotFree")}</> : null}</small></div>
           <Choice label={t("ui.dots")} value={String(selection.dots)} setValue={(value) => { const next = [...merits]; next[index] = { ...selection, dots: Number(value) }; setMerits(next); }} options={(definition ? meritRatingsFor(definition, Math.max(selection.dots, budget - spent + selection.dots)) : [1]).map(String)} />
           {!selection.grantedBy && (needsConfirmation
@@ -116,7 +118,7 @@ export function MeritPicker({
       <div className="merit-picker">{experienceMerits.map((selection, index) => {
         const definition = resolveMeritDefinition(selection, catalog);
         return <div className="merit-row configurable" key={`experience-${selection.instanceId ?? index}-${selection.name}`}>
-          <div className="merit-row-main"><div><strong>{definition ? meritName(definition) : selection.name}{meritConfigurationTitle(selection.configuration) ? `: ${meritConfigurationTitle(selection.configuration)}` : ""}</strong><small>{definition ? `${definition.source} · p. ${definition.page || "—"}` : t("ui.experience")}</small></div><Badge variant="outline">{selection.dots} {t("ui.dots")}</Badge><Badge variant="outline">{experienceMeritDots(selection)} {t("ui.xp")}</Badge></div>
+          <div className="merit-row-main"><div><strong>{definition ? meritName(definition) : selection.name}{configurationTitle(selection) ? `: ${configurationTitle(selection)}` : ""}</strong><small>{definition ? `${definition.source} · p. ${definition.page || "—"}` : t("ui.experience")}</small></div><Badge variant="outline">{selection.dots} {t("ui.dots")}</Badge><Badge variant="outline">{experienceMeritDots(selection)} {t("ui.xp")}</Badge></div>
         </div>;
       })}</div>
     </>}

@@ -19,7 +19,26 @@
       ],
       "level_5_type": "custom",
       "level_5_custom": "Spend Willpower to make the vampire's blood a bane to spirits for the scene."
-    }
+    },
+    "presentationPt": {
+      "cult": "Seguidores de Seth",
+      "level_1_specialty_name": "Espíritos",
+      "level_5_custom": "Gastar 1 Força de Vontade torna o sangue do cultista uma Fraqueza para todos os espíritos e Strix pelo restante da cena."
+    },
+    "presentationEn": {
+      "level_5_custom": "Spending 1 Willpower makes the cultist's blood a bane to all spirits and Strix for the rest of the scene."
+    },
+    "notes": {
+      "1": "The Specialty may be Spirits or Strix.",
+      "2": "Demolisher ignores prerequisites.",
+      "4": "Medium ignores the Empathy prerequisite and the usual restriction on Kindred taking Supernatural Merits."
+    },
+    "notesPt": {
+      "1": "A Especialização pode ser Espíritos ou Strix.",
+      "2": "Demolidor ignora os requisitos.",
+      "4": "Médium ignora o requisito de Empatia e a restrição habitual a Membros adquirirem Méritos Sobrenaturais."
+    },
+    "page": 69
   },
   "inconnu": {
     "name": "Inconnu",
@@ -41,7 +60,16 @@
       ],
       "level_5_type": "custom",
       "level_5_custom": "See past the Lost Visage according to Humanity."
-    }
+    },
+    "presentationPt": {
+      "cult": "Inconnu",
+      "level_1_specialty_name": "Membros",
+      "level_5_custom": "O cultista enxerga além do Semblante Perdido enquanto sua Humanidade for igual ou superior à do outro vampiro. Isso vale para gravações, espelhos e outras superfícies refletoras."
+    },
+    "presentationEn": {
+      "level_5_custom": "The cultist can see past the Lost Visage while her Humanity is equal to or higher than the other vampire's. This applies to recordings, mirrors, and other reflective surfaces."
+    },
+    "page": 73
   },
   "moirai": {
     "name": "Moirai",
@@ -63,7 +91,26 @@
       ],
       "level_5_type": "custom",
       "level_5_custom": "Spend Willpower to act normally when surprised or take an instant action immediately before the foretold event."
-    }
+    },
+    "presentationPt": {
+      "cult": "Moirai",
+      "level_1_specialty_name": "Profecia",
+      "level_5_custom": "Se for surpreendido em combate ou pego desprevenido em outra situação, o cultista pode gastar 1 Força de Vontade para agir normalmente no primeiro turno ou realizar uma única ação instantânea antes do acontecimento súbito."
+    },
+    "presentationEn": {
+      "level_5_custom": "If surprised in combat or otherwise caught flat-footed, the cultist may spend 1 Willpower to act normally in the first round or take a single instant action before the sudden event."
+    },
+    "notes": {
+      "2": "Fast Reflexes ignores prerequisites.",
+      "3": "Choose Occult or Weaponry for the Skill dot.",
+      "4": "Anonymity also penalizes all indirect means of tracking the character."
+    },
+    "notesPt": {
+      "2": "Reflexos Rápidos ignora os requisitos.",
+      "3": "Escolher Ocultismo ou Armas Brancas para o ponto de Perícia.",
+      "4": "Anonimato também penaliza todos os meios indiretos de rastrear o personagem."
+    },
+    "page": 75
   },
   "moulding-room": {
     "name": "The Moulding Room",
@@ -87,13 +134,32 @@
       "level_5_merits": [
         "{\"definitionId\":\"core-2ed:fame\",\"name\":\"Fame\",\"dots\":3,\"sourceId\":\"core-2ed\",\"source\":\"Chronicles of Darkness\"}"
       ]
-    }
+    },
+    "presentationPt": {
+      "cult": "A Sala de Moldagem",
+      "level_1_specialty_name": "Vigilância"
+    },
+    "notes": {
+      "2": "Trained Observer ignores prerequisites.",
+      "4": "Visitors gain Psychometry 3; Residents gain Cacophony Savvy 3.",
+      "5": "In addition to Fame 3, once per session take a Beat when the cultist's name appears in tabloids or the rumor mill."
+    },
+    "notesPt": {
+      "2": "Observador Treinado ignora os requisitos.",
+      "4": "Visitantes recebem Psicometria 3; Residentes recebem Conhecimento da Cacofonia 3.",
+      "5": "Além de Fama 3, uma vez por sessão receber um Ato quando o nome do cultista aparecer nos tabloides ou nas fofocas."
+    },
+    "page": 78
   },
   "children-of-the-thorns": {
     "name": "Children of the Thorns",
     "sourceId": "h-vtr-agony-ecstasy",
     "source": "Agony & Ecstasy: Circle of the Crone",
-    "configuration": {}
+    "configuration": {},
+    "presentationPt": {
+      "cult": "Filhos dos Espinhos"
+    },
+    "page": 113
   },
   "faithful-of-propylaia": {
     "name": "Faithful of Propylaia",
@@ -112,6 +178,24 @@
       "level_4_custom": "Gain the printed Iron Will benefit against doubt.",
       "level_5_type": "custom",
       "level_5_custom": "Mortals hear the dead in Twilight; vampires gain Arcane Sight regardless of Auspex."
-    }
+    },
+    "presentationPt": {
+      "cult": "Fiéis de Propylaia",
+      "level_2_custom": "Escolher uma Especialização em Ofícios (Açougue) ou Ocultismo (Oferendas).",
+      "level_3_custom": "Receber um ponto de Socialização ou Subterfúgio.",
+      "level_4_custom": "Receber Vontade de Ferro ao gastar Força de Vontade para disputar tentativas de fazê-lo duvidar de Hecate ou de suas próprias ações. Usar os pontos de Iniciação em Culto dos Mistérios no lugar de Perseverança, se forem maiores.",
+      "level_5_custom": "Mortais podem ouvir as vozes dos mortos no Crepúsculo. Vampiros e carniçais aprendem gratuitamente a Devoção Visão Arcana, mesmo sem os Auspícios exigidos."
+    },
+    "presentationEn": {
+      "level_4_custom": "Gain Iron Will when spending Willpower to contest attempts to make you doubt Hecate or your own actions. Substitute Mystery Cult Initiation dots for Resolve if higher.",
+      "level_5_custom": "Mortals can hear the dead in Twilight. Vampires and ghouls learn Arcane Sight for free even without the requisite Auspex."
+    },
+    "notes": {
+      "1": "Tolerance for Biology ignores prerequisites."
+    },
+    "notesPt": {
+      "1": "Tolerância à Biologia ignora os requisitos."
+    },
+    "page": 127
   }
 }

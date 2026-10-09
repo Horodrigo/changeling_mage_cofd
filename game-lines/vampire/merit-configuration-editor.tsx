@@ -1,13 +1,19 @@
 "use client";
 
 import type { ComponentProps } from "react";
-import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
+import { CultMeritEditor, MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { useLanguage } from "@/lib/i18n";
 import { BLOODCRAFTING_ID, BLOODCRAFTING_ENHANCEMENTS, bloodcraftingChoices, bloodcraftingSpent } from "./bloodcrafting";
+import { vampireShadowCultConfigurationChange, vampireShadowCultNotes, vampireShadowCultPresentation } from "./shadow-cult-presentation";
 
-export function VampireMeritConfigurationEditor(props: ComponentProps<typeof MeritConfigurationEditor>) {
-  const { t } = useLanguage();
-  return <MeritConfigurationEditor {...props} renderStructured={({ merit, configuration, onChange }) => {
+export function VampireMeritConfigurationEditor({ shadowCultId = "", ...props }: ComponentProps<typeof MeritConfigurationEditor> & { shadowCultId?: string }) {
+  const { locale, t } = useLanguage();
+  return <MeritConfigurationEditor {...props} renderStructured={({ merit, configuration, onChange, compact }) => {
+    const shown = vampireShadowCultPresentation(merit, shadowCultId, locale, props.catalog);
+    if (shown !== merit) return <>
+      <CultMeritEditor merit={merit} compact={compact} catalog={props.catalog} configuration={shown.configuration!} onChange={changed => onChange(vampireShadowCultConfigurationChange(configuration, shown.configuration, changed))} />
+      {vampireShadowCultNotes(merit, shadowCultId, locale, props.catalog).map(note => <p className="rule-callout" key={note.level}>{t("ui.dot")} {note.level}: {note.text}</p>)}
+    </>;
     if (merit.definitionId !== BLOODCRAFTING_ID) return null;
     const choices = [...new Set((props.specialtyContext?.specializations ?? []).filter(item => item.skill === "Crafts" && item.name.trim()).map(item => item.name))];
     const subject = String(configuration.subject ?? ""), selected = bloodcraftingChoices(configuration);

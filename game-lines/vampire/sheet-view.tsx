@@ -105,6 +105,7 @@ import {
   vampireRuleEffectsFor,
 } from "./power-rule-effects";
 import { VAMPIRE_MERIT_CONFIGURATIONS, vampireExpandedConfigurationLines } from "./merit-configurations";
+import { vampireShadowCultNotes, vampireShadowCultPresentation, vampireShadowCultSpecialty } from "./shadow-cult-presentation";
 import { BloodlineJoinDialog, BloodlinePage } from "./bloodline-page";
 import { useBloodlineHomebrews } from "./use-bloodline-homebrews";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
@@ -1342,7 +1343,7 @@ export function VampireCharacterPaper({
             names={names}
             values={character.skills}
             specialties={character.specializations.map((item) =>
-              typeof item === "string" ? { skill: "", name: item } : item,
+              typeof item === "string" ? { skill: "", name: item } : vampireShadowCultSpecialty(item, character.merits, String(data.covenant_id ?? ""), locale, merits),
             )}
           />
         ))}
@@ -2219,28 +2220,29 @@ function VampireExpandedMeritList({
     <div className="expanded-merit-list">
       {merits.map((merit, index) => {
         const definition = resolveMeritDefinition(merit, catalog);
+        const shown = vampireShadowCultPresentation(merit, String(character.line_data.covenant_id ?? ""), locale, catalog);
         const configDefinition = VAMPIRE_MERIT_CONFIGURATIONS.find(
           (item) => item.id === definition?.id,
         );
         const presented = definition && meritPresentation(definition, locale);
         const displayName = presented?.name ?? merit.name;
-        const detail = meritConfigurationTitle(merit.configuration);
+        const detail = meritConfigurationTitle(shown.configuration);
         const configured = vampireExpandedConfigurationLines(definition?.id, merit.configuration, locale) ?? (configuredDefinitionLines(
           configDefinition,
           merit.dots,
-          merit.configuration,
+          shown.configuration,
           locale,
         ).length
           ? configuredDefinitionLines(
               configDefinition,
               merit.dots,
-              merit.configuration,
+              shown.configuration,
               locale,
             )
           : (commonExpandedConfigurationLines(
               definition?.id,
               merit.dots,
-              merit.configuration,
+              shown.configuration,
               locale,
               catalog,
             ) ?? []));
@@ -2290,6 +2292,7 @@ function VampireExpandedMeritList({
                   <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
                 </section>
               ))}
+              {vampireShadowCultNotes(merit, String(character.line_data.covenant_id ?? ""), locale, catalog).map(note => <p key={`cult-note:${note.level}`}><strong>{t("ui.dot")} {note.level}:</strong> {note.text}</p>)}
               {presented?.prerequisites && <p><strong>{t("ui.prerequisites")}:</strong> {presented.prerequisites}</p>}
               {presented?.description && <p>{presented.description}</p>}
               {presented?.levels?.filter((level) => level.rating <= merit.dots).map((level, levelIndex) => (
@@ -2335,7 +2338,7 @@ function MeritList({
       {visible.map((merit, index) => {
         const definition = resolveMeritDefinition(merit, catalog);
         const displayName = definition ? meritPresentation(definition, locale).name : merit.name;
-        const configuredName = meritConfigurationTitle(merit.configuration);
+        const configuredName = meritConfigurationTitle(vampireShadowCultPresentation(merit, String(character.line_data.covenant_id ?? ""), locale, catalog).configuration);
         const presented = definition && meritPresentation(definition, locale);
         const tooltip = presented
           ? `${presented.prerequisites ? `${t("ui.prerequisites")}: ${presented.prerequisites}\n` : ""}${presented.description}`
