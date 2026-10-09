@@ -90,3 +90,117 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
   .wtf-sheet .wtf-rule-disclosure { break-inside: avoid; }
 }
 .wtf-benefit-reference { grid-column: 1 / -1; }
+
+/* Line-owned artwork decorates the shared sheet geometry. */
+@media screen {
+  .cod-sheet.wtf-sheet {
+    border: 1px solid #806453;
+    border-radius: 0;
+    background: #faf7f0 url("/game-lines/werewolf/images/paper-texture.webp") repeat;
+    background-size: 768px 768px;
+  }
+  .wtf-sheet::after {
+    background-image: url("/game-lines/werewolf/images/background-werewolf.webp");
+    background-position: center 45%;
+    background-size: min(80%, 850px) auto;
+    opacity: .065;
+  }
+  .wtf-sheet > .wtf-frame {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    border: 1px solid #713c3140;
+  }
+  .wtf-frame > span {
+    position: absolute;
+    width: 112px;
+    height: 112px;
+    background: url("/game-lines/werewolf/images/frame-corner.webp") top left / contain no-repeat;
+  }
+  .wtf-frame > :nth-child(1) { top: 0; left: 0; }
+  .wtf-frame > :nth-child(2) { top: 0; right: 0; transform: scaleX(-1); }
+  .wtf-frame > :nth-child(3) { bottom: 0; left: 0; transform: scaleY(-1); }
+  .wtf-frame > :nth-child(4) { bottom: 0; right: 0; transform: scale(-1); }
+  .wtf-sheet .cod-sheet-title {
+    padding-top: 64px;
+    padding-bottom: 14px;
+    border-bottom: 0;
+    background: url("/game-lines/werewolf/images/title.webp") center top / 180px 60px no-repeat;
+  }
+  .wtf-sheet .cod-sheet-title span { color: #39261f; letter-spacing: .04em; }
+  .wtf-sheet .cod-sheet-title strong { color: var(--sheet-accent); }
+  .wtf-sheet .ctl-sheet-tab-list {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 3px;
+    padding: 4px;
+    border-block: 1px solid #a68a75;
+    border-radius: 0;
+    background: #eee5d8 url("/game-lines/werewolf/images/paper-texture.webp") center / 768px;
+  }
+  .wtf-sheet .ctl-sheet-tab-list button {
+    flex: 1;
+    min-height: 44px;
+    border-radius: 0;
+    color: #513027;
+  }
+  .wtf-sheet .ctl-sheet-tab-list button[data-state="active"] {
+    color: #fffaf2;
+    background: #713c31 url("/game-lines/werewolf/images/tab-texture.webp") center / 256px;
+    box-shadow: inset 0 -2px #d6b48c;
+  }
+  .wtf-sheet .official-heading::before,
+  .wtf-sheet .official-heading::after {
+    height: 13px;
+    background: url("/game-lines/werewolf/images/section-divider.webp") center / 100% 100% no-repeat;
+    opacity: .85;
+  }
+  .wtf-sheet :is(input, textarea, [data-slot="select-trigger"], button[data-variant]) {
+    border-radius: 2px;
+    border-color: #b49a83;
+  }
+  .wtf-sheet :is(button, input, textarea):focus-visible {
+    outline: 2px solid #986551;
+    outline-offset: 2px;
+  }
+  body:has(.line-theme-wtf) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) {
+    border-radius: 0;
+    background: #faf7f0 url("/game-lines/werewolf/images/paper-texture.webp") center / 768px;
+    box-shadow: 0 20px 55px #39261f38;
+  }
+  body:has(.line-theme-wtf) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) button[data-variant] {
+    border-radius: 2px;
+  }
+  .wtf-sheet button[data-variant="outline"],
+  body:has(.line-theme-wtf) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) button[data-variant="outline"] {
+    color: #513027;
+    border-color: #b49a83;
+    background: #f3ece2;
+  }
+  .wtf-sheet button[data-variant="outline"]:hover,
+  body:has(.line-theme-wtf) :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) button[data-variant="outline"]:hover {
+    background: #e5d5c5;
+  }
+  body:has(.line-theme-wtf) .purchase-preview {
+    color: #513027;
+    border-color: #c4aa96;
+    background: #e9ddd2;
+  }
+}
+@media screen and (max-width: 767px) {
+  .wtf-sheet .ctl-sheet-tab-list button { flex: 1 0 auto; }
+  .wtf-frame > span { width: 48px; height: 48px; }
+  .wtf-sheet .cod-sheet-title { padding-top: 48px; background-size: 132px 44px; }
+  .wtf-sheet::after { background-size: 92% auto; opacity: .045; }
+  .wtf-sheet .official-heading { gap: 6px; }
+}
+
+.wtf-experience-panel .experience-purchase-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  background: url("/game-lines/werewolf/images/experience-purchase-icon.webp") center / contain no-repeat;
+}

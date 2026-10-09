@@ -21,7 +21,7 @@ test("public resources have one owner and only PWA entry points remain at the ro
 });
 
 test("sheet URLs, registration icons and service-worker resources resolve to real public files", async () => {
-  const paths = ["app/workspace.tsx", ...lines.filter(line => line !== "werewolf").flatMap(line => [
+  const paths = ["app/workspace.tsx", ...lines.flatMap(line => [
     `game-lines/${line}/registration.ts`, `game-lines/${line}/styles/sheet.css`,
   ])];
   const sources = (await Promise.all(paths.map(read))).join("\n");

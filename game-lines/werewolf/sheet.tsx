@@ -179,7 +179,9 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const notes = <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={String(state.notes ?? "")} onChange={value => setState("notes", value)}/></>;
   const activeTab = tabs.characterId === character.id ? mobile ? tabs.mobile : tabs.desktop : mobile ? "summary" : "main";
   const setTab = (value: string) => setTabs(previous => ({ ...previous, characterId: character.id, [mobile ? "mobile" : "desktop"]: value }));
+  const frame = <div className="wtf-frame" aria-hidden="true"><span /><span /><span /><span /></div>;
   if (mobile) return <CharacterPaperShell line="WtF" mobile title={t("werewolf.title")} subtitle={t("werewolf.forsaken")}>
+    {frame}
     <SwipeableSheetTabs value={activeTab} onValueChange={setTab} tabs={[{ value: "summary", label: t("ui.summary") }, { value: "stats", label: t("ui.traits") }, { value: "details", label: t("ui.details") }, { value: "combat", label: t("ui.combat") }, { value: "notes", label: t("ui.notes") }]}>{{
       summary: <>{identity}{health}{willpower}{powerStat}{essence}{harmony}<SheetHeading>{t("werewolf.renown")}</SheetHeading>{renownBlock}{experience}</>,
       stats: <>{attributes}{skills}<SheetHeading>{t("ui.merits")}</SheetHeading>{meritList}<SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}<SheetHeading>{t("ui.conditions")}</SheetHeading>{conditionList}</>,
@@ -187,6 +189,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
     }}</SwipeableSheetTabs>
   </CharacterPaperShell>;
   return <CharacterPaperShell line="WtF" title={t("werewolf.title")} subtitle={t("werewolf.forsaken")}>
+    {frame}
     <Tabs value={activeTab} onValueChange={setTab}><TabsList className="ctl-sheet-tab-list" aria-label={t("ui.characterPages")}>
       <TabsTrigger value="main">{t("ui.main")}</TabsTrigger><TabsTrigger value="details">{t("ui.details")}</TabsTrigger><TabsTrigger value="combat">{t("ui.combat")}</TabsTrigger><TabsTrigger value="notes">{t("ui.notes")}</TabsTrigger>
     </TabsList><TabsContent value="main" className="ctl-sheet-page"><MainSheet className="wtf-main-body" identity={identity} attributes={attributes} skills={skills} specificPowers={renownBlock} specificPowersTitle={t("werewolf.renown")} merits={meritList} aspirations={aspirationList} conditions={conditionList}

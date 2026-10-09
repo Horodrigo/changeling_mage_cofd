@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { History, RotateCcw, ShoppingBag } from "lucide-react";
+import { History, RotateCcw } from "lucide-react";
 import { BeatTrack, ExperienceMeritPicker, ExperienceRatingPicker, convertFifthBeat, groupedPurchaseOptions, type ExperiencePurchaseGroup } from "@/app/workspace/experience-shared";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
@@ -116,7 +116,7 @@ export function WerewolfExperiencePanel({ character, updateSheet, updateState, c
       onBlur={() => { const value = Number(amountDraft ?? available), next = Number.isFinite(value) ? Math.max(0, Math.trunc(value)) : 0; setAmountDraft(null); saveState({ experience_available: next, experience_spent: spent, experience_total: next + spent }); }} onKeyDown={event => { if (event.key === "Enter") event.currentTarget.blur(); }}/><span>{t("ui.xpAvailable")}</span></label>}
       <div><strong>{total}</strong><span>{t("ui.totalXP")}</span></div><div><strong>{spent}</strong><span>{t("ui.xpSpent")}</span></div></div>
     {!builderMode && <BeatTrack label={t("ui.beats")} value={beats} onChange={value => { const next = convertFifthBeat(value, available, total); saveState({ beats: next.beats, experience_available: next.available, experience_spent: spent, experience_total: next.total }); }}/ >}
-    <Dialog><DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="catalog-selection-action"><ShoppingBag/>{t("ui.spendExperience")}</Button></DialogTrigger><DialogContent className="experience-dialog">
+    <Dialog><DialogTrigger asChild><Button type="button" variant="outline" size="sm" className="catalog-selection-action"><span className="experience-purchase-icon" aria-hidden="true" />{t("ui.spendExperience")}</Button></DialogTrigger><DialogContent className="experience-dialog">
       <DialogHeader><DialogTitle>{t("ui.spendExperience")}</DialogTitle><DialogDescription>{t("werewolf.experienceDescription")}</DialogDescription></DialogHeader>
       <div className="experience-purchase-form"><label>{t("ui.type")}<RuleSelect value={type} onChange={changeType} options={groupedPurchaseOptions(GROUPS, labels, locale)}/></label>
         {type === "merit" ? <label>{t("ui.merit")}<ExperienceMeritPicker line="WtF" context={contexts.core} meritCatalog={merits} character={character} selectedId={definition?.id ?? ""} targetDots={rating} canAdvanceGrant={merit => canAdvanceWerewolfGrant(merit, merits)}

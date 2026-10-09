@@ -123,7 +123,7 @@ public/                           Static files; paths become browser URLs
       images/                     Vampire-only artwork and icon.webp
     werewolf/
       data/                       Werewolf catalogs in progress; gifts/, rites/ and fetishes/ use source-book EN/PT shards
-      images/                     Supplied skull (icon.webp) and transparent form comparison illustration (forms.webp)
+      images/                     Skull, form comparison, paper/tab textures, lunar frame/title/divider, watermark and Experience icon (WebP)
   manifest.webmanifest            PWA entry point, intentionally at the root
   sw.template.js / sw.js          Service-worker template / generated worker
   version.json                    Generated application version
