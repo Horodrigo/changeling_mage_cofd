@@ -422,9 +422,9 @@ test("excluded Ghoul, Dhampyr, and Revenant Conditions are absent", async () => 
   const elders = conditions.filter((item) => item.sourceCode === "TY");
 
   assert.deepEqual(halfDamned, []);
-  assert.equal(elders.length, 12);
-  assert.equal(elders.filter((item) => item.persistent).length, 8);
-  assert.deepEqual(["Blood Siblings", "Children of the Blood", "Curated", "Leveraged", "Weak Vitae"].filter((name) => conditions.some((item) => item.name === name)), []);
+  assert.equal(elders.length, 16);
+  assert.equal(elders.filter((item) => item.persistent).length, 12);
+  assert.deepEqual(["Blood Siblings"].filter((name) => conditions.some((item) => item.name === name)), []);
   assert.ok(elders.every((item) => item.category === "Elder" && item.source === "Thousand Years of Night"));
 });
 

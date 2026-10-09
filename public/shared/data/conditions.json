@@ -373,7 +373,11 @@
     "source": "Chronicles of Darkness",
     "sourceCode": "CofD",
     "page": 289,
-    "resolution": "Comply with the request, or gain equivalent leverage over the specified character."
+    "resolution": "Comply with the request, or gain equivalent leverage over the specified character.",
+    "nameQualifier": {
+      "en-US": "Core",
+      "pt-BR": "Core"
+    }
   },
   {
     "id": "notoriety",

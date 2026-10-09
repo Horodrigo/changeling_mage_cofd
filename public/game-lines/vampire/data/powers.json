@@ -4468,7 +4468,7 @@
       "id": "devotion-aura-cursive-seduction",
       "kind": "devotion",
       "name": "Aura of Cursive Seduction",
-      "translatedName": "Aura of Cursive Seduction",
+      "translatedName": "Aura de Sedução Sinuosa",
       "prerequisites": "Majesty •••, Vigor ••",
       "covenantIds": [
         "carthian-movement"
@@ -4480,7 +4480,15 @@
       "cost": "1 Vitae",
       "dicePool": "Presence + Subterfuge + Majesty",
       "action": "Reflexive",
-      "effect": "When another character lashes out, the vampire may contest with this pool instead of lashing back. Success gives the vampire the Condition the aggressor would normally impose, while the aggressor gains Persistent Enthralled and Quelled. The vampire may also use it when initiating a Seductive Beast lash, using the normal Presence + Blood Potency pool."
+      "effect": "When another character lashes out, the vampire may contest with this pool instead of lashing back. Success gives the vampire the Condition the aggressor would normally impose, while the aggressor gains Persistent Enthralled and Quelled. The vampire may also use it when initiating a Seductive Beast lash, using the normal Presence + Blood Potency pool.",
+      "presentationPt": {
+        "prerequisites": "Majestade •••, Ímpeto ••",
+        "summary": "Impõe Condições de fascínio quando alguém Incita a Fera contra você.",
+        "cost": "1 Vitae",
+        "dicePool": "Presença + Subterfúgio + Majestade",
+        "action": "Reflexiva",
+        "effect": "Quando outro personagem Incita a Fera, o vampiro pode disputar com esta parada em vez de responder Incitando a própria Fera. Um sucesso impõe ao vampiro a Condição que o agressor normalmente causaria, enquanto o agressor recebe Cativado Persistente e Quelled. O vampiro também pode usar esta Devoção ao iniciar uma Incitação da Fera Sedutora, usando a parada normal de Presença + Potência de Sangue."
+      }
     },
     {
       "id": "devotion-bffs",

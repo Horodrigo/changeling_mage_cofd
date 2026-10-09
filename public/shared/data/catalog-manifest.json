@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 263,
+  "catalogVersion": 264,
   "catalogs": {
     "werewolf-totem-powers": { "version": 2, "url": "/game-lines/werewolf/data/totem-powers.json" },
     "werewolf-totem-powers-pt": { "version": 2, "url": "/game-lines/werewolf/data/totem-powers-pt.json" },
@@ -55,7 +55,7 @@
     "merits-changeling-pt": { "version": 8, "url": "/game-lines/changeling/data/merits-pt.json" },
     "merits-mage": { "version": 3, "url": "/game-lines/mage/data/merits.json" },
     "merits-mage-supplements": { "version": 2, "url": "/game-lines/mage/data/merits-supplements.json" },
-    "core-conditions": { "version": 2, "url": "/shared/data/conditions.json" },
+    "core-conditions": { "version": 3, "url": "/shared/data/conditions.json" },
     "core-conditions-pt": { "version": 4, "url": "/shared/data/conditions-pt.json" },
     "changeling-conditions": { "version": 2, "url": "/game-lines/changeling/data/conditions.json" },
     "changeling-conditions-pt": { "version": 2, "url": "/game-lines/changeling/data/conditions-pt.json" },
@@ -73,7 +73,7 @@
     "vampire-bloodlines": { "version": 15, "url": "/game-lines/vampire/data/bloodlines.json" },
     "merits-vampire-pt": { "version": 30, "url": "/game-lines/vampire/data/merits-pt.json" },
     "merits-vampire": { "version": 19, "url": "/game-lines/vampire/data/merits.json" },
-    "vampire-powers": { "version": 182, "url": "/game-lines/vampire/data/powers.json" },
-    "vampire-conditions": { "version": 27, "url": "/game-lines/vampire/data/conditions.json" }
+    "vampire-powers": { "version": 183, "url": "/game-lines/vampire/data/powers.json" },
+    "vampire-conditions": { "version": 28, "url": "/game-lines/vampire/data/conditions.json" }
   }
 }

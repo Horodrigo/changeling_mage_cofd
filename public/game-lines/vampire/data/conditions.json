@@ -1305,5 +1305,85 @@
       "resolution": "Recuperar uma alma.",
       "beat": "Perder Integridade por se entregar ao Vício."
     }
+  },
+  {
+    "id": "elder-children-of-the-blood",
+    "name": "Children of the Blood",
+    "originalName": "Children of the Blood",
+    "category": "Elder",
+    "description": "You created a revenant. The childe has −4 Blood Sympathy to you, stronger than other revenants, and follows you wherever you go; however far or fast you travel, she eventually catches up. The Storyteller controls the revenant and her goals, which might include destroying you or becoming a true vampire.",
+    "persistent": true,
+    "resolution": "The revenant stops haunting you.",
+    "beat": "The revenant causes psychological trauma by triggering a breaking point, excluding the automatic one for creating a revenant, or causes other vampires to treat you as a pariah.",
+    "presentationPt": {
+      "name": "Filhos do Sangue",
+      "description": "Você criou um revenante. A cria possui Simpatia de Sangue de −4 com você, mais forte que a de outros revenantes, e o segue aonde quer que vá; por mais longe ou rápido que viaje, ela acaba alcançando você. O Narrador controla o revenante e seus objetivos, que podem incluir destruir você ou tornar-se um vampiro verdadeiro.",
+      "resolution": "O revenante deixa de assombrar você.",
+      "beat": "O revenante causa trauma psicológico ao provocar um Ponto de Ruptura, excluindo o automático por criar um revenante, ou faz outros vampiros tratarem você como um pária."
+    },
+    "source": "Thousand Years of Night",
+    "sourceCode": "TY",
+    "page": 135
+  },
+  {
+    "id": "elder-curated",
+    "name": "Curated",
+    "originalName": "Curated",
+    "category": "Elder",
+    "description": "You and your deceitful peers have made a bargain to survive the nights and share a ghoul who oversees it. He serves as an ordinary ghoul and may be represented by the Retainer Merit, but is inflexible about preserving the bargain. Define its terms with the Storyteller, who controls the ghoul and any participating elders who are not player characters.",
+    "persistent": true,
+    "resolution": "The ghoul dies, your peers die, or the bargain ends.",
+    "beat": "The bargain hinders your private pursuits; for example, your coterie is sworn to protect the Keeper of Elysium, who is your enemy.",
+    "presentationPt": {
+      "name": "Sob Curadoria",
+      "description": "Você e seus pares dissimulados firmaram um acordo para sobreviver às noites e compartilham um carniçal encarregado de preservá-lo. Ele serve como um carniçal comum e pode ser representado pelo Mérito Lacaio, mas é inflexível quanto à manutenção do acordo. Defina seus termos com o Narrador, que controla o carniçal e os anciões participantes que não sejam personagens de jogadores.",
+      "resolution": "O carniçal morre, seus pares morrem ou o acordo termina.",
+      "beat": "O acordo prejudica seus interesses particulares; por exemplo, sua coterie jurou proteger o Guardião do Elísio, que é seu inimigo."
+    },
+    "source": "Thousand Years of Night",
+    "sourceCode": "TY",
+    "page": 136
+  },
+  {
+    "id": "elder-leveraged",
+    "name": "Leveraged",
+    "originalName": "Leveraged",
+    "category": "Elder",
+    "description": "Your ghoul protects you during the day, attends to your needs at night, and knows you too well. He senses your moods as though you shared a thrice-removed Blood Sympathy bond and knows all your buried secrets.",
+    "persistent": true,
+    "resolution": "The ghoul dies.",
+    "beat": "You seriously inconvenience yourself to accommodate your ghoul for fear he will reveal your secrets. No explicit threat or demand is necessary; you both know what he knows.",
+    "presentationPt": {
+      "name": "Coagido",
+      "description": "Seu carniçal protege você durante o dia, atende às suas necessidades à noite e conhece você bem demais. Ele percebe seu humor como se vocês compartilhassem um vínculo de Simpatia de Sangue com três graus de separação e conhece todos os seus segredos enterrados.",
+      "resolution": "O carniçal morre.",
+      "beat": "Você se prejudica seriamente para atender ao carniçal, temendo que ele revele seus segredos. Não é necessária uma ameaça ou exigência explícita; ambos sabem o que ele sabe."
+    },
+    "source": "Thousand Years of Night",
+    "sourceCode": "TY",
+    "page": 136,
+    "nameQualifier": {
+      "en-US": "Kindred",
+      "pt-BR": "Membro"
+    }
+  },
+  {
+    "id": "elder-weak-vitae",
+    "name": "Weak Vitae",
+    "originalName": "Weak Vitae",
+    "category": "Elder",
+    "description": "You cannot create a true vampire. Even if you perform every step of the Embrace correctly, your childe becomes a revenant instead. Each such Embrace still costs the normal dot of Humanity.",
+    "persistent": true,
+    "resolution": "Raise your Blood Potency through Diablerie.",
+    "beat": "Your revenant childe puts you in mortal danger, directly or indirectly, such as being sentenced to final death for creating a revenant.",
+    "presentationPt": {
+      "name": "Vitae Fraca",
+      "description": "Você não consegue criar um vampiro verdadeiro. Mesmo cumprindo corretamente todas as etapas do Abraço, sua cria se torna um revenante. Cada um desses Abraços ainda custa o ponto habitual de Humanidade.",
+      "resolution": "Aumentar sua Potência de Sangue por meio de Diablerie.",
+      "beat": "Sua cria revenante coloca você em perigo mortal, direta ou indiretamente, como ao ser condenado à morte final por criar um revenante."
+    },
+    "source": "Thousand Years of Night",
+    "sourceCode": "TY",
+    "page": 137
   }
 ]
