@@ -2,9 +2,9 @@ import { ATTRIBUTES, SKILLS } from "./creation-rules";
 
 export type AttributeId = typeof ATTRIBUTES[keyof typeof ATTRIBUTES][number];
 export type SkillId = typeof SKILLS[keyof typeof SKILLS][number];
-export type TraitGroup = "attributes" | "skills";
+export type TraitGroup = "attributes" | "skills" | "derived";
 
-const aliases: { attributes: Readonly<Record<string, AttributeId>>; skills: Readonly<Record<string, SkillId>> } = {
+const aliases: { attributes: Readonly<Record<string, AttributeId>>; skills: Readonly<Record<string, SkillId>>; derived: Readonly<Record<string, string>> } = {
   attributes: {
     Inteligência: "Intelligence", Raciocínio: "Wits", Perseverança: "Resolve",
     Força: "Strength", Destreza: "Dexterity", Vigor: "Stamina",
@@ -18,6 +18,11 @@ const aliases: { attributes: Readonly<Record<string, AttributeId>>; skills: Read
     "Empatia com Animais": "Animal Ken", "Trato com Animais": "Animal Ken", "Emp. c/ Animais": "Animal Ken", AnimalKen: "Animal Ken",
     Empatia: "Empathy", Expressão: "Expression", Intimidação: "Intimidation", Persuasão: "Persuasion",
     Socialização: "Socialize", Manha: "Streetwise", Subterfúgio: "Subterfuge",
+  },
+  derived: {
+    Tamanho: "Size", Vitalidade: "Health", Deslocamento: "Speed", ForçaDeVontade: "Willpower",
+    Iniciativa: "Initiative", Defesa: "Defense", Armadura: "Armor",
+    ArmaduraGeral: "GeneralArmor", ArmaduraBalistica: "BallisticArmor",
   },
 };
 

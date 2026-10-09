@@ -183,7 +183,7 @@ export function meritContextForSheet(sheet: {game_line:GameLine;attributes:Recor
   const skills={...sheet.skills};
   for(const [name,value]of Object.entries(skillBonuses??{})) skills[name]=(skills[name]??0)+value;
   return {gameLine:sheet.game_line,archetypes,attributes:sheet.attributes,skills,specializations:sheet.specializations ?? [],merits:sheet.merits,meritCatalog,
-    size:Number(sheet.derived?.Tamanho??5)};
+    size:Number(sheet.derived?.Size??5)};
 }
 
 export type MeritSelectionProblem = { key: MessageKey; params?: TranslationParams; meritIds?: readonly string[] };

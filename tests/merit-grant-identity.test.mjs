@@ -68,7 +68,7 @@ test("Core grants dispatch by definition ID and derive stable grant identities i
 test("Homebrew namesakes, unavailable IDs and foreign source names never receive official Core effects", () => {
   for (const identity of COMMON_MERIT_IDENTITIES) for (const extra of [{ definitionId: "homebrew:test:merit" }, { definitionId: "unavailable:id" }, { sourceId: "homebrew:test" }]) {
     const sheet = blankPrintCharacter("CofD");
-    sheet.derived = { Tamanho: 5, Vitalidade: 7, Iniciativa: 4, Defesa: 3, Deslocamento: 9 };
+    sheet.derived = { Size: 5, Health: 7, Initiative: 4, Defense: 3, Speed: 9 };
     sheet.merits = [{ ...identity, ...extra, name: identity.name, instanceId: "authored", dots: 5, configuration: { contacts: ["Authored"], boosted_skill: "Athletics", level_1_type: "skill", level_1_skill: "Athletics" } }];
     const before = JSON.stringify(sheet);
     assert.deepEqual(synchronizeCommonMeritGrants(sheet), {});
@@ -76,15 +76,15 @@ test("Homebrew namesakes, unavailable IDs and foreign source names never receive
     assert.deepEqual(derivedWithPermanentMerits(sheet), sheet.derived);
   }
   const sheet = blankPrintCharacter("CofD");
-  sheet.derived = { Tamanho: 5, Vitalidade: 7, Iniciativa: 4, Defesa: 3, Deslocamento: 9 };
+  sheet.derived = { Size: 5, Health: 7, Initiative: 4, Defense: 3, Speed: 9 };
   sheet.merits = [{ name: "Professional Training", sourceId: "core-2ed", instanceId: "old", dots: 1, configuration: { contacts: ["Old authored group"] } }];
   synchronizeCommonMeritGrants(sheet);
   assert.equal(sheet.merits[1].definitionId, "core-2ed:contacts");
   sheet.merits = [{ definitionId: "core-2ed:fast-reflexes", name: "Renamed", dots: 2 }, { definitionId: "core-2ed:giant", name: "Renamed", dots: 3 }];
   const derived = derivedWithPermanentMerits(sheet);
-  assert.equal(derived.Iniciativa, sheet.derived.Iniciativa + 2);
-  assert.equal(derived.Tamanho, 6);
-  assert.equal(derived.Vitalidade, sheet.derived.Vitalidade + 1);
+  assert.equal(derived.Initiative, sheet.derived.Initiative + 2);
+  assert.equal(derived.Size, 6);
+  assert.equal(derived.Health, sheet.derived.Health + 1);
 });
 
 test("Mortal synchronization is pure, preserves paid instances/state and regenerates only unlocked Core grants", () => {

@@ -352,7 +352,7 @@ test("Totem Advantage reaches every Werewolf form, the canonical rules loader an
     assert.equal(actual.attributes.Stamina, base.attributes.Stamina + 1, form.id);
   }
   const loaded = await registration.loadRules(), derived = loaded.deriveCharacterState(character);
-  assert.equal(derived.Vitalidade, plain.derived.Vitalidade + 1); assert.equal(derived.Deslocamento, plain.derived.Deslocamento + 1);
+  assert.equal(derived.Health, plain.derived.Health + 1); assert.equal(derived.Speed, plain.derived.Speed + 1);
   const { prepareCharacterForUpdate } = await vite.ssrLoadModule("/app/workspace/character-lifecycle.ts");
   const updated = await prepareCharacterForUpdate(character);
   assert.deepEqual(updated.derived, derived); assert.deepEqual(updated.attributes, character.attributes); assert.deepEqual(updated.skills, character.skills); assert.deepEqual(updated.merits, character.merits);

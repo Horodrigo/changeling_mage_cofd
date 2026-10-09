@@ -43,7 +43,7 @@ test("organiza compras de Experiência nos quatro grupos sem alterar os tipos", 
 });
 
 test("Changeling usa IDs estáveis nas compras e traduz apenas a apresentação", () => {
-  const character = { attributes: { Strength: 2 }, skills: { Athletics: 1 }, derived: { ForçaDeVontade: 4 }, line_data: {} };
+  const character = { attributes: { Strength: 2 }, skills: { Athletics: 1 }, derived: { Willpower: 4 }, line_data: {} };
   const base = { locale: "pt-BR", character, attribute: "Strength", skill: "Athletics", specialtySkill: "Athletics", specialtyName: "", wyrd: 2, lostWillpower: 1, targetRating: 3 };
   assert.deepEqual(changelingExperience.purchasePreview({ ...base, purchaseType: "attribute" }), { label: "Força 3", cost: 4 });
   assert.deepEqual(changelingExperience.purchasePreview({ ...base, locale: "en-US", purchaseType: "wyrd" }), { label: "Wyrd 3", cost: 5 });
@@ -74,7 +74,7 @@ test("o Builder preserva compras de vários pontos feitas em uma única transaç
 
 function sheet(key = "wyrd", creation = 1) {
   return { game_line: key === "wyrd" ? "CtL" : "MtA", attributes: { Strength: 1 }, skills: { Athletics: 0 },
-    merits: [{ name: "Resources", dots: 10, creationDots: 10, experienceDots: 0 }], specializations: [], derived: { LucidezMaxima: 4 },
+    merits: [{ name: "Resources", dots: 10, creationDots: 10, experienceDots: 0 }], specializations: [], derived: { ClarityMaximum: 4 },
     line_data: { [key]: creation, arcana: { Fate: 0 }, wisdom: 7 },
     current_state: { experience_available: 20, clarity_damage: ["severe", "mild"] } };
 }

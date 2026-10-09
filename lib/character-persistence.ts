@@ -13,6 +13,7 @@ export function normalizeStoredSheet(value:CharacterSheet):CharacterSheet{
   const next=structuredClone(value),storedSpecializations:unknown[]=Array.isArray(next.specializations)?next.specializations:[];
   next.attributes=canonicalTraitRatings("attributes",next.attributes);
   next.skills=canonicalTraitRatings("skills",next.skills);
+  next.derived=canonicalTraitRatings("derived",next.derived);
   next.specializations=storedSpecializations.map(item=>{const record=asRecord(item);return typeof item==="string"?{skill:"",name:item}:{skill:canonicalTraitId("skills",String(record.skill??"")),name:String(record.name??""),grantedBy:record.grantedBy?String(record.grantedBy):undefined};});
   const storedMerits:unknown[]=Array.isArray(next.merits)?next.merits:[];
   next.merits=storedMerits.map((value,index)=>{const item=asRecord(value);return {...(item.definitionId?{definitionId:String(item.definitionId)}:{}),name:String(item.name??""),dots:Number(item.dots??1),instanceId:item.instanceId?String(item.instanceId):`legacy-merit-${index}-${String(item.name??"merit").toLowerCase().replace(/[^a-z0-9]+/g,"-")}`,sourceId:item.sourceId?String(item.sourceId):undefined,source:item.source?String(item.source):undefined,configuration:normalizeMeritConfiguration(item.configuration),grantedBy:item.grantedBy?String(item.grantedBy):undefined,creationDots:item.creationDots===undefined?undefined:Number(item.creationDots),experienceDots:item.experienceDots===undefined?undefined:Number(item.experienceDots)};});

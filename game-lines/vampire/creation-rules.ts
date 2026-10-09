@@ -78,7 +78,7 @@ export function createBloodTetherPack(character: CharacterSheet) {
   const next = structuredClone(character);
   next.line_data.blood_tether_pack_active = true;
   next.current_state.willpower_lost_dots = Math.max(0, Number(next.current_state.willpower_lost_dots ?? 0)) + 1;
-  const maximum = Math.max(1, Number(next.derived.ForçaDeVontade ?? 1) - Number(next.current_state.willpower_lost_dots));
+  const maximum = Math.max(1, Number(next.derived.Willpower ?? 1) - Number(next.current_state.willpower_lost_dots));
   next.current_state.willpower_current = Math.min(maximum, Number(next.current_state.willpower_current ?? maximum));
   return grantPackAlpha(next);
 }
@@ -412,12 +412,12 @@ export function vampireDerived(
   const effectiveStrength = Number(attributes.Strength ?? 1) + vigor;
   const potency = reference ? bloodPotencyRow(reference, bloodPotency) : bloodPotencyLimits(bloodPotency);
   return {
-    Tamanho: 5,
-    Vitalidade: 5 + effectiveStamina,
-    Deslocamento: 5 + effectiveStrength + Number(attributes.Dexterity ?? 1),
-    ForçaDeVontade: Number(attributes.Resolve ?? 1) + Number(attributes.Composure ?? 1),
-    Iniciativa: Number(attributes.Dexterity ?? 1) + Number(attributes.Composure ?? 1),
-    Defesa: Math.min(Number(attributes.Dexterity ?? 1), Number(attributes.Wits ?? 1)) + Number(skills.Athletics ?? 0) + celerity,
+    Size: 5,
+    Health: 5 + effectiveStamina,
+    Speed: 5 + effectiveStrength + Number(attributes.Dexterity ?? 1),
+    Willpower: Number(attributes.Resolve ?? 1) + Number(attributes.Composure ?? 1),
+    Initiative: Number(attributes.Dexterity ?? 1) + Number(attributes.Composure ?? 1),
+    Defense: Math.min(Number(attributes.Dexterity ?? 1), Number(attributes.Wits ?? 1)) + Number(skills.Athletics ?? 0) + celerity,
     VitaeMaxima: typeof potency?.vitaeMaximum === "number" ? potency.vitaeMaximum : effectiveStamina,
     VitaePorTurno: potency?.vitaePerTurn ?? 1,
     LimiteDeCaracteristica: potency?.traitMaximum ?? 5,

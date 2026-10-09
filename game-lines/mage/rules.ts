@@ -14,17 +14,19 @@ const numberValue = (value: unknown) => {
 function mageDerived(character: CharacterSheet): CharacterSheet["derived"] {
   const attributes = character.attributes;
   const skills = character.skills;
+  const derived = { ...character.derived };
+  delete derived.Sabedoria;
   return {
-    ...character.derived,
-    Tamanho: 5,
-    Vitalidade: 5 + numberValue(attributes.Stamina),
-    Deslocamento: 5 + numberValue(attributes.Strength) + numberValue(attributes.Dexterity),
-    ForçaDeVontade: numberValue(attributes.Resolve) + numberValue(attributes.Composure),
-    Iniciativa: numberValue(attributes.Dexterity) + numberValue(attributes.Composure),
-    Defesa:
+    ...derived,
+    Size: 5,
+    Health: 5 + numberValue(attributes.Stamina),
+    Speed: 5 + numberValue(attributes.Strength) + numberValue(attributes.Dexterity),
+    Willpower: numberValue(attributes.Resolve) + numberValue(attributes.Composure),
+    Initiative: numberValue(attributes.Dexterity) + numberValue(attributes.Composure),
+    Defense:
       Math.min(numberValue(attributes.Dexterity), numberValue(attributes.Wits)) +
       numberValue(skills.Athletics),
-    Sabedoria: numberValue(character.line_data.wisdom) || 7,
+    Wisdom: numberValue(character.line_data.wisdom) || 7,
   };
 }
 

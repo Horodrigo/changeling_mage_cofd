@@ -215,10 +215,10 @@ export function ExperiencePanel({
   const traitMaximum = Math.max(5, wyrd);
   const lostWillpower = boundedNumber(
     state.willpower_lost_dots,
-    Math.max(0, Number(character.derived.ForçaDeVontade ?? 1) - 1),
+    Math.max(0, Number(character.derived.Willpower ?? 1) - 1),
     0,
   );
-  const permanentWillpowerMaximum = Math.max(1, Number(character.derived.ForçaDeVontade ?? 1));
+  const permanentWillpowerMaximum = Math.max(1, Number(character.derived.Willpower ?? 1));
   const ratedCurrent = purchaseType === "attribute" ? Number(character.attributes[attribute] ?? 1)
     : purchaseType === "skill" ? Number(character.skills[skill] ?? 0)
       : purchaseType === "wyrd" ? wyrd
@@ -290,7 +290,7 @@ export function ExperiencePanel({
   function markWillpowerLoss() {
     const maximum = Math.max(
       0,
-      Number(character.derived.ForçaDeVontade ?? 1) - 1,
+      Number(character.derived.Willpower ?? 1) - 1,
     );
     if (lostWillpower >= maximum) return;
     const next = structuredClone(character);
@@ -415,7 +415,7 @@ export function ExperiencePanel({
       };
     else if (undo.kind === "clarityGain") {
       next.current_state = changePermanentClarity(next.current_state, -1);
-      const maximum = Number(derivedWithPermanentMerits(next).LucidezMaxima ?? 1);
+      const maximum = Number(derivedWithPermanentMerits(next).ClarityMaximum ?? 1);
       next.current_state.clarity_damage = normalizeClarityDamage(next.current_state.clarity_damage, maximum);
     }
     else if (undo.kind === "wyrd") {

@@ -61,9 +61,9 @@ export function werewolfFormTraits(character: CharacterSheet, form: FormId = "hi
 /** Persisted derived values are the stable Hishu baseline; the Sheet computes the selected form live. */
 export function werewolfDerived(character: CharacterSheet, catalogs?: TotemBenefitCatalogs) {
   const traits = werewolfFormTraits(character, "hishu", catalogs);
-  return { Tamanho: traits.size, Vitalidade: traits.health, Deslocamento: traits.speed,
-    ForçaDeVontade: traits.willpower, Iniciativa: traits.initiative, Defesa: traits.defense,
-    ArmaduraGeral: traits.armorGeneral, ArmaduraBalistica: traits.armorBallistic };
+  return { Size: traits.size, Health: traits.health, Speed: traits.speed,
+    Willpower: traits.willpower, Initiative: traits.initiative, Defense: traits.defense,
+    GeneralArmor: traits.armorGeneral, BallisticArmor: traits.armorBallistic };
 }
 
 export const werewolfRules: GameLineRulesModule = {

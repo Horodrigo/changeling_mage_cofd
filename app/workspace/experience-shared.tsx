@@ -395,12 +395,12 @@ export function recalculateCoreDerived(sheet: CharacterSheet) {
     s = sheet.skills;
   sheet.derived = {
     ...sheet.derived,
-    Tamanho: 5,
-    Vitalidade: 5 + Number(a.Stamina ?? 1),
-    Deslocamento: 5 + Number(a.Strength ?? 1) + Number(a.Dexterity ?? 1),
-    ForçaDeVontade: Number(a.Resolve ?? 1) + Number(a.Composure ?? 1),
-    Iniciativa: Number(a.Dexterity ?? 1) + Number(a.Composure ?? 1),
-    Defesa:
+    Size: 5,
+    Health: 5 + Number(a.Stamina ?? 1),
+    Speed: 5 + Number(a.Strength ?? 1) + Number(a.Dexterity ?? 1),
+    Willpower: Number(a.Resolve ?? 1) + Number(a.Composure ?? 1),
+    Initiative: Number(a.Dexterity ?? 1) + Number(a.Composure ?? 1),
+    Defense:
       Math.min(Number(a.Dexterity ?? 1), Number(a.Wits ?? 1)) +
       Number(s.Athletics ?? 0),
   };

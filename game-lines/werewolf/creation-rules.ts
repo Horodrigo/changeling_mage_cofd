@@ -22,19 +22,19 @@ export function boundedPrimalUrge(value: unknown) {
 /** WTF2 pp. 96–98; M02/M03/M04/M07 resolve the audited sheet/text conflicts. */
 export function formTraits(character: Pick<CharacterSheet, "attributes" | "skills">, form: FormMechanics, baseSize = 5, merits: readonly WerewolfMeritChoice[] = [], coreMerits: readonly MeritSelection[] = []) {
   const bonuses = werewolfFormMeritEffects(merits, form);
-  const common = derivedWithPermanentMerits({ merits: [...coreMerits], line_data: {}, derived: { Tamanho: baseSize, Vitalidade: 0, Defesa: 0, Iniciativa: 0, Deslocamento: 0 } });
+  const common = derivedWithPermanentMerits({ merits: [...coreMerits], line_data: {}, derived: { Size: baseSize, Health: 0, Defense: 0, Initiative: 0, Speed: 0 } });
   const attributes = Object.fromEntries(Object.entries(character.attributes).map(([key, value]) => [key, Math.max(0, finite(value))]));
   for (const [key, delta] of Object.entries(form.attributes)) attributes[key] = finite(attributes[key]) + finite(delta);
   for (const [key, delta] of Object.entries(bonuses.attributes)) attributes[key] = finite(attributes[key]) + delta;
   for (const key of Object.keys(attributes)) attributes[key] = Math.max(0, attributes[key]);
-  const size = Math.max(1, finite(common.Tamanho, 5) + form.size);
+  const size = Math.max(1, finite(common.Size, 5) + form.size);
   return {
     attributes,
     size,
     health: Math.max(1, size + finite(attributes.Stamina)),
     defense: (bonuses.instinctiveDefense ? Math.max : Math.min)(finite(attributes.Dexterity), finite(attributes.Wits)) + finite(character.skills.Athletics),
-    initiative: finite(attributes.Dexterity) + finite(attributes.Composure) + common.Iniciativa,
-    speed: finite(attributes.Strength) + finite(attributes.Dexterity) + 5 + form.speciesFactor + common.Deslocamento,
+    initiative: finite(attributes.Dexterity) + finite(attributes.Composure) + common.Initiative,
+    speed: finite(attributes.Strength) + finite(attributes.Dexterity) + 5 + form.speciesFactor + common.Speed,
     willpower: finite(attributes.Resolve) + finite(attributes.Composure),
     perception: form.perception,
     armorGeneral: form.armorGeneral + bonuses.armorGeneral,

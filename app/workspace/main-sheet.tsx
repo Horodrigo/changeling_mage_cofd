@@ -74,11 +74,11 @@ export function MainSheet({
   const { t } = useLanguage();
   const traits = derivedTraitsWithArmor(derived, armorId);
   const derivedRows: Array<[string, unknown]> = [
-    [t("ui.size"), traits.Tamanho],
-    [t("ui.speed"), traits.Deslocamento],
-    [t("ui.defense"), traits.Defesa],
-    [t("ui.initiative"), traits.Iniciativa],
-    [t("ui.armor"), traits.Armadura],
+    [t("ui.size"), traits.Size],
+    [t("ui.speed"), traits.Speed],
+    [t("ui.defense"), traits.Defense],
+    [t("ui.initiative"), traits.Initiative],
+    [t("ui.armor"), traits.Armor],
   ];
 
   const conditionsSection = <div data-slot="conditions">

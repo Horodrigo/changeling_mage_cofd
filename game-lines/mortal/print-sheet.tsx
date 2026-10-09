@@ -56,8 +56,8 @@ export function MortalPrintSheet({ character, catalogs, onReadyChange }: GameLin
   const selectedConditions = objectList(character.current_state.conditions).map((item) => conditions.find((condition) => condition.id === String(item.id))?.name ?? String(item.id ?? "")).filter(Boolean);
   const derived = derivedWithPermanentMerits(character);
   const printDerived = isBlankPrintCharacter(character) ? undefined : derivedTraitsWithArmor(derived, data.combat_armor);
-  const health = Math.max(1, Number(derived.Vitalidade ?? 6));
-  const willpower = Math.max(1, Number(derived.ForçaDeVontade ?? 2));
+  const health = Math.max(1, Number(derived.Health ?? 6));
+  const willpower = Math.max(1, Number(derived.Willpower ?? 2));
   const currentWillpower = Math.max(0, Math.min(willpower, Number(character.current_state.willpower_current ?? willpower)));
   const integrity = boundedIntegrity(data.integrity);
   const identity = [
@@ -79,7 +79,7 @@ export function MortalPrintSheet({ character, catalogs, onReadyChange }: GameLin
       <div className="cofd-print-main-grid">
         <section><Heading>{t("ui.skills")}</Heading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations}/>)}</section>
         <section><Heading>{t("ui.merits")}</Heading><PrintRatedLines values={meritRows.slice(0, 12)} minimum={12}/><Heading>{t("ui.aspirations")}</Heading><PrintLines values={stringList(data.aspirations)} minimum={3}/><Heading>{t("ui.conditions")}</Heading><PrintLines values={selectedConditions.slice(0, 5)} minimum={5}/></section>
-        <section><Heading>{t("ui.health")}</Heading><div className="cofd-print-track"><PrintDots value={health} maximum={Math.max(10, health)}/><PrintBoxes maximum={Math.max(10, health)}/></div><Heading>{t("ui.willpower")}</Heading><div className="cofd-print-track"><PrintDots value={currentWillpower} maximum={Math.max(10, willpower)}/><PrintBoxes maximum={Math.max(10, willpower)}/></div><Heading>{t("ui.integrity")}</Heading><PrintIntegrityTrack value={integrity}/><Heading>{t("ui.derivedStats")}</Heading><dl className="cofd-print-derived"><div><dt>{t("ui.size")}</dt><dd>{printDerived?.Tamanho}</dd></div><div><dt>{t("ui.speed")}</dt><dd>{printDerived?.Deslocamento}</dd></div><div><dt>{t("ui.defense")}</dt><dd>{printDerived?.Defesa}</dd></div><div><dt>{t("ui.initiative")}</dt><dd>{printDerived?.Iniciativa}</dd></div><div><dt>{t("ui.armor")}</dt><dd>{printDerived?.Armadura}</dd></div></dl><Heading>{t("ui.experience")}</Heading><PrintExperience beatLabels={[t("ui.beats")]} lineLabels={[t("ui.xpAvailable"), t("ui.totalXP"), t("ui.xpSpent")]}/></section>
+        <section><Heading>{t("ui.health")}</Heading><div className="cofd-print-track"><PrintDots value={health} maximum={Math.max(10, health)}/><PrintBoxes maximum={Math.max(10, health)}/></div><Heading>{t("ui.willpower")}</Heading><div className="cofd-print-track"><PrintDots value={currentWillpower} maximum={Math.max(10, willpower)}/><PrintBoxes maximum={Math.max(10, willpower)}/></div><Heading>{t("ui.integrity")}</Heading><PrintIntegrityTrack value={integrity}/><Heading>{t("ui.derivedStats")}</Heading><dl className="cofd-print-derived"><div><dt>{t("ui.size")}</dt><dd>{printDerived?.Size}</dd></div><div><dt>{t("ui.speed")}</dt><dd>{printDerived?.Speed}</dd></div><div><dt>{t("ui.defense")}</dt><dd>{printDerived?.Defense}</dd></div><div><dt>{t("ui.initiative")}</dt><dd>{printDerived?.Initiative}</dd></div><div><dt>{t("ui.armor")}</dt><dd>{printDerived?.Armor}</dd></div></dl><Heading>{t("ui.experience")}</Heading><PrintExperience beatLabels={[t("ui.beats")]} lineLabels={[t("ui.xpAvailable"), t("ui.totalXP"), t("ui.xpSpent")]}/></section>
       </div>
     </MortalPrintPage>
     <MortalPrintPage page={2}>

@@ -39,12 +39,12 @@ test("o catálogo de combate possui apresentação inglesa completa", () => {
 });
 
 test("Derived Traits applies equipped armor once and formats General/Ballistic", () => {
-  assert.deepEqual(combat.derivedTraitsWithArmor({ Tamanho: 5, Deslocamento: 12, Defesa: 4, Iniciativa: 6 }, "equipamento-antitumulto"), {
-    Tamanho: 5,
-    Deslocamento: 11,
-    Defesa: 2,
-    Iniciativa: 6,
-    Armadura: "3/5",
+  assert.deepEqual(combat.derivedTraitsWithArmor({ Size: 5, Speed: 12, Defense: 4, Initiative: 6 }, "equipamento-antitumulto"), {
+    Size: 5,
+    Speed: 11,
+    Defense: 2,
+    Initiative: 6,
+    Armor: "3/5",
   });
 });
 

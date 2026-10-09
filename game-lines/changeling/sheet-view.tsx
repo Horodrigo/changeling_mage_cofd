@@ -166,12 +166,12 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     ];
     const powerRating = Number(data.wyrd ?? 1);
     const resource = powerResourceLimits(powerRating);
-    const health = Math.max(1, Number(derived.Vitalidade ?? 5));
-    const baseWillpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
+    const health = Math.max(1, Number(derived.Health ?? 5));
+    const baseWillpower = Math.max(1, Number(derived.Willpower ?? 1));
     const lostWillpower = boundedNumber(character.current_state?.willpower_lost_dots, baseWillpower - 1, 0);
     const willpower = Math.max(1, baseWillpower - lostWillpower);
     const damage = normalizeDamage(character.current_state?.health_damage, health);
-    const clarityMaximum = Math.max(1, Number(derived.LucidezMaxima ?? derived.ClarezaMaxima ?? 1));
+    const clarityMaximum = Math.max(1, Number(derived.ClarityMaximum ?? derived.ClarezaMaxima ?? 1));
     const clarityDamage = normalizeClarityDamage(character.current_state?.clarity_damage, clarityMaximum);
     const currentWillpower = boundedNumber(character.current_state?.willpower_current, willpower, willpower);
     const resourceKey = "glamour_current";

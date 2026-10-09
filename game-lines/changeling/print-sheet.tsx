@@ -254,12 +254,12 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
   const data = character.line_data;
   const derived = derivedWithPermanentMerits(character);
   const powerRating = Math.max(1, Number(data.wyrd ?? 1));
-  const health = Math.max(1, Number(derived.Vitalidade ?? 5));
-  const baseWillpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
+  const health = Math.max(1, Number(derived.Health ?? 5));
+  const baseWillpower = Math.max(1, Number(derived.Willpower ?? 1));
   const lostWillpower = Math.max(0, Math.min(baseWillpower - 1, Number(character.current_state?.willpower_lost_dots ?? 0)));
   const willpower = Math.max(1, baseWillpower - lostWillpower);
   const currentWillpower = Math.max(0, Math.min(willpower, Number(character.current_state?.willpower_current ?? willpower)));
-  const clarity = Math.max(1, Number(derived.LucidezMaxima ?? derived.ClarezaMaxima ?? 1));
+  const clarity = Math.max(1, Number(derived.ClarityMaximum ?? derived.ClarezaMaxima ?? 1));
   const clarityDamage = normalizeClarityDamage(character.current_state?.clarity_damage, clarity);
   const contracts = useMemo(() => [...objectList(data.contracts), ...objectList(data.learned_contracts)].flatMap((saved) => {
     const found = contractCatalog.find((item) => item.id === String(saved.id ?? "") || item.name === String(saved.name ?? ""));
@@ -295,7 +295,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     [t("ui.chronicle"), character.character.chronicle], [t("ui.concept"), character.character.concept], [t("ui.court"), courtDisplay],
   ];
   const otherTraits = isBlankPrintCharacter(character)
-    ? { Tamanho: "", Deslocamento: "", Defesa: "", Iniciativa: "", Armadura: "" }
+    ? { Size: "", Speed: "", Defense: "", Initiative: "", Armor: "" }
     : derivedTraitsWithArmor(derived, data.combat_armor);
   const flowBlocks = useMemo(() => {
     const blocks: PrintBlock[] = [];

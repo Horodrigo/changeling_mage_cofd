@@ -75,9 +75,9 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const hishu = werewolfFormTraits(character, "hishu", benefitCatalogs), activeForm = werewolfFormTraits(character, currentForm, benefitCatalogs);
   const damage = normalizeDamage(state.health_damage, Math.max(activeForm.health, Array.isArray(state.health_damage) ? state.health_damage.length : 0));
   const primalUrge = boundedPrimalUrge(data.primal_urge), limits = primalUrgeLevel(reference, primalUrge);
-  const derived = { ...character.derived, Tamanho: activeForm.size, Vitalidade: activeForm.health, Defesa: activeForm.defense, Iniciativa: activeForm.initiative, Deslocamento: activeForm.speed };
-  const armor = derivedTraitsWithArmor(derived, data.combat_armor).Armadura;
-  const displayedDerived = { ...derived, Armadura: activeForm.armorGeneral || activeForm.armorBallistic
+  const derived = { ...character.derived, Size: activeForm.size, Health: activeForm.health, Defense: activeForm.defense, Initiative: activeForm.initiative, Speed: activeForm.speed };
+  const armor = derivedTraitsWithArmor(derived, data.combat_armor).Armor;
+  const displayedDerived = { ...derived, Armor: activeForm.armorGeneral || activeForm.armorBallistic
     ? t("werewolf.naturalAndEquipmentArmor", { natural: `${activeForm.armorGeneral}/${activeForm.armorBallistic}`, equipment: armor }) : armor };
   const ownMerits = resolveWerewolfMerits(member.merits, merits);
   const conditions: SelectedCondition[] = Array.isArray(state.conditions) ? state.conditions.flatMap(item => item && typeof item === "object" && typeof item.id === "string"

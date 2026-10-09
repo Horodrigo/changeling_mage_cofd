@@ -17,7 +17,7 @@ const { vampireCovenantStatus, vampireCovenantAffiliationDots, createBloodTether
 const { zirnitraMortalMeritCount, vampireMeritEligible } = await vite.ssrLoadModule("/game-lines/vampire/merit-eligibility.ts");
 const sheet = () => ({ game_line: "VtR", merits: [],
   line_data: { bloodline_id: "adrestoi", disciplines: { "Blood Tether": 5 } },
-  derived: { ForçaDeVontade: 5 }, current_state: { willpower_current: 5, willpower_lost_dots: 0,
+  derived: { Willpower: 5 }, current_state: { willpower_current: 5, willpower_lost_dots: 0,
     health_damage: ["lethal"], experience_available: 8, experience_spent: 3, experience_history: [{ id: "opaque" }] } });
 
 test("pure Vampire Merit identities agree with static catalogs and explicit IDs always win", () => {

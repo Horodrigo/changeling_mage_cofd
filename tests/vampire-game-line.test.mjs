@@ -36,10 +36,10 @@ test("Vampire derived traits include physical Disciplines and audited Blood Pote
     { Resilience: 2, Vigor: 3, Celerity: 1 },
     6,
   );
-  assert.equal(derived.Vitalidade, 10);
-  assert.equal(derived.Deslocamento, 13);
-  assert.equal(derived.Iniciativa, 6);
-  assert.equal(derived.Defesa, 5);
+  assert.equal(derived.Health, 10);
+  assert.equal(derived.Speed, 13);
+  assert.equal(derived.Initiative, 6);
+  assert.equal(derived.Defense, 5);
   assert.equal(derived.VitaeMaxima, 20);
   assert.equal(derived.VitaePorTurno, 6);
   assert.equal(derived.LimiteDeCaracteristica, 6);
@@ -497,7 +497,7 @@ test("Adrestoi Blood Tether exposes Lashes and grants Gangrel-only Pack Alpha th
 
   const character = {
     merits: [], line_data: { clan_id: "ventrue", bloodline_id: "adrestoi", disciplines: { "Blood Tether": 5 } },
-    current_state: { willpower_current: 5, willpower_lost_dots: 0 }, derived: { ForçaDeVontade: 5 },
+    current_state: { willpower_current: 5, willpower_lost_dots: 0 }, derived: { Willpower: 5 },
   };
   const created = createBloodTetherPack(character);
   assert.equal(created.line_data.blood_tether_pack_active, true);

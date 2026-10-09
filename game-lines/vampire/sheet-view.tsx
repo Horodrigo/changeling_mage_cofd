@@ -1116,8 +1116,8 @@ export function VampireCharacterPaper({
     bloodPotency,
     reference,
   );
-  const health = Math.max(1, Number(derived.Vitalidade ?? 5));
-  const baseWillpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
+  const health = Math.max(1, Number(derived.Health ?? 5));
+  const baseWillpower = Math.max(1, Number(derived.Willpower ?? 1));
   const willpower = Math.max(
     1,
     baseWillpower -
@@ -1236,12 +1236,12 @@ export function VampireCharacterPaper({
   const combatDerived = beastPowerActive
     ? {
         ...derived,
-        Defesa: Number(derived.Defesa ?? 0) + bloodPotency,
-        Vitalidade: Number(derived.Vitalidade ?? 0) + bloodPotency,
-        Deslocamento: Number(derived.Deslocamento ?? 0) + bloodPotency,
+        Defense: Number(derived.Defense ?? 0) + bloodPotency,
+        Health: Number(derived.Health ?? 0) + bloodPotency,
+        Speed: Number(derived.Speed ?? 0) + bloodPotency,
       }
     : derived;
-  const combatHealth = Math.max(1, Number(combatDerived.Vitalidade ?? health));
+  const combatHealth = Math.max(1, Number(combatDerived.Health ?? health));
   const combatDamage = normalizeDamage(
     character.current_state.health_damage,
     combatHealth,
@@ -2881,8 +2881,8 @@ function FrenzyPanel({
           <p className="wide">
             <strong>{t("ui.beastsPower")}:</strong>
             {t("ui.defense")}
-            {combatDerived.Defesa}, {t("ui.health")} {combatDerived.Vitalidade},{" "}
-            {t("ui.speed")} {combatDerived.Deslocamento}.
+            {combatDerived.Defense}, {t("ui.health")} {combatDerived.Health},{" "}
+            {t("ui.speed")} {combatDerived.Speed}.
           </p>
         )}
         {eternalFrenzy && (

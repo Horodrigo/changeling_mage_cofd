@@ -93,7 +93,7 @@ export function MageExperiencePanel({
     arcaneBeats = boundedNumber(state.arcane_experience_beats, 5, 0);
   const maximumLostWillpower = Math.max(
     0,
-    Number(character.derived.ForçaDeVontade ?? 1) - 1,
+    Number(character.derived.Willpower ?? 1) - 1,
   );
   const lostWillpower = boundedNumber(
     state.willpower_lost_dots,
@@ -173,7 +173,7 @@ export function MageExperiencePanel({
   const selectedSpell =
     availableSpells.find((item) => item.id === target) ?? availableSpells[0];
   const traitMaximum = Math.max(5, Number(character.line_data.gnosis ?? 1));
-  const permanentWillpowerMaximum = Math.max(1, Number(character.derived.ForçaDeVontade ?? 1));
+  const permanentWillpowerMaximum = Math.max(1, Number(character.derived.Willpower ?? 1));
   const ratedCurrent = purchase === "attribute" ? Number(character.attributes[chosenTarget] ?? 1)
     : purchase === "skill" ? Number(character.skills[chosenTarget] ?? 0)
       : purchase === "arcanum" ? Number(arcana[chosenTarget] ?? 0)

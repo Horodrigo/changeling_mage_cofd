@@ -89,6 +89,34 @@ test("canonical Skill reconciliation does not count as an authored Specialty edi
   assert.deepEqual(result.merits, [merit]);
   assert.equal(reconcileSpecialtyMerits([merit], old, [merit], [{ ...canonical[0], name: "Alterado" }]).removed.length, 1, "An actual authored edit still removes the linked instance");
 });
+
+test("all five lines persist English Derived Stats while retaining their own calculations and old schema-2 inputs", async t => {
+  t.mock.method(globalThis, "fetch", async path => {
+    assert.match(String(path), /^\/(shared|game-lines)\//);
+    return new Response(await readFile(new URL(`../public${path}`, import.meta.url), "utf8"));
+  });
+  for (const line of ["CofD", "CtL", "MtA", "VtR", "WtF"]) {
+    const current = sheet(line);
+    current.attributes = Object.fromEntries(["Intelligence", "Wits", "Resolve", "Strength", "Dexterity", "Stamina", "Presence", "Manipulation", "Composure"].map(name => [name, 2]));
+    current.skills = { Athletics: 1 };
+    current.merits = [];
+    current.derived = { Tamanho: 9, Vitalidade: 99, Deslocamento: 99, ForçaDeVontade: 99, Iniciativa: 99, Defesa: 99, Willpower: 2,
+      ...(line === "CofD" ? { Integridade: 9 } : line === "CtL" ? { LucidezMaxima: 9, ClarezaMaxima: 9 } : line === "MtA" ? { Sabedoria: 9 } : {}) };
+    const before = structuredClone(current);
+    const structural = normalizeStoredSheet(current);
+    assert.equal(structural.derived.Willpower, 2, "An existing English value wins before the owning line recalculates");
+    const normalized = await normalizeGameLineCharacter(structural);
+    const common = ["Size", "Health", "Speed", "Willpower", "Initiative", "Defense"];
+    assert.deepEqual(common.map(key => normalized.derived[key]), [5, 7, 9, 4, 4, 3], line);
+    assert.ok(Object.keys(normalized.derived).every(key => !["Tamanho", "Vitalidade", "Deslocamento", "ForçaDeVontade", "Iniciativa", "Defesa", "Integridade", "LucidezMaxima", "ClarezaMaxima", "Sabedoria"].includes(key)), line);
+    if (line === "CofD") assert.equal(normalized.derived.Integrity, 7);
+    if (line === "CtL") assert.equal(normalized.derived.ClarityMaximum, 4);
+    if (line === "MtA") assert.equal(normalized.derived.Wisdom, 7);
+    const reopened = await normalizeGameLineCharacter(normalizeStoredSheet(JSON.parse(JSON.stringify(normalized))));
+    assert.deepEqual(reopened.derived, normalized.derived);
+    assert.deepEqual(current, before);
+  }
+});
 test("validation rejects old schemas without attempting migration",()=>{
   assert.equal(validateCurrentCharacter({...sheet(),schema_version:1}),"unsupported-schema");
   assert.equal(validateCurrentCharacter({schema_version:2,system:"chronicles-of-darkness",game_line:"VtR"}),"invalid-character");
@@ -163,7 +191,7 @@ test("Mortal normalization owns Integrity, Breaking Points, and derived traits",
   assert.equal(normalized.line_data.breaking_points.length,5);
   assert.equal(normalized.line_data.aspirations.length,3);
   assert.deepEqual(
-    [normalized.derived.Vitalidade,normalized.derived.Deslocamento,normalized.derived.ForçaDeVontade,normalized.derived.Iniciativa,normalized.derived.Defesa,normalized.derived.Integridade],
+    [normalized.derived.Health,normalized.derived.Speed,normalized.derived.Willpower,normalized.derived.Initiative,normalized.derived.Defense,normalized.derived.Integrity],
     [9,10,5,5,4,0],
   );
 });

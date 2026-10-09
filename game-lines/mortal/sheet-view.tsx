@@ -63,8 +63,8 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
   const data = character.line_data;
   const state = character.current_state;
   const derived = derivedWithPermanentMerits(character);
-  const health = Math.max(1, Number(derived.Vitalidade ?? 5));
-  const willpower = Math.max(0, Number(derived.ForçaDeVontade ?? 0));
+  const health = Math.max(1, Number(derived.Health ?? 5));
+  const willpower = Math.max(0, Number(derived.Willpower ?? 0));
   const currentWillpower = Math.max(0, Math.min(willpower, Number(state.willpower_current ?? willpower)));
   const integrity = boundedIntegrity(data.integrity);
   const aspirations = stringList(data.aspirations);

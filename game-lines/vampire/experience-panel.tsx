@@ -198,7 +198,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const humanityMaximum = Math.max(0, 10 - Number(bloodSorcery.cruac_rating ?? 0));
   const mysteryId = String(ordo.mystery_id ?? "");
   const limit = Math.max(5, Number(character.derived.LimiteDeCaracteristica ?? 5));
-  const permanentWillpowerMaximum = Math.max(1, Number(character.derived.ForçaDeVontade ?? 1));
+  const permanentWillpowerMaximum = Math.max(1, Number(character.derived.Willpower ?? 1));
   const packWillpowerInvestment = character.line_data.blood_tether_pack_active === true ? 1 : 0;
   const coilInMystery = covenantIds.includes("ordo-dracul") && Boolean(mysteryId) && chosenOption === `coil-${mysteryId}`;
   const currentDiscipline = Number(disciplines[chosenOption] ?? 0);

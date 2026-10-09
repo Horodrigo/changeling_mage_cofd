@@ -29,14 +29,16 @@ export function mortalBreakingPointPool(resolve: unknown, composure: unknown, in
 export function mortalDerived(character: Pick<CharacterSheet, "attributes" | "skills" | "line_data" | "derived">) {
   const { attributes, skills } = character;
   const size = 5;
+  const derived = { ...character.derived };
+  delete derived.Integridade;
   return {
-    ...character.derived,
-    Tamanho: size,
-    Vitalidade: size + numberValue(attributes.Stamina),
-    Deslocamento: size + numberValue(attributes.Strength) + numberValue(attributes.Dexterity),
-    ForçaDeVontade: numberValue(attributes.Resolve) + numberValue(attributes.Composure),
-    Iniciativa: numberValue(attributes.Dexterity) + numberValue(attributes.Composure),
-    Defesa: Math.min(numberValue(attributes.Dexterity), numberValue(attributes.Wits)) + numberValue(skills.Athletics),
-    Integridade: boundedIntegrity(character.line_data.integrity),
+    ...derived,
+    Size: size,
+    Health: size + numberValue(attributes.Stamina),
+    Speed: size + numberValue(attributes.Strength) + numberValue(attributes.Dexterity),
+    Willpower: numberValue(attributes.Resolve) + numberValue(attributes.Composure),
+    Initiative: numberValue(attributes.Dexterity) + numberValue(attributes.Composure),
+    Defense: Math.min(numberValue(attributes.Dexterity), numberValue(attributes.Wits)) + numberValue(skills.Athletics),
+    Integrity: boundedIntegrity(character.line_data.integrity),
   };
 }

@@ -12,11 +12,11 @@ export const EQUIPMENT=data.equipment as LocalizedItem<Equipment>[];
 export function derivedTraitsWithArmor(derived:Record<string,unknown>,armorId:unknown){
  const armor=ARMORS.find((item)=>item.id===String(armorId??""));
  return {
-  Tamanho:Number(derived.Tamanho??5),
-  Deslocamento:Number(derived.Deslocamento??0)+(armor?.speed??0),
-  Defesa:Number(derived.Defesa??0)+(armor?.defense??0),
-  Iniciativa:Number(derived.Iniciativa??0),
-  Armadura:typeof derived.Armadura==="string"?derived.Armadura:`${armor?.general??0}/${armor?.ballistic??0}`,
+  Size:Number(derived.Size??5),
+  Speed:Number(derived.Speed??0)+(armor?.speed??0),
+  Defense:Number(derived.Defense??0)+(armor?.defense??0),
+  Initiative:Number(derived.Initiative??0),
+  Armor:typeof derived.Armor==="string"?derived.Armor:`${armor?.general??0}/${armor?.ballistic??0}`,
  };
 }
 

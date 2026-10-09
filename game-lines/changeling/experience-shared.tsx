@@ -61,7 +61,7 @@ export function purchasePreview(input: {
   };
   return {
     label: input.lostWillpower ? `${translate(locale, "ui.willpower")} ${input.targetRating}` : translate(locale, "ui.noLostDots"),
-    cost: input.lostWillpower ? input.targetRating - (Number(character.derived.ForçaDeVontade ?? 1) - input.lostWillpower) : 0,
+    cost: input.lostWillpower ? input.targetRating - (Number(character.derived.Willpower ?? 1) - input.lostWillpower) : 0,
   };
 }
 
@@ -69,22 +69,22 @@ export function recalculateCtlDerived(sheet: CharacterSheet) {
   const a = sheet.attributes, s = sheet.skills;
   sheet.derived = {
     ...sheet.derived,
-    Tamanho: 5,
-    Vitalidade: 5 + Number(a.Stamina ?? 1),
-    Deslocamento: 5 + Number(a.Strength ?? 1) + Number(a.Dexterity ?? 1),
-    ForçaDeVontade: Number(a.Resolve ?? 1) + Number(a.Composure ?? 1),
-    Iniciativa: Number(a.Dexterity ?? 1) + Number(a.Composure ?? 1),
-    Defesa: Math.min(Number(a.Dexterity ?? 1), Number(a.Wits ?? 1)) + Number(s.Athletics ?? 0),
-    LucidezMaxima: Number(a.Wits ?? 1) + Number(a.Composure ?? 1),
+    Size: 5,
+    Health: 5 + Number(a.Stamina ?? 1),
+    Speed: 5 + Number(a.Strength ?? 1) + Number(a.Dexterity ?? 1),
+    Willpower: Number(a.Resolve ?? 1) + Number(a.Composure ?? 1),
+    Initiative: Number(a.Dexterity ?? 1) + Number(a.Composure ?? 1),
+    Defense: Math.min(Number(a.Dexterity ?? 1), Number(a.Wits ?? 1)) + Number(s.Athletics ?? 0),
+    ClarityMaximum: Number(a.Wits ?? 1) + Number(a.Composure ?? 1),
   };
 }
 
 export function derivedWithPermanentMerits(character: CharacterSheet) {
   const derived = derivedWithCommonMerits(character);
-  derived.LucidezMaxima = Number(derived.LucidezMaxima ?? derived.ClarezaMaxima ?? 1) + permanentClarityBonus(character.current_state);
+  derived.ClarityMaximum = Number(derived.ClarityMaximum ?? derived.ClarezaMaxima ?? 1) + permanentClarityBonus(character.current_state);
   if (character.line_data.seeming === "Beast") {
-    derived.Iniciativa = Number(derived.Iniciativa ?? 0) + 3;
-    derived.Deslocamento = Number(derived.Deslocamento ?? 0) + 3;
+    derived.Initiative = Number(derived.Initiative ?? 0) + 3;
+    derived.Speed = Number(derived.Speed ?? 0) + 3;
   }
   return derived;
 }

@@ -177,7 +177,7 @@ test("only Changeling enforces catalog Mantle as an existing allocation; a Homeb
 });
 
 test("neutral Merit context never reads line_data and applies only explicitly supplied Skill bonuses without mutation", () => {
-  const sheet = { game_line: "CofD", attributes: { Wits: 2 }, skills: { Occult: 2 }, merits: [], derived: { Tamanho: 6 } };
+  const sheet = { game_line: "CofD", attributes: { Wits: 2 }, skills: { Occult: 2 }, merits: [], derived: { Size: 6 } };
   Object.defineProperty(sheet, "line_data", { get() { throw new Error("Core accessed line mechanics"); } });
   const context = meritContextForSheet(sheet, catalog, ["mortal"], { Occult: 1, Medicine: 2 });
   assert.deepEqual(context.skills, { Occult: 3, Medicine: 2 });

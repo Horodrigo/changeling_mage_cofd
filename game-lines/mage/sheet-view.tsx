@@ -408,8 +408,8 @@ export function MageCharacterPaper({
     gnosis <= 2 ? 1 : gnosis <= 5 ? 2 : gnosis <= 8 ? 3 : 4;
   const powerRating = gnosis;
   const resource = powerResourceLimits(powerRating);
-  const health = Math.max(1, Number(derived.Vitalidade ?? 5));
-  const baseWillpower = Math.max(1, Number(derived.ForçaDeVontade ?? 1));
+  const health = Math.max(1, Number(derived.Health ?? 5));
+  const baseWillpower = Math.max(1, Number(derived.Willpower ?? 1));
   const lostWillpower = boundedNumber(
     character.current_state?.willpower_lost_dots,
     baseWillpower - 1,
