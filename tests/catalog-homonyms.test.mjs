@@ -115,12 +115,16 @@ test("Merit Builder, XP selections, purchase previews and semantic histories sho
   }
 });
 
-test("exactly six cross-line Condition homonyms have bilingual presentation qualifiers, without changing canonical names", () => {
+test("cross-line Condition homonyms and line-owned Soulless variants retain their presentation qualifiers", () => {
   const groups = Map.groupBy(all, item => item.originalName);
   const collisions = [...groups].filter(([, items]) => new Set(items.map(item => item.line)).size > 1);
-  assert.deepEqual(collisions.map(([name]) => name).sort(), ["Addicted", "Charmed", "Humbled", "Lethargic", "Oathbreaker", "Thrall"]);
-  assert.equal(all.filter(item => item.nameQualifier).length, 12);
+  assert.deepEqual(collisions.map(([name]) => name).sort(), ["Addicted", "Charmed", "Humbled", "Lethargic", "Oathbreaker", "Soulless", "Thrall"]);
+  assert.equal(all.filter(item => item.nameQualifier).length, 14);
   for (const item of all) {
+    if (item.id === "soulless" && !item.line) {
+      assert.equal(item.nameQualifier, undefined, "Core retains its neutral Integrity variant");
+      continue;
+    }
     if (new Set(groups.get(item.originalName).map(other => other.line)).size > 1) {
       assert.equal(item.name, item.originalName);
       const line = lines.find(line => line.id === item.line);
