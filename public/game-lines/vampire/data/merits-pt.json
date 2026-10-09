@@ -551,16 +551,6 @@
       { "rating": 5, "name": "Fanático", "description": "Receba três pontos de Méritos para os Méritos concedidos pelos Athenians, ou um ponto de Perícia de outra função." }
     ]
   },
-  "vtr-nhsb:each-to-each": {
-    "name": "De Cada Um para Todos",
-    "description": "Gaste um turno transmitindo uma mensagem ouvida por todos os Nereid a até Potência de Sangue × 10 milhas, enquanto se move a no máximo metade do Deslocamento.",
-    "prerequisites": "Nereid"
-  },
-  "vtr-nhsb:swimmers-skin": {
-    "name": "Pele de Nadador",
-    "description": "Mova-se e lute livremente debaixo d'água; com três pontos, corra debaixo d'água com o triplo do Deslocamento por um número de turnos igual à Potência de Sangue.",
-    "prerequisites": "Nereid"
-  },
   "vtr-onyx-path:three-heads-kerberos": {
     "name": "As Três Cabeças de Kerberos",
     "description": "Escolha o aspecto competitivo, monstruoso ou sedutor; cada aspecto é comprado como uma instância separada do Estilo.",

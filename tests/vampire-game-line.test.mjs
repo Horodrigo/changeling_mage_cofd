@@ -8,6 +8,26 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const vite = await createServer({ appType: "custom", configFile: false, root, server: { middlewareMode: true, hmr: false }, resolve: { alias: { "@": root } } });
 after(() => vite.close());
 
+test("Nereid-exclusive content is absent from catalogs while existing purchases remain stored and refundable", async () => {
+  const powers = JSON.parse(await readFile(new URL('../public/game-lines/vampire/data/powers.json', import.meta.url), 'utf8'));
+  const merits = JSON.parse(await readFile(new URL('../public/game-lines/vampire/data/merits.json', import.meta.url), 'utf8'));
+  assert.doesNotMatch(JSON.stringify([powers, merits]), /Nereid|devotion-sea-witch-gift|devotion-sirens-sweet-visage|vtr-nhsb:each-to-each|vtr-nhsb:swimmers-skin/i);
+  const { blankPrintCharacter } = await vite.ssrLoadModule('/app/workspace/blank-print-character.ts');
+  const { normalizeStoredSheet } = await vite.ssrLoadModule('/lib/character-persistence.ts');
+  const { refundVampireAdvancement } = await vite.ssrLoadModule('/game-lines/vampire/experience-refunds.ts');
+  const sheet = blankPrintCharacter('VtR');
+  sheet.line_data.devotion_ids = ['devotion-sea-witch-gift', 'devotion-sirens-sweet-visage'];
+  sheet.merits = [{ definitionId: 'vtr-nhsb:each-to-each', instanceId: 'old-purchase', name: 'Each to Each', dots: 1, creationDots: 0, experienceDots: 1, configuration: { notes: 'Authored' } }];
+  const normalized = normalizeStoredSheet(sheet);
+  assert.deepEqual(normalized.line_data.devotion_ids, sheet.line_data.devotion_ids);
+  assert.deepEqual(JSON.parse(JSON.stringify(normalized.merits)), sheet.merits);
+  assert.deepEqual(normalized.current_state, sheet.current_state);
+  assert.equal(refundVampireAdvancement(normalized, { kind: 'devotion', id: 'devotion-sea-witch-gift' }, powers, merits), true);
+  assert.deepEqual(normalized.line_data.devotion_ids, ['devotion-sirens-sweet-visage']);
+  assert.equal(refundVampireAdvancement(normalized, { kind: 'merit', definitionId: 'vtr-nhsb:each-to-each', instanceId: 'old-purchase', name: 'Translated name', dots: 1 }, powers, merits), true);
+  assert.deepEqual(normalized.merits, []);
+});
+
 test("Vampire derived traits include physical Disciplines and audited Blood Potency limits", async () => {
   const { vampireDerived } = await vite.ssrLoadModule("/game-lines/vampire/creation-rules.ts");
   const derived = vampireDerived(
@@ -82,7 +102,7 @@ test("Vampire catalogs group core, historical, and uncommon Clans", async () => 
   assert.ok(merits.length >= 45);
   assert.equal(powers.disciplines.length, 23);
   assert.equal(powers.ritualDisciplines.length, 5);
-  assert.equal(powers.devotions.length, 358);
+  assert.equal(powers.devotions.length, 356);
   assert.equal(powers.devotions.find(item => item.id === "devotion-treasured-servant")?.source, "False Gods: Ventrue", "The independently printed p. 110 Devotion is no longer merged into Soul Transfer");
   assert.equal(powers.lashes.length, 2);
   assert.equal(powers.cruacRites.length, 76);

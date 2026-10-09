@@ -6992,52 +6992,6 @@
       "requirement": "The vampire must touch the victim. This Devotion only affects the subject’s unique clan Discipline; it cannot affect Animalism, Obfuscate or physical Disciplines."
     },
     {
-      "id": "devotion-sea-witch-gift",
-      "kind": "devotion",
-      "name": "Sea Witch's Gift",
-      "translatedName": "Dádiva da Bruxa Marinha",
-      "prerequisites": "Nereid; Protean ••",
-      "experienceCost": 1,
-      "cost": "1 Vitae",
-      "summary": "Regain legs for an hour while ignoring the Nereid Bane.",
-      "source": "Night Horrors: Spilled Blood",
-      "page": 139,
-      "dicePool": "None",
-      "action": "Instant",
-      "effect": "By spending a Vitae, a Nereid using this devotion sheds her tail for an hour and regains her lost legs. She may spend additional Vitae to continue the effect without being compelled to return to the water. Sirens are deeply uncomfortable on land, and the expenditures necessary for prolonged time ashore make it likely that, if forced to stay two-legged, she will become ravenously hungry.",
-      "presentationPt": {
-        "prerequisites": "Nereid; Metamorfose ••",
-        "cost": "1 Vitae",
-        "summary": "Recupera as pernas por uma hora enquanto ignora a Maldição Nereid.",
-        "dicePool": "Nenhuma",
-        "action": "Instantânea",
-        "effect": "Ao gastar uma Vitae, uma Nereid usando esta Devoção perde sua cauda por uma hora e recupera as pernas perdidas. Ela pode gastar Vitae adicional para prolongar o efeito sem ser compelida a retornar à água. Sereias ficam profundamente desconfortáveis em terra, e os gastos necessários para permanecer por muito tempo fora da água tornam provável que, se forem forçadas a manter as duas pernas, fiquem famintas."
-      }
-    },
-    {
-      "id": "devotion-sirens-sweet-visage",
-      "kind": "devotion",
-      "name": "Siren's Sweet Visage",
-      "translatedName": "Doce Semblante da Sereia",
-      "prerequisites": "Nereid; Obfuscate ••••, Majesty •",
-      "experienceCost": 2,
-      "cost": "1 Vitae",
-      "summary": "Conceal abnormalities and weaken resistance to persuasion or intimidation.",
-      "source": "Night Horrors: Spilled Blood",
-      "page": 140,
-      "dicePool": "Presence + Empathy + Majesty vs. Blood Potency + Composure",
-      "action": "Instant",
-      "effect": "No matter how distended her body might be from human norms — jellied flesh no longer being pushed inward by deepsea pressure, skin so pale that even other vampires gasp — this devotion hides her abnormalities completely, functioning similarly to Familiar Stranger, except the Siren does not need to take on a visage other than her own. While using this Devotion, the Nereid also becomes strangely compelling, drawing attention to herself wherever she goes. Those affected by Siren’s Sweet Visage suffer a die penalty equal to her successes when resisting her Persuasionor Intimidation-based Social maneuvers.",
-      "presentationPt": {
-        "prerequisites": "Nereid; Ofuscação ••••, Majestade •",
-        "cost": "1 Vitae",
-        "summary": "Oculta anormalidades e enfraquece a resistência à persuasão ou intimidação.",
-        "dicePool": "Presença + Empatia + Majestade contra Potência de Sangue + Compostura",
-        "action": "Instantânea",
-        "effect": "Por mais que seu corpo se afaste dos padrões humanos — carne gelatinosa sem a pressão das profundezas do mar, pele tão pálida que até outros vampiros ficam espantados — esta Devoção oculta completamente suas anormalidades. Funciona de modo semelhante a Estranho Familiar, mas a Sereia não precisa assumir uma aparência diferente da sua própria. Enquanto usa esta Devoção, a Nereid também se torna estranhamente cativante, atraindo atenção por onde passa. Quem for afetado por Doce Semblante da Sereia sofre uma penalidade em dados igual aos sucessos dela ao resistir a suas Manobras Sociais baseadas em Persuasão ou Intimidação."
-      }
-    },
-    {
       "id": "devotion-hounds-hell",
       "kind": "devotion",
       "name": "Hounds of Hell",

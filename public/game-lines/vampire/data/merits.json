@@ -1819,41 +1819,6 @@
     ]
   },
   {
-    "id": "vtr-nhsb:each-to-each",
-    "name": "Each to Each",
-    "ratings": [
-      1
-    ],
-    "line": "VtR",
-    "sourceId": "vtr-nh-spilled-blood",
-    "source": "Night Horrors: Spilled Blood",
-    "category": "Nereid",
-    "priority": 10,
-    "translatedName": "Each to Each",
-    "description": "Spend a turn broadcasting a message heard by every Nereid within Blood Potency × 10 miles while moving at no more than half Speed.",
-    "descriptionEn": "Spend a turn broadcasting a message heard by every Nereid within Blood Potency × 10 miles while moving at no more than half Speed.",
-    "prerequisites": "Nereid",
-    "page": 139
-  },
-  {
-    "id": "vtr-nhsb:swimmers-skin",
-    "name": "Swimmer's Skin",
-    "ratings": [
-      2,
-      3
-    ],
-    "line": "VtR",
-    "sourceId": "vtr-nh-spilled-blood",
-    "source": "Night Horrors: Spilled Blood",
-    "category": "Nereid",
-    "priority": 10,
-    "translatedName": "Swimmer's Skin",
-    "description": "Move and fight freely underwater; at three dots, sprint underwater at triple Speed for Blood Potency turns.",
-    "descriptionEn": "Move and fight freely underwater; at three dots, sprint underwater at triple Speed for Blood Potency turns.",
-    "prerequisites": "Nereid",
-    "page": 139
-  },
-  {
     "id": "vtr-onyx-path:three-heads-kerberos",
     "name": "The Three Heads of Kerberos",
     "ratings": [

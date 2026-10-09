@@ -141,7 +141,6 @@ export function vampireMeritFilterCategory(merit: Pick<MeritDefinition, "categor
   if (category === "Fighting Style") return "Fighting Styles";
   if (category === "Social Style") return "Social Styles";
   if (["Style", "Crúac Style"].includes(category)) return "Supernatural Styles";
-  if (category === "Nereid") return "Restricted";
   return category;
 }
 
