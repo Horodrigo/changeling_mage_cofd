@@ -10,7 +10,7 @@ O tema Werewolf acompanha essas categorias visuais sem copiar a botânica ou a g
 
 Cada linha usa seu WebP no botão de compra de Experiência. Na revisão, Mage e Vampire receberam traços planos, sem volume ou brilho; Changeling recebeu uma nova folha. Mortal e Werewolf mantêm os ícones aprovados. O texto, a ação e as regras de compra permanecem os existentes.
 
-Werewolf agora usa cantos de 210px no Desktop e 98px no Mobile, ligados por rulers. Separadores horizontais e verticais organizam as categorias; título, subtítulo e emblema ficam centralizados. Os comentários em `game-lines/werewolf/styles/sheet.css` identificam os controles de escala, posição, opacidade e margens de cada imagem para ajuste fino.
+Werewolf usa cantos de 210px no Desktop e 98px no Mobile, ligados por rulers. Separadores horizontais e verticais organizam as categorias. Após a referência enviada pelo usuário, o cabeçalho ficou horizontal: título à esquerda, subtítulo junto à base e assinatura à direita. No Mobile, os textos ficam empilhados à esquerda. Um novo ornamento baixo ocupa o centro da moldura superior; os lobos com a lua (`title.webp`) ficam no rodapé, com espaço reservado pela margem inferior. Os comentários em `game-lines/werewolf/styles/sheet.css` identificam os controles de escala, posição, opacidade e margens de cada imagem para ajuste fino.
 
 Mage permite quebra de linha no botão de compra para manter ícone e texto dentro do painel. Os nove campos de identidade usam três linhas por coluna no Desktop e na impressão; somente o Mobile usa quatro linhas.
 
@@ -45,6 +45,14 @@ Prefixo comum: “Create a tiny UI experience icon, not a button mockup.”
 Sufixo comum: “One-color two-dimensional line art on true transparency. The subject fills 85 percent of square canvas. Designed to read at 24px. NO photorealism, NO 3D, NO metal, NO gemstones, NO gradients, NO highlights, NO shadows, NO frame, NO text. Sparse internal detail, strong silhouette.”
 
 Esses prompts substituem os ícones Mage/Vampire da primeira geração registrada acima. Os três arquivos foram recortados pelos limites do alfa e reduzidos para até 96px, preservando a transparência.
+
+### Ornamento do cabeçalho Werewolf
+
+Arquivo: `public/game-lines/werewolf/images/header-ornament.webp`, 840 × 138, com alfa. Gerado pela ferramenta integrada ImageGen e otimizado para WebP. Prompt final:
+
+“Use case: stylized-concept. Production transparent ornament for the TOP border of a Werewolf tabletop character sheet. Create a very low, wide horizontal hand-engraved woodcut flourish: a small central crescent moon crossed by three shallow claw scratches, with sparse thorn-like angular strokes extending horizontally to each side. Dark charcoal brown #39261f and muted rust #713c31 ink only. Flat printed ink, slightly distressed edges, strong sparse silhouette. Overall artwork aspect ratio about 7:1, only a thin horizontal band, no tall uprights. Symmetrical balance. No wolves, no animals, no text, no lettering, no background, no paper, no mockup, no realistic materials, no shadows, no gradients. True transparent background around the isolated ornament.”
+
+Verificação desta alteração: prévia isolada com `CharacterPaperShell` e CSS reais em Desktop/Mobile, português/inglês; cabeçalho e rodapé conferidos visualmente. Quatro testes de ownership/referências de assets e `git diff --check` aprovados. Não houve nova rodada da suíte completa ou de impressão.
 
 ## Fontes: proposta aprovada e aplicada
 

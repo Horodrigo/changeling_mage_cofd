@@ -107,7 +107,7 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
     --wtf-rail-inset: 27px;
     --wtf-rail-start: 188px;
     --wtf-rule: #713c3199;
-    padding: 48px 52px 60px;
+    padding: 48px 52px 128px;
     border: 2px solid #806453;
     border-radius: 0;
     /* paper-texture.webp: background-size controla a escala do grão do papel. */
@@ -154,16 +154,53 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
   }
   .wtf-frame-rail-left { left: var(--wtf-rail-inset); }
   .wtf-frame-rail-right { right: var(--wtf-rail-inset); }
-  /* title.webp: largura/altura do emblema e padding-top reservam espaço antes do texto. */
+  /* Ornamentos centrais: o papel encobre o ruler apenas sob o desenho. */
+  .wtf-frame::before, .wtf-frame::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background-repeat: no-repeat, repeat;
+  }
+  /* header-ornament.webp: top, width e height ajustam o ornamento baixo do topo. */
+  .wtf-frame::before {
+    top: 3px;
+    width: 280px;
+    height: 46px;
+    background-image: url("/game-lines/werewolf/images/header-ornament.webp"), url("/game-lines/werewolf/images/paper-texture.webp");
+    background-size: contain, 768px;
+    background-position: center;
+  }
+  /* title.webp: lobos no rodapé; padding-bottom da folha reserva o espaço do desenho. */
+  .wtf-frame::after {
+    bottom: 12px;
+    width: 300px;
+    height: 96px;
+    background-image: url("/game-lines/werewolf/images/title.webp"), url("/game-lines/werewolf/images/paper-texture.webp");
+    background-size: contain, 768px;
+    background-position: center;
+  }
+  /* Cabeçalho compacto: nome à esquerda, subtítulo junto à base e assinatura à direita. */
   .wtf-sheet .cod-sheet-title {
-    padding: 82px 0 18px;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 24px;
+    padding: 18px 0 14px;
     margin-bottom: 10px;
     border-bottom: 3px double var(--wtf-rule);
-    background: url("/game-lines/werewolf/images/title.webp") center top / 240px 77px no-repeat;
+    text-align: left;
+  }
+  .wtf-sheet .cod-sheet-title > div {
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0 16px;
+    min-width: 0;
   }
   .wtf-sheet .cod-sheet-title span {
     color: #39261f;
-    font: 400 46px/1.1 "Werewolf Arnova", Georgia, serif;
+    font: 400 64px/1.1 "Werewolf Arnova", Georgia, serif;
     letter-spacing: .04em;
   }
   .wtf-sheet .cod-sheet-title strong {
@@ -171,7 +208,7 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
     font: 400 17px/1.2 Georgia, serif;
     letter-spacing: .2em;
   }
-  .wtf-sheet .cod-sheet-title p { margin: 4px 0 0; font-size: 11px; }
+  .wtf-sheet .cod-sheet-title p { flex: none; width: auto; margin: 0; font-size: 11px; text-align: right; }
   .wtf-sheet :is(.official-heading, .official-trait-block h4, .experience-title > span) {
     font-family: "Werewolf Arnova", Georgia, serif;
     font-weight: 400;
@@ -270,9 +307,13 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
     --wtf-corner-size: 98px;
     --wtf-rail-inset: 12px;
     --wtf-rail-start: 87px;
-    padding: 26px 22px 36px;
+    padding: 26px 22px 100px;
   }
-  .wtf-sheet .cod-sheet-title { padding-top: 61px; background-size: 180px 58px; }
+  .wtf-frame::before { top: 0; width: 158px; height: 26px; }
+  .wtf-frame::after { bottom: 6px; width: 240px; height: 77px; }
+  .wtf-sheet .cod-sheet-title { flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px 0; }
+  .wtf-sheet .cod-sheet-title > div { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .wtf-sheet .cod-sheet-title p { text-align: left; font-size: 9px; }
   .wtf-sheet .cod-sheet-title span { font-size: clamp(27px, 8vw, 36px); }
   .wtf-sheet .cod-sheet-title strong { font-size: 12px; letter-spacing: .15em; }
   .wtf-sheet .official-trait-grid > .official-trait-block + .official-trait-block::before,
