@@ -893,6 +893,10 @@ test("Desktop sheet shows current-form Health, manual healing and preserved over
   const markup = render(createElement(WerewolfCharacterPaper, { character, catalogs, updateState: () => assert.fail("render mutated state"), updateSheet: () => assert.fail("render mutated structure") }));
   assert.match(markup, /Current form for Health/); assert.match(markup, />Heal</);
   assert.match(markup, /Spend Experience/);
+  assert.ok(markup.indexOf('data-slot="experience"') < markup.indexOf('data-slot="aspirations"'));
+  assert.ok(markup.indexOf('class="wtf-harmony"') < markup.indexOf('data-slot="conditions"'));
+  assert.match(markup, /trigger-forms/);
+  assert.doesNotMatch(markup, /wtf-form-columns|wtf-passives/);
   assert.match(markup, /6 damage marks beyond this form/);
   assert.equal((markup.match(/class="health-box lethal"/g) ?? []).length, 7);
   assert.doesNotMatch(markup, /missing translation/); assert.deepEqual(character, before);
@@ -1176,13 +1180,13 @@ test("Rite XP chooser shows complete rules and disabled reasons; creation blocks
   assert.doesNotMatch(selected, /disabled=""/);
 });
 
-test("Builder and mobile Details render Portuguese catalog presentation without translating stored identities", async () => {
+test("Builder and mobile Powers render Portuguese catalog presentation without translating stored identities", async () => {
   // Test-only SSR locale/mobile snapshots; production defaults and navigation are unchanged.
   const portuguese = await server({ plugins: [{ name: "werewolf-test-snapshots", enforce: "pre", transform(code, path) {
     const normalized = path.replaceAll("\\", "/");
     if (normalized.endsWith("/lib/i18n.tsx")) return code.replace('const serverLocale = ():Locale => "en-US";', 'const serverLocale = ():Locale => "pt-BR";');
     if (normalized.endsWith("/hooks/use-mobile.ts")) return "export function useIsMobile() { return true; }";
-    if (normalized.endsWith("/game-lines/werewolf/sheet.tsx")) return code.replace('mobile: "summary"', 'mobile: "details"');
+    if (normalized.endsWith("/game-lines/werewolf/sheet.tsx")) return code.replace('mobile: "summary"', 'mobile: "powers"');
   } }] });
   try {
     const { LanguageProvider: PtProvider } = await portuguese.ssrLoadModule("/lib/i18n.tsx");
@@ -1199,8 +1203,8 @@ test("Builder and mobile Details render Portuguese catalog presentation without 
     const ptRender = element => renderToStaticMarkup(createElement(PtProvider, null, element));
     const markup = ptRender(createElement(PtSheet, { character, catalogs, updateState: () => {}, updateSheet: () => {} }));
     assert.match(markup, /mobile-character-sheet/);
-    assert.doesNotMatch(markup, /wtf-form-columns|wtf-mobile-form/);
-    for (const phrase of ["Corpo do Lobo", "Caçador Destemido", "Caçada Sagrada"]) assert.ok(markup.includes(phrase), phrase);
+    assert.doesNotMatch(markup, /wtf-form-columns|wtf-mobile-form|Corpo do Lobo/);
+    for (const phrase of ["Caçador Destemido", "Caçada Sagrada"]) assert.ok(markup.includes(phrase), phrase);
     assert.doesNotMatch(markup, /missing translation|<summary>Fearless Hunter/);
     assert.match(markup, /Fetiches e Talens|Boneca de Bruxa/); assert.match(markup, /Quantidade restante/);
     for (const phrase of ["Regras e exemplos de Totem", "O Ninho Vigilante", "Pedra Inabalável", "Espreitador da Morte", "Proibição:", "Fraqueza:", "Numina:"]) assert.ok(markup.includes(phrase), phrase);

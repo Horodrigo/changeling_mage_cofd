@@ -2,7 +2,7 @@ export const werewolfMessages = {
   "en-US": {
     meritCategories: { Werewolf: "Werewolf", "Werewolf Fighting": "Werewolf Fighting" },
     werewolf: {
-      title: "Werewolf", forsaken: "The Forsaken", healthForm: "Current form for Health", hishuTraits: "Attributes shown in Hishu. Compare all forms under Details.",
+      title: "Werewolf", forsaken: "The Forsaken", healthForm: "Current form for Health", hishuTraits: "Attributes shown in Hishu. Compare all forms under Forms.",
       preservedDamage: "{amount} damage marks beyond this form's Health remain stored; changing form does not heal them.",
       naturalAndEquipmentArmor: "Natural {natural}; equipment {equipment}",
       creationTraitRange: "Starting Attributes must be 1–5 and Skills 0–5 before the free Auspice dot.",
@@ -99,7 +99,7 @@ export const werewolfMessages = {
         invalidRite: "Remove duplicate or unknown Rites.", riteTribe: "Some selected Rites are taught only to another Tribe.",
         riteDots: "Allocate all starting Rite dots without exceeding the allowance.",
       },
-      forms: "Forms", bodyOfTheWolf: "Body of the Wolf", perception: "Wolf-sense Perception bonus",
+      notesTab: "Notes", traitsTab: "Traits", forms: "Forms", bodyOfTheWolf: "Body of the Wolf", perception: "Wolf-sense Perception bonus",
       formPerception: "Perception", formFirearmsDefense: "Firearms Defense",
       firearmsDefense: "Defense against Firearms", primalUrge: "Primal Urge", essence: "Essence",
       harmony: "Harmony", renown: "Renown", auspice: "Auspice", tribe: "Tribe",
@@ -163,7 +163,7 @@ export const werewolfMessages = {
   "pt-BR": {
     meritCategories: { Werewolf: "Lobisomem", "Werewolf Fighting": "Combate de Lobisomem" },
     werewolf: {
-      title: "Lobisomem", forsaken: "Os Destituídos", healthForm: "Forma atual para Vitalidade", hishuTraits: "Atributos apresentados em Hishu. Compare todas as formas em Detalhes.",
+      title: "Lobisomem", forsaken: "Os Destituídos", healthForm: "Forma atual para Vitalidade", hishuTraits: "Atributos apresentados em Hishu. Compare todas as formas em Formas.",
       preservedDamage: "{amount} marcas de dano além da Vitalidade desta forma permanecem armazenadas; trocar de forma não as cura.",
       naturalAndEquipmentArmor: "Natural {natural}; equipamento {equipment}",
       creationTraitRange: "Atributos iniciais devem estar entre 1 e 5 e Perícias entre 0 e 5 antes do ponto gratuito do Auspício.",
@@ -260,7 +260,7 @@ export const werewolfMessages = {
         invalidRite: "Remova Ritos duplicados ou desconhecidos.", riteTribe: "Alguns Ritos selecionados são ensinados somente a outra Tribo.",
         riteDots: "Distribua todos os pontos iniciais de Ritos sem ultrapassar a quantidade disponível.",
       },
-      forms: "Formas", bodyOfTheWolf: "Corpo do Lobo", perception: "Bônus de percepção lupina",
+      notesTab: "Notas", traitsTab: "Traços", forms: "Formas", bodyOfTheWolf: "Corpo do Lobo", perception: "Bônus de percepção lupina",
       formPerception: "Percepção", formFirearmsDefense: "Defesa contra disparos",
       firearmsDefense: "Defesa contra Armas de Fogo", primalUrge: "Instinto Primitivo", essence: "Essência",
       harmony: "Harmonia", renown: "Renome", auspice: "Auspício", tribe: "Tribo",

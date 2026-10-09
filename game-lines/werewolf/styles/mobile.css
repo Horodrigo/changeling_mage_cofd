@@ -1,0 +1,52 @@
+@media screen and (max-width: 767px) {
+  /* Duas linhas mantêm todas as abas visíveis, com a textura da aba ativa da linha. */
+  .wtf-sheet.mobile-character-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list {
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+    overflow: visible;
+    gap: 3px;
+    padding: 4px;
+    border: 1px solid #a68a75;
+    box-shadow: 0 3px 8px #39261f1a;
+  }
+  .wtf-sheet.mobile-character-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button {
+    flex: 1 1 22%;
+    min-width: 0;
+    min-height: 44px;
+    height: auto;
+    padding: 6px 3px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font: 400 13px/1.2 Georgia, serif;
+    letter-spacing: 0;
+    text-transform: none;
+    border: 1px solid #a68a7555;
+  }
+  .wtf-sheet.mobile-character-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button:nth-child(-n+3) { flex-basis: 30%; }
+  .wtf-sheet.mobile-character-sheet .mobile-sheet-page { padding: 14px 0 20px; }
+  .wtf-sheet.mobile-character-sheet .sheet-identity-grid { padding-top: 0; padding-bottom: 12px; }
+  .wtf-sheet.mobile-character-sheet .official-field { flex-direction: column; align-items: stretch; gap: 2px; }
+  .wtf-sheet.mobile-character-sheet .official-field strong {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+  }
+  .wtf-sheet.mobile-character-sheet .official-heading { font-size: 21px; margin-block: 16px 10px; }
+  .wtf-sheet.mobile-character-sheet .wtf-harmony .official-heading { font-size: 19px; margin: 0; }
+  .wtf-sheet.mobile-character-sheet .wtf-mobile-form > .panel-heading {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+  .wtf-sheet.mobile-character-sheet .wtf-mobile-form > .panel-heading > h3 { font-size: 21px; }
+  .wtf-sheet.mobile-character-sheet .wtf-mobile-form [data-slot="select-trigger"] { width: 140px; min-height: 44px; }
+  .wtf-sheet.mobile-character-sheet .wtf-form-column { font-size: 14px; }
+  .wtf-sheet.mobile-character-sheet .wtf-form-column dl > div { min-height: 30px; align-items: center; }
+  .wtf-sheet.mobile-character-sheet .wtf-power-filters { gap: 8px; }
+  .wtf-sheet.mobile-character-sheet .wtf-power-filters > * { flex-basis: 100%; }
+}
+@media screen and (max-width: 359px) {
+  .wtf-sheet.mobile-character-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button { font-size: 12px; }
+}

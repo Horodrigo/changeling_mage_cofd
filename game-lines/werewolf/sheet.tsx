@@ -49,6 +49,7 @@ import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configur
 import { INTERDISCIPLINARY_SPECIALTY_ID } from "@/lib/core/character/specialty-merits";
 import { commonExpandedConfigurationLines } from "@/app/workspace/merit-configuration-presentation";
 import "./styles/sheet.css";
+import "./styles/mobile.css";
 
 export function WerewolfCharacterPaper({ character, updateState, updateSheet, catalogs }: GameLineSheetProps) {
   const { locale, t } = useLanguage();
@@ -143,11 +144,16 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const aspirationList = <EditableList values={werewolfIds(data.aspirations)} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={value => setLine("aspirations", value)}/>;
   const conditionList = <ConditionManager selected={conditions} catalog={conditionCatalog} onChange={value => setState("conditions", value)}/>;
   const experience = <WerewolfExperiencePanel character={character} catalogs={catalogs} updateSheet={updateSheet} updateState={updateState}/>;
-  const powers = <>
-    {!mobile && <FormsTable character={{ ...member }} reference={reference} merits={ownMerits}/>}
+  const anchors = <>
     <SheetHeading>{t("werewolf.anchors")}</SheetHeading>
     {reference.anchors.filter(anchor => anchor.id === data.blood || anchor.id === data.bone).map(anchor => <AnchorDetails key={anchor.id} anchor={anchor} reference={reference}/>)}
+  </>;
+  const forms = <>
+    {mobile ? <MobileForm character={member} reference={reference} merits={ownMerits} value={currentForm} onChange={setForm}/>
+      : <FormsTable character={member} reference={reference} merits={ownMerits}/>}
     <WerewolfPassives reference={reference} harmony={boundedHarmony(data.harmony)}/>
+  </>;
+  const powers = <>
     <div className="catalog-filters wtf-power-filters"><Input value={powerSearch} onChange={event => setPowerSearch(event.target.value)} aria-label={t("werewolf.searchPowers")} placeholder={t("werewolf.searchPowers")}/>
       <label>{t("ui.type")}<RuleSelect value={powerKind} onChange={setPowerKind} options={[
         { value: "all", label: t("ui.all"), localized: true }, { value: "moon", label: t("werewolf.moonGift"), localized: true },
@@ -186,19 +192,28 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   </div>;
   if (mobile) return <CharacterPaperShell line="WtF" mobile title={t("werewolf.title")} subtitle={t("werewolf.forsaken")}>
     {frame}
-    <SwipeableSheetTabs value={activeTab} onValueChange={setTab} tabs={[{ value: "summary", label: t("ui.summary") }, { value: "stats", label: t("ui.traits") }, { value: "details", label: t("ui.details") }, { value: "combat", label: t("ui.combat") }, { value: "notes", label: t("ui.notes") }]}>{{
-      summary: <>{identity}{health}{willpower}{powerStat}{essence}{harmony}<SheetHeading>{t("werewolf.renown")}</SheetHeading>{renownBlock}{experience}</>,
-      stats: <>{attributes}{skills}<SheetHeading>{t("ui.merits")}</SheetHeading>{meritList}<SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}<SheetHeading>{t("ui.conditions")}</SheetHeading>{conditionList}</>,
-      details: powers, combat: <><MobileForm character={member} reference={reference} merits={ownMerits} value={currentForm} onChange={setForm}/><CombatPage character={character} derived={derived} updateSheet={updateSheet}/></>, notes,
+    <SwipeableSheetTabs value={activeTab} onValueChange={setTab} tabs={[
+      { value: "summary", label: t("ui.summary") }, { value: "stats", label: t("werewolf.traitsTab") },
+      { value: "details", label: t("ui.details") }, { value: "forms", label: t("werewolf.forms") },
+      { value: "powers", label: t("ui.powers") }, { value: "combat", label: t("ui.combat") }, { value: "notes", label: t("werewolf.notesTab") },
+    ]}>{{
+      summary: <>{identity}{experience}<SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}</>,
+      stats: <>{attributes}{skills}</>,
+      details: <><SheetHeading>{t("werewolf.renown")}</SheetHeading>{renownBlock}<SheetHeading>{t("ui.merits")}</SheetHeading>{meritList}{anchors}{harmony}<SheetHeading>{t("ui.conditions")}</SheetHeading>{conditionList}</>,
+      forms,
+      powers: <>{powerStat}{essence}{powers}</>,
+      combat: <>{health}{willpower}<CombatPage character={character} derived={derived} updateSheet={updateSheet}/></>,
+      notes,
     }}</SwipeableSheetTabs>
   </CharacterPaperShell>;
   return <CharacterPaperShell line="WtF" title={t("werewolf.title")} subtitle={t("werewolf.forsaken")}>
     {frame}
     <Tabs value={activeTab} onValueChange={setTab}><TabsList className="ctl-sheet-tab-list" aria-label={t("ui.characterPages")}>
-      <TabsTrigger value="main">{t("ui.main")}</TabsTrigger><TabsTrigger value="details">{t("ui.details")}</TabsTrigger><TabsTrigger value="combat">{t("ui.combat")}</TabsTrigger><TabsTrigger value="notes">{t("ui.notes")}</TabsTrigger>
-    </TabsList><TabsContent value="main" className="ctl-sheet-page"><MainSheet className="wtf-main-body" identity={identity} attributes={attributes} skills={skills} specificPowers={renownBlock} specificPowersTitle={t("werewolf.renown")} merits={meritList} aspirations={<>{aspirationList}{harmony}</>} conditions={conditionList}
+      <TabsTrigger value="main">{t("ui.main")}</TabsTrigger><TabsTrigger value="forms">{t("werewolf.forms")}</TabsTrigger><TabsTrigger value="details">{t("ui.details")}</TabsTrigger><TabsTrigger value="combat">{t("ui.combat")}</TabsTrigger><TabsTrigger value="notes">{t("ui.notes")}</TabsTrigger>
+    </TabsList><TabsContent value="main" className="ctl-sheet-page"><MainSheet className="wtf-main-body" identity={identity} attributes={attributes} skills={skills} specificPowers={renownBlock} specificPowersTitle={t("werewolf.renown")} merits={meritList} aspirations={aspirationList} aspirationsAfterExperience lineSections={harmony} conditions={conditionList}
       health={health} willpower={willpower} powerStat={powerStat} fuel={essence} stability={null} derived={displayedDerived} armorId={data.combat_armor} experience={experience}/></TabsContent>
-      <TabsContent value="details" className="ctl-sheet-page powers-page">{powers}</TabsContent>
+      <TabsContent value="forms" className="ctl-sheet-page wtf-forms-page">{forms}</TabsContent>
+      <TabsContent value="details" className="ctl-sheet-page powers-page">{anchors}{powers}</TabsContent>
       <TabsContent value="combat" className="ctl-sheet-page powers-page"><CombatPage character={character} derived={derived} updateSheet={updateSheet}/></TabsContent>
       <TabsContent value="notes" className="ctl-sheet-page powers-page">{notes}</TabsContent>
     </Tabs>
