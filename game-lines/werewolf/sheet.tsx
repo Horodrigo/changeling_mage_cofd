@@ -197,7 +197,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
       { value: "details", label: t("ui.details") }, { value: "forms", label: t("werewolf.forms") },
       { value: "powers", label: t("ui.powers") }, { value: "combat", label: t("ui.combat") }, { value: "notes", label: t("werewolf.notesTab") },
     ]}>{{
-      summary: <>{identity}{experience}<SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}</>,
+      summary: <>{identity}<SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}{experience}</>,
       stats: <>{attributes}{skills}</>,
       details: <><SheetHeading>{t("werewolf.renown")}</SheetHeading>{renownBlock}<SheetHeading>{t("ui.merits")}</SheetHeading>{meritList}{anchors}{harmony}<SheetHeading>{t("ui.conditions")}</SheetHeading>{conditionList}</>,
       forms,

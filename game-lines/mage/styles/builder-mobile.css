@@ -1,0 +1,30 @@
+/* Mobile-only creation/editing composition for the Awakened template. */
+@media (max-width: 767px) {
+  .mta-template-grid { grid-template-columns: 1fr; }
+  .mta-template-grid > .mta-template-column { display: contents; }
+  /* Path */
+  .mta-template-grid > .mta-template-column:nth-child(1) > :nth-child(1) { order: 1; }
+  .mta-template-grid > .mta-template-column:nth-child(1) > :nth-child(2) { order: 1; }
+  /* Resistance Attribute */
+  .mta-template-grid > .mta-template-column:nth-child(1) > :nth-child(3) { order: 2; }
+  /* Order */
+  .mta-template-grid > .mta-template-column:nth-child(2) > :nth-child(1) { order: 3; }
+  /* Ministry */
+  .mta-template-grid > .mta-template-column:nth-child(2) > :nth-child(2) { order: 4; }
+  /* Virtue */
+  .mta-template-grid > .mta-template-column:nth-child(3) > :nth-child(1) { order: 5; }
+  /* Vice */
+  .mta-template-grid > .mta-template-column:nth-child(3) > :nth-child(2) { order: 6; }
+  /* Gnosis advancement notice */
+  /* Order benefits notice */
+  /* Arcana heading */
+  .mobile-mage-builder-template .mta-arcana-heading { order: 7; }
+  /* Arcana */
+  .mobile-mage-builder-template .mta-arcana-grid { order: 8; }
+  /* Starting Rotes */
+  .mobile-mage-builder-template .mta-starting-rotes { order: 9; }
+  /* Praxes */
+  .mobile-mage-builder-template .mta-praxes { order: 10; }
+  /* Merits */
+  .mobile-mage-builder-template .mta-merits { order: 11; }
+}

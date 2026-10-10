@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, Check, Save } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
@@ -11,7 +12,8 @@ import type { CharacterSheet, MeritSelection, Specialty } from "@/lib/core/chara
 import { reconcileSpecialtyMerits, specialtyMeritWasRemoved } from "@/lib/core/character/specialty-merits";
 import { commonMeritId } from "@/lib/core/character/merit-identities";
 import { creationMeritDots, creationMerits } from "@/lib/merit-progression";
-import { useLanguage } from "@/lib/i18n";
+import { localeFlag, useLanguage, type Locale } from "@/lib/i18n";
+import { useIsMobile } from "@/hooks/use-mobile";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 
 export type BuilderValidationIssue = { step: number; key: string; label: string };
@@ -234,7 +236,8 @@ export function CharacterBuilderShell({
   onCancel: () => void;
   onFinish: (draft: boolean, advancement?: CharacterSheet) => boolean;
 }) {
-  const { t } = useLanguage();
+  const { locale, setLocale, t } = useLanguage();
+  const isMobile = useIsMobile();
   const hasAdvancement = Boolean(prepareAdvancement && renderAdvancement);
   const advancementStep = 4 + lineSteps.length;
   const [exitOpen, setExitOpen] = useState(false);
@@ -261,7 +264,19 @@ export function CharacterBuilderShell({
     <div className="builder-head">
       <Button variant="ghost" onClick={requestExit}><ArrowLeft /> {t("ui.back")}</Button>
       <div><Badge variant="outline">{line}</Badge><span>{t("ui.guidedCreationSharedRulesV1")}</span></div>
-      <Button type="button" variant="outline" onClick={() => saveAndExit(draft)}><Save /> {draft ? t("ui.saveDraftAndExit") : t("ui.saveChangesAndExit")}</Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button className="language-trigger builder-language-trigger" aria-label={t("workspace.languageCurrent", { language: locale === "pt-BR" ? t("workspace.portuguese") : t("workspace.english") })} title={t("workspace.language")}>
+            <span aria-hidden="true">{localeFlag(locale)}</span>
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          {(["en-US", "pt-BR"] as Locale[]).map(option => <DropdownMenuItem key={option} onSelect={() => setLocale(option)}>
+            <span aria-hidden="true">{localeFlag(option)}</span> {option === "pt-BR" ? t("workspace.portuguese") : t("workspace.english")}
+          </DropdownMenuItem>)}
+        </DropdownMenuContent>
+      </DropdownMenu>
+      {(!isMobile || state.step > 2) && <Button type="button" variant="outline" onClick={() => saveAndExit(draft)}><Save /> {draft ? t("ui.saveDraftAndExit") : t("ui.saveChangesAndExit")}</Button>}
     </div>
     {hasAdvancement && <label className="builder-advancement-toggle">
       <span><strong>{t("ui.allowCreationAdvancement")}</strong><small>{t("ui.allowCreationAdvancementDescription")}</small></span>

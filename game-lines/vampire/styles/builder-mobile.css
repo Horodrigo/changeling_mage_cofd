@@ -1,0 +1,32 @@
+/* Mobile-only creation/editing composition for the Vampire template. */
+@media (max-width: 767px) {
+  .vampire-template-grid { grid-template-columns: 1fr; }
+  .vampire-builder-template { display: flex; flex-direction: column; }
+  /* Clan */
+  .vampire-builder-template > .vampire-template-grid { order: 1; }
+  /* Covenant */
+  /* Kindred Status */
+  .vampire-builder-template > .vampire-kindred-status-grant { order: 2; }
+  /* Mask */
+  /* Dirge */
+  .vampire-builder-template > .vampire-anchor-grid { order: 3; }
+  /* Touchstone */
+  .vampire-builder-template > .vampire-touchstone-field { order: 4; }
+  /* Disciplines */
+  .vampire-builder-template > .vampire-disciplines-heading { order: 5; }
+  .vampire-builder-template > .vampire-discipline-grid { order: 6; }
+  /* Discipline allocation rule */
+  .vampire-builder-template > .rule-callout { order: 7; }
+  /* Protean — Predatory Aspect */
+  /* Protean — Beast's Skin */
+  /* Protean — Unnatural Aspect */
+  .vampire-builder-template > .vampire-protean-builder { order: 8; }
+  /* Mystery */
+  .vampire-builder-template > .vampire-mystery-field { order: 9; }
+  /* Covenant power */
+  .vampire-builder-template > .vampire-covenant-power-field { order: 10; }
+  /* Aspirations */
+  .vampire-builder-template > .vampire-aspirations { order: 11; }
+  /* Merits */
+  .vampire-builder-template > .vampire-merits { order: 12; }
+}

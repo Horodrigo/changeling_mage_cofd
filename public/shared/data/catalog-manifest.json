@@ -1,79 +1,371 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 264,
+  "catalogVersion": 265,
   "catalogs": {
-    "werewolf-totem-powers": { "version": 2, "url": "/game-lines/werewolf/data/totem-powers.json" },
-    "werewolf-totem-powers-pt": { "version": 2, "url": "/game-lines/werewolf/data/totem-powers-pt.json" },
-    "werewolf-totem": { "version": 1, "url": "/game-lines/werewolf/data/totem.json" },
-    "werewolf-totem-pt": { "version": 1, "url": "/game-lines/werewolf/data/totem-pt.json" },
-    "werewolf-fetishes-core": { "version": 1, "url": "/game-lines/werewolf/data/fetishes/wtf-core.json" },
-    "werewolf-fetishes-core-pt": { "version": 1, "url": "/game-lines/werewolf/data/fetishes/wtf-core-pt.json" },
-    "merits-werewolf": { "version": 1, "url": "/game-lines/werewolf/data/merits.json" },
-    "merits-werewolf-pt": { "version": 1, "url": "/game-lines/werewolf/data/merits-pt.json" },
-    "werewolf-rites-core": { "version": 1, "url": "/game-lines/werewolf/data/rites/wtf-core.json" },
-    "werewolf-rites-core-pt": { "version": 1, "url": "/game-lines/werewolf/data/rites/wtf-core-pt.json" },
-    "werewolf-gifts-core-shadow": { "version": 4, "url": "/game-lines/werewolf/data/gifts/wtf-core-shadow.json" },
-    "werewolf-gifts-core-shadow-pt": { "version": 4, "url": "/game-lines/werewolf/data/gifts/wtf-core-shadow-pt.json" },
-    "werewolf-gifts-core-wolf": { "version": 1, "url": "/game-lines/werewolf/data/gifts/wtf-core-wolf.json" },
-    "werewolf-gifts-core-wolf-pt": { "version": 1, "url": "/game-lines/werewolf/data/gifts/wtf-core-wolf-pt.json" },
-    "werewolf-gifts-core-moon": { "version": 1, "url": "/game-lines/werewolf/data/gifts/wtf-core-moon.json" },
-    "werewolf-gifts-core-moon-pt": { "version": 1, "url": "/game-lines/werewolf/data/gifts/wtf-core-moon-pt.json" },
-    "werewolf-reference": { "version": 3, "url": "/game-lines/werewolf/data/reference.json" },
-    "werewolf-reference-pt": { "version": 4, "url": "/game-lines/werewolf/data/reference-pt.json" },
-    "werewolf-traits": { "version": 1, "url": "/game-lines/werewolf/data/traits.json" },
-    "werewolf-traits-pt": { "version": 2, "url": "/game-lines/werewolf/data/traits-pt.json" },
-    "mage-spells-index": { "version": 1, "url": "/game-lines/mage/data/spells/index.json" },
-    "mage-spells-death": { "version": 1, "url": "/game-lines/mage/data/spells/death.json" },
-    "mage-spells-fate": { "version": 1, "url": "/game-lines/mage/data/spells/fate.json" },
-    "mage-spells-forces": { "version": 1, "url": "/game-lines/mage/data/spells/forces.json" },
-    "mage-spells-life": { "version": 1, "url": "/game-lines/mage/data/spells/life.json" },
-    "mage-spells-matter": { "version": 1, "url": "/game-lines/mage/data/spells/matter.json" },
-    "mage-spells-mind": { "version": 1, "url": "/game-lines/mage/data/spells/mind.json" },
-    "mage-spells-prime": { "version": 1, "url": "/game-lines/mage/data/spells/prime.json" },
-    "mage-spells-space": { "version": 1, "url": "/game-lines/mage/data/spells/space.json" },
-    "mage-spells-spirit": { "version": 1, "url": "/game-lines/mage/data/spells/spirit.json" },
-    "mage-spells-time": { "version": 1, "url": "/game-lines/mage/data/spells/time.json" },
-    "mage-factions": { "version": 1, "url": "/game-lines/mage/data/factions.json" },
-    "changeling-contracts-h-courts": { "version": 2, "url": "/game-lines/changeling/data/contracts/h-courts.json" },
-    "changeling-contracts-ctl-oak-ash-thorn": { "version": 2, "url": "/game-lines/changeling/data/contracts/ctl-oak-ash-thorn.json" },
-    "changeling-contracts-ctl-the-hedge": { "version": 2, "url": "/game-lines/changeling/data/contracts/ctl-the-hedge.json" },
-    "changeling-contracts-ctl-dark-eras": { "version": 2, "url": "/game-lines/changeling/data/contracts/ctl-dark-eras.json" },
-    "changeling-contracts-ctl-kith-and-kin": { "version": 2, "url": "/game-lines/changeling/data/contracts/ctl-kith-and-kin.json" },
-    "changeling-contracts-ctl-core": { "version": 2, "url": "/game-lines/changeling/data/contracts/ctl-core.json" },
-    "changeling-contracts-h-courts-pt": { "version": 2, "url": "/game-lines/changeling/data/contracts/h-courts-pt.json" },
-    "changeling-contracts-ctl-oak-ash-thorn-pt": { "version": 2, "url": "/game-lines/changeling/data/contracts/ctl-oak-ash-thorn-pt.json" },
-    "changeling-contracts-ctl-the-hedge-pt": { "version": 2, "url": "/game-lines/changeling/data/contracts/ctl-the-hedge-pt.json" },
-    "changeling-contracts-ctl-dark-eras-pt": { "version": 2, "url": "/game-lines/changeling/data/contracts/ctl-dark-eras-pt.json" },
-    "changeling-contracts-ctl-kith-and-kin-pt": { "version": 3, "url": "/game-lines/changeling/data/contracts/ctl-kith-and-kin-pt.json" },
-    "changeling-contracts-ctl-core-pt": { "version": 3, "url": "/game-lines/changeling/data/contracts/ctl-core-pt.json" },
-    "changeling-tokens": { "version": 2, "url": "/game-lines/changeling/data/tokens.json" },
-    "changeling-tokens-pt": { "version": 2, "url": "/game-lines/changeling/data/tokens-pt.json" },
-    "merits-index": { "version": 6, "url": "/shared/data/merits-index.json" },
-    "merits-core": { "version": 17, "url": "/shared/data/merits.json" },
-    "merits-core-pt": { "version": 19, "url": "/shared/data/merits-pt.json" },
-    "merits-changeling": { "version": 6, "url": "/game-lines/changeling/data/merits.json" },
-    "merits-changeling-pt": { "version": 8, "url": "/game-lines/changeling/data/merits-pt.json" },
-    "merits-mage": { "version": 3, "url": "/game-lines/mage/data/merits.json" },
-    "merits-mage-supplements": { "version": 2, "url": "/game-lines/mage/data/merits-supplements.json" },
-    "core-conditions": { "version": 3, "url": "/shared/data/conditions.json" },
-    "core-conditions-pt": { "version": 4, "url": "/shared/data/conditions-pt.json" },
-    "changeling-conditions": { "version": 2, "url": "/game-lines/changeling/data/conditions.json" },
-    "changeling-conditions-pt": { "version": 2, "url": "/game-lines/changeling/data/conditions-pt.json" },
-    "changeling-courts": { "version": 1, "url": "/game-lines/changeling/data/courts.json" },
-    "changeling-entitlements": { "version": 1, "url": "/game-lines/changeling/data/entitlements.json" },
-    "changeling-entitlements-pt": { "version": 2, "url": "/game-lines/changeling/data/entitlements-pt.json" },
-    "changeling-kiths": { "version": 1, "url": "/game-lines/changeling/data/kiths.json" },
-    "changeling-kiths-pt": { "version": 2, "url": "/game-lines/changeling/data/kiths-pt.json" },
-    "mage-conditions": { "version": 3, "url": "/game-lines/mage/data/conditions.json" },
-    "vampire-clans": { "version": 6, "url": "/game-lines/vampire/data/clans.json" },
-    "vampire-covenants": { "version": 6, "url": "/game-lines/vampire/data/covenants.json" },
-    "vampire-anchors": { "version": 2, "url": "/game-lines/vampire/data/anchors.json" },
-    "vampire-blood-potency": { "version": 1, "url": "/game-lines/vampire/data/blood-potency.json" },
-    "vampire-torpor": { "version": 1, "url": "/game-lines/vampire/data/torpor.json" },
-    "vampire-bloodlines": { "version": 15, "url": "/game-lines/vampire/data/bloodlines.json" },
-    "merits-vampire-pt": { "version": 30, "url": "/game-lines/vampire/data/merits-pt.json" },
-    "merits-vampire": { "version": 19, "url": "/game-lines/vampire/data/merits.json" },
-    "vampire-powers": { "version": 183, "url": "/game-lines/vampire/data/powers.json" },
-    "vampire-conditions": { "version": 28, "url": "/game-lines/vampire/data/conditions.json" }
+    "werewolf-totem-powers": {
+      "version": 3,
+      "url": "/game-lines/werewolf/data/totem-powers.json",
+      "hash": "4c5cb7354db7304f652fc4036b8ccb6829bf66ee9db6ddffbe93e988272c68d5"
+    },
+    "werewolf-totem-powers-pt": {
+      "version": 3,
+      "url": "/game-lines/werewolf/data/totem-powers-pt.json",
+      "hash": "64c3485cf9c467a01f7703ebaf8231f9e693d339a3d196340e5ec93d681f2aca"
+    },
+    "werewolf-totem": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/totem.json",
+      "hash": "7d17ce7a98f1c90a49685ec15048e8723da7f3ea0adb42cf533b4f5e76a5a49d"
+    },
+    "werewolf-totem-pt": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/totem-pt.json",
+      "hash": "04ff106ac7df9df5cd627cc65d966a931cb25c33592b71ed61aaed33b6429770"
+    },
+    "werewolf-fetishes-core": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/fetishes/wtf-core.json",
+      "hash": "8747ec4a96b40cf3f81ff8c6593c315f275ed15308e468f4dcfcc2ae303d9187"
+    },
+    "werewolf-fetishes-core-pt": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/fetishes/wtf-core-pt.json",
+      "hash": "3c9695124333bd8ba8a463d54b670aac7fe06d1fdc555887ac65106f2daacbd9"
+    },
+    "merits-werewolf": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/merits.json",
+      "hash": "a7d602461c5939917d8e861597d9a31edbdd85634aa96a299944ce3cd5965774"
+    },
+    "merits-werewolf-pt": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/merits-pt.json",
+      "hash": "206628e01ad8e3bb9cb055c1366f9b7d2b21054cb0c0aff6417f004c558e80b0"
+    },
+    "werewolf-rites-core": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/rites/wtf-core.json",
+      "hash": "b0c7813f22f5803b9c3e385ee6735a3eba718a5e2123e77e475cc4624424b93c"
+    },
+    "werewolf-rites-core-pt": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/rites/wtf-core-pt.json",
+      "hash": "78027dd9ff72ffbf51914c6c6457287576f1f71dab9c85c7eda1955177c78182"
+    },
+    "werewolf-gifts-core-shadow": {
+      "version": 5,
+      "url": "/game-lines/werewolf/data/gifts/wtf-core-shadow.json",
+      "hash": "88e6efe872f664ac922336f254bd534e77a749214d35a738238bb26298f63d30"
+    },
+    "werewolf-gifts-core-shadow-pt": {
+      "version": 5,
+      "url": "/game-lines/werewolf/data/gifts/wtf-core-shadow-pt.json",
+      "hash": "1436bc83135bcc80883ff02d1df784f4347778fe8c18372335f3d4aecaf317c5"
+    },
+    "werewolf-gifts-core-wolf": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/gifts/wtf-core-wolf.json",
+      "hash": "ded3d7234f912f49fdae9d8ddf72c94bcc1114a081d7e24f7268a1cbe9ed57d1"
+    },
+    "werewolf-gifts-core-wolf-pt": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/gifts/wtf-core-wolf-pt.json",
+      "hash": "f02229203c0d31d7118bd080db790ea6eb1ae23482cbf25d0dcd0987727fd44c"
+    },
+    "werewolf-gifts-core-moon": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/gifts/wtf-core-moon.json",
+      "hash": "9d965c65846c5c4f9565acbabfd7e444bd96cd9bbebf0cea01862ce8ab5c99d6"
+    },
+    "werewolf-gifts-core-moon-pt": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/gifts/wtf-core-moon-pt.json",
+      "hash": "462782b80e818f2f54787471e24ddbdb105e2c6693920cc6fb5b550a5836a9a6"
+    },
+    "werewolf-reference": {
+      "version": 4,
+      "url": "/game-lines/werewolf/data/reference.json",
+      "hash": "685b6b2c5765ef944ed1d88518595dc55a2b1178607c43e47746f9b43831d113"
+    },
+    "werewolf-reference-pt": {
+      "version": 5,
+      "url": "/game-lines/werewolf/data/reference-pt.json",
+      "hash": "cb05c722a8bf5c8537cead05bba1bbf25e18fd00d5e64860eb59b0f56105d471"
+    },
+    "werewolf-traits": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/traits.json",
+      "hash": "2b700ba1cad240b579895a268428e0c47c3379c92f7ac7771bee35bbb7f3f3f3"
+    },
+    "werewolf-traits-pt": {
+      "version": 3,
+      "url": "/game-lines/werewolf/data/traits-pt.json",
+      "hash": "458fd8fdf4023c11cb0e919a4f92fddcb8db8a5b852646eed41447b91134d3a5"
+    },
+    "mage-spells-index": {
+      "version": 2,
+      "url": "/game-lines/mage/data/spells/index.json",
+      "hash": "980812c09ab0c726a57b489314c162f2f0a802d1743e5ca5ddc5e7d2177f06ae"
+    },
+    "mage-spells-death": {
+      "version": 2,
+      "url": "/game-lines/mage/data/spells/death.json",
+      "hash": "eb2e19d7d19937244fe87e2dc7a11e43548fc3740039d8c4d4b1a500ac73e720"
+    },
+    "mage-spells-fate": {
+      "version": 2,
+      "url": "/game-lines/mage/data/spells/fate.json",
+      "hash": "7aaa8d42766f1f51e40fba6dd592b0a729a1103959db67e1292265d76526b5b2"
+    },
+    "mage-spells-forces": {
+      "version": 2,
+      "url": "/game-lines/mage/data/spells/forces.json",
+      "hash": "82bb70375a77ae858020ae052a5414253a701d2239228f7c28e732552b37919d"
+    },
+    "mage-spells-life": {
+      "version": 2,
+      "url": "/game-lines/mage/data/spells/life.json",
+      "hash": "e95f388b677800872fe2f46fe5a2dae003da09caf3ecac4867e867f06792ccc0"
+    },
+    "mage-spells-matter": {
+      "version": 2,
+      "url": "/game-lines/mage/data/spells/matter.json",
+      "hash": "005df3e71fa231c257bf914fc8fcaeb053eb5dee1ff903ba50185c07bccbc090"
+    },
+    "mage-spells-mind": {
+      "version": 2,
+      "url": "/game-lines/mage/data/spells/mind.json",
+      "hash": "84e38c45123c90788a84aa665b964d1fdf121ca4343c4e8faeb8cf350e078563"
+    },
+    "mage-spells-prime": {
+      "version": 2,
+      "url": "/game-lines/mage/data/spells/prime.json",
+      "hash": "feeafc5c51db059e6d19e54c35e13594d70771dab64ca6418eb22a9d636153ff"
+    },
+    "mage-spells-space": {
+      "version": 2,
+      "url": "/game-lines/mage/data/spells/space.json",
+      "hash": "9849f705eae96c0367fd2dacec3b35a255acb8bcadb85f89cfbedc717404a385"
+    },
+    "mage-spells-spirit": {
+      "version": 2,
+      "url": "/game-lines/mage/data/spells/spirit.json",
+      "hash": "5efc133c95a354e752781322f58bf061e2ea6e3e3534df11b5f947990b3c463e"
+    },
+    "mage-spells-time": {
+      "version": 2,
+      "url": "/game-lines/mage/data/spells/time.json",
+      "hash": "662922c64b10db7ff1180700de1fa7b30384f697d6363cdbe963b583c807df4b"
+    },
+    "mage-factions": {
+      "version": 2,
+      "url": "/game-lines/mage/data/factions.json",
+      "hash": "03b12a8de2706c0280e0ebb783b0cbe6203069d501bfc871915d1718bb8bed07"
+    },
+    "changeling-contracts-h-courts": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/contracts/h-courts.json",
+      "hash": "920702fddef51b3b6cf279b32eb70686feea4808cbcb35bc276bf7b9b47905ec"
+    },
+    "changeling-contracts-ctl-oak-ash-thorn": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/contracts/ctl-oak-ash-thorn.json",
+      "hash": "201131b51fd31c8eabc61ee184b1e68545cce443d5765595a21ca7ff6696d861"
+    },
+    "changeling-contracts-ctl-the-hedge": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/contracts/ctl-the-hedge.json",
+      "hash": "7b5d6d43191ba0481e74d86851672bacc679cc737340d75e3a4d188801c92b92"
+    },
+    "changeling-contracts-ctl-dark-eras": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/contracts/ctl-dark-eras.json",
+      "hash": "413d5c54c3404a364c0ca9528458b2f135289918186c29667a1aeaf4335c79d0"
+    },
+    "changeling-contracts-ctl-kith-and-kin": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/contracts/ctl-kith-and-kin.json",
+      "hash": "4cd4a4dc0520f11333447f5ccb0c039f39ad9ea1aad963343f24ec3971faad8e"
+    },
+    "changeling-contracts-ctl-core": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/contracts/ctl-core.json",
+      "hash": "5b12bc92a769636f9ae2bc59d5abf80be212c589691dd83386190b8d418b8511"
+    },
+    "changeling-contracts-h-courts-pt": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/contracts/h-courts-pt.json",
+      "hash": "605637fc49c770f566a4e591568587938a66f38e0fd4e000628b58cd3c6b521c"
+    },
+    "changeling-contracts-ctl-oak-ash-thorn-pt": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/contracts/ctl-oak-ash-thorn-pt.json",
+      "hash": "e59514bad3f36c4a6b857c7ee09c084f0ea09b8c4ed66e7386498d933dedeaa1"
+    },
+    "changeling-contracts-ctl-the-hedge-pt": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/contracts/ctl-the-hedge-pt.json",
+      "hash": "5ea2a150297c982a9d64ee981f0e9a2854cd93d964e235f6d4e94983e9ab667a"
+    },
+    "changeling-contracts-ctl-dark-eras-pt": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/contracts/ctl-dark-eras-pt.json",
+      "hash": "01c63cd5452d68334f3952e350fdf8ce38825dc1eaac3038f10a92f55e36a148"
+    },
+    "changeling-contracts-ctl-kith-and-kin-pt": {
+      "version": 4,
+      "url": "/game-lines/changeling/data/contracts/ctl-kith-and-kin-pt.json",
+      "hash": "42a861d182d016c5e257311bde7390e218ac904e875c3aee51f64fb45de4370d"
+    },
+    "changeling-contracts-ctl-core-pt": {
+      "version": 4,
+      "url": "/game-lines/changeling/data/contracts/ctl-core-pt.json",
+      "hash": "7e9fe457350f7ddd0e0d374373d234301a562137888db8f7c04d4ac0b5a71396"
+    },
+    "changeling-tokens": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/tokens.json",
+      "hash": "0bba745d6002df1e1b259c31759bf8d0227e0569249c58032a8d00a96e8a8617"
+    },
+    "changeling-tokens-pt": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/tokens-pt.json",
+      "hash": "83f3c0795481399ec9c822ec1dee35c1cddd17b09e31132122754228cddf374f"
+    },
+    "merits-index": {
+      "version": 7,
+      "url": "/shared/data/merits-index.json",
+      "hash": "1ecd67ba1f6fa40676ef3a562434b8b68d7f66eaa6742f8a9bc00e7d77331f47"
+    },
+    "merits-core": {
+      "version": 18,
+      "url": "/shared/data/merits.json",
+      "hash": "530f030c72dfd9353b9f23dc214311c441b3b9fdddae5cc8736ba114ee6658a6"
+    },
+    "merits-core-pt": {
+      "version": 20,
+      "url": "/shared/data/merits-pt.json",
+      "hash": "a8b68d90dd97fcaae655187a2eaaa7d2cc6c9b21b3f1d6427a5883b21d69ab11"
+    },
+    "merits-changeling": {
+      "version": 7,
+      "url": "/game-lines/changeling/data/merits.json",
+      "hash": "99446d00ff1df9c6d5f32f5e9e16992ced1f2e6323deb67bb23966f5433a95f7"
+    },
+    "merits-changeling-pt": {
+      "version": 9,
+      "url": "/game-lines/changeling/data/merits-pt.json",
+      "hash": "eac61e665d86c396385e526db948adf40cbf2488a9defbeb679aadabbdc1fad0"
+    },
+    "merits-mage": {
+      "version": 4,
+      "url": "/game-lines/mage/data/merits.json",
+      "hash": "df89eca6ad679826681f4e3dd57bf174538cd5669cf9df3967517135d925ebff"
+    },
+    "merits-mage-supplements": {
+      "version": 3,
+      "url": "/game-lines/mage/data/merits-supplements.json",
+      "hash": "4b8bc741a3516e56eaef0c7703e0e504b6bfbfd6b8d82fa641d9cb0bceb4d8a5"
+    },
+    "core-conditions": {
+      "version": 4,
+      "url": "/shared/data/conditions.json",
+      "hash": "57b1a68bb0069c8cb8906d634a0a93a3b4de82cc81899a0f757042734bd7524b"
+    },
+    "core-conditions-pt": {
+      "version": 5,
+      "url": "/shared/data/conditions-pt.json",
+      "hash": "19a118517e487fdc54a219c594fc03b83f165360255d41eb66f5b555408847d7"
+    },
+    "changeling-conditions": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/conditions.json",
+      "hash": "07a868a2a13e8ff6bb09755f841424783b72ee8fa598c8e2b7c3ec0a4b44b90b"
+    },
+    "changeling-conditions-pt": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/conditions-pt.json",
+      "hash": "6958c1777d7eccab16c5d2ade6ff0ba565ac59176b40da90041136edbffdd70f"
+    },
+    "changeling-courts": {
+      "version": 2,
+      "url": "/game-lines/changeling/data/courts.json",
+      "hash": "54d0c990ea007979e528bbcab675b6f74f6e0bd4e55e1287ceb4adf402dd1a4e"
+    },
+    "changeling-entitlements": {
+      "version": 2,
+      "url": "/game-lines/changeling/data/entitlements.json",
+      "hash": "fba8300df2055c9df730787c3dfb6f700056e2eb3346d208f493da93ff43fd15"
+    },
+    "changeling-entitlements-pt": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/entitlements-pt.json",
+      "hash": "a0c6793a3879941ecc214395009d002b594d2cf42f25ffd1f0e06ab38e28d4f5"
+    },
+    "changeling-kiths": {
+      "version": 2,
+      "url": "/game-lines/changeling/data/kiths.json",
+      "hash": "6b113519e55f608aa37fdbebf321d63c7ee4102bd92e2267aa95b759c132ae46"
+    },
+    "changeling-kiths-pt": {
+      "version": 3,
+      "url": "/game-lines/changeling/data/kiths-pt.json",
+      "hash": "118245dbb48bb0a85ac19968439d2d3da3050f6c8ee689678fbc7755d85b7c54"
+    },
+    "mage-conditions": {
+      "version": 4,
+      "url": "/game-lines/mage/data/conditions.json",
+      "hash": "e07db013912ffea27df0526f92a381fa86deb2dbaf7ceda2c3e4648a047df505"
+    },
+    "vampire-clans": {
+      "version": 7,
+      "url": "/game-lines/vampire/data/clans.json",
+      "hash": "118199b28d22c70b0a865fda6ffc7f097fb8cbefc9546b61d7b9f1f67b53d9be"
+    },
+    "vampire-covenants": {
+      "version": 7,
+      "url": "/game-lines/vampire/data/covenants.json",
+      "hash": "07cf215fdb27f770bd696b1243ecb38f6bcfcfe0239dbbfafa7ca856cd97f82d"
+    },
+    "vampire-anchors": {
+      "version": 3,
+      "url": "/game-lines/vampire/data/anchors.json",
+      "hash": "c778031b01a3c9cbf0b69e2bc362920d2bef09dc7a05bcff9e28493221f2db83"
+    },
+    "vampire-blood-potency": {
+      "version": 2,
+      "url": "/game-lines/vampire/data/blood-potency.json",
+      "hash": "1e2f04a15b5483f6f041c54959a16cb63c55b74c89167ed99e372be1137bf2cc"
+    },
+    "vampire-torpor": {
+      "version": 2,
+      "url": "/game-lines/vampire/data/torpor.json",
+      "hash": "caa95aff557332ca925c29e3909c86f6cd71d8ef54ce061d4906ca2a9a6475b2"
+    },
+    "vampire-bloodlines": {
+      "version": 16,
+      "url": "/game-lines/vampire/data/bloodlines.json",
+      "hash": "d3375ce6a658e306d9a6ddfdee2122e11b0402706c2bf1af16473fa40f4fade9"
+    },
+    "merits-vampire-pt": {
+      "version": 31,
+      "url": "/game-lines/vampire/data/merits-pt.json",
+      "hash": "1a5676d5e5159c526a281da987b33d55617230bdd7a474d2536d2760fc0178f9"
+    },
+    "merits-vampire": {
+      "version": 20,
+      "url": "/game-lines/vampire/data/merits.json",
+      "hash": "05187279028d2f2afd9f8fff8e919bab21e4a3d7c008b99be41129baaecef554"
+    },
+    "vampire-powers": {
+      "version": 184,
+      "url": "/game-lines/vampire/data/powers.json",
+      "hash": "bb67765d28ed54ddee920bacd871b755acdd46a6f397ce17c750c47e6077fd15"
+    },
+    "vampire-conditions": {
+      "version": 29,
+      "url": "/game-lines/vampire/data/conditions.json",
+      "hash": "6004aa55743a2ebd1ae8274d775b28cddbb0eb7cd35596db07ceda8440d483f1"
+    }
   }
 }

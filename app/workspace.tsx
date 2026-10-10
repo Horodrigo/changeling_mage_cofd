@@ -90,6 +90,7 @@ export function Workspace({
   const [editing, setEditing] = useState<CharacterSheet | null | "new">(null);
   const [deleteTarget, setDeleteTarget] = useState<StoredCharacter | null>(null);
   const [notice, setNotice] = useState("");
+  const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [dataTransferOpen, setDataTransferOpen] = useState(false);
 
   const {
@@ -106,6 +107,16 @@ export function Workspace({
   const effectiveNotice = readFailed
     ? storageReadFailedMessage
     : notice;
+
+  const showNotice = (message: string, autoDismiss = false) => {
+    if (noticeTimer.current) clearTimeout(noticeTimer.current);
+    setNotice(message);
+    if (autoDismiss) noticeTimer.current = setTimeout(() => setNotice(""), 5000);
+  };
+
+  useEffect(() => () => {
+    if (noticeTimer.current) clearTimeout(noticeTimer.current);
+  }, []);
 
   const [sheetZoom, setSheetZoom] = useState(() => {
     if (
@@ -161,7 +172,7 @@ export function Workspace({
       setEditing(null);
       setSelected(normalized);
       setView("personagens");
-      setNotice(t("workspace.characterSaved"));
+      showNotice(t("workspace.characterSaved"), true);
     } catch {
       setNotice(t("workspace.invalidCharacterJson"));
     }
@@ -178,7 +189,7 @@ export function Workspace({
     setEditing(null);
     setSelected(null);
     setView("personagens");
-    setNotice(t("workspace.characterDraftSaved"));
+    showNotice(t("workspace.characterDraftSaved"), true);
   }
 
   function openOrResumeCharacter(sheet: CharacterSheet) {
@@ -216,7 +227,7 @@ export function Workspace({
     removeCharacter(character);
     setSelected(null);
     setView("personagens");
-    setNotice(t("workspace.characterDeleted", { name: summary.name }));
+    showNotice(t("workspace.characterDeleted", { name: summary.name }), true);
   }
 
   async function importCharacter(file: File) {
@@ -226,7 +237,7 @@ export function Workspace({
       setView("personagens");
       setSelected(sheet);
       const message = t("workspace.characterImported", { name: sheet.character.name });
-      setNotice(message);
+      showNotice(message, true);
       return { ok: true, message, characterId: sheet.id };
     } catch (error) {
       if (error instanceof CharacterLifecycleError) {

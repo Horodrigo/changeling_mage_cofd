@@ -139,7 +139,8 @@ pdfSources/                       Local reference library, not deployed
 Conventions for maintenance:
 
 - Place each line's public JSON, artwork, and webfonts under its single `public/game-lines/<line>/` owner. Create `data/`, `images/`, or `fonts/` only when that category exists; a line does not need empty placeholder folders.
-- Keep CSS under `game-lines/<line>/styles/`, not inside public image folders. Shared CSS stays in `app/css/`. Preserve current stylesheet import order when moving files.
+- Keep CSS under `game-lines/<line>/styles/`, not inside public image folders. Shared CSS stays in `app/css/`. Keep general/desktop styles separate from mobile-only styles (for example `builder.css` plus `builder-mobile.css`); import mobile CSS only from the mobile surface that uses it. Preserve current stylesheet import order when moving files.
+- Catalog JSON versions are maintained by `scripts/build-verified.mjs`: it hashes every manifest URL on each build and bumps only entries whose content changed. Register new served JSON files in `public/shared/data/catalog-manifest.json`; do not hand-edit their version for normal content changes.
 - Shared/Core catalogs belong in `public/shared/data/`. Changeling and Mage Merits belong to their own line folders, even when another line can purchase them. Cross-line eligibility does not change file ownership.
 - English is canonical. Portuguese files normally use the same basename plus `-pt.json`; book/Arcana shards remain under their owning catalog directory. Translations do not change IDs or persisted choices.
 - Catalog groups request stable resource IDs. `public/shared/data/catalog-manifest.json` resolves those IDs to URLs; moving a file changes its URL and the manifest version, not its content version or character data. Unchanged IndexedDB catalog entries remain reusable.

@@ -3,6 +3,7 @@ import type { CatalogNameQualifier } from "@/lib/localized-catalog";
 export interface CatalogManifestEntry {
   version: number;
   url: string;
+  hash?: string;
 }
 
 export interface CatalogManifest {

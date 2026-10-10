@@ -1,0 +1,37 @@
+/* Mobile-only creation/editing composition for the Forsaken template. */
+@media (max-width: 767px) {
+  .wtf-creation-template { display: flex; flex-direction: column; }
+  .wtf-creation-template .form-grid { grid-template-columns: 1fr; }
+  /* Auspice */
+  .wtf-creation-template > .form-grid:nth-of-type(1) > :nth-child(1) { order: 1; }
+  /* Tribe */
+  .wtf-creation-template > .form-grid:nth-of-type(1) > :nth-child(2) { order: 2; }
+  /* Auspice Skill */
+  .wtf-creation-template > .form-grid:nth-of-type(1) > :nth-child(3) { order: 3; }
+  /* Renown */
+  .wtf-creation-template > .form-grid:nth-of-type(1) > :nth-child(4) { order: 4; }
+  /* Primal Urge */
+  .wtf-creation-template > .form-grid:nth-of-type(1) > :nth-child(5) { order: 5; }
+  /* Extra Rite Dots */
+  .wtf-creation-template > .form-grid:nth-of-type(1) > :nth-child(6) { order: 6; }
+  /* Blood */
+  .wtf-creation-template > .form-grid:nth-of-type(2) > :nth-child(1) { order: 1; }
+  /* Bone */
+  .wtf-creation-template > .form-grid:nth-of-type(2) > :nth-child(2) { order: 2; }
+  /* Physical Touchstone */
+  .wtf-creation-template > .form-grid:nth-of-type(2) > :nth-child(3) { order: 3; }
+  /* Spiritual Touchstone */
+  .wtf-creation-template > .form-grid:nth-of-type(2) > :nth-child(4) { order: 4; }
+  /* Renown */
+  .wtf-creation-template .wtf-renown-heading { order: 7; }
+  /* Renown values */
+  .wtf-creation-template .wtf-renown-values { order: 8; }
+  /* Renown summary */
+  .wtf-creation-template .wtf-renown-summary { order: 9; }
+  /* Gifts */
+  .wtf-creation-template .wtf-creation-gifts { order: 10; }
+  /* Rites */
+  .wtf-creation-template .wtf-rites { order: 11; }
+  /* Merits */
+  .mobile-werewolf-builder-template .wtf-merits { order: 2; }
+}

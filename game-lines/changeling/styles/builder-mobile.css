@@ -1,0 +1,24 @@
+/* Mobile-only creation/editing composition for the Lost template. */
+@media (max-width: 767px) {
+  .ctl-template-grid { grid-template-columns: 1fr; }
+  .ctl-template-grid > .ctl-template-primary,
+  .ctl-template-grid > .ctl-template-secondary { display: contents; }
+  /* Seeming */
+  .ctl-template-grid > .ctl-template-primary > :nth-child(1) { order: 1; }
+  /* Favored Attribute */
+  .ctl-template-grid > .ctl-template-primary > :nth-child(2) { order: 2; }
+  /* Second Favored Regalia */
+  .ctl-template-grid > .ctl-template-primary > :nth-child(3) { order: 3; }
+  /* Kith */
+  .ctl-template-grid > .ctl-template-secondary:nth-of-type(2) > :nth-child(1) { order: 4; }
+  /* Court */
+  .ctl-template-grid > .ctl-template-secondary:nth-of-type(3) > :nth-child(1) { order: 5; }
+  /* Needle */
+  .ctl-template-grid > .ctl-template-secondary:nth-of-type(2) > :nth-child(2) { order: 6; }
+  /* Thread */
+  .ctl-template-grid > .ctl-template-secondary:nth-of-type(3) > :nth-child(2) { order: 7; }
+  /* Contracts */
+  .mobile-changeling-builder-template .ctl-contracts-builder { order: 8; }
+  /* Merits */
+  .mobile-changeling-builder-template .ctl-merits-builder { order: 9; }
+}

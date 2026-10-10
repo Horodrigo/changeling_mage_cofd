@@ -26,6 +26,7 @@ import { renderMageStructuredMeritEditor } from "./merit-configuration-editor";
 import { mageMeritPrerequisitesMet, type MageMeritContext } from "./merits";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import type { MageFactionDefinition } from "./factions";
+import "./styles/builder-mobile.css";
 
 export type SpellSelection = SpellDefinition & { roteSkill?: string };
 export type CustomOrderDefinition = { name: string; description: string; roteSkills: string[]; initiation?: MeritConfiguration };
@@ -202,9 +203,9 @@ export function MageBuilderView(props: MageBuilderViewProps) {
                 : t("ui.historicalOrderBenefitsNotApplied")}
         </p>
       )}
-      <h3>{t("ui.arcana6Dots")}</h3>
+      <h3 className="mta-arcana-heading">{t("ui.arcana6Dots")}</h3>
       <div
-        className={`arcana-grid ${props.missing("arcana") ? "missing-field" : ""}`}
+        className={`arcana-grid mta-arcana-grid ${props.missing("arcana") ? "missing-field" : ""}`}
       >
         {ARCANA.map((item) => (
           <DotRow
@@ -240,7 +241,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
         </div>
       )}
       {hasCreationOrderBenefits && (
-        <div className={props.missing("rotes") ? "missing-field block" : ""}>
+        <div className={`mta-starting-rotes${props.missing("rotes") ? " missing-field block" : ""}`}>
           <SpellSelector
             title={t("ui.startingRotes")}
             count={3}
@@ -253,7 +254,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
           />
         </div>
       )}
-      <div className={props.missing("praxes") ? "missing-field block" : ""}>
+      <div className={`mta-praxes${props.missing("praxes") ? " missing-field block" : ""}`}>
         <SpellSelector
           title={`${t("ui.praxes")} · ${neededPraxes}`}
           count={neededPraxes}
@@ -263,7 +264,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
           catalog={props.spellCatalog}
         />
       </div>
-      <div className={props.missing("merits") ? "missing-field block" : ""}>
+      <div className={`mta-merits${props.missing("merits") ? " missing-field block" : ""}`}>
         <MeritPicker
           merits={props.merits}
           setMerits={props.setMerits}

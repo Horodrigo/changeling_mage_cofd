@@ -14,6 +14,7 @@ import {
 } from "@/app/character-builder-shell";
 import { CommonIdentityStep, TraitsStep } from "@/app/builder/common-controls";
 import { ChangelingBuilderView, type ContractSelection, type CustomCourtDefinition } from "./builder-view";
+import { MobileChangelingBuilderTemplate } from "./mobile-builder-template";
 import {
   canonicalChangelingAnchorName,
   normalizeChangelingFrailties,
@@ -258,6 +259,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
     return true;
   };
 
+  const setAspirations = common.setAspirations;
   return <CharacterBuilderShell
     line="CtL" templateLabel={t("ui.lostTemplate")} state={common} issues={issues}
     draft={!initial || isCreationDraft(initial)} onCancel={onCancel} onFinish={finish}
@@ -265,7 +267,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
     renderAdvancement={(sheet, updateSheet) => <ExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} reference={reference} builderMode />}
     identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing} />}
-    lineTemplate={<ChangelingBuilderView seeming={seeming} seemingCatalog={seemingCatalog} setSeeming={setSeeming} attributes={common.attributes} contractCatalog={contractCatalog} contractPresentation={reference.contractPresentation} contracts={contracts} setContracts={setContracts} favoredAttribute={favoredAttribute} setFavoredAttribute={setFavoredAttribute} secondRegalia={secondRegalia} setSecondRegalia={setSecondRegalia} needle={needle} setNeedle={setNeedle} thread={thread} setThread={setThread} touchstone={touchstone} setTouchstone={setTouchstone} wyrd={wyrd} setWyrd={setWyrd} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={wyrdProgression.advancement} aspirations={common.aspirations} setAspirations={common.setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} court={court} missing={missing} kith={kith} setKith={setKith} customKith={customKith} setCustomKith={setCustomKith} kithChoice={kithChoice} setKithChoice={setKithChoice} specialties={common.specialties} customKithSkill={customKithSkill} setCustomKithSkill={setCustomKithSkill} customKithDescription={customKithDescription} setCustomKithDescription={setCustomKithDescription} kithCatalog={kithCatalog} kithPresentation={reference.kithPresentation} entitlementCatalog={entitlementCatalog} tokenCatalog={tokenCatalog} customCourt={customCourt} setCustomCourt={setCustomCourt} setCourt={setCourt} courtCatalog={courtCatalog} />}
+    lineTemplate={<MobileChangelingBuilderTemplate><ChangelingBuilderView seeming={seeming} seemingCatalog={seemingCatalog} setSeeming={setSeeming} attributes={common.attributes} contractCatalog={contractCatalog} contractPresentation={reference.contractPresentation} contracts={contracts} setContracts={setContracts} favoredAttribute={favoredAttribute} setFavoredAttribute={setFavoredAttribute} secondRegalia={secondRegalia} setSecondRegalia={setSecondRegalia} needle={needle} setNeedle={setNeedle} thread={thread} setThread={setThread} touchstone={touchstone} setTouchstone={setTouchstone} wyrd={wyrd} setWyrd={setWyrd} maximumPowerFromMerits={maximumPowerFromMerits} powerAdvancement={wyrdProgression.advancement} aspirations={common.aspirations} setAspirations={setAspirations} meritContext={meritContext} meritCatalog={meritCatalog} merits={common.merits} setMerits={common.setMerits} meritSpent={meritSpent} meritBudget={Math.max(0, meritBudget - meritSpent)} court={court} missing={missing} kith={kith} setKith={setKith} customKith={customKith} setCustomKith={setCustomKith} kithChoice={kithChoice} setKithChoice={setKithChoice} specialties={common.specialties} customKithSkill={customKithSkill} setCustomKithSkill={setCustomKithSkill} customKithDescription={customKithDescription} setCustomKithDescription={setCustomKithDescription} kithCatalog={kithCatalog} kithPresentation={reference.kithPresentation} entitlementCatalog={entitlementCatalog} tokenCatalog={tokenCatalog} customCourt={customCourt} setCustomCourt={setCustomCourt} setCourt={setCourt} courtCatalog={courtCatalog} /></MobileChangelingBuilderTemplate>}
   />;
 }
 

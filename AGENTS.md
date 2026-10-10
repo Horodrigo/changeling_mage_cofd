@@ -29,7 +29,7 @@ The application currently supports the persisted game-line IDs `CofD`, `CtL`, `M
 - `lib/character-persistence.ts` and `lib/stored-character.ts`: line-neutral structural normalization, current-schema validation exports, and safe treatment of stored values.
 - `public/shared/`: shared static Core catalogs and application images.
 - `public/game-lines/<line>/`: line-owned static catalogs, images, and fonts, separated into `data/`, `images/`, and `fonts/` when those categories exist.
-- `game-lines/<line>/styles/`: line-owned CSS, including responsive and print rules. Shared CSS remains in `app/css/`; public image folders do not contain application CSS.
+- `game-lines/<line>/styles/`: line-owned CSS. Keep desktop/general styles separate from mobile-only styles (for example `builder.css` and `builder-mobile.css`, or `sheet.css` and `mobile.css`); import mobile CSS only from the mobile surface that uses it. Print rules remain in the owning line's print stylesheet. Shared CSS remains in `app/css/`; public image folders do not contain application CSS.
 
 ## Ownership Rules
 
@@ -83,6 +83,8 @@ A new line should be primarily additive. A Werewolf implementation should normal
 
 It should not require broad edits to Mage, Changeling, catalog-service internals, generic Merit mechanics, Builder or Sheet shells, or the common persisted field list. Widespread changes are an architectural warning, not the expected cost of adding a line.
 
+For mobile creation/editing surfaces, add a line-owned mobile template component and a line-owned mobile stylesheet alongside the general builder stylesheet. The mobile component may reorder existing controls, but must reuse the same callbacks, validation, catalogs, and rule components as the desktop template; it must not create a second rules implementation. Keep the desktop composition unchanged and select the mobile composition at the shell boundary.
+
 Do not grow central switches indefinitely. Explicit registration is preferred over filesystem autodiscovery, and a small intentionally centralized supported-ID list is acceptable.
 
 ## Composition Over Universal Abstractions
@@ -122,7 +124,7 @@ The registry may eagerly import lightweight registration objects. Registration m
 
 ## Catalog Architecture
 
-Static RPG content should remain data under `public/shared/data/**` for common/Core catalogs and `public/game-lines/<line>/data/**` for line-owned catalogs. Catalog infrastructure is generic and group-driven; each game-line registration declares the groups required by its Builder and Sheet surfaces. The versioned resource manifest lives at `public/shared/data/catalog-manifest.json`. Canonical line Merits belong to their own public line folder even when other lines can purchase them; the shared Merit discovery index does not transfer ownership.
+Static RPG content should remain data under `public/shared/data/**` for common/Core catalogs and `public/game-lines/<line>/data/**` for line-owned catalogs. Catalog infrastructure is generic and group-driven; each game-line registration declares the groups required by its Builder and Sheet surfaces. The versioned resource manifest lives at `public/shared/data/catalog-manifest.json`. Catalog entries also carry a build-maintained SHA-256 hash; `scripts/build-verified.mjs` compares each manifest URL during every build and increments only changed entries. Canonical line Merits belong to their own public line folder even when other lines can purchase them; the shared Merit discovery index does not transfer ownership.
 
 `game-lines/<line>/` contains bundled executable source; `public/game-lines/<line>/` contains static files served unchanged. Keep public images and fonts with their owning line instead of creating global line-specific folders. Only application/PWA entry points, installation icons, and generated runtime metadata belong directly in `public/`. Asset/catalog generators, CSS URLs, registrations, tests, and the service-worker template must follow the layout documented in `README.md`; do not leave duplicate legacy public paths. Moving unchanged catalogs must preserve resource IDs and content versions so IndexedDB cache entries and persisted character choices remain valid.
 

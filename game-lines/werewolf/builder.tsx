@@ -26,6 +26,7 @@ import { TotemEditor } from "./totem";
 import { personalTotemPoints, totemSelection, type TotemSelection } from "./totem-rules";
 import type { WerewolfTotemCatalog } from "./catalogs/totem";
 import { WerewolfCreationTemplate } from "./builder-template";
+import { MobileWerewolfBuilderTemplate } from "./mobile-builder-template";
 import { creationAuspiceSkill, creationGiftSelection, creationMeritBudget, creationTemplateProblems, formTraits, type WerewolfCreationChoices } from "./creation-rules";
 import { mergeWerewolfCreationMerits } from "./creation-grants";
 import { WEREWOLF_CREATION_GRANT_SOURCES, withWerewolfCreationGrants, werewolfCreationMeritCost, werewolfMeritDefinition, resolveWerewolfMerits, withoutAuspiceSkillGrant } from "./creation-grants";
@@ -197,8 +198,8 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
     renderAdvancement={(sheet, updateSheet) => <WerewolfExperiencePanel character={sheet} updateSheet={next => { setAdvancementSource(next); updateSheet(next); }} catalogs={catalogs} builderMode/>}
     identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing}/>}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing}/>}
-    lineTemplate={<><WerewolfCreationTemplate value={choices} onChange={setChoices} skills={common.skills} reference={reference} gifts={gifts} rites={rites} learnedRiteIds={learnedRiteIds}/>
-      <div className="builder-section"><Aspirations values={common.aspirations} setValues={common.setAspirations}/><p>{t("werewolf.freeCreationMerits")}</p>
+    lineTemplate={<MobileWerewolfBuilderTemplate><><WerewolfCreationTemplate value={choices} onChange={setChoices} skills={common.skills} reference={reference} gifts={gifts} rites={rites} learnedRiteIds={learnedRiteIds}/>
+      <div className="builder-section wtf-merits"><Aspirations values={common.aspirations} setValues={common.setAspirations}/><p>{t("werewolf.freeCreationMerits")}</p>
         <MeritPicker merits={merits} setMerits={common.setMerits} catalog={meritCatalog} context={context} spent={spent} budget={budget} isEligible={eligible} isInlineConfiguration={isCommonInlineMeritConfiguration}
           renderConfiguration={({ merit, ownedMerits, inline, onChange }) => {
             const definition = werewolfMeritDefinition(merit, meritCatalog);
@@ -210,7 +211,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
       </div><div className="builder-section"><FetishInventory value={fetishes} onChange={setFetishes} catalog={fetishCatalog} gifts={gifts}/></div>
       <div className="builder-section"><TotemEditor value={totem} onChange={setTotem} personalPoints={personalTotemPoints(allMerits, meritCatalog)} catalog={totemCatalog}>
         {totem && <TotemAdvantageEditor character={memberSource} value={totem} onChange={setTotem} catalogs={benefitCatalogs}/>}
-      </TotemEditor></div></>}/>;
+      </TotemEditor></div></></MobileWerewolfBuilderTemplate>}/>;
 }
 
 export const werewolfBuilder: GameLineBuilderModule = { Component: WerewolfCharacterBuilder };

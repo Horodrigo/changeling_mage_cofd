@@ -3272,13 +3272,23 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 .builder-head > div {
   display: flex;
   align-items: center;
   gap: 9px;
+  padding-right: 48px;
   color: #756d77;
   font-size: 13px;
+}
+.builder-head > .builder-language-trigger {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.builder-head > .builder-language-trigger + button {
+  margin-right: 42px;
 }
 .builder-advancement-toggle {
   max-width: 1000px;
@@ -6347,9 +6357,29 @@ body:has([class*="line-theme-"])
   .builder-head > div {
     flex: 1;
     min-width: 0;
+    padding-right: 48px;
   }
-  .builder-head > button:last-child:not(:first-child) {
+  .builder-head > button:last-child:not(:first-child):not(.builder-language-trigger) {
     width: 100%;
+  }
+  .builder-head > .builder-language-trigger {
+    width: auto;
+  }
+  .builder-head > .builder-language-trigger + button {
+    margin-right: 0;
+  }
+  .builder-advancement-toggle {
+    align-items: flex-start;
+    gap: 12px;
+    padding: 13px 14px;
+  }
+  .builder-advancement-toggle > span {
+    flex: 1;
+    min-width: 0;
+  }
+  .builder-advancement-toggle small {
+    display: block;
+    line-height: 1.35;
   }
   .builder-actions {
     grid-template-columns: minmax(0, 1fr);

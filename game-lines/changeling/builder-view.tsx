@@ -37,6 +37,7 @@ import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { homebrewCategoryKeys, homebrewContentActive } from "@/lib/homebrew";
 import type { TokenDefinition } from "./catalogs/tokens";
 import type { SeemingDefinition, SeemingHomebrew } from "./catalog-homebrews";
+import "./styles/builder-mobile.css";
 
 export type ContractSelection = ContractDefinition;
 export type CustomCourtDefinition = { name: string; emotion: string; mantleBenefits: string[] };
@@ -172,7 +173,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
           <ChangelingAnchorSelector kind="thread" value={props.thread} setValue={props.setThread} invalid={props.missing("thread")}/>
         </div>
       </div>
-      <div className={props.missing("contracts") ? "missing-field block" : ""}>
+      <div className={`ctl-contracts-builder${props.missing("contracts") ? " missing-field block" : ""}`}>
         <ContractSelector
           contracts={props.contracts}
           setContracts={props.setContracts}
@@ -188,7 +189,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
           presentation={props.contractPresentation}
         />
       </div>
-      <div className={props.missing("merits") ? "missing-field block" : ""}>
+      <div className={`ctl-merits-builder${props.missing("merits") ? " missing-field block" : ""}`}>
         <MeritPicker
           isEligible={changelingMeritPrerequisitesMet}
           merits={props.merits}

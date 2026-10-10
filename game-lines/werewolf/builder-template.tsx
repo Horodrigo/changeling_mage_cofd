@@ -12,6 +12,7 @@ import { AnchorField } from "./anchors";
 import { CreationGifts } from "./creation-gifts";
 import { CreationRites } from "./creation-rites";
 import "./styles/builder.css";
+import "./styles/builder-mobile.css";
 
 /** Forsaken template choices stay line-owned; Core trait allocations remain untouched. */
 export function WerewolfCreationTemplate({ value, onChange, skills, reference, gifts, rites, learnedRiteIds = [] }: {
@@ -56,12 +57,12 @@ export function WerewolfCreationTemplate({ value, onChange, skills, reference, g
       <label>{t("werewolf.spiritualTouchstone")} · {t("ui.optional")}<Input value={value.spiritual_touchstone} onChange={event => update("spiritual_touchstone", event.target.value)}/></label>
     </div>
     {grants && auspice && tribe && <>
-      <h3>{t("werewolf.renown")}</h3>
-      <dl className="wtf-creation-renown">{Object.entries(grants.renown).map(([name, dots]) => <div key={name}><dt>{renownNames[name]}</dt><dd>{dots}</dd></div>)}</dl>
-      <p>{t("werewolf.creationGiftGrants", { moon: grants.moonFacetCount, shadow: grants.shadowFacetCount, wolf: grants.wolfFacetCount })}</p>
+      <h3 className="wtf-renown-heading">{t("werewolf.renown")}</h3>
+      <dl className="wtf-creation-renown wtf-renown-values">{Object.entries(grants.renown).map(([name, dots]) => <div key={name}><dt>{renownNames[name]}</dt><dd>{dots}</dd></div>)}</dl>
+      <p className="wtf-renown-summary">{t("werewolf.creationGiftGrants", { moon: grants.moonFacetCount, shadow: grants.shadowFacetCount, wolf: grants.wolfFacetCount })}</p>
       <CreationGifts value={value} onChange={onChange} auspice={auspice} tribe={tribe} gifts={gifts}/>
     </>}
-    <CreationRites value={value} onChange={onChange} catalog={rites} learnedRiteIds={learnedRiteIds}/>
+    <div className="wtf-rites"><CreationRites value={value} onChange={onChange} catalog={rites} learnedRiteIds={learnedRiteIds}/></div>
     {problems.length > 0 && <ul>{problems.map(problem => <li key={problem}>{t(`werewolf.creationProblem.${problem}`)}</li>)}</ul>}
   </div>;
 }
