@@ -41,7 +41,7 @@ test("mobile Changeling Oaths precede Notes and no longer occupy Powers", async 
   const notes = mobile.slice(mobile.indexOf("anotacoes:"));
   assert.doesNotMatch(powers, /ui\.oaths|writeAnOath/);
   assert.ok(notes.indexOf('t("ui.oaths")') < notes.indexOf('t("ui.notes")'));
-  assert.match(notes, /updateLineData\(updateSheet, character, "oaths", value\)/);
+  assert.match(notes, /updateLineData\(updateSheet, character, "oaths", value, updateNarrative\)/);
   assert.match(notes, /NotesArea value=\{notes\}/);
 });
 
