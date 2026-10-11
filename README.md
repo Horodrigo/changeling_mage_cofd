@@ -163,9 +163,19 @@ parse/import
 -> runtime use / local persistence
 ```
 
-Transient play-state changes such as damage, resource tracks, and Conditions use the dedicated current-state fast path instead of re-running the full structural pipeline on every interaction.
+Transient play-state changes such as damage, resource tracks, and Conditions use the dedicated current-state fast path instead of re-running the full structural pipeline on every interaction. Explicit line-owned narrative text patches also avoid mechanical recomputation. Shared text lists and common Builder text fields keep typing local and commit when leaving the field; search and mechanical controls remain immediate.
+
+Normal autosaves coalesce changed characters after 400 ms of inactivity, with a 2-second maximum wait. IndexedDB stores individual characters and separate portrait records; typing does not synchronously serialize the entire collection. Portraits are rewritten only when changed. Closing or hiding the page checkpoints pending committed changes, but browser termination and localStorage quota limits can still prevent recovery. Save failures are shown explicitly.
+
+Characters may optionally include a portrait in the neutral `character.portrait` field. The shared upload, preview, and removal controls are available at the start of the standard Desktop/Mobile Notes tab on every supported game line. Removal deletes the locally stored portrait, not the original device file. Portraits are included in the normal character import/export JSON and are structurally validated when a sheet is opened or imported.
 
 Unsupported stored values remain opaque in the character list until the user removes them explicitly.
+
+## Changeling sheet themes
+
+Changeling Desktop/Mobile sheets offer a theme selector beside the language selector; Mobile shows its palette icon only. This is a device presentation preference, not character data. Other game lines, character creation and print/PDF output are unchanged.
+
+`Default` uses `public/game-lines/changeling/images/`. Each direct `theme-*` subfolder adds an option automatically during development or the next build: for example, `theme-fairest` adds `Fairest`, and `theme-darkling` adds `Darkling`. Put replacement WebP images inside using exactly the default filenames (`title.webp`, `paper-texture.webp`, `frame-corner.webp`, etc.). Missing replacements use the default image. `theme-default` is reserved; no catalog or manual option registration is needed. Theme images remain static assets and use the existing service-worker cache after being requested online.
 
 ## Runtime and deployment
 
