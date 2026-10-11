@@ -96,3 +96,40 @@
     display: none;
   }
 }
+
+/*
+ * MOLDURA DA PERICIA DE KITH - move/redimensiona o bloco ja montado.
+ * translate: 0 0; positivo = direita/baixo.
+ * scale: 1; 1.2 aumenta 20%; 0.8 reduz 20%.
+ * Use scale: 1;
+    scale: 1;
+    transform-origin: center;
+  }
+
+  /* DEFAULT - MOBILE */
+  .app-shell:has([data-changeling-sheet-theme="default"])
+    .ctl-sheet.mobile-character-sheet
+    .skill-highlight-kith .kith-skill-frame {
+    translate: 0 0;
+    scale: 1;
+    transform-origin: center;
+  }
+
+  /* FAIREST - DESKTOP */
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .skill-highlight-kith .kith-skill-frame {
+    translate: 0 0;
+    scale: 1;
+    transform-origin: center;
+  }
+
+  /* FAIREST - MOBILE */
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-sheet.mobile-character-sheet
+    .skill-highlight-kith .kith-skill-frame {
+    translate: 0 0;
+    scale: 1;
+    transform-origin: center;
+  }
+}

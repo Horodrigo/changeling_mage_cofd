@@ -179,6 +179,8 @@ Changeling Desktop/Mobile sheets offer a theme selector beside the language sele
 
 Title sizing and positioning can be customized in `game-lines/changeling/styles/sheet-theme.css`. Its commented Default/Fairest blocks separate Desktop and Mobile and target the title image, `strong` and `p`. For another theme, copy the Fairest blocks and replace `fairest` with the folder suffix. `width`/`max-width` size the image, `font-size` sizes text, and `translate: X Y` offsets either element. All overrides are screen-only.
 
+The same file includes separate Desktop/Mobile blocks for the assembled Kith Skill highlight frame. Adjust `translate: X Y` to move it and `scale` to resize it as a whole, without changing its automatic piece assembly, Skill text or dots. Initial values preserve the current appearance.
+
 ## Runtime and deployment
 
 Cloudflare configuration lives in `wrangler.jsonc`.

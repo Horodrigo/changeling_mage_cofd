@@ -68,7 +68,7 @@ test("title adjustment blocks distinguish themes and actual Desktop/Mobile surfa
   const toolbar = await readFile(new URL("../game-lines/changeling/sheet-theme-toolbar.tsx", import.meta.url), "utf8");
   assert.match(toolbar, /<style data-changeling-sheet-theme=\{themeId\}>/);
   const css = await readFile(new URL("../game-lines/changeling/styles/sheet-theme.css", import.meta.url), "utf8");
-  const adjustments = css.slice(css.indexOf("@media screen"));
+  const adjustments = css.slice(css.indexOf("@media screen")).replace(/\s+/g, " ");
   assert.ok(adjustments.startsWith("@media screen {"));
   for (const theme of ["default", "fairest"]) {
     for (const surface of [":not(.mobile-character-sheet)", ".mobile-character-sheet"]) {
@@ -79,4 +79,21 @@ test("title adjustment blocks distinguish themes and actual Desktop/Mobile surfa
   }
   assert.match(adjustments, /translate: 0 0/);
   assert.doesNotMatch(adjustments, /ctl-print/);
+});
+
+test("Kith highlight theme controls move and scale only the assembled decorative frame", async () => {
+  const css = (await readFile(new URL("../game-lines/changeling/styles/sheet-theme.css", import.meta.url), "utf8")).replace(/\s+/g, " ");
+  for (const theme of ["default", "fairest"]) {
+    for (const surface of [":not(.mobile-character-sheet)", ".mobile-character-sheet"]) {
+      const selector = `.app-shell:has([data-changeling-sheet-theme="${theme}"]) .ctl-sheet${surface} .skill-highlight-kith .kith-skill-frame`;
+      assert.ok(css.includes(`${selector} {`), selector);
+      const block = css.slice(css.indexOf(`${selector} {`) + selector.length).split("}")[0];
+      assert.match(block, /translate:\s*[^;]+;/);
+      assert.match(block, /scale:\s*[^;]+;/);
+      assert.match(block, /transform-origin:\s*center;/);
+    }
+  }
+  const frameControls = css.slice(css.indexOf("MOLDURA DA PERICIA DE KITH"));
+  assert.match(frameControls, /@media screen/);
+  assert.doesNotMatch(frameControls, /kith-skill-piece|kith-skill-name-text|ctl-print/);
 });
