@@ -389,7 +389,7 @@
     max-width: 400px;
     position: relative;
     left: 50%;
-    translate: -30% -10px;
+    translate: -28% 0px;
   }
 
   .app-shell:has([data-changeling-sheet-theme="fairest"])
@@ -443,7 +443,7 @@
   .app-shell:has([data-changeling-sheet-theme="fairest"])
     .ctl-sheet.mobile-character-sheet
     .skill-highlight-kith .kith-skill-frame {
-    translate: 10px 5px;
+    translate: 4px 5px;
     scale: 1.095;
     transform-origin: center;
   }
