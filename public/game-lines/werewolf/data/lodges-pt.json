@@ -1,0 +1,97 @@
+{
+  "wtf2:lodge-of-the-einherjar": {
+    "name": "Lodge of the Einherjar",
+    "summary": "Destituídos que preservam as histórias de alcateias perdidas e honram os Gloriosos mortos.",
+    "description": "Com sede no norte do Colorado, seus membros investigam o destino de alcateias Uratha e compartilham as descobertas com o Povo. O trabalho pode revelar heroísmo, covardia ou traição."
+  },
+  "wtf2:lodge-of-the-hundred-days": {
+    "name": "Lodge of the Hundred Days",
+    "summary": "Uratha ruandeses que trabalham para curar as feridas espirituais deixadas pelo genocídio.",
+    "description": "Seus membros enfrentam espíritos e fantasmas moldados pelo genocídio, tratam feridas espirituais e ajudam a reunir famílias separadas pela violência."
+  },
+  "wtf2:lodge-of-the-hook-hand": {
+    "name": "Lodge of the Hook Hand",
+    "summary": "Caçadores nas Trevas que remodelam o folclore como ferramenta para proteger território.",
+    "description": "Seus membros adaptam lendas locais e folclore urbano para conduzir pessoas e presas a situações que a Lodge pode aproveitar em suas caçadas.",
+    "admission": "A Lodge é associada aos Caçadores nas Trevas; a fonte não estabelece isso como requisito exclusivo de ingresso."
+  },
+  "wtf2:lodge-of-the-shield": {
+    "name": "Lodge of the Shield",
+    "summary": "Uma rede de apoio para Uratha que trabalham na aplicação da lei.",
+    "description": "A Lodge começou entre Iron Masters do Departamento de Polícia de Los Angeles e se espalhou para outras agências. Seus membros ajudam uns aos outros a conciliar o trabalho policial com a Caçada.",
+    "admission": "A fonte afirma que a Lodge aceita lobisomens de qualquer Tribo."
+  },
+  "wtf2:lodge-of-the-roman-ritual": {
+    "name": "Lodge of the Roman Ritual",
+    "summary": "Senhores da Tempestade que realizam exorcismos e cuidam de pessoas afetadas pela possessão.",
+    "description": "Seus membros combinam rituais católicos e animismo Uratha para separar espíritos de suas vítimas. Irmãos leigos Wolf-Blooded administram hospícios para a recuperação dos possuídos.",
+    "admission": "Os membros Uratha são padres católicos romanos autorizados a realizar exorcismos."
+  },
+  "wtf2:lodge-of-the-chronicle": {
+    "name": "Lodge of the Chronicle",
+    "summary": "Cahalith que preservam a história e o conhecimento dos Uratha.",
+    "description": "A Lodge surgiu após uma Caçada devastadora revelar como a história do Povo podia se perder. Seus membros coletam, preservam e compartilham esse conhecimento.",
+    "admission": "Somente lobisomens Cahalith são admitidos."
+  },
+  "wtf2:lodge-of-gargoyles": {
+    "name": "Lodge of Gargoyles",
+    "summary": "Irraka treinados para atacar presas do alto com armas de longo alcance.",
+    "description": "Esta pequena Lodge surgiu na Nova Inglaterra. Seus membros treinam tiro de precisão, acrobacia e o uso da altura para obter vantagem sobre suas presas.",
+    "admission": "Somente Irraka são admitidos."
+  },
+  "wtf2:lodge-of-garm": {
+    "name": "Lodge of Garm",
+    "summary": "Guerreiros que buscam a perfeição marcial e caçam os Puros.",
+    "description": "A Lodge se prepara para o conflito com disciplina física e mental, estratégia e estudo dos inimigos. Recruta principalmente Blood Talons, incluindo uma cisão secreta Meninna.",
+    "totem": "Garm, também chamado Upuaut, é um espírito de guerra ligado à ambição e à caça de presas poderosas.",
+    "blessing": "Ao gastar Força de Vontade para ampliar uma jogada de ataque contra outro lobisomem, o personagem recebe cinco dados em vez de três.",
+    "aspiration": "Ser derrotado em batalha por um oponente superior.",
+    "ban": "Ser o último membro da alcateia a recuar de uma batalha ou confronto.",
+    "sacredHunt": "Perceber se a presa tem Instinto Primitivo 6 ou mais; manter toda a Defesa ao fazer um ataque total contra ela.",
+    "access": ["Lodge Armory", "Uma Suguthkuth"]
+  },
+  "wtf2:lodge-of-the-thousand-steel-teeth": {
+    "name": "Lodge of the Thousand Steel Teeth",
+    "summary": "Guerreiros das estradas ligados a espíritos de máquinas e viagens.",
+    "description": "Seus membros caçam pelas rodovias em veículos e valorizam transporte, comunicação e conhecimento mecânico. A Lodge é especialmente associada aos Iron Masters.",
+    "totem": "The Smoke Drinker é um espírito de motores, velocidade e óleo.",
+    "blessing": "Ao gastar Força de Vontade para acrescentar dados a Direção, Ofícios para consertar ou modificar veículos, ou Atletismo para se mover entre veículos, recebe a qualidade rote.",
+    "aspiration": "Aprimorar e melhorar um veículo que o membro possua.",
+    "ban": "Não dormir no mesmo lugar em noites consecutivas; viajar ao menos uma milha até outro local de descanso.",
+    "sacredHunt": "Rastrear a presa ao dirigir sem penalidades por atacá-la. Dano letal causado por um veículo pode ser reduzido a contundente; o dano ao próprio veículo segue a regra impressa.",
+    "access": ["Lodge Connections, para assuntos de veículos e viagens"]
+  },
+  "wtf2:lodge-of-the-screaming-moon": {
+    "name": "Lodge of the Screaming Moon",
+    "summary": "Uma Lodge centrada no medo que caça criaturas aterrorizantes.",
+    "description": "Seus membros enfrentam o medo por meio de rituais sombrios e voltam essa experiência contra presas sobrenaturais associadas ao terror.",
+    "totem": "Zakinsuzi, the Tyrant Over Fear, é uma Lune do Coro Giboso.",
+    "blessing": "Jogadas de Intimidação alcançam sucesso excepcional com três sucessos em vez de cinco; matar uma presa em uma Caçada bem-sucedida pode render Essência conforme a regra da Lodge.",
+    "aspiration": "Governar pelo medo.",
+    "ban": "Quando a presa morrer, ela deve gritar ou o membro deve uivar.",
+    "sacredHunt": "Gastar um ponto de Essência para superar medo ou pânico sobrenatural originado pela presa ou que impeça a Caçada. Se o efeito causaria dano, esse dano também é negado.",
+    "access": ["Lodge Lorehouse", "Lodge Sorcery", "Banshee Howl"]
+  },
+  "wtf2:temple-of-apollo": {
+    "name": "Temple of Apollo",
+    "summary": "Um culto secreto que constrói santuários e caça quem invade esses lugares.",
+    "description": "Os enclaves do Templo combinam riqueza, rituais e santuários protegidos. Seus membros defendem esses locais e perseguem quem descobre ou viola seus segredos.",
+    "totem": "Apollo é descrito como um espírito alienígena de energia e luz, não como o espírito solar Helios.",
+    "blessing": "Não há penalidade em uma jogada social para forçar portas quando a ação desejada se alinha ao Vício da presa.",
+    "aspiration": "Satisfazer qualquer fome ou desejo que o membro sinta intensamente.",
+    "ban": "Não permitir que um infiel entre e sobreviva.",
+    "sacredHunt": "Perceber uma presa que entrou em um santuário sagrado de Apollo enquanto o membro não pertence à Lodge.",
+    "access": ["Lodge Connections", "Lodge Sorcery", "Lodge Stronghold"]
+  },
+  "wtf2:eaters-of-the-dead": {
+    "name": "Eaters of the Dead",
+    "summary": "Ghost Wolves que consomem carniça e caçam os mortos famintos.",
+    "description": "A Lodge surgiu na Ásia Central e recebe Ghost Wolves. Seus membros aproveitam os restos das presas e perseguem os mortos-vivos, enquanto buscam seu próprio propósito espiritual e familiar.",
+    "totem": "Isim-Ur, Ravening Wolf, é o patrono totêmico da Lodge.",
+    "blessing": "Gastar Força de Vontade para remover do corpo Sick ou Poisoned e aflições sobrenaturais semelhantes.",
+    "aspiration": "Ter uma família e protegê-la e sustentá-la.",
+    "ban": "Não deixar nenhuma presa apodrecer; consumi-la ou usar parte dela para criar algo.",
+    "sacredHunt": "Uma mordida contra uma presa morta-viva destrói um ponto de seu combustível sobrenatural; o efeito completo segue a regra impressa.",
+    "access": ["Lodge Sorcery", "Carrion Feast"]
+  }
+}

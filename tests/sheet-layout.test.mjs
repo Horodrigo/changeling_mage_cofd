@@ -31,8 +31,8 @@ const lines = [
   {
     id: "werewolf",
     label: "Werewolf",
-    desktopTabs: ["main", "forms", "details", "combat", "notes"],
-    mobileTabs: ["main", "summary", "stats", "details", "forms", "powers", "combat", "notes"],
+    desktopTabs: ["main", "forms", "details", "lodge", "combat", "notes"],
+    mobileTabs: ["main", "summary", "stats", "details", "forms", "powers", "lodge", "combat", "notes"],
   },
 ];
 
@@ -50,6 +50,15 @@ test("shared layout renderer validates coordinates and stable item IDs", async (
   assert.match(source, /configuredItems\.has\(itemId\)/);
   assert.match(mainSheet, /identityItems/);
   assert.match(mainSheet, /items=\{layoutItems\}/);
+});
+
+test("Werewolf Lodge tab is membership-gated and follows Details/Powers on each platform", async () => {
+  const sheet = await read("../game-lines/werewolf/sheet.tsx");
+  assert.match(sheet, /const hasLodge = Boolean\(werewolfLodgeId\(data\.lodge_id\)\)/);
+  assert.match(sheet, /\.\.\.\(hasLodge \? \[\{ value: "lodge"/);
+  assert.match(sheet, /<TabsTrigger value="details">[\s\S]*\{hasLodge && <TabsTrigger value="lodge">/);
+  assert.match(sheet, /<TabsTrigger value="lodge">[\s\S]*<TabsTrigger value="combat">/);
+  assert.match(sheet, /\{ value: "powers"[\s\S]*\.\.\.\(hasLodge \? \[\{ value: "lodge"/);
 });
 
 test("each game line has separate platform configs covering every sheet tab", async () => {
@@ -74,13 +83,17 @@ test("each game line has separate platform configs covering every sheet tab", as
   }
 });
 
-test("Werewolf Mobile field order is configured rather than selected by child index", async () => {
-  const [layout, styles] = await Promise.all([
+test("Werewolf Mobile field order is configured independently and omits the Desktop-only Chronicle field", async () => {
+  const [layout, styles, sheet] = await Promise.all([
     read("../game-lines/werewolf/sheet-layout.mobile.ts"),
     read("../game-lines/werewolf/styles/sheet.css"),
+    read("../game-lines/werewolf/sheet.tsx"),
   ]);
   assert.match(layout, /identity:\s*positions\(2,/);
   assert.doesNotMatch(styles, /\.sheet-identity-grid\s*>\s*:nth-child/);
+  assert.doesNotMatch(layout, /\["chronicle",/);
+  assert.match(sheet, /const identityFields = \{\s*\.\.\.identityMobileFields,\s*chronicle:/);
+  assert.match(sheet, /definition=\{werewolfMobileLayout\.main\.identity\} items=\{identityMobileFields\}/);
 });
 
 test("line-owned main sheet column spacing targets shared layout wrappers", async () => {

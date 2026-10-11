@@ -26,6 +26,7 @@ try {
 const reference = catalogs.get("werewolf-reference"), gifts = catalogs.get("werewolf-gifts"), rites = catalogs.get("werewolf-rites");
 const fetishCatalog = catalogs.get("werewolf-fetishes");
 const totemCatalog = catalogs.get("werewolf-totem");
+const lodgeCatalog = catalogs.get("werewolf-lodges");
 const { totemSamplePresentation } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/totem.ts");
 const { TotemReference, TotemPowerReference } = await vite.ssrLoadModule("/game-lines/werewolf/totem-reference.tsx");
 const { TotemEditor } = await vite.ssrLoadModule("/game-lines/werewolf/totem.tsx");
@@ -642,12 +643,60 @@ test("Werewolf registration loads only immutable Core and Werewolf resources wit
   assert.equal(loadedRules.normalizeCharacter, werewolfRules.normalizeCharacter);
   assert.deepEqual(loadedRules.deriveCharacterState(create()), werewolfRules.deriveCharacterState(create()));
   assert.equal(registration.loadPrintSheet, undefined, "Print must not be advertised before its own implementation exists");
+  assert.equal((await registration.loadHomebrew()).Component.name, "WerewolfHomebrew");
   assert.ok(requests.length > 10);
   for (const url of requests) assert.match(url, /^\/(?:shared\/data|game-lines\/werewolf\/data)\//);
   assert.ok(Object.isFrozen(reference.forms[0].attributes));
   assert.ok(Object.isFrozen(gifts.gifts[0].facets));
   assert.throws(() => gifts.gifts[0].facets.push({}), TypeError);
   assert.throws(() => catalogs.get("changeling-contracts"), /absent/);
+});
+
+test("WTF2 Lodge references localize by ID and enforce a single membership without mechanics changes", async () => {
+  const { werewolfLodgePresentation } = await vite.ssrLoadModule("/game-lines/werewolf/catalogs/lodges.ts");
+  const { joinWerewolfLodge, leaveWerewolfLodge } = await vite.ssrLoadModule("/game-lines/werewolf/lodge-membership.ts");
+  const { WerewolfLodgeIdentity } = await vite.ssrLoadModule("/game-lines/werewolf/lodge.tsx");
+  const { normalizeWerewolfLodgeHomebrew } = await vite.ssrLoadModule("/game-lines/werewolf/lodge-homebrews.ts");
+  assert.equal(lodgeCatalog.lodges.length, 12);
+  assert.equal(lodgeCatalog.lodges.find(item => item.id === "wtf2:lodge-of-the-chronicle").page, 53);
+  assert.ok(Object.isFrozen(lodgeCatalog.lodges));
+  for (const lodge of lodgeCatalog.lodges) {
+    const pt = lodgeCatalog.presentation[lodge.id];
+    assert.ok(pt?.name && pt.summary && pt.description, `Portuguese presentation exists for ${lodge.id}`);
+    assert.equal(werewolfLodgePresentation(lodge, lodgeCatalog, "pt-BR").id, lodge.id);
+  }
+  const custom = normalizeWerewolfLodgeHomebrew({
+    id: "homebrew:werewolf-lodge:test", name: "The Night Road", summary: "A custom summary", description: "Authored in English",
+    presentationPt: { name: "Estrada Noturna", summary: "Resumo", description: "Texto autoral" },
+  });
+  assert.equal(custom.presentationPt.name, "Estrada Noturna");
+  assert.equal(werewolfLodgePresentation(custom, lodgeCatalog, "pt-BR").name, "Estrada Noturna");
+
+  const character = create();
+  assert.match(render(createElement(WerewolfLodgeIdentity, { character, catalog: lodgeCatalog, onOpen() {} })), />Join</);
+  const affiliated = { ...character, line_data: { ...character.line_data, lodge_id: "wtf2:lodge-of-garm" } };
+  assert.match(render(createElement(WerewolfLodgeIdentity, { character: affiliated, catalog: lodgeCatalog, onOpen() {} })), />Lodge of Garm</);
+  const before = structuredClone(character);
+  const joined = joinWerewolfLodge(character, "wtf2:lodge-of-garm");
+  assert.equal(joined.line_data.lodge_id, "wtf2:lodge-of-garm");
+  assert.deepEqual(joined.current_state, before.current_state);
+  assert.deepEqual(joined.merits, before.merits);
+  assert.deepEqual(character, before, "membership updates do not mutate the original sheet");
+  assert.throws(() => joinWerewolfLodge(joined, "wtf2:lodge-of-the-chronicle"), /Leave the current Lodge/);
+  assert.equal(joinWerewolfLodge(joined, "wtf2:lodge-of-garm"), joined, "joining the current Lodge is idempotent");
+
+  joined.line_data.lodge_notes = "A note from the initiation";
+  const normalized = werewolfRules.normalizeCharacter(joined);
+  assert.equal(normalized.line_data.lodge_id, joined.line_data.lodge_id);
+  assert.equal(normalized.line_data.lodge_notes, "A note from the initiation");
+  const left = leaveWerewolfLodge(normalized, "wtf2:lodge-of-garm");
+  assert.equal(left.line_data.lodge_id, "");
+  assert.equal(left.line_data.lodge_notes, "");
+  assert.deepEqual(left.current_state, before.current_state);
+  assert.deepEqual(left.merits, before.merits);
+  assert.deepEqual(werewolfRules.normalizeCharacter({ ...character, line_data: { ...character.line_data, lodge_id: "legacy:unknown-lodge" } }).line_data.lodge_id, "legacy:unknown-lodge");
+  assert.ok(requests.includes("/game-lines/werewolf/data/lodges.json"));
+  assert.ok(requests.includes("/game-lines/werewolf/data/lodges-pt.json"));
 });
 
 test("WTF2 pp. 99 and 114–115 Renown costs three XP per deed and grants ordered Auspice Moon Facets without charging twice", () => {

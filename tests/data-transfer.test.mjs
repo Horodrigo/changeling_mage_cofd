@@ -21,6 +21,16 @@ test("homebrew transfer accepts current and previous complete envelopes only", a
     parseHomebrewTransferEnvelope({ schemaVersion: 2, homebrews, preferences: { disabledIds: [], enabledIds: [] } })?.preferences,
     { disabledIds: [], enabledIds: [] },
   );
+  assert.deepEqual(
+    parseHomebrewTransferEnvelope({ schemaVersion: 2, homebrews, preferences: { disabledIds: [], enabledIds: [] } })?.homebrews.werewolfLodges,
+    [],
+    "older bundles are normalized without a missing collection",
+  );
+  assert.deepEqual(
+    parseHomebrewTransferEnvelope({ schemaVersion: 3, homebrews: { ...homebrews, werewolfLodges: [] }, preferences: { disabledIds: [], enabledIds: [] } })?.homebrews.werewolfLodges,
+    [],
+  );
+  assert.equal(parseHomebrewTransferEnvelope({ schemaVersion: 3, homebrews, preferences: { disabledIds: [] } }), null);
   assert.equal(parseHomebrewTransferEnvelope({ schemaVersion: 2, homebrews }), null);
   assert.equal(parseHomebrewTransferEnvelope({ schemaVersion: 2, homebrews, preferences: { disabledIds: [{}] } }), null);
   assert.equal(parseHomebrewTransferEnvelope({ schemaVersion: 2, homebrews: { ...homebrews, merits: {} }, preferences: { disabledIds: [] } }), null);

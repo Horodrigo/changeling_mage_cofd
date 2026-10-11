@@ -44,6 +44,9 @@ import { WerewolfExperiencePanel } from "./experience-panel";
 import { knownWerewolfFacets } from "./gift-progression";
 import { changeWerewolfForm, changeWerewolfTotem } from "./form-state";
 import { TotemAdvantageEditor } from "./totem-advantage";
+import { WerewolfLodgeIdentity, WerewolfLodgeJoinDialog, WerewolfLodgePage } from "./lodge";
+import type { WerewolfLodgeCatalog } from "./catalogs/lodges";
+import { werewolfLodgeId } from "./lodge-membership";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
 import { INTERDISCIPLINARY_SPECIALTY_ID } from "@/lib/core/character/specialty-merits";
@@ -58,6 +61,8 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const { locale, t } = useLanguage();
   const mobile = useIsMobile();
   const [tabs, setTabs] = useState({ characterId: character.id, mobile: "summary", desktop: "main" });
+  const [lodgeJoinOpen, setLodgeJoinOpen] = useState(false);
+  const setTab = (value: string) => setTabs(previous => ({ ...previous, characterId: character.id, [mobile ? "mobile" : "desktop"]: value }));
   const [powerSearch, setPowerSearch] = useState(""), [powerKind, setPowerKind] = useState("all");
   if (character.game_line !== "WtF") throw new Error("Werewolf sheet received another game line.");
   if (!catalogs) throw new Error("Werewolf sheet requires its catalog snapshot.");
@@ -66,9 +71,11 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const rites = catalogs.get<WerewolfRiteCatalog>("werewolf-rites");
   const fetishes = catalogs.get<WerewolfFetishCatalog>("werewolf-fetishes");
   const totem = catalogs.get<WerewolfTotemCatalog>("werewolf-totem");
+  const lodges = catalogs.get<WerewolfLodgeCatalog>("werewolf-lodges");
   const merits = [...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")];
   const core = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
   const data = character.line_data, state = character.current_state;
+  const hasLodge = Boolean(werewolfLodgeId(data.lodge_id));
   const selectedTotem = totemSelection(data.totem);
   const setState = (key: string, value: unknown) => updateState({ ...state, [key]: value });
   const setLine = (key: string, value: unknown) => updateSheet({ ...character, line_data: { ...data, [key]: value } });
@@ -91,17 +98,24 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
     const definition = records.find(item => item.id === id);
     return definition ? locale === "pt-BR" ? reference.presentation[definition.id]?.name ?? definition.name : definition.name : String(id ?? "");
   };
-  const identityFields = {
+  const identityMobileFields = {
     name: <SheetField label={t("ui.characterName")} value={character.character.name}/>,
     blood: <SheetField label={t("werewolf.blood")} value={name(data.blood, reference.anchors)}/>,
     auspice: <SheetField label={t("werewolf.auspice")} value={name(data.auspice_id, reference.auspices)}/>,
     player: <SheetField label={t("ui.player")} value={character.character.player}/>,
     bone: <SheetField label={t("werewolf.bone")} value={name(data.bone, reference.anchors)}/>,
     tribe: <SheetField label={t("werewolf.tribe")} value={name(data.tribe_id, reference.tribes)}/>,
-    chronicle: <SheetField label={t("ui.chronicle")} value={character.character.chronicle}/>,
+    lodge: <WerewolfLodgeIdentity character={character} catalog={lodges} onOpen={joined => {
+      if (joined) setTab("lodge");
+      else setLodgeJoinOpen(true);
+    }}/>,
     concept: <SheetField label={t("ui.concept")} value={character.character.concept}/>,
   };
-  const identityMobile = <SheetLayoutSection id="identity-mobile" definition={werewolfMobileLayout.main.identity} items={identityFields} className="sheet-identity-grid"/>;
+  const identityFields = {
+    ...identityMobileFields,
+    chronicle: <SheetField label={t("ui.chronicle")} value={character.character.chronicle}/>,
+  };
+  const identityMobile = <SheetLayoutSection id="identity-mobile" definition={werewolfMobileLayout.main.identity} items={identityMobileFields} className="sheet-identity-grid"/>;
   const attributes = <><SheetHeading>{t("ui.attributes")}</SheetHeading><p className="wtf-trait-note">{t("werewolf.hishuTraits")}</p><SheetCategoryLayout id={mobile ? "mobile-attributes" : "attributes"} definition={mobile ? werewolfMobileLayout.main.attributes : werewolfDesktopLayout.main.attributes} className={mobile ? "mobile-attribute-grid" : "official-trait-grid"} render={category => <TraitBlock key={category} title={category} names={ATTRIBUTES[category as keyof typeof ATTRIBUTES]} values={hishu.attributes} compactNames={mobile}/>} /></>;
   const skills = <><SheetHeading>{t("ui.skills")}</SheetHeading><SheetCategoryLayout id={mobile ? "mobile-skills" : "skills"} definition={mobile ? werewolfMobileLayout.main.skills : werewolfDesktopLayout.main.skills} className="wtf-skill-stack" render={category => <TraitBlock key={category} title={category} names={SKILLS[category as keyof typeof SKILLS]} values={member.skills} specialties={member.specializations} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")}/>} /></>;
   const health = <><div className="panel-heading wtf-health-heading"><SheetHeading>{t("ui.health")}</SheetHeading><FormSelector value={currentForm} onChange={setForm} reference={reference}/></div>
@@ -192,8 +206,12 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
     </TotemEditor>
   </>;
   const notes = <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={String(state.notes ?? "")} onChange={value => setState("notes", value)}/></>;
-  const activeTab = tabs.characterId === character.id ? mobile ? tabs.mobile : tabs.desktop : mobile ? "summary" : "main";
-  const setTab = (value: string) => setTabs(previous => ({ ...previous, characterId: character.id, [mobile ? "mobile" : "desktop"]: value }));
+  const lodgePage = <WerewolfLodgePage character={character} updateSheet={updateSheet} catalog={lodges}
+    onLeft={() => setTab(mobile ? "powers" : "details")}/>;
+  const lodgeJoinDialog = <WerewolfLodgeJoinDialog open={lodgeJoinOpen} onOpenChange={setLodgeJoinOpen}
+    character={character} updateSheet={updateSheet} catalog={lodges} onJoined={() => setTab("lodge")}/>;
+  const requestedTab = tabs.characterId === character.id ? mobile ? tabs.mobile : tabs.desktop : mobile ? "summary" : "main";
+  const activeTab = requestedTab === "lodge" && !hasLodge ? mobile ? "powers" : "details" : requestedTab;
   const frame = <div className="wtf-frame" aria-hidden="true">
     <span className="wtf-frame-corner" /><span className="wtf-frame-corner" /><span className="wtf-frame-corner" /><span className="wtf-frame-corner" />
     <span className="wtf-frame-rail wtf-frame-rail-top" /><span className="wtf-frame-rail wtf-frame-rail-bottom" />
@@ -204,9 +222,12 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
     <SwipeableSheetTabs value={activeTab} onValueChange={setTab} tabs={[
       { value: "summary", label: t("ui.summary") }, { value: "stats", label: t("werewolf.traitsTab") },
       { value: "details", label: t("ui.details") }, { value: "forms", label: t("werewolf.forms") },
-      { value: "powers", label: t("ui.powers") }, { value: "combat", label: t("ui.combat") }, { value: "notes", label: t("werewolf.notesTab") },
+      { value: "powers", label: t("ui.powers") },
+      ...(hasLodge ? [{ value: "lodge", label: t("werewolf.lodgeTab") }] : []),
+      { value: "combat", label: t("ui.combat") }, { value: "notes", label: t("werewolf.notesTab") },
     ]}>{{
       summary: <SheetLayoutFlow id="werewolf-mobile-summary" definition={werewolfMobileLayout.summary} items={{ identity: identityMobile, aspirations: <><SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}</>, experience }}/>,
+      ...(hasLodge ? { lodge: <SheetLayoutFlow id="werewolf-mobile-lodge" definition={werewolfMobileLayout.lodge} items={{ directory: lodgePage }}/> } : {}),
       stats: <SheetLayoutFlow id="werewolf-mobile-stats" definition={werewolfMobileLayout.stats} items={{ attributes, skills }}/>,
       details: <SheetLayoutFlow id="werewolf-mobile-details" definition={werewolfMobileLayout.details} items={{
         renown: <><SheetHeading>{t("werewolf.renown")}</SheetHeading>{renownBlock}</>,
@@ -219,18 +240,21 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
       combat: <SheetLayoutFlow id="werewolf-mobile-combat" definition={werewolfMobileLayout.combat} items={{ health, willpower, combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet}/> }}/>,
       notes: <SheetLayoutFlow id="werewolf-mobile-notes" definition={werewolfMobileLayout.notes} items={{ notes }}/>,
     }}</SwipeableSheetTabs>
+    {lodgeJoinDialog}
   </CharacterPaperShell>;
   return <CharacterPaperShell line="WtF" title={t("werewolf.title")} subtitle={t("werewolf.forsaken")}>
     {frame}
     <Tabs value={activeTab} onValueChange={setTab}><TabsList className="ctl-sheet-tab-list" aria-label={t("ui.characterPages")}>
-      <TabsTrigger value="main">{t("ui.main")}</TabsTrigger><TabsTrigger value="forms">{t("werewolf.forms")}</TabsTrigger><TabsTrigger value="details">{t("ui.details")}</TabsTrigger><TabsTrigger value="combat">{t("ui.combat")}</TabsTrigger><TabsTrigger value="notes">{t("ui.notes")}</TabsTrigger>
+      <TabsTrigger value="main">{t("ui.main")}</TabsTrigger><TabsTrigger value="forms">{t("werewolf.forms")}</TabsTrigger><TabsTrigger value="details">{t("ui.details")}</TabsTrigger>{hasLodge && <TabsTrigger value="lodge">{t("werewolf.lodgeTab")}</TabsTrigger>}<TabsTrigger value="combat">{t("ui.combat")}</TabsTrigger><TabsTrigger value="notes">{t("ui.notes")}</TabsTrigger>
     </TabsList><TabsContent value="main" className="ctl-sheet-page"><MainSheet className="wtf-main-body" layout={werewolfDesktopLayout.main} identityItems={identityFields} attributes={attributes} skills={skills} specificPowers={renownBlock} specificPowersTitle={t("werewolf.renown")} merits={meritList} aspirations={aspirationList} lineSections={harmony} conditions={conditionList}
       health={health} willpower={willpower} powerStat={powerStat} fuel={essence} stability={null} derived={displayedDerived} armorId={data.combat_armor} experience={experience}/></TabsContent>
       <TabsContent value="forms" className="ctl-sheet-page wtf-forms-page"><SheetLayoutDesktopPage id="werewolf-desktop-forms" definition={werewolfDesktopLayout.forms} items={{ forms }}/></TabsContent>
+      {hasLodge && <TabsContent value="lodge" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-lodge" definition={werewolfDesktopLayout.lodge} items={{ directory: lodgePage }}/></TabsContent>}
       <TabsContent value="details" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-details" definition={werewolfDesktopLayout.details} items={{ anchors, powers }}/></TabsContent>
       <TabsContent value="combat" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-combat" definition={werewolfDesktopLayout.combat} items={{ combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet}/> }}/></TabsContent>
       <TabsContent value="notes" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-notes" definition={werewolfDesktopLayout.notes} items={{ notes }}/></TabsContent>
     </Tabs>
+    {lodgeJoinDialog}
   </CharacterPaperShell>;
 }
 

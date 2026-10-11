@@ -6,6 +6,15 @@
   font-display: swap;
 }
 
+.wtf-sheet .official-field > strong,
+.wtf-sheet .official-field > button {
+  text-indent: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
 .line-theme-wtf,
 body:has(.line-theme-wtf) {
   --primary: #713c31;
@@ -56,6 +65,43 @@ body:has(.line-theme-wtf) {
 .wtf-sheet .wtf-power-filters > label { display: grid; gap: 4px; font: 12px/1.4 Inter, Arial, sans-serif; }
 .wtf-sheet .wtf-fetish-inventory > .panel-heading h3 { font-size: 19px; font-weight: 400; }
 .wtf-sheet .wtf-fetish-inventory > .panel-heading p { color: #67554a; font-size: 12px; line-height: 1.45; }
+.wtf-sheet .wtf-lodge-identity { min-width: 0; }
+.wtf-sheet .wtf-lodge-identity > button {
+  min-width: 0;
+  min-height: 21px;
+  overflow: hidden;
+  border: 0;
+  border-bottom: 1px solid var(--sheet-ink);
+  background: transparent;
+  color: var(--sheet-ink);
+  opacity: 1;
+  font: italic 15px/20px Georgia, serif;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.wtf-sheet .wtf-lodge-directory, .wtf-lodge-homebrews { display: grid; gap: 1rem; }
+.wtf-sheet .wtf-lodge-directory > .panel-heading { margin: 0; }
+.wtf-lodge-catalog, .wtf-lodge-memberships, .wtf-lodge-list { display: grid; gap: 1rem; }
+.wtf-sheet .wtf-lodge-card, .wtf-sheet .wtf-lodge-membership, .wtf-lodge-homebrew-card { display: grid; gap: .75rem; padding: 1rem; }
+.wtf-sheet .wtf-lodge-card > header, .wtf-sheet .wtf-lodge-membership > header, .wtf-lodge-homebrew-card > header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.wtf-sheet .wtf-lodge-card h3, .wtf-sheet .wtf-lodge-membership h3, .wtf-lodge-homebrew-card h3 { margin: 0; color: var(--sheet-accent); font: 400 20px/1.2 "Werewolf Arnova", Georgia, serif; }
+.wtf-sheet .wtf-lodge-card header p, .wtf-lodge-homebrew-card header p { margin: .25rem 0 .5rem; }
+.wtf-sheet .wtf-lodge-details { display: grid; gap: .5rem; margin: 0; font-size: 13px; }
+.wtf-sheet .wtf-lodge-details > div { display: grid; grid-template-columns: minmax(100px, 180px) minmax(0, 1fr); gap: .75rem; border-top: 1px solid var(--sheet-line); padding-top: .45rem; }
+.wtf-sheet .wtf-lodge-details dt { color: var(--sheet-accent); font-weight: 700; }
+.wtf-sheet .wtf-lodge-details dd { margin: 0; white-space: pre-wrap; }
+.wtf-sheet .wtf-lodge-notes, .wtf-lodge-search, .wtf-lodge-select { display: grid; gap: .35rem; font-size: 12px; }
+.wtf-lodge-homebrew-card > p { margin: 0; }
+.wtf-lodge-card-actions { display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; }
+.wtf-lodge-toggle { display: inline-flex; align-items: center; gap: .4rem; font-size: 12px; }
+.wtf-lodge-preview { max-height: 52vh; overflow: auto; }
+.wtf-lodge-preview h3 { margin: 0; color: var(--sheet-accent); }
+.wtf-lodge-preview > p { margin: .4rem 0; }
+.wtf-lodge-homebrew-editor .homebrew-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; max-height: 60vh; overflow-y: auto; }
+.wtf-lodge-homebrew-editor .homebrew-form > label { display: grid; gap: .35rem; font-size: 12px; }
+.wtf-lodge-editor-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
 .wtf-sheet .wtf-experience-panel { display: grid; gap: 7px; }
 .wtf-sheet .wtf-experience-panel .beat-resource { justify-content: space-between; padding: 6px 8px; border: 1px solid var(--sheet-line); background: #fff8; }
 .wtf-sheet .wtf-experience-panel svg { width: 14px; }

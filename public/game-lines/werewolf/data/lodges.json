@@ -1,0 +1,151 @@
+{
+  "lodges": [
+    {
+      "id": "wtf2:lodge-of-the-einherjar",
+      "name": "Lodge of the Einherjar",
+      "sourceId": "wtf2",
+      "source": "Werewolf: The Forsaken, 2nd Edition",
+      "page": 51,
+      "summary": "Blood Talons who preserve the stories of lost packs and honor the Glorious dead.",
+      "description": "Based in northern Colorado, members investigate the fate of Uratha packs and share what they learn with the People. Their work may reveal heroism, cowardice, or betrayal.",
+      "recruitment": "The Lodge's work is not restricted to Blood Talons."
+    },
+    {
+      "id": "wtf2:lodge-of-the-hundred-days",
+      "name": "Lodge of the Hundred Days",
+      "sourceId": "wtf2",
+      "source": "Werewolf: The Forsaken, 2nd Edition",
+      "page": 51,
+      "summary": "Rwandan Uratha who work to heal spiritual wounds left by the genocide.",
+      "description": "Members confront spirits and ghosts shaped by the genocide, address spiritual wounds, and help reunite families separated by the violence."
+    },
+    {
+      "id": "wtf2:lodge-of-the-hook-hand",
+      "name": "Lodge of the Hook Hand",
+      "sourceId": "wtf2",
+      "source": "Werewolf: The Forsaken, 2nd Edition",
+      "page": 51,
+      "summary": "Hunters in Darkness who reshape folklore into tools for protecting territory.",
+      "description": "Members adapt local legends and urban folklore to guide people and prey toward situations the Lodge can use in its hunts.",
+      "admission": "The Lodge is associated with Hunters in Darkness; the source does not state this as an exclusive admission rule."
+    },
+    {
+      "id": "wtf2:lodge-of-the-shield",
+      "name": "Lodge of the Shield",
+      "sourceId": "wtf2",
+      "source": "Werewolf: The Forsaken, 2nd Edition",
+      "page": 51,
+      "summary": "A support network for Uratha working in law enforcement.",
+      "description": "The Lodge began among Iron Masters in the Los Angeles Police Department and spread to other agencies. Its members help one another navigate the demands of police work and the hunt.",
+      "admission": "The source says the Lodge is open to werewolves of any Tribe."
+    },
+    {
+      "id": "wtf2:lodge-of-the-roman-ritual",
+      "name": "Lodge of the Roman Ritual",
+      "sourceId": "wtf2",
+      "source": "Werewolf: The Forsaken, 2nd Edition",
+      "page": 52,
+      "summary": "Storm Lords who perform exorcisms and care for people affected by possession.",
+      "description": "Members use a blend of Catholic ritual and Uratha animism to separate spirits from victims. Wolf-Blooded lay brethren operate hospices for those recovering from possession.",
+      "admission": "Uratha members are Roman Catholic priests authorized to perform exorcisms."
+    },
+    {
+      "id": "wtf2:lodge-of-the-chronicle",
+      "name": "Lodge of the Chronicle",
+      "sourceId": "wtf2",
+      "source": "Werewolf: The Forsaken, 2nd Edition",
+      "page": 53,
+      "summary": "Cahalith who preserve the history and knowledge of the Uratha.",
+      "description": "The Lodge formed after a devastating hunt exposed how easily the People's history could be lost. Its members collect, preserve, and share that knowledge.",
+      "admission": "Only Cahalith werewolves are admitted."
+    },
+    {
+      "id": "wtf2:lodge-of-gargoyles",
+      "name": "Lodge of Gargoyles",
+      "sourceId": "wtf2",
+      "source": "Werewolf: The Forsaken, 2nd Edition",
+      "page": 53,
+      "summary": "Irraka trained to strike prey from above with ranged weapons.",
+      "description": "This small Lodge began in New England. Its members train in sniping, acrobatics, and using height to gain an advantage over their prey.",
+      "admission": "Only Irraka are admitted."
+    },
+    {
+      "id": "wtf2:lodge-of-garm",
+      "name": "Lodge of Garm",
+      "sourceId": "the-pack",
+      "source": "The Pack, 2nd Edition",
+      "page": 82,
+      "summary": "Warriors pursuing martial perfection and hunting the Pure.",
+      "description": "The Lodge prepares for conflict through physical and mental discipline, strategy, and the study of its enemies. It primarily recruits Blood Talons, with a secretive Meninna schism.",
+      "totem": "Garm, also called Upuaut, is a war spirit associated with ambition and the hunt for powerful prey.",
+      "blessing": "Spending Willpower to augment an attack against another werewolf adds five dice instead of three.",
+      "aspiration": "Be defeated in battle by a superior foe.",
+      "ban": "Be the last member of the pack to retreat from a battle or confrontation.",
+      "sacredHunt": "Sense whether prey has Primal Urge 6 or higher; retain full Defense when making an all-out attack against that prey.",
+      "access": ["Lodge Armory", "Uma Suguthkuth"]
+    },
+    {
+      "id": "wtf2:lodge-of-the-thousand-steel-teeth",
+      "name": "Lodge of the Thousand Steel Teeth",
+      "sourceId": "the-pack",
+      "source": "The Pack, 2nd Edition",
+      "page": 84,
+      "summary": "Road warriors bound to spirits of machinery and travel.",
+      "description": "Members hunt along the highways in vehicles, valuing transport, communication, and mechanical expertise. The Lodge is especially associated with Iron Masters.",
+      "totem": "The Smoke Drinker is a spirit of engines, speed, and oil.",
+      "blessing": "When spending Willpower to add dice to Drive, Crafts rolls to repair or modify a vehicle, or Athletics rolls to move between vehicles, gain the rote quality.",
+      "aspiration": "Improve and enhance a vehicle the adherent possesses.",
+      "ban": "Do not sleep in the same place on consecutive nights; travel at least one mile to another resting place.",
+      "sacredHunt": "Track prey while driving without penalties for attacking it. Lethal damage from a vehicle strike can be downgraded to bashing; damage to the adherent's own vehicle is handled by the printed rule.",
+      "access": ["Lodge Connections, for vehicle- and travel-related matters"]
+    },
+    {
+      "id": "wtf2:lodge-of-the-screaming-moon",
+      "name": "Lodge of the Screaming Moon",
+      "sourceId": "the-pack",
+      "source": "The Pack, 2nd Edition",
+      "page": 86,
+      "summary": "A fear-focused Lodge that hunts creatures of terror.",
+      "description": "Its members face fear through grim rituals and turn that experience against supernatural prey associated with terror.",
+      "totem": "Zakinsuzi, the Tyrant Over Fear, is a Lune of the Gibbous Choir.",
+      "blessing": "Intimidation rolls achieve exceptional success with three successes instead of five; killing prey in a successful hunt can yield Essence as described by the Lodge.",
+      "aspiration": "Rule through fear.",
+      "ban": "When the prey is killed, it must scream or the adherent must howl.",
+      "sacredHunt": "Spend one Essence to overcome supernatural fear or panic originating from the prey or obstructing the hunt. If the effect would inflict damage, the damage is also negated.",
+      "access": ["Lodge Lorehouse", "Lodge Sorcery", "Banshee Howl"]
+    },
+    {
+      "id": "wtf2:temple-of-apollo",
+      "name": "Temple of Apollo",
+      "sourceId": "the-pack",
+      "source": "The Pack, 2nd Edition",
+      "page": 88,
+      "summary": "A secretive cult that builds shrines and hunts those who intrude on them.",
+      "description": "The Temple's enclaves combine wealth, ritual, and guarded shrines. Its adherents protect these places and pursue people who uncover or violate their inner workings.",
+      "totem": "Apollo is described as an alien spirit of energy and light, not the sun spirit Helios.",
+      "blessing": "No penalty applies to a social roll to force Doors when the desired action aligns with the prey's Vice.",
+      "aspiration": "Slake any hunger or desire the adherent feels strongly.",
+      "ban": "Allow no infidel to enter and live.",
+      "sacredHunt": "Sense prey that has entered a sacred shrine of Apollo while the adherent is not a member of the Lodge.",
+      "access": ["Lodge Connections", "Lodge Sorcery", "Lodge Stronghold"]
+    },
+    {
+      "id": "wtf2:eaters-of-the-dead",
+      "name": "Eaters of the Dead",
+      "sourceId": "the-pack",
+      "source": "The Pack, 2nd Edition",
+      "page": 90,
+      "additionalSources": [
+        { "sourceId": "wtf2", "source": "Werewolf: The Forsaken, 2nd Edition", "page": 52 }
+      ],
+      "summary": "Ghost Wolves who consume carrion and hunt the hungry dead.",
+      "description": "The Lodge began in Central Asia and welcomes Ghost Wolves. Its adherents use the remains of prey and seek undead, while pursuing their own spiritual and familial purpose.",
+      "totem": "Isim-Ur, Ravening Wolf, is the Lodge's totemic patron.",
+      "blessing": "Spend Willpower to purge Sick or Poisoned and similar supernatural afflictions from the body.",
+      "aspiration": "Have a family, and protect and provide for them.",
+      "ban": "Leave no kill to rot; consume it or use part of it to craft something.",
+      "sacredHunt": "A bite against undead prey destroys one point of its supernatural fuel; the complete effect follows the printed Lodge rule.",
+      "access": ["Lodge Sorcery", "Carrion Feast"]
+    }
+  ]
+}

@@ -1,5 +1,4 @@
 @media screen and (max-width: 767px) {
-  /* Duas linhas mantêm todas as abas visíveis, com a textura da aba ativa da linha. */
   .wtf-sheet.mobile-character-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list {
     display: flex;
     flex-wrap: wrap;
@@ -28,11 +27,36 @@
   .wtf-sheet.mobile-character-sheet .sheet-identity-grid { padding-top: 0; padding-bottom: 12px; }
   .wtf-sheet.mobile-character-sheet .official-field { flex-direction: column; align-items: stretch; gap: 2px; }
   .wtf-sheet.mobile-character-sheet .official-field strong {
-    min-width: 0;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    text-overflow: clip;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-indent: 2px;
   }
+  .wtf-sheet.mobile-character-sheet
+  .official-field.wtf-lodge-identity {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 5px;
+  }
+
+  .wtf-sheet.mobile-character-sheet
+  .official-field.wtf-lodge-identity > button {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    color: #241c19;
+    opacity: 1;
+    font: italic 15px/20px Georgia, serif;
+    text-align: left;
+  }
+  .wtf-sheet.mobile-character-sheet .wtf-lodge-details > div { grid-template-columns: 1fr; gap: .15rem; }
+  .wtf-sheet.mobile-character-sheet .wtf-lodge-card > header,
+  .wtf-sheet.mobile-character-sheet .wtf-lodge-membership > header { flex-direction: column; }
+  .wtf-lodge-homebrew-editor .homebrew-form { grid-template-columns: 1fr; }
+  .wtf-lodge-editor-pair { grid-template-columns: 1fr; }
   .wtf-sheet.mobile-character-sheet .official-heading { font-size: 21px; margin-block: 16px 10px; }
   .wtf-sheet.mobile-character-sheet .wtf-harmony .official-heading { font-size: 19px; margin: 0; }
   .wtf-sheet.mobile-character-sheet .wtf-mobile-form > .panel-heading {

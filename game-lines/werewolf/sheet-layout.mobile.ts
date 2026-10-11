@@ -11,10 +11,10 @@ const positions = (columns: number, entries: readonly [string, number, number][]
 export const werewolfMobileLayout = {
   main: {
     identity: positions(2, [
-      ["name", 1, 1], ["auspice", 2, 1],
-      ["player", 1, 2], ["tribe", 2, 2],
-      ["chronicle", 1, 3], ["blood", 2, 3],
-      ["concept", 1, 4], ["bone", 2, 4],
+      ["name", 1, 1], ["concept", 2, 1],
+      ["player", 1, 2], ["auspice", 2, 2],
+      ["blood", 1, 3], ["tribe", 2, 3],
+      ["bone", 1, 4], ["lodge", 2, 4],
     ]),
     attributes: positions(3, [["Mental", 1, 1], ["Physical", 2, 1], ["Social", 3, 1]]),
     skills: positions(1, [["Mental", 1, 1], ["Physical", 1, 2], ["Social", 1, 3]]),
@@ -34,4 +34,5 @@ export const werewolfMobileLayout = {
   combat: flow(["health", "willpower", "combat"]),
   // Notes: notas livres do personagem.
   notes: flow(["notes"]),
+  lodge: flow(["directory"]),
 } as const;

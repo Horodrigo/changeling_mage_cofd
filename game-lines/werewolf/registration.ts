@@ -6,9 +6,11 @@ export const werewolfRegistration: GameLineRegistration = {
   cardClass: "wtf-card", summaryClass: "wtf-summary",
   catalogGroups: {
     builder: ["core-merits", "werewolf-merits", "werewolf-reference", "werewolf-gifts", "werewolf-rites", "werewolf-fetishes", "werewolf-totem"],
-    sheet: ["core-merits", "core-reference", "werewolf-merits", "werewolf-reference", "werewolf-gifts", "werewolf-rites", "werewolf-fetishes", "werewolf-totem"],
+    sheet: ["core-merits", "core-reference", "werewolf-merits", "werewolf-reference", "werewolf-gifts", "werewolf-rites", "werewolf-fetishes", "werewolf-totem", "werewolf-lodges"],
+    homebrew: ["core-merits", "werewolf-merits", "werewolf-lodges"],
   },
   loadRules: () => import("./rules").then(({ loadWerewolfRules }) => loadWerewolfRules()),
   loadBuilder: () => import("./builder").then(({ werewolfBuilder }) => werewolfBuilder),
   loadSheet: () => import("./sheet").then(({ werewolfSheet }) => werewolfSheet),
+  loadHomebrew: () => import("./homebrew").then(({ werewolfHomebrew }) => werewolfHomebrew),
 };

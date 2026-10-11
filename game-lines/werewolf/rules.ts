@@ -8,6 +8,7 @@ import { resolveWerewolfMerits, type AuspiceSkillGrant } from "./creation-grants
 import { FORM_MECHANICS, PERMANENT_MERIT_IDENTITIES, RENOWN_IDS } from "./mechanics";
 import { fetishSelections } from "./fetish-rules";
 import { totemSelection, totemState } from "./totem-rules";
+import { werewolfLodgeId } from "./lodge-membership";
 import { resolveTotemAdvantage, type TotemBenefitCatalogs } from "./totem-benefits";
 import type { WerewolfReferenceCatalog } from "./catalogs/reference";
 import type { WerewolfGiftCatalog } from "./catalogs/gifts";
@@ -86,6 +87,8 @@ export const werewolfRules: GameLineRulesModule = {
       totem,
       blood: text(data.blood), bone: text(data.bone), auspice_id: text(data.auspice_id), tribe_id: text(data.tribe_id),
       physical_touchstone: text(data.physical_touchstone), spiritual_touchstone: text(data.spiritual_touchstone),
+      ...(data.lodge_id === undefined ? {} : { lodge_id: werewolfLodgeId(data.lodge_id) }),
+      ...(data.lodge_notes === undefined ? {} : { lodge_notes: text(data.lodge_notes) }),
     } };
   },
   deriveCharacterState: werewolfDerived,

@@ -10,7 +10,7 @@ export const werewolfDesktopLayout = {
     identity: positions(3, [
       ["name", 1, 1], ["blood", 2, 1], ["auspice", 3, 1],
       ["player", 1, 2], ["bone", 2, 2], ["tribe", 3, 2],
-      ["chronicle", 1, 3], ["concept", 2, 3],
+      ["chronicle", 1, 3], ["concept", 2, 3], ["lodge", 3, 3],
     ]),
     attributes: positions(3, [["Mental", 1, 1], ["Physical", 2, 1], ["Social", 3, 1]]),
     skills: positions(1, [["Mental", 1, 1], ["Physical", 1, 2], ["Social", 1, 3]]),
@@ -63,6 +63,13 @@ export const werewolfDesktopLayout = {
       id: "content",
       order: 1,
       definition: { columns: 1, items: [{ id: "notes", column: 1, order: 1 }] },
+    }],
+  },
+  lodge: {
+    sections: [{
+      id: "content",
+      order: 1,
+      definition: { columns: 1, items: [{ id: "directory", column: 1, order: 1 }] },
     }],
   },
 } as const;

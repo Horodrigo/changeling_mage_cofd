@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 265,
+  "catalogVersion": 266,
   "catalogs": {
     "werewolf-totem-powers": {
       "version": 3,
@@ -16,6 +16,16 @@
       "version": 2,
       "url": "/game-lines/werewolf/data/totem.json",
       "hash": "7d17ce7a98f1c90a49685ec15048e8723da7f3ea0adb42cf533b4f5e76a5a49d"
+    },
+    "werewolf-lodges": {
+      "version": 2,
+      "url": "/game-lines/werewolf/data/lodges.json",
+      "hash": "6268eaefa991bee790e94bdb9d145c4653ef6e6b38c8d35e26d5cf6c333273b7"
+    },
+    "werewolf-lodges-pt": {
+      "version": 1,
+      "url": "/game-lines/werewolf/data/lodges-pt.json",
+      "hash": "bc3221607e7dec219f2b08102c979ff2c7fdf36346459239226853ad8fdf108d"
     },
     "werewolf-totem-pt": {
       "version": 2,
