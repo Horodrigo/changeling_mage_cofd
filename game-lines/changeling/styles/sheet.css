@@ -552,7 +552,7 @@ body:has(.line-theme-ctl) {
       rgba(255, 254, 249, 0) 93%,
       rgba(239, 245, 233, 0.94) 100%
     ),
-    url("/game-lines/changeling/images/paper-texture.webp");
+    var(--ctl-image-paper-texture, url("/game-lines/changeling/images/paper-texture.webp"));
   background-repeat: no-repeat, repeat;
   background-size:
     auto,
@@ -853,7 +853,7 @@ body:has(.line-theme-ctl)
   border-radius: 0;
 
   background-color: var(--ctl-paper);
-  background-image: url("/game-lines/changeling/images/paper-texture.webp");
+  background-image: var(--ctl-image-paper-texture, url("/game-lines/changeling/images/paper-texture.webp"));
   background-repeat: repeat;
   background-size: 1024px 1024px;
 
@@ -868,7 +868,7 @@ body:has(.line-theme-ctl)
 }
 
 .ctl-sheet::after {
-  background-image: url("/game-lines/changeling/images/background-changeling.webp");
+  background-image: var(--ctl-image-background-changeling, url("/game-lines/changeling/images/background-changeling.webp"));
   background-position: center;
   background-repeat: no-repeat;
   background-size: 50% auto;
@@ -960,7 +960,7 @@ body:has(.line-theme-ctl)
   left: 50%;
   width: var(--ctl-frame-star-width);
   height: var(--ctl-frame-star-height);
-  background-image: url("/game-lines/changeling/images/frame-center.webp");
+  background-image: var(--ctl-image-frame-center, url("/game-lines/changeling/images/frame-center.webp"));
   background-position: center;
   background-size: 50%;
   background-repeat: no-repeat;
@@ -994,12 +994,12 @@ body:has(.line-theme-ctl)
 }
 
 .ctl-frame-star-side-top-left {
-  background-image: url("/game-lines/changeling/images/frame-side.webp");
+  background-image: var(--ctl-image-frame-side, url("/game-lines/changeling/images/frame-side.webp"));
   transform: translateX(-50%);
 }
 
 .ctl-frame-star-side-top-right {
-  background-image: url("/game-lines/changeling/images/frame-side.webp");
+  background-image: var(--ctl-image-frame-side, url("/game-lines/changeling/images/frame-side.webp"));
   transform: translateX(-50%) scaleX(-1);
 }
 
@@ -1012,7 +1012,7 @@ body:has(.line-theme-ctl)
   bottom: calc(
     var(--ctl-frame-rail-y) - var(--ctl-frame-star-side-half-height)
   );
-  background-image: url("/game-lines/changeling/images/frame-side.webp");
+  background-image: var(--ctl-image-frame-side, url("/game-lines/changeling/images/frame-side.webp"));
   transform: translateX(-50%) scaleX(-1) rotate(180deg);
 }
 
@@ -1020,14 +1020,14 @@ body:has(.line-theme-ctl)
   bottom: calc(
     var(--ctl-frame-rail-y) - var(--ctl-frame-star-side-half-height)
   );
-  background-image: url("/game-lines/changeling/images/frame-side.webp");
+  background-image: var(--ctl-image-frame-side, url("/game-lines/changeling/images/frame-side.webp"));
   transform: translateX(-50%) rotate(180deg);
 }
 
 .ctl-frame-corner {
   width: 190px;
   height: 178px;
-  background-image: url("/game-lines/changeling/images/frame-corner.webp");
+  background-image: var(--ctl-image-frame-corner, url("/game-lines/changeling/images/frame-corner.webp"));
   background-position: left top;
   background-size: contain;
 }
@@ -1086,7 +1086,7 @@ body:has(.line-theme-ctl)
 .ctl-sheet .cod-sheet-title::before {
   left: 0;
   background-image:
-    url("/game-lines/changeling/images/section-divider.webp"),
+    var(--ctl-image-section-divider, url("/game-lines/changeling/images/section-divider.webp")),
     linear-gradient(
       transparent 43%,
       var(--ctl-ink-soft) 43%,
@@ -1106,7 +1106,7 @@ body:has(.line-theme-ctl)
   right: 0;
   transform: scaleX(-1);
   background-image:
-    url("/game-lines/changeling/images/section-divider.webp"),
+    var(--ctl-image-section-divider, url("/game-lines/changeling/images/section-divider.webp")),
     linear-gradient(
       transparent 43%,
       var(--ctl-ink-soft) 43%,
@@ -1136,7 +1136,7 @@ body:has(.line-theme-ctl)
   aspect-ratio: 998 / 190;
   overflow: hidden;
   color: transparent;
-  background-image: url("/game-lines/changeling/images/title.webp");
+  background-image: var(--ctl-image-title, url("/game-lines/changeling/images/title.webp"));
   background-position: left center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -1247,7 +1247,7 @@ body:has(.line-theme-ctl)
   inset: 4px;
   border-radius: 2px;
   background-color: var(--ctl-ink);
-  background-image: url("/game-lines/changeling/images/tab-texture.webp");
+  background-image: var(--ctl-image-tab-texture, url("/game-lines/changeling/images/tab-texture.webp"));
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1321,7 +1321,7 @@ body:has(.line-theme-ctl)
   background-color: transparent;
 
   background-image:
-    url("/game-lines/changeling/images/section-divider.webp"),
+    var(--ctl-image-section-divider, url("/game-lines/changeling/images/section-divider.webp")),
     linear-gradient(var(--ctl-rule), var(--ctl-rule)),
     linear-gradient(var(--ctl-rule), var(--ctl-rule));
 
@@ -1350,7 +1350,7 @@ body:has(.line-theme-ctl)
 .ctl-sheet .official-heading.main-sheet-conditions-heading::before,
 .ctl-sheet .official-heading.main-sheet-conditions-heading::after {
   background-image:
-    url("/game-lines/changeling/images/section-divider.webp"),
+    var(--ctl-image-section-divider, url("/game-lines/changeling/images/section-divider.webp")),
     linear-gradient(var(--ctl-rule), var(--ctl-rule));
 
   background-position:
@@ -1393,8 +1393,8 @@ body:has(.line-theme-ctl)
   min-width: 0;
 
   background-image:
-    url("/game-lines/changeling/images/attributes-divider-leaf.webp"),
-    url("/game-lines/changeling/images/attributes-divider.webp");
+    var(--ctl-image-attributes-divider-leaf, url("/game-lines/changeling/images/attributes-divider-leaf.webp")),
+    var(--ctl-image-attributes-divider, url("/game-lines/changeling/images/attributes-divider.webp"));
 
   background-position:
     100% center,
@@ -1442,7 +1442,7 @@ body:has(.line-theme-ctl)
   > .official-trait-block
   + .official-trait-block {
   border-left: 0;
-  background-image: url("/game-lines/changeling/images/column-divider.webp");
+  background-image: var(--ctl-image-column-divider, url("/game-lines/changeling/images/column-divider.webp"));
   background-position: left center;
   background-repeat: repeat-y;
   background-size: 3px auto;
@@ -1452,7 +1452,7 @@ body:has(.line-theme-ctl)
   > .sheet-layout-column
   + .sheet-layout-column {
   border-left: 0;
-  background-image: url("/game-lines/changeling/images/column-divider.webp");
+  background-image: var(--ctl-image-column-divider, url("/game-lines/changeling/images/column-divider.webp"));
   background-position: left center;
   background-repeat: repeat-y;
   background-size: 3px auto;
@@ -1529,7 +1529,7 @@ body:has(.line-theme-ctl)
 
 .ctl-sheet .kith-skill-left {
   width: calc(38px * 760 / 552);
-  background-image: url("/game-lines/changeling/images/skill-highlight-left.webp");
+  background-image: var(--ctl-image-skill-highlight-left, url("/game-lines/changeling/images/skill-highlight-left.webp"));
 }
 
 .ctl-sheet .kith-skill-middle-1,
@@ -1538,15 +1538,15 @@ body:has(.line-theme-ctl)
 }
 
 .ctl-sheet .kith-skill-middle-1 {
-  background-image: url("/game-lines/changeling/images/skill-highlight-middle-1.webp");
+  background-image: var(--ctl-image-skill-highlight-middle-1, url("/game-lines/changeling/images/skill-highlight-middle-1.webp"));
 }
 .ctl-sheet .kith-skill-middle-2 {
-  background-image: url("/game-lines/changeling/images/skill-highlight-middle-2.webp");
+  background-image: var(--ctl-image-skill-highlight-middle-2, url("/game-lines/changeling/images/skill-highlight-middle-2.webp"));
 }
 
 .ctl-sheet .kith-skill-right {
   width: calc(38px * 471 / 552);
-  background-image: url("/game-lines/changeling/images/skill-highlight-right.webp");
+  background-image: var(--ctl-image-skill-highlight-right, url("/game-lines/changeling/images/skill-highlight-right.webp"));
 }
 
 .ctl-sheet .court-summary-card .court-benefit-locked {
@@ -2124,7 +2124,7 @@ body:has(.line-theme-ctl)
   height: 21px;
   flex: 0 0 21px;
 
-  background: url("/game-lines/changeling/images/experience-purchase-icon.webp") center /
+  background: var(--ctl-image-experience-purchase-icon, url("/game-lines/changeling/images/experience-purchase-icon.webp")) center /
     contain no-repeat;
 }
 
@@ -2226,7 +2226,7 @@ body:has(.line-theme-ctl)
 }
 .ctl-sheet .sheet-bottom-grid > section + section {
   border-left: 0;
-  background-image: url("/game-lines/changeling/images/column-divider.webp");
+  background-image: var(--ctl-image-column-divider, url("/game-lines/changeling/images/column-divider.webp"));
   background-position: left center;
   background-repeat: repeat-y;
   background-size: 3px auto;
@@ -2492,7 +2492,7 @@ body:has(.line-theme-ctl)
     width: calc(50% - 60px);
     height: 38px;
 
-    background-image: url("/game-lines/changeling/images/attributes-divider-leaf.webp");
+    background-image: var(--ctl-image-attributes-divider-leaf, url("/game-lines/changeling/images/attributes-divider-leaf.webp"));
 
     background-position: right center;
 
@@ -2629,7 +2629,7 @@ body:has(.line-theme-ctl)
 @media print {
   .ctl-sheet {
     box-shadow: none;
-    background-image: url("/game-lines/changeling/images/paper-texture.webp");
+    background-image: var(--ctl-image-paper-texture, url("/game-lines/changeling/images/paper-texture.webp"));
   }
 
   .ctl-sheet .cod-sheet-title span,

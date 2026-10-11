@@ -17,6 +17,7 @@ export const changelingRegistration: GameLineRegistration = {
   loadRules: () => import("./rules").then(({ changelingRules }) => changelingRules),
   loadBuilder: () => import("./builder").then(({ changelingBuilder }) => changelingBuilder),
   loadSheet: () => import("./sheet").then(({ changelingSheet }) => changelingSheet),
+  loadSheetToolbar: () => import("./sheet-theme-toolbar"),
   loadPrintSheet: () => import("./print").then(({ changelingPrintSheet }) => changelingPrintSheet),
   loadHomebrew: () => import("./homebrew").then(({ changelingHomebrew }) => changelingHomebrew),
 };

@@ -10,6 +10,10 @@ export const changelingMessages = {
     },
     "ui": {
       "coreRegalia": "Core",
+      "changelingSheetTheme": "Tema da ficha",
+      "changelingSheetThemeCurrent": "Tema da ficha: {theme}",
+      "changelingDefaultTheme": "Default",
+      "changelingThemeStorageFailed": "Não foi possível salvar ou carregar a preferência de tema neste dispositivo.",
       "supplementRegalia": "Suplementos",
       "mountAbilities": {
         "manyleague": { "name": "Muitas Léguas", "description": "Dobra o Deslocamento; soma os pontos do Mérito à Iniciativa da montaria sozinha ou do dono montado." },
@@ -575,6 +579,10 @@ export const changelingMessages = {
     },
     "ui": {
       "coreRegalia": "Core",
+      "changelingSheetTheme": "Sheet theme",
+      "changelingSheetThemeCurrent": "Sheet theme: {theme}",
+      "changelingDefaultTheme": "Default",
+      "changelingThemeStorageFailed": "Could not save or load the theme preference on this device.",
       "supplementRegalia": "Supplements",
       "mountAbilities": {
         "manyleague": { "name": "Manyleague", "description": "Double Speed; add Merit dots to the mount's Initiative, whether alone or carrying its owner." },

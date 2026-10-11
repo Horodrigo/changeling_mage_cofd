@@ -6,6 +6,7 @@ import type {
   GameLineHomebrewModule,
   GameLinePrintModule,
   GameLineSheetModule,
+  GameLineSheetToolbarModule,
 } from "./game-line-ui";
 
 /**
@@ -24,6 +25,7 @@ export interface GameLineRegistration {
   loadRules: () => Promise<GameLineRulesModule>;
   loadBuilder: () => Promise<GameLineBuilderModule>;
   loadSheet: () => Promise<GameLineSheetModule>;
+  loadSheetToolbar?: () => Promise<GameLineSheetToolbarModule>;
   loadPrintSheet?: () => Promise<GameLinePrintModule>;
   loadHomebrew?: () => Promise<GameLineHomebrewModule>;
 }

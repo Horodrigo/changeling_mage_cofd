@@ -39,5 +39,6 @@ export type GameLineHomebrewProps = { catalogs?: CatalogSnapshot };
 
 export type GameLineBuilderModule = { Component: ComponentType<GameLineBuilderProps> };
 export type GameLineSheetModule = { Component: ComponentType<GameLineSheetProps> };
+export type GameLineSheetToolbarModule = { default: ComponentType };
 export type GameLinePrintModule = { Component: ComponentType<GameLinePrintSheetProps> };
 export type GameLineHomebrewModule = { Component: ComponentType<GameLineHomebrewProps> };

@@ -1,0 +1,17 @@
+.top-navigation .sheet-theme-trigger {
+  min-height: 44px;
+  gap: 6px;
+}
+.sheet-theme-error {
+  color: #b42318;
+  font-size: 12px;
+}
+@media (max-width: 900px) {
+  .top-navigation .sheet-theme-trigger {
+    min-width: 2.75rem;
+    padding-inline: 10px;
+  }
+  .top-navigation .sheet-theme-trigger span {
+    display: none;
+  }
+}

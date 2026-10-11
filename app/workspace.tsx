@@ -53,6 +53,7 @@ import type { CharacterNarrativePatch } from "@/lib/core/character/narrative-upd
 import { useCharacterRepository } from "./workspace/character-repository";
 import { blankPrintCharacter } from "./workspace/blank-print-character";
 import { isCreationDraft } from "./character-builder-shell";
+import { GameLineSheetToolbar } from "./workspace/game-line-sheet-toolbar";
 
 const NewCharacterBuilder = lazy(() =>
   import("./new-character-builder").then((module) => ({ default: module.NewCharacterBuilder })),
@@ -320,6 +321,7 @@ export function Workspace({
               <span>{label}</span>
             </button>
           )})}
+          {selected && !editing && <GameLineSheetToolbar gameLine={selected.game_line} />}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="language-trigger" aria-label={t("workspace.languageCurrent", { language: locale === "pt-BR" ? t("workspace.portuguese") : t("workspace.english") })} title={t("workspace.language")}>
