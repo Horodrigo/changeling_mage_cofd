@@ -5,6 +5,7 @@ import type { MeritDefinition, MeritSelectionProblem } from "@/lib/merits";
 import { textRequirementMet } from "@/lib/merit-requirements";
 import type { AuspiceDefinition, FormDefinition, FormMechanics, RenownId } from "./catalogs/reference";
 import type { GiftDefinition } from "./catalogs/gifts";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 
 /** Resolved catalog IDs, not a second persisted Merit model. The caller resolves each instance. */
 export type WerewolfMeritChoice = Pick<MeritSelection, "instanceId" | "dots" | "configuration"> & { id: string };
@@ -54,7 +55,7 @@ export function werewolfMeritPrerequisitesMet(
     case "wtf-2ed:embodiment-of-the-firstborn": return ["blood-talons", "bone-shadows", "hunters-in-darkness", "iron-masters", "storm-lords"].includes(context.tribeId);
     case "wtf-2ed:favored-form": return context.primalUrge >= choice.dots + 1;
     case "wtf-2ed:instinctive-defense": return context.primalUrge >= 2;
-    case "wtf-2ed:dedicated-locus": return context.merits.some(item => item.id === "core-2ed:safe-place" && item.dots >= choice.dots);
+    case "wtf-2ed:dedicated-locus": return context.merits.some(item => item.id === "core-2ed:safe-place" && effectiveMeritDots({ ...item, definitionId: item.id }) >= effectiveMeritDots({ ...choice, definitionId: choice.id }));
     case "wtf-2ed:moon-kissed": {
       const selected = value(choice.configuration, "skill");
       return (context.auspice?.skills ?? []).some(skill => (!selected || selected === skill) && context.skills[skill] >= 2);
@@ -94,7 +95,7 @@ export function werewolfMeritSelectionProblems(
     case "wtf-2ed:blood-or-bone-affinity": if (choice.dots === 2 && !["blood", "bone"].includes(value(config, "anchor"))) problem("anchor"); break;
     case "wtf-2ed:code-of-honor": if (!value(config, "virtue").trim()) problem("virtue"); break;
     case "wtf-2ed:dedicated-locus":
-      if (!context.merits.some(item => item.id === "core-2ed:safe-place" && item.instanceId && item.instanceId === value(config, "safePlaceId") && item.dots >= choice.dots)) problem("safePlace");
+      if (!context.merits.some(item => item.id === "core-2ed:safe-place" && item.instanceId && item.instanceId === value(config, "safePlaceId") && effectiveMeritDots({ ...item, definitionId: item.id }) >= effectiveMeritDots({ ...choice, definitionId: choice.id }))) problem("safePlace");
       break;
     case "wtf-2ed:embodiment-of-the-firstborn": if (!attributes.includes(value(config, "attribute"))) problem("attribute"); break;
     case "wtf-2ed:favored-form": {

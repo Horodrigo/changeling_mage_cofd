@@ -1,4 +1,5 @@
 import { resolveMeritDefinition, resolveMeritReference, type DefinitionIdentity } from "./merit-identity";
+import { effectiveMeritDots } from "./shared-merit-dots";
 
 /** Structured requirements reference catalog identities, never localized display labels. */
 export type Requirement =
@@ -57,7 +58,7 @@ export function requirementMet(requirement:Requirement,context:RequirementContex
   if("trait" in requirement) return requirementTrait(requirement.trait,context)>=requirement.minimum;
   if("merit" in requirement) {
     const definition = resolveMeritReference(requirement.merit, context.meritCatalog ?? []);
-    return Boolean(definition && (context.merits??[]).some(item=>resolveMeritDefinition(item, context.meritCatalog ?? [])?.id === definition.id && item.dots >= (requirement.minimum ?? 1)));
+    return Boolean(definition && (context.merits??[]).some(item=>resolveMeritDefinition(item, context.meritCatalog ?? [])?.id === definition.id && effectiveMeritDots({ ...item, definitionId: definition.id }) >= (requirement.minimum ?? 1)));
   }
   if("status" in requirement) return statusRating(context,requirement.status)>=requirement.minimum;
   return false;

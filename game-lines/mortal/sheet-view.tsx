@@ -33,6 +33,8 @@ import { mortalMobileLayout } from "./sheet-layout.mobile";
 import { SheetCategoryLayout, SheetLayoutDesktopPage, SheetLayoutFlow, SheetLayoutSection } from "@/app/workspace/sheet-layout";
 import { mortalMeritContextForSheet } from "./rules";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
+import { SharedMeritDotsControl } from "@/app/builder/shared-merit-dots-control";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
 import { commonExpandedConfigurationLines } from "@/app/workspace/merit-configuration-presentation";
 import { INTERDISCIPLINARY_SPECIALTY_ID } from "@/lib/core/character/specialty-merits";
@@ -258,7 +260,8 @@ function MeritList({ character, catalog, detailCatalog, updateSheet }: { charact
     const presented = definition && meritPresentation(definition, locale);
     const tooltip = presented ? `${presented.prerequisites ? `${t("ui.prerequisites")}: ${presented.prerequisites}\n` : ""}${presented.description}` : merit.source;
     return <div className="sheet-merit-row" key={`${merit.instanceId ?? merit.name}-${index}`} title={tooltip}>
-      <div className="sheet-merit-main"><MeritDetails merit={merit} catalog={detailCatalog}><span>{name}{configured ? `: ${configured}` : ""}</span></MeritDetails><DotValue value={merit.dots} max={Math.max(5, merit.dots)} /></div>
+      <div className="sheet-merit-main"><MeritDetails merit={merit} catalog={detailCatalog}><span>{name}{configured ? `: ${configured}` : ""}</span></MeritDetails><DotValue value={effectiveMeritDots({ ...merit, definitionId: definition?.id })} max={Math.max(5, merit.dots)} /></div>
+      <SharedMeritDotsControl merit={merit} definition={definition} onChange={configuration => { const next = structuredClone(character); next.merits[index].configuration = configuration; updateSheet(next); }}/>
       {definition?.id === INTERDISCIPLINARY_SPECIALTY_ID && <>
         {commonExpandedConfigurationLines(definition.id, merit.dots, merit.configuration, locale, catalog)?.map(line => <small key={line}>{line}</small>)}
         <MeritConfigurationEditor merit={merit} catalog={catalog} definitions={COMMON_MERIT_CONFIGURATIONS} specialtyContext={mortalMeritContextForSheet(character, catalog)} onChange={configuration => {

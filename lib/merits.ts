@@ -5,6 +5,7 @@ import type { MessageKey, TranslationParams } from "./i18n";
 import type { CatalogNameQualifier } from "./localized-catalog";
 import { resolveMeritDefinition, resolveMeritReference } from "./merit-identity";
 import { INTERDISCIPLINARY_SPECIALTY_ID, configuredSpecialty, interdisciplinarySpecialties, interdisciplinarySpecialtySelected } from "./core/character/specialty-merits";
+import { SHARED_DOT_MERIT_IDS, effectiveMeritDots, sharedMeritDots } from "./shared-merit-dots";
 
 export type GameLine = PersistedGameLineId;
 export type MeritLevel = { rating: number; name: string; description: string };
@@ -190,7 +191,11 @@ export type MeritSelectionProblem = { key: MessageKey; params?: TranslationParam
 
 export function meritSelectionProblems(merit:MeritDefinition,selection:{dots:number;configuration?:Record<string,string|string[]>},context:MeritPrerequisiteContext,isEligible:(merit:MeritDefinition,context:MeritPrerequisiteContext)=>boolean=meritPrerequisitesMet):MeritSelectionProblem[]{
   const config=selection.configuration??{}, problems:MeritSelectionProblem[]=[];
-  if(!isEligible(merit,{...context,selectedDots:selection.dots,configuration:config})) problems.push({key:"ui.meritPrerequisitesNotMet",params:{prerequisites:merit.prerequisites??merit.name}});
+  const shared = SHARED_DOT_MERIT_IDS.has(merit.id) ? sharedMeritDots({definitionId:merit.id,configuration:config}) : 0;
+  if (SHARED_DOT_MERIT_IDS.has(merit.id) && config.sharedDots !== undefined &&
+      (typeof config.sharedDots !== "string" || !/^(0|[1-9]\d*)$/.test(config.sharedDots))) problems.push({key:"ui.meritsExceedTheLimit"});
+  if (shared && selection.dots + shared > Math.max(...merit.ratings)) problems.push({key:"ui.meritsExceedTheLimit"});
+  if(!isEligible(merit,{...context,selectedDots:effectiveMeritDots({definitionId:merit.id,dots:selection.dots,configuration:config}),configuration:config})) problems.push({key:"ui.meritPrerequisitesNotMet",params:{prerequisites:merit.prerequisites??merit.name}});
   if (merit.id === INTERDISCIPLINARY_SPECIALTY_ID && !interdisciplinarySpecialtySelected(config, context.specializations, context.skills)) problems.push({ key: "ui.meritSelectExistingSpecialty" });
   return problems;
 }

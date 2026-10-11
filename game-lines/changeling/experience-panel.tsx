@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
+import { SharedMeritDotsControl } from "@/app/builder/shared-merit-dots-control";
 import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
 import { normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { INTERDISCIPLINARY_SPECIALTY_ID } from "@/lib/core/character/specialty-merits";
+import { SHARED_DOT_MERIT_IDS } from "@/lib/shared-merit-dots";
 import { History, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -503,7 +505,7 @@ export function ExperiencePanel({
         return setFeedback(t("ui.thisMeritHasNoHigherAvailableRating"));
       if(!changelingExperienceMeritEligible(selectedMerit,{...meritContext,selectedDots:nextMeritRating,configuration:ownedMerit?.configuration}))return setFeedback(t("ui.prerequisitesNotMet"));
       const quoted = quoteChangelingMeritPurchase(character, selectedMerit.id, nextMeritRating, meritInstance, meritCatalog,
-        selectedMerit.id === INTERDISCIPLINARY_SPECIALTY_ID ? meritConfiguration : undefined);
+        selectedMerit.id === INTERDISCIPLINARY_SPECIALTY_ID || SHARED_DOT_MERIT_IDS.has(selectedMerit.id) ? meritConfiguration : undefined);
       if (!quoted) return setFeedback(t("ui.selectAnAvailableMerit"));
       spend(
         quoted.cost,
@@ -766,6 +768,8 @@ export function ExperiencePanel({
               {purchaseType === "merit" && selectedMerit?.id === INTERDISCIPLINARY_SPECIALTY_ID && nextMeritRating &&
                 <MeritConfigurationEditor merit={{ definitionId: selectedMerit.id, name: selectedMerit.name, dots: nextMeritRating, configuration: meritConfiguration }}
                   catalog={meritCatalog} specialtyContext={meritContext} definitions={COMMON_MERIT_CONFIGURATIONS} onChange={setMeritConfiguration} />}
+              {purchaseType === "merit" && selectedMerit && nextMeritRating &&
+                <SharedMeritDotsControl merit={{ definitionId: selectedMerit.id, name: selectedMerit.name, dots: nextMeritRating, configuration: meritConfiguration }} definition={selectedMerit} onChange={setMeritConfiguration} />}
               {purchaseType === "specialty" && (
                 <>
                   <label>

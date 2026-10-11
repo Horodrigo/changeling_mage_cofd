@@ -1,6 +1,7 @@
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core/character/merit-configuration";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 import { addExperienceMeritDots, experienceMeritDots, removeExperienceMeritDots } from "@/lib/merit-progression";
 import { meritPrerequisitesMet, meritSelectionProblems, meritRatingsFor, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { createRandomId } from "@/lib/random-id";
@@ -120,7 +121,7 @@ export function werewolfPurchaseQuote(character: CharacterSheet, purchase: Werew
     if (!natural(purchase.target) || purchase.target <= (instance?.dots ?? 0) || !meritRatingsFor(definition, purchase.target).includes(purchase.target)) fail("meritChoices");
     const { core, own } = werewolfAdvancementContexts(character, catalogs);
     const choice = { id: definition.id, instanceId: instance?.instanceId, dots: purchase.target, configuration: normalizeMeritConfiguration(purchase.configuration) };
-    if (!meritPrerequisitesMet(definition, { ...core, selectedDots: choice.dots, configuration: choice.configuration }) || !werewolfMeritPrerequisitesMet(definition, choice, own)) fail("meritPrerequisites");
+    if (!meritPrerequisitesMet(definition, { ...core, selectedDots: effectiveMeritDots({ ...choice, definitionId: definition.id }), configuration: choice.configuration }) || !werewolfMeritPrerequisitesMet(definition, choice, own)) fail("meritPrerequisites");
     if (meritSelectionProblems(definition, choice, core).length || (definition.line === "WtF" && werewolfMeritSelectionProblems(definition, choice, own).length)) fail("meritChoices");
     const candidate = structuredClone(character);
     const candidateInstance = instance && candidate.merits.find(item => item.instanceId === instance.instanceId);

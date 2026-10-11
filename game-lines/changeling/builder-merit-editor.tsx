@@ -14,6 +14,7 @@ import { useHomebrewPreferences } from "@/app/use-homebrew";
 import { homebrewContentActive } from "@/lib/homebrew";
 import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
 import { useLanguage, type MessageKey } from "@/lib/i18n";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 import { createRandomId } from "@/lib/random-id";
 import type { TokenDefinition, TokenKind } from "./catalogs/tokens";
 import { configuredTokenPresentation, tokenPresentation, type TokenConfigurationItem } from "./token-presentation";
@@ -129,6 +130,7 @@ function HollowEditor({
   compact: boolean;
 }) {
   const { t } = useLanguage();
+  const totalDots = effectiveMeritDots(merit);
   const selected = Array.isArray(configuration.features)
     ? configuration.features
     : [];
@@ -161,7 +163,7 @@ function HollowEditor({
         </label>
         <fieldset>
           <legend>
-            {t("ui.enhancements")} ({used}/{merit.dots} {t("ui.dots33098e")})
+            {t("ui.enhancements")} ({used}/{totalDots} {t("ui.dots33098e")})
           </legend>
           <div className="structured-option-grid">
             {HOLLOW_OPTIONS.filter((option) => {
@@ -171,7 +173,7 @@ function HollowEditor({
                 const selectedOption=HOLLOW_OPTIONS.find((candidate)=>`${candidate.name}|${candidate.cost}`===item);
                 return sum+(selectedOption&&"group" in selectedOption&&selectedOption.group===option.group?selectedOption.cost:0);
               },0):0;
-              return option.cost<=merit.dots-used+replacedCost;
+              return option.cost<=totalDots-used+replacedCost;
             }).map((option) => {
               const {name, cost}=option;
               const key = `${name}|${cost}`,
@@ -183,7 +185,7 @@ function HollowEditor({
                   <input
                     type="checkbox"
                     checked={active}
-                    disabled={!active && used + cost > merit.dots}
+                    disabled={!active && used + cost > totalDots}
                     onChange={() =>
                       set(
                         "features",
@@ -217,6 +219,7 @@ const SHARED_BASTION_OPTIONS=meritOptions.sharedBastionOptions;
 
 function SharedBastionEditor({merit,configuration,onChange,compact}:{merit:MeritSelection;configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}) {
   const { t }=useLanguage();
+  const totalDots=effectiveMeritDots(merit);
   const selected=Array.isArray(configuration.features)?configuration.features:[];
   const used=selected.reduce((sum,item)=>sum+(Number(String(item).split("|")[1])||0),0);
   const set=(key:string,value:string|string[])=>onChange({...configuration,[key]:value});
@@ -225,8 +228,8 @@ function SharedBastionEditor({merit,configuration,onChange,compact}:{merit:Merit
     <div>
       <label>{t("ui.name")}<Input value={String(configuration.name??"")} onChange={(event)=>set("name",event.target.value)}/></label>
       <label>{t("ui.locationAndAppearance")}<textarea value={String(configuration.location??"")} onChange={(event)=>set("location",event.target.value)}/></label>
-      <fieldset><legend>{t("ui.features")} ({used}/{merit.dots} {t("ui.dots33098e")})</legend><div className="structured-option-grid">
-        {SHARED_BASTION_OPTIONS.filter(({name,cost})=>selected.includes(`${name}|${cost}`)||cost<=merit.dots-used).map(({name,cost,nameKey,descriptionKey})=>{const key=`${name}|${cost}`,active=selected.includes(key);return <label key={key}><input type="checkbox" checked={active} onChange={()=>set("features",active?selected.filter((item)=>item!==key):[...selected,key])}/><span><strong>{t(nameKey as MessageKey)}</strong><small>{cost} {cost===1?t("ui.dot160503"):t("ui.dots33098e")}</small><small>{t(descriptionKey as MessageKey)}</small></span></label>;})}
+      <fieldset><legend>{t("ui.features")} ({used}/{totalDots} {t("ui.dots33098e")})</legend><div className="structured-option-grid">
+        {SHARED_BASTION_OPTIONS.filter(({name,cost})=>selected.includes(`${name}|${cost}`)||cost<=totalDots-used).map(({name,cost,nameKey,descriptionKey})=>{const key=`${name}|${cost}`,active=selected.includes(key);return <label key={key}><input type="checkbox" checked={active} onChange={()=>set("features",active?selected.filter((item)=>item!==key):[...selected,key])}/><span><strong>{t(nameKey as MessageKey)}</strong><small>{cost} {cost===1?t("ui.dot160503"):t("ui.dots33098e")}</small><small>{t(descriptionKey as MessageKey)}</small></span></label>;})}
       </div></fieldset>
     </div>
   </details>;

@@ -45,6 +45,18 @@ function buy(current, id, dots, index = -1, configuration) {
   return next;
 }
 
+test("CtL Hollow keeps shared dots free when upgraded with Experience", () => {
+  const hollow = catalog.find(item => item.id === "ctl-2ed:hollow");
+  const current = sheet();
+  current.merits.push({ definitionId: hollow.id, instanceId: "shared-hollow", name: hollow.name, dots: 2,
+    creationDots: 2, experienceDots: 0, configuration: { name: "Motley Hollow", sharedDots: "2" } });
+  const quote = xp.quoteChangelingMeritPurchase(current, hollow.id, 3, 0, active, current.merits[0].configuration);
+  assert.equal(quote?.cost, 1);
+  assert.equal(quote?.selection.dots, 3);
+  assert.equal(quote?.selection.configuration.sharedDots, "2");
+  assert.equal(xp.quoteChangelingMeritPurchase(current, hollow.id, 4, 0, active, current.merits[0].configuration), undefined);
+});
+
 test("Acquired Taste permits independent configured instances and refunds only the purchased instance", () => {
   const current = sheet();
   current.line_data.court = "autumn";

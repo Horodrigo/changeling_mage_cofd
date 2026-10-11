@@ -48,6 +48,8 @@ import { WerewolfLodgeIdentity, WerewolfLodgeJoinDialog, WerewolfLodgePage } fro
 import type { WerewolfLodgeCatalog } from "./catalogs/lodges";
 import { werewolfLodgeId } from "./lodge-membership";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
+import { SharedMeritDotsControl } from "@/app/builder/shared-merit-dots-control";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 import { MeritDetails } from "@/app/workspace/merit-details";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
@@ -147,7 +149,8 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, up
       if (key === "safePlaceId") { const place = character.merits.find(item => item.instanceId === value); return place ? meritConfigurationTitle(place.configuration) || value : value; }
       return key === "virtue" ? value : systemTerm(value, locale);
     };
-    return <details className="wtf-rule-disclosure" key={selection.instanceId ?? index}><summary><MeritDetails merit={selection} catalog={detailCatalog}><span>{text?.name ?? selection.name}{configured ? `: ${configured}` : ""}</span></MeritDetails><DotValue value={selection.dots}/></summary>
+    return <details className="wtf-rule-disclosure" key={selection.instanceId ?? index}><summary><MeritDetails merit={selection} catalog={detailCatalog}><span>{text?.name ?? selection.name}{configured ? `: ${configured}` : ""}</span></MeritDetails><DotValue value={effectiveMeritDots({ ...selection, definitionId: definition?.id })}/></summary>
+      <SharedMeritDotsControl merit={selection} definition={definition} onChange={configuration => { const next = structuredClone(character); next.merits[index].configuration = configuration; updateSheet(next); }}/>
       {selection.grantedBy === "werewolf:totem-advantage" && <p className="wtf-rule-field"><strong>{t("ui.source")}:</strong>{" "}{t("werewolf.totemAdvantage")}</p>}
       {text?.prerequisites && <p className="wtf-rule-field"><strong>{t("ui.prerequisites")}:</strong>{" "}{text.prerequisites}</p>}
       {text && <p className="wtf-rule-field">{text.description}</p>}

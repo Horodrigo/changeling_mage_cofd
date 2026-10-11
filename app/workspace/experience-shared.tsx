@@ -16,6 +16,7 @@ import { homebrewCategoryKeys } from "@/lib/homebrew";
 import { SelectableCatalogCard } from "../selectable-catalog-card";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 import { meritPresentation } from "@/lib/merit-presentation";
+import { SHARED_DOT_MERIT_IDS, sharedMeritDots } from "@/lib/shared-merit-dots";
 import { meritCategoryLabel } from "@/lib/merit-ui";
 import { meritMatchesDefinition } from "@/lib/merit-identity";
 
@@ -333,7 +334,8 @@ export function ExperienceMeritPicker({
                 buyingNew = repeatable && draft.newInstance,
                 allowedRatings = ratings.filter((dot)=>
                   (buyingNew || !activeInstance || dot > activeInstance.owned.dots) &&
-                  isEligible(item,{...context,selectedDots:dot,configuration:buyingNew?undefined:activeInstance?.owned.configuration}),
+                  (!SHARED_DOT_MERIT_IDS.has(item.id) || dot + (buyingNew ? 0 : sharedMeritDots({ ...activeInstance?.owned, definitionId: item.id })) <= Math.max(...item.ratings)) &&
+                  isEligible(item,{...context,selectedDots:dot + (buyingNew ? 0 : sharedMeritDots({ ...activeInstance?.owned, definitionId: item.id })),configuration:buyingNew?undefined:activeInstance?.owned.configuration}),
                 ),
                 intendedDots = allowedRatings.includes(draft.dots) ? draft.dots : allowedRatings[0],
                 prerequisitesMet = isEligible(item,context);

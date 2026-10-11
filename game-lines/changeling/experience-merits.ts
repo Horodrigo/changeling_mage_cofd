@@ -49,6 +49,7 @@ export function quoteChangelingMeritPurchase(sheet: CharacterSheet, definitionId
   if (creationMeritDots(selection) + experienceMeritDots(selection) !== (owned?.dots ?? 0)) return;
   selection.definitionId = definition.id;
   selection.instanceId ||= createRandomId();
+  selection.configuration = structuredClone(selectedConfiguration);
   addExperienceMeritDots(selection, cost);
   const undo: ChangelingMeritUndo = { kind: "merit", definitionId: definition.id, name: definition.name,
     instanceId: selection.instanceId, previousDots: owned?.dots ?? null, targetDots: target };

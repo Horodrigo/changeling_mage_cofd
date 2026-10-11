@@ -7,6 +7,7 @@ import { TraitBlock, stringList } from "@/app/workspace/sheet-primitives";
 import type { SpellDefinition } from "@/lib/catalog/catalog-types";
 import { EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
@@ -79,7 +80,7 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
   ];
   const meritRows = character.merits.filter((merit) => !merit.grantedBy || ["Ordem", "Nameless Order"].includes(String(merit.grantedBy))).slice(0, 9).map((merit) => {
     const definition = meritCatalog.find((item) => item.name === merit.name);
-    return { name: locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name, rating: merit.dots };
+    return { name: locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name, rating: effectiveMeritDots({ ...merit, definitionId: definition?.id }) };
   });
   const arcanaRows = Object.entries(arcana).map(([name, rating]) => ({ name: systemTerm(name, locale), rating: Number(rating) }));
   const attainments = [

@@ -1,5 +1,6 @@
 "use client";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 import { MeritDetails } from "@/app/workspace/merit-details";
 import {
   CharacterPaperShell,
@@ -1184,7 +1185,7 @@ function ExpandedMeritList({
             >
               <summary>
                 <h4><MeritDetails merit={item} catalog={catalog}>{title}</MeritDetails></h4>
-                <DotValue value={item.dots} />
+                <DotValue value={effectiveMeritDots({ ...item, definitionId: definition?.id })} />
               </summary>
               <div className="expanded-merit-body">
                 {configured.length ? (
@@ -1222,7 +1223,7 @@ function ExpandedMeritList({
                   )}
                 </small>
               </div>
-              <DotValue value={item.dots} />
+              <DotValue value={effectiveMeritDots({ ...item, definitionId: definition?.id })} />
             </summary>
             <div className="expanded-merit-body">
               {definition?.id === "core-2ed:mystery-cult-initiation" &&

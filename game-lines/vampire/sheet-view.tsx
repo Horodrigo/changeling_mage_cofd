@@ -8,6 +8,7 @@ import { vampirePowerPresentation } from "./power-presentation";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Link2, Plus, Trash2 } from "lucide-react";
 import { VampireMeritConfigurationEditor } from "./merit-configuration-editor";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 import { MeritDetails } from "@/app/workspace/merit-details";
 import {
   CharacterPaperShell,
@@ -2251,7 +2252,7 @@ function VampireExpandedMeritList({
                   </small>
                 )}
               </div>
-              <DotValue value={merit.dots} max={Math.max(5, merit.dots)} />
+              <DotValue value={effectiveMeritDots({ ...merit, definitionId: definition?.id })} max={Math.max(5, merit.dots)} />
             </summary>
             <div className="expanded-merit-body">
               {configured.map((line, lineIndex) => (
@@ -2319,7 +2320,7 @@ function MeritList({
           >
             <div className="sheet-merit-main">
               <MeritDetails merit={merit} catalog={catalog}><span>{displayName}{configuredName ? `: ${configuredName}` : ""}</span></MeritDetails>
-              <DotValue value={merit.dots} max={Math.max(5, merit.dots)} />
+              <DotValue value={effectiveMeritDots({ ...merit, definitionId: definition?.id })} max={Math.max(5, merit.dots)} />
             </div>
           </div>
         );

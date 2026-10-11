@@ -6,6 +6,7 @@ import type { MageFactionDefinition } from "./factions";
 import { findMageFaction, mageFactionAvailable } from "./factions";
 import { findMageAffiliation } from "./orders";
 import { ARCANA, MTA_PATHS } from "./creation-rules";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 
 export type MageMeritContext = MeritPrerequisiteContext & {
   gnosis?: number; arcana?: Record<string, number>; path?: string; order?: string;
@@ -52,7 +53,10 @@ function matchingMerits(context: MeritPrerequisiteContext, ids: readonly string[
   const owned = context.merits ?? [];
   const candidates = instanceId === undefined ? owned : owned.filter(item => item.instanceId === instanceId);
   if (instanceId !== undefined && (!instanceId || candidates.length !== 1)) return [];
-  return candidates.filter(item => item.dots >= minimum && ids.includes(resolveMeritDefinition(item, context.meritCatalog ?? [])?.id ?? ""));
+  return candidates.filter(item => {
+    const definition = resolveMeritDefinition(item, context.meritCatalog ?? []);
+    return definition && ids.includes(definition.id) && effectiveMeritDots({ ...item, definitionId: definition.id }) >= minimum;
+  });
 }
 
 export function mageMeritPrerequisitesMet(merit: MeritDefinition, context: MageMeritContext) {
@@ -78,7 +82,7 @@ export function mageMeritSelectionProblems(
     }
   };
   if (merit.id === "mta-2ed:infamous-mentor") linked("mentorId", ["core-2ed:mentor"], selection.dots);
-  if (merit.id === "mta-2ed:sanctum") linked("safePlaceId", ["core-2ed:safe-place"], selection.dots);
+  if (merit.id === "mta-2ed:sanctum") linked("safePlaceId", ["core-2ed:safe-place"], effectiveMeritDots({ definitionId: merit.id, dots: selection.dots, configuration }));
   if (merit.id === "mta-2ed:demesne") linked("sanctumId", ["mta-2ed:sanctum"]);
   if (merit.id === "mta-signs:imbued-ally") linked("allyId", ["core-2ed:retainer", "mta-2ed:familiar"]);
   if (merit.id === "mta-signs:order-archive") linked("statusId", ["mta-2ed:awakened-status"]);

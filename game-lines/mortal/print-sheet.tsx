@@ -11,6 +11,7 @@ import { EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } fr
 import { VEHICLES, vehiclePresentation } from "@/lib/companions";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
@@ -52,7 +53,7 @@ export function MortalPrintSheet({ character, catalogs, onReadyChange }: GameLin
     const definition = meritCatalog.find((item) => item.name === merit.name);
     const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name;
     const detail = meritConfigurationTitle(merit.configuration);
-    return { name: detail ? `${name}: ${detail}` : name, rating: merit.dots };
+    return { name: detail ? `${name}: ${detail}` : name, rating: effectiveMeritDots({ ...merit, definitionId: definition?.id }) };
   });
   const selectedConditions = objectList(character.current_state.conditions).map((item) => conditions.find((condition) => condition.id === String(item.id))?.name ?? String(item.id ?? "")).filter(Boolean);
   const derived = derivedWithPermanentMerits(character);

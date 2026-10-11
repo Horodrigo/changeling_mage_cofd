@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 
 import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { pairPrintColumns, paginatePrintItems, type PrintFlowColumn, type PrintFlowItem } from "@/app/workspace/print-pagination";
@@ -178,8 +179,9 @@ function ExpandedMeritCard({ merit, catalog, courts, tokens, detailed }: { merit
   const configuredTitle = meritConfigurationTitle(merit.configuration, locale, courts);
   const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name;
   const title = configuredTitle ? `${name}: ${configuredTitle}` : name;
-  const levels = presented?.levels?.filter((level) => level.rating <= merit.dots) ?? [];
-  return <PrintCard title={`${title} ${"•".repeat(merit.dots)}`} meta={definition ? `${definition.source} · p. ${definition.page || "-"}` : merit.source} className={detailed ? "detailed" : "compact"}>
+  const dots = effectiveMeritDots({ ...merit, definitionId: definition?.id });
+  const levels = presented?.levels?.filter((level) => level.rating <= dots) ?? [];
+  return <PrintCard title={`${title} ${"•".repeat(dots)}`} meta={definition ? `${definition.source} · p. ${definition.page || "-"}` : merit.source} className={detailed ? "detailed" : "compact"}>
     {!!configured.length && <div className="ctl-print-configured">{configured.map((line, index) => <p key={index}>{line}</p>)}</div>}
     {detailed && presented && <div className="ctl-print-merit-details">
       {presented.prerequisites && <p><b>{t("ui.prerequisites")}:</b> {presented.prerequisites}</p>}
@@ -359,7 +361,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
         <section><SheetHeading>{t("ui.skills")}</SheetHeading>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.skills} specialties={character.specializations} highlightedNames={kithSkillNames} highlightTone="kith"/>)}</section>
         <section>
           <SheetHeading>{t("ui.merits")}</SheetHeading>
-          <div className="ctl-print-merits">{meritRows.map((merit, index) => { const definition = meritCatalog.find((item) => item.name === merit.name); const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name; const detail = meritConfigurationTitle(merit.configuration, locale, reference.courts); return <div key={`${merit.name}-${index}`}><span>{name}{detail ? `: ${detail}` : ""}</span><DotValue value={merit.dots} max={Math.max(5, merit.dots)}/></div>; })}{Array.from({ length: Math.max(0, 8 - meritRows.length) }, (_, index) => <div className="blank" key={`blank-merit-${index}`}><span>&nbsp;</span><DotValue value={0} max={5}/></div>)}</div>
+          <div className="ctl-print-merits">{meritRows.map((merit, index) => { const definition = resolveMeritDefinition(merit, meritCatalog); const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name; const detail = meritConfigurationTitle(merit.configuration, locale, reference.courts); const dots = effectiveMeritDots({ ...merit, definitionId: definition?.id }); return <div key={`${merit.name}-${index}`}><span>{name}{detail ? `: ${detail}` : ""}</span><DotValue value={dots} max={Math.max(5, dots)}/></div>; })}{Array.from({ length: Math.max(0, 8 - meritRows.length) }, (_, index) => <div className="blank" key={`blank-merit-${index}`}><span>&nbsp;</span><DotValue value={0} max={5}/></div>)}</div>
           <SheetHeading>{t("ui.favoredRegalia")}</SheetHeading><PrintTextList values={changelingFavoredRegalia(data).map((value) => systemTerm(value, locale))} minimum={2}/>
           <SheetHeading>{t("ui.frailties")}</SheetHeading><PrintTextList values={frailties.map((value) => value ? systemTerm(value, locale) : "")} minimum={frailties.length}/>
           <SheetHeading>{t("ui.aspirations")}</SheetHeading><PrintTextList values={cleanList(data.aspirations)} minimum={3}/>
@@ -397,7 +399,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
         <section>
           <SheetHeading>{t("ui.oaths")}</SheetHeading><PrintTextList values={cleanList(data.oaths)} minimum={6}/>
           <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
-          <div className="ctl-print-expanded-grid">{pageTwoMerits.slice(0, 4).map((merit, index) => <article key={`${merit.instanceId ?? merit.name}-${index}`}><strong>{merit.name} {"•".repeat(merit.dots)}</strong><PrintTextList values={expandedConfigurationLines(resolveMeritDefinition(merit, meritCatalog)?.id, merit.dots, merit.configuration, locale, reference.courts, tokenCatalog, meritCatalog)} minimum={3}/></article>)}{Array.from({ length: Math.max(0, 4 - pageTwoMerits.length) }, (_, index) => <article key={`blank-expanded-${index}`}><strong>&nbsp;</strong><PrintTextList values={[]} minimum={3}/></article>)}</div>
+          <div className="ctl-print-expanded-grid">{pageTwoMerits.slice(0, 4).map((merit, index) => <article key={`${merit.instanceId ?? merit.name}-${index}`}><strong>{merit.name} {"•".repeat(effectiveMeritDots({ ...merit, definitionId: resolveMeritDefinition(merit, meritCatalog)?.id }))}</strong><PrintTextList values={expandedConfigurationLines(resolveMeritDefinition(merit, meritCatalog)?.id, merit.dots, merit.configuration, locale, reference.courts, tokenCatalog, meritCatalog)} minimum={3}/></article>)}{Array.from({ length: Math.max(0, 4 - pageTwoMerits.length) }, (_, index) => <article key={`blank-expanded-${index}`}><strong>&nbsp;</strong><PrintTextList values={[]} minimum={3}/></article>)}</div>
           <SheetHeading>{t("ui.combat")}</SheetHeading>
           <div className="ctl-print-combat-table"><header><span>{t("combat.weapons")}</span><span>{t("ui.dicePool")}</span><span>{t("ui.damage")}</span><span>{t("ui.range")}</span><span>{t("ui.initiative")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const weapon = weapons[index]; return <div key={weapon?.id ?? index}><i/><span>{weapon?.name}</span><span/><span>{weapon?.damage}</span><span>{weapon?.ranges}</span><span>{weapon?.initiative}</span><span>{weapon?.size}</span></div>; })}</div>
           <SheetHeading>{t("ui.equipment")}</SheetHeading>

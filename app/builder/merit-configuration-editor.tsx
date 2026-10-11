@@ -17,6 +17,8 @@ import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { Choice } from "./common-controls";
 import { INTERDISCIPLINARY_SPECIALTY_ID, configuredSpecialty, interdisciplinarySpecialties, specialtyIdentity } from "@/lib/core/character/specialty-merits";
+import { SharedMeritDotsControl } from "./shared-merit-dots-control";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 
 export type StructuredMeritEditorProps = {
   merit: MeritSelection;
@@ -62,11 +64,12 @@ export function MeritConfigurationEditor({
   if (!canonical) return null;
   const configuration = normalizeMeritConfiguration(merit.configuration);
   const structuredProps = { merit: {...merit, definitionId: canonical.id}, configuration, onChange, compact };
+  const shared = <SharedMeritDotsControl merit={structuredProps.merit} definition={canonical} onChange={onChange} />;
   const injected = renderStructured?.(structuredProps);
-  if (injected != null) return injected;
+  if (injected != null) return <>{shared}{injected}</>;
   const definition = definitions.find(item => item.id === canonical.id);
-  if (!definition) return null;
-  const effectiveDots = configurationDots ?? merit.dots;
+  if (!definition) return shared;
+  const effectiveDots = configurationDots ?? effectiveMeritDots(structuredProps.merit);
   const visible = definition.fields.filter(field => (field.minDots ?? 0) <= effectiveDots);
   const set = (key: string, value: string | string[]) => onChange({ ...configuration, [key]: value });
   const label = (value: string) => value.startsWith("ui.") ? t(value as MessageKey) : systemTerm(value, locale);
@@ -85,10 +88,10 @@ export function MeritConfigurationEditor({
   const fields = <div>{visible.map((field) => {
     const value = configuration[field.key];
     if (field.kind === "merit") {
-      const minimum = field.minimumDots === "rating" ? merit.dots : field.minimumDots ?? 1;
+      const minimum = field.minimumDots === "rating" ? effectiveDots : field.minimumDots ?? 1;
       const choices = ownedMerits.flatMap(item => {
         const linked = resolveMeritDefinition(item, catalog);
-        return item.instanceId && ownedMerits.filter(candidate => candidate.instanceId === item.instanceId).length === 1 && linked && field.meritIds?.includes(linked.id) && item.dots >= minimum ? [{item, linked}] : [];
+        return item.instanceId && ownedMerits.filter(candidate => candidate.instanceId === item.instanceId).length === 1 && linked && field.meritIds?.includes(linked.id) && effectiveMeritDots({ ...item, definitionId: linked.id }) >= minimum ? [{item, linked}] : [];
       });
       return <label key={field.key}>{label(field.label)}<select value={String(value ?? "")} onChange={(event) => set(field.key, event.target.value)}><option value="">{t("ui.selectAnInstance")}</option>{choices.map(({item, linked}) => <option key={item.instanceId} value={item.instanceId}>{meritPresentation(linked, locale).name}: {meritConfigurationTitle(item.configuration) || item.instanceId} ({item.dots})</option>)}</select></label>;
     }
@@ -107,8 +110,8 @@ export function MeritConfigurationEditor({
     return <label key={field.key}>{label(field.label)}<BufferedInput value={Array.isArray(value) ? value.join(", ") : String(value ?? "")} placeholder={field.placeholder ? label(field.placeholder) : undefined} onValueCommit={(text) => set(field.key, text)} /></label>;
   })}</div>;
   return inline
-    ? <div className={`merit-configuration inline${compact ? " compact" : ""}`}>{fields}</div>
-    : <details className={`merit-configuration${compact ? " compact" : ""}`}><summary>{t("ui.configureChoices")}</summary>{fields}</details>;
+    ? <div className={`merit-configuration inline${compact ? " compact" : ""}`}>{shared}{fields}</div>
+    : <><div>{shared}</div><details className={`merit-configuration${compact ? " compact" : ""}`}><summary>{t("ui.configureChoices")}</summary>{fields}</details></>;
 }
 
 function ProfessionalTrainingEditor({ merit, configuration, onChange, compact }: StructuredMeritEditorProps) {

@@ -1,6 +1,8 @@
 "use client";
 
 import { Choice } from "@/app/builder/common-controls";
+import { SharedMeritDotsControl } from "@/app/builder/shared-merit-dots-control";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
@@ -39,7 +41,7 @@ export function WerewolfMeritConfigurationEditor({ merit, context, onChange, gif
     case "wtf-2ed:blood-or-bone-affinity": fields = merit.dots >= 5 ? <p>{t("werewolf.meritChoice.bothAnchors")}</p> : choice("anchor", "werewolf.meritChoice.anchor", ["blood", "bone"], { blood: t("werewolf.blood"), bone: t("werewolf.bone") }); break;
     case "wtf-2ed:code-of-honor": fields = <label>{t("werewolf.meritChoice.virtue")}<Input value={value("virtue")} onChange={event => set("virtue", event.target.value)}/></label>; break;
     case "wtf-2ed:dedicated-locus": {
-      const places = context.merits.filter(item => item.id === "core-2ed:safe-place" && item.instanceId && item.dots >= merit.dots);
+      const places = context.merits.filter(item => item.id === "core-2ed:safe-place" && item.instanceId && effectiveMeritDots({ ...item, definitionId: item.id }) >= effectiveMeritDots({ ...merit, definitionId: merit.id }));
       fields = choice("safePlaceId", "werewolf.meritChoice.safePlace", places.map(item => item.instanceId!), Object.fromEntries(places.map(item => [item.instanceId!, t("werewolf.meritChoice.safePlaceInstance", {
         name: typeof item.configuration?.place === "string" && item.configuration.place.trim() ? item.configuration.place : item.instanceId!, dots: item.dots,
       })]))); break;
@@ -81,5 +83,5 @@ export function WerewolfMeritConfigurationEditor({ merit, context, onChange, gif
       </>; break;
     }
   }
-  return <details className="merit-configuration wtf-merit-configuration"><summary>{t("ui.configureChoices")}</summary><div className="form-grid">{fields}</div></details>;
+  return <><SharedMeritDotsControl merit={{ definitionId: merit.id, name: merit.id, dots: merit.dots, configuration }} definition={{ id: merit.id, ratings: [1, 2, 3, 4, 5] }} onChange={onChange}/><details className="merit-configuration wtf-merit-configuration"><summary>{t("ui.configureChoices")}</summary><div className="form-grid">{fields}</div></details></>;
 }

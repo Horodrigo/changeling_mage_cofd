@@ -1,5 +1,6 @@
 "use client";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 import { ExperiencePanel } from "./experience-panel";
 import { CharacterPaperShell,CharacterPortraitArea,EditableList,NotesArea,PowerResource,ResourceTrack,boundedNumber,updateLineData } from "@/app/workspace/character-paper-shell";
 import { MainFuel, MainPowerStat, MainSheet } from "@/app/workspace/main-sheet";
@@ -388,7 +389,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                 return (<details className="expanded-merit-card" key={`${item.name}-${itemIndex}`}>
               <summary>
                 <h4><MeritDetails merit={item} catalog={catalog}>{title}</MeritDetails></h4>
-                <DotValue value={item.dots}/>
+                <DotValue value={effectiveMeritDots({ ...item, definitionId: definition?.id })}/>
               </summary>
               <div className="expanded-merit-body">
                 {definition && <>
@@ -416,7 +417,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
                   <> · {t("ui.prerequisites")}: {presented.prerequisites || t("ui.none")}</>
                 </small>
               </div>
-              <DotValue value={item.dots}/>
+              <DotValue value={effectiveMeritDots({ ...item, definitionId: definition?.id })}/>
             </summary>
             <div className="expanded-merit-body">
               <p>{presented.description}</p>

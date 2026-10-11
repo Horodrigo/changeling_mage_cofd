@@ -25,6 +25,8 @@ import { homebrewCategoryKeys } from "@/lib/homebrew";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { meritCategoryLabel } from "@/lib/merit-ui";
 import { meritMatchesDefinition, resolveMeritDefinition } from "@/lib/merit-identity";
+import { SharedMeritDotsControl } from "./shared-merit-dots-control";
+import { SHARED_DOT_MERIT_IDS, sharedMeritDots } from "@/lib/shared-merit-dots";
 
 export type MeritConfigurationRenderProps = {
   merit: MeritSelection;
@@ -105,7 +107,8 @@ export function MeritPicker({
       return <div className="merit-row configurable" key={`${selection.instanceId ?? index}-${selection.name}`} title={definition ? meritTooltip(definition, locale, catalog) : undefined}>
         <div className="merit-row-main"><div><strong>{definition ? meritName(definition) : selection.name}{configurationTitle(selection) ? `: ${configurationTitle(selection)}` : ""}</strong>
           <small>{definition ? `${categoryName(categoryFor(definition))} · ${definition.source} · p. ${definition.page || "—"}` : selection.source}{selection.grantedBy ? <> · {t("ui.firstDotFree")}</> : null}</small></div>
-          <Choice label={t("ui.dots")} value={String(selection.dots)} setValue={(value) => { const next = [...merits]; next[index] = { ...selection, dots: Number(value) }; setMerits(next); }} options={(definition ? meritRatingsFor(definition, Math.max(selection.dots, budget - spent + selection.dots)) : [1]).map(String)} />
+          <Choice label={t("ui.dots")} value={String(selection.dots)} setValue={(value) => { const next = [...merits]; const dots = Number(value); const configuration = definition && SHARED_DOT_MERIT_IDS.has(definition.id) ? { ...selection.configuration, sharedDots: String(Math.min(sharedMeritDots(selection), Math.max(0, Math.max(...definition.ratings) - dots))) } : selection.configuration; next[index] = { ...selection, dots, configuration }; setMerits(next); }} options={(definition ? meritRatingsFor(definition, Math.max(selection.dots, budget - spent + selection.dots)) : [1]).map(String)} />
+          <SharedMeritDotsControl merit={selection} definition={definition} onChange={(configuration) => { const next = [...merits]; next[index] = { ...selection, configuration }; setMerits(next); }} />
           {!selection.grantedBy && (needsConfirmation
             ? <ConfirmAction trigger={<Button type="button" variant="ghost" size="icon" aria-label={`${t("ui.remove7d41cc")} ${definition ? meritName(definition) : selection.name}`}><Trash2 /></Button>} title={t("ui.removefc5df2", { p1: definition ? meritName(definition) : selection.name })} description={t("ui.theMeritAndLinkedBenefitsWillBeRemoved")} action={t("ui.remove7d41cc")} onConfirm={remove} />
             : <Button type="button" variant="ghost" size="icon" aria-label={`${t("ui.remove7d41cc")} ${definition ? meritName(definition) : selection.name}`} onClick={remove}><Trash2 /></Button>)}
