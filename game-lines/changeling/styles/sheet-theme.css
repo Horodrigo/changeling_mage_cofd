@@ -169,6 +169,12 @@
     box-shadow: 0 16px 48px rgb(61 38 56 / 16%);
   }
 
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-sheet:not(.mobile-character-sheet) {
+    --ctl-frame-star-side-offset: 32px;
+    --ctl-frame-star-side-width: 18px;
+  }
+
   .app-shell:has([data-changeling-sheet-theme="fairest"]) .ctl-frame-edge-top::before,
   .app-shell:has([data-changeling-sheet-theme="fairest"]) .ctl-frame-edge-top::after,
   .app-shell:has([data-changeling-sheet-theme="fairest"]) .ctl-frame-edge-bottom::before,
