@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import { useLayoutEffect } from "react";
 import { derivedWithPermanentMerits } from "@/app/workspace/experience-shared";
@@ -87,7 +88,9 @@ export function MortalPrintSheet({ character, catalogs, onReadyChange }: GameLin
         <section><Heading>{t("ui.breakingPoints")}</Heading><PrintLines values={stringList(data.breaking_points)} minimum={5}/><Heading>{t("ui.conditions")}</Heading><PrintLines values={selectedConditions.slice(5)} minimum={5}/><Heading>{t("combat.tilts")}</Heading><PrintLines values={tilts} minimum={5}/><Heading>{t("combat.vehicles")}</Heading><PrintLines values={vehicles.map((item) => item.name)} minimum={5}/></section>
         <section><Heading>{t("combat.weapons")}</Heading><div className="cofd-print-combat"><header><span>{t("ui.name")}</span><span>{t("ui.damage")}</span><span>{t("ui.range")}</span><span>{t("ui.initiative")}</span><span>{t("ui.strength")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 7 }, (_, index) => { const item = weapons[index]; return <div key={item?.id ?? index}><span>{item?.name}</span><span>{item?.damage}</span><span>{item?.ranges}</span><span>{item?.initiative}</span><span>{item?.strength}</span><span>{item?.size}</span></div>; })}</div><Heading>{t("ui.equipment")}</Heading><div className="cofd-print-equipment"><header><span>{t("ui.name")}</span><span>{t("ui.bonus")}</span><span>{t("ui.durability")}</span><span>{t("ui.structure")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 8 }, (_, index) => { const item = equipment[index]; return <div key={item?.id ?? index}><span>{item?.name}</span><span>{item?.bonus}</span><span>{item?.durability}</span><span>{item?.structure}</span><span>{item?.size}</span></div>; })}</div></section>
       </div>
-      <Heading>{t("ui.notes")}</Heading><PrintLines values={notes} minimum={12}/>
+      {character.character.portrait
+        ? <div className="cofd-print-notes-with-portrait"><section><Heading>{t("ui.notes")}</Heading><PrintLines values={notes} minimum={12}/></section><Image src={character.character.portrait.dataUrl} alt={character.character.name} width={160} height={208} unoptimized loading="eager"/></div>
+        : <><Heading>{t("ui.notes")}</Heading><PrintLines values={notes} minimum={12}/></>}
     </MortalPrintPage>
   </div>;
 }

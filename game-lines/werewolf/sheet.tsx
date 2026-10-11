@@ -48,6 +48,9 @@ import { WerewolfLodgeIdentity, WerewolfLodgeJoinDialog, WerewolfLodgePage } fro
 import type { WerewolfLodgeCatalog } from "./catalogs/lodges";
 import { werewolfLodgeId } from "./lodge-membership";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
+import { MeritDetails } from "@/app/workspace/merit-details";
+import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
 import { INTERDISCIPLINARY_SPECIALTY_ID } from "@/lib/core/character/specialty-merits";
 import { commonExpandedConfigurationLines } from "@/app/workspace/merit-configuration-presentation";
@@ -72,7 +75,10 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, up
   const fetishes = catalogs.get<WerewolfFetishCatalog>("werewolf-fetishes");
   const totem = catalogs.get<WerewolfTotemCatalog>("werewolf-totem");
   const lodges = catalogs.get<WerewolfLodgeCatalog>("werewolf-lodges");
+  const allCustomMerits = useMeritHomebrews();
+  const customMerits = useMemo(() => allCustomMerits.filter(item => item.line === "WtF" || item.line === "Core"), [allCustomMerits]);
   const merits = useMemo(() => [...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")], [catalogs]);
+  const detailCatalog = useMemo(() => mergeMeritHomebrews(merits, customMerits), [merits, customMerits]);
   const core = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
   const data = character.line_data, state = character.current_state;
   const hasLodge = Boolean(werewolfLodgeId(data.lodge_id));
@@ -141,7 +147,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, up
       if (key === "safePlaceId") { const place = character.merits.find(item => item.instanceId === value); return place ? meritConfigurationTitle(place.configuration) || value : value; }
       return key === "virtue" ? value : systemTerm(value, locale);
     };
-    return <details className="wtf-rule-disclosure" key={selection.instanceId ?? index}><summary><span>{text?.name ?? selection.name}{configured ? `: ${configured}` : ""}</span><DotValue value={selection.dots}/></summary>
+    return <details className="wtf-rule-disclosure" key={selection.instanceId ?? index}><summary><MeritDetails merit={selection} catalog={detailCatalog}><span>{text?.name ?? selection.name}{configured ? `: ${configured}` : ""}</span></MeritDetails><DotValue value={selection.dots}/></summary>
       {selection.grantedBy === "werewolf:totem-advantage" && <p className="wtf-rule-field"><strong>{t("ui.source")}:</strong>{" "}{t("werewolf.totemAdvantage")}</p>}
       {text?.prerequisites && <p className="wtf-rule-field"><strong>{t("ui.prerequisites")}:</strong>{" "}{text.prerequisites}</p>}
       {text && <p className="wtf-rule-field">{text.description}</p>}

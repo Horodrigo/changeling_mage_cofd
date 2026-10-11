@@ -339,6 +339,8 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
 .cofd-print-combat > header,.cofd-print-equipment > header { color:#315e7a; font-size:5.5pt; font-weight:700; text-transform:uppercase; }
 .cofd-print-combat span,.cofd-print-equipment span { min-width:0; overflow:hidden; border-bottom:.2mm solid #718895; padding:.5mm; text-overflow:ellipsis; white-space:nowrap; }
 .cofd-print-page-2 > .cod-print-lines > div { min-height:5.3mm; }
+.cofd-print-notes-with-portrait { display:grid; grid-template-columns:minmax(0,1fr) 40mm; gap:4mm; align-items:start; }
+.cofd-print-notes-with-portrait img { width:40mm; height:55mm; object-fit:contain; object-position:top center; }
 
 @media print {
   body.character-printing .cofd-print-page { width:210mm!important; min-width:210mm!important; height:297mm!important; margin:0!important; box-shadow:none!important; break-after:page; page-break-after:always; }

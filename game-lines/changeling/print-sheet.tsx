@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 
 import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
@@ -246,7 +247,8 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
   const meritCatalog = useMemo(() => mergeMeritHomebrews([...coreMerits, ...changelingMerits], customMerits), [changelingMerits, coreMerits, customMerits]);
   const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
   const customCatalog = useChangelingCatalogHomebrews();
-  const reference = mergeChangelingReference(catalogs.get<ChangelingReference>("changeling-reference"), customCatalog);
+  const baseReference = catalogs.get<ChangelingReference>("changeling-reference");
+  const reference = useMemo(() => mergeChangelingReference(baseReference, customCatalog), [baseReference, customCatalog]);
   const tokens = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
   const tokenCatalog = useMemo(() => withTokenPresentation(tokens, reference.tokenPresentation), [tokens, reference.tokenPresentation]);
   const seemingCatalog = mergeChangelingSeemings(customCatalog);
@@ -275,7 +277,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     const skill = canonicalSkill(choice?.kind === "skill" ? data.kith_choice : data.kith_skill ?? definition?.skill);
     return new Set(skill ? [skill] : []);
   }, [data.kith, data.kith_choice, data.kith_skill, reference]);
-  const armor = ARMORS.map((item) => combatItemPresentation(item, locale)).find((item) => item.id === String(data.combat_armor ?? ""));
+  const armor = useMemo(() => ARMORS.map((item) => combatItemPresentation(item, locale)).find((item) => item.id === String(data.combat_armor ?? "")), [data.combat_armor, locale]);
   const weapons = useMemo(() => stringList(data.combat_weapons).map((id) => WEAPONS.map((item) => combatItemPresentation(item, locale)).find((item) => item.id === id)).filter((item): item is NonNullable<typeof item> => Boolean(item)), [data.combat_weapons, locale]);
   const equipment = useMemo(() => stringList(data.combat_equipment).map((id) => EQUIPMENT.map((item) => combatItemPresentation(item, locale)).find((item) => item.id === id)).filter((item): item is NonNullable<typeof item> => Boolean(item)), [data.combat_equipment, locale]);
   const vehicles = useMemo(() => stringList(data.companion_vehicles).map((id) => VEHICLES.map((item) => vehiclePresentation(item, locale)).find((item) => item.id === id)).filter((item): item is NonNullable<typeof item> => Boolean(item)), [data.companion_vehicles, locale]);
@@ -332,7 +334,8 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
       add("companions", t("ui.companions"), `bonded-${index}`, <PrintCard title={String(bonded.animalName ?? "").trim() || presented.name} meta={`Bonded · ${presented.name}`}><p><b>{t("ui.attributes")}:</b> {presented.attributes}</p><p><b>{t("ui.skills")}:</b> {presented.skills}</p><p><b>{t("ui.otherTraits")}:</b> {t("ui.willpower")} {presented.willpower}, {t("ui.initiative")} {presented.initiative}, {t("ui.defense")} {presented.defense}, {t("ui.speed")} {presented.speed}, {t("ui.size")} {presented.size}, {t("ui.health")} {presented.health}</p></PrintCard>);
     });
     const notes = String(character.current_state?.notes ?? "").trim();
-    if (notes) add("notes", t("ui.notes"), "notes", <PrintCard title={t("ui.notes")}><p className="ctl-print-preserve-lines">{notes}</p></PrintCard>);
+    const portrait = character.character.portrait;
+    if (notes || portrait) add("notes", t("ui.notes"), "notes", <PrintCard title={t("ui.notes")}><div className="ctl-print-notes-content">{notes && <p className="ctl-print-preserve-lines">{notes}</p>}{portrait && <Image src={portrait.dataUrl} alt={character.character.name} width={144} height={192} unoptimized loading="eager" />}</div></PrintCard>);
     return blocks;
   }, [armor, character, contracts, data, equipment, expanded, locale, meritCatalog, options.expandedMeritDetails, options.powerDetails, powerRating, reference, selectedConditions, t, tokenCatalog, vehicles, weapons]);
 

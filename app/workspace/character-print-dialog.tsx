@@ -18,6 +18,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLinePrintOptions, GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
 import { useLanguage } from "@/lib/i18n";
 import { useCatalogSnapshot } from "../catalog-boundary";
+import "./character-print-dialog.css";
 
 export function CharacterPrintDialog({
   character,
@@ -69,8 +70,7 @@ export function CharacterPrintDialog({
     return () => observer.disconnect();
   }, [open, PrintSheet, ready, options]);
 
-  async function print() {
-    if (!ready) return;
+  function print() {
     const preview = previewRef.current;
     const printable = preview?.querySelector<HTMLElement>(".game-print-document");
     if (!preview || !printable) return;
@@ -83,15 +83,17 @@ export function CharacterPrintDialog({
     document.body.appendChild(printSurface);
     document.title = `${safeName} - ${getGameLineRegistration(character.game_line).label}`;
     document.body.classList.add("character-printing");
-    try {
-      await document.fonts?.ready;
-      await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
-      window.print();
-    } finally {
+    const cleanup = () => {
+      window.clearTimeout(cleanupTimer);
       printSurface.remove();
       document.body.classList.remove("character-printing");
       document.title = previousTitle;
-    }
+      window.removeEventListener("afterprint", cleanup);
+    };
+    const cleanupTimer = window.setTimeout(cleanup, 60000);
+    window.addEventListener("afterprint", cleanup, { once: true });
+    try { window.print(); }
+    catch (error) { cleanup(); throw error; }
   }
 
   return <Dialog open={open} onOpenChange={onOpenChange}>
@@ -129,7 +131,7 @@ export function CharacterPrintDialog({
       </div>
       <DialogFooter className="character-print-footer">
         <DialogClose asChild><Button type="button" size="sm" variant="outline">{t("ui.cancel")}</Button></DialogClose>
-        <Button type="button" size="sm" disabled={!ready} onClick={() => void print()}><Printer />{t("ui.printSavePDF")}</Button>
+        <Button type="button" size="sm" disabled={!PrintSheet} onClick={print}><Printer />{t("ui.printSavePDF")}</Button>
       </DialogFooter>
     </DialogContent>
   </Dialog>;

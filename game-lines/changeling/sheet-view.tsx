@@ -37,6 +37,7 @@ import { changelingMeritContextForSheet } from "./merit-context";
 import { changelingDesktopLayout } from "./sheet-layout.desktop";
 import { changelingMobileLayout } from "./sheet-layout.mobile";
 import { meritPresentation } from "@/lib/merit-presentation";
+import { MeritDetails } from "@/app/workspace/merit-details";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { changelingMeritId } from "./merit-identities";
 import { normalizeClarityDamage,normalizeDamage,powerResourceLimits,type ClarityDamageLevel } from "@/lib/resource-rules";
@@ -386,7 +387,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
             if (!style)
                 return (<details className="expanded-merit-card" key={`${item.name}-${itemIndex}`}>
               <summary>
-                <h4>{title}</h4>
+                <h4><MeritDetails merit={item} catalog={catalog}>{title}</MeritDetails></h4>
                 <DotValue value={item.dots}/>
               </summary>
               <div className="expanded-merit-body">
@@ -408,8 +409,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
             <summary>
               <div>
                 <h4>
-                  {title}
-                  {cult && !title.includes(cult) ? `: ${cult}` : ""}
+                  <MeritDetails merit={item} catalog={catalog}>{title}{cult && !title.includes(cult) ? `: ${cult}` : ""}</MeritDetails>
                 </h4>
                 <small>
                   {style.source} · p. {style.page}
@@ -560,7 +560,7 @@ function MeritSheetList({ merits, catalog, courtCatalog, }: {
                 : item.source;
             return (<div className="sheet-merit-row" key={`${item.name}-${index}`} title={tooltip}>
               <div className="sheet-merit-main">
-                <span>{meritLabel(item, catalog, courtCatalog, locale)}</span>
+                <MeritDetails merit={item} catalog={catalog}><span>{meritLabel(item, catalog, courtCatalog, locale)}</span></MeritDetails>
                 <DotValue value={item.dots} max={Math.max(5, item.dots)}/>
               </div>
             </div>);

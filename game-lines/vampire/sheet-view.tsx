@@ -8,6 +8,7 @@ import { vampirePowerPresentation } from "./power-presentation";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Link2, Plus, Trash2 } from "lucide-react";
 import { VampireMeritConfigurationEditor } from "./merit-configuration-editor";
+import { MeritDetails } from "@/app/workspace/merit-details";
 import {
   CharacterPaperShell,
   CharacterPortraitArea,
@@ -2242,8 +2243,7 @@ function VampireExpandedMeritList({
             <summary>
               <div>
                 <h4>
-                  {displayName}
-                  {detail ? `: ${detail}` : ""}
+                  <MeritDetails merit={merit} catalog={catalog}>{displayName}{detail ? `: ${detail}` : ""}</MeritDetails>
                 </h4>
                 {definition && (
                   <small>
@@ -2318,10 +2318,7 @@ function MeritList({
             title={tooltip}
           >
             <div className="sheet-merit-main">
-              <span>
-                {displayName}
-                {configuredName ? `: ${configuredName}` : ""}
-              </span>
+              <MeritDetails merit={merit} catalog={catalog}><span>{displayName}{configuredName ? `: ${configuredName}` : ""}</span></MeritDetails>
               <DotValue value={merit.dots} max={Math.max(5, merit.dots)} />
             </div>
           </div>

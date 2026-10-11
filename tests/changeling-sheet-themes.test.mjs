@@ -42,7 +42,7 @@ test("theme module resolves at build time, and all existing Fairest assets map t
   assert.ok(fairest);
   const { sheetThemeCss } = await vite.ssrLoadModule("/game-lines/changeling/sheet-theme.ts");
   const css = await readFile(new URL("../game-lines/changeling/styles/sheet.css", import.meta.url), "utf8");
-  const [screen, print] = css.split("/* CtL print preview and A4 output are independent from the responsive sheet. */");
+  const [screen, print] = css.split(".ctl-print-document {");
   for (const [name, url] of Object.entries(fairest.assets)) {
     assert.ok(screen.includes(`var(--ctl-image-${name}, url("/game-lines/changeling/images/${name}.webp"))`), name);
     assert.ok(sheetThemeCss(fairest).includes(url));
@@ -70,7 +70,7 @@ test("title adjustment blocks distinguish themes and actual Desktop/Mobile surfa
   const css = await readFile(new URL("../game-lines/changeling/styles/sheet-theme.css", import.meta.url), "utf8");
   const adjustments = css.slice(css.indexOf("@media screen")).replace(/\s+/g, " ");
   assert.ok(adjustments.startsWith("@media screen {"));
-  for (const theme of ["default", "fairest", "elemental"]) {
+  for (const theme of ["default", "fairest", "elemental", "ogre"]) {
     for (const surface of [":not(.mobile-character-sheet)", ".mobile-character-sheet"]) {
       for (const element of [".ctl-title-mark", "strong", "p"]) {
         assert.ok(adjustments.includes(`.app-shell:has([data-changeling-sheet-theme="${theme}"]) .ctl-sheet${surface} .cod-sheet-title ${element} {`));
@@ -83,7 +83,7 @@ test("title adjustment blocks distinguish themes and actual Desktop/Mobile surfa
 
 test("Kith highlight theme controls move and scale only the assembled decorative frame", async () => {
   const css = (await readFile(new URL("../game-lines/changeling/styles/sheet-theme.css", import.meta.url), "utf8")).replace(/\s+/g, " ");
-  for (const theme of ["default", "fairest", "elemental"]) {
+  for (const theme of ["default", "fairest", "elemental", "ogre"]) {
     for (const surface of [":not(.mobile-character-sheet)", ".mobile-character-sheet"]) {
       const selector = `.app-shell:has([data-changeling-sheet-theme="${theme}"]) .ctl-sheet${surface} .skill-highlight-kith .kith-skill-frame`;
       assert.ok(css.includes(`${selector} {`), selector);
@@ -97,11 +97,11 @@ test("Kith highlight theme controls move and scale only the assembled decorative
   assert.doesNotMatch(css, /kith-skill-piece|kith-skill-name-text|ctl-print/);
 });
 
-test("Fairest and Elemental replace all 16 image assets and scope their colors to the selected screen theme", async () => {
+test("Fairest, Elemental and Ogre replace all 16 image assets and scope their colors to the selected screen theme", async () => {
   const images = new URL("../public/game-lines/changeling/images/", import.meta.url);
   const baseNames = (await readdir(images)).filter(name => name.endsWith(".webp") && name !== "icon.webp").sort();
   assert.equal(baseNames.length, 16);
-  for (const theme of ["fairest", "elemental"]) {
+  for (const theme of ["fairest", "elemental", "ogre"]) {
     const names = (await readdir(new URL(`theme-${theme}/`, images))).filter(name => name.endsWith(".webp")).sort();
     assert.deepEqual(names, baseNames);
   }
@@ -113,7 +113,12 @@ test("Fairest and Elemental replace all 16 image assets and scope their colors t
   assert.match(css, /body:has\(\[data-changeling-sheet-theme="elemental"\]\)/);
   assert.match(css, /--primary: #1f5960/);
   assert.match(css, /--ctl-ink: #244950/);
-  assert.match(css, /--ctl-frame-star-side-width: 29px/);
+  assert.match(css, /body:has\(\[data-changeling-sheet-theme="ogre"\]\)/);
+  assert.match(css, /--primary: #684735/);
+  assert.match(css, /--ctl-ink: #302b27/);
+  assert.match(css, /--ctl-frame-star-side-width: 36px/);
+  assert.match(css, /transform: translateX\(-50%\) rotate\(90deg\)/);
+  assert.match(css, /--ctl-title-divider-icon: var\(--ctl-image-frame-side\)/);
   assert.match(css, /\.official-heading\.ctl-attributes-heading::before \{\s*transform: translateY\(-50%\) scaleX\(-1\)/);
   assert.match(css, /\.official-heading\.ctl-attributes-heading::after \{\s*transform: translateY\(-50%\)/);
   assert.match(css, /\.ctl-sheet \.experience-actions button:not\(\.ctl-purchase-trait-button\)/);

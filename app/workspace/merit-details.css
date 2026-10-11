@@ -1,0 +1,8 @@
+.sheet-merit-details-trigger { all: unset; cursor: pointer; min-width: 0; flex: 1; text-align: left; overflow-wrap: anywhere; }
+.sheet-merit-details-trigger:hover { text-decoration: underline; text-underline-offset: 2px; }
+.sheet-merit-details-trigger:focus-visible { outline: 2px solid var(--sheet-accent, currentColor); outline-offset: 2px; }
+.sheet-merit-details-dialog { max-height: min(90dvh, 850px); overflow-y: auto; }
+.sheet-merit-details-dialog [data-slot="dialog-description"] { display: grid; gap: 2px; }
+.sheet-merit-details-body { display: grid; gap: 12px; white-space: pre-line; }
+.sheet-merit-details-body p { margin: 0; }
+.sheet-merit-details-body h3 { color: var(--sheet-accent, currentColor); font-weight: 700; }

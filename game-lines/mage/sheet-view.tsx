@@ -1,5 +1,6 @@
 "use client";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
+import { MeritDetails } from "@/app/workspace/merit-details";
 import {
   CharacterPaperShell,
   CharacterPortraitArea,
@@ -1182,7 +1183,7 @@ function ExpandedMeritList({
               key={`${item.name}-${itemIndex}`}
             >
               <summary>
-                <h4>{title}</h4>
+                <h4><MeritDetails merit={item} catalog={catalog}>{title}</MeritDetails></h4>
                 <DotValue value={item.dots} />
               </summary>
               <div className="expanded-merit-body">
@@ -1208,8 +1209,7 @@ function ExpandedMeritList({
             <summary>
               <div>
                 <h4>
-                  {title}
-                  {cult && !title.includes(cult) ? `: ${cult}` : ""}
+                  <MeritDetails merit={item} catalog={catalog}>{title}{cult && !title.includes(cult) ? `: ${cult}` : ""}</MeritDetails>
                 </h4>
                 <small>
                   {style.source} · p. {style.page}
@@ -2016,7 +2016,7 @@ function MeritSheetList({
               title={tooltip}
             >
               <div className="sheet-merit-main">
-                <span>{meritLabel(item, catalog, locale)}</span>
+                <MeritDetails merit={item} catalog={catalog}><span>{meritLabel(item, catalog, locale)}</span></MeritDetails>
                 <DotValue value={item.dots} max={Math.max(5, item.dots)} />
               </div>
             </div>

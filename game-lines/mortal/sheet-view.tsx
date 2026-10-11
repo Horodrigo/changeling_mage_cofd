@@ -20,6 +20,9 @@ import type { GameLineSheetProps } from "@/lib/game-line-contracts/game-line-ui"
 import { useLanguage } from "@/lib/i18n";
 import type { MeritDefinition } from "@/lib/merits";
 import { meritPresentation } from "@/lib/merit-presentation";
+import { MeritDetails } from "@/app/workspace/merit-details";
+import { useMeritHomebrews } from "@/app/use-merit-homebrews";
+import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
@@ -58,7 +61,10 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, upda
   const setActiveTab = (value: string) => isMobile ? setMobileTab({ characterId: character.id, value }) : setDesktopTab(value);
   if (!catalogs) throw new Error("Mortal sheet requires its catalog snapshot.");
 
+  const allCustomMerits = useMeritHomebrews();
+  const customMerits = useMemo(() => allCustomMerits.filter(item => item.line === "CofD" || item.line === "Core"), [allCustomMerits]);
   const meritCatalog = catalogs.get<readonly MeritDefinition[]>("core-merits");
+  const detailCatalog = useMemo(() => mergeMeritHomebrews(meritCatalog, customMerits), [meritCatalog, customMerits]);
   const reference = catalogs.get<CoreReference>("core-reference");
   const conditionCatalog = useMemo(() => reference.conditions.map((condition) =>
     locale === "pt-BR" ? { ...condition, ...(reference.presentation[condition.id] ?? {}) } : condition,
@@ -101,7 +107,7 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, upda
   const skillGrid = (layout: typeof mortalDesktopLayout.main.skills, compact: boolean) => <SheetCategoryLayout id={compact ? "mobile-skills" : "skills"} definition={layout} className={compact ? "mobile-trait-stack" : "mortal-skill-stack"} render={category => <TraitBlock key={category} title={category} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")} names={SKILLS[category as keyof typeof SKILLS]} values={character.skills} specialties={character.specializations} />} />;
   const attributes = <><SheetHeading className="cofd-attributes-heading">{t("ui.attributes")}</SheetHeading>{attributeGrid(mortalDesktopLayout.main.attributes, false)}</>;
   const skills = <><SheetHeading>{t("ui.skills")}</SheetHeading>{skillGrid(mortalDesktopLayout.main.skills, false)}</>;
-  const merits = <MeritList character={character} catalog={meritCatalog} updateSheet={updateSheet} />;
+  const merits = <MeritList character={character} catalog={meritCatalog} detailCatalog={detailCatalog} updateSheet={updateSheet} />;
   const aspirationList = <EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => setLineValue("aspirations", value)} />;
   const breakingPointList = <EditableList values={breakingPoints} minimum={5} placeholder={t("ui.writeBreakingPoint")} onChange={(value) => setLineValue("breaking_points", value)} />;
   const conditionList = <ConditionManager selected={conditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)} />;
@@ -242,7 +248,7 @@ function MortalIntegritySection({ character, integrity, breakingPoints, conditio
   </div>;
 }
 
-function MeritList({ character, catalog, updateSheet }: { character: CharacterSheet; catalog: readonly MeritDefinition[]; updateSheet: (sheet: CharacterSheet) => void }) {
+function MeritList({ character, catalog, detailCatalog, updateSheet }: { character: CharacterSheet; catalog: readonly MeritDefinition[]; detailCatalog: readonly MeritDefinition[]; updateSheet: (sheet: CharacterSheet) => void }) {
   const { locale, t } = useLanguage();
   if (!character.merits.length) return <em>{t("ui.noMeritSelected")}</em>;
   return <div className="sheet-merits single-column">{character.merits.map((merit, index) => {
@@ -252,7 +258,7 @@ function MeritList({ character, catalog, updateSheet }: { character: CharacterSh
     const presented = definition && meritPresentation(definition, locale);
     const tooltip = presented ? `${presented.prerequisites ? `${t("ui.prerequisites")}: ${presented.prerequisites}\n` : ""}${presented.description}` : merit.source;
     return <div className="sheet-merit-row" key={`${merit.instanceId ?? merit.name}-${index}`} title={tooltip}>
-      <div className="sheet-merit-main"><span>{name}{configured ? `: ${configured}` : ""}</span><DotValue value={merit.dots} max={Math.max(5, merit.dots)} /></div>
+      <div className="sheet-merit-main"><MeritDetails merit={merit} catalog={detailCatalog}><span>{name}{configured ? `: ${configured}` : ""}</span></MeritDetails><DotValue value={merit.dots} max={Math.max(5, merit.dots)} /></div>
       {definition?.id === INTERDISCIPLINARY_SPECIALTY_ID && <>
         {commonExpandedConfigurationLines(definition.id, merit.dots, merit.configuration, locale, catalog)?.map(line => <small key={line}>{line}</small>)}
         <MeritConfigurationEditor merit={merit} catalog={catalog} definitions={COMMON_MERIT_CONFIGURATIONS} specialtyContext={mortalMeritContextForSheet(character, catalog)} onChange={configuration => {
