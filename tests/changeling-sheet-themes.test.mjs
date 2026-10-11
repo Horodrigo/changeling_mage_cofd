@@ -113,5 +113,8 @@ test("Fairest and Elemental replace all 16 image assets and scope their colors t
   assert.match(css, /body:has\(\[data-changeling-sheet-theme="elemental"\]\)/);
   assert.match(css, /--primary: #1f5960/);
   assert.match(css, /--ctl-ink: #244950/);
+  assert.match(css, /--ctl-frame-star-side-width: 24px/);
+  assert.match(css, /\.official-heading\.ctl-attributes-heading::before \{\s*transform: translateY\(-50%\) scaleX\(-1\)/);
+  assert.match(css, /\.official-heading\.ctl-attributes-heading::after \{\s*transform: translateY\(-50%\)/);
   assert.match(css, /\.ctl-sheet \.experience-actions button:not\(\.ctl-purchase-trait-button\)/);
 });

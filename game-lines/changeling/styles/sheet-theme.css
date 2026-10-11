@@ -465,8 +465,31 @@
 
   .app-shell:has([data-changeling-sheet-theme="elemental"])
     .ctl-sheet:not(.mobile-character-sheet) {
-    --ctl-frame-star-side-offset: 32px;
+    --ctl-frame-star-side-offset: 38px;
+    --ctl-frame-star-side-width: 24px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet.mobile-character-sheet {
+    --ctl-frame-star-side-offset: 30px;
     --ctl-frame-star-side-width: 18px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet .official-heading.ctl-attributes-heading::before,
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet .official-heading.ctl-attributes-heading::after {
+    background-position: left center, right center;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet .official-heading.ctl-attributes-heading::before {
+    transform: translateY(-50%) scaleX(-1);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet .official-heading.ctl-attributes-heading::after {
+    transform: translateY(-50%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-frame-edge-top::before,
@@ -706,7 +729,14 @@
 
   .app-shell:has([data-changeling-sheet-theme="elemental"])
     .ctl-sheet :is(.kith-skill-middle-1, .kith-skill-middle-2) {
+    translate: 0 -2px;
+    scale: 1 1.05;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet .kith-skill-right {
     translate: 0 -1px;
+    scale: 1 0.84;
   }
 
 

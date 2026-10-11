@@ -29,4 +29,6 @@ For Fairest, use luxurious Art Nouveau and Belle Époque jewelry, chiefly aged g
 
 Elemental uses **period Art Nouveau color lithography**, with flat muted inks, hand-drawn outlines, flowing curves and subtle print grain. Alchemical diagrams and minerals are motifs within that illustration style; glossy 3D gemstones or polished digital fantasy rendering are wrong even when the palette is correct. The palette is petroleum blue, mineral turquoise, aged copper and pale gold. Its wordmark reads `ELEMENTAL`.
 
+For Elemental, the simple four-point alchemical star belongs in `frame-center`; the more detailed mineral crest belongs in `experience-purchase-icon`. Its `frame-side` needs enough display width to read as a finial beside the star. The Elemental `attributes-divider-leaf` orientation is reversed with theme-only CSS while keeping the flourish at the inner end of each heading rule. Its four skill pieces require matching top and bottom rail heights after the theme-specific CSS scaling; verify the complete short-name frame at display size.
+
 Fairest keeps its existing roses, sage leaves, pearls, jeweled motifs and composition. When revising the finish, match a turn-of-the-century illustrated print: matte colors and drawn contours, with restrained gem highlights. Preserve each asset's geometry and transparency so the approved CSS placement still works.
