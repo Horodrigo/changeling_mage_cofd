@@ -1,101 +1,178 @@
+
+/* ============================================================
+   CHANGELING: THE LOST — CONFIGURAÇÕES DOS TEMAS
+   ============================================================
+
+   Temas:
+   1. DEFAULT
+   2. FAIREST
+   3. ELEMENTAL
+
+   Os seletores desktop/mobile seguem o tipo real da ficha,
+   independentemente da largura da janela.
+
+   translate: X Y
+   X positivo = direita
+   Y positivo = baixo
+
+   scale: X Y
+   1.1 = aumento de 10%
+
+   ============================================================ */
+
+
+/* ============================================================
+   1. CONFIGURAÇÕES GLOBAIS
+   ============================================================ */
+
 .top-navigation .sheet-theme-trigger {
   min-height: 44px;
   gap: 6px;
 }
 
-/*
- * O valor data-changeling-sheet-theme e o nome da pasta sem "theme-".
- * Para theme-darkling, copie os blocos Fairest e troque "fairest" por "darkling".
- * Desktop/Mobile seguem a composicao real da ficha, nao a largura da janela.
- */
+.sheet-theme-error {
+  color: #b42318;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .top-navigation .sheet-theme-trigger {
+    min-width: 2.75rem;
+    padding-inline: 10px;
+  }
+
+  .top-navigation .sheet-theme-trigger span {
+    display: none;
+  }
+}
+
+
+/* ============================================================
+   2. DEFAULT
+   ============================================================ */
+
 @media screen {
-  /* DEFAULT - DESKTOP */
+
+  /* ---------- DESKTOP: TÍTULO ---------- */
+
   .app-shell:has([data-changeling-sheet-theme="default"])
     .ctl-sheet:not(.mobile-character-sheet)
-    .cod-sheet-title
-    .ctl-title-mark {
-    width: 380px; /* Largura da imagem; a altura acompanha aspect-ratio. */
+    .cod-sheet-title .ctl-title-mark {
+    width: 380px;
     max-width: 100%;
     translate: 0 0;
   }
-  .app-shell:has([data-changeling-sheet-theme="default"])
-    .ctl-sheet:not(.mobile-character-sheet)
-    .cod-sheet-title
-    strong {
-    font-size: 20px;
-    top: 65%; /* Posicao vertical dentro do titulo. */
-    left: 350px; /* Distancia da borda esquerda. */
-    translate: 0 0;
-  }
-  .app-shell:has([data-changeling-sheet-theme="default"])
-    .ctl-sheet:not(.mobile-character-sheet)
-    .cod-sheet-title
-    p {
-    font-size: 13px;
-    top: 65%;
-    right: 0; /* Distancia da borda direita. */
-    translate: 0 0;
-  }
 
-  /* DEFAULT - MOBILE */
   .app-shell:has([data-changeling-sheet-theme="default"])
-    .ctl-sheet.mobile-character-sheet
-    .cod-sheet-title
-    .ctl-title-mark {
-    width: 100%;
-    max-width: 380px; /* Limite da imagem; pode ser reduzido em px. */
-    translate: 0 0;
-  }
-  .app-shell:has([data-changeling-sheet-theme="default"])
-    .ctl-sheet.mobile-character-sheet
-    .cod-sheet-title
-    strong {
-    font-size: clamp(20px, 4.2vw, 16px);
-    margin: -10px 35px 0 0; /* Cima, direita, baixo, esquerda. */
-    translate: 0 0; /* No Mobile use margin/translate, nao top/left. */
-  }
-  .app-shell:has([data-changeling-sheet-theme="default"])
-    .ctl-sheet.mobile-character-sheet
-    .cod-sheet-title
-    p {
-    font-size: 10px;
-    translate: 0 0;
-  }
-
-  /* FAIREST - DESKTOP */
-  .app-shell:has([data-changeling-sheet-theme="fairest"])
     .ctl-sheet:not(.mobile-character-sheet)
-    .cod-sheet-title
-    .ctl-title-mark {
-    width: 480px;
-    max-width: 100%;
-    translate: 30px -5px;
-  }
-  .app-shell:has([data-changeling-sheet-theme="fairest"])
-    .ctl-sheet:not(.mobile-character-sheet)
-    .cod-sheet-title
-    strong {
+    .cod-sheet-title strong {
     font-size: 20px;
     top: 65%;
     left: 350px;
     translate: 0 0;
-    opacity: 0%;
   }
-  .app-shell:has([data-changeling-sheet-theme="fairest"])
+
+  .app-shell:has([data-changeling-sheet-theme="default"])
     .ctl-sheet:not(.mobile-character-sheet)
-    .cod-sheet-title
-    p {
+    .cod-sheet-title p {
     font-size: 13px;
     top: 65%;
     right: 0;
     translate: 0 0;
   }
 
-  /* FAIREST - MOBILE */
+
+  /* ---------- MOBILE: TÍTULO ---------- */
+
+  .app-shell:has([data-changeling-sheet-theme="default"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title .ctl-title-mark {
+    width: 100%;
+    max-width: 380px;
+    translate: 0 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="default"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title strong {
+    font-size: clamp(16px, 4.2vw, 20px);
+    margin: -10px 35px 0 0;
+    translate: 0 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="default"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title p {
+    font-size: 10px;
+    translate: 0 0;
+  }
+
+
+  /* ---------- DESKTOP: SKILL HIGHLIGHT ---------- */
+
+  .app-shell:has([data-changeling-sheet-theme="default"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .skill-highlight-kith .kith-skill-frame {
+    translate: 0 3px;
+    scale: 1.095;
+    transform-origin: center;
+  }
+
+
+  /* ---------- MOBILE: SKILL HIGHLIGHT ---------- */
+
+  .app-shell:has([data-changeling-sheet-theme="default"])
+    .ctl-sheet.mobile-character-sheet
+    .skill-highlight-kith .kith-skill-frame {
+    translate: 0 3px;
+    scale: 1.095;
+    transform-origin: center;
+  }
+
+}
+
+
+/* ============================================================
+   3. FAIREST
+   ============================================================ */
+
+@media screen {
+
+  /* ---------- DESKTOP: TÍTULO ---------- */
+
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title .ctl-title-mark {
+    width: 480px;
+    max-width: 100%;
+    translate: 30px -5px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title strong {
+    font-size: 20px;
+    top: 65%;
+    left: 350px;
+    translate: 0 0;
+    opacity: 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title p {
+    font-size: 13px;
+    top: 65%;
+    right: 0;
+    translate: 0 0;
+  }
+
+
+  /* ---------- MOBILE: TÍTULO ---------- */
+
   .app-shell:has([data-changeling-sheet-theme="fairest"])
     .ctl-sheet.mobile-character-sheet
-    .cod-sheet-title
-    .ctl-title-mark {
+    .cod-sheet-title .ctl-title-mark {
     width: 100%;
     max-width: 400px;
     position: relative;
@@ -105,63 +182,22 @@
 
   .app-shell:has([data-changeling-sheet-theme="fairest"])
     .ctl-sheet.mobile-character-sheet
-    .cod-sheet-title
-    strong {
-    font-size: clamp(20px, 4.2vw, 16px);
+    .cod-sheet-title strong {
+    font-size: clamp(16px, 4.2vw, 20px);
     margin: -10px 35px 0 0;
     translate: 0 0;
   }
+
   .app-shell:has([data-changeling-sheet-theme="fairest"])
     .ctl-sheet.mobile-character-sheet
-    .cod-sheet-title
-    p {
+    .cod-sheet-title p {
     font-size: 10px;
     translate: 0 0;
   }
-}
-.sheet-theme-error {
-  color: #b42318;
-  font-size: 12px;
-}
-@media (max-width: 900px) {
-  .top-navigation .sheet-theme-trigger {
-    min-width: 2.75rem;
-    padding-inline: 10px;
-  }
-  .top-navigation .sheet-theme-trigger span {
-    display: none;
-  }
-}
 
-/*
- * MOLDURA DA PERICIA DE KITH - move/redimensiona o bloco ja montado.
- * translate: X Y desloca a moldura; positivo = direita/baixo.
- * scale: 1 preserva o tamanho; 1.2 aumenta 20%; 0.8 reduz 20%.
- * Use scale: 1.2 1 para aumentar somente a largura, se necessario.
- * Nao altere as pecas individuais: o encaixe e a repeticao seguem automaticos.
- * O texto da Pericia e seus pontos nao sao deslocados/redimensionados.
- * Para outro tema, copie os blocos Fairest e substitua "fairest".
- */
-@media screen {
-  /* DEFAULT - DESKTOP */
-  .app-shell:has([data-changeling-sheet-theme="default"])
-    .ctl-sheet:not(.mobile-character-sheet)
-    .skill-highlight-kith .kith-skill-frame {
-    translate: 0 3px;
-    scale: 1.095;
-    transform-origin: center;
-  }
 
-  /* DEFAULT - MOBILE */
-  .app-shell:has([data-changeling-sheet-theme="default"])
-    .ctl-sheet.mobile-character-sheet
-    .skill-highlight-kith .kith-skill-frame {
-    translate: 0 3px;
-    scale: 1.095;
-    transform-origin: center;
-  }
+  /* ---------- DESKTOP: SKILL HIGHLIGHT ---------- */
 
-  /* FAIREST - DESKTOP */
   .app-shell:has([data-changeling-sheet-theme="fairest"])
     .ctl-sheet:not(.mobile-character-sheet)
     .skill-highlight-kith .kith-skill-frame {
@@ -170,7 +206,9 @@
     transform-origin: center;
   }
 
-  /* FAIREST - MOBILE */
+
+  /* ---------- MOBILE: SKILL HIGHLIGHT ---------- */
+
   .app-shell:has([data-changeling-sheet-theme="fairest"])
     .ctl-sheet.mobile-character-sheet
     .skill-highlight-kith .kith-skill-frame {
@@ -178,4 +216,126 @@
     scale: 1.095;
     transform-origin: center;
   }
+
+}
+
+
+/* ============================================================
+   4. ELEMENTAL
+   ============================================================ */
+
+@media screen {
+
+  /* ---------- DESKTOP: TÍTULO ---------- */
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title .ctl-title-mark {
+    width: 480px;
+    max-width: 100%;
+    translate: 30px -5px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title strong {
+    font-size: 20px;
+    top: 65%;
+    left: 350px;
+    translate: 0 0;
+    opacity: 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title p {
+    font-size: 13px;
+    top: 65%;
+    right: 0;
+    translate: 0 0;
+  }
+
+
+  /* ---------- MOBILE: TÍTULO ---------- */
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title .ctl-title-mark {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    left: 50%;
+    translate: -30% -10px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title strong {
+    font-size: clamp(16px, 4.2vw, 20px);
+    margin: -10px 35px 0 0;
+    translate: 0 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title p {
+    font-size: 10px;
+    translate: 0 0;
+  }
+
+
+  /* ---------- DESKTOP: SKILL HIGHLIGHT ---------- */
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .skill-highlight-kith .kith-skill-frame {
+    translate: 5px 5px;
+    scale: 1.095;
+    transform-origin: center;
+  }
+
+
+  /* ---------- MOBILE: SKILL HIGHLIGHT ---------- */
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet.mobile-character-sheet
+    .skill-highlight-kith .kith-skill-frame {
+    translate: 5px 5px;
+    scale: 1.095;
+    transform-origin: center;
+  }
+
+
+  /* ========================================================
+     ELEMENTAL: CORREÇÕES ESPECÍFICAS
+     ======================================================== */
+
+
+  /* ---------- SKILL HIGHLIGHT RIGHT ----------
+  */
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet .kith-skill-right {
+    scale: 1 1.15;
+    translate: 0px 2px;
+    transform-origin: left center;
+  }
+
+
+  /* ---------- ATTRIBUTES DIVIDER LEAF ----------
+
+     Pendente de identificação do seletor real.
+
+     O CSS que utiliza attributes-divider-leaf.webp
+     ainda não foi fornecido.
+
+     A correção deve ser aplicada ao elemento que
+     renderiza a imagem, não à imagem de fundo global.
+
+     Objetivo:
+     - Ampliar o ornamento;
+     - Preservar sua posição;
+     - Não alterar os demais temas.
+  */
+
 }
