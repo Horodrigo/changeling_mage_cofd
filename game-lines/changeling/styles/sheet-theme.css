@@ -374,6 +374,11 @@
     translate: 0 0;
   }
 
+  .app-shell:has([data-changeling-sheet-theme="fairest"]) .ctl-sheet::after {
+    /* >>ALTERAR AQUI PARA TRANSPARENCIA BACKGROUND<< 0 = invisível; 1 = opaco. */
+    opacity: 0.2;
+  }
+
 
   /* ---------- MOBILE: TÍTULO ---------- */
 
