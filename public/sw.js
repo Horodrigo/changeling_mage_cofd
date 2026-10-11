@@ -1,4 +1,4 @@
-const VERSION = "2026.10.11-d489f6e";
+const VERSION = "2026.10.11-b840cf1";
 const CACHE = `characters-of-the-darkness-${VERSION}`;
 
 const SHELL = [

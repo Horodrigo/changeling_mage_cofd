@@ -70,7 +70,7 @@ test("title adjustment blocks distinguish themes and actual Desktop/Mobile surfa
   const css = await readFile(new URL("../game-lines/changeling/styles/sheet-theme.css", import.meta.url), "utf8");
   const adjustments = css.slice(css.indexOf("@media screen")).replace(/\s+/g, " ");
   assert.ok(adjustments.startsWith("@media screen {"));
-  for (const theme of ["default", "fairest"]) {
+  for (const theme of ["default", "fairest", "elemental"]) {
     for (const surface of [":not(.mobile-character-sheet)", ".mobile-character-sheet"]) {
       for (const element of [".ctl-title-mark", "strong", "p"]) {
         assert.ok(adjustments.includes(`.app-shell:has([data-changeling-sheet-theme="${theme}"]) .ctl-sheet${surface} .cod-sheet-title ${element} {`));
@@ -83,7 +83,7 @@ test("title adjustment blocks distinguish themes and actual Desktop/Mobile surfa
 
 test("Kith highlight theme controls move and scale only the assembled decorative frame", async () => {
   const css = (await readFile(new URL("../game-lines/changeling/styles/sheet-theme.css", import.meta.url), "utf8")).replace(/\s+/g, " ");
-  for (const theme of ["default", "fairest"]) {
+  for (const theme of ["default", "fairest", "elemental"]) {
     for (const surface of [":not(.mobile-character-sheet)", ".mobile-character-sheet"]) {
       const selector = `.app-shell:has([data-changeling-sheet-theme="${theme}"]) .ctl-sheet${surface} .skill-highlight-kith .kith-skill-frame`;
       assert.ok(css.includes(`${selector} {`), selector);
@@ -97,16 +97,21 @@ test("Kith highlight theme controls move and scale only the assembled decorative
   assert.doesNotMatch(css, /kith-skill-piece|kith-skill-name-text|ctl-print/);
 });
 
-test("Fairest replaces all 16 image assets and scopes its colors to the selected screen theme", async () => {
+test("Fairest and Elemental replace all 16 image assets and scope their colors to the selected screen theme", async () => {
   const images = new URL("../public/game-lines/changeling/images/", import.meta.url);
   const baseNames = (await readdir(images)).filter(name => name.endsWith(".webp") && name !== "icon.webp").sort();
-  const fairestNames = (await readdir(new URL("theme-fairest/", images))).filter(name => name.endsWith(".webp")).sort();
   assert.equal(baseNames.length, 16);
-  assert.deepEqual(fairestNames, baseNames);
+  for (const theme of ["fairest", "elemental"]) {
+    const names = (await readdir(new URL(`theme-${theme}/`, images))).filter(name => name.endsWith(".webp")).sort();
+    assert.deepEqual(names, baseNames);
+  }
 
   const css = await readFile(new URL("../game-lines/changeling/styles/sheet-theme.css", import.meta.url), "utf8");
   assert.match(css, /@media screen\s*\{[\s\S]*body:has\(\[data-changeling-sheet-theme="fairest"\]\)/);
   assert.match(css, /--primary: #70415a/);
   assert.match(css, /--ctl-ink: #573348/);
+  assert.match(css, /body:has\(\[data-changeling-sheet-theme="elemental"\]\)/);
+  assert.match(css, /--primary: #1f5960/);
+  assert.match(css, /--ctl-ink: #244950/);
   assert.match(css, /\.ctl-sheet \.experience-actions button:not\(\.ctl-purchase-trait-button\)/);
 });
