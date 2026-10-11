@@ -321,10 +321,18 @@
 
   .app-shell:has([data-changeling-sheet-theme="fairest"])
     .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title > div {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-sheet:not(.mobile-character-sheet)
     .cod-sheet-title .ctl-title-mark {
     width: 480px;
     max-width: 100%;
-    translate: 30px -5px;
+    background-position: center;
+    translate: 0 -5px;
   }
 
   .app-shell:has([data-changeling-sheet-theme="fairest"])
@@ -383,6 +391,17 @@
     translate: 5px 5px;
     scale: 1.095;
     transform-origin: center;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-sheet .kith-skill-middle-2 {
+    translate: 0 -1px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-sheet .kith-skill-right {
+    translate: 0 -0.5px;
+    transform-origin: left center;
   }
 
 
