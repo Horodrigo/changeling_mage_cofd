@@ -80,10 +80,12 @@ test("repository owns local persistence and stored-character collection mutation
   assert.match(workspace, /useCharacterRepository\(userKey\)/);
   assert.doesNotMatch(workspace, /@\/lib\/device-storage|getDeviceValue|setDeviceValue|stageDeviceValue/);
 
-  assert.match(repository, /from\s+["']@\/lib\/device-storage["']/);
-  assert.match(repository, /getDeviceValue<StoredCharacter\[\]>\(storageKey\)/);
-  assert.match(repository, /stageDeviceValue\(storageKey,\s*characters\)/);
-  assert.match(repository, /setDeviceValue\(storageKey,\s*characters\)/);
+  assert.match(repository, /from\s+["']@\/lib\/character-collection-store["']/);
+  assert.match(repository, /store\.load\(\)/);
+  assert.match(repository, /storeRef\.current\.update\(collection\.items\)/);
+  assert.match(repository, /pagehide/);
+  // No synchronous full-collection staging on each mutation.
+  assert.doesNotMatch(repository, /stageDeviceValue|setDeviceValue|JSON\.stringify|localStorage/);
   assert.match(repository, /upsertStoredCharacter/);
   assert.match(repository, /replaceStoredCharacter/);
   assert.match(repository, /removeStoredCharacter/);

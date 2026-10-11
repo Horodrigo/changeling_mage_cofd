@@ -17,12 +17,12 @@ function openDatabase(): Promise<IDBDatabase> {
   });
 }
 
-async function requestValue<T>(mode: IDBTransactionMode, key: string, value?: T) {
+async function requestValue<T>(mode: IDBTransactionMode | "delete", key: string, value?: T) {
   const database = await openDatabase();
   return new Promise<T | undefined>((resolve, reject) => {
-    const transaction = database.transaction(STORE_NAME, mode);
+    const transaction = database.transaction(STORE_NAME, mode === "delete" ? "readwrite" : mode);
     const store = transaction.objectStore(STORE_NAME);
-    const request = mode === "readonly" ? store.get(key) : store.put(value, key);
+    const request = mode === "readonly" ? store.get(key) : mode === "delete" ? store.delete(key) : store.put(value, key);
     // A successful request is not a committed transaction yet.
     request.onerror = () => reject(request.error);
     transaction.oncomplete = () => {
@@ -60,9 +60,10 @@ export async function setDeviceValue<T>(key: string, value: T) {
   // Quota errors here must not prevent IndexedDB from saving.
   let backedUp = false;
   try {
-    localStorage.setItem(`${key}:pending-write`, JSON.stringify(snapshot));
+    const serialized = JSON.stringify(snapshot);
+    localStorage.setItem(`${key}:pending-write`, serialized);
     backedUp = true;
-    localStorage.setItem(key, JSON.stringify(snapshot));
+    localStorage.setItem(key, serialized);
   } catch {}
   const previous = pendingWrites.get(key) ?? Promise.resolve();
   const write = previous.catch(() => {}).then(async () => {
@@ -82,11 +83,26 @@ export async function setDeviceValue<T>(key: string, value: T) {
 
 /** Stage the latest value synchronously so a debounced IndexedDB write is crash-safe. */
 export function stageDeviceValue<T>(key: string, value: T) {
-  const snapshot = structuredClone(value);
   try {
-    localStorage.setItem(`${key}:pending-write`, JSON.stringify(snapshot));
-    localStorage.setItem(key, JSON.stringify(snapshot));
+    // JSON serialization already produces an independent snapshot.
+    const serialized = JSON.stringify(value);
+    localStorage.setItem(`${key}:pending-write`, serialized);
+    localStorage.setItem(key, serialized);
   } catch {}
+}
+
+/**
+ * Permanently removes a value from every device copy (IndexedDB key-value
+ * entry plus localStorage copies), after pending writes for the key settle.
+ * Idempotent: deleting an absent value succeeds. Rejects if IndexedDB fails.
+ */
+export async function deleteDeviceValue(key: string) {
+  await pendingWrites.get(key)?.catch(() => {});
+  try {
+    localStorage.removeItem(`${key}:pending-write`);
+    localStorage.removeItem(key);
+  } catch {}
+  if (typeof indexedDB !== "undefined") await requestValue("delete", key);
 }
 
 function readLegacy<T>(key: string): T | null {

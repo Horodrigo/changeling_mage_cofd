@@ -99,6 +99,7 @@ export function Workspace({
     characters,
     ready,
     readFailed,
+    saveFailed,
     upsertCharacter,
     replaceCharacter,
     removeCharacter,
@@ -108,7 +109,7 @@ export function Workspace({
 
   const effectiveNotice = readFailed
     ? storageReadFailedMessage
-    : notice;
+    : saveFailed ? t("workspace.storageSaveFailed") : notice;
 
   const showNotice = (message: string, autoDismiss = false) => {
     if (noticeTimer.current) clearTimeout(noticeTimer.current);

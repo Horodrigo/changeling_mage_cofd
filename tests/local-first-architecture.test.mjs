@@ -110,10 +110,12 @@ test("browser character persistence is local-first behind CharacterRepository", 
   assert.doesNotMatch(workspace, /\/api\/characters|fetch\([^)]*characters/i);
   assert.doesNotMatch(workspace, /@\/lib\/device-storage/);
 
-  assert.match(repository, /from\s+["']@\/lib\/device-storage["']/);
-  assert.match(repository, /getDeviceValue<StoredCharacter\[\]>/);
-  assert.match(repository, /stageDeviceValue\(storageKey,\s*characters\)/);
-  assert.match(repository, /setDeviceValue\(storageKey,\s*characters\)/);
+  assert.match(repository, /from\s+["']@\/lib\/character-collection-store["']/);
+  assert.match(repository, /store\.load\(\)/);
+  assert.match(repository, /storeRef\.current\.update\(collection\.items\)/);
+  assert.match(repository, /pagehide/);
+  // No synchronous full-collection staging on each mutation.
+  assert.doesNotMatch(repository, /stageDeviceValue|setDeviceValue|JSON\.stringify|localStorage/);
   assert.doesNotMatch(repository, /\/api\/characters|fetch\([^)]*characters/i);
 
   assert.match(storage, /indexedDB\.open\(/);
