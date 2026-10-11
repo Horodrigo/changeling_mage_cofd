@@ -83,7 +83,7 @@ test("each game line has separate platform configs covering every sheet tab", as
   }
 });
 
-test("every game line exposes Notes on Desktop and Mobile with portrait editing only in Notes", async () => {
+test("every game line exposes portrait editing in Builder Identity and Desktop/Mobile Notes", async () => {
   const tabs = [
     { id: "mortal", desktop: "notes", mobile: "notes" },
     { id: "changeling", desktop: "notas", mobile: "anotacoes" },
@@ -95,7 +95,14 @@ test("every game line exposes Notes on Desktop and Mobile with portrait editing 
     read("../app/builder/common-controls.tsx"),
     read("../app/workspace/character-paper-shell.tsx"),
   ]);
-  assert.doesNotMatch(identity, /CharacterImageControls|portrait|setPortrait/);
+  assert.match(identity, /<CharacterImageControls value=\{portrait\} onChange=\{setPortrait\} \/>/);
+  assert.ok(identity.indexOf('<h2>{t("ui.identity")}</h2>') < identity.indexOf("<CharacterImageControls"));
+  assert.ok(identity.indexOf("<CharacterImageControls") < identity.indexOf('className="identity-grid"'));
+  for (const line of ["mortal", "changeling", "mage", "vampire", "werewolf"]) {
+    const builder = await read(`../game-lines/${line}/builder.tsx`);
+    assert.match(builder, /<CommonIdentityStep[^>]*portrait=\{common\.portrait\} setPortrait=\{common\.setPortrait\}/, `${line} binds the shared portrait state`);
+    assert.match(builder, /portrait: common\.portrait/, `${line} saves the portrait with character identity`);
+  }
   assert.match(paperShell, /export function CharacterPortraitArea/);
   assert.match(paperShell, /<CharacterImageControls value=\{character\.character\.portrait\} onChange=\{applyPortrait\} \/>/);
   assert.match(paperShell, /else delete next\.character\.portrait;/, "removing a portrait deletes the stored key");

@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { BufferedInput } from "@/components/ui/buffered-text";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ATTRIBUTES, SKILLS, ATTRIBUTE_BUDGETS, SKILL_BUDGETS, creationCategoryDots, creationAllocationFits } from "@/lib/core/character/creation-rules";
-import type { Specialty } from "@/lib/core/character/character-types";
+import type { CharacterPortrait, Specialty } from "@/lib/core/character/character-types";
+import { CharacterImageControls } from "@/app/character-image";
 import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 
@@ -22,6 +23,8 @@ export function CommonIdentityStep({
   setPlayer,
   chronicle,
   setChronicle,
+  portrait,
+  setPortrait,
   missing,
 }: {
   name: string;
@@ -33,12 +36,15 @@ export function CommonIdentityStep({
   setPlayer: Setter<string>;
   chronicle: string;
   setChronicle: Setter<string>;
+  portrait?: CharacterPortrait;
+  setPortrait: Setter<CharacterPortrait | undefined>;
   missing: MissingCheck;
 }) {
   const { t } = useLanguage();
   return <div className="builder-section">
     <span className="kicker">{t("ui.step1")}</span>
     <h2>{t("ui.identity")}</h2>
+    <CharacterImageControls value={portrait} onChange={setPortrait} />
     <div className="identity-grid">
       <label className={missing("name") || missing("shadowName") ? "missing-field" : ""}>
         {nameLabel}<BufferedInput value={name} onValueCommit={setName} />

@@ -167,7 +167,7 @@ Transient play-state changes such as damage, resource tracks, and Conditions use
 
 Normal autosaves coalesce changed characters after 400 ms of inactivity, with a 2-second maximum wait. IndexedDB stores individual characters and separate portrait records; typing does not synchronously serialize the entire collection. Portraits are rewritten only when changed. Closing or hiding the page checkpoints pending committed changes, but browser termination and localStorage quota limits can still prevent recovery. Save failures are shown explicitly.
 
-Characters may optionally include a portrait in the neutral `character.portrait` field. The shared upload, preview, and removal controls are available at the start of the standard Desktop/Mobile Notes tab on every supported game line. Removal deletes the locally stored portrait, not the original device file. Portraits are included in the normal character import/export JSON and are structurally validated when a sheet is opened or imported.
+Characters may optionally include a portrait in the neutral `character.portrait` field. The shared upload, preview, and removal controls are available in step 1 (Identity) during creation/editing, and at the start of the standard Desktop/Mobile Notes tab on every supported game line. Builder image changes are applied when the character or draft is saved. Removal deletes the locally stored portrait, not the original device file. Portraits are included in the normal character import/export JSON and are structurally validated when a sheet is opened or imported.
 
 Unsupported stored values remain opaque in the character list until the user removes them explicitly.
 

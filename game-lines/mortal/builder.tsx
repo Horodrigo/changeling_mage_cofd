@@ -199,7 +199,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
     prepareAdvancement={(previous) => buildCharacter(previous ?? initial, false)}
     renderAdvancement={(sheet, updateSheet) => <MortalExperiencePanel character={sheet} updateSheet={updateSheet} catalogs={catalogs} builderMode />}
     identity={<>
-      <CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} missing={missing} />
+      <CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} portrait={common.portrait} setPortrait={common.setPortrait} missing={missing} />
       <div className="builder-section mortal-identity-extra"><div className="identity-grid">
         <label>{t("ui.age")}<Input value={age} onChange={(event) => setAge(event.target.value)} /></label>
         <label>{t("ui.faction")}<Input value={faction} onChange={(event) => setFaction(event.target.value)} /></label>
