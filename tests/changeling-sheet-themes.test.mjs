@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test, { after } from "node:test";
-import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -93,7 +93,20 @@ test("Kith highlight theme controls move and scale only the assembled decorative
       assert.match(block, /transform-origin:\s*center;/);
     }
   }
-  const frameControls = css.slice(css.indexOf("MOLDURA DA PERICIA DE KITH"));
-  assert.match(frameControls, /@media screen/);
-  assert.doesNotMatch(frameControls, /kith-skill-piece|kith-skill-name-text|ctl-print/);
+  assert.match(css, /@media screen/);
+  assert.doesNotMatch(css, /kith-skill-piece|kith-skill-name-text|ctl-print/);
+});
+
+test("Fairest replaces all 16 image assets and scopes its colors to the selected screen theme", async () => {
+  const images = new URL("../public/game-lines/changeling/images/", import.meta.url);
+  const baseNames = (await readdir(images)).filter(name => name.endsWith(".webp") && name !== "icon.webp").sort();
+  const fairestNames = (await readdir(new URL("theme-fairest/", images))).filter(name => name.endsWith(".webp")).sort();
+  assert.equal(baseNames.length, 16);
+  assert.deepEqual(fairestNames, baseNames);
+
+  const css = await readFile(new URL("../game-lines/changeling/styles/sheet-theme.css", import.meta.url), "utf8");
+  assert.match(css, /@media screen\s*\{[\s\S]*body:has\(\[data-changeling-sheet-theme="fairest"\]\)/);
+  assert.match(css, /--primary: #70415a/);
+  assert.match(css, /--ctl-ink: #573348/);
+  assert.match(css, /\.ctl-sheet \.experience-actions button:not\(\.ctl-purchase-trait-button\)/);
 });
