@@ -172,7 +172,21 @@
   .app-shell:has([data-changeling-sheet-theme="fairest"])
     .ctl-sheet:not(.mobile-character-sheet) {
     --ctl-frame-star-side-offset: 32px;
-    --ctl-frame-star-side-width: 18px;
+    --ctl-frame-star-side-width: 22px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-frame-star-side-top-left,
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-frame-star-side-top-right {
+    translate: 0 -1px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-frame-star-side-bottom-left,
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-frame-star-side-bottom-right {
+    translate: 0 1px;
   }
 
   .app-shell:has([data-changeling-sheet-theme="fairest"]) .ctl-frame-edge-top::before,
@@ -400,13 +414,21 @@
   }
 
   .app-shell:has([data-changeling-sheet-theme="fairest"])
+    .ctl-sheet .kith-skill-middle-1 {
+    translate: 0 -0.2px;
+    scale: 1 1.04;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="fairest"])
     .ctl-sheet .kith-skill-middle-2 {
-    translate: 0 -1px;
+    translate: 0 -1.1px;
+    scale: 1 0.95;
   }
 
   .app-shell:has([data-changeling-sheet-theme="fairest"])
     .ctl-sheet .kith-skill-right {
-    translate: 0 -0.5px;
+    translate: 0 -0.8px;
+    scale: 1 0.96;
     transform-origin: left center;
   }
 
@@ -465,14 +487,14 @@
 
   .app-shell:has([data-changeling-sheet-theme="elemental"])
     .ctl-sheet:not(.mobile-character-sheet) {
-    --ctl-frame-star-side-offset: 38px;
-    --ctl-frame-star-side-width: 24px;
+    --ctl-frame-star-side-offset: 32px;
+    --ctl-frame-star-side-width: 29px;
   }
 
   .app-shell:has([data-changeling-sheet-theme="elemental"])
     .ctl-sheet.mobile-character-sheet {
-    --ctl-frame-star-side-offset: 30px;
-    --ctl-frame-star-side-width: 18px;
+    --ctl-frame-star-side-offset: 26px;
+    --ctl-frame-star-side-width: 22px;
   }
 
   .app-shell:has([data-changeling-sheet-theme="elemental"])
@@ -711,8 +733,8 @@
   .app-shell:has([data-changeling-sheet-theme="elemental"])
     .ctl-sheet:not(.mobile-character-sheet)
     .skill-highlight-kith .kith-skill-frame {
-    translate: 0 3px;
-    scale: 1.095;
+    translate: 0 6px;
+    scale: 1.095 1.148;
     transform-origin: center;
   }
 
@@ -723,7 +745,7 @@
     .ctl-sheet.mobile-character-sheet
     .skill-highlight-kith .kith-skill-frame {
     translate: 0 3px;
-    scale: 1.095;
+    scale: 1.095 1.148;
     transform-origin: center;
   }
 
