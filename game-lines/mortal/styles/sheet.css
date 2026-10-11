@@ -224,15 +224,27 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
     height:32px;
     background-size:100% auto;
   }
-  .cofd-sheet .sheet-identity-grid {
-  display: grid;
-  grid-template-rows: repeat(3, auto);
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 1fr);
+  .cofd-sheet.mobile-character-sheet .sheet-identity-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: row;
+    gap: 6px 10px;
+    padding: 0;
+  }
 
-  gap: 6px 10px;
-  padding: 0px 0px 0px;
- }
+  .cofd-sheet.mobile-character-sheet .sheet-identity-grid > .sheet-layout-column {
+    gap: 6px;
+  }
+
+  .cofd-sheet.mobile-character-sheet .sheet-identity-grid .official-field {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 2px;
+  }
+
+  .cofd-sheet.mobile-character-sheet .sheet-identity-grid .official-field strong {
+    overflow-wrap: anywhere;
+  }
   .cofd-sheet .mobile-attribute-grid { gap:4px; }
   .cofd-sheet .mobile-attribute-grid .official-trait-block { padding:7px 3px; }
   .cofd-sheet .mobile-attribute-grid .official-trait-name { font-size:10px; }
@@ -254,8 +266,6 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
 }
 
 @media (max-width:430px) {
-  .cofd-sheet .sheet-identity-grid { grid-template-columns:1fr; gap:6px; padding-inline:3px; }
-  .cofd-sheet .official-field { grid-template-columns:minmax(72px,auto) minmax(0,1fr); }
   .cofd-sheet .integrity-heading-row { align-items:flex-start; gap:6px; }
   .cofd-sheet .integrity-heading-row .builder-add-action { flex:none; }
 }

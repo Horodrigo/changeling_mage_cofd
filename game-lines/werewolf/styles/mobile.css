@@ -1,44 +1,33 @@
 @media screen and (max-width: 767px) {
   .wtf-sheet.mobile-character-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list {
-    display: flex;
-    flex-wrap: wrap;
-    height: auto;
-    overflow: visible;
-    gap: 3px;
-    padding: 4px;
     border: 1px solid #a68a75;
     box-shadow: 0 3px 8px #39261f1a;
   }
   .wtf-sheet.mobile-character-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button {
-    flex: 1 1 22%;
-    min-width: 0;
-    min-height: 44px;
-    height: auto;
-    padding: 6px 3px;
-    white-space: normal;
-    overflow-wrap: anywhere;
     font: 400 13px/1.2 Georgia, serif;
     letter-spacing: 0;
     text-transform: none;
     border: 1px solid #a68a7555;
   }
-  .wtf-sheet.mobile-character-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button:nth-child(-n+3) { flex-basis: 30%; }
   .wtf-sheet.mobile-character-sheet .mobile-sheet-page { padding: 14px 0 20px; }
   .wtf-sheet.mobile-character-sheet .sheet-identity-grid { padding-top: 0; padding-bottom: 12px; }
-  .wtf-sheet.mobile-character-sheet .official-field { flex-direction: column; align-items: stretch; gap: 2px; }
-  .wtf-sheet.mobile-character-sheet .official-field strong {
-  min-width: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-indent: 2px;
+  .wtf-sheet.mobile-character-sheet .sheet-identity-grid {
+    gap: 6px 10px;
   }
-  .wtf-sheet.mobile-character-sheet
-  .official-field.wtf-lodge-identity {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    gap: 5px;
+  .wtf-sheet.mobile-character-sheet .sheet-identity-grid > .sheet-layout-column {
+    gap: 6px;
+  }
+  .wtf-sheet.mobile-character-sheet .sheet-identity-grid .official-field {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 2px;
+  }
+  .wtf-sheet.mobile-character-sheet .sheet-identity-grid .official-field :is(strong, button) {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-indent: 2px;
   }
 
   .wtf-sheet.mobile-character-sheet
