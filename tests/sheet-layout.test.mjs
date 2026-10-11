@@ -230,6 +230,8 @@ test("all Mobile sheets share Werewolf's wrapping tab geometry without changing 
     read("../game-lines/werewolf/styles/mobile.css"),
   ]);
   assert.match(tabs, /className="ctl-sheet-tabs mobile-sheet-tabs"/);
+  assert.doesNotMatch(tabs, /scrollIntoView|scrollTo|document\.querySelector/, "Selecting a wrapped tab must not scroll the application viewport");
+  assert.match(tabs, /const select=\(next:string\)=>\{onValueChange\(next\);\}/);
   const list = shared.match(/\.cod-sheet\.mobile-character-sheet \.mobile-sheet-tabs > \.ctl-sheet-tab-list\s*\{([^}]+)\}/)[1];
   assert.match(list, /flex-wrap: wrap/);
   assert.match(list, /height: auto/);

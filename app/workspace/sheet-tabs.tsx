@@ -9,7 +9,7 @@ export type SheetTab={value:string;label:string;hidden?:boolean};
 export function SwipeableSheetTabs({tabs,children,value,onValueChange}:{tabs:SheetTab[];children:Record<string,ReactNode>;value:string;onValueChange:(value:string)=>void}){
   const { t }=useLanguage();
   const touchStart=useRef<{x:number;y:number}|null>(null);
-  const select=(next:string)=>{onValueChange(next);requestAnimationFrame(()=>document.querySelector(`[data-mobile-tab="${next}"]`)?.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"}));};
+  const select=(next:string)=>{onValueChange(next);};
   const visibleTabs=tabs.filter(tab=>!tab.hidden);
   return <Tabs value={value} onValueChange={select} className="ctl-sheet-tabs mobile-sheet-tabs">
     <TabsList className="ctl-sheet-tab-list" aria-label={t("ui.characterSections")}>{visibleTabs.map(tab=><TabsTrigger key={tab.value} value={tab.value} data-mobile-tab={tab.value}>{tab.label}</TabsTrigger>)}</TabsList>
