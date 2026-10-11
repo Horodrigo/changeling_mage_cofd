@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { CharacterPaperShell, EditableList, NotesArea, ResourceTrack, SheetField } from "@/app/workspace/character-paper-shell";
+import { useMemo, useState } from "react";
+import { CharacterPaperShell, CharacterPortraitArea, EditableList, NotesArea, ResourceTrack, SheetField, updateLineData } from "@/app/workspace/character-paper-shell";
 import { CombatPage } from "@/app/workspace/combat-page";
 import { ConditionManager, type ConditionDefinition, type SelectedCondition } from "@/app/workspace/condition-manager";
 import { convertFifthBeat, derivedWithPermanentMerits } from "@/app/workspace/experience-shared";
@@ -49,7 +49,7 @@ function selectedConditions(value: unknown): SelectedCondition[] {
   });
 }
 
-export function MortalCharacterPaper({ character, updateState, updateSheet, catalogs }: GameLineSheetProps) {
+export function MortalCharacterPaper({ character, updateState, updateSheet, updateNarrative, catalogs }: GameLineSheetProps) {
   const { locale, t } = useLanguage();
   const isMobile = useIsMobile();
   const [mobileTab, setMobileTab] = useState({ characterId: character.id, value: "summary" });
@@ -60,12 +60,16 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
 
   const meritCatalog = catalogs.get<readonly MeritDefinition[]>("core-merits");
   const reference = catalogs.get<CoreReference>("core-reference");
-  const conditionCatalog = reference.conditions.map((condition) =>
+  const conditionCatalog = useMemo(() => reference.conditions.map((condition) =>
     locale === "pt-BR" ? { ...condition, ...(reference.presentation[condition.id] ?? {}) } : condition,
-  );
+  ), [reference, locale]);
   const data = character.line_data;
   const state = character.current_state;
-  const derived = derivedWithPermanentMerits(character);
+  const derived = useMemo(() => derivedWithPermanentMerits({
+    derived: character.derived,
+    merits: character.merits,
+    line_data: { merit_granted_skill_bonuses: data.merit_granted_skill_bonuses },
+  }), [character.derived, character.merits, data.merit_granted_skill_bonuses]);
   const health = Math.max(1, Number(derived.Health ?? 5));
   const willpower = Math.max(0, Number(derived.Willpower ?? 0));
   const currentWillpower = Math.max(0, Math.min(willpower, Number(state.willpower_current ?? willpower)));
@@ -75,16 +79,12 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
   const conditions = selectedConditions(state.conditions);
   const notes = String(state.notes ?? "");
   const setState = (key: string, value: unknown) => updateState({ ...state, [key]: value });
-  const setLineValue = (key: string, value: unknown) => {
-    const next = structuredClone(character);
-    next.line_data = { ...next.line_data, [key]: value };
-    updateSheet(next);
-  };
+  const setLineValue = (key: string, value: string[]) =>
+    updateLineData(updateSheet, character, key, value, updateNarrative);
 
-  const identityFields = {
+  const identityMobileFields = {
     name: <SheetField label={t("ui.characterName")} value={character.character.name} />,
     virtue: <SheetField label={t("ui.virtue")} value={data.virtue} />,
-    chronicle: <SheetField label={t("ui.chronicle")} value={character.character.chronicle} />,
     age: <SheetField label={t("ui.age")} value={data.age} />,
     vice: <SheetField label={t("ui.vice")} value={data.vice} />,
     faction: <SheetField label={t("ui.faction")} value={data.faction} />,
@@ -92,7 +92,11 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
     concept: <SheetField label={t("ui.concept")} value={character.character.concept} />,
     group: <SheetField label={t("ui.groupName")} value={data.group_name} />,
   };
-  const identityMobile = <SheetLayoutSection id="identity-mobile" definition={mortalMobileLayout.main.identity} items={identityFields} className="sheet-identity-grid" />;
+  const identityFields = {
+    ...identityMobileFields,
+    chronicle: <SheetField label={t("ui.chronicle")} value={character.character.chronicle} />,
+  };
+  const identityMobile = <SheetLayoutSection id="identity-mobile" definition={mortalMobileLayout.main.identity} items={identityMobileFields} className="sheet-identity-grid" />
   const attributeGrid = (layout: typeof mortalDesktopLayout.main.attributes, compactNames: boolean) => <SheetCategoryLayout id={compactNames ? "mobile-attributes" : "attributes"} definition={layout} className={compactNames ? "mobile-attribute-grid" : "official-trait-grid"} render={category => <TraitBlock key={category} title={category} names={ATTRIBUTES[category as keyof typeof ATTRIBUTES]} values={character.attributes} compactNames={compactNames} />} />;
   const skillGrid = (layout: typeof mortalDesktopLayout.main.skills, compact: boolean) => <SheetCategoryLayout id={compact ? "mobile-skills" : "skills"} definition={layout} className={compact ? "mobile-trait-stack" : "mortal-skill-stack"} render={category => <TraitBlock key={category} title={category} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")} names={SKILLS[category as keyof typeof SKILLS]} values={character.skills} specialties={character.specializations} />} />;
   const attributes = <><SheetHeading className="cofd-attributes-heading">{t("ui.attributes")}</SheetHeading>{attributeGrid(mortalDesktopLayout.main.attributes, false)}</>;
@@ -128,7 +132,10 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
         conditions: <><SheetHeading>{t("ui.conditions")}</SheetHeading>{conditionList}</>,
       }}/>,
       combat: <SheetLayoutFlow id="mortal-mobile-combat" definition={mortalMobileLayout.combat} items={{ combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet}/> }}/>,
-      notes: <SheetLayoutFlow id="mortal-mobile-notes" definition={mortalMobileLayout.notes} items={{ notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></> }}/>,
+      notes: <SheetLayoutFlow id="mortal-mobile-notes" definition={mortalMobileLayout.notes} items={{
+        portrait: <CharacterPortraitArea character={character} updateSheet={updateSheet}/>,
+        notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
+      }}/>,
     }}</SwipeableSheetTabs>
   </CharacterPaperShell>;
 
@@ -163,7 +170,10 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
         />
       </TabsContent>
       <TabsContent value="combat" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="mortal-desktop-combat" definition={mortalDesktopLayout.combat} items={{ combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet}/> }}/></TabsContent>
-      <TabsContent value="notes" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="mortal-desktop-notes" definition={mortalDesktopLayout.notes} items={{ notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></> }}/></TabsContent>
+      <TabsContent value="notes" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="mortal-desktop-notes" definition={mortalDesktopLayout.notes} items={{
+        portrait: <CharacterPortraitArea character={character} updateSheet={updateSheet}/>,
+        notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
+      }}/></TabsContent>
     </Tabs>
   </CharacterPaperShell>;
 }

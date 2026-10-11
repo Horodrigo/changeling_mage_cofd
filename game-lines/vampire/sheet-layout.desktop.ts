@@ -89,18 +89,21 @@ export const vampireDesktopLayout = {
       definition: { columns: 1, items: [{ id: "companions", column: 1, order: 1 }] },
     }],
   },
-  // Aba Notes: Blood Bonds seguidos das anotações livres.
+  // Aba Notes: retrato no topo; abaixo, Blood Bonds e anotações livres.
   notes: {
-    sections: [{
-      id: "content",
-      order: 1,
-      definition: {
-        columns: 1,
-        items: [
-          { id: "bloodBonds", column: 1, order: 1 },
-          { id: "notes", column: 1, order: 2 },
-        ],
+    sections: [
+      { id: "portrait", order: 1, definition: { columns: 1, items: [{ id: "portrait", column: 1, order: 1 }] } },
+      {
+        id: "content",
+        order: 2,
+        definition: {
+          columns: 1,
+          items: [
+            { id: "bloodBonds", column: 1, order: 1 },
+            { id: "notes", column: 1, order: 2 },
+          ],
+        },
       },
-    }],
+    ],
   },
 } as const;

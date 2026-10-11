@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, Check, Save } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { ATTRIBUTES, SKILLS, ATTRIBUTE_BUDGETS, SKILL_BUDGETS, creationCategoryDots, creationAllocationFits } from "@/lib/core/character/creation-rules";
-import type { CharacterSheet, MeritSelection, Specialty } from "@/lib/core/character/character-types";
+import type { CharacterSheet, MeritSelection, Specialty, CharacterPortrait } from "@/lib/core/character/character-types";
 import { reconcileSpecialtyMerits, specialtyMeritWasRemoved } from "@/lib/core/character/specialty-merits";
 import { commonMeritId } from "@/lib/core/character/merit-identities";
 import { creationMeritDots, creationMerits } from "@/lib/merit-progression";
@@ -142,8 +142,6 @@ export function useCommonBuilderState(
     grantedMeritSources?: readonly string[];
   },
 ) {
-  const startingAttributes = editableTraits(initial, "attributes", options.experienceHistoryKey, options.adjustAttributes);
-  const startingSkills = editableTraits(initial, "skills", options.experienceHistoryKey, options.adjustSkills);
   const [step, setStep] = useState(() => isCreationDraft(initial) ? Math.max(1, Number(initial?.current_state.creation_draft_step ?? 1)) : 1);
   const [allowAdvancement, setAllowAdvancement] = useState(initial?.current_state.creation_advancement_enabled === true);
   const [error, setError] = useState("");
@@ -151,8 +149,11 @@ export function useCommonBuilderState(
   const [concept, setConcept] = useState(initial?.character.concept ?? "");
   const [playerName, setPlayerName] = useState(initial?.character.player ?? player);
   const [chronicle, setChronicle] = useState(initial?.character.chronicle ?? "");
-  const [attributes, setAttributes] = useState<Record<string, number>>(startingAttributes);
-  const [skills, setSkills] = useState<Record<string, number>>(startingSkills);
+  const [portrait, setPortrait] = useState<CharacterPortrait | undefined>(initial?.character.portrait);
+  const [attributes, setAttributes] = useState<Record<string, number>>(() =>
+    editableTraits(initial, "attributes", options.experienceHistoryKey, options.adjustAttributes));
+  const [skills, setSkills] = useState<Record<string, number>>(() =>
+    editableTraits(initial, "skills", options.experienceHistoryKey, options.adjustSkills));
   const [specialties, setSpecialtyState] = useState<Specialty[]>(() =>
     editableSpecialties(initial, options.purchasedSpecialties ?? []),
   );
@@ -169,8 +170,9 @@ export function useCommonBuilderState(
       })),
   ]);
   const [removedSpecialtyMerits, setRemovedSpecialtyMerits] = useState<MeritSelection[]>([]);
-  const meritWasRemoved = (item: MeritSelection) => specialtyMeritWasRemoved(item, removedSpecialtyMerits);
-  const specialtyCollection = (values: Specialty[]) => [...values, ...(options.purchasedSpecialties ?? []), ...(initial?.specializations ?? []).filter(item => item.grantedBy && !item.grantedBy.startsWith("Merit:"))];
+  const meritWasRemoved = useCallback((item: MeritSelection) => specialtyMeritWasRemoved(item, removedSpecialtyMerits), [removedSpecialtyMerits]);
+  const specialtyCollection = useCallback((values: Specialty[]) => [...values, ...(options.purchasedSpecialties ?? []), ...(initial?.specializations ?? []).filter(item => item.grantedBy && !item.grantedBy.startsWith("Merit:"))], [options.purchasedSpecialties, initial?.specializations]);
+  const specializations = useMemo(() => specialtyCollection(specialties), [specialtyCollection, specialties]);
   const setSpecialties = (value: Specialty[] | ((previous: Specialty[]) => Specialty[])) => {
     const next = typeof value === "function" ? value(specialties) : value;
     const owned = [...(initial?.merits ?? []).filter(item => !meritWasRemoved(item) && !merits.some(current => item.instanceId ? current.instanceId === item.instanceId :
@@ -184,10 +186,10 @@ export function useCommonBuilderState(
   };
   return {
     step, setStep, allowAdvancement, setAllowAdvancement, error, setError,
-    name, setName, concept, setConcept, playerName, setPlayerName, chronicle, setChronicle,
+    name, setName, concept, setConcept, playerName, setPlayerName, chronicle, setChronicle, portrait, setPortrait,
     attributes, setAttributes, skills, setSkills,
     specialties, setSpecialties, aspirations, setAspirations, merits, setMerits,
-    specializations: specialtyCollection(specialties),
+    specializations,
     meritWasRemoved,
   };
 }

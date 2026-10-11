@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 import { Plus, Search, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BufferedInput, BufferedTextarea } from "@/components/ui/buffered-text";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -99,11 +100,11 @@ export function MeritConfigurationEditor({
       const fieldLabel = label(field.label);
       const values = Array.isArray(value) ? value : [String(value ?? "")];
       const count = rowCount;
-      return <fieldset key={field.key}><legend>{fieldLabel}</legend><div className="merit-config-list">{Array.from({ length: count }, (_, index) => <Input key={index} value={values[index] ?? ""} placeholder={`${field.placeholder ? label(field.placeholder) : fieldLabel} ${index + 1}`} onChange={(event) => { const next = Array.from({ length: count }, (_, item) => values[item] ?? ""); next[index] = event.target.value; set(field.key, next); }} />)}</div></fieldset>;
+      return <fieldset key={field.key}><legend>{fieldLabel}</legend><div className="merit-config-list">{Array.from({ length: count }, (_, index) => <BufferedInput key={index} value={values[index] ?? ""} placeholder={`${field.placeholder ? label(field.placeholder) : fieldLabel} ${index + 1}`} onValueCommit={(text) => { const next = Array.from({ length: count }, (_, item) => values[item] ?? ""); next[index] = text; set(field.key, next); }} />)}</div></fieldset>;
     }
     if (field.kind === "select") return <label key={field.key}>{label(field.label)}<Select value={String(value ?? "")} onValueChange={(next) => set(field.key, next)}><SelectTrigger><SelectValue placeholder={field.placeholder ? label(field.placeholder) : t("ui.selectAnOption")} /></SelectTrigger><SelectContent>{(field.options ?? []).map((option) => <SelectItem key={option.value} value={option.value}>{label(option.label)}</SelectItem>)}</SelectContent></Select></label>;
-    if (field.kind === "textarea") return <label key={field.key}>{label(field.label)}<textarea value={Array.isArray(value) ? value.join("\n") : String(value ?? "")} placeholder={field.placeholder ? label(field.placeholder) : undefined} onChange={(event) => set(field.key, event.target.value)} /></label>;
-    return <label key={field.key}>{label(field.label)}<Input value={Array.isArray(value) ? value.join(", ") : String(value ?? "")} placeholder={field.placeholder ? label(field.placeholder) : undefined} onChange={(event) => set(field.key, event.target.value)} /></label>;
+    if (field.kind === "textarea") return <label key={field.key}>{label(field.label)}<BufferedTextarea value={Array.isArray(value) ? value.join("\n") : String(value ?? "")} placeholder={field.placeholder ? label(field.placeholder) : undefined} onValueCommit={(text) => set(field.key, text)} /></label>;
+    return <label key={field.key}>{label(field.label)}<BufferedInput value={Array.isArray(value) ? value.join(", ") : String(value ?? "")} placeholder={field.placeholder ? label(field.placeholder) : undefined} onValueCommit={(text) => set(field.key, text)} /></label>;
   })}</div>;
   return inline
     ? <div className={`merit-configuration inline${compact ? " compact" : ""}`}>{fields}</div>
@@ -118,10 +119,10 @@ function ProfessionalTrainingEditor({ merit, configuration, onChange, compact }:
   const set = (key: string, value: string | string[]) => onChange({ ...configuration, [key]: value });
   const setArray = (key: string, current: string[], index: number, next: string) => { const changed = [...current]; changed[index] = next; set(key, changed); };
   return <details className={`merit-configuration structured${compact ? " compact" : ""}`} open={!compact}><summary>{t("ui.configureProfessionalTraining")}</summary><div>
-    <label>{t("ui.profession")}<Input value={String(configuration.profession ?? "")} onChange={(event) => set("profession", event.target.value)} /></label>
-    {merit.dots >= 1 && <fieldset><legend>{t("ui.dot1ContactNetwork")}</legend>{[0, 1].map((index) => <label key={index}>{t("ui.contact")} {index + 1}<Input value={contacts[index] ?? ""} onChange={(event) => setArray("contacts", contacts, index, event.target.value)} /></label>)}</fieldset>}
+    <label>{t("ui.profession")}<BufferedInput value={String(configuration.profession ?? "")} onValueCommit={(text) => set("profession", text)} /></label>
+    {merit.dots >= 1 && <fieldset><legend>{t("ui.dot1ContactNetwork")}</legend>{[0, 1].map((index) => <label key={index}>{t("ui.contact")} {index + 1}<BufferedInput value={contacts[index] ?? ""} onValueCommit={(text) => setArray("contacts", contacts, index, text)} /></label>)}</fieldset>}
     {assetCount > 0 && <fieldset><legend>{t("ui.assetSkills")}</legend>{Array.from({ length: assetCount }, (_, index) => <SkillChoice key={index} label={`${t("ui.assetSkill")} ${index + 1}`} value={skills[index] ?? ""} options={CONFIG_SKILLS.filter((skill) => skill === skills[index] || !skills.includes(skill))} setValue={(next) => setArray("asset_skills", skills, index, next)} />)}</fieldset>}
-    {merit.dots >= 3 && <fieldset><legend>{t("ui.dot3Specialties")}</legend>{[1, 2].map((index) => <div className="structured-choice-row" key={index}><SkillChoice label={`${t("ui.skill")} ${index}`} value={String(configuration[`specialty_${index}_skill`] ?? "")} options={skills.filter(Boolean)} setValue={(next) => set(`specialty_${index}_skill`, next)} /><label>{t("ui.specialty")} {index}<Input value={String(configuration[`specialty_${index}_name`] ?? "")} onChange={(event) => set(`specialty_${index}_name`, event.target.value)} /></label></div>)}</fieldset>}
+    {merit.dots >= 3 && <fieldset><legend>{t("ui.dot3Specialties")}</legend>{[1, 2].map((index) => <div className="structured-choice-row" key={index}><SkillChoice label={`${t("ui.skill")} ${index}`} value={String(configuration[`specialty_${index}_skill`] ?? "")} options={skills.filter(Boolean)} setValue={(next) => set(`specialty_${index}_skill`, next)} /><label>{t("ui.specialty")} {index}<BufferedInput value={String(configuration[`specialty_${index}_name`] ?? "")} onValueCommit={(text) => set(`specialty_${index}_name`, text)} /></label></div>)}</fieldset>}
     {merit.dots >= 4 && <SkillChoice label={t("ui.assetSkillReceiving1")} value={String(configuration.boosted_skill ?? "")} options={skills.filter(Boolean)} setValue={(next) => set("boosted_skill", next)} />}
   </div></details>;
 }
@@ -131,7 +132,7 @@ export function CultMeritEditor({ merit, configuration, onChange, compact, catal
   const set = (key: string, value: string | string[]) => onChange({ ...configuration, [key]: value });
   const value = (key: string) => String(configuration[key] ?? "");
   return <details className={`merit-configuration structured${compact ? " compact" : ""}`} open={!compact}><summary>{t("ui.configureMysteryCultBenefits")}</summary><div>
-    <label>{t("ui.cultName")}<Input value={value("cult")} onChange={(event) => set("cult", event.target.value)} /></label>
+    <label>{t("ui.cultName")}<BufferedInput value={value("cult")} onValueCommit={(text) => set("cult", text)} /></label>
     {Array.from({ length: merit.dots }, (_, index) => index + 1).map((level) =>
       <CultLevelEditor key={level} level={level} configuration={configuration} set={set} catalog={catalog} />)}
   </div></details>;
@@ -145,10 +146,10 @@ function CultLevelEditor({ level, configuration, set, catalog }: { level: number
   const options = level <= 2 ? ["__none", "specialty", "merit", "custom"] : level === 3 ? ["__none", "merits", "skill", "custom"] : ["__none", "merits", "merit_skill", "custom"];
   const max = level <= 2 ? 1 : level === 3 ? 2 : type === "merit_skill" ? 1 : 3;
   return <fieldset><legend>{t("ui.dot")} {level}</legend><Choice label={t("ui.benefitType")} value={type || "__none"} setValue={(next) => set(`${prefix}_type`, next === "__none" ? "" : next)} options={options} optionLabels={{ __none: t("ui.selectAnOption"), specialty: t("ui.specialty"), merit: t("ui.merit"), merits: t("ui.merits"), skill: t("ui.skill"), merit_skill: t("ui.meritConfig.meritAndSkill"), custom: t("ui.customBenefit") }} />
-    {type === "specialty" && <div className="structured-choice-row"><SkillChoice label={t("ui.skill")} value={value("specialty_skill")} setValue={(next) => set(`${prefix}_specialty_skill`, next)} /><label>{t("ui.specialty")}<Input value={value("specialty_name")} onChange={(event) => set(`${prefix}_specialty_name`, event.target.value)} /></label></div>}
+    {type === "specialty" && <div className="structured-choice-row"><SkillChoice label={t("ui.skill")} value={value("specialty_skill")} setValue={(next) => set(`${prefix}_specialty_skill`, next)} /><label>{t("ui.specialty")}<BufferedInput value={value("specialty_name")} onValueCommit={(text) => set(`${prefix}_specialty_name`, text)} /></label></div>}
     {(type === "merit" || type === "merits" || type === "merit_skill") && <MeritGrantPicker value={Array.isArray(configuration[`${prefix}_merits`]) ? configuration[`${prefix}_merits`] as string[] : []} max={max} catalog={catalog} onChange={(next) => set(`${prefix}_merits`, next)} />}
     {(type === "skill" || type === "merit_skill") && <SkillChoice label={t("ui.skillReceiving1")} value={value("skill")} setValue={(next) => set(`${prefix}_skill`, next)} />}
-    {type === "custom" && <label>{t("ui.customBenefit")}<textarea value={value("custom")} onChange={(event) => set(`${prefix}_custom`, event.target.value)} /></label>}
+    {type === "custom" && <label>{t("ui.customBenefit")}<BufferedTextarea value={value("custom")} onValueCommit={(text) => set(`${prefix}_custom`, text)} /></label>}
   </fieldset>;
 }
 

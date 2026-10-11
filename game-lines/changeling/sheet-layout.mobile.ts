@@ -10,9 +10,12 @@ const positions = (columns: number, entries: readonly [string, number, number][]
 
 export const changelingMobileLayout = {
   main: {
+    // Chronicle é exclusivo do Desktop em todas as gamelines.
     identity: positions(2, [
-      ["name", 1, 1], ["player", 2, 1], ["needle", 1, 2], ["thread", 2, 2],
-      ["chronicle", 1, 3], ["concept", 2, 3], ["seeming", 1, 4], ["kith", 2, 4], ["court", 1, 5],
+      ["name", 1, 1],     ["concept", 2, 1],
+      ["player", 1, 2],   ["seeming", 2, 2],
+      ["needle", 1, 3],   ["kith", 2, 3],
+      ["thread", 1, 4],   ["court", 2, 4],
     ]),
     attributes: positions(3, [["Mental", 1, 1], ["Physical", 2, 1], ["Social", 3, 1]]),
     skills: positions(1, [["Mental", 1, 1], ["Physical", 1, 2], ["Social", 1, 3]]),
@@ -33,6 +36,6 @@ export const changelingMobileLayout = {
   combate: flow(["health", "willpower", "combat"]),
   // Companheiros Changeling e Core são apresentados juntos em um único slot.
   companheiros: flow(["companions"]),
-  // Anotações: Oaths; notas livres.
-  anotacoes: flow(["oaths", "notes"]),
+  // Anotações: retrato; Oaths; notas livres.
+  anotacoes: flow(["portrait", "oaths", "notes"]),
 } as const;

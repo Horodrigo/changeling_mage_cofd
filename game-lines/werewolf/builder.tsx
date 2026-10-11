@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { CharacterBuilderShell, builderCurrentState, commonCreationIssues, experienceTraitDots, isCreationDraft, useCommonBuilderState } from "@/app/character-builder-shell";
 import { Aspirations, CommonIdentityStep, TraitsStep } from "@/app/builder/common-controls";
 import { MeritPicker } from "@/app/builder/merit-picker";
@@ -127,11 +127,11 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
   const [fetishes, setFetishes] = useState(() => fetishSelections(initial?.line_data.fetishes));
   const [totem, setTotem] = useState(() => totemSelection(initial?.line_data.totem));
   const preferences = useHomebrewPreferences();
-  const meritCatalog = activeMeritCatalog([...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")], [], preferences, initial?.merits);
+  const meritCatalog = useMemo(() => activeMeritCatalog([...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")], [], preferences, initial?.merits), [catalogs, preferences, initial?.merits]);
   const common = useCommonBuilderState(initial, player, { experienceHistoryKey: HISTORY_KEY, purchasedSpecialties: werewolfExperienceSpecialties(initial),
     adjustSkills: values => withoutAuspiceSkillGrant(values, recordedAuspiceSkillGrant(initial?.line_data.auspice_skill_grant)), grantedMeritSources: WEREWOLF_CREATION_GRANT_SOURCES });
   const [freeGrants] = useState(() => withWerewolfCreationGrants([], initial?.merits ?? [], meritCatalog));
-  const merits = withWerewolfCreationGrants(common.merits, freeGrants, meritCatalog);
+  const merits = useMemo(() => withWerewolfCreationGrants(common.merits, freeGrants, meritCatalog), [common.merits, freeGrants, meritCatalog]);
   const [choices, setChoices] = useState(() => {
     const value = creationChoices(initial?.line_data.creation_choices);
     if (initial) for (const key of ["blood", "bone", "physical_touchstone", "spiritual_touchstone"] as const)
@@ -185,7 +185,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
     for (const message of messages) add(3, "merits", `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`);
   }
   const missing = (key: string) => issues.some(issue => issue.key === key);
-  const buildCharacter = (source: CharacterSheet | null | undefined, draft: boolean) => buildWerewolfCharacter({ source, meritWasRemoved: common.meritWasRemoved, identity: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
+  const buildCharacter = (source: CharacterSheet | null | undefined, draft: boolean) => buildWerewolfCharacter({ source, meritWasRemoved: common.meritWasRemoved, identity: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim(), portrait: common.portrait },
     attributes: common.attributes, skills: common.skills, specialties: common.specialties, aspirations: common.aspirations, merits, choices, reference, gifts, rites, meritCatalog, totemCatalog, fetishes, totem, draft, step: common.step, allowAdvancement: common.allowAdvancement });
   const finish = (draft: boolean, advancement?: CharacterSheet) => {
     if (!draft && issues.length) { common.setError(`${t("ui.stillRequired")}: ${issues.map(issue => issue.label).join(", ")}.`); common.setStep(issues[0].step); return false; }

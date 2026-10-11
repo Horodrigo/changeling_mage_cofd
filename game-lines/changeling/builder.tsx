@@ -2,7 +2,7 @@
 import { meritProblemMessage } from "@/lib/merit-ui";
 import { meritPresentation } from "@/lib/merit-presentation";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CharacterBuilderShell,
   builderCurrentState,
@@ -89,7 +89,7 @@ function findKith(catalog: readonly KithDefinition[], value: string) {
 
 function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, onSave, onSaveDraft, catalogs }: GameLineBuilderProps) {
   const { locale, t } = useLanguage();
-  const initial = storedInitial ? { ...storedInitial, merits: recoverChangelingMeritAllocations(storedInitial) } : storedInitial;
+  const initial = useMemo(() => storedInitial ? { ...storedInitial, merits: recoverChangelingMeritAllocations(storedInitial) } : storedInitial, [storedInitial]);
   if (initial && initial.game_line !== "CtL") throw new Error("Changeling builder received a non-Changeling character.");
   if (!catalogs) throw new Error("Changeling builder requires its catalog snapshot.");
   const common = useCommonBuilderState(initial, player, {
@@ -103,22 +103,24 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
   });
   const homebrewPreferences = useHomebrewPreferences();
   const customCatalog = useChangelingCatalogHomebrews();
-  const reference = mergeChangelingReference(catalogs.get<ChangelingReference>("changeling-reference"), customCatalog);
-  const seemingCatalog = mergeChangelingSeemings(customCatalog);
+  const reference = useMemo(() => mergeChangelingReference(catalogs.get<ChangelingReference>("changeling-reference"), customCatalog), [catalogs, customCatalog]);
+  const seemingCatalog = useMemo(() => mergeChangelingSeemings(customCatalog), [customCatalog]);
   const tokens = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
-  const tokenCatalog = withTokenPresentation(tokens, reference.tokenPresentation);
-  const entitlementCatalog = entitlementCatalogPresentation(reference.entitlements, locale, reference.entitlementPresentation);
+  const tokenCatalog = useMemo(() => withTokenPresentation(tokens, reference.tokenPresentation), [tokens, reference.tokenPresentation]);
+  const entitlementCatalog = useMemo(() => entitlementCatalogPresentation(reference.entitlements, locale, reference.entitlementPresentation), [reference.entitlements, locale, reference.entitlementPresentation]);
   const customContracts = useContractHomebrews();
-  const customMerits = useMeritHomebrews("CtL", true);
-  const initialContractIds = new Set((Array.isArray(initial?.line_data.contracts) ? initial.line_data.contracts : []).map((item) => String((item as Record<string, unknown>).id ?? "")));
-  const contractCatalog = mergeContractHomebrews(catalogs.get<readonly ContractDefinition[]>("changeling-contracts"), customContracts)
+  const allCustomMerits = useMeritHomebrews();
+  const customMerits = useMemo(() => allCustomMerits.filter(item => item.line === "CtL" || item.line === "Core"), [allCustomMerits]);
+  const initialContracts = initial?.line_data.contracts;
+  const initialContractIds = useMemo(() => new Set((Array.isArray(initialContracts) ? initialContracts : []).map((item) => String((item as Record<string, unknown>).id ?? ""))), [initialContracts]);
+  const contractCatalog = useMemo(() => mergeContractHomebrews(catalogs.get<readonly ContractDefinition[]>("changeling-contracts"), customContracts)
     .filter((item) => initialContractIds.has(item.id) || homebrewContentActive(homebrewPreferences, item.id, item.sourceId))
-    .map((item) => contractWithSupplementalBenefits(item, homebrewPreferences.disabledIds.includes("h-seemings") ? [] : ["h-seemings"]));
-  const meritCatalog = activeMeritCatalog([
+    .map((item) => contractWithSupplementalBenefits(item, homebrewPreferences.disabledIds.includes("h-seemings") ? [] : ["h-seemings"])), [catalogs, customContracts, initialContractIds, homebrewPreferences]);
+  const meritCatalog = useMemo(() => activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("changeling-merits"),
   ], customMerits, homebrewPreferences, [...(initial?.merits ?? []), ...common.merits])
-    .sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR"));
+    .sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR")), [catalogs, customMerits, homebrewPreferences, initial?.merits, common.merits]);
 
   const [seeming, setSeeming] = useState(String(initial?.line_data.seeming ?? ""));
   const [kith, setKith] = useState(String(initial?.line_data.kith ?? ""));
@@ -159,25 +161,32 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
     return () => window.clearTimeout(timer);
   }, [wyrd, maximumPowerFromMerits]);
 
-  const meritContext: ChangelingMeritContext = {
+  const meritContext: ChangelingMeritContext = useMemo(() => {
+    const merits = mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved);
+    return {
     gameLine: "CtL", archetypes: ["changeling"], attributes: common.attributes, skills: common.skills,
     seeming, kith, wyrd, court,
-    mantle: court && !["sem corte", "courtless"].includes(court.toLowerCase()) ? Math.max(1, mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved).find(item => changelingMeritId(item) === "ctl-2ed:mantle" && item.grantedBy === "Corte")?.dots ?? 1) : 0,
-    merits: mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved),
-    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved)),
+    mantle: court && !["sem corte", "courtless"].includes(court.toLowerCase()) ? Math.max(1, merits.find(item => changelingMeritId(item) === "ctl-2ed:mantle" && item.grantedBy === "Corte")?.dots ?? 1) : 0,
+    merits,
+    specializations: commonMeritSpecializations(common.specializations, merits),
     meritCatalog,
     powers: contracts.map((item) => item.originalName || item.name).filter(Boolean),
-  };
+    };
+  }, [initial?.merits, common.merits, common.meritWasRemoved, common.attributes, common.skills, common.specializations, seeming, kith, wyrd, court, meritCatalog, contracts]);
+  const meritIssues = useMemo(() => common.merits.flatMap(merit => {
+    const definition = resolveMeritDefinition(merit, meritCatalog);
+    return definition ? meritSelectionProblems(definition, merit, meritContext, changelingMeritPrerequisitesMet).map(message => ({
+      step: 3, key: "merits",
+      label: `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`,
+    })) : [];
+  }), [common.merits, meritCatalog, meritContext, locale]);
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {
       attributeAllocation: t("ui.attributeAllocation"), skillAllocation: t("ui.skillAllocation"),
     });
     const add = (step: number, key: string, label: string) => result.push({ step, key, label });
     if (!common.name.trim()) add(1, "name", t("ui.characterName"));
-    for (const merit of common.merits) {
-      const definition = resolveMeritDefinition(merit, meritCatalog);
-      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext, changelingMeritPrerequisitesMet)) add(3, "merits", `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`);
-    }
+    result.push(...meritIssues);
     if (meritSpent > meritBudget) add(3, "merits", t("ui.meritsExceedTheLimit"));
     for (const [key, value, label] of [
       ["seeming", seeming, t("ui.seeming")], ["kith", kith, t("ui.kith")], ["needle", needle, t("ui.needle")],
@@ -207,7 +216,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
     const completed: CharacterSheet = {
       id: source?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "CtL",
       ruleset: { id: "ctl-2ed-embedded", version: 1 },
-      character: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
+      character: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim(), portrait: common.portrait },
       attributes: finalAttributes, skills: finalSkills,
       specializations: [
         ...common.specialties.filter((item) => item.skill && item.name.trim()).map((item) => ({ skill: item.skill, name: item.name.trim() })),

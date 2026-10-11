@@ -4,6 +4,12 @@ import type { PersistedGameLineId } from "./game-line-ids";
 /** A persisted specialty, independent of any editor implementation. */
 export type Specialty = { skill: string; name: string; grantedBy?: string };
 
+export type CharacterPortrait = {
+  dataUrl: string;
+  fileName: string;
+  mimeType: string;
+};
+
 /** A persisted Merit purchase or grant. */
 export type MeritSelection = {
   /** Stable catalog identity; instanceId identifies a particular purchase/configuration. */
@@ -29,7 +35,7 @@ export type CharacterSheet = {
   system: "chronicles-of-darkness";
   game_line: PersistedGameLineId;
   ruleset: { id: string; version: number };
-  character: { name: string; concept: string; player: string; chronicle?: string };
+  character: { name: string; concept: string; player: string; chronicle?: string; portrait?: CharacterPortrait };
   /** Canonical English trait keys; persistence reconciles known schema-2 PT aliases. */
   attributes: Record<string, number>;
   skills: Record<string, number>;

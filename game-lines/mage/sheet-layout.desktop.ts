@@ -34,7 +34,7 @@ export const mageDesktopLayout = {
       definition: {
         ...positions(2, [
           ["activeSpells", 1, 1], ["attainments", 1, 2], ["praxes", 1, 3],
-          ["rotes", 2, 1], ["magicalTools", 2, 2], ["nimbus", 2, 3], ["notes", 2, 4],
+          ["rotes", 2, 1], ["magicalTools", 2, 2], ["nimbus", 2, 3],
         ]),
         columnClassNames: ["mage-page-left", "mage-page-main"],
         sectionClassName: "mage-page-355-grid",
@@ -57,6 +57,13 @@ export const mageDesktopLayout = {
       order: 1,
       definition: { columns: 1, items: [{ id: "combat", column: 1, order: 1 }] },
     }],
+  },
+  // Aba Notes: retrato no topo, seguido das notas livres do personagem.
+  notes: {
+    sections: [
+      { id: "portrait", order: 1, definition: { columns: 1, items: [{ id: "portrait", column: 1, order: 1 }] } },
+      { id: "content", order: 2, definition: { columns: 1, items: [{ id: "notes", column: 1, order: 1 }] } },
+    ],
   },
   // Aba Companions: páginas de companheiros Mage e companheiros genéricos/Core,
   // em sequência na mesma coluna.

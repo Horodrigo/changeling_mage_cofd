@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { CharacterPaperShell, EditableList, NotesArea, ResourceTrack, SheetField } from "@/app/workspace/character-paper-shell";
+import { useMemo, useState } from "react";
+import { CharacterPaperShell, CharacterPortraitArea, EditableList, NotesArea, ResourceTrack, SheetField, updateLineData } from "@/app/workspace/character-paper-shell";
 import { MainSheet, MainPowerStat } from "@/app/workspace/main-sheet";
 import { HealthTrack, SheetHeading, TraitBlock, DotValue } from "@/app/workspace/sheet-primitives";
 import { SwipeableSheetTabs } from "@/app/workspace/sheet-tabs";
@@ -57,7 +57,7 @@ import { SheetCategoryLayout, SheetLayoutDesktopPage, SheetLayoutFlow, SheetLayo
 import "./styles/sheet.css";
 import "./styles/mobile.css";
 
-export function WerewolfCharacterPaper({ character, updateState, updateSheet, catalogs }: GameLineSheetProps) {
+export function WerewolfCharacterPaper({ character, updateState, updateSheet, updateNarrative, catalogs }: GameLineSheetProps) {
   const { locale, t } = useLanguage();
   const mobile = useIsMobile();
   const [tabs, setTabs] = useState({ characterId: character.id, mobile: "summary", desktop: "main" });
@@ -72,18 +72,19 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const fetishes = catalogs.get<WerewolfFetishCatalog>("werewolf-fetishes");
   const totem = catalogs.get<WerewolfTotemCatalog>("werewolf-totem");
   const lodges = catalogs.get<WerewolfLodgeCatalog>("werewolf-lodges");
-  const merits = [...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")];
+  const merits = useMemo(() => [...catalogs.get<MeritDefinition[]>("core-merits"), ...catalogs.get<MeritDefinition[]>("werewolf-merits")], [catalogs]);
   const core = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
   const data = character.line_data, state = character.current_state;
   const hasLodge = Boolean(werewolfLodgeId(data.lodge_id));
   const selectedTotem = totemSelection(data.totem);
   const setState = (key: string, value: unknown) => updateState({ ...state, [key]: value });
   const setLine = (key: string, value: unknown) => updateSheet({ ...character, line_data: { ...data, [key]: value } });
-  const benefitCatalogs = { reference, gifts, merits, totem };
-  const member = werewolfMemberTraits(character, benefitCatalogs);
+  const benefitCatalogs = useMemo(() => ({ reference, gifts, merits, totem }), [reference, gifts, merits, totem]);
+  const member = useMemo(() => werewolfMemberTraits(character, benefitCatalogs), [character, benefitCatalogs]);
   const setForm = (value: string) => updateState(changeWerewolfForm(character, value, benefitCatalogs));
   const currentForm = werewolfFormId(state.form);
-  const hishu = werewolfFormTraits(character, "hishu", benefitCatalogs), activeForm = werewolfFormTraits(character, currentForm, benefitCatalogs);
+  const hishu = useMemo(() => werewolfFormTraits(character, "hishu", benefitCatalogs), [character, benefitCatalogs]);
+  const activeForm = useMemo(() => currentForm === "hishu" ? hishu : werewolfFormTraits(character, currentForm, benefitCatalogs), [character, currentForm, benefitCatalogs, hishu]);
   const damage = normalizeDamage(state.health_damage, Math.max(activeForm.health, Array.isArray(state.health_damage) ? state.health_damage.length : 0));
   const primalUrge = boundedPrimalUrge(data.primal_urge), limits = primalUrgeLevel(reference, primalUrge);
   const derived = { ...character.derived, Size: activeForm.size, Health: activeForm.health, Defense: activeForm.defense, Initiative: activeForm.initiative, Speed: activeForm.speed };
@@ -93,7 +94,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const ownMerits = resolveWerewolfMerits(member.merits, merits);
   const conditions: SelectedCondition[] = Array.isArray(state.conditions) ? state.conditions.flatMap(item => item && typeof item === "object" && typeof item.id === "string"
     ? [{ ...item, id: item.id, persistent: Boolean(item.persistent), instanceId: typeof item.instanceId === "string" ? item.instanceId : undefined }] : []) : [];
-  const conditionCatalog = core.conditions.map(item => locale === "pt-BR" ? { ...item, ...core.presentation[item.id] } : item);
+  const conditionCatalog = useMemo(() => core.conditions.map(item => locale === "pt-BR" ? { ...item, ...core.presentation[item.id] } : item), [core, locale]);
   const name = (id: unknown, records: readonly { id: string; name: string }[]) => {
     const definition = records.find(item => item.id === id);
     return definition ? locale === "pt-BR" ? reference.presentation[definition.id]?.name ?? definition.name : definition.name : String(id ?? "");
@@ -124,7 +125,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
   const willpower = <><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} maximum={hishu.willpower} current={Math.max(0, Math.min(hishu.willpower, Number(state.willpower_current ?? hishu.willpower)))} onChange={value => setState("willpower_current", value)}/></>;
   const essence = <><SheetHeading>{t("werewolf.essence")}</SheetHeading><ResourceTrack label={t("werewolf.essence")} maximum={limits.essenceMaximum} perTurn={limits.essencePerTurn} current={Math.max(0, Math.min(limits.essenceMaximum, Number(state.essence_current ?? 0)))} onChange={value => setState("essence_current", value)} displayMinimum={20}/></>;
   const harmony = <HarmonyTrack value={boundedHarmony(data.harmony)} onChange={value => setLine("harmony", value)} touchstones={{ physical: String(data.physical_touchstone ?? ""), spiritual: String(data.spiritual_touchstone ?? "") }}
-    onTouchstoneChange={(kind, value) => setLine(kind === "physical" ? "physical_touchstone" : "spiritual_touchstone", value)} reference={reference}/>;
+    onTouchstoneChange={(kind, value) => updateLineData(updateSheet, character, kind === "physical" ? "physical_touchstone" : "spiritual_touchstone", value, updateNarrative)} reference={reference}/>;
   const powerStat = <><MainPowerStat label={t("werewolf.primalUrge")} value={primalUrge}/><PrimalUrgeLimits reference={reference} rating={primalUrge} harmony={boundedHarmony(data.harmony)}/></>;
   const renown = renownRatings(data.renown);
   const renownBlock = <div className="wtf-renown">{RENOWN_IDS.map(id => <div className="sheet-merit-main" key={id}><span>{t(`werewolf.renownNames.${id}`)}</span><DotValue value={renown[id]}/></div>)}</div>;
@@ -164,7 +165,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
       {definition && <small>{t("conditions.sourcePage", { source: definition.source, page: definition.page })}</small>}
     </details>;
   })}</div>;
-  const aspirationList = <EditableList values={werewolfIds(data.aspirations)} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={value => setLine("aspirations", value)}/>;
+  const aspirationList = <EditableList values={werewolfIds(data.aspirations)} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={value => updateLineData(updateSheet, character, "aspirations", value, updateNarrative)}/>;
   const conditionList = <ConditionManager selected={conditions} catalog={conditionCatalog} onChange={value => setState("conditions", value)}/>;
   const experience = <WerewolfExperiencePanel character={character} catalogs={catalogs} updateSheet={updateSheet} updateState={updateState}/>;
   const anchors = <>
@@ -205,6 +206,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
       {selectedTotem && <TotemAdvantageEditor character={character} value={selectedTotem} onChange={value => updateSheet(changeWerewolfTotem(character, value, benefitCatalogs))} catalogs={benefitCatalogs}/>}
     </TotemEditor>
   </>;
+  const portrait = <CharacterPortraitArea character={character} updateSheet={updateSheet}/>;
   const notes = <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={String(state.notes ?? "")} onChange={value => setState("notes", value)}/></>;
   const lodgePage = <WerewolfLodgePage character={character} updateSheet={updateSheet} catalog={lodges}
     onLeft={() => setTab(mobile ? "powers" : "details")}/>;
@@ -238,7 +240,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
       forms: <SheetLayoutFlow id="werewolf-mobile-forms" definition={werewolfMobileLayout.forms} items={{ forms }}/>,
       powers: <SheetLayoutFlow id="werewolf-mobile-powers" definition={werewolfMobileLayout.powers} items={{ powerStat, essence, powers }}/>,
       combat: <SheetLayoutFlow id="werewolf-mobile-combat" definition={werewolfMobileLayout.combat} items={{ health, willpower, combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet}/> }}/>,
-      notes: <SheetLayoutFlow id="werewolf-mobile-notes" definition={werewolfMobileLayout.notes} items={{ notes }}/>,
+      notes: <SheetLayoutFlow id="werewolf-mobile-notes" definition={werewolfMobileLayout.notes} items={{ portrait, notes }}/>,
     }}</SwipeableSheetTabs>
     {lodgeJoinDialog}
   </CharacterPaperShell>;
@@ -252,7 +254,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
       {hasLodge && <TabsContent value="lodge" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-lodge" definition={werewolfDesktopLayout.lodge} items={{ directory: lodgePage }}/></TabsContent>}
       <TabsContent value="details" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-details" definition={werewolfDesktopLayout.details} items={{ anchors, powers }}/></TabsContent>
       <TabsContent value="combat" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-combat" definition={werewolfDesktopLayout.combat} items={{ combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet}/> }}/></TabsContent>
-      <TabsContent value="notes" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-notes" definition={werewolfDesktopLayout.notes} items={{ notes }}/></TabsContent>
+      <TabsContent value="notes" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-notes" definition={werewolfDesktopLayout.notes} items={{ portrait, notes }}/></TabsContent>
     </Tabs>
     {lodgeJoinDialog}
   </CharacterPaperShell>;

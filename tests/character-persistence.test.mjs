@@ -21,6 +21,17 @@ test("current schema normalization preserves character data",()=>{
   assert.equal(normalized.character.name,"Test");assert.equal(normalized.skills.Occult,3);
 });
 
+test("current schema normalization preserves valid portraits and removes malformed ones",()=>{
+  const valid = { ...sheet(), character: { ...sheet().character, portrait: {
+    dataUrl: "data:image/png;base64,AAAA",
+    fileName: "portrait.png",
+    mimeType: "image/png",
+  } } };
+  assert.deepEqual(normalizeStoredSheet(valid).character.portrait, valid.character.portrait);
+  const invalid = { ...valid, character: { ...valid.character, portrait: { ...valid.character.portrait, dataUrl: "not-an-image" } } };
+  assert.equal(normalizeStoredSheet(invalid).character.portrait, undefined);
+});
+
 test("schema-2 PT Attribute and Skill aliases normalize to English, with existing English values authoritative", async t => {
   t.mock.method(globalThis, "fetch", async path => {
     assert.match(String(path), /^\/(shared|game-lines)\//);

@@ -26,8 +26,8 @@ export const changelingDesktopLayout = {
     },
   } satisfies MainSheetDesktopLayoutInput),
   // Aba Powers: seção 1 contém Contracts. Na seção 2, otherTraits reúne o Lore
-  // de Seeming/Kith e Goblin Debt; os demais slots mostram Oaths, Court Lore e
-  // Merits expandidos.
+  // de Seeming/Kith e Goblin Debt; os demais slots mostram Court Lore e Merits
+  // expandidos. Oaths pertence exclusivamente à aba Notes.
   poderes: {
     sections: [
       { id: "contracts", order: 1, definition: { columns: 1, items: [{ id: "contracts", column: 1, order: 1 }] } },
@@ -35,7 +35,7 @@ export const changelingDesktopLayout = {
         id: "details",
         order: 2,
         definition: {
-          ...positions(2, [["otherTraits", 1, 1], ["oaths", 2, 1], ["courtLore", 2, 2], ["expandedMerits", 2, 3]]),
+          ...positions(2, [["otherTraits", 1, 1], ["courtLore", 2, 1], ["expandedMerits", 2, 2]]),
           sectionClassName: "powers-sheet-grid",
         },
       },
@@ -57,6 +57,23 @@ export const changelingDesktopLayout = {
       order: 1,
       definition: { columns: 1, items: [{ id: "combat", column: 1, order: 1 }] },
     }],
+  },
+  // Aba Notes: retrato no topo; abaixo, oaths e notas livres do personagem.
+  notas: {
+    sections: [
+      { id: "portrait", order: 1, definition: { columns: 1, items: [{ id: "portrait", column: 1, order: 1 }] } },
+      {
+        id: "content",
+        order: 2,
+        definition: {
+          columns: 2,
+          items: [
+            { id: "oaths", column: 1, order: 1 },
+            { id: "notes", column: 2, order: 1 },
+          ],
+        },
+      },
+    ],
   },
   // Aba Companheiros: companheiros Changeling e companheiros genéricos/Core
   // são apresentados juntos pelo mesmo slot.

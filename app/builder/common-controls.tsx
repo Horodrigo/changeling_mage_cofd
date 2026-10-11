@@ -2,7 +2,7 @@
 
 import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { BufferedInput } from "@/components/ui/buffered-text";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ATTRIBUTES, SKILLS, ATTRIBUTE_BUDGETS, SKILL_BUDGETS, creationCategoryDots, creationAllocationFits } from "@/lib/core/character/creation-rules";
 import type { Specialty } from "@/lib/core/character/character-types";
@@ -41,11 +41,11 @@ export function CommonIdentityStep({
     <h2>{t("ui.identity")}</h2>
     <div className="identity-grid">
       <label className={missing("name") || missing("shadowName") ? "missing-field" : ""}>
-        {nameLabel}<Input value={name} onChange={(event) => setName(event.target.value)} />
+        {nameLabel}<BufferedInput value={name} onValueCommit={setName} />
       </label>
-      <label>{t("ui.player")}<Input value={player} onChange={(event) => setPlayer(event.target.value)} /></label>
-      <label>{t("ui.concept")}<Input value={concept} onChange={(event) => setConcept(event.target.value)} /></label>
-      <label>{t("ui.chronicle")}<Input value={chronicle} onChange={(event) => setChronicle(event.target.value)} /></label>
+      <label>{t("ui.player")}<BufferedInput value={player} onValueCommit={setPlayer} /></label>
+      <label>{t("ui.concept")}<BufferedInput value={concept} onValueCommit={setConcept} /></label>
+      <label>{t("ui.chronicle")}<BufferedInput value={chronicle} onValueCommit={setChronicle} /></label>
     </div>
   </div>;
 }
@@ -89,7 +89,7 @@ export function TraitsStep({
           value={specialty.skill}
           setValue={(skill) => updateArray(setSpecialties, specialties, index, { ...specialty, skill })}
         />
-        <label>{t("ui.specialty")}<Input value={specialty.name} onChange={(event) => updateArray(setSpecialties, specialties, index, { ...specialty, name: event.target.value })} /></label>
+        <label>{t("ui.specialty")}<BufferedInput value={specialty.name} onValueCommit={(name) => updateArray(setSpecialties, specialties, index, { ...specialty, name })} /></label>
       </div>)}
     </div>
   </div>;
@@ -150,7 +150,7 @@ function SkillSpecialtyChoice({ label, value, setValue }: { label: string; value
 
 export function Aspirations({ values, setValues }: { values: string[]; setValues: Setter<string[]> }) {
   const { t } = useLanguage();
-  return <div className="aspirations-block"><h3>{t("ui.aspirations")}</h3><div>{values.map((value, index) => <Input key={index} value={value} onChange={(event) => updateArray(setValues, values, index, event.target.value)} placeholder={`${t("ui.aspiration")} ${index + 1}`} />)}</div></div>;
+  return <div className="aspirations-block"><h3>{t("ui.aspirations")}</h3><div>{values.map((value, index) => <BufferedInput key={index} value={value} onValueCommit={(text) => updateArray(setValues, values, index, text)} placeholder={`${t("ui.aspiration")} ${index + 1}`} />)}</div></div>;
 }
 
 function updateArray<T>(setter: Setter<T[]>, values: T[], index: number, value: T) {

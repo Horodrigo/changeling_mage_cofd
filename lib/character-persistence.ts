@@ -11,6 +11,11 @@ export { asRecord, validateCurrentCharacter, type CurrentCharacterValidation };
 
 export function normalizeStoredSheet(value:CharacterSheet):CharacterSheet{
   const next=structuredClone(value),storedSpecializations:unknown[]=Array.isArray(next.specializations)?next.specializations:[];
+  const portrait = next.character?.portrait;
+  if (!portrait || typeof portrait.dataUrl !== "string" || !portrait.dataUrl.startsWith("data:image/") ||
+      typeof portrait.fileName !== "string" || typeof portrait.mimeType !== "string" || !portrait.mimeType.startsWith("image/")) {
+    if (next.character) delete next.character.portrait;
+  }
   next.attributes=canonicalTraitRatings("attributes",next.attributes);
   next.skills=canonicalTraitRatings("skills",next.skills);
   next.derived=canonicalTraitRatings("derived",next.derived);

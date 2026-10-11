@@ -32,7 +32,7 @@ export const werewolfMobileLayout = {
   powers: flow(["powerStat", "essence", "powers"]),
   // Combat: Health; Willpower; painel completo de combate.
   combat: flow(["health", "willpower", "combat"]),
-  // Notes: notas livres do personagem.
-  notes: flow(["notes"]),
+  // Notes: retrato e notas livres do personagem.
+  notes: flow(["portrait", "notes"]),
   lodge: flow(["directory"]),
 } as const;

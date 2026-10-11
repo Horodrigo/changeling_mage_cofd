@@ -57,13 +57,12 @@ export const werewolfDesktopLayout = {
       definition: { columns: 1, items: [{ id: "combat", column: 1, order: 1 }] },
     }],
   },
-  // Aba Notes: notas livres do personagem.
+  // Aba Notes: retrato no topo, seguido das notas livres do personagem.
   notes: {
-    sections: [{
-      id: "content",
-      order: 1,
-      definition: { columns: 1, items: [{ id: "notes", column: 1, order: 1 }] },
-    }],
+    sections: [
+      { id: "portrait", order: 1, definition: { columns: 1, items: [{ id: "portrait", column: 1, order: 1 }] } },
+      { id: "content", order: 2, definition: { columns: 1, items: [{ id: "notes", column: 1, order: 1 }] } },
+    ],
   },
   lodge: {
     sections: [{

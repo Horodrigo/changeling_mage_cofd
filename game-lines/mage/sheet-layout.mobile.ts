@@ -43,6 +43,6 @@ export const mageMobileLayout = {
   combate: flow(["health", "willpower", "combat"]),
   // Companheiros Mage e Core são exibidos em sequência na aba.
   companheiros: flow(["companions"]),
-  // Anotações: notas livres.
-  anotacoes: flow(["notes"]),
+  // Anotações: retrato e notas livres.
+  anotacoes: flow(["portrait", "notes"]),
 } as const;

@@ -2,7 +2,7 @@
 import { meritProblemMessage } from "@/lib/merit-ui";
 import { meritPresentation } from "@/lib/merit-presentation";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -69,7 +69,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
     purchasedSpecialties: experienceSpecialties(initial),
   });
   const homebrewPreferences = useHomebrewPreferences();
-  const meritCatalog = activeMeritCatalog(catalogs.get<readonly MeritDefinition[]>("core-merits"), [], homebrewPreferences, initial?.merits);
+  const meritCatalog = useMemo(() => activeMeritCatalog(catalogs.get<readonly MeritDefinition[]>("core-merits"), [], homebrewPreferences, initial?.merits), [catalogs, homebrewPreferences, initial?.merits]);
   const [age, setAge] = useState(String(initial?.line_data.age ?? ""));
   const [faction, setFaction] = useState(String(initial?.line_data.faction ?? ""));
   const [groupName, setGroupName] = useState(String(initial?.line_data.group_name ?? ""));
@@ -79,16 +79,27 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
     minimumRows(readLineArray(initial, "breaking_points", []), 5),
   );
   const meritSpent = common.merits.reduce((sum, merit) => sum + Math.max(0, Number(merit.dots) || 0), 0);
-  const meritContext: MeritPrerequisiteContext = {
+  const meritContext: MeritPrerequisiteContext = useMemo(() => {
+    const merits = mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved);
+    return {
     gameLine: "CofD",
     archetypes: ["mortal"],
     attributes: common.attributes,
     skills: common.skills,
     size: 5,
-    merits: mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved),
-    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved)),
+    merits,
+    specializations: commonMeritSpecializations(common.specializations, merits),
     meritCatalog,
-  };
+    };
+  }, [initial?.merits, common.merits, common.meritWasRemoved, common.attributes, common.skills, common.specializations, meritCatalog]);
+
+  const meritIssues = useMemo(() => common.merits.flatMap(merit => {
+    const definition = resolveMeritDefinition(merit, meritCatalog);
+    return definition ? meritSelectionProblems(definition, merit, meritContext).map(message => ({
+      step: 3, key: "merits",
+      label: `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`,
+    })) : [];
+  }), [common.merits, meritCatalog, meritContext, locale]);
 
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {
@@ -101,11 +112,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
     if (virtue.trim() && virtue.trim().toLocaleLowerCase() === vice.trim().toLocaleLowerCase())
       add(3, "anchors", t("ui.virtueAndViceMustDiffer"));
     if (meritSpent > 7) add(3, "merits", t("ui.meritsExceedTheLimit"));
-    for (const merit of common.merits) {
-      const definition = resolveMeritDefinition(merit, meritCatalog);
-      if (definition) for (const message of meritSelectionProblems(definition, merit, meritContext))
-        add(3, "merits", `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale)}`);
-    }
+    result.push(...meritIssues);
     return result;
   })();
   const missing = (key: string) => issues.some((issue) => issue.key === key);
@@ -129,6 +136,7 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
         concept: common.concept.trim(),
         player: common.playerName.trim(),
         chronicle: common.chronicle.trim(),
+        portrait: common.portrait,
       },
       attributes: finalAttributes,
       skills: finalSkills,

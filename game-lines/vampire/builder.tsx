@@ -7,7 +7,7 @@ import { vampireMeritId } from "./merit-identities";
 import { meritProblemMessage } from "@/lib/merit-ui";
 import { meritPresentation } from "@/lib/merit-presentation";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import {
   CharacterBuilderShell,
@@ -155,17 +155,19 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
   const { locale, t } = useLanguage();
   if (initial && initial.game_line !== "VtR") throw new Error("Vampire builder received a non-Vampire character.");
   if (!catalogs) throw new Error("Vampire builder requires its catalog snapshot.");
-  const customMerits = useMeritHomebrews("VtR", true), homebrewPreferences = useHomebrewPreferences();
+  const allCustomMerits = useMeritHomebrews();
+  const customMerits = useMemo(() => allCustomMerits.filter(item => item.line === "VtR" || item.line === "Core"), [allCustomMerits]);
+  const homebrewPreferences = useHomebrewPreferences();
   const customCatalog = useVampireCatalogHomebrews();
-  const reference = mergeVampireReference(catalogs.get<VampireReference>("vampire-reference"), customCatalog);
-  const powers = activeVampirePowers(mergeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), customCatalog), homebrewPreferences);
-  const disciplineNames = powers.disciplines.map((item) => item.name);
-  const creationDisciplineNames = [...new Set([...VAMPIRE_CREATION_DISCIPLINES, ...customCatalog.filter((item) => item.entryType === "discipline").map((item) => item.name)])];
+  const reference = useMemo(() => mergeVampireReference(catalogs.get<VampireReference>("vampire-reference"), customCatalog), [catalogs, customCatalog]);
+  const powers = useMemo(() => activeVampirePowers(mergeVampirePowers(catalogs.get<VampirePowers>("vampire-powers"), customCatalog), homebrewPreferences), [catalogs, customCatalog, homebrewPreferences]);
+  const disciplineNames = useMemo(() => powers.disciplines.map((item) => item.name), [powers.disciplines]);
+  const creationDisciplineNames = useMemo(() => [...new Set([...VAMPIRE_CREATION_DISCIPLINES, ...customCatalog.filter((item) => item.entryType === "discipline").map((item) => item.name)])], [customCatalog]);
   const initialClan = reference.clans.find((item) => item.id === String(initial?.line_data.clan_id ?? ""));
-  const meritCatalog = activeMeritCatalog([
+  const meritCatalog = useMemo(() => activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("vampire-merits"),
-  ], customMerits, homebrewPreferences, initial?.merits).sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR"));
+  ], customMerits, homebrewPreferences, initial?.merits).sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR")), [catalogs, customMerits, homebrewPreferences, initial?.merits]);
   const common = useCommonBuilderState(initial, player, {
     experienceHistoryKey: "vampire_experience_history",
     purchasedSpecialties: experienceSpecialties(initial),
@@ -383,7 +385,7 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     const completed: CharacterSheet = {
       id: source?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "VtR",
       ruleset: { id: "vtr-2ed-embedded", version: 1 },
-      character: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
+      character: { name: common.name.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim(), portrait: common.portrait },
       attributes: finalAttributes, skills: finalSkills,
       specializations: [
         ...common.specialties.filter((item) => item.skill && item.name.trim()).map((item) => ({ skill: item.skill, name: item.name.trim() })),

@@ -10,9 +10,10 @@ const positions = (columns: number, entries: readonly [string, number, number][]
 
 export const vampireMobileLayout = {
   main: {
+    // Chronicle é exclusivo do Desktop em todas as gamelines.
     identity: positions(2, [
       ["name", 1, 1], ["player", 2, 1], ["mask", 1, 2], ["dirge", 2, 2],
-      ["clan", 1, 3], ["covenant", 2, 3], ["concept", 1, 4], ["bloodline", 2, 4], ["chronicle", 1, 5],
+      ["clan", 1, 3], ["covenant", 2, 3], ["concept", 1, 4], ["bloodline", 2, 4],
     ]),
     attributes: positions(3, [["Mental", 1, 1], ["Physical", 2, 1], ["Social", 3, 1]]),
     skills: positions(1, [["Mental", 1, 1], ["Physical", 1, 2], ["Social", 1, 3]]),
@@ -32,6 +33,6 @@ export const vampireMobileLayout = {
   combat: flow(["health", "willpower", "combat", "frenzy"]),
   // Companions: página de companheiros Vampire.
   companions: flow(["companions"]),
-  // Notes: Blood Bonds; notas livres.
-  notes: flow(["bloodBonds", "notes"]),
+  // Notes: retrato; Blood Bonds; notas livres.
+  notes: flow(["portrait", "bloodBonds", "notes"]),
 } as const;

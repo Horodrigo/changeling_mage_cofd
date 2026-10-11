@@ -2,6 +2,7 @@
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import {
   CharacterPaperShell,
+  CharacterPortraitArea,
   SheetField as CommonSheetField,
   EditableList,
   NotesArea,
@@ -44,7 +45,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { BufferedInput } from "@/components/ui/buffered-text";
 import {
   Select,
   SelectContent,
@@ -97,7 +98,7 @@ import { normalizeDamage, powerResourceLimits } from "@/lib/resource-rules";
 import { systemTerm } from "@/lib/system-terms";
 import { createRandomId } from "@/lib/random-id";
 import { Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { renderMageStructuredMeritEditor } from "./merit-configuration-editor";
 import { masqueConfigurationDots } from "./merit-configurations";
 import { CompanionPage as MageCompanionPage } from "./companion-page";
@@ -115,36 +116,40 @@ export function MageCharacterPaper({
   character,
   updateState,
   updateSheet,
+  updateNarrative,
   catalogs,
 }: GameLineSheetProps) {
   if (!catalogs) throw new Error("Mage sheet requires its catalog snapshot.");
   const customSpells = useSpellHomebrews();
-  const spellCatalog = mergeSpellHomebrews(
+  const spellCatalog = useMemo(() => mergeSpellHomebrews(
     catalogs.get<readonly SpellDefinition[]>("mage-spells"),
     customSpells,
-  );
+  ), [catalogs, customSpells]);
   const factionCatalog =
     catalogs.get<readonly MageFactionDefinition[]>("mage-factions");
-  const customMerits = useMeritHomebrews("MtA", true);
+  const allCustomMerits = useMeritHomebrews();
+  const customMerits = useMemo(() => allCustomMerits.filter(item => item.line === "MtA" || item.line === "Core"), [allCustomMerits]);
   const customLegacies = useLegacyHomebrews();
-  const meritCatalog = mergeMeritHomebrews(
+  const meritCatalog = useMemo(() => mergeMeritHomebrews(
     [
       ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
       ...catalogs.get<readonly MeritDefinition[]>("mage-merits"),
     ],
     customMerits,
-  );
+  ), [catalogs, customMerits]);
   const { locale, t } = useLanguage();
   const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
-  const coreConditions = coreReference.conditions.map(condition =>
-    locale === "pt-BR" ? { ...condition, ...coreReference.presentation[condition.id] } : condition,
-  );
-  const mageConditions = catalogs.get<readonly MageConditionDefinition[]>("mage-reference")
-    .map(condition => mageConditionPresentation(condition, locale));
-  const conditionCatalog = [
-    ...coreConditions.filter(condition => !mageConditions.some(item => item.id === condition.id)),
-    ...mageConditions,
-  ];
+  const conditionCatalog = useMemo(() => {
+    const coreConditions = coreReference.conditions.map(condition =>
+      locale === "pt-BR" ? { ...condition, ...coreReference.presentation[condition.id] } : condition,
+    );
+    const mageConditions = catalogs.get<readonly MageConditionDefinition[]>("mage-reference")
+      .map(condition => mageConditionPresentation(condition, locale));
+    return [
+      ...coreConditions.filter(condition => !mageConditions.some(item => item.id === condition.id)),
+      ...mageConditions,
+    ];
+  }, [coreReference, catalogs, locale]);
   const isMobile = useIsMobile();
   const [mobileTab, setMobileTab] = useState({
     characterId: character.id,
@@ -174,7 +179,11 @@ export function MageCharacterPaper({
       character.current_state?.conditions,
       conditionCatalog,
     ).some((item) => item.id === "bonded");
-  const derived = derivedWithPermanentMerits(character);
+  const derived = useMemo(() => derivedWithPermanentMerits({
+    derived: character.derived,
+    merits: character.merits,
+    line_data: { merit_granted_skill_bonuses: data.merit_granted_skill_bonuses },
+  }), [character.derived, character.merits, data.merit_granted_skill_bonuses]);
   const grantedSkillBonuses = (
     data.merit_granted_skill_bonuses &&
     typeof data.merit_granted_skill_bonuses === "object"
@@ -217,15 +226,16 @@ export function MageCharacterPaper({
   const skillHighlightTone = "rote" as const;
   const aspirations = stringList(data.aspirations);
   const rotes = [...objectList(data.rotes), ...objectList(data.learned_rotes)];
-  const praxes = [
+  const praxes = useMemo(() => [
     ...objectList(data.praxes),
     ...objectList(data.learned_praxes),
-  ];
-  const arcana = (
-    data.arcana && typeof data.arcana === "object" ? data.arcana : {}
-  ) as Record<string, number>;
+  ], [data.praxes, data.learned_praxes]);
+  const storedArcana = data.arcana;
+  const arcana = useMemo(() => (
+    storedArcana && typeof storedArcana === "object" ? storedArcana : {}
+  ) as Record<string, number>, [storedArcana]);
   const gnosis = Number(data.gnosis ?? 1);
-  const availablePraxes = spellCatalog
+  const availablePraxes = useMemo(() => spellCatalog
     .filter(
       (spell) =>
         meetsArcanaRequirements(spell.requirements, arcana) &&
@@ -237,7 +247,7 @@ export function MageCharacterPaper({
       category: Object.keys(spell.requirements).map(name => systemTerm(name, locale)).join(" + "),
       description: spell.summary ?? spell.description ?? "",
       meta: `${formatSpellRequirements(spell.requirements, locale)} · ${spell.source} · p. ${spell.page || "—"}`,
-    }));
+    })), [spellCatalog, arcana, praxes, locale]);
   const addGrantedPraxis = (id: string) => {
     if (praxes.length >= gnosis) return;
     const spell = spellCatalog.find((item) => item.id === id);
@@ -590,6 +600,7 @@ export function MageCharacterPaper({
                               character,
                               "aspirations",
                               value,
+                              updateNarrative,
                             )
                           }
                         />
@@ -609,6 +620,7 @@ export function MageCharacterPaper({
                               character,
                               "obsessions",
                               value,
+                              updateNarrative,
                             )
                           }
                         />
@@ -697,6 +709,7 @@ export function MageCharacterPaper({
                         character,
                         "magical_tools",
                         value,
+                        updateNarrative,
                       )
                     }/></>,
                   nimbus: <><SheetHeading>{t("ui.nimbusTilt")}</SheetHeading><NimbusEditor
@@ -710,6 +723,7 @@ export function MageCharacterPaper({
                         character,
                         "nimbus_tilt",
                         value,
+                        updateNarrative,
                       )
                     }
                     onEffectsChange={setNimbusEffects}/></>,
@@ -777,6 +791,7 @@ export function MageCharacterPaper({
                 </div>,
               }}/>,
               anotacoes: <SheetLayoutFlow id="mage-mobile-notes" definition={mageMobileLayout.anotacoes} items={{
+                portrait: <CharacterPortraitArea character={character} updateSheet={updateSheet}/>,
                 notes: <>
                   <SheetHeading>{t("ui.notes")}</SheetHeading>
                   <NotesArea
@@ -823,17 +838,16 @@ export function MageCharacterPaper({
       maximum={3}
       firstPrefix={t("ui.dedicatedTool")}
       placeholder={t("ui.magicalTool")}
-      onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)}
+      onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value, updateNarrative)}
     /></>,
     nimbus: <><SheetHeading>{t("ui.nimbusTilt")}</SheetHeading><NimbusEditor
       wisdom={Number(data.wisdom ?? 7)}
       gnosis={gnosis}
       values={stringList(data.nimbus_tilt)}
       effects={nimbusEffects}
-      onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)}
+      onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value, updateNarrative)}
       onEffectsChange={setNimbusEffects}
     /></>,
-    notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
   };
   return (
     <>
@@ -861,6 +875,7 @@ export function MageCharacterPaper({
                 </TabsTrigger>
               )}
               <TabsTrigger value="combate">{t("ui.combat")}</TabsTrigger>
+              <TabsTrigger value="notes">{t("ui.notes")}</TabsTrigger>
               {hasCompanions && (
                 <TabsTrigger value="companheiros">
                   {t("ui.companions")}
@@ -914,6 +929,7 @@ export function MageCharacterPaper({
                         character,
                         "aspirations",
                         value,
+                        updateNarrative,
                       )
                     }
                   />
@@ -930,6 +946,7 @@ export function MageCharacterPaper({
                         character,
                         "obsessions",
                         value,
+                        updateNarrative,
                       )
                     }
                   />
@@ -1029,6 +1046,22 @@ export function MageCharacterPaper({
               className="ctl-sheet-page powers-page"
             >
               <SheetLayoutDesktopPage id="mage-desktop-combat" definition={mageDesktopLayout.combate} items={{ combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet}/> }}/>
+            </TabsContent>
+            <TabsContent
+              value="notes"
+              data-page-title="Notes"
+              className="ctl-sheet-page powers-page"
+            >
+              <SheetLayoutDesktopPage id="mage-desktop-notes" definition={mageDesktopLayout.notes} items={{
+                portrait: <CharacterPortraitArea character={character} updateSheet={updateSheet}/>,
+                notes: <>
+                  <SheetHeading>{t("ui.notes")}</SheetHeading>
+                  <NotesArea
+                    value={notes}
+                    onChange={(value) => setState("notes", value)}
+                  />
+                </>,
+              }}/>
             </TabsContent>
             <TabsContent
               value="companheiros"
@@ -1654,9 +1687,9 @@ function NimbusEditor({
         <small>
           {t("ui.rangeIsCalculatedAutomaticallyFromWisdom")} · MtA, p. 89
         </small>
-        <Input
+        <BufferedInput
           value={descriptions[0]}
-          onChange={(event) => setDescription(0, event.target.value)}
+          onValueCommit={(value) => setDescription(0, value)}
           placeholder={t("ui.subtleCoincidencesAndEffectsSurroundingTheMage")}
         />
       </article>
@@ -1671,9 +1704,9 @@ function NimbusEditor({
           {t("ui.defineItsAppearanceAndDistributeBonusesOrPenalties")} · MtA, p.
           90
         </small>
-        <Input
+        <BufferedInput
           value={descriptions[1]}
-          onChange={(event) => setDescription(1, event.target.value)}
+          onValueCommit={(value) => setDescription(1, value)}
           placeholder={t("ui.appearanceOrSensationOfTheNimbusAndIts")}
         />
         <div className="nimbus-effects">
@@ -1766,9 +1799,9 @@ function NimbusEditor({
           {t("ui.describeTheRecognizableResidueLeftByTheCharacter")} · MtA, pp.
           89–90
         </small>
-        <Input
+        <BufferedInput
           value={descriptions[2]}
-          onChange={(event) => setDescription(2, event.target.value)}
+          onValueCommit={(value) => setDescription(2, value)}
           placeholder={t("ui.magicalSignatureDescription")}
         />
       </article>

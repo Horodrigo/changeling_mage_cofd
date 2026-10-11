@@ -47,7 +47,9 @@ import {
   prepareCharacterForSave,
   prepareCharacterForUpdate,
   updateCharacterState as applyCharacterState,
+  updateCharacterNarrative as applyCharacterNarrative,
 } from "./workspace/character-lifecycle";
+import type { CharacterNarrativePatch } from "@/lib/core/character/narrative-update";
 import { useCharacterRepository } from "./workspace/character-repository";
 import { blankPrintCharacter } from "./workspace/blank-print-character";
 import { isCreationDraft } from "./character-builder-shell";
@@ -211,6 +213,16 @@ export function Workspace({
     setSelected(updated);
   }
 
+  function updateCharacterNarrative(character: CharacterSheet, patch: CharacterNarrativePatch) {
+    try {
+      const updated = applyCharacterNarrative(character, patch);
+      replaceCharacter(updated);
+      setSelected(updated);
+    } catch {
+      setNotice(t("workspace.invalidCharacterJson"));
+    }
+  }
+
   async function updateCharacter(sheet: CharacterSheet) {
     try {
       const previous = characters.find(item => storedCharacterId(item) === sheet.id);
@@ -365,6 +377,7 @@ export function Workspace({
             setPrintOpen={setPrintOpen}
             updateState={(state) => updateCharacterState(selected, state)}
             updateSheet={(sheet) => { void updateCharacter(sheet); }}
+            updateNarrative={(patch) => updateCharacterNarrative(selected, patch)}
           />
         ) : view === "inicio" ? (
           <Dashboard
@@ -641,6 +654,7 @@ function CharacterView({
   setPrintOpen,
   updateState,
   updateSheet,
+  updateNarrative,
 }: {
   character: CharacterSheet;
   zoom: number;
@@ -650,6 +664,7 @@ function CharacterView({
   setPrintOpen: (open: boolean) => void;
   updateState: (state: Record<string, unknown>) => void;
   updateSheet: (sheet: CharacterSheet) => void;
+  updateNarrative: (patch: CharacterNarrativePatch) => void;
 }) {
   const isMobile=useIsMobile();
   const editorRef=useRef<HTMLElement>(null);
@@ -696,7 +711,7 @@ function CharacterView({
   const sheet=(
     <CatalogBoundary groups={registration.catalogGroups.sheet}>
       <Suspense fallback={<WorkspaceLoading />}>
-        <GameLineSheet character={character} updateState={updateState} updateSheet={updateSheet}/>
+        <GameLineSheet character={character} updateState={updateState} updateSheet={updateSheet} updateNarrative={updateNarrative}/>
       </Suspense>
     </CatalogBoundary>
   );

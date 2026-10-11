@@ -1,7 +1,7 @@
 "use client";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { ExperiencePanel } from "./experience-panel";
-import { CharacterPaperShell,EditableList,NotesArea,PowerResource,ResourceTrack,boundedNumber,updateLineData } from "@/app/workspace/character-paper-shell";
+import { CharacterPaperShell,CharacterPortraitArea,EditableList,NotesArea,PowerResource,ResourceTrack,boundedNumber,updateLineData } from "@/app/workspace/character-paper-shell";
 import { MainFuel, MainPowerStat, MainSheet } from "@/app/workspace/main-sheet";
 import { CombatPage } from "@/app/workspace/combat-page";
 import { CompanionPage } from "./companion-page";
@@ -40,7 +40,7 @@ import { meritPresentation } from "@/lib/merit-presentation";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { changelingMeritId } from "./merit-identities";
 import { normalizeClarityDamage,normalizeDamage,powerResourceLimits,type ClarityDamageLevel } from "@/lib/resource-rules";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { SheetCategoryLayout, SheetLayoutDesktopPage, SheetLayoutFlow, SheetLayoutSection } from "@/app/workspace/sheet-layout";
 import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
 import { useEntitlementHomebrews } from "./use-entitlement-homebrews";
@@ -98,24 +98,29 @@ const seemingName = (catalog: Record<string, SeemingDefinition | SeemingHomebrew
     const name = String(value ?? ""), definition = catalog[name];
     return locale === "pt-BR" && definition && "translated" in definition ? definition.translated : seemingDisplayName(name, locale);
 };
-export function ChangelingCharacterPaper({ character, updateState, updateSheet, catalogs, }: GameLineSheetProps) {
+export function ChangelingCharacterPaper({ character, updateState, updateSheet, updateNarrative, catalogs, }: GameLineSheetProps) {
     if (!catalogs)
         throw new Error("Changeling sheet requires its catalog snapshot.");
     const contractCatalog = catalogs.get<readonly ContractDefinition[]>("changeling-contracts");
-    const customMerits = useMeritHomebrews("CtL", true);
-    const meritCatalog = mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("changeling-merits")], customMerits);
+    const allCustomMerits = useMeritHomebrews();
+    const customMerits = useMemo(() => allCustomMerits.filter(item => item.line === "CtL" || item.line === "Core"), [allCustomMerits]);
+    const meritCatalog = useMemo(() => mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("changeling-merits")], customMerits), [catalogs, customMerits]);
     const { locale, t } = useLanguage();
     const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
     const customCatalog = useChangelingCatalogHomebrews();
-    const lineReference = mergeChangelingReference(catalogs.get<ChangelingReference>("changeling-reference"), customCatalog);
-    const seemingCatalog = mergeChangelingSeemings(customCatalog);
+    const lineReference = useMemo(() => mergeChangelingReference(catalogs.get<ChangelingReference>("changeling-reference"), customCatalog), [catalogs, customCatalog]);
+    const seemingCatalog = useMemo(() => mergeChangelingSeemings(customCatalog), [customCatalog]);
     const tokens = catalogs.get<readonly TokenDefinition[]>("changeling-tokens");
-    const tokenCatalog = withTokenPresentation(tokens, lineReference.tokenPresentation);
+    const tokenCatalog = useMemo(() => withTokenPresentation(tokens, lineReference.tokenPresentation), [tokens, lineReference.tokenPresentation]);
     const customEntitlements = useEntitlementHomebrews();
-    const officialEntitlements = entitlementCatalogPresentation(lineReference.entitlements, locale, lineReference.entitlementPresentation);
-    const entitlementCatalog = [...officialEntitlements, ...customEntitlements.filter((custom) => !lineReference.entitlements.some((item) => item.id === custom.id))];
-    const conditionPresentation = { ...coreReference.presentation, ...lineReference.presentation };
-    const conditionCatalog = [...coreReference.conditions, ...lineReference.conditions].map((condition) => locale === "pt-BR" ? { ...condition, ...conditionPresentation[condition.id] } : condition);
+    const entitlementCatalog = useMemo(() => {
+        const officialEntitlements = entitlementCatalogPresentation(lineReference.entitlements, locale, lineReference.entitlementPresentation);
+        return [...officialEntitlements, ...customEntitlements.filter((custom) => !lineReference.entitlements.some((item) => item.id === custom.id))];
+    }, [lineReference, locale, customEntitlements]);
+    const conditionCatalog = useMemo(() => {
+        const conditionPresentation = { ...coreReference.presentation, ...lineReference.presentation };
+        return [...coreReference.conditions, ...lineReference.conditions].map((condition) => locale === "pt-BR" ? { ...condition, ...conditionPresentation[condition.id] } : condition);
+    }, [coreReference, lineReference, locale]);
     const isMobile = useIsMobile();
     const [mobileTab, setMobileTab] = useState({ characterId: character.id, value: "resumo" });
     const sheetTab = mobileTab.characterId === character.id ? mobileTab.value : "resumo";
@@ -230,7 +235,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
             ]}>
           {{
                 resumo: <SheetLayoutFlow id="changeling-mobile-summary" definition={changelingMobileLayout.resumo} items={{
-                  identity, aspirations: <><SheetHeading>{t("ui.aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/></>,
+                  identity, aspirations: <><SheetHeading>{t("ui.aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value, updateNarrative)}/></>,
                   experience: <><SheetHeading>{t("ui.experience")}</SheetHeading><ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} reference={lineReference}/></>,
                 }}/>,
                 stats: <SheetLayoutFlow id="changeling-mobile-stats" definition={changelingMobileLayout.stats} items={{
@@ -242,7 +247,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                   expandedMerits: <><SheetHeading>{t("ui.expandedMerits")}</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog} tokenCatalog={tokenCatalog} hasAdjacentContent/></>,
                   courtLore: <CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/>,
                   frailties: <><SheetHeading>{t("ui.frailties")}</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/></>,
-                  touchstones: <><SheetHeading>{t("ui.touchstones")}</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/></>,
+                  touchstones: <><SheetHeading>{t("ui.touchstones")}</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value, updateNarrative)}/></>,
                   clarity: claritySection,
                   conditions: <><SheetHeading>{t("ui.conditions")}</SheetHeading><CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/></>,
                 }}/>,
@@ -262,7 +267,8 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                 }}/>,
                 companheiros: <SheetLayoutFlow id="changeling-mobile-companions" definition={changelingMobileLayout.companheiros} items={{ companions: <div className="companions-page"><CompanionPage catalog={meritCatalog} character={character} updateSheet={updateSheet}/><CoreCompanionPage character={character} updateSheet={updateSheet}/></div> }}/>,
                 anotacoes: <SheetLayoutFlow id="changeling-mobile-notes" definition={changelingMobileLayout.anotacoes} items={{
-                  oaths: <><SheetHeading>{t("ui.oaths")}</SheetHeading><EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/></>,
+                  portrait: <CharacterPortraitArea character={character} updateSheet={updateSheet}/>,
+                  oaths: <><SheetHeading>{t("ui.oaths")}</SheetHeading><EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value, updateNarrative)}/></>,
                   notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
                 }}/>,
             }}
@@ -287,6 +293,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
             <TabsTrigger value="poderes">{t("ui.details")}</TabsTrigger>
             {entitlementMerit && <TabsTrigger value="entitlement">{t("ui.entitlement")}</TabsTrigger>}
             <TabsTrigger value="combate">{t("ui.combat")}</TabsTrigger>
+            <TabsTrigger value="notas">{t("ui.notes")}</TabsTrigger>
           {hasCompanions && <TabsTrigger value="companheiros">{t("ui.companions")}</TabsTrigger>}
           </TabsList>
           <TabsContent value="principal" data-page-title="Principal" className="ctl-sheet-page">
@@ -302,8 +309,8 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                 </>
               }
               specificPowersTitle="Regalias Favorecidas" specificPowers={<><LineList items={changelingFavoredRegalia(data).map((value) => systemTerm(value, locale))}/><SheetHeading className="ctl-single-divider">{t("ui.frailties")}</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/></>}
-              merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog}/><SheetHeading className="ctl-single-divider">{t("ui.touchstones")}</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value)}/></>}
-              aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/>}
+              merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog}/><SheetHeading className="ctl-single-divider">{t("ui.touchstones")}</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value, updateNarrative)}/></>}
+              aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value, updateNarrative)}/>}
               conditions={<CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>}
               health={<><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
               powerStat={<MainPowerStat label={t("ui.wyrd")} value={powerRating} summary={wyrdSummary(powerRating, locale)}/>} fuel={<MainFuel label={t("ui.glamour")} current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>} stability={claritySection} derived={derived} armorId={data.combat_armor} experience={<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} reference={lineReference}/>} />
@@ -312,7 +319,6 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
             <SheetLayoutDesktopPage id="changeling-desktop-powers" definition={changelingDesktopLayout.poderes} items={{
               contracts: <><SheetHeading>{t("ui.contracts")}</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} presentation={lineReference.contractPresentation} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/></>,
               otherTraits: <section><SheetHeading>{t("ui.otherTraits")}</SheetHeading><SeemingLore seeming={String(data.seeming ?? "")} seemingCatalog={seemingCatalog}/><KithLore data={data} reference={lineReference}/><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/></section>,
-              oaths: <><SheetHeading>{t("ui.oaths")}</SheetHeading><EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value)}/></>,
               courtLore: <CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/>,
               expandedMerits: <><SheetHeading>{t("ui.expandedMerits")}</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog} tokenCatalog={tokenCatalog} hasAdjacentContent/></>,
             }}/>
@@ -320,6 +326,13 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
           {entitlementMerit && <TabsContent value="entitlement" data-page-title="Entitlement" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="changeling-desktop-entitlement" definition={changelingDesktopLayout.entitlement} items={{ entitlement: <EntitlementPage character={character} updateSheet={updateSheet} catalog={entitlementCatalog}/> }}/></TabsContent>}
           <TabsContent value="combate" data-page-title="Combate" className="ctl-sheet-page powers-page">
             <SheetLayoutDesktopPage id="changeling-desktop-combat" definition={changelingDesktopLayout.combate} items={{ combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet}/> }}/>
+          </TabsContent>
+          <TabsContent value="notas" data-page-title="Notes" className="ctl-sheet-page powers-page">
+            <SheetLayoutDesktopPage id="changeling-desktop-notes" definition={changelingDesktopLayout.notas} items={{
+              portrait: <CharacterPortraitArea character={character} updateSheet={updateSheet}/>,
+              oaths: <><SheetHeading>{t("ui.oaths")}</SheetHeading><EditableList values={oaths} minimum={5} placeholder={t("ui.writeAnOath")} onChange={(value) => updateLineData(updateSheet, character, "oaths", value, updateNarrative)}/></>,
+              notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
+            }}/>
           </TabsContent>
           <TabsContent value="companheiros" data-page-title="Companheiros" className="ctl-sheet-page powers-page">
             <SheetLayoutDesktopPage id="changeling-desktop-companions" definition={changelingDesktopLayout.companheiros} items={{ companions: <div className="companions-page"><CompanionPage catalog={meritCatalog} character={character} updateSheet={updateSheet}/><CoreCompanionPage character={character} updateSheet={updateSheet}/></div> }}/>

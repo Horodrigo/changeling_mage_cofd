@@ -3,7 +3,10 @@
 import type { ReactNode } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { CharacterImageControls } from "@/app/character-image";
+import type { CharacterPortrait } from "@/lib/core/character/character-types";
+import { BufferedInput } from "@/components/ui/buffered-text";
+import type { CharacterNarrativePatch } from "@/lib/core/character/narrative-update";
 import { Textarea } from "@/components/ui/textarea";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
@@ -71,7 +74,13 @@ export function SheetField({ label, value, tooltip }: { label: string; value: un
   );
 }
 
-export function NotesArea({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+export function NotesArea({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+}) {
   const { t } = useLanguage();
   return (
     <div className="notes-area">
@@ -79,6 +88,22 @@ export function NotesArea({ value, onChange }: { value: string; onChange: (value
       <small>{t("ui.savedAutomaticallyWhenLeavingTheField")}</small>
     </div>
   );
+}
+
+export function CharacterPortraitArea({
+  character,
+  updateSheet,
+}: {
+  character: CharacterSheet;
+  updateSheet: (sheet: CharacterSheet) => void;
+}) {
+  const applyPortrait = (portrait: CharacterPortrait | undefined) => {
+    const next = { ...character, character: { ...character.character } };
+    if (portrait) next.character.portrait = portrait;
+    else delete next.character.portrait;
+    updateSheet(next);
+  };
+  return <CharacterImageControls value={character.character.portrait} onChange={applyPortrait} />;
 }
 
 function inferredPowerResourcePerTurn(label: string, maximum: number) {
@@ -195,7 +220,7 @@ export function EditableList({ values, minimum = 1, maximum, firstPrefix, placeh
     <div className="editable-lines">
       {rows.map((value, index) => <div className="editable-line-row" key={index}>
         {index === 0 && firstPrefix && <strong className="editable-line-prefix">{firstPrefix}</strong>}
-        <Input value={value} placeholder={placeholder} onChange={(event) => { const next = [...rows]; next[index] = event.target.value; onChange(next); }} />
+        <BufferedInput value={value} placeholder={placeholder} onValueCommit={(text) => { const next = [...rows]; next[index] = text; onChange(next); }} />
         {removable && <Button type="button" size="icon" variant="ghost" aria-label={`${t("ui.removeRow")} ${index + 1}`} onClick={() => onChange(rows.filter((_, itemIndex) => itemIndex !== index))}><Trash2 /></Button>}
       </div>)}
       {(!maximum || rows.length < maximum) && <Button type="button" size="sm" variant="ghost" onClick={() => onChange([...rows, ""])}><Plus /> {t("ui.addRow")}</Button>}
@@ -212,8 +237,13 @@ export function updateLineData(
   updateSheet: (sheet: CharacterSheet) => void,
   character: CharacterSheet,
   key: string,
-  value: string[],
+  value: string | string[],
+  updateNarrative?: (patch: CharacterNarrativePatch) => void,
 ) {
+  if (updateNarrative) {
+    updateNarrative({ line_data: { [key]: value } });
+    return;
+  }
   const next = structuredClone(character);
   next.line_data = { ...next.line_data, [key]: value };
   updateSheet(next);

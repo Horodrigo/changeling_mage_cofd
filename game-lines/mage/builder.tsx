@@ -127,8 +127,10 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     },
   });
   const factionCatalog = catalogs.get<readonly MageFactionDefinition[]>("mage-factions");
-  const customMerits = useMeritHomebrews("MtA", true), customSpells = useSpellHomebrews(), homebrewPreferences = useHomebrewPreferences();
-  const spellCatalog = activeSpellCatalog(catalogs.get<readonly SpellDefinition[]>("mage-spells"), customSpells, homebrewPreferences);
+  const allCustomMerits = useMeritHomebrews();
+  const customMerits = useMemo(() => allCustomMerits.filter(item => item.line === "MtA" || item.line === "Core"), [allCustomMerits]);
+  const customSpells = useSpellHomebrews(), homebrewPreferences = useHomebrewPreferences();
+  const spellCatalog = useMemo(() => activeSpellCatalog(catalogs.get<readonly SpellDefinition[]>("mage-spells"), customSpells, homebrewPreferences), [catalogs, customSpells, homebrewPreferences]);
   const meritCatalog = useMemo(() => activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("mage-merits"),
@@ -191,27 +193,34 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     return () => window.clearTimeout(timer);
   }, [gnosis, maximumPowerFromMerits]);
 
-  const meritContext: MageMeritContext = {
+  const meritContext: MageMeritContext = useMemo(() => {
+    const merits = mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved);
+    return {
     ...MAGE_STATUS_REQUIREMENTS,
     gameLine: "MtA",
     archetypes: ["awakened"],
     attributes: common.attributes,
     skills: { ...common.skills, ...(hasCreationOrderBenefits ? { Occult: Math.min(5, (common.skills.Occult ?? 0) + 1) } : {}) },
     gnosis, arcana, path, order,
-    merits: mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved),
-    specializations: commonMeritSpecializations(common.specializations, mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved), source => source === "Nameless Order", merit => resolveMeritDefinition(merit, meritCatalog)?.id === "mta-2ed:mystery-cult-influence" ? "mta-2ed:mystery-cult-influence" : undefined),
+    merits,
+    specializations: commonMeritSpecializations(common.specializations, merits, source => source === "Nameless Order", merit => resolveMeritDefinition(merit, meritCatalog)?.id === "mta-2ed:mystery-cult-influence" ? "mta-2ed:mystery-cult-influence" : undefined),
     meritCatalog,
-  };
+    };
+  }, [initial?.merits, common.merits, common.meritWasRemoved, common.attributes, common.skills, common.specializations, hasCreationOrderBenefits, gnosis, arcana, path, order, meritCatalog]);
+  const meritIssues = useMemo(() => common.merits.flatMap(merit => {
+    const definition = resolveMeritDefinition(merit, meritCatalog);
+    return definition ? mageMeritSelectionProblems(definition, merit, meritContext, factionCatalog, affiliationId).map(message => ({
+      step: 3, key: "merits",
+      label: `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale, meritCatalog)}`,
+    })) : [];
+  }), [common.merits, meritCatalog, meritContext, factionCatalog, affiliationId, locale]);
   const pathData = MTA_PATHS[path as keyof typeof MTA_PATHS] ?? MTA_PATHS.Acanthus;
   const issues = (() => {
     const result: BuilderValidationIssue[] = commonCreationIssues(common, {
       attributeAllocation: t("ui.attributeAllocation"), skillAllocation: t("ui.skillAllocation"),
     });
     const add = (key: string, label: string) => result.push({ step: 3, key, label });
-    for (const merit of common.merits) {
-      const definition = resolveMeritDefinition(merit, meritCatalog);
-      if (definition) for (const message of mageMeritSelectionProblems(definition, merit, meritContext, factionCatalog, affiliationId)) add("merits", `${meritPresentation(definition, locale).name}: ${meritProblemMessage(message, definition, locale, meritCatalog)}`);
-    }
+    result.push(...meritIssues);
     if (meritSpent > meritBudget) add("merits", t("ui.meritsExceedTheLimit"));
     for (const [key, value, label] of [
       ["path", path, "Caminho"], ["order", order, "Ordem"], ["virtue", virtue, "Virtude"],
@@ -244,7 +253,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     const completed: CharacterSheet = {
       id: source?.id ?? createRandomId(), schema_version: 2, system: "chronicles-of-darkness", game_line: "MtA",
       ruleset: { id: "mta-2ed-embedded", version: 1 },
-      character: { name: shadowName.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim() },
+      character: { name: shadowName.trim(), concept: common.concept.trim(), player: common.playerName.trim(), chronicle: common.chronicle.trim(), portrait: common.portrait },
       attributes: finalAttributes, skills: finalSkills,
       specializations: [
         ...common.specialties.filter((item) => item.skill && item.name.trim()).map((item) => ({ skill: item.skill, name: item.name.trim() })),

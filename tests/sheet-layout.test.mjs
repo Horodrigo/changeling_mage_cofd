@@ -13,13 +13,13 @@ const lines = [
   {
     id: "changeling",
     label: "Changeling",
-    desktopTabs: ["main", "poderes", "entitlement", "combate", "companheiros"],
+    desktopTabs: ["main", "poderes", "entitlement", "combate", "notas", "companheiros"],
     mobileTabs: ["main", "resumo", "stats", "detalhes", "poderes", "entitlement", "combate", "companheiros", "anotacoes"],
   },
   {
     id: "mage",
     label: "Mage",
-    desktopTabs: ["main", "magia", "legacy", "combate", "companheiros"],
+    desktopTabs: ["main", "magia", "legacy", "combate", "notes", "companheiros"],
     mobileTabs: ["main", "resumo", "stats", "detalhes", "poderes", "legacy", "combate", "companheiros", "anotacoes"],
   },
   {
@@ -83,6 +83,44 @@ test("each game line has separate platform configs covering every sheet tab", as
   }
 });
 
+test("every game line exposes Notes on Desktop and Mobile with portrait editing only in Notes", async () => {
+  const tabs = [
+    { id: "mortal", desktop: "notes", mobile: "notes" },
+    { id: "changeling", desktop: "notas", mobile: "anotacoes" },
+    { id: "mage", desktop: "notes", mobile: "anotacoes" },
+    { id: "vampire", desktop: "notes", mobile: "notes" },
+    { id: "werewolf", desktop: "notes", mobile: "notes", source: "sheet.tsx" },
+  ];
+  const [identity, paperShell] = await Promise.all([
+    read("../app/builder/common-controls.tsx"),
+    read("../app/workspace/character-paper-shell.tsx"),
+  ]);
+  assert.doesNotMatch(identity, /CharacterImageControls|portrait|setPortrait/);
+  assert.match(paperShell, /export function CharacterPortraitArea/);
+  assert.match(paperShell, /<CharacterImageControls value=\{character\.character\.portrait\} onChange=\{applyPortrait\} \/>/);
+  assert.match(paperShell, /else delete next\.character\.portrait;/, "removing a portrait deletes the stored key");
+  assert.doesNotMatch(paperShell.slice(paperShell.indexOf("export function NotesArea"), paperShell.indexOf("export function CharacterPortraitArea")), /CharacterImageControls|portrait/i);
+
+  const image = await read("../app/character-image.tsx");
+  assert.doesNotMatch(image, /download/i, "the portrait card offers no download action");
+  assert.match(image, /\{value\s*\n?\s*\? <Button[^]*?removeCharacterImage[^]*?: <label className="character-image-upload">/, "Add image is replaced by Remove image once a portrait exists");
+  assert.match(image, /\{!value && <small>\{t\("ui\.characterImageHelp"\)\}<\/small>\}/, "the format hint only shows without a portrait");
+  assert.ok(image.indexOf("character-image-preview") < image.indexOf("characterImageHelp"), "the format hint renders below the preview");
+
+  for (const line of tabs) {
+    const [sheet, desktop, mobile] = await Promise.all([
+      read(`../game-lines/${line.id}/${line.source ?? "sheet-view.tsx"}`),
+      read(`../game-lines/${line.id}/sheet-layout.desktop.ts`),
+      read(`../game-lines/${line.id}/sheet-layout.mobile.ts`),
+    ]);
+    assert.match(sheet, new RegExp(`<TabsTrigger value="${line.desktop}"`), `${line.id} exposes Desktop Notes`);
+    assert.match(sheet, new RegExp(`\\{ value: "${line.mobile}", label: t\\("(?:ui\\.notes|werewolf\\.notesTab)"\\)`), `${line.id} exposes Mobile Notes`);
+    assert.match(sheet, /<CharacterPortraitArea character=\{character\} updateSheet=\{updateSheet\}\/>/, `${line.id} edits the portrait from Notes`);
+    assert.match(desktop, /id: "portrait", order: 1[\s\S]*id: "portrait", column: 1, order: 1/, `${line.id} places the portrait first on Desktop`);
+    assert.match(mobile, new RegExp(`${line.mobile}: flow\\(\\["portrait"`), `${line.id} places the portrait first on Mobile`);
+  }
+});
+
 test("Werewolf Mobile field order is configured independently and omits the Desktop-only Chronicle field", async () => {
   const [layout, styles, sheet] = await Promise.all([
     read("../game-lines/werewolf/sheet-layout.mobile.ts"),
@@ -94,6 +132,17 @@ test("Werewolf Mobile field order is configured independently and omits the Desk
   assert.doesNotMatch(layout, /\["chronicle",/);
   assert.match(sheet, /const identityFields = \{\s*\.\.\.identityMobileFields,\s*chronicle:/);
   assert.match(sheet, /definition=\{werewolfMobileLayout\.main\.identity\} items=\{identityMobileFields\}/);
+});
+
+test("Chronicle stays a Desktop-only identity field on every game line", async () => {
+  for (const line of ["mortal", "changeling", "mage", "vampire", "werewolf"]) {
+    const [mobile, desktop] = await Promise.all([
+      read(`../game-lines/${line}/sheet-layout.mobile.ts`),
+      read(`../game-lines/${line}/sheet-layout.desktop.ts`),
+    ]);
+    assert.doesNotMatch(mobile, /"chronicle"/, `${line} omits Chronicle from its Mobile identity layout`);
+    assert.match(desktop, /"chronicle"/, `${line} keeps Chronicle on Desktop`);
+  }
 });
 
 test("line-owned main sheet column spacing targets shared layout wrappers", async () => {
@@ -139,4 +188,58 @@ test("Mage Arcana labels and dots use paired name-over-dots layout", async () =>
   assert.match(styles, /\.mage-arcana-glyph\s*\{[^}]*font-family:"Magean Symbols";/);
   assert.match(styles, /\.mta-sheet \.official-field strong \.mage-arcana-glyph\s*\{[^}]*font-family:"Magean Symbols";/);
   assert.match(styles, /\.arcana-sheet-list\s*\{[^}]*grid-template-columns:repeat\(2,minmax\(0,1fr\)\);/);
+});
+
+
+test("Mobile identity and Attributes respect the current layout wrappers in Mortal, Changeling and Vampire", async () => {
+  for (const [line, theme] of [["mortal", "cofd"], ["changeling", "ctl"], ["vampire", "vtr"]]) {
+    const styles = await read(`../game-lines/${line}/styles/sheet.css`);
+    const identity = styles.match(new RegExp(`\\.${theme}-sheet\\.mobile-character-sheet \\.sheet-identity-grid \\{([^}]+)\\}`))[1];
+    assert.match(identity, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
+    assert.match(identity, /grid-auto-flow: row/);
+    assert.doesNotMatch(styles, /grid-auto-flow:\s*column/);
+    assert.doesNotMatch(styles, /sheet-identity-grid\s*\{[^}]*grid-template-columns:\s*1fr/);
+    assert.match(styles, /sheet-identity-grid > \.sheet-layout-column/);
+    assert.match(styles, /sheet-identity-grid \.official-field\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/);
+    if (line !== "mortal") {
+      const attributes = styles.match(/mobile-attribute-grid\s*\{([^}]+)\}/)[1];
+      assert.match(attributes, /gap:\s*8px/);
+      assert.doesNotMatch(styles, /mobile-attribute-grid \.official-trait-block:(?:first|last)-child/);
+      assert.doesNotMatch(styles, /minmax\(26px, 1fr\)/);
+      assert.match(styles, /mobile-attribute-grid \.official-dot-row\s*\{\s*gap:\s*2px/);
+      assert.match(styles, /@media \(max-width: 420px\)\s*\{[^}]*mobile-attribute-grid \.official-trait-line\s*\{\s*grid-template-columns:\s*minmax\(0, 1fr\)/);
+    }
+  }
+});
+
+
+test("Mage and Werewolf Mobile identities stack labels and values, including affiliation actions", async () => {
+  for (const [line, theme, file] of [["mage", "mta", "sheet.css"], ["werewolf", "wtf", "mobile.css"]]) {
+    const styles = await read(`../game-lines/${line}/styles/${file}`);
+    assert.match(styles, new RegExp(`\\.${theme}-sheet\\.mobile-character-sheet \\.sheet-identity-grid \\.official-field\\s*\\{[^}]*display: grid;[^}]*grid-template-columns: minmax\\(0, 1fr\\)`));
+    assert.match(styles, /sheet-identity-grid > \.sheet-layout-column\s*\{\s*gap: 6px/);
+    assert.match(styles, /official-field :is\(strong, button\)\s*\{[^}]*white-space: normal;[^}]*overflow-wrap: anywhere/);
+    assert.doesNotMatch(styles, /official-field\.wtf-lodge-identity\s*\{[^}]*flex-direction: row/);
+  }
+});
+
+test("all Mobile sheets share Werewolf's wrapping tab geometry without changing line typography", async () => {
+  const [shared, tabs, wolf] = await Promise.all([
+    read("../app/css/globals.css"),
+    read("../app/workspace/sheet-tabs.tsx"),
+    read("../game-lines/werewolf/styles/mobile.css"),
+  ]);
+  assert.match(tabs, /className="ctl-sheet-tabs mobile-sheet-tabs"/);
+  const list = shared.match(/\.cod-sheet\.mobile-character-sheet \.mobile-sheet-tabs > \.ctl-sheet-tab-list\s*\{([^}]+)\}/)[1];
+  assert.match(list, /flex-wrap: wrap/);
+  assert.match(list, /height: auto/);
+  assert.match(list, /overflow: visible/);
+  const buttons = shared.match(/\.cod-sheet\.mobile-character-sheet \.mobile-sheet-tabs > \.ctl-sheet-tab-list button\s*\{([^}]+)\}/)[1];
+  assert.match(buttons, /flex: 1 1 22%/);
+  assert.match(buttons, /min-height: 44px/);
+  assert.match(buttons, /min-width: 0/);
+  assert.match(buttons, /white-space: normal/);
+  assert.doesNotMatch(buttons, /font:|font-family:|color:/);
+  assert.match(shared, /ctl-sheet-tab-list button:nth-child\(-n\+3\)\s*\{\s*flex-basis: 30%/);
+  assert.doesNotMatch(wolf.slice(0, wolf.indexOf(".mobile-sheet-page")), /flex-wrap:|flex-basis:/, "Werewolf consumes the common tab geometry");
 });

@@ -5,11 +5,12 @@ import { vampireAnchorPresentation, vampireBloodlinePresentation, vampireClanPre
 import { vampireConditionPresentation } from "./condition-presentation";
 import { vampirePowerPresentation } from "./power-presentation";
 
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Link2, Plus, Trash2 } from "lucide-react";
 import { VampireMeritConfigurationEditor } from "./merit-configuration-editor";
 import {
   CharacterPaperShell,
+  CharacterPortraitArea,
   EditableList,
   NotesArea,
   PowerResource,
@@ -50,6 +51,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { BufferedInput } from "@/components/ui/buffered-text";
 import {
   Popover,
   PopoverContent,
@@ -555,13 +557,13 @@ function HumanityTrack({
               key={rating}
             >
               {canWriteTouchstone ? (
-                <Input
+                <BufferedInput
                   className="vampire-humanity-touchstone"
                   value={String(row?.name ?? "")}
                   placeholder={t("ui.touchstone")}
                   aria-label={t("ui.humanityTouchstone", { p1: rating })}
-                  onChange={(event) =>
-                    setTouchstoneName(rating, meritPoint, event.target.value)
+                  onValueCommit={(value) =>
+                    setTouchstoneName(rating, meritPoint, value)
                   }
                 />
               ) : (
@@ -895,15 +897,15 @@ function BaneEditor({
               }`}
               key={String(bane.id ?? index)}
             >
-              <Input
+              <BufferedInput
                 value={name}
                 placeholder={
                   requiredByMekhet
                     ? t("ui.mekhetBaneRequired")
                     : `${t("ui.bane")} ${index + 1}`
                 }
-                onChange={(event) =>
-                  update(index, { name: event.target.value })
+                onValueCommit={(value) =>
+                  update(index, { name: value })
                 }
               />
 
@@ -1037,6 +1039,7 @@ export function VampireCharacterPaper({
   character,
   updateState,
   updateSheet,
+  updateNarrative,
   catalogs,
 }: GameLineSheetProps) {
   if (!catalogs)
@@ -1045,46 +1048,49 @@ export function VampireCharacterPaper({
   const preferences = useHomebrewPreferences();
   const isMobile = useIsMobile();
   const customCatalog = useVampireCatalogHomebrews();
-  const reference = mergeVampireReference(
+  const reference = useMemo(() => mergeVampireReference(
     catalogs.get<VampireReference>("vampire-reference"),
     customCatalog,
-  );
+  ), [catalogs, customCatalog]);
   const customBloodlines = useBloodlineHomebrews();
-  const bloodlines = [
+  const bloodlines = useMemo(() => [
     ...reference.bloodlines,
     ...customBloodlines.filter(
       (item) =>
         !reference.bloodlines.some((official) => official.id === item.id),
     ),
-  ];
-  const powers = activeVampirePowers(
+  ], [reference.bloodlines, customBloodlines]);
+  const powers = useMemo(() => activeVampirePowers(
     mergeVampirePowers(
       catalogs.get<VampirePowers>("vampire-powers"),
       customCatalog,
     ),
     preferences,
-  );
-  const disciplineNames = powers.disciplines.map((item) => item.name);
-  const customMerits = useMeritHomebrews("VtR", true);
-  const merits = mergeMeritHomebrews(
+  ), [catalogs, customCatalog, preferences]);
+  const disciplineNames = useMemo(() => powers.disciplines.map((item) => item.name), [powers.disciplines]);
+  const allCustomMerits = useMeritHomebrews();
+  const customMerits = useMemo(() => allCustomMerits.filter(item => item.line === "VtR" || item.line === "Core"), [allCustomMerits]);
+  const merits = useMemo(() => mergeMeritHomebrews(
     [
       ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
       ...catalogs.get<readonly MeritDefinition[]>("vampire-merits"),
     ],
     customMerits,
-  );
+  ), [catalogs, customMerits]);
   const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
-  const coreConditions = coreReference.conditions.map(condition =>
-    locale === "pt-BR" ? { ...condition, ...coreReference.presentation[condition.id] } : condition,
-  );
-  const vampireConditions = activeVampireItems(
-    catalogs.get<readonly VampireCondition[]>("vampire-conditions"),
-    preferences,
-  ).map(condition => vampireConditionPresentation(condition, locale)) as readonly ConditionDefinition[];
-  const conditionCatalog = [
-    ...coreConditions.filter(condition => !vampireConditions.some(item => item.id === condition.id)),
-    ...vampireConditions,
-  ];
+  const conditionCatalog = useMemo(() => {
+    const coreConditions = coreReference.conditions.map(condition =>
+      locale === "pt-BR" ? { ...condition, ...coreReference.presentation[condition.id] } : condition,
+    );
+    const vampireConditions = activeVampireItems(
+      catalogs.get<readonly VampireCondition[]>("vampire-conditions"),
+      preferences,
+    ).map(condition => vampireConditionPresentation(condition, locale)) as readonly ConditionDefinition[];
+    return [
+      ...coreConditions.filter(condition => !vampireConditions.some(item => item.id === condition.id)),
+      ...vampireConditions,
+    ];
+  }, [coreReference, catalogs, preferences, locale]);
   const data = character.line_data;
   const bloodSorcery =
     data.blood_sorcery &&
@@ -1101,7 +1107,7 @@ export function VampireCharacterPaper({
   );
   const mask = reference.anchors.find((item) => item.id === data.mask_id);
   const dirge = reference.anchors.find((item) => item.id === data.dirge_id);
-  const disciplines = recordRatings(data.disciplines, disciplineNames, 10);
+  const disciplines = useMemo(() => recordRatings(data.disciplines, disciplineNames, 10), [data.disciplines, disciplineNames]);
   const bloodPotency = Math.max(
     1,
     Math.min(10, Number(data.blood_potency ?? 1)),
@@ -1112,13 +1118,13 @@ export function VampireCharacterPaper({
     Humans: t("ui.humans"),
     Kindred: t("ui.kindred"),
   } satisfies Record<typeof limits.feedingTier, string>;
-  const derived = vampireDerived(
+  const derived = useMemo(() => vampireDerived(
     character.attributes,
     character.skills,
     disciplines,
     bloodPotency,
     reference,
-  );
+  ), [character.attributes, character.skills, disciplines, bloodPotency, reference]);
   const health = Math.max(1, Number(derived.Health ?? 5));
   const baseWillpower = Math.max(1, Number(derived.Willpower ?? 1));
   const willpower = Math.max(
@@ -1276,18 +1282,21 @@ export function VampireCharacterPaper({
       : setDesktopTab("companions");
   const setState = (key: string, value: unknown) =>
     updateState({ ...character.current_state, [key]: value });
-  const identityItems = {
+  const identityMobileFields = {
     name: <SheetField label={t("ui.name")} value={character.character.name}/>,
     mask: <SheetField label={t("sheet.mask")} value={localized(mask, locale)} tooltip={mask && vampireAnchorPresentation(mask, locale).singleWillpower}/>,
     clan: <SheetField label={t("sheet.clan")} value={localized(clan, locale)}/>,
     player: <SheetField label={t("ui.player")} value={character.character.player}/>,
     dirge: <SheetField label={t("sheet.dirge")} value={localized(dirge, locale)} tooltip={dirge && vampireAnchorPresentation(dirge, locale).allWillpower}/>,
     covenant: <SheetField label={t("sheet.covenant")} value={covenants.map((item) => localized(item, locale)).join(" · ")}/>,
-    chronicle: !isMobile ? <SheetField label={t("ui.chronicle")} value={character.character.chronicle}/> : null,
     concept: <SheetField label={t("ui.concept")} value={character.character.concept}/>,
     bloodline: <BloodlineSheetField value={bloodline?.name ?? (hasBloodline ? String(data.bloodline_id) : t("ui.join"))} onOpen={openBloodline}/>,
   };
-  const identity = <SheetLayoutSection id={isMobile ? "identity-mobile" : "identity"} definition={isMobile ? vampireMobileLayout.main.identity : vampireDesktopLayout.main.identity} items={identityItems} className="sheet-identity-grid"/>;
+  const identityItems = {
+    ...identityMobileFields,
+    chronicle: <SheetField label={t("ui.chronicle")} value={character.character.chronicle}/>,
+  };
+  const identity = <SheetLayoutSection id={isMobile ? "identity-mobile" : "identity"} definition={isMobile ? vampireMobileLayout.main.identity : vampireDesktopLayout.main.identity} items={isMobile ? identityMobileFields : identityItems} className="sheet-identity-grid"/>;
   const attributes = (
     <>
       <SheetHeading>{t("ui.attributes")}</SheetHeading>
@@ -1359,7 +1368,7 @@ export function VampireCharacterPaper({
   );
   const summary = <SheetLayoutFlow id="vampire-mobile-summary" definition={vampireMobileLayout.summary} items={{
     identity,
-    aspirations: <><SheetHeading>{t("ui.aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/></>,
+    aspirations: <><SheetHeading>{t("ui.aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value, updateNarrative)}/></>,
     experience: <><SheetHeading>{t("ui.experience")}</SheetHeading><VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/></>,
   }}/>;
   const vampirePowersItems = {
@@ -1563,6 +1572,7 @@ export function VampireCharacterPaper({
     </>
   );
   const notesItems = {
+      portrait: <CharacterPortraitArea character={character} updateSheet={updateSheet}/>,
       bloodBonds: bloodBonds,
       notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
   };
@@ -1656,7 +1666,7 @@ export function VampireCharacterPaper({
           maximum={3}
           placeholder={t("ui.writeAnAspiration")}
           onChange={(value) =>
-            updateLineData(updateSheet, character, "aspirations", value)
+            updateLineData(updateSheet, character, "aspirations", value, updateNarrative)
           }
         />
       }
@@ -2890,10 +2900,10 @@ function StructuredRecords({
     <div className="vampire-records">
       {rows.map((item, index) => (
         <div key={item.id}>
-          <Input
+          <BufferedInput
             value={item.subject}
             placeholder={t("ui.nameOrSubject")}
-            onChange={(event) => update(index, { subject: event.target.value })}
+            onValueCommit={(value) => update(index, { subject: value })}
           />
           {levelLabel && (
             <label>
@@ -2909,10 +2919,10 @@ function StructuredRecords({
               />
             </label>
           )}
-          <Input
+          <BufferedInput
             value={item.notes}
             placeholder={t("ui.notes8c4aa0")}
-            onChange={(event) => update(index, { notes: event.target.value })}
+            onValueCommit={(value) => update(index, { notes: value })}
           />
           <Button
             type="button"
