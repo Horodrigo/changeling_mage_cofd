@@ -11,6 +11,7 @@ after(() => vite.close());
 const { effectiveMeritDots, sharedMeritDots, SHARED_DOT_MERIT_IDS } = await vite.ssrLoadModule("/lib/shared-merit-dots.ts");
 const { meritSelectionProblems } = await vite.ssrLoadModule("/lib/merits.ts");
 const { requirementMet } = await vite.ssrLoadModule("/lib/merit-requirements.ts");
+const { werewolfMeritPrerequisitesMet } = await vite.ssrLoadModule("/game-lines/werewolf/merit-rules.ts");
 
 test("shared dots apply only to the eight named place Merits and never change purchased dots", () => {
   assert.equal(SHARED_DOT_MERIT_IDS.size, 8);
@@ -30,4 +31,12 @@ test("shared Safe Place dots satisfy a linked Merit requirement and totals canno
   assert.equal(requirementMet({ merit: safe.id, minimum: 4 }, context), true);
   assert.equal(requirementMet({ merit: safe.id, minimum: 5 }, context), false);
   assert.ok(meritSelectionProblems(safe, { dots: 4, configuration: { sharedDots: "2" } }, context).some(item => item.key === "ui.meritsExceedTheLimit"));
+});
+
+test("Werewolf Dedicated Locus compares the effective rating of its linked Safe Place", () => {
+  const locus = { id: "wtf-2ed:dedicated-locus", prerequisites: "" };
+  const safePlace = { id: "core-2ed:safe-place", instanceId: "safe-one", dots: 2, configuration: { sharedDots: "2" } };
+  const context = { attributes: {}, skills: {}, renown: {}, tribeId: "", forms: [], gifts: [], merits: [safePlace] };
+  assert.equal(werewolfMeritPrerequisitesMet(locus, { id: locus.id, dots: 3, configuration: { safePlaceId: "safe-one" } }, context), true);
+  assert.equal(werewolfMeritPrerequisitesMet(locus, { id: locus.id, dots: 3, configuration: { safePlaceId: "safe-one", sharedDots: "2" } }, context), false);
 });
