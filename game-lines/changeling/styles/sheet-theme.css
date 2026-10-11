@@ -508,6 +508,12 @@
   }
 
   .app-shell:has([data-changeling-sheet-theme="elemental"])
+  .ctl-frame-star-side {
+    width: 29px;
+    height: 60px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
     .ctl-sheet .official-heading.ctl-attributes-heading::before,
   .app-shell:has([data-changeling-sheet-theme="elemental"])
     .ctl-sheet .official-heading.ctl-attributes-heading::after {

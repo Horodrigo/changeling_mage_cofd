@@ -978,6 +978,7 @@ body:has(.line-theme-ctl)
 .ctl-frame-star-side {
   width: var(--ctl-frame-star-side-width);
   height: var(--ctl-frame-star-side-height);
+  transform: translate(var(--ctl-frame-star-side-position, 0px 0px));
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
