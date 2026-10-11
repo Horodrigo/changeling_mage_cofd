@@ -108,6 +108,9 @@ import { mergeSpellHomebrews } from "./spell-homebrews";
 import { useSpellHomebrews } from "./use-spell-homebrews";
 import type { MageFactionDefinition } from "./factions";
 import { mageConditionPresentation, type MageConditionDefinition } from "./condition-presentation";
+import { mageDesktopLayout } from "./sheet-layout.desktop";
+import { mageMobileLayout } from "./sheet-layout.mobile";
+import { SheetCategoryLayout, SheetLayoutDesktopPage, SheetLayoutFlow, SheetLayoutSection } from "@/app/workspace/sheet-layout";
 export function MageCharacterPaper({
   character,
   updateState,
@@ -394,15 +397,8 @@ export function MageCharacterPaper({
       pathDefinition?.inferior &&
       sameSystemTerm(String(pathDefinition.inferior), name),
     );
-    return {
-      note: legacyRuling
-        ? t("ui.legacyRuling")
-        : pathRuling
-          ? t("ui.ruling")
-          : inferior
-            ? t("ui.inferior")
-            : undefined,
-    };
+    const role: "R" | "I" | undefined = legacyRuling || pathRuling ? "R" : inferior ? "I" : undefined;
+    return { role };
   };
   const obsessionSlots =
     gnosis <= 2 ? 1 : gnosis <= 5 ? 2 : gnosis <= 8 ? 3 : 4;
@@ -528,18 +524,16 @@ export function MageCharacterPaper({
     updateSheet(next);
   };
   if (isMobile) {
-    const identity = [
-      ["Alias", data.shadow_name],
-      ["Jogador", character.character.player],
-      ["Vício", data.vice],
-      ["Virtude", data.virtue],
-      ["Conceito", character.character.concept],
-      ["Caminho", data.path],
-      [
-        "Ordem",
-        mageOrderLabel(String(data.order || "Orderless"), locale),
-      ],
-    ];
+    const identity = <SheetLayoutSection id="mage-mobile-identity" definition={mageMobileLayout.main.identity} className="sheet-identity-grid" items={{
+      shadowName: <CommonSheetField label={t("ui.shadowName")} value={data.shadow_name}/>,
+      player: <CommonSheetField label={t("ui.player")} value={character.character.player}/>,
+      vice: <CommonSheetField label={t("ui.vice")} value={data.vice}/>,
+      virtue: <CommonSheetField label={t("ui.virtue")} value={data.virtue}/>,
+      concept: <CommonSheetField label={t("ui.concept")} value={character.character.concept}/>,
+      path: <MagePathField label={t("ui.path")} value={data.path}/>,
+      order: <CommonSheetField label={t("ui.order")} value={mageOrderLabel(String(data.order || "Orderless"), locale)}/>,
+      legacy: <LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={openLegacy}/>,
+    }}/>;
     const paradoxConditions = conditionCatalog.filter((condition) =>
       `${condition.name} ${condition.description} ${condition.penalty}`
         .toLocaleLowerCase("pt-BR")
@@ -580,26 +574,9 @@ export function MageCharacterPaper({
             ]}
           >
             {{
-              resumo: (
-                <>
-                  <section className="sheet-identity-grid">
-                    {identity.map(([label, value]) => (
-                      <CommonSheetField
-                        key={String(label)}
-                        label={String(label)}
-                        value={value}
-                      />
-                    ))}
-                    {
-                      <LegacySheetField
-                        value={legacyDisplay}
-                        enabled={hasLegacyAccess}
-                        onOpen={openLegacy}
-                      />
-                    }
-                  </section>
-                  {
-                    <div className="sheet-bottom-grid mage-bottom-grid">
+              resumo: <SheetLayoutFlow id="mage-mobile-summary" definition={mageMobileLayout.resumo} items={{
+                  identity,
+                  aspirations: (
                       <section>
                         <SheetHeading>{t("ui.aspirations")}</SheetHeading>
                         <EditableList
@@ -617,6 +594,8 @@ export function MageCharacterPaper({
                           }
                         />
                       </section>
+                  ),
+                  obsessions: (
                       <section>
                         <SheetHeading>{t("ui.obsessions")}</SheetHeading>
                         <EditableList
@@ -634,95 +613,54 @@ export function MageCharacterPaper({
                           }
                         />
                       </section>
-                    </div>
-                  }
-                  <SheetHeading>{t("ui.experience")}</SheetHeading>
-                  {
+                  ),
+                  experience: <>
+                    <SheetHeading>{t("ui.experience")}</SheetHeading>
                     <MageExperiencePanel
                       character={character}
                       updateSheet={updateSheet}
                       catalogs={catalogs}
                     />
-                  }
-                </>
-              ),
-              stats: (
-                <>
-                  <SheetHeading>{t("ui.attributes")}</SheetHeading>
-                  <div className="mobile-attribute-grid">
-                    {Object.entries(ATTRIBUTES).map(([category, names]) => (
-                      <TraitBlock
-                        key={category}
-                        title={category}
-                        names={names}
-                        values={character.attributes}
-                        compactNames
-                      />
-                    ))}
-                  </div>
-                  <SheetHeading>{t("ui.skills")}</SheetHeading>
-                  <div className="mobile-trait-stack">
-                    {Object.entries(SKILLS).map(([category, names]) => (
-                      <TraitBlock
-                        key={category}
-                        title={category}
-                        names={names}
-                        values={effectiveSkills}
-                        specialties={specialties}
-                        highlightedNames={highlightedSkills}
-                        highlightTone={skillHighlightTone}
-                      />
-                    ))}
-                  </div>
-                </>
-              ),
-              detalhes: (
-                <>
-                  <SheetHeading>{t("ui.merits")}</SheetHeading>
-                  <MeritSheetList
+                  </>,
+                }}/>,
+              stats: <SheetLayoutFlow id="mage-mobile-stats" definition={mageMobileLayout.stats} items={{
+                attributes: <><SheetHeading>{t("ui.attributes")}</SheetHeading><SheetCategoryLayout id="mage-mobile-attributes" definition={mageMobileLayout.main.attributes} className="mobile-attribute-grid" render={category => <TraitBlock key={category} title={category} names={ATTRIBUTES[category as keyof typeof ATTRIBUTES]} values={character.attributes} compactNames/>}/></>,
+                skills: <><SheetHeading>{t("ui.skills")}</SheetHeading><SheetCategoryLayout id="mage-mobile-skills" definition={mageMobileLayout.main.skills} className="mobile-trait-stack" render={category => <TraitBlock key={category} title={category} names={SKILLS[category as keyof typeof SKILLS]} values={effectiveSkills} specialties={specialties} highlightedNames={highlightedSkills} highlightTone={skillHighlightTone}/>} /></>,
+              }}/>,
+              detalhes: <SheetLayoutFlow id="mage-mobile-details" definition={mageMobileLayout.detalhes} items={{
+                  merits: <><SheetHeading>{t("ui.merits")}</SheetHeading><MeritSheetList
                     character={character}
                     merits={principalMerits}
                     updateSheet={updateSheet}
-                    catalog={meritCatalog}
-                  />
-                  <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
-                  <ExpandedMeritList
+                    catalog={meritCatalog}/></>,
+                  expandedMerits: <><SheetHeading>{t("ui.expandedMerits")}</SheetHeading><ExpandedMeritList
                     merits={expandedMerits}
                     character={character}
                     updateSheet={updateSheet}
                     catalog={meritCatalog}
-                    factions={factionCatalog}
-                  />
-                  <MageOrderSummary data={data} />
-                  <SheetHeading>{t("ui.activeSpells")}</SheetHeading>
-                  <EditableList
+                    factions={factionCatalog}/></>,
+                  order: <MageOrderSummary data={data}/>,
+                  activeSpells: <><SheetHeading>{t("ui.activeSpells")}</SheetHeading><EditableList
                     values={stringList(character.current_state?.active_spells)}
                     minimum={gnosis}
                     maximum={gnosis}
                     placeholder={t("ui.activeSpell")}
-                    onChange={(value) => setState("active_spells", value)}
-                  />
-                  <SheetHeading>{t("ui.conditions")}</SheetHeading>
-                  <CoreConditionManager
+                    onChange={(value) => setState("active_spells", value)}/></>,
+                  conditions: <><SheetHeading>{t("ui.conditions")}</SheetHeading><CoreConditionManager
                     selected={selectedConditions}
                     catalog={conditionCatalog}
-                    onChange={(value) => setState("conditions", value)}
-                  />
-                </>
-              ),
-              poderes: (
-                <>
-                  <PowerResource
+                    onChange={(value) => setState("conditions", value)}/></>,
+                }}/>,
+              poderes: <SheetLayoutFlow id="mage-mobile-powers" definition={mageMobileLayout.poderes} items={{
+                  powerResource: <PowerResource
                     name={t("ui.gnosis")}
                     rating={powerRating}
                     resourceName="Mana"
                     current={currentResource}
                     maximum={resource.maximum}
                     perTurn={resource.perTurn}
-                    onChange={(value) => setState(resourceKey, value)}
-                  />
-                  <SheetHeading>{t("ui.arcana")}</SheetHeading>
-                  <div className="arcana-sheet-list">
+                    onChange={(value) => setState(resourceKey, value)}/>,
+                  arcana: <><SheetHeading>{t("ui.arcana")}</SheetHeading><div className="arcana-sheet-list">
                     {Object.entries(arcana).map(([name, value]) => (
                       <TraitLine
                         key={name}
@@ -731,8 +669,8 @@ export function MageCharacterPaper({
                         {...arcanaPresentation(name)}
                       />
                     ))}
-                  </div>
-                  <MageWisdomSection
+                  </div></>,
+                  wisdom: <MageWisdomSection
                     wisdom={Number(data.wisdom ?? 7)}
                     gnosis={gnosis}
                     inuredSpells={inuredSpells}
@@ -741,12 +679,9 @@ export function MageCharacterPaper({
                     locale={locale}
                     onAdd={addInuredSpell}
                     onRemove={removeInuredSpell}
-                    onHubris={applyHubris}
-                  />
-                  <SheetHeading>{t("ui.rotes")}</SheetHeading>
-                  <SpellColumn items={rotes} catalog={spellCatalog} showSkill />
-                  <SheetHeading>{t("ui.magicalTools")}</SheetHeading>
-                  <EditableList
+                    onHubris={applyHubris}/>,
+                  rotes: <><SheetHeading>{t("ui.rotes")}</SheetHeading><SpellColumn items={rotes} catalog={spellCatalog} showSkill/></>,
+                  magicalTools: <><SheetHeading>{t("ui.magicalTools")}</SheetHeading><EditableList
                     values={
                       stringList(data.magical_tools).length
                         ? stringList(data.magical_tools)
@@ -763,10 +698,8 @@ export function MageCharacterPaper({
                         "magical_tools",
                         value,
                       )
-                    }
-                  />
-                  <SheetHeading>{t("ui.nimbusTilt")}</SheetHeading>
-                  <NimbusEditor
+                    }/></>,
+                  nimbus: <><SheetHeading>{t("ui.nimbusTilt")}</SheetHeading><NimbusEditor
                     wisdom={Number(data.wisdom ?? 7)}
                     gnosis={gnosis}
                     values={stringList(data.nimbus_tilt)}
@@ -779,9 +712,8 @@ export function MageCharacterPaper({
                         value,
                       )
                     }
-                    onEffectsChange={setNimbusEffects}
-                  />
-                  <div className="sheet-heading-action">
+                    onEffectsChange={setNimbusEffects}/></>,
+                  praxes: <><div className="sheet-heading-action">
                     <SheetHeading>{t("ui.praxes")}</SheetHeading>
                     {praxes.length < gnosis && (
                       <ExperiencePowerPicker
@@ -798,49 +730,41 @@ export function MageCharacterPaper({
                     catalog={spellCatalog}
                     minimumRows={gnosis}
                     onRemove={removePraxis}
-                  />
-                  <SheetHeading>{t("ui.attainments")}</SheetHeading>
-                  <MageAttainmentList arcana={arcana} />
-                  <SheetHeading>{t("ui.paradoxConditions")}</SheetHeading>
-                  <CoreConditionManager
+                  /></>,
+                  attainments: <><SheetHeading>{t("ui.attainments")}</SheetHeading><MageAttainmentList arcana={arcana}/></>,
+                  paradoxConditions: <><SheetHeading>{t("ui.paradoxConditions")}</SheetHeading><CoreConditionManager
                     selected={selectedConditions}
                     catalog={paradoxConditions}
-                    onChange={(value) => setState("conditions", value)}
-                  />
-                </>
-              ),
-              legacy: (
-                <LegacyPage
+                    onChange={(value) => setState("conditions", value)}/></>,
+                }}/>,
+              legacy: <SheetLayoutFlow id="mage-mobile-legacy" definition={mageMobileLayout.legacy} items={{
+                legacy: <LegacyPage
                   meritCatalog={meritCatalog}
                   character={character}
                   updateSheet={updateSheet}
                   onDiscard={() => setSheetTab("resumo")}
-                />
-              ),
-              combate: (
-                <>
-                  <SheetHeading>{t("ui.health")}</SheetHeading>
-                  <HealthTrack
-                    health={health}
-                    damage={damage}
-                    onChange={(value) => setState("health_damage", value)}
-                  />
-                  <SheetHeading>{t("ui.willpower")}</SheetHeading>
-                  <ResourceTrack
-                    label={t("ui.willpower")}
-                    current={currentWillpower}
-                    maximum={willpower}
-                    onChange={(value) => setState("willpower_current", value)}
-                  />
-                  <CombatPage
-                    character={character}
-                    derived={derived}
-                    updateSheet={updateSheet}
-                  />
-                </>
-              ),
-              companheiros: (
-                <div className="companions-page">
+                />,
+              }}/>,
+              combate: <SheetLayoutFlow id="mage-mobile-combat" definition={mageMobileLayout.combate} items={{
+                health: <><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack
+                  health={health}
+                  damage={damage}
+                  onChange={(value) => setState("health_damage", value)}
+                /></>,
+                willpower: <><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack
+                  label={t("ui.willpower")}
+                  current={currentWillpower}
+                  maximum={willpower}
+                  onChange={(value) => setState("willpower_current", value)}
+                /></>,
+                combat: <CombatPage
+                  character={character}
+                  derived={derived}
+                  updateSheet={updateSheet}
+                />,
+              }}/>,
+              companheiros: <SheetLayoutFlow id="mage-mobile-companions" definition={mageMobileLayout.companheiros} items={{
+                companions: <div className="companions-page">
                   <MageCompanionPage
                     catalog={meritCatalog}
                     character={character}
@@ -850,17 +774,17 @@ export function MageCharacterPaper({
                     character={character}
                     updateSheet={updateSheet}
                   />
-                </div>
-              ),
-              anotacoes: (
-                <>
+                </div>,
+              }}/>,
+              anotacoes: <SheetLayoutFlow id="mage-mobile-notes" definition={mageMobileLayout.anotacoes} items={{
+                notes: <>
                   <SheetHeading>{t("ui.notes")}</SheetHeading>
                   <NotesArea
                     value={notes}
                     onChange={(value) => setState("notes", value)}
                   />
-                </>
-              ),
+                </>,
+              }}/>,
             }}
           </SwipeableSheetTabs>
         </CharacterPaperShell>
@@ -868,6 +792,49 @@ export function MageCharacterPaper({
       </>
     );
   }
+  const desktopIdentityItems = {
+    shadowName: <CommonSheetField label={t("ui.shadowName")} value={data.shadow_name}/>,
+    virtue: <CommonSheetField label={t("ui.virtue")} value={data.virtue}/>,
+    path: <MagePathField label={t("ui.path")} value={data.path}/>,
+    player: <CommonSheetField label={t("ui.player")} value={character.character.player}/>,
+    vice: <CommonSheetField label={t("ui.vice")} value={data.vice}/>,
+    order: <CommonSheetField label={t("ui.order")} value={mageOrderLabel(String(data.order || "Orderless"), locale)}/>,
+    chronicle: <CommonSheetField label={t("ui.chronicle")} value={character.character.chronicle}/>,
+    concept: <CommonSheetField label={t("ui.concept")} value={character.character.concept}/>,
+    legacy: <LegacySheetField value={legacyDisplay} enabled={hasLegacyAccess} onOpen={openLegacy}/>,
+  };
+  const desktopMagicItems = {
+    activeSpells: <><SheetHeading>{t("ui.activeSpells")}</SheetHeading><EditableList
+      values={stringList(character.current_state?.active_spells)}
+      minimum={gnosis}
+      maximum={gnosis}
+      placeholder={t("ui.activeSpell")}
+      onChange={(value) => setState("active_spells", value)}
+    /></>,
+    attainments: <><SheetHeading>{t("ui.attainments")}</SheetHeading><MageAttainmentList arcana={arcana}/></>,
+    praxes: <><div className="sheet-heading-action">
+      <SheetHeading>{t("ui.praxes")}</SheetHeading>
+      {praxes.length < gnosis && <ExperiencePowerPicker kind="Práxis" items={availablePraxes} selectedId="" onSelect={addGrantedPraxis} compact/>}
+    </div><SpellColumn items={praxes} catalog={spellCatalog} minimumRows={gnosis} onRemove={removePraxis}/></>,
+    rotes: <><SheetHeading>{t("ui.rotes")}</SheetHeading><SpellColumn items={rotes} catalog={spellCatalog} showSkill/></>,
+    magicalTools: <><SheetHeading>{t("ui.magicalTools")}</SheetHeading><EditableList
+      values={stringList(data.magical_tools).length ? stringList(data.magical_tools) : [String(data.dedicated_tool ?? "")]}
+      minimum={3}
+      maximum={3}
+      firstPrefix={t("ui.dedicatedTool")}
+      placeholder={t("ui.magicalTool")}
+      onChange={(value) => updateLineData(updateSheet, character, "magical_tools", value)}
+    /></>,
+    nimbus: <><SheetHeading>{t("ui.nimbusTilt")}</SheetHeading><NimbusEditor
+      wisdom={Number(data.wisdom ?? 7)}
+      gnosis={gnosis}
+      values={stringList(data.nimbus_tilt)}
+      effects={nimbusEffects}
+      onChange={(value) => updateLineData(updateSheet, character, "nimbus_tilt", value)}
+      onEffectsChange={setNimbusEffects}
+    /></>,
+    notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
+  };
   return (
     <>
       <CharacterPaperShell
@@ -907,77 +874,18 @@ export function MageCharacterPaper({
             >
               <MainSheet
                 className="mage-main-body"
-                identity={
-                  <section className="sheet-identity-grid">
-                    <CommonSheetField
-                      label={t("ui.shadowName")}
-                      value={data.shadow_name}
-                    />
-                    <CommonSheetField
-                      label={t("ui.virtue")}
-                      value={data.virtue}
-                    />
-                    <CommonSheetField label={t("ui.path")} value={data.path} />
-                    <CommonSheetField
-                      label={t("ui.player")}
-                      value={character.character.player}
-                    />
-                    <CommonSheetField label={t("ui.vice")} value={data.vice} />
-                    <CommonSheetField
-                      label={t("ui.order")}
-                      value={
-                        mageOrderLabel(String(data.order || "Orderless"), locale)
-                      }
-                    />
-                    <CommonSheetField
-                      label={t("ui.chronicle")}
-                      value={character.character.chronicle}
-                    />
-                    <CommonSheetField
-                      label={t("ui.concept")}
-                      value={character.character.concept}
-                    />
-                    <LegacySheetField
-                      value={legacyDisplay}
-                      enabled={hasLegacyAccess}
-                      onOpen={openLegacy}
-                    />
-                  </section>
-                }
+                layout={mageDesktopLayout.main}
+                identityItems={desktopIdentityItems}
                 attributes={
                   <>
                     <SheetHeading>{t("ui.attributes")}</SheetHeading>
-                    <div className="official-trait-grid">
-                      {Object.entries(ATTRIBUTES).map(([category, names]) => (
-                        <TraitBlock
-                          key={category}
-                          title={category}
-                          names={names}
-                          values={character.attributes}
-                        />
-                      ))}
-                    </div>
+                    <SheetCategoryLayout id="attributes" definition={mageDesktopLayout.main.attributes} className="official-trait-grid" render={category => <TraitBlock key={category} title={category} names={ATTRIBUTES[category as keyof typeof ATTRIBUTES]} values={character.attributes}/>}/>
                   </>
                 }
                 skills={
                   <>
                     <SheetHeading>{t("ui.skills")}</SheetHeading>
-                    {Object.entries(SKILLS).map(([category, names]) => (
-                      <TraitBlock
-                        key={category}
-                        title={category}
-                        subtitle={
-                          category === "Mental"
-                            ? t("ui.message3IfUntrained")
-                            : t("ui.message1IfUntrained")
-                        }
-                        names={names}
-                        values={effectiveSkills}
-                        specialties={specialties}
-                        highlightedNames={highlightedSkills}
-                        highlightTone="rote"
-                      />
-                    ))}
+                    <SheetCategoryLayout id="skills" definition={mageDesktopLayout.main.skills} render={category => <TraitBlock key={category} title={category} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")} names={SKILLS[category as keyof typeof SKILLS]} values={effectiveSkills} specialties={specialties} highlightedNames={highlightedSkills} highlightTone="rote"/>}/>
                   </>
                 }
                 specificPowers={
@@ -1099,83 +1007,7 @@ export function MageCharacterPaper({
               data-page-title="Detalhes"
               className="ctl-sheet-page powers-page mage-spell-page"
             >
-              <div className="mage-page-355-grid">
-                <section className="mage-page-left">
-                  <SheetHeading>{t("ui.activeSpells")}</SheetHeading>
-                  <EditableList
-                    values={stringList(character.current_state?.active_spells)}
-                    minimum={gnosis}
-                    maximum={gnosis}
-                    placeholder={t("ui.activeSpell")}
-                    onChange={(value) => setState("active_spells", value)}
-                  />
-                  <SheetHeading>{t("ui.attainments")}</SheetHeading>
-                  <MageAttainmentList arcana={arcana} />
-                  <div className="sheet-heading-action">
-                    <SheetHeading>{t("ui.praxes")}</SheetHeading>
-                    {praxes.length < gnosis && (
-                      <ExperiencePowerPicker
-                        kind="Práxis"
-                        items={availablePraxes}
-                        selectedId=""
-                        onSelect={addGrantedPraxis}
-                        compact
-                      />
-                    )}
-                  </div>
-                  <SpellColumn
-                    items={praxes}
-                    catalog={spellCatalog}
-                    minimumRows={gnosis}
-                    onRemove={removePraxis}
-                  />
-                </section>
-                <section className="mage-page-main">
-                  <SheetHeading>{t("ui.rotes")}</SheetHeading>
-                  <SpellColumn items={rotes} catalog={spellCatalog} showSkill />
-                  <SheetHeading>{t("ui.magicalTools")}</SheetHeading>
-                  <EditableList
-                    values={
-                      stringList(data.magical_tools).length
-                        ? stringList(data.magical_tools)
-                        : [String(data.dedicated_tool ?? "")]
-                    }
-                    minimum={3}
-                    maximum={3}
-                    firstPrefix={t("ui.dedicatedTool")}
-                    placeholder={t("ui.magicalTool")}
-                    onChange={(value) =>
-                      updateLineData(
-                        updateSheet,
-                        character,
-                        "magical_tools",
-                        value,
-                      )
-                    }
-                  />
-                  <SheetHeading>{t("ui.nimbusTilt")}</SheetHeading>
-                  <NimbusEditor
-                    wisdom={Number(data.wisdom ?? 7)}
-                    gnosis={gnosis}
-                    values={stringList(data.nimbus_tilt)}
-                    effects={nimbusEffects}
-                    onChange={(value) =>
-                      updateLineData(
-                        updateSheet,
-                        character,
-                        "nimbus_tilt",
-                        value,
-                      )
-                    }
-                    onEffectsChange={setNimbusEffects}
-                  />
-                  <SheetHeading>{t("ui.notes")}</SheetHeading>
-                  <NotesArea
-                    value={notes}
-                    onChange={(value) => setState("notes", value)}
-                  />
-                </section>
-              </div>
+              <SheetLayoutDesktopPage id="mage-desktop-magic" definition={mageDesktopLayout.magia} items={desktopMagicItems}/>
             </TabsContent>
             {hasLegacyAccess && (
               <TabsContent
@@ -1183,12 +1015,12 @@ export function MageCharacterPaper({
                 data-page-title={t("ui.legacy")}
                 className="ctl-sheet-page powers-page"
               >
-                <LegacyPage
+                <SheetLayoutDesktopPage id="mage-desktop-legacy" definition={mageDesktopLayout.legacy} items={{ legacy: <LegacyPage
                   meritCatalog={meritCatalog}
                   character={character}
                   updateSheet={updateSheet}
                   onDiscard={() => setSheetTab("principal")}
-                />
+                /> }}/>
               </TabsContent>
             )}
             <TabsContent
@@ -1196,28 +1028,17 @@ export function MageCharacterPaper({
               data-page-title="Combate"
               className="ctl-sheet-page powers-page"
             >
-              <CombatPage
-                character={character}
-                derived={derived}
-                updateSheet={updateSheet}
-              />
+              <SheetLayoutDesktopPage id="mage-desktop-combat" definition={mageDesktopLayout.combate} items={{ combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet}/> }}/>
             </TabsContent>
             <TabsContent
               value="companheiros"
               data-page-title="Companheiros"
               className="ctl-sheet-page powers-page"
             >
-              <div className="companions-page">
-                <MageCompanionPage
-                  catalog={meritCatalog}
-                  character={character}
-                  updateSheet={updateSheet}
-                />
-                <CoreCompanionPage
-                  character={character}
-                  updateSheet={updateSheet}
-                />
-              </div>
+              <SheetLayoutDesktopPage id="mage-desktop-companions" className="companions-page" definition={mageDesktopLayout.companheiros} items={{
+                mageCompanions: <MageCompanionPage catalog={meritCatalog} character={character} updateSheet={updateSheet}/>,
+                coreCompanions: <CoreCompanionPage character={character} updateSheet={updateSheet}/>,
+              }}/>
             </TabsContent>
           </Tabs>
         }
@@ -2174,21 +1995,67 @@ function MeritSheetList({
     </div>
   );
 }
+const ATLANTEAN_ARCANA_GLYPHS: Readonly<Record<string, string>> = {
+  Death: "B",
+  Fate: "C",
+  Forces: "D",
+  Life: "E",
+  Matter: "F",
+  Mind: "G",
+  Prime: "H",
+  Space: "I",
+  Spirit: "J",
+  Time: "K",
+};
+
+const ATLANTEAN_PATH_GLYPHS: Readonly<Record<string, string>> = {
+  Acanthus: "M",
+  Mastigos: "N",
+  Moros: "O",
+  Obrimos: "P",
+  Thyrsus: "Q",
+};
+
+function MagePathField({ label, value }: { label: string; value: unknown }) {
+  const { locale } = useLanguage();
+  const name = String(value ?? "");
+  const glyph = ATLANTEAN_PATH_GLYPHS[name];
+  console.log("PATH DEBUG:", {
+  name,
+  glyph,
+  keys: Object.keys(ATLANTEAN_PATH_GLYPHS),
+});
+  return (
+    <div className="official-field">
+      <span>{systemTerm(label, locale)}</span>
+      <strong>
+        {glyph && <><span className="mage-arcana-glyph" aria-hidden="true">{glyph}</span>{" "}</>}
+        {name}
+      </strong>
+    </div>
+  );
+}
+
 function MageArcanaList({
   arcana,
   presentation,
 }: {
   arcana: Record<string, number>;
-  presentation: (name: string) => { note?: string };
+  presentation: (name: string) => { role?: "R" | "I" };
 }) {
+  const { locale } = useLanguage();
   return (
     <div className="arcana-sheet-list">
       {Object.entries(arcana).map(([name, value]) => {
-        const note = presentation(name).note;
+        const role = presentation(name).role;
         return (
           <div className="mage-arcana-line" key={name}>
-            <TraitLine name={name} value={Number(value)} />
-            {note && <small>{note}</small>}
+            <div className="mage-arcana-name">
+              <span className="mage-arcana-glyph" aria-hidden="true">{ATLANTEAN_ARCANA_GLYPHS[name] ?? ""}</span>
+              <span>{systemTerm(name, locale)}</span>
+              {role && <small>({role})</small>}
+            </div>
+            <DotValue value={Number(value)} />
           </div>
         );
       })}

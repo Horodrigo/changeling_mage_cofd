@@ -74,14 +74,6 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
   .wtf-sheet .cod-sheet-title span { font-size: clamp(25px, 7.8vw, 36px); }
   .wtf-sheet .cod-sheet-title strong { font-size: 11px; }
   .wtf-sheet .sheet-identity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 10px; padding-inline: 0; }
-  .wtf-sheet .sheet-identity-grid > :nth-child(1) { order: 1; }
-  .wtf-sheet .sheet-identity-grid > :nth-child(4) { order: 2; }
-  .wtf-sheet .sheet-identity-grid > :nth-child(6) { order: 3; }
-  .wtf-sheet .sheet-identity-grid > :nth-child(3) { order: 4; }
-  .wtf-sheet .sheet-identity-grid > :nth-child(2) { order: 5; }
-  .wtf-sheet .sheet-identity-grid > :nth-child(5) { order: 6; }
-  .wtf-sheet .sheet-identity-grid > :nth-child(7) { order: 7; }
-  .wtf-sheet .sheet-identity-grid > :nth-child(8) { order: 8; }
   .wtf-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list { position: sticky; top: 0; z-index: 25; max-width: 100%; overflow-x: auto; scrollbar-width: none; overscroll-behavior-inline: contain; }
   .wtf-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button { min-width: max-content; min-height: 44px; padding-inline: 12px; }
   .wtf-sheet .mobile-sheet-page { padding: 10px 2px 20px; }

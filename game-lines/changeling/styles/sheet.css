@@ -1424,20 +1424,33 @@ body:has(.line-theme-ctl)
   gap: 0;
 }
 
-.ctl-sheet .official-trait-grid > .official-trait-block {
+.ctl-sheet .official-trait-grid > .official-trait-block,
+.ctl-sheet .official-trait-grid > .sheet-layout-column {
   padding: 0 18px;
 }
 
-.ctl-sheet .official-trait-grid > .official-trait-block:first-child {
+.ctl-sheet .official-trait-grid > .official-trait-block:first-child,
+.ctl-sheet .official-trait-grid > .sheet-layout-column:first-child {
   padding-left: 0px;
 }
-.ctl-sheet .official-trait-grid > .official-trait-block:last-child {
+.ctl-sheet .official-trait-grid > .official-trait-block:last-child,
+.ctl-sheet .official-trait-grid > .sheet-layout-column:last-child {
   padding-right: 0px;
 }
 .ctl-sheet
   .official-trait-grid
   > .official-trait-block
   + .official-trait-block {
+  border-left: 0;
+  background-image: url("/game-lines/changeling/images/column-divider.webp");
+  background-position: left center;
+  background-repeat: repeat-y;
+  background-size: 3px auto;
+}
+.ctl-sheet
+  .official-trait-grid
+  > .sheet-layout-column
+  + .sheet-layout-column {
   border-left: 0;
   background-image: url("/game-lines/changeling/images/column-divider.webp");
   background-position: left center;
@@ -1469,7 +1482,7 @@ body:has(.line-theme-ctl)
 
   font-family: "Changeling Sheet", Georgia, serif;
   font-size: 15px;
-  line-height: 1.05;
+  line-height: 1.2;
   padding-bottom: 5px;
   padding-top: 4px;
 }
@@ -1566,20 +1579,24 @@ body:has(.line-theme-ctl)
   gap: 0;
 }
 
-.ctl-sheet .official-sheet-body > section {
+.ctl-sheet .official-sheet-body > section,
+.ctl-sheet .official-sheet-body > .sheet-layout-column {
   min-width: 0;
   padding: 0 15px;
 }
 
-.ctl-sheet .official-sheet-body > section:first-child {
+.ctl-sheet .official-sheet-body > section:first-child,
+.ctl-sheet .official-sheet-body > .sheet-layout-column:first-child {
   padding-left: 0;
 }
 
-.ctl-sheet .official-sheet-body > section:last-child {
+.ctl-sheet .official-sheet-body > section:last-child,
+.ctl-sheet .official-sheet-body > .sheet-layout-column:last-child {
   padding-right: 0;
 }
 
-.ctl-sheet .official-sheet-body > section + section {
+.ctl-sheet .official-sheet-body > section + section,
+.ctl-sheet .official-sheet-body > .sheet-layout-column + .sheet-layout-column {
   border-left: 1px solid rgba(23, 56, 35, 0.35);
   background-image: none;
 }
@@ -2237,12 +2254,13 @@ body:has(.line-theme-ctl)
     width: 150px;
   }
 
-  /* O MainSheet atual usa <section>, não <div>. */
-  .ctl-sheet .official-sheet-body > section {
+  .ctl-sheet .official-sheet-body > section,
+  .ctl-sheet .official-sheet-body > .sheet-layout-column {
     padding-inline: 11px;
   }
 
-  .ctl-sheet .official-trait-grid > .official-trait-block {
+  .ctl-sheet .official-trait-grid > .official-trait-block,
+  .ctl-sheet .official-trait-grid > .sheet-layout-column {
     padding-inline: 12px;
   }
 }
@@ -2361,7 +2379,9 @@ body:has(.line-theme-ctl)
    * herdado desses layouts.
    */
   .ctl-sheet .official-trait-grid > .official-trait-block,
+  .ctl-sheet .official-trait-grid > .sheet-layout-column,
   .ctl-sheet .official-sheet-body > section,
+  .ctl-sheet .official-sheet-body > .sheet-layout-column,
   .ctl-sheet .sheet-bottom-grid > section {
     padding-inline: 0;
     border-left: 0 !important;
@@ -2373,7 +2393,8 @@ body:has(.line-theme-ctl)
     gap: 0;
   }
 
-  .ctl-sheet .official-sheet-body > section + section {
+  .ctl-sheet .official-sheet-body > section + section,
+  .ctl-sheet .official-sheet-body > .sheet-layout-column + .sheet-layout-column {
     margin-top: 8px;
   }
 

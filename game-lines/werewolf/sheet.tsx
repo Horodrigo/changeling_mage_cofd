@@ -48,6 +48,9 @@ import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-edit
 import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
 import { INTERDISCIPLINARY_SPECIALTY_ID } from "@/lib/core/character/specialty-merits";
 import { commonExpandedConfigurationLines } from "@/app/workspace/merit-configuration-presentation";
+import { werewolfDesktopLayout } from "./sheet-layout.desktop";
+import { werewolfMobileLayout } from "./sheet-layout.mobile";
+import { SheetCategoryLayout, SheetLayoutDesktopPage, SheetLayoutFlow, SheetLayoutSection } from "@/app/workspace/sheet-layout";
 import "./styles/sheet.css";
 import "./styles/mobile.css";
 
@@ -88,13 +91,19 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
     const definition = records.find(item => item.id === id);
     return definition ? locale === "pt-BR" ? reference.presentation[definition.id]?.name ?? definition.name : definition.name : String(id ?? "");
   };
-  const identity = <section className="sheet-identity-grid">
-    <SheetField label={t("ui.characterName")} value={character.character.name}/><SheetField label={t("werewolf.auspice")} value={name(data.auspice_id, reference.auspices)}/><SheetField label={t("ui.chronicle")} value={character.character.chronicle}/>
-    <SheetField label={t("ui.player")} value={character.character.player}/><SheetField label={t("werewolf.tribe")} value={name(data.tribe_id, reference.tribes)}/><SheetField label={t("ui.concept")} value={character.character.concept}/>
-    <SheetField label={t("werewolf.blood")} value={name(data.blood, reference.anchors)}/><SheetField label={t("werewolf.bone")} value={name(data.bone, reference.anchors)}/>
-  </section>;
-  const attributes = <><SheetHeading>{t("ui.attributes")}</SheetHeading><p className="wtf-trait-note">{t("werewolf.hishuTraits")}</p><div className={mobile ? "mobile-attribute-grid" : "official-trait-grid"}>{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={hishu.attributes} compactNames={mobile}/>)}</div></>;
-  const skills = <><SheetHeading>{t("ui.skills")}</SheetHeading><div className="wtf-skill-stack">{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={member.skills} specialties={member.specializations} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")}/>)}</div></>;
+  const identityFields = {
+    name: <SheetField label={t("ui.characterName")} value={character.character.name}/>,
+    blood: <SheetField label={t("werewolf.blood")} value={name(data.blood, reference.anchors)}/>,
+    auspice: <SheetField label={t("werewolf.auspice")} value={name(data.auspice_id, reference.auspices)}/>,
+    player: <SheetField label={t("ui.player")} value={character.character.player}/>,
+    bone: <SheetField label={t("werewolf.bone")} value={name(data.bone, reference.anchors)}/>,
+    tribe: <SheetField label={t("werewolf.tribe")} value={name(data.tribe_id, reference.tribes)}/>,
+    chronicle: <SheetField label={t("ui.chronicle")} value={character.character.chronicle}/>,
+    concept: <SheetField label={t("ui.concept")} value={character.character.concept}/>,
+  };
+  const identityMobile = <SheetLayoutSection id="identity-mobile" definition={werewolfMobileLayout.main.identity} items={identityFields} className="sheet-identity-grid"/>;
+  const attributes = <><SheetHeading>{t("ui.attributes")}</SheetHeading><p className="wtf-trait-note">{t("werewolf.hishuTraits")}</p><SheetCategoryLayout id={mobile ? "mobile-attributes" : "attributes"} definition={mobile ? werewolfMobileLayout.main.attributes : werewolfDesktopLayout.main.attributes} className={mobile ? "mobile-attribute-grid" : "official-trait-grid"} render={category => <TraitBlock key={category} title={category} names={ATTRIBUTES[category as keyof typeof ATTRIBUTES]} values={hishu.attributes} compactNames={mobile}/>} /></>;
+  const skills = <><SheetHeading>{t("ui.skills")}</SheetHeading><SheetCategoryLayout id={mobile ? "mobile-skills" : "skills"} definition={mobile ? werewolfMobileLayout.main.skills : werewolfDesktopLayout.main.skills} className="wtf-skill-stack" render={category => <TraitBlock key={category} title={category} names={SKILLS[category as keyof typeof SKILLS]} values={member.skills} specialties={member.specializations} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")}/>} /></>;
   const health = <><div className="panel-heading wtf-health-heading"><SheetHeading>{t("ui.health")}</SheetHeading><FormSelector value={currentForm} onChange={setForm} reference={reference}/></div>
     <HealthTrack health={activeForm.health} damage={damage} onChange={value => setState("health_damage", value)}/>
     {damage.length > activeForm.health && <p>{t("werewolf.preservedDamage", { amount: damage.length - activeForm.health })}</p>}</>;
@@ -197,25 +206,30 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, ca
       { value: "details", label: t("ui.details") }, { value: "forms", label: t("werewolf.forms") },
       { value: "powers", label: t("ui.powers") }, { value: "combat", label: t("ui.combat") }, { value: "notes", label: t("werewolf.notesTab") },
     ]}>{{
-      summary: <>{identity}<SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}{experience}</>,
-      stats: <>{attributes}{skills}</>,
-      details: <><SheetHeading>{t("werewolf.renown")}</SheetHeading>{renownBlock}<SheetHeading>{t("ui.merits")}</SheetHeading>{meritList}{anchors}{harmony}<SheetHeading>{t("ui.conditions")}</SheetHeading>{conditionList}</>,
-      forms,
-      powers: <>{powerStat}{essence}{powers}</>,
-      combat: <>{health}{willpower}<CombatPage character={character} derived={derived} updateSheet={updateSheet}/></>,
-      notes,
+      summary: <SheetLayoutFlow id="werewolf-mobile-summary" definition={werewolfMobileLayout.summary} items={{ identity: identityMobile, aspirations: <><SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}</>, experience }}/>,
+      stats: <SheetLayoutFlow id="werewolf-mobile-stats" definition={werewolfMobileLayout.stats} items={{ attributes, skills }}/>,
+      details: <SheetLayoutFlow id="werewolf-mobile-details" definition={werewolfMobileLayout.details} items={{
+        renown: <><SheetHeading>{t("werewolf.renown")}</SheetHeading>{renownBlock}</>,
+        merits: <><SheetHeading>{t("ui.merits")}</SheetHeading>{meritList}</>,
+        anchors, harmony,
+        conditions: <><SheetHeading>{t("ui.conditions")}</SheetHeading>{conditionList}</>,
+      }}/>,
+      forms: <SheetLayoutFlow id="werewolf-mobile-forms" definition={werewolfMobileLayout.forms} items={{ forms }}/>,
+      powers: <SheetLayoutFlow id="werewolf-mobile-powers" definition={werewolfMobileLayout.powers} items={{ powerStat, essence, powers }}/>,
+      combat: <SheetLayoutFlow id="werewolf-mobile-combat" definition={werewolfMobileLayout.combat} items={{ health, willpower, combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet}/> }}/>,
+      notes: <SheetLayoutFlow id="werewolf-mobile-notes" definition={werewolfMobileLayout.notes} items={{ notes }}/>,
     }}</SwipeableSheetTabs>
   </CharacterPaperShell>;
   return <CharacterPaperShell line="WtF" title={t("werewolf.title")} subtitle={t("werewolf.forsaken")}>
     {frame}
     <Tabs value={activeTab} onValueChange={setTab}><TabsList className="ctl-sheet-tab-list" aria-label={t("ui.characterPages")}>
       <TabsTrigger value="main">{t("ui.main")}</TabsTrigger><TabsTrigger value="forms">{t("werewolf.forms")}</TabsTrigger><TabsTrigger value="details">{t("ui.details")}</TabsTrigger><TabsTrigger value="combat">{t("ui.combat")}</TabsTrigger><TabsTrigger value="notes">{t("ui.notes")}</TabsTrigger>
-    </TabsList><TabsContent value="main" className="ctl-sheet-page"><MainSheet className="wtf-main-body" identity={identity} attributes={attributes} skills={skills} specificPowers={renownBlock} specificPowersTitle={t("werewolf.renown")} merits={meritList} aspirations={aspirationList} aspirationsAfterExperience lineSections={harmony} conditions={conditionList}
+    </TabsList><TabsContent value="main" className="ctl-sheet-page"><MainSheet className="wtf-main-body" layout={werewolfDesktopLayout.main} identityItems={identityFields} attributes={attributes} skills={skills} specificPowers={renownBlock} specificPowersTitle={t("werewolf.renown")} merits={meritList} aspirations={aspirationList} lineSections={harmony} conditions={conditionList}
       health={health} willpower={willpower} powerStat={powerStat} fuel={essence} stability={null} derived={displayedDerived} armorId={data.combat_armor} experience={experience}/></TabsContent>
-      <TabsContent value="forms" className="ctl-sheet-page wtf-forms-page">{forms}</TabsContent>
-      <TabsContent value="details" className="ctl-sheet-page powers-page">{anchors}{powers}</TabsContent>
-      <TabsContent value="combat" className="ctl-sheet-page powers-page"><CombatPage character={character} derived={derived} updateSheet={updateSheet}/></TabsContent>
-      <TabsContent value="notes" className="ctl-sheet-page powers-page">{notes}</TabsContent>
+      <TabsContent value="forms" className="ctl-sheet-page wtf-forms-page"><SheetLayoutDesktopPage id="werewolf-desktop-forms" definition={werewolfDesktopLayout.forms} items={{ forms }}/></TabsContent>
+      <TabsContent value="details" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-details" definition={werewolfDesktopLayout.details} items={{ anchors, powers }}/></TabsContent>
+      <TabsContent value="combat" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-combat" definition={werewolfDesktopLayout.combat} items={{ combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet}/> }}/></TabsContent>
+      <TabsContent value="notes" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-notes" definition={werewolfDesktopLayout.notes} items={{ notes }}/></TabsContent>
     </Tabs>
   </CharacterPaperShell>;
 }

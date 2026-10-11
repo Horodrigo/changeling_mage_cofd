@@ -23,6 +23,7 @@ The application currently supports the persisted game-line IDs `CofD`, `CtL`, `M
 - `app/character-builder-shell.tsx` and `app/builder/`: common creation shell and genuinely shared controls.
 - `app/workspace/character-paper-shell.tsx` and neutral workspace controls: common in-app sheet composition.
 - `app/workspace/character-lifecycle.ts`: import/open/save/update lifecycle and canonical routing through Core normalization plus the selected game-line rules.
+- `app/workspace/sheet-layout.tsx`: neutral Desktop/Mobile sheet-layout contracts and renderers; it composes line-owned content without interpreting mechanics.
 - `app/workspace/character-repository.ts`: browser-local character loading, crash-safe staging, debounced persistence, and collection mutation.
 - `app/data-transfer-panel.tsx`: shared, local import/export UI for characters and player-created Homebrews; character imports still delegate to the canonical lifecycle, while Homebrew bundles validate every line-owned collection before replacing local data.
 - `app/homebrews.tsx` plus line-owned Homebrew surfaces: shared source/item activation shell and game-line-specific editors.
@@ -80,6 +81,7 @@ A new line should be primarily additive. A Werewolf implementation should normal
 - focused tests;
 - one explicit lightweight registry entry;
 - one persisted game-line ID entry if the product supports saving that line.
+- `game-lines/werewolf/sheet-layout.desktop.ts` and `sheet-layout.mobile.ts`, defining that line's complete Desktop and Mobile sheet arrangements separately.
 
 It should not require broad edits to Mage, Changeling, catalog-service internals, generic Merit mechanics, Builder or Sheet shells, or the common persisted field list. Widespread changes are an architectural warning, not the expected cost of adding a line.
 
@@ -108,6 +110,10 @@ common Sheet shell   -> selected line Sheet
 - Changeling second-Regalia choices use canonical English identities with locale-only labels and Core/Supplement groups. Exclude the Seeming affinity first, then Kith affinities; selecting Darkling or Shadowsoul clears an already selected Mirror from the second-Regalia state, including editing/draft output, without restricting the Seeming/Kith combination.
 - The common Sheet owns neutral paper layout and reusable controls.
 - The common Main Sheet owns the shared first-page skeleton: identity/header, Attributes, Skills, Other Traits, Core/Line Traits, Derived Stats, and Experience. Game lines provide the slot content, labels, values, limits, and interactions for their own mechanics; they do not recreate the page geometry.
+- Every game line owns separate `game-lines/<line>/sheet-layout.desktop.ts` and `sheet-layout.mobile.ts` files. The Desktop file configures Main and every Desktop tab using ordered sections, columns, and item positions. The Mobile file configures Main groups and every Mobile tab using item order. Keep the platform definitions separate rather than interleaving them in one file. Stable IDs connect layout entries to the content slots rendered by that line. Keep secondary-tab Desktop coordinates explicit, and document each slot's content beside the layout entry and in the `Layout.md` inventory so contributors can identify both what they are moving and where it currently appears.
+- The shared `SheetLayoutDesktopPage`, `SheetLayoutSection`, and `SheetLayoutFlow` render only supplied slots. They do not create game-line content, choose tabs, or decide whether conditional content is eligible. Missing conditional slots are omitted; every supplied slot must have exactly one configured position/order.
+- The Main Sheet layout can reposition identity fields and complete sheet blocks among its sections without moving their rules or state. Skills is the explicit shared exception that also exposes its Mental/Physical/Social categories as orderable subitems. Other composite components must expose line-owned slots before their internal parts can be reordered.
+- Keep Mobile sheet order in the line-owned layout definition, not in positional CSS. `builder-mobile.css` remains Builder-only and is not replaced by sheet-layout configuration.
 - Each line Sheet owns its sections, mechanics, experience flow, and line-specific companions or powers.
 - Inactive line mechanics must not be instantiated or executed.
 - A future line supplies its own Builder and Sheet through the registry.
@@ -326,6 +332,7 @@ Werewolf form comparisons display only changed Attributes and their recalculated
 - Share controls only when behavior is truly common. A shared visual pattern does not imply a shared mechanical abstraction.
 - Shared CSS patterns use neutral names (`rule-power-*`, `creation-power-*`, `template-choice-*`, `affiliation-*`, `stored-resource-dot`). Changeling-specific Kith, Court, Regalia, Token, Entitlement, Clarity, and Goblin Debt selectors belong to its styles, including Homebrew editors. Reusing presentation does not move the underlying mechanics into Core.
 - Keep line-specific forms and interactions in the owning module.
+- Follow [Layout.md](./Layout.md) when creating or editing per-line sheet layouts. Update both the line's layout definition and the matching tab's slot map; document slot descriptions and positions in the tutorial inventory; update focused tests when the available slot set changes. Treat composite components as one slot unless the line explicitly exposes internal parts as separate slots.
 - Avoid giant switch components, universal section engines, and large optional-prop matrices.
 - Desktop page content uses the shared `1200px` maximum width and is centered. Full-width sections inside a page grid must explicitly span every grid column; do not rely on a generic `wide` class with unrelated selectors.
 - Use the shared `Button`, `Input`, `Textarea`, and select primitives for application controls. Standard controls are `36px` high; `32px` compact controls are reserved for card-level and inline actions. Controls sharing a row use the same height and align to the field baseline.
@@ -345,6 +352,7 @@ The user explicitly authorizes browser smoke tests during the active Werewolf go
 
 Tests protect current contracts and architectural boundaries, not removed compatibility promises. Cover:
 
+- each supported game line's Desktop section/column/item layout and Mobile tab/order layout, including slot identity, conditional omission, Skills-category ordering, and no positional-CSS dependency;
 - current schema validation and round-trip persistence;
 - line-owned normalization and synchronization;
 - dependency direction and lazy Builder/Sheet ownership;

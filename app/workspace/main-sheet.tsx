@@ -3,6 +3,7 @@ import { useLanguage } from "@/lib/i18n";
 import { ResourceTrack } from "./character-paper-shell";
 import { DotValue, SheetHeading } from "./sheet-primitives";
 import { derivedTraitsWithArmor } from "@/lib/combat-equipment";
+import { SheetLayoutDesktopPage, type MainSheetDesktopLayout } from "./sheet-layout";
 
 export function MainPowerStat({ label, value, summary }: { label: string; value: number; summary?: string }) {
   return <><div className="cod-main-power-stat"><strong>{label}</strong><DotValue value={value} max={10} singleRow /></div>{summary && <p className="cod-main-power-summary">{summary}</p>}</>;
@@ -27,7 +28,7 @@ export function MainFuel({ label, current, maximum, onChange, storedCurrent, sto
  * model: each game line owns the meaning and controls inside its slot.
  */
 export function MainSheet({
-  identity,
+  identityItems,
   attributes,
   skills,
   specificPowers,
@@ -45,11 +46,10 @@ export function MainSheet({
   experience,
   specificPowersTitle,
   lineSections,
-  conditionsAfterSkills = false,
-  aspirationsAfterExperience = false,
+  layout,
   className = "",
 }: {
-  identity: ReactNode;
+  identityItems: Readonly<Record<string, ReactNode>>;
   attributes: ReactNode;
   skills: ReactNode;
   specificPowers: ReactNode;
@@ -67,8 +67,7 @@ export function MainSheet({
   experience: ReactNode;
   specificPowersTitle?: ReactNode;
   lineSections?: ReactNode;
-  conditionsAfterSkills?: boolean;
-  aspirationsAfterExperience?: boolean;
+  layout: MainSheetDesktopLayout;
   className?: string;
 }) {
   const { t } = useLanguage();
@@ -95,51 +94,43 @@ export function MainSheet({
     {aspirations}
   </div>;
 
-  return <div className={`cod-main-sheet ${className}`}>
-    <section className="cod-main-identity" data-slot="identity">{identity}</section>
-    <section className="cod-main-attributes" data-slot="attributes">{attributes}</section>
+  const bodyItems: Record<string, ReactNode> = {
+    skills: <div data-slot="skills">{skills}</div>,
+    conditions: conditionsSection,
+    specificPowers: <div data-slot="specific-powers">
+      {specificPowersTitle !== null && <SheetHeading>{specificPowersTitle ?? t("ui.specificPowers")}</SheetHeading>}
+      {specificPowers}
+    </div>,
+    merits: <div data-slot="merits">
+      <SheetHeading className="main-sheet-merits-heading">{t("ui.merits")}</SheetHeading>
+      {merits}
+    </div>,
+    lineSections: lineSections === undefined ? null : <div data-slot="line-sections">{lineSections}</div>,
+    aspirations: aspirationsSection,
+    obsessions: obsessions === undefined ? null : <div data-slot="obsessions"><SheetHeading>{t("ui.obsessions")}</SheetHeading>{obsessions}</div>,
+    health: <div data-slot="health">{health}</div>,
+    willpower: <div data-slot="willpower">{willpower}</div>,
+    powerStat: <div data-slot="power-stat">{powerStat}</div>,
+    fuel: <div data-slot="fuel">{fuel}</div>,
+    stability: <div data-slot="stability">{stability}</div>,
+    derived: <section className="cod-main-derived" data-slot="derived-stats">
+      <SheetHeading>{t("ui.derivedStats")}</SheetHeading>
+      <div className="cod-main-derived-grid">{derivedRows.map(([label, value]) => <div key={String(label)}><span>{label}</span><strong>{String(value)}</strong></div>)}</div>
+    </section>,
+    experience: <section className="cod-main-experience" data-slot="experience">{experience}</section>,
+  };
 
-    <div className="cod-main-columns official-sheet-body">
-      <section className="cod-main-skills sheet-skills-column" data-slot="skills">
-        {skills}
-        {conditionsAfterSkills && conditionsSection}
-      </section>
-
-      <section className="cod-main-other sheet-center-column" data-slot="other-traits">
-        <div data-slot="specific-powers">
-          {specificPowersTitle !== null && <SheetHeading>{specificPowersTitle ?? t("ui.specificPowers")}</SheetHeading>}
-          {specificPowers}
-        </div>
-
-        <div data-slot="merits">
-          <SheetHeading className="main-sheet-merits-heading">
-            {t("ui.merits")}
-          </SheetHeading>
-          {merits}
-        </div>
-
-        {lineSections !== undefined && <div data-slot="line-sections">{lineSections}</div>}
-
-        {!aspirationsAfterExperience && aspirationsSection}
-        {obsessions !== undefined && <div data-slot="obsessions"><SheetHeading>{t("ui.obsessions")}</SheetHeading>{obsessions}</div>}
-        {!conditionsAfterSkills && conditionsSection}
-      </section>
-
-      <section className="cod-main-core sheet-right-column" data-slot="core-line-traits">
-        <div data-slot="health">{health}</div>
-        <div data-slot="willpower">{willpower}</div>
-        <div data-slot="power-stat">{powerStat}</div>
-        <div data-slot="fuel">{fuel}</div>
-        <div data-slot="stability">{stability}</div>
-
-        <section className="cod-main-derived" data-slot="derived-stats">
-          <SheetHeading>{t("ui.derivedStats")}</SheetHeading>
-          <div className="cod-main-derived-grid">{derivedRows.map(([label, value]) => <div key={String(label)}><span>{label}</span><strong>{String(value)}</strong></div>)}</div>
-        </section>
-
-        <section className="cod-main-experience" data-slot="experience">{experience}</section>
-        {aspirationsAfterExperience && <section className="cod-main-aspirations">{aspirationsSection}</section>}
-      </section>
-    </div>
-  </div>;
+  const layoutItems: Readonly<Record<string, ReactNode>> = {
+    ...identityItems,
+    attributes: <div data-slot="attributes">{attributes}</div>,
+    ...bodyItems,
+  };
+  return (
+    <SheetLayoutDesktopPage
+      id="main-sheet"
+      definition={{ sections: layout.desktopSections }}
+      items={layoutItems}
+      className={`cod-main-sheet ${className}`}
+    />
+  );
 }

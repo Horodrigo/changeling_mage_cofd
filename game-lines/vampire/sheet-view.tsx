@@ -114,6 +114,9 @@ import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 import { activeVampireItems, activeVampirePowers } from "./homebrew-catalog";
 import { mergeVampirePowers, mergeVampireReference } from "./catalog-homebrews";
 import { useVampireCatalogHomebrews } from "./use-catalog-homebrews";
+import { vampireDesktopLayout } from "./sheet-layout.desktop";
+import { vampireMobileLayout } from "./sheet-layout.mobile";
+import { SheetCategoryLayout, SheetLayoutDesktopPage, SheetLayoutFlow, SheetLayoutSection } from "@/app/workspace/sheet-layout";
 
 type EditableRecord = {
   id: string;
@@ -1273,65 +1276,29 @@ export function VampireCharacterPaper({
       : setDesktopTab("companions");
   const setState = (key: string, value: unknown) =>
     updateState({ ...character.current_state, [key]: value });
-  const identity = (
-    <section className="sheet-identity-grid">
-      <SheetField label={t("ui.name")} value={character.character.name} />
-      <SheetField
-        label={t("sheet.mask")}
-        value={localized(mask, locale)}
-        tooltip={mask && vampireAnchorPresentation(mask, locale).singleWillpower}
-      />
-      <SheetField label={t("sheet.clan")} value={localized(clan, locale)} />
-      <SheetField label={t("ui.player")} value={character.character.player} />
-      <SheetField
-        label={t("sheet.dirge")}
-        value={localized(dirge, locale)}
-        tooltip={dirge && vampireAnchorPresentation(dirge, locale).allWillpower}
-      />
-      <SheetField
-        label={t("sheet.covenant")}
-        value={covenants.map((item) => localized(item, locale)).join(" · ")}
-      />
-      {!isMobile && (
-        <SheetField
-          label={t("ui.chronicle")}
-          value={character.character.chronicle}
-        />
-      )}
-      <SheetField label={t("ui.concept")} value={character.character.concept} />
-      <BloodlineSheetField
-        value={
-          bloodline?.name ??
-          (hasBloodline ? String(data.bloodline_id) : t("ui.join"))
-        }
-        onOpen={openBloodline}
-      />
-    </section>
-  );
+  const identityItems = {
+    name: <SheetField label={t("ui.name")} value={character.character.name}/>,
+    mask: <SheetField label={t("sheet.mask")} value={localized(mask, locale)} tooltip={mask && vampireAnchorPresentation(mask, locale).singleWillpower}/>,
+    clan: <SheetField label={t("sheet.clan")} value={localized(clan, locale)}/>,
+    player: <SheetField label={t("ui.player")} value={character.character.player}/>,
+    dirge: <SheetField label={t("sheet.dirge")} value={localized(dirge, locale)} tooltip={dirge && vampireAnchorPresentation(dirge, locale).allWillpower}/>,
+    covenant: <SheetField label={t("sheet.covenant")} value={covenants.map((item) => localized(item, locale)).join(" · ")}/>,
+    chronicle: !isMobile ? <SheetField label={t("ui.chronicle")} value={character.character.chronicle}/> : null,
+    concept: <SheetField label={t("ui.concept")} value={character.character.concept}/>,
+    bloodline: <BloodlineSheetField value={bloodline?.name ?? (hasBloodline ? String(data.bloodline_id) : t("ui.join"))} onOpen={openBloodline}/>,
+  };
+  const identity = <SheetLayoutSection id={isMobile ? "identity-mobile" : "identity"} definition={isMobile ? vampireMobileLayout.main.identity : vampireDesktopLayout.main.identity} items={identityItems} className="sheet-identity-grid"/>;
   const attributes = (
     <>
       <SheetHeading>{t("ui.attributes")}</SheetHeading>
-      <div
-        className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"}
-      >
-        {Object.entries(ATTRIBUTES).map(([category, names]) => (
-          <TraitBlock
-            key={category}
-            title={category}
-            names={names}
-            values={character.attributes}
-            compactNames={isMobile}
-          />
-        ))}
-      </div>
+      <SheetCategoryLayout id={isMobile ? "mobile-attributes" : "attributes"} definition={isMobile ? vampireMobileLayout.main.attributes : vampireDesktopLayout.main.attributes} className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"} render={category => <TraitBlock key={category} title={category} names={ATTRIBUTES[category as keyof typeof ATTRIBUTES]} values={character.attributes} compactNames={isMobile}/>}/>
     </>
   );
   const skills = (
     <>
       <SheetHeading>{t("ui.skills")}</SheetHeading>
 
-      <div className={isMobile ? "mobile-trait-stack" : "vampire-skill-grid"}>
-        {Object.entries(SKILLS).map(([category, names]) => (
+      <SheetCategoryLayout id={isMobile ? "mobile-skills" : "skills"} definition={isMobile ? vampireMobileLayout.main.skills : vampireDesktopLayout.main.skills} className={isMobile ? "mobile-trait-stack" : "vampire-skill-grid"} render={category => (
           <TraitBlock
             key={category}
             title={category}
@@ -1340,22 +1307,16 @@ export function VampireCharacterPaper({
                 ? t("ui.message3IfUntrained")
                 : t("ui.message1IfUntrained")
             }
-            names={names}
+            names={SKILLS[category as keyof typeof SKILLS]}
             values={character.skills}
             specialties={character.specializations.map((item) =>
               typeof item === "string" ? { skill: "", name: item } : vampireShadowCultSpecialty(item, character.merits, String(data.covenant_id ?? ""), locale, merits),
             )}
           />
-        ))}
-      </div>
+        )}/>
     </>
   );
-  const stats = (
-    <>
-      {attributes}
-      {skills}
-    </>
-  );
+  const stats = <SheetLayoutFlow id="vampire-mobile-stats" definition={vampireMobileLayout.stats} items={{ attributes, skills }}/>;
   const humanitySection = (
     <HumanityTrack
       character={character}
@@ -1396,31 +1357,13 @@ export function VampireCharacterPaper({
         ) ||
         resolveMeritDefinition(item, merits)?.id === "core-2ed:mystery-cult-initiation"),
   );
-  const summary = (
-    <>
-      {identity}
-      <SheetHeading>{t("ui.aspirations")}</SheetHeading>
-      <EditableList
-        values={aspirations}
-        minimum={3}
-        maximum={3}
-        placeholder={t("ui.writeAnAspiration")}
-        onChange={(value) =>
-          updateLineData(updateSheet, character, "aspirations", value)
-        }
-      />
-      <SheetHeading>{t("ui.experience")}</SheetHeading>
-      <VampireExperiencePanel
-        character={character}
-        updateSheet={updateSheet}
-        catalogs={catalogs}
-      />
-    </>
-  );
-  const powersPage = (
-    <>
-      {isMobile && (
-        <PowerResource
+  const summary = <SheetLayoutFlow id="vampire-mobile-summary" definition={vampireMobileLayout.summary} items={{
+    identity,
+    aspirations: <><SheetHeading>{t("ui.aspirations")}</SheetHeading><EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value)}/></>,
+    experience: <><SheetHeading>{t("ui.experience")}</SheetHeading><VampireExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/></>,
+  }}/>;
+  const vampirePowersItems = {
+    bloodPotencyResource: isMobile ? <PowerResource
           name={t("ui.bloodPotency")}
           rating={bloodPotency}
           resourceName="Vitae"
@@ -1428,32 +1371,28 @@ export function VampireCharacterPaper({
           maximum={vitaeMaximum}
           perTurn={limits.vitaePerTurn}
           onChange={(value) => setState("vitae_current", value)}
-        />
-      )}
-      <SheetHeading>{t("ui.disciplines")}</SheetHeading>
-      <DisciplineCards
+        /> : null,
+    disciplines: <><SheetHeading>{t("ui.disciplines")}</SheetHeading><DisciplineCards
         character={character}
         updateSheet={updateSheet}
         powers={powers}
         disciplines={disciplines}
         coilRatings={coilRatings}
         locale={locale}
-        onRaiseFamiliar={openCompanions}
-      />
-      {Number(disciplines.Protean ?? 0) >= 2 && (
+        onRaiseFamiliar={openCompanions}/></>,
+    proteanChoices: Number(disciplines.Protean ?? 0) >= 2 ? (
         <ProteanChoicesEditor
           character={character}
           updateSheet={updateSheet}
           rating={Number(disciplines.Protean ?? 0)}
         />
-      )}
-      <RitualDisciplines
+      ) : null,
+    ritualDisciplines: <RitualDisciplines
         powers={powers}
         bloodSorcery={bloodSorcery}
-        locale={locale}
-      />
-      <PurchasedPowers character={character} powers={powers} locale={locale} meritCatalog={merits} />
-      <TricksOfTheDamned
+        locale={locale}/>,
+    purchasedPowers: <PurchasedPowers character={character} powers={powers} locale={locale} meritCatalog={merits}/>,
+    tricks: <TricksOfTheDamned
         character={character}
         bloodPotency={bloodPotency}
         effectiveSenseBloodPotency={frenzySenseBloodPotency}
@@ -1468,64 +1407,61 @@ export function VampireCharacterPaper({
         ignoresDaysleepWithBlush={ignoresDaysleepWithBlush}
         ignoresLethargicWithBlush={ignoresLethargicWithBlush}
         fireDowngraded={hasRuleEffect("fire-damage")}
-        resilience={Number(disciplines.Resilience ?? 0)}
-      />
-    </>
-  );
-  const detailsPage = (
-    <>
-      {clan?.id === "hollow-mekhet" && <HollowKaCard data={data.hollow_ka} />}
+        resilience={Number(disciplines.Resilience ?? 0)}/>,
+  };
+  const powersPage = isMobile
+    ? <SheetLayoutFlow id="vampire-mobile-powers" definition={vampireMobileLayout.powers} items={vampirePowersItems}/>
+    : <SheetLayoutDesktopPage id="vampire-desktop-powers" definition={vampireDesktopLayout.powers} items={vampirePowersItems}/>;
+  const expandedMeritsSection = <>
+      {clan?.id === "hollow-mekhet" && <HollowKaCard data={data.hollow_ka}/>}
       <SheetHeading>{t("ui.expandedMerits")}</SheetHeading>
       <VampireExpandedMeritList
         character={character}
         updateSheet={updateSheet}
         merits={expandedMerits}
         catalog={merits}
-        locale={locale}
-      />
-      {isMobile && (
-        <>
-          {humanitySection}
-          {banesSection}
-          <SheetHeading>{t("ui.conditions")}</SheetHeading>
-          <ConditionManager
-            selected={conditions}
-            catalog={conditionCatalog}
-            onChange={(value) => setState("conditions", value)}
-          />
-        </>
-      )}
-      {!isMobile && powersPage}
-    </>
-  );
-  const combat = (
-    <>
-      <div className="vampire-track-grid">
-        <section>
-          <SheetHeading>{t("ui.health")}</SheetHeading>
-          <HealthTrack
-            health={combatHealth}
-            damage={combatDamage}
-            onChange={(value) => setState("health_damage", value)}
-          />
-        </section>
-        <section>
-          <SheetHeading>{t("ui.willpower")}</SheetHeading>
-          <ResourceTrack
-            label={t("ui.willpower")}
-            current={currentWillpower}
-            maximum={willpower}
-            onChange={(value) => setState("willpower_current", value)}
-          />
-        </section>
-      </div>
+        locale={locale}/>
+    </>;
+  const vampireMobileDetailsItems = {
+    expandedMerits: expandedMeritsSection,
+    humanity: humanitySection,
+    banes: banesSection,
+    conditions: <><SheetHeading>{t("ui.conditions")}</SheetHeading><ConditionManager
+      selected={conditions}
+      catalog={conditionCatalog}
+      onChange={(value) => setState("conditions", value)}/></>,
+  };
+  const vampireDesktopDetailsItems = { expandedMerits: expandedMeritsSection, powers: powersPage };
+  const detailsPage = isMobile
+    ? <SheetLayoutFlow id="vampire-mobile-details" definition={vampireMobileLayout.details} items={vampireMobileDetailsItems}/>
+    : <SheetLayoutDesktopPage id="vampire-desktop-details" definition={vampireDesktopLayout.details} items={vampireDesktopDetailsItems}/>;
+  const healthTrack = <section>
+    <SheetHeading>{t("ui.health")}</SheetHeading>
+    <HealthTrack
+      health={combatHealth}
+      damage={combatDamage}
+      onChange={(value) => setState("health_damage", value)}
+    />
+  </section>;
+  const willpowerTrack = <section>
+    <SheetHeading>{t("ui.willpower")}</SheetHeading>
+    <ResourceTrack
+      label={t("ui.willpower")}
+      current={currentWillpower}
+      maximum={willpower}
+      onChange={(value) => setState("willpower_current", value)}
+    />
+  </section>;
+  const combatPage = (
       <CombatPage
         character={character}
         derived={combatDerived}
         updateSheet={updateSheet}
         tiltCatalog={[...TILTS, ...(powers.tilts ?? [])]}
       />
-      <FrenzyPanel
+  );
+  const frenzyPanel = (
+    <FrenzyPanel
         setState={setState}
         bloodPotency={bloodPotency}
         frenzyActive={frenzyActive}
@@ -1546,10 +1482,21 @@ export function VampireCharacterPaper({
           combatDamage.length >= combatHealth &&
           !combatDamage.includes("aggravated")
         }
-      />
-    </>
+    />
   );
-  const companionsPage =
+  const combat = isMobile
+    ? <SheetLayoutFlow id="vampire-mobile-combat" definition={vampireMobileLayout.combat} items={{
+        health: healthTrack,
+        willpower: willpowerTrack,
+        combat: combatPage,
+        frenzy: frenzyPanel,
+      }}/>
+    : <SheetLayoutDesktopPage id="vampire-desktop-combat" definition={vampireDesktopLayout.combat} items={{
+        tracks: <div className="vampire-track-grid">{healthTrack}{willpowerTrack}</div>,
+        combat: combatPage,
+        frenzy: frenzyPanel,
+      }}/>;
+  const companionsContent =
     Number(disciplines.Animalism ?? 0) >= 2 ? (
       <VampireCompanionPage
         character={character}
@@ -1557,7 +1504,11 @@ export function VampireCharacterPaper({
         bloodPotency={bloodPotency}
       />
     ) : null;
-  const notesPage = (
+  const companionsPage = companionsContent ? isMobile
+    ? <SheetLayoutFlow id="vampire-mobile-companions" definition={vampireMobileLayout.companions} items={{ companions: companionsContent }}/>
+    : <SheetLayoutDesktopPage id="vampire-desktop-companions" definition={vampireDesktopLayout.companions} items={{ companions: companionsContent }}/>
+    : null;
+  const bloodBonds = (
     <>
       <SheetHeading>{t("ui.bloodBonds")}</SheetHeading>
       <StructuredRecords
@@ -1609,11 +1560,16 @@ export function VampireCharacterPaper({
           )}
         </div>
       )}
-      <SheetHeading>{t("ui.notes")}</SheetHeading>
-      <NotesArea value={notes} onChange={(value) => setState("notes", value)} />
     </>
   );
-  const bloodlinesPage = (
+  const notesItems = {
+      bloodBonds: bloodBonds,
+      notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></>,
+  };
+  const notesPage = isMobile
+    ? <SheetLayoutFlow id="vampire-mobile-notes" definition={vampireMobileLayout.notes} items={notesItems}/>
+    : <SheetLayoutDesktopPage id="vampire-desktop-notes" definition={vampireDesktopLayout.notes} items={notesItems}/>;
+  const bloodlinesPageContent = (
     <BloodlinePage
       character={character}
       updateSheet={updateSheet}
@@ -1623,6 +1579,9 @@ export function VampireCharacterPaper({
       onRemoved={closeBloodline}
     />
   );
+  const bloodlinesPage = isMobile
+    ? <SheetLayoutFlow id="vampire-mobile-bloodlines" definition={vampireMobileLayout.bloodlines} items={{ bloodlines: bloodlinesPageContent }}/>
+    : <SheetLayoutDesktopPage id="vampire-desktop-bloodlines" definition={vampireDesktopLayout.bloodlines} items={{ bloodlines: bloodlinesPageContent }}/>;
   const bloodlineJoinDialog = (
     <BloodlineJoinDialog
       open={bloodlineJoinOpen}
@@ -1638,11 +1597,10 @@ export function VampireCharacterPaper({
   const mainBody = (
     <MainSheet
       className="vampire-main-body"
-      identity={identity}
+      layout={vampireDesktopLayout.main}
+      identityItems={identityItems}
       attributes={attributes}
       skills={skills}
-      conditionsAfterSkills
-      aspirationsAfterExperience
       specificPowers={
         <div className="vampire-main-disciplines">
           {disciplineNames

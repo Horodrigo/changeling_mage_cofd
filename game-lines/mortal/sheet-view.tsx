@@ -25,6 +25,9 @@ import { createRandomId } from "@/lib/random-id";
 import { normalizeDamage } from "@/lib/resource-rules";
 import { boundedIntegrity, mortalBreakingPointPool, mortalDerived, mortalIntegrityModifier } from "./creation-rules";
 import { MortalExperiencePanel } from "./experience-panel";
+import { mortalDesktopLayout } from "./sheet-layout.desktop";
+import { mortalMobileLayout } from "./sheet-layout.mobile";
+import { SheetCategoryLayout, SheetLayoutDesktopPage, SheetLayoutFlow, SheetLayoutSection } from "@/app/workspace/sheet-layout";
 import { mortalMeritContextForSheet } from "./rules";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { COMMON_MERIT_CONFIGURATIONS } from "@/app/builder/common-merit-configurations";
@@ -78,19 +81,22 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
     updateSheet(next);
   };
 
-  const identity = <section className="sheet-identity-grid">
-    <SheetField label={t("ui.characterName")} value={character.character.name} />
-    <SheetField label={t("ui.virtue")} value={data.virtue} />
-    <SheetField label={t("ui.chronicle")} value={character.character.chronicle} />
-    <SheetField label={t("ui.age")} value={data.age} />
-    <SheetField label={t("ui.vice")} value={data.vice} />
-    <SheetField label={t("ui.faction")} value={data.faction} />
-    <SheetField label={t("ui.player")} value={character.character.player} />
-    <SheetField label={t("ui.concept")} value={character.character.concept} />
-    <SheetField label={t("ui.groupName")} value={data.group_name} />
-  </section>;
-  const attributes = <><SheetHeading className="cofd-attributes-heading">{t("ui.attributes")}</SheetHeading><div className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"}>{Object.entries(ATTRIBUTES).map(([category, names]) => <TraitBlock key={category} title={category} names={names} values={character.attributes} compactNames={isMobile} />)}</div></>;
-  const skills = <><SheetHeading>{t("ui.skills")}</SheetHeading><div className={isMobile ? "mobile-trait-stack" : "mortal-skill-stack"}>{Object.entries(SKILLS).map(([category, names]) => <TraitBlock key={category} title={category} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")} names={names} values={character.skills} specialties={character.specializations} />)}</div></>;
+  const identityFields = {
+    name: <SheetField label={t("ui.characterName")} value={character.character.name} />,
+    virtue: <SheetField label={t("ui.virtue")} value={data.virtue} />,
+    chronicle: <SheetField label={t("ui.chronicle")} value={character.character.chronicle} />,
+    age: <SheetField label={t("ui.age")} value={data.age} />,
+    vice: <SheetField label={t("ui.vice")} value={data.vice} />,
+    faction: <SheetField label={t("ui.faction")} value={data.faction} />,
+    player: <SheetField label={t("ui.player")} value={character.character.player} />,
+    concept: <SheetField label={t("ui.concept")} value={character.character.concept} />,
+    group: <SheetField label={t("ui.groupName")} value={data.group_name} />,
+  };
+  const identityMobile = <SheetLayoutSection id="identity-mobile" definition={mortalMobileLayout.main.identity} items={identityFields} className="sheet-identity-grid" />;
+  const attributeGrid = (layout: typeof mortalDesktopLayout.main.attributes, compactNames: boolean) => <SheetCategoryLayout id={compactNames ? "mobile-attributes" : "attributes"} definition={layout} className={compactNames ? "mobile-attribute-grid" : "official-trait-grid"} render={category => <TraitBlock key={category} title={category} names={ATTRIBUTES[category as keyof typeof ATTRIBUTES]} values={character.attributes} compactNames={compactNames} />} />;
+  const skillGrid = (layout: typeof mortalDesktopLayout.main.skills, compact: boolean) => <SheetCategoryLayout id={compact ? "mobile-skills" : "skills"} definition={layout} className={compact ? "mobile-trait-stack" : "mortal-skill-stack"} render={category => <TraitBlock key={category} title={category} subtitle={category === "Mental" ? t("ui.message3IfUntrained") : t("ui.message1IfUntrained")} names={SKILLS[category as keyof typeof SKILLS]} values={character.skills} specialties={character.specializations} />} />;
+  const attributes = <><SheetHeading className="cofd-attributes-heading">{t("ui.attributes")}</SheetHeading>{attributeGrid(mortalDesktopLayout.main.attributes, false)}</>;
+  const skills = <><SheetHeading>{t("ui.skills")}</SheetHeading>{skillGrid(mortalDesktopLayout.main.skills, false)}</>;
   const merits = <MeritList character={character} catalog={meritCatalog} updateSheet={updateSheet} />;
   const aspirationList = <EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => setLineValue("aspirations", value)} />;
   const breakingPointList = <EditableList values={breakingPoints} minimum={5} placeholder={t("ui.writeBreakingPoint")} onChange={(value) => setLineValue("breaking_points", value)} />;
@@ -107,11 +113,22 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
       { value: "combat", label: t("ui.combat") },
       { value: "notes", label: t("ui.notes") },
     ]}>{{
-      summary: <>{identity}{healthTrack}{willpowerTrack}{integrityTrack}<SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}<MortalExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} /></>,
-      stats: <>{attributes}{skills}<SheetHeading>{t("ui.merits")}</SheetHeading>{merits}</>,
-      details: <><SheetHeading>{t("ui.breakingPoints")}</SheetHeading>{breakingPointList}<SheetHeading>{t("ui.conditions")}</SheetHeading>{conditionList}</>,
-      combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet} />,
-      notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)} /></>,
+      summary: <SheetLayoutFlow id="mortal-mobile-summary" definition={mortalMobileLayout.summary} items={{
+        identity: identityMobile, health: healthTrack, willpower: willpowerTrack, integrity: integrityTrack,
+        aspirations: <><SheetHeading>{t("ui.aspirations")}</SheetHeading>{aspirationList}</>,
+        experience: <MortalExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs}/>,
+      }}/>,
+      stats: <SheetLayoutFlow id="mortal-mobile-stats" definition={mortalMobileLayout.stats} items={{
+        attributes: <><SheetHeading className="cofd-attributes-heading">{t("ui.attributes")}</SheetHeading>{attributeGrid(mortalMobileLayout.main.attributes, true)}</>,
+        skills: skillGrid(mortalMobileLayout.main.skills, true),
+        merits: <><SheetHeading>{t("ui.merits")}</SheetHeading>{merits}</>,
+      }}/>,
+      details: <SheetLayoutFlow id="mortal-mobile-details" definition={mortalMobileLayout.details} items={{
+        breakingPoints: <><SheetHeading>{t("ui.breakingPoints")}</SheetHeading>{breakingPointList}</>,
+        conditions: <><SheetHeading>{t("ui.conditions")}</SheetHeading>{conditionList}</>,
+      }}/>,
+      combat: <SheetLayoutFlow id="mortal-mobile-combat" definition={mortalMobileLayout.combat} items={{ combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet}/> }}/>,
+      notes: <SheetLayoutFlow id="mortal-mobile-notes" definition={mortalMobileLayout.notes} items={{ notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></> }}/>,
     }}</SwipeableSheetTabs>
   </CharacterPaperShell>;
 
@@ -125,7 +142,7 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
       <TabsContent value="main" className="ctl-sheet-page">
         <MainSheet
           className="mortal-main-body"
-          identity={identity}
+          identityItems={identityFields}
           attributes={attributes}
           skills={skills}
           specificPowers={null}
@@ -142,10 +159,11 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, cata
           armorId={data.combat_armor}
           experience={<MortalExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />}
           lineSections={<><SheetHeading>{t("ui.breakingPoints")}</SheetHeading>{breakingPointList}</>}
+          layout={mortalDesktopLayout.main}
         />
       </TabsContent>
-      <TabsContent value="combat" className="ctl-sheet-page powers-page"><CombatPage character={character} derived={derived} updateSheet={updateSheet} /></TabsContent>
-      <TabsContent value="notes" className="ctl-sheet-page powers-page"><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)} /></TabsContent>
+      <TabsContent value="combat" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="mortal-desktop-combat" definition={mortalDesktopLayout.combat} items={{ combat: <CombatPage character={character} derived={derived} updateSheet={updateSheet}/> }}/></TabsContent>
+      <TabsContent value="notes" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="mortal-desktop-notes" definition={mortalDesktopLayout.notes} items={{ notes: <><SheetHeading>{t("ui.notes")}</SheetHeading><NotesArea value={notes} onChange={(value) => setState("notes", value)}/></> }}/></TabsContent>
     </Tabs>
   </CharacterPaperShell>;
 }

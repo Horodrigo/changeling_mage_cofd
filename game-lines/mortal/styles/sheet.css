@@ -51,18 +51,25 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
 .line-choice button.mortal-line-choice { border-color:#aec5d2; background:linear-gradient(145deg,#f5fafc,#e7f0f5); }
 .line-choice button.mortal-line-choice:hover { border-color:#477d9d; }
 .cod-sheet.cofd-sheet {
-  --sheet-accent:#315e7a;
-  --sheet-ink:#253b47;
-  background-color:#e8edf0;
-  background-image:url("/game-lines/mortal/images/paper-texture.webp");
-  background-repeat:repeat;
-  background-size:1024px 1024px;
+  --sheet-accent: #315e7a;
+  --sheet-ink: #253b47;
+
+  background-color: #e8edf0;
+  background-image:
+    linear-gradient(
+      rgba(232, 237, 240, 0.65),
+      rgba(232, 237, 240, 0.65)
+    ),
+    url("/game-lines/mortal/images/paper-texture.webp");
+
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 100%, 1024px 1024px;
 }
 .cofd-sheet::after {
   background-image:url("/game-lines/mortal/images/background-mortal.webp");
   background-position:center 46%;
   background-size:min(54%,600px) auto;
-  opacity:.20;
+  opacity:.10;
 }
 .cofd-urban-frame {
   position:absolute !important;
@@ -125,12 +132,38 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
 .cofd-sheet .official-heading.cofd-attributes-heading::after { right:0; transform:translateY(-50%) scaleX(-1); }
 .cofd-sheet .official-heading.cofd-attributes-heading span { position:relative; z-index:1; }
 .cofd-sheet .cod-sheet-title { justify-content:center; min-height:78px; padding-bottom:16px; }
-.cofd-sheet .cod-sheet-title .cofd-title-mark { display:grid; grid-template-columns:1fr auto 1fr; align-items:baseline; gap:10px; width:min(100%,720px); color:var(--sheet-ink); }
+.cofd-sheet .cod-sheet-title .cofd-title-mark {
+  display: grid;
+  grid-template-columns: 1.2fr 35px 1.4fr;
+  align-items: center;
+  gap: 6px;
+  width: min(100%, 800px);
+}
 .cofd-sheet .cofd-title-mark span,
 .cofd-sheet .cofd-title-mark strong { font-size:clamp(25px,3.4vw,42px); line-height:.9; letter-spacing:.12em; }
-.cofd-sheet .cofd-title-mark span { text-align:right; }
-.cofd-sheet .cofd-title-mark strong { text-align:left; }
-.cofd-sheet .cofd-title-mark small { font-size:clamp(13px,1.5vw,18px); font-style:italic; text-transform:none; }
+.cofd-sheet .cofd-title-mark span {
+  font-size: clamp(29px, 3.6vw, 46px);
+  line-height: 1.1;
+  letter-spacing: .12em;
+  text-align: left;
+  transform: translateX(26px);
+}
+.cofd-sheet .cofd-title-mark small {
+  font-size: 16px;
+  font-style: italic;
+  text-transform: none;
+  align-self: end;
+  transform: translateY(10px);
+  transform: translateX(26px);
+  text-align: center;
+}
+.cofd-sheet .cofd-title-mark strong {
+  font-size: clamp(29px, 3.6vw, 46px);
+  line-height: 1.1;
+  letter-spacing: .12em;
+  text-align: left;
+  transform: translateX(90px);
+}
 .cofd-sheet .official-trait-subtitle,
 .cofd-sheet .official-trait-line small { color:#17384c; font-weight:600; text-shadow:0 1px 0 #fff9; }
 .cofd-sheet :is(small,em,.combat-note,.combat-source,.cod-main-derived-grid span,.tracker-meta span,.tracker-help) { color:#17384c; text-shadow:0 1px 0 #fff9; }
@@ -313,14 +346,9 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
 /* Typewriter headings and character name; rules and numeric tracks keep their reading font. */
 .cofd-sheet .official-heading,
 .cofd-sheet .cofd-title-mark span,
-.cofd-sheet .sheet-identity-grid .official-field:first-child strong {
+.cofd-sheet .cofd-title-mark strong, 
+.cofd-sheet .sheet-identity-grid [data-sheet-layout-item="name"] .official-field strong {
   font-family: "Mortal Typewriter", Georgia, serif;
   font-weight: 400;
   font-style: normal;
-}
-/* Only the fixed Darkness/Trevas word uses this face: authored text may contain missing accents. */
-.cofd-sheet .cofd-title-mark strong {
-  font-family: "Mortal Horror", Georgia, serif;
-  font-weight: 400;
-  letter-spacing: .04em;
 }
