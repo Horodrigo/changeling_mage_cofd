@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
+import type { CharacterNarrativePatch } from "@/lib/core/character/narrative-update";
 import type { CatalogSnapshot } from "./catalog-groups";
 
 /** React-specific contracts are kept separate from the neutral rules contract. */
@@ -18,6 +19,7 @@ export type GameLineSheetProps = {
   character: CharacterSheet;
   updateState: (state: Record<string, unknown>) => void;
   updateSheet: (sheet: CharacterSheet) => void;
+  updateNarrative?: (patch: CharacterNarrativePatch) => void;
   catalogs?: CatalogSnapshot;
 };
 

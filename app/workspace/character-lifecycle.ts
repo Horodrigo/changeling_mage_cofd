@@ -4,6 +4,8 @@ import {
   normalizeGameLineCharacter,
 } from "@/game-lines/registry/game-line-registry";
 
+export { applyNarrativePatch as updateCharacterNarrative } from "@/lib/core/character/narrative-update";
+
 export type CharacterLifecycleErrorCode =
   | "unsupported-schema"
   | "invalid-character"
