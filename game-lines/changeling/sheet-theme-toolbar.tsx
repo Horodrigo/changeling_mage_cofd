@@ -31,7 +31,7 @@ export default function ChangelingSheetThemeToolbar() {
     void setDeviceValue(CHANGELING_THEME_STORAGE_KEY, id).catch(() => setError(true));
   }
   return <>
-    <style>{sheetThemeCss(theme)}</style>
+    <style data-changeling-sheet-theme={themeId}>{sheetThemeCss(theme)}</style>
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button type="button" className="sheet-theme-trigger" title={t("ui.changelingSheetTheme")} aria-label={t("ui.changelingSheetThemeCurrent", { theme: name })}>

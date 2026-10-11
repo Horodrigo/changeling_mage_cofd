@@ -63,3 +63,20 @@ test("only Changeling registers the independent lazy toolbar, beside language wi
   assert.match(css, /@media \(max-width: 900px\)/);
   assert.match(css, /\.sheet-theme-trigger span \{\s*display: none/);
 });
+
+test("title adjustment blocks distinguish themes and actual Desktop/Mobile surfaces, excluding print", async () => {
+  const toolbar = await readFile(new URL("../game-lines/changeling/sheet-theme-toolbar.tsx", import.meta.url), "utf8");
+  assert.match(toolbar, /<style data-changeling-sheet-theme=\{themeId\}>/);
+  const css = await readFile(new URL("../game-lines/changeling/styles/sheet-theme.css", import.meta.url), "utf8");
+  const adjustments = css.slice(css.indexOf("@media screen"));
+  assert.ok(adjustments.startsWith("@media screen {"));
+  for (const theme of ["default", "fairest"]) {
+    for (const surface of [":not(.mobile-character-sheet)", ".mobile-character-sheet"]) {
+      for (const element of [".ctl-title-mark", "strong", "p"]) {
+        assert.ok(adjustments.includes(`.app-shell:has([data-changeling-sheet-theme="${theme}"]) .ctl-sheet${surface} .cod-sheet-title ${element} {`));
+      }
+    }
+  }
+  assert.match(adjustments, /translate: 0 0/);
+  assert.doesNotMatch(adjustments, /ctl-print/);
+});

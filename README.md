@@ -177,6 +177,8 @@ Changeling Desktop/Mobile sheets offer a theme selector beside the language sele
 
 `Default` uses `public/game-lines/changeling/images/`. Each direct `theme-*` subfolder adds an option automatically during development or the next build: for example, `theme-fairest` adds `Fairest`, and `theme-darkling` adds `Darkling`. Put replacement WebP images inside using exactly the default filenames (`title.webp`, `paper-texture.webp`, `frame-corner.webp`, etc.). Missing replacements use the default image. `theme-default` is reserved; no catalog or manual option registration is needed. Theme images remain static assets and use the existing service-worker cache after being requested online.
 
+Title sizing and positioning can be customized in `game-lines/changeling/styles/sheet-theme.css`. Its commented Default/Fairest blocks separate Desktop and Mobile and target the title image, `strong` and `p`. For another theme, copy the Fairest blocks and replace `fairest` with the folder suffix. `width`/`max-width` size the image, `font-size` sizes text, and `translate: X Y` offsets either element. All overrides are screen-only.
+
 ## Runtime and deployment
 
 Cloudflare configuration lives in `wrangler.jsonc`.

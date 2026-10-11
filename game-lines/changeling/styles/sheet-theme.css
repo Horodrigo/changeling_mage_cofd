@@ -2,6 +2,87 @@
   min-height: 44px;
   gap: 6px;
 }
+
+/*
+ * AJUSTES DO TITULO POR TEMA (somente a ficha na tela, nunca a impressao).
+ * O valor data-changeling-sheet-theme e o nome da pasta sem "theme-".
+ * Para theme-darkling, copie os blocos Fairest e troque "fairest" por "darkling".
+ * Desktop/Mobile seguem a composicao real da ficha, nao a largura da janela.
+ * translate: X Y move o elemento sem alterar o espaco ocupado:
+ * X positivo = direita; Y positivo = baixo; negativos = esquerda/cima.
+ * Os valores iniciais preservam a apresentacao atual.
+ */
+@media screen {
+  /* DEFAULT - DESKTOP */
+  .app-shell:has([data-changeling-sheet-theme="default"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title .ctl-title-mark {
+    width: 280px; /* Largura da imagem; a altura acompanha aspect-ratio. */
+    max-width: 50%;
+    translate: 0 0;
+  }
+  .app-shell:has([data-changeling-sheet-theme="default"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title strong {
+    font-size: 20px;
+    top: 65%; /* Posicao vertical dentro do titulo. */
+    left: 350px; /* Distancia da borda esquerda. */
+    translate: 0 0;
+  }
+  .app-shell:has([data-changeling-sheet-theme="default"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title p {
+    font-size: 13px;
+    top: 65%;
+    right: 0; /* Distancia da borda direita. */
+    translate: 0 0;
+  }
+
+  /* DEFAULT - MOBILE */
+  .app-shell:has([data-changeling-sheet-theme="default"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title .ctl-title-mark {
+    width: 100%;
+    max-width: 380px; /* Limite da imagem; pode ser reduzido em px. */
+    translate: 0 0;
+  }
+  .app-shell:has([data-changeling-sheet-theme="default"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title strong {
+    font-size: clamp(20px, 4.2vw, 16px);
+    margin: -10px 35px 0 0; /* Cima, direita, baixo, esquerda. */
+    translate: 0 0; /* No Mobile use margin/translate, nao top/left. */
+  }
+  .app-shell:has([data-changeling-sheet-theme="default"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title p {
+    font-size: 10px;
+    translate: 0 0;
+  }
+
+  /* FAIREST - DESKTOP */
+  .app-shell:has([data-changeling-sheet-theme="fairest"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title .ctl-title-mark {
+    width: 380px;
+    max-width: 100%;
+    translate: 0 0;
+  }
+  .app-shell:has([data-changeling-sheet-theme="fairest"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title strong {
+    font-size: 20px;
+    top: 65%;
+    left: 350px;
+    translate: 0 0;
+  }
+  .app-shell:has([data-changeling-sheet-theme="fairest"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title p {
+    font-size: 13px;
+    top: 65%;
+    right: 0;
+    translate: 0 0;
+  }
+
+  /* FAIREST - MOBILE */
+  .app-shell:has([data-changeling-sheet-theme="fairest"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title .ctl-title-mark {
+    width: 100%;
+    max-width: 380px;
+    translate: 0 0;
+  }
+  .app-shell:has([data-changeling-sheet-theme="fairest"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title strong {
+    font-size: clamp(20px, 4.2vw, 16px);
+    margin: -10px 35px 0 0;
+    translate: 0 0;
+  }
+  .app-shell:has([data-changeling-sheet-theme="fairest"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title p {
+    font-size: 10px;
+    translate: 0 0;
+  }
+}
 .sheet-theme-error {
   color: #b42318;
   font-size: 12px;
