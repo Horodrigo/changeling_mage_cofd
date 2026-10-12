@@ -6,21 +6,21 @@
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet:not(.mobile-character-sheet) {
     /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
-    --ctl-frame-top-center-shift: 0px 0px;
-    --ctl-frame-top-left-line-shift: 0px 0px;
-    --ctl-frame-top-right-line-shift: 0px 0px;
-    --ctl-frame-bottom-center-shift: 0px 0px;
-    --ctl-frame-bottom-left-line-shift: 0px 0px;
-    --ctl-frame-bottom-right-line-shift: 0px 0px;
+    --ctl-frame-top-center-shift: 0px 4px;
+    --ctl-frame-top-left-line-shift: -5px 4px;
+    --ctl-frame-top-right-line-shift: 0px 4px;
+    --ctl-frame-bottom-center-shift: 0px -3px;
+    --ctl-frame-bottom-left-line-shift: -5px -3px;
+    --ctl-frame-bottom-right-line-shift: 0px -3px;
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet.mobile-character-sheet {
     /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
-    --ctl-frame-top-center-shift: 0px 0px;
-    --ctl-frame-top-left-line-shift: 0px 0px;
-    --ctl-frame-top-right-line-shift: 0px 0px;
-    --ctl-frame-bottom-center-shift: 0px 0px;
-    --ctl-frame-bottom-left-line-shift: 0px 0px;
+    --ctl-frame-top-center-shift: 0px 2px;
+    --ctl-frame-top-left-line-shift: -4px 1px;
+    --ctl-frame-top-right-line-shift: 0px 1px;
+    --ctl-frame-bottom-center-shift: 0px -2px;
+    --ctl-frame-bottom-left-line-shift: -4px 0px;
     --ctl-frame-bottom-right-line-shift: 0px 0px;
   }
 
@@ -28,35 +28,37 @@
   /* Paleta da ficha e dos controles que herdam as cores da linha. */
   body:has([data-changeling-sheet-theme="wizened"]),
   body:has([data-changeling-sheet-theme="wizened"]) .line-theme-ctl {
-    --primary: #566a55;
+    --primary: #47635f;
     --primary-foreground: #f6f1e4;
-    --secondary: #dfe5d8;
-    --secondary-foreground: #39483b;
-    --accent: #cfc69e;
-    --accent-foreground: #39483b;
-    --ring: #9da782;
-    --line-accent: #75876a;
-    --line-strong: #39483b;
+    --secondary: #e5e8dc;
+    --secondary-foreground: #493b2e;
+    --accent: #c6ae80;
+    --accent-foreground: #493b2e;
+    --ring: #9aaea5;
+    --line-accent: #748c84;
+    --line-strong: #493b2e;
     --line-soft: #edf0e5;
-    --line-border: #b4bca5;
-    --line-topbar-start: #2b3931;
-    --line-topbar-middle: #405146;
-    --line-topbar-end: #566a55;
-    --line-topbar-muted: #c7d0bd;
+    --line-border: #b7b8a4;
+    --line-topbar-start: #283d3a;
+    --line-topbar-middle: #3a5550;
+    --line-topbar-end: #47635f;
+    --line-topbar-muted: #cad5ca;
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet {
-    --ctl-ink: #39483b;
-    --ctl-ink-soft: rgb(57 72 59 / 48%);
-    --ctl-rule: rgb(57 72 59 / 34%);
+    --ctl-ink: #493b2e;
+    --ctl-ink-soft: rgb(73 59 46 / 48%);
+    --ctl-rule: rgb(73 59 46 / 34%);
     --ctl-paper: #eee9d8;
     --ctl-paper-light: rgb(246 241 228 / 68%);
-    --ctl-ornament-fill: #cdc5a2;
-    --sheet-accent: #75876a;
-    --sheet-ink: #39483b;
-    --ctl-title-divider-icon: var(--ctl-image-frame-side);
-    border-color: rgb(86 106 85 / 52%);
-    box-shadow: 0 16px 48px rgb(43 57 49 / 16%);
+    --ctl-ornament-fill: #cdb790;
+    --sheet-accent: #748c84;
+    --sheet-ink: #493b2e;
+    --ctl-title-divider-icon: none;
+    border-color: rgb(71 99 95 / 52%);
+    box-shadow: 0 16px 48px rgb(40 61 58 / 16%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet::after {
@@ -78,25 +80,90 @@
     --ctl-frame-star-side-half-height: 11px;
   }
 
+  /* AQUI MEXE NOS LATERAIS DE FRAME CENTER */
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .ctl-frame-star-side {
+    scale: 1.2;
+  }
+
+  /* X Y: positivo move para direita/baixo. Ângulo positivo gira no sentido horário. */
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-star-side-top-left,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-star-side-top-right {
+    translate: 0px 5px;
+    rotate: 0deg;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-star-side-bottom-left,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-star-side-bottom-right {
+    translate: 0px -5px;
+    rotate: 0deg;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"])
+  .ctl-sheet.mobile-character-sheet .ctl-frame-star-side-top-left,
+.app-shell:has([data-changeling-sheet-theme="wizened"])
+  .ctl-sheet.mobile-character-sheet .ctl-frame-star-side-top-right {
+  translate: 0px 3px;
+  rotate: 0deg;
+}
+
+.app-shell:has([data-changeling-sheet-theme="wizened"])
+  .ctl-sheet.mobile-character-sheet .ctl-frame-star-side-bottom-left,
+.app-shell:has([data-changeling-sheet-theme="wizened"])
+  .ctl-sheet.mobile-character-sheet .ctl-frame-star-side-bottom-right {
+  translate: 0px -3px;
+  rotate: 0deg;
+}
+  
+
+  /* AQUI MEXE NOS LATERAIS DE TITLE */
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .cod-sheet-title::before,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .cod-sheet-title::after {
+    background-size: auto 18.7px, calc(100% - 12px) 100%;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .cod-sheet-title .ctl-title-side {
+    display: block;
+    width: 19px;
+    height: 19px;
+    bottom: 1px;
+    scale: 2;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .cod-sheet-title .ctl-title-side-left {
+    translate: 0px 0px;
+    rotate: 0deg;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .cod-sheet-title .ctl-title-side-right {
+    translate: 0px 0px;
+    rotate: 0deg;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .official-heading:not(.ctl-attributes-heading)::before,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .official-heading:not(.ctl-attributes-heading)::after {
+    height: 19.2px;
+    background-size: auto 19.2px, calc(100% - 18px) 1px, calc(100% - 18px) 1px;
+  }
+
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-edge-top::before,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-edge-top::after,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-edge-bottom::before,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-edge-bottom::after {
-    background-image: linear-gradient(to bottom, transparent 0 10%, rgb(86 106 85 / 76%) 10% 30%, transparent 30% 57%, rgb(86 106 85 / 48%) 57% 78%, transparent 78% 100%);
+    background-image: linear-gradient(to bottom, transparent 0 10%, rgb(71 99 95 / 76%) 10% 30%, transparent 30% 57%, rgb(71 99 95 / 48%) 57% 78%, transparent 78% 100%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-edge-left,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-edge-right {
-    background-image: linear-gradient(to right, rgb(86 106 85 / 46%) 0 18%, transparent 18% 48%, rgb(86 106 85 / 76%) 48% 70%, transparent 70% 100%);
+    background-image: linear-gradient(to right, rgb(71 99 95 / 46%) 0 18%, transparent 18% 48%, rgb(71 99 95 / 76%) 48% 70%, transparent 70% 100%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .ctl-sheet-tab-list {
-    border-color: rgb(86 106 85 / 62%);
-    background: rgb(223 229 213 / 60%);
+    border-color: rgb(71 99 95 / 62%);
+    background: rgb(229 232 220 / 60%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .ctl-sheet-tab-list button {
-    border-right-color: rgb(86 106 85 / 34%);
+    border-right-color: rgb(71 99 95 / 34%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .ctl-sheet-tab-list button[data-state="active"] {
@@ -104,36 +171,36 @@
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .ctl-sheet-tab-list button[data-state="active"]::before {
-    box-shadow: 0 0 0 1px rgb(86 106 85 / 35%);
+    box-shadow: 0 0 0 1px rgb(71 99 95 / 35%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .official-sheet-body > section + section,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .official-sheet-body > .sheet-layout-column + .sheet-layout-column {
-    border-left-color: rgb(86 106 85 / 35%);
+    border-left-color: rgb(71 99 95 / 35%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .editable-line-row input::placeholder,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .notes-area textarea::placeholder {
-    color: rgb(57 72 59 / 65%);
+    color: rgb(73 59 46 / 65%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .tracker-help,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-panel,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .notes-area small,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-title small {
-    color: rgb(57 72 59 / 76%);
+    color: rgb(73 59 46 / 76%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .power-resource::before,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-panel::before {
-    background: rgb(86 106 85 / 48%);
+    background: rgb(71 99 95 / 48%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-totals div,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-input,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .beat-controls,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .beat-resource {
-    border-color: rgb(86 106 85 / 26%);
+    border-color: rgb(71 99 95 / 26%);
     background: rgb(246 241 228 / 55%);
   }
 
@@ -141,7 +208,7 @@
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-input span,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .beat-controls legend,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .beat-resource > span {
-    color: rgb(57 72 59 / 70%);
+    color: rgb(73 59 46 / 70%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .skill-highlight-kith .official-trait-name::before {
@@ -162,21 +229,21 @@
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .rule-power-card,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .selected-condition,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .selected-tilt {
-    border-color: rgb(86 106 85 / 38%);
+    border-color: rgb(71 99 95 / 38%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-actions button:not(.ctl-purchase-trait-button),
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .condition-manager > button {
-    background: rgb(199 206 177 / 65%);
+    background: rgb(198 174 128 / 65%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-actions button:not(.ctl-purchase-trait-button):hover,
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .condition-manager > button:hover {
-    background: rgb(172 185 145 / 76%);
+    background: rgb(176 150 105 / 76%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button::before {
-    background: rgb(86 106 85 / 65%);
+    background: rgb(71 99 95 / 65%);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button::after {
@@ -184,12 +251,12 @@
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button:hover::after {
-    background: #d9d0ae;
+    background: #dbc89f;
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .notes-area textarea {
     background-color: rgb(246 241 228 / 58%);
-    background-image: repeating-linear-gradient(transparent, transparent 23px, rgb(86 106 85 / 18%) 24px);
+    background-image: repeating-linear-gradient(transparent, transparent 23px, rgb(71 99 95 / 18%) 24px);
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .rule-power-card,
@@ -201,19 +268,19 @@
   body:has([data-changeling-sheet-theme="wizened"]) .ctl-dialog,
   body:has(.line-theme-ctl):has([data-changeling-sheet-theme="wizened"])
     :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) {
-    --ctl-ink: #39483b;
-    --sheet-accent: #75876a;
-    --sheet-ink: #39483b;
-    border-color: rgb(86 106 85 / 50%) !important;
+    --ctl-ink: #493b2e;
+    --sheet-accent: #748c84;
+    --sheet-ink: #493b2e;
+    border-color: rgb(71 99 95 / 50%) !important;
     background: rgb(246 241 228 / 98%) !important;
-    color: #39483b;
+    color: #493b2e;
   }
 
   body:has([data-changeling-sheet-theme="wizened"]) .ctl-dialog :is(input, button, [data-slot="select-trigger"]),
   body:has(.line-theme-ctl):has([data-changeling-sheet-theme="wizened"])
     :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
     :is(input, button, [data-slot="select-trigger"]) {
-    border-color: rgb(86 106 85 / 38%);
+    border-color: rgb(71 99 95 / 38%);
   }
 
   body:has(.line-theme-ctl):has([data-changeling-sheet-theme="wizened"])
@@ -222,7 +289,7 @@
   body:has(.line-theme-ctl):has([data-changeling-sheet-theme="wizened"])
     :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
     .experience-merit-catalog p {
-    color: #39483b;
+    color: #493b2e;
   }
 
   body:has(.line-theme-ctl):has([data-changeling-sheet-theme="wizened"])
@@ -230,12 +297,12 @@
     .experience-merit-catalog small,
   body:has([data-changeling-sheet-theme="wizened"]) .ctl-dialog .merit-option small,
   body:has([data-changeling-sheet-theme="wizened"]) .ctl-dialog .experience-merit-catalog small {
-    color: rgb(57 72 59 / 72%);
+    color: rgb(73 59 46 / 72%);
   }
 
   body:has([data-changeling-sheet-theme="wizened"]) .ctl-dialog .merit-option p,
   body:has([data-changeling-sheet-theme="wizened"]) .ctl-dialog .experience-merit-catalog p {
-    color: #39483b;
+    color: #493b2e;
   }
 
   /* O título ilustrado mantém sua proporção original. */
@@ -253,6 +320,15 @@
     max-width: 100%;
     aspect-ratio: 2045 / 338;
     background-position: center;
+    translate: 0 -15px;
+    scale: 1.1;
+  }
+
+    .app-shell:has([data-changeling-sheet-theme="wizened"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title p {
+    margin: -10px 35px 0 0;
+    translate: 0 25px;
   }
 
   .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title strong {
@@ -265,5 +341,14 @@
     aspect-ratio: 2045 / 338;
     margin-inline: auto;
     background-position: center;
+    scale: 1.1;
+  }
+
+      .app-shell:has([data-changeling-sheet-theme="wizened"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title strong {
+    font-size: clamp(16px, 4.2vw, 20px);
+    margin: -10px 35px 0 0;
+    translate: 0 10px;
   }
 }
