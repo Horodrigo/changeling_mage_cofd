@@ -20,7 +20,6 @@ export function TraitBlock({
   names,
   values,
   specialties = [],
-  compactNames = false,
   highlightedNames,
   highlightTone,
 }: {
@@ -29,7 +28,6 @@ export function TraitBlock({
   names: readonly string[];
   values: Record<string, number>;
   specialties?: Array<{ skill: string; name: string }>;
-  compactNames?: boolean;
   highlightedNames?: ReadonlySet<string>;
   highlightTone?: "rote" | "kith" | "legacy" | "ruling";
 }) {
@@ -50,7 +48,6 @@ export function TraitBlock({
           key={name}
           name={name}
           value={values[name] ?? 0}
-          compactName={compactNames}
           highlightTone={highlightedNames?.has(name) ? highlightTone : undefined}
           note={specialties
             .filter((item) => item.skill === name)
@@ -65,22 +62,19 @@ export function TraitLine({
   name,
   value,
   note,
-  compactName = false,
   highlightTone,
 }: {
   name: string;
   value: number;
   note?: string;
-  compactName?: boolean;
   highlightTone?: "rote" | "kith" | "legacy" | "ruling";
 }) {
   const {locale}=useLanguage();
   const localizedName=systemTerm(name,locale);
-  const displayedName=compactName ? localizedName.slice(0,3) : localizedName;
   return (
     <div className={`official-trait-line${highlightTone ? ` skill-highlight-${highlightTone}` : ""}`}>
-      <span className="official-trait-label" title={compactName ? localizedName : undefined} aria-label={note ? `${localizedName} (${note})` : localizedName}>
-        <span className="official-trait-name">{displayedName}</span>
+      <span className="official-trait-label" aria-label={note ? `${localizedName} (${note})` : localizedName}>
+        <span className="official-trait-name">{localizedName}</span>
         {note && <small title={note}>({note})</small>}
       </span>
       <DotValue value={value} />

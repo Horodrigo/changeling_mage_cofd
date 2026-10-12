@@ -638,7 +638,7 @@ export function MageCharacterPaper({
                   </>,
                 }}/>,
               stats: <SheetLayoutFlow id="mage-mobile-stats" definition={mageMobileLayout.stats} items={{
-                attributes: <><SheetHeading>{t("ui.attributes")}</SheetHeading><SheetCategoryLayout id="mage-mobile-attributes" definition={mageMobileLayout.main.attributes} className="mobile-attribute-grid" render={category => <TraitBlock key={category} title={category} names={ATTRIBUTES[category as keyof typeof ATTRIBUTES]} values={character.attributes} compactNames/>}/></>,
+                attributes: <><SheetHeading>{t("ui.attributes")}</SheetHeading><SheetCategoryLayout id="mage-mobile-attributes" definition={mageMobileLayout.main.attributes} className="mobile-attribute-grid" render={category => <TraitBlock key={category} title={category} names={ATTRIBUTES[category as keyof typeof ATTRIBUTES]} values={character.attributes}/>}/></>,
                 skills: <><SheetHeading>{t("ui.skills")}</SheetHeading><SheetCategoryLayout id="mage-mobile-skills" definition={mageMobileLayout.main.skills} className="mobile-trait-stack" render={category => <TraitBlock key={category} title={category} names={SKILLS[category as keyof typeof SKILLS]} values={effectiveSkills} specialties={specialties} highlightedNames={highlightedSkills} highlightTone={skillHighlightTone}/>} /></>,
               }}/>,
               detalhes: <SheetLayoutFlow id="mage-mobile-details" definition={mageMobileLayout.detalhes} items={{

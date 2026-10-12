@@ -1302,7 +1302,7 @@ export function VampireCharacterPaper({
   const attributes = (
     <>
       <SheetHeading>{t("ui.attributes")}</SheetHeading>
-      <SheetCategoryLayout id={isMobile ? "mobile-attributes" : "attributes"} definition={isMobile ? vampireMobileLayout.main.attributes : vampireDesktopLayout.main.attributes} className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"} render={category => <TraitBlock key={category} title={category} names={ATTRIBUTES[category as keyof typeof ATTRIBUTES]} values={character.attributes} compactNames={isMobile}/>}/>
+      <SheetCategoryLayout id={isMobile ? "mobile-attributes" : "attributes"} definition={isMobile ? vampireMobileLayout.main.attributes : vampireDesktopLayout.main.attributes} className={isMobile ? "mobile-attribute-grid" : "official-trait-grid"} render={category => <TraitBlock key={category} title={category} names={ATTRIBUTES[category as keyof typeof ATTRIBUTES]} values={character.attributes}/>}/>
     </>
   );
   const skills = (

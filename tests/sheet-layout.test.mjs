@@ -248,7 +248,16 @@ test("all Mobile sheets wrap tabs while keeping each label on one line", async (
   assert.match(buttons, /min-height: 44px/);
   assert.match(buttons, /min-width: max-content/);
   assert.match(buttons, /white-space: nowrap/);
+  assert.match(buttons, /text-transform: none/);
+  assert.match(buttons, /word-break: normal/);
   assert.doesNotMatch(buttons, /font:|font-family:|color:/);
   assert.match(shared, /ctl-sheet-tab-list button:nth-child\(-n\+3\)\s*\{\s*flex-basis: 30%/);
   assert.doesNotMatch(wolf.slice(0, wolf.indexOf(".mobile-sheet-page")), /flex-wrap:|flex-basis:/, "Werewolf consumes the common tab geometry");
+});
+
+test("Mobile Attributes show full centered names above their dots", async () => {
+  const [shared, traits] = await Promise.all([read("../app/css/globals.css"), read("../app/workspace/sheet-primitives.tsx")]);
+  assert.doesNotMatch(traits, /compactNames|compactName|localizedName\.slice/);
+  assert.match(shared, /\.cod-sheet\.mobile-character-sheet \.mobile-attribute-grid \.official-trait-line\s*\{[^}]*flex-direction: column;[^}]*text-align: center;/);
+  assert.match(shared, /\.cod-sheet\.mobile-character-sheet \.mobile-attribute-grid \.official-dots\s*\{[^}]*justify-content: center;/);
 });

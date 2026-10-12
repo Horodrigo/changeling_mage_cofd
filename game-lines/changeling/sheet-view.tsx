@@ -1,6 +1,6 @@
 "use client";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
-import { effectiveMeritDots } from "@/lib/shared-merit-dots";
+import { effectiveMeritDots, SHARED_DOT_MERIT_IDS } from "@/lib/shared-merit-dots";
 import { ExperiencePanel } from "./experience-panel";
 import { CharacterPaperShell,CharacterPortraitArea,EditableList,NotesArea,PowerResource,ResourceTrack,boundedNumber,updateLineData } from "@/app/workspace/character-paper-shell";
 import { MainFuel, MainPowerStat, MainSheet } from "@/app/workspace/main-sheet";
@@ -130,7 +130,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const [mobileTab, setMobileTab] = useState({ characterId: character.id, value: "resumo" });
     const sheetTab = mobileTab.characterId === character.id ? mobileTab.value : "resumo";
     const setSheetTab = (value: string) => setMobileTab({ characterId: character.id, value });
-    const isExpanded = (selection: CharacterSheet["merits"][number]) => { const definition = resolveMeritDefinition(selection, meritCatalog); return Boolean(definition?.levels?.length || findMeritConfiguration(definition?.id)); };
+    const isExpanded = (selection: CharacterSheet["merits"][number]) => { const definition = resolveMeritDefinition(selection, meritCatalog); return Boolean(definition?.levels?.length || findMeritConfiguration(definition?.id) || SHARED_DOT_MERIT_IDS.has(definition?.id ?? "")); };
     const data = character.line_data;
     const entitlementMerit = character.merits.find((item) => changelingMeritId(item) === "oak-ash-thorn:entitlement" && !item.grantedBy);
     const hasCompanions = character.merits.some((item) => !item.grantedBy && ["ctl-2ed:fae-mount", "h-seemings:fae-pet"].includes(resolveMeritDefinition(item, meritCatalog)?.id ?? "")) || selectedConditionList(character.current_state?.conditions, conditionCatalog).some(item => item.id === "bonded");
@@ -245,7 +245,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                   experience: <><SheetHeading>{t("ui.experience")}</SheetHeading><ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} reference={lineReference}/></>,
                 }}/>,
                 stats: <SheetLayoutFlow id="changeling-mobile-stats" definition={changelingMobileLayout.stats} items={{
-                  attributes: <><SheetHeading className="ctl-attributes-heading">{t("ui.attributes")}</SheetHeading><SheetCategoryLayout id="mobile-attributes" definition={changelingMobileLayout.main.attributes} className="mobile-attribute-grid" render={category => <TraitBlock key={category} title={category} names={ATTRIBUTES[category as keyof typeof ATTRIBUTES]} values={character.attributes} compactNames/>}/></>,
+                  attributes: <><SheetHeading className="ctl-attributes-heading">{t("ui.attributes")}</SheetHeading><SheetCategoryLayout id="mobile-attributes" definition={changelingMobileLayout.main.attributes} className="mobile-attribute-grid" render={category => <TraitBlock key={category} title={category} names={ATTRIBUTES[category as keyof typeof ATTRIBUTES]} values={character.attributes}/>}/></>,
                   skills: <><SheetHeading>{t("ui.skills")}</SheetHeading><SheetCategoryLayout id="mobile-skills" definition={changelingMobileLayout.main.skills} className="mobile-trait-stack" render={category => <TraitBlock key={category} title={category} names={SKILLS[category as keyof typeof SKILLS]} values={effectiveSkills} specialties={specialties} highlightedNames={highlightedSkills} highlightTone={skillHighlightTone}/>} /></>,
                 }}/>,
                 detalhes: <SheetLayoutFlow id="changeling-mobile-details" definition={changelingMobileLayout.detalhes} items={{
@@ -387,7 +387,7 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
       {visible.map((item, itemIndex) => {
             const definition = resolveMeritDefinition(item, catalog), style = definition?.levels?.length ? definition : undefined, configured = expandedConfigurationLines(definition?.id, item.dots, item.configuration, locale, courtCatalog, tokenCatalog, catalog), tokenItems = definition?.id === "ctl-2ed:token" ? decodeConfiguredRows<TokenConfigurationItem>(normalizeMeritConfiguration(item.configuration).items) : [], cult = String(normalizeMeritConfiguration(item.configuration).cult ?? ""), title = definition?.id === "ctl-2ed:token"
                 ? t("ui.tokens")
-                : meritLabel(item, catalog, courtCatalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && findMeritConfiguration(definition?.id) && !["ctl-2ed:fae-mount", "h-seemings:fae-pet", "oak-ash-thorn:entitlement"].includes(definition?.id ?? "")
+                : meritLabel(item, catalog, courtCatalog, locale), meritIndex = character?.merits.indexOf(item) ?? -1, configurationEditor = character && updateSheet && (findMeritConfiguration(definition?.id) || SHARED_DOT_MERIT_IDS.has(definition?.id ?? "")) && !["ctl-2ed:fae-mount", "h-seemings:fae-pet", "oak-ash-thorn:entitlement"].includes(definition?.id ?? "")
                 ? <MeritConfigurationEditor compact specialtyContext={changelingMeritContextForSheet(character, catalog)} merit={item} ownedMerits={character.merits} catalog={[...catalog]} definitions={CHANGELING_SHEET_MERIT_CONFIGURATIONS} renderStructured={(props) => renderChangelingStructuredMeritEditor(props, entitlementCatalog, tokenCatalog)} onChange={(configuration) => { const next = structuredClone(character); const target = next.merits[meritIndex]; if (target)
                     target.configuration = configuration; updateSheet(synchronizeMeritGrants(next, entitlementCatalog)); }}/>
                 : null;
@@ -770,12 +770,14 @@ function LorePanel({ title, intro, text, source, }: {
     text: string;
     source?: string;
 }) {
-    return (<article className="lore-panel">
-      <h4>{title}</h4>
-      {intro && intro !== text && <p className="lore-intro">{intro}</p>}
-      <p>{text}</p>
-      {source && <small>{source}</small>}
-    </article>);
+    return (<details className="rule-power-card ctl-lore-card">
+      <summary className="rule-power-summary"><strong>{title}</strong></summary>
+      <div className="rule-power-details">
+        {intro && intro !== text && <p className="lore-intro">{intro}</p>}
+        <p>{text}</p>
+        {source && <small>{source}</small>}
+      </div>
+    </details>);
 }
 function selectedConditionList(value: unknown, catalog: readonly ConditionDefinition[]): CoreSelectedCondition[] {
     if (!Array.isArray(value))

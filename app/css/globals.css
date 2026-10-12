@@ -4289,15 +4289,22 @@ button {
   white-space: nowrap;
 }
 .mobile-attribute-grid .official-trait-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 3px;
+  text-align: center;
 }
 .mobile-attribute-grid .official-trait-line > .official-trait-label {
-  min-width: 3ch;
-  font-size: 11px;
-  text-transform: uppercase;
+  min-width: 0;
+  justify-content: center;
+  white-space: normal;
+  font-size: 12px;
+  text-transform: none;
 }
 .mobile-attribute-grid .official-dots {
   gap: 2px;
+  justify-content: center;
 }
 .mobile-attribute-grid .official-dots i {
   width: 8px;
@@ -6880,6 +6887,30 @@ body:has([class*="line-theme-"])
 
 
 @media screen and (max-width: 767px) {
+  .cod-sheet.mobile-character-sheet .mobile-attribute-grid .official-trait-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    text-align: center;
+  }
+
+  .cod-sheet.mobile-character-sheet .mobile-attribute-grid .official-trait-label {
+    justify-content: center;
+    white-space: normal;
+    text-transform: none;
+  }
+
+  .cod-sheet.mobile-character-sheet .mobile-attribute-grid .official-trait-name {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .cod-sheet.mobile-character-sheet .mobile-attribute-grid .official-dots {
+    justify-content: center;
+  }
+
   .cod-sheet.mobile-character-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list {
     display: flex;
     flex-wrap: wrap;
@@ -6902,6 +6933,9 @@ body:has([class*="line-theme-"])
     height: auto;
     padding: 6px 3px;
     white-space: nowrap;
+    text-transform: none;
+    overflow-wrap: normal;
+    word-break: normal;
   }
 
   .cod-sheet.mobile-character-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button:nth-child(-n+3) {

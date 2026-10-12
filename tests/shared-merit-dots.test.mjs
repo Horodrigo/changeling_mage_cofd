@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test, { after } from "node:test";
+import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { createServer } from "vite";
 
@@ -39,4 +40,14 @@ test("Werewolf Dedicated Locus compares the effective rating of its linked Safe 
   const context = { attributes: {}, skills: {}, renown: {}, tribeId: "", forms: [], gifts: [], merits: [safePlace] };
   assert.equal(werewolfMeritPrerequisitesMet(locus, { id: locus.id, dots: 3, configuration: { safePlaceId: "safe-one" } }, context), true);
   assert.equal(werewolfMeritPrerequisitesMet(locus, { id: locus.id, dots: 3, configuration: { safePlaceId: "safe-one", sharedDots: "2" } }, context), false);
+});
+
+test("Changeling Details exposes shared-only Merits through the same dots selector", async () => {
+  const [sheet, control] = await Promise.all([
+    readFile(new URL("../game-lines/changeling/sheet-view.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/builder/shared-merit-dots-control.tsx", import.meta.url), "utf8"),
+  ]);
+  assert.match(sheet, /isExpanded[\s\S]*?SHARED_DOT_MERIT_IDS\.has/);
+  assert.match(sheet, /configurationEditor[\s\S]*?SHARED_DOT_MERIT_IDS\.has/);
+  assert.match(control, /return <Choice label=\{t\("ui\.sharedDots"\)\}/);
 });
