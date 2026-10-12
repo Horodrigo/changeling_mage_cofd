@@ -55,6 +55,7 @@ import { RuleSelect } from "@/app/workspace/rule-select";
 import { CLARITY_ATTACK_MODIFIERS,CLARITY_BREAKING_POINT_TIERS,clarityAttackPool } from "./clarity";
 import { mergeChangelingReference, mergeChangelingSeemings, type SeemingDefinition, type SeemingHomebrew } from "./catalog-homebrews";
 import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
+import { useHomebrewPreferences } from "@/app/use-homebrew";
 import type { ChangelingReference } from "./catalogs/reference";
 
 function normalizedCatalogName(value: unknown) {
@@ -108,6 +109,8 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const customMerits = useMemo(() => allCustomMerits.filter(item => item.line === "CtL" || item.line === "Core"), [allCustomMerits]);
     const meritCatalog = useMemo(() => mergeMeritHomebrews([...catalogs.get<readonly MeritDefinition[]>("core-merits"), ...catalogs.get<readonly MeritDefinition[]>("changeling-merits")], customMerits), [catalogs, customMerits]);
     const { locale, t } = useLanguage();
+    const homebrewPreferences = useHomebrewPreferences();
+    const supplementalBenefitSources = homebrewPreferences.disabledIds.includes("h-seemings") ? [] : ["h-seemings"];
     const coreReference = catalogs.get<{ conditions: ConditionDefinition[]; presentation: Record<string, Partial<ConditionDefinition>> }>("core-reference");
     const customCatalog = useChangelingCatalogHomebrews();
     const lineReference = useMemo(() => mergeChangelingReference(catalogs.get<ChangelingReference>("changeling-reference"), customCatalog), [catalogs, customCatalog]);
@@ -256,7 +259,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                 poderes: <SheetLayoutFlow id="changeling-mobile-powers" definition={changelingMobileLayout.poderes} items={{
                   resource: <PowerResource name={t("ui.wyrd")} rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>,
                   regalia: <><SheetHeading>{t("ui.favoredRegalia")}</SheetHeading><LineList items={changelingFavoredRegalia(data).map((value) => systemTerm(value, locale))}/></>,
-                  contracts: <><SheetHeading>{t("ui.contracts")}</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} presentation={lineReference.contractPresentation} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/></>,
+                  contracts: <><SheetHeading>{t("ui.contracts")}</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} presentation={lineReference.contractPresentation} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} supplementalBenefitSources={supplementalBenefitSources} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/></>,
                   goblinDebt: <><SheetHeading>{t("ui.goblinDebt")}</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/></>,
                   seemingLore: <SeemingLore seeming={String(data.seeming ?? "")} seemingCatalog={seemingCatalog}/>,
                   kithLore: <KithLore data={data} reference={lineReference}/>,
@@ -319,7 +322,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
           </TabsContent>
           <TabsContent value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
             <SheetLayoutDesktopPage id="changeling-desktop-powers" definition={changelingDesktopLayout.poderes} items={{
-              contracts: <><SheetHeading>{t("ui.contracts")}</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} presentation={lineReference.contractPresentation} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/></>,
+              contracts: <><SheetHeading>{t("ui.contracts")}</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} presentation={lineReference.contractPresentation} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} supplementalBenefitSources={supplementalBenefitSources} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/></>,
               otherTraits: <section><SheetHeading>{t("ui.otherTraits")}</SheetHeading><SeemingLore seeming={String(data.seeming ?? "")} seemingCatalog={seemingCatalog}/><KithLore data={data} reference={lineReference}/><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/></section>,
               courtLore: <CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/>,
               expandedMerits: <><SheetHeading>{t("ui.expandedMerits")}</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog} tokenCatalog={tokenCatalog} hasAdjacentContent/></>,
@@ -388,14 +391,10 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
             if (!style)
                 return (<details className="expanded-merit-card" key={`${item.name}-${itemIndex}`}>
               <summary>
-                <h4><MeritDetails merit={item} catalog={catalog}>{title}</MeritDetails></h4>
+                <h4>{title}</h4>
                 <DotValue value={effectiveMeritDots({ ...item, definitionId: definition?.id })}/>
               </summary>
               <div className="expanded-merit-body">
-                {definition && <>
-                  {meritPresentation(definition, locale).prerequisites && <p><strong>{t("ui.prerequisites")}:</strong> {meritPresentation(definition, locale).prerequisites}</p>}
-                  <p>{meritPresentation(definition, locale).description}</p>
-                </>}
                 {definition?.id === "ctl-2ed:token" ? <ConfiguredTokenList items={tokenItems} catalog={tokenCatalog} dots={item.dots} locale={locale} renderTrifleUses={(token, index) => <TrifleUseTrack used={Number(trifleUses[`trifle:${item.instanceId ?? itemIndex}:${token.id || index}`] ?? 0)} onChange={(value) => setTrifleUses(`trifle:${item.instanceId ?? itemIndex}:${token.id || index}`, value)}/>} /> : configured.length ? (configured.map((line, index) => (<section key={`${item.name}-configured-${index}`}>
                       <strong>{line.split(":")[0]}</strong>
                       <p>{line.slice(line.indexOf(":") + 1).trim()}</p>
@@ -410,17 +409,12 @@ function ExpandedMeritList({ merits, character, updateSheet, catalog, courtCatal
             <summary>
               <div>
                 <h4>
-                  <MeritDetails merit={item} catalog={catalog}>{title}{cult && !title.includes(cult) ? `: ${cult}` : ""}</MeritDetails>
+                  {title}{cult && !title.includes(cult) ? `: ${cult}` : ""}
                 </h4>
-                <small>
-                  {style.source} · p. {style.page}
-                  <> · {t("ui.prerequisites")}: {presented.prerequisites || t("ui.none")}</>
-                </small>
               </div>
               <DotValue value={effectiveMeritDots({ ...item, definitionId: definition?.id })}/>
             </summary>
             <div className="expanded-merit-body">
-              <p>{presented.description}</p>
               {configured.length
                     ? <>{configured.map((line, index) => (<section key={`${style.name}-configured-${index}`}>
                       <strong>{line.split(":")[0]}</strong>
@@ -568,13 +562,14 @@ function MeritSheetList({ merits, catalog, courtCatalog, }: {
         })) : (<em className="rule-callout merit-empty">{t("ui.noMeritSelected")}</em>)}
     </div>);
 }
-function ContractPowerList({ contracts, catalog, presentation, courtCatalog, seeming, court, extraBenefits = [], extraClauses = [], }: {
+function ContractPowerList({ contracts, catalog, presentation, courtCatalog, seeming, court, supplementalBenefitSources, extraBenefits = [], extraClauses = [], }: {
     contracts: Array<Record<string, unknown>>;
     catalog: readonly ContractDefinition[];
     presentation: ContractPresentationCatalog;
     courtCatalog: readonly CourtDefinition[];
     seeming: string;
     court: string;
+    supplementalBenefitSources: readonly string[];
     extraBenefits?: Array<Record<string, unknown>>;
     extraClauses?: Array<Record<string, unknown>>;
 }) {
@@ -585,7 +580,7 @@ function ContractPowerList({ contracts, catalog, presentation, courtCatalog, see
             .map((item, index) => {
             const baseDefinition = catalog.find((entry) => entry.id === String(item.id ?? "") || entry.name === String(item.name ?? "")) ??
                 (item as unknown as ContractDefinition);
-            const definition = contractPresentation(contractWithSupplementalBenefits(baseDefinition, []), locale, presentation);
+            const definition = contractPresentation(contractWithSupplementalBenefits(baseDefinition, supplementalBenefitSources), locale, presentation);
             const summary = contractSummary(definition, locale);
             if (!definition?.id)
                 return null;

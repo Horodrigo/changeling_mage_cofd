@@ -58,6 +58,7 @@ export function CharacterPaperShell({
         {line === "CofD" ? <div className="cofd-title-mark" aria-label={t("workspace.chroniclesOfDarkness")}>
           <span aria-hidden="true">{t("ui.chroniclesTitle")}</span><small aria-hidden="true">{t("ui.ofTitle")}</small><strong aria-hidden="true">{t("ui.darknessTitle")}</strong>
         </div> : <><div><span className={line === "CtL" ? "ctl-title-mark" : undefined}>{title}</span><strong>{subtitle}</strong></div><p>{t("ui.chroniclesOFDARKNESS")}</p></>}
+        {line === "CtL" && <><span className="ctl-title-side ctl-title-side-left" aria-hidden="true"/><span className="ctl-title-side ctl-title-side-right" aria-hidden="true"/></>}
       </header>
       {children}
     </article>

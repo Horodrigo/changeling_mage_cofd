@@ -1,0 +1,392 @@
+/* ============================================================
+   4. ELEMENTAL
+   ============================================================ */
+
+@media screen {
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet:not(.mobile-character-sheet) {
+    /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
+    --ctl-frame-top-center-shift: 0px -10px;
+    --ctl-frame-top-left-line-shift: 0px -10px;
+    --ctl-frame-top-right-line-shift: 0px -10px;
+    --ctl-frame-bottom-center-shift: 0px 10px;
+    --ctl-frame-bottom-left-line-shift: 0px 10px;
+    --ctl-frame-bottom-right-line-shift: 0px 10px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet.mobile-character-sheet {
+    /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
+    --ctl-frame-top-center-shift: 0px -1px;
+    --ctl-frame-top-left-line-shift: 0px -3px;
+    --ctl-frame-top-right-line-shift: 0px -3px;
+    --ctl-frame-bottom-center-shift: 0px 2px;
+    --ctl-frame-bottom-left-line-shift: 0px 5px;
+    --ctl-frame-bottom-right-line-shift: 0px 5px;
+  }
+
+
+  /* Paleta da ficha e dos controles que herdam as cores da linha. */
+  body:has([data-changeling-sheet-theme="elemental"]),
+  body:has([data-changeling-sheet-theme="elemental"]) .line-theme-ctl {
+    --primary: #1f5960;
+    --primary-foreground: #f5f1df;
+    --secondary: #dce8e3;
+    --secondary-foreground: #244950;
+    --accent: #cde3dc;
+    --accent-foreground: #244950;
+    --ring: #6caaa4;
+    --line-accent: #31777b;
+    --line-strong: #244950;
+    --line-soft: #edf2e9;
+    --line-border: #a9c6bf;
+    --line-topbar-start: #17383f;
+    --line-topbar-middle: #1e4d55;
+    --line-topbar-end: #1f5960;
+    --line-topbar-muted: #d7e8e0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet {
+    --ctl-ink: #244950;
+    --ctl-ink-soft: rgb(36 73 80 / 48%);
+    --ctl-rule: rgb(36 73 80 / 34%);
+    --ctl-paper: #f3eddb;
+    --ctl-paper-light: rgb(248 246 231 / 68%);
+    --ctl-ornament-fill: #dfebe2;
+    --sheet-accent: #31777b;
+    --sheet-ink: #244950;
+    --ctl-title-divider-icon: var(--ctl-image-frame-side);
+    border-color: rgb(31 89 96 / 52%);
+    box-shadow: 0 16px 48px rgb(23 56 63 / 16%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet::after {
+    /* >>ALTERAR AQUI PARA TRANSPARENCIA BACKGROUND<< 0 = invisível; 1 = opaco. */
+    opacity: 0.3;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet:not(.mobile-character-sheet) {
+    --ctl-frame-star-side-offset: 34px;
+    --ctl-frame-star-side-width: 36px;
+    --ctl-frame-star-side-height: 30px;
+    --ctl-frame-star-side-half-height: 15px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet.mobile-character-sheet {
+    --ctl-frame-star-side-offset: 28px;
+    --ctl-frame-star-side-width: 30px;
+    --ctl-frame-star-side-height: 24px;
+    --ctl-frame-star-side-half-height: 12px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet .cod-sheet-title {
+    background-image: linear-gradient(var(--ctl-rule), var(--ctl-rule));
+    background-position: center bottom 10px;
+    background-repeat: no-repeat;
+    background-size: calc(100% - 20px) 1px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .skill-highlight-kith .official-trait-name::before {
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 50%;
+  width: 100px;
+  height: 85px;
+  transform: translateY(-48%);
+  background: var(--ctl-image-skill-highlight, url("/game-lines/changeling/images/skill-highlight.webp")) center / contain no-repeat;
+  pointer-events: none;
+}
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet .cod-sheet-title::before,
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet .cod-sheet-title::after {
+    bottom: -5px;
+    width: 30px;
+    height: 30px;
+    background-image: var(--ctl-image-frame-side);
+    background-position: center;
+    background-size: contain;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet .cod-sheet-title::before {
+    transform: rotate(90deg);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet .cod-sheet-title::after {
+    transform: rotate(-90deg);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-frame-star-side-top-left {
+    transform: translateX(-50%) rotate(90deg);
+    translate: 10px -9px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-frame-star-side-top-right {
+    transform: translateX(-50%) rotate(-90deg);
+    translate: -10px -8px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-frame-star-side-bottom-left {
+    transform: translateX(-50%) rotate(-90deg);
+    translate: 10px 8px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-frame-star-side-bottom-right {
+    transform: translateX(-50%) rotate(90deg);
+    translate: -10px 7px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet.mobile-character-sheet .ctl-frame-star-side-top-left {
+    transform: translateX(-50%) rotate(90deg);
+    translate: 8px -1px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet.mobile-character-sheet .ctl-frame-star-side-top-right {
+    transform: translateX(-50%) rotate(-90deg);
+    translate: -8px -1px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet.mobile-character-sheet .ctl-frame-star-side-bottom-left {
+    transform: translateX(-50%) rotate(-90deg);
+    translate: 8px 2px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet.mobile-character-sheet .ctl-frame-star-side-bottom-right {
+    transform: translateX(-50%) rotate(90deg);
+    translate: -8px 2px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-frame-edge-top::before,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-frame-edge-top::after,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-frame-edge-bottom::before,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-frame-edge-bottom::after {
+    background-image: linear-gradient(to bottom, transparent 0 10%, rgb(31 89 96 / 76%) 10% 30%, transparent 30% 57%, rgb(31 89 96 / 48%) 57% 78%, transparent 78% 100%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-frame-edge-left,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-frame-edge-right {
+    background-image: linear-gradient(to right, rgb(31 89 96 / 46%) 0 18%, transparent 18% 48%, rgb(31 89 96 / 76%) 48% 70%, transparent 70% 100%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .ctl-sheet-tab-list {
+    border-color: rgb(31 89 96 / 62%);
+    background: rgb(228 238 229 / 60%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .ctl-sheet-tab-list button {
+    border-right-color: rgb(31 89 96 / 34%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .ctl-sheet-tab-list button[data-state="active"] {
+    color: #f6f2e4;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .ctl-sheet-tab-list button[data-state="active"]::before {
+    box-shadow: 0 0 0 1px rgb(31 89 96 / 35%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .official-sheet-body > section + section,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .official-sheet-body > .sheet-layout-column + .sheet-layout-column {
+    border-left-color: rgb(31 89 96 / 35%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .editable-line-row input::placeholder,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .notes-area textarea::placeholder {
+    color: rgb(36 73 80 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .tracker-help,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .experience-panel,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .notes-area small,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .experience-title small {
+    color: rgb(36 73 80 / 76%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .power-resource::before,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .experience-panel::before {
+    background: rgb(31 89 96 / 48%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .experience-totals div,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .experience-input,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .beat-controls,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .beat-resource {
+    border-color: rgb(31 89 96 / 26%);
+    background: rgb(248 246 231 / 55%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .experience-totals span,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .experience-input span,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .beat-controls legend,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .beat-resource > span {
+    color: rgb(36 73 80 / 70%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .experience-actions button,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .condition-manager > button,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .notes-area textarea,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .rule-power-card,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .selected-condition,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .selected-tilt {
+    border-color: rgb(31 89 96 / 38%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .experience-actions button:not(.ctl-purchase-trait-button),
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .condition-manager > button {
+    background: rgb(207 228 218 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .experience-actions button:not(.ctl-purchase-trait-button):hover,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .condition-manager > button:hover {
+    background: rgb(164 207 193 / 76%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button::before {
+    background: rgb(31 89 96 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button::after {
+    background: rgb(246 241 222 / 92%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button:hover::after {
+    background: #d0e4dc;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .notes-area textarea {
+    background-color: rgb(248 246 231 / 58%);
+    background-image: repeating-linear-gradient(transparent, transparent 23px, rgb(31 89 96 / 18%) 24px);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .rule-power-card,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .selected-condition,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .selected-tilt {
+    background: rgb(248 246 231 / 58%);
+  }
+
+  body:has([data-changeling-sheet-theme="elemental"]) .ctl-dialog,
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="elemental"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) {
+    --ctl-ink: #244950;
+    --sheet-accent: #31777b;
+    --sheet-ink: #244950;
+    border-color: rgb(31 89 96 / 50%) !important;
+    background: rgb(248 246 231 / 98%) !important;
+    color: #244950;
+  }
+
+  body:has([data-changeling-sheet-theme="elemental"]) .ctl-dialog :is(input, button, [data-slot="select-trigger"]),
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="elemental"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    :is(input, button, [data-slot="select-trigger"]) {
+    border-color: rgb(31 89 96 / 38%);
+  }
+
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="elemental"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    :is([data-slot="dialog-title"], [data-slot="alert-dialog-title"], strong),
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="elemental"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    .experience-merit-catalog p {
+    color: #244950;
+  }
+
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="elemental"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    .experience-merit-catalog small,
+  body:has([data-changeling-sheet-theme="elemental"]) .ctl-dialog .merit-option small,
+  body:has([data-changeling-sheet-theme="elemental"]) .ctl-dialog .experience-merit-catalog small {
+    color: rgb(36 73 80 / 72%);
+  }
+
+  body:has([data-changeling-sheet-theme="elemental"]) .ctl-dialog .merit-option p,
+  body:has([data-changeling-sheet-theme="elemental"]) .ctl-dialog .experience-merit-catalog p {
+    color: #244950;
+  }
+
+  /* ---------- DESKTOP: TÍTULO ---------- */
+
+/* O título ilustrado mantém sua proporção original. */
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .cod-sheet-title {
+    min-height: 80px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title > div {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title .ctl-title-mark {
+     width: 590px;
+    max-width: 100%;
+    aspect-ratio: 1768 / 296;
+    background-position: center;
+    translate: 0 -20px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title strong {
+    font-size: 20px;
+    top: 65%;
+    left: 350px;
+    translate: 0 0;
+    opacity: 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title p {
+    font-size: 13px;
+    top: 65%;
+    right: 0;
+    translate: 0 0;
+  }
+
+
+  /* ---------- MOBILE: TÍTULO ---------- */
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title .ctl-title-mark {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    left: 50%;
+    translate: -50% -10px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title strong {
+    font-size: clamp(16px, 4.2vw, 20px);
+    margin: -10px 35px 0 0;
+    translate: 0 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title p {
+    font-size: 10px;
+    translate: 0 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .cod-sheet-title .ctl-title-mark {
+    scale: 1.5;
+  }
+
+}

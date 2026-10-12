@@ -179,46 +179,12 @@ correspondesse à estrutura da referência:
 - fez uma ficha recém-selecionada abrir em Summary no mobile, associando o
   estado da aba ao ID do personagem.
 
-### 2.9 Moldura dinâmica da Skill de Kith
+### 2.9 Destaque da Skill de Kith
 
-O antigo `kith-skill-stamp.webp` era esticado como uma imagem única e foi
-removido. O substituto possui quatro peças:
-
-```text
-left + right
-left + middle-1 + right
-left + middle-1 + middle-2 + middle-1 + middle-2 + ... + right
-```
-
-`KithSkillName`, em `app/workspace/sheet-primitives.tsx`, mede a largura real do
-nome localizado com `getBoundingClientRect()`. Um `ResizeObserver` recalcula a
-moldura quando a métrica muda. No estado atual:
-
-```text
-altura renderizada = 38 px
-largura fixa = (471 + 760) × 38 / 552
-largura de um segmento = 260 × 38 / 552
-largura requerida = largura do texto + 20 px
-segmentos = max(0, ceil((largura requerida - largura fixa) / largura do segmento))
-```
-
-A folga contínua já faz parte de `largura requerida`. Por isso, nomes curtos
-como Brawl, Drive e Crafts usam somente `left + right`; um segmento central só
-é adicionado quando a largura medida realmente ultrapassa a capacidade das duas
-extremidades. Os segmentos centrais alternam entre as versões 1 e 2 para evitar
-repetição visual evidente. O posicionamento final calibrado está em
-`.kith-skill-frame`.
-
-Para ajustar esse efeito no futuro:
-
-- altere `height` no CSS para mudar toda a escala;
-- altere `top` e `left` para posicionar sem afetar a medição;
-- altere os `20 px` no TypeScript para mudar a folga contínua em torno do texto;
-- não acrescente um segmento fixo depois do `ceil`: isso faz nomes curtos
-  escaparem para a esquerda;
-- mantenha as proporções originais nas fórmulas de largura;
-- não recorte individualmente essas quatro peças depois de prontas, pois isso
-  pode quebrar os encaixes entre elas.
+A Skill favorecida pelo Kith recebe um único ornamento transparente à esquerda do nome.
+O CSS usa `skill-highlight.webp` como pseudo-elemento de `.official-trait-name`,
+com posição fixa na linha. A largura do nome localizado não altera o ornamento.
+Os PNGs recortados são os arquivos-fonte dos WebPs de cada tema.
 
 ### 2.10 Prévia e saída A4 de impressão
 
@@ -252,8 +218,8 @@ mas manter sua composição e interpretação dos dados dentro da própria linha
 
 ### 3.1 Assets usados em runtime por Changeling
 
-A implementação completa usa **17 imagens raster**: 13 fundamentais e 4
-específicas da moldura dinâmica de Skill de Kith.
+A implementação completa usa **14 imagens raster**: 13 fundamentais e um
+ornamento de Skill de Kith.
 
 | Grupo | Asset público | Dimensão | Canal | Propósito |
 | --- | --- | ---: | --- | --- |
@@ -270,10 +236,7 @@ específicas da moldura dinâmica de Skill de Kith.
 | Marca-d'água | `public/game-lines/changeling/images/background-changeling.webp` | 1145 × 1374 | RGBA | Ilustração central translúcida da ficha. |
 | Ícone | `public/game-lines/changeling/images/icon.webp` | 534 × 500 | RGBA | Símbolo da linha usado no registro e na impressão. |
 | Experiência | `public/game-lines/changeling/images/experience-purchase-icon.webp` | 657 × 685 | RGBA | Ornamento do seletor de compra de trait. |
-| Skill de Kith | `public/game-lines/changeling/images/skill-highlight-left.webp` | 760 × 552 | RGBA | Início da moldura adaptável. |
-| Skill de Kith | `public/game-lines/changeling/images/skill-highlight-middle-1.webp` | 260 × 552 | RGBA | Primeiro segmento repetível. |
-| Skill de Kith | `public/game-lines/changeling/images/skill-highlight-middle-2.webp` | 260 × 552 | RGBA | Segundo segmento repetível, alternado com o primeiro. |
-| Skill de Kith | `public/game-lines/changeling/images/skill-highlight-right.webp` | 471 × 552 | RGBA | Fechamento da moldura adaptável. |
+| Skill de Kith | `public/game-lines/changeling/images/skill-highlight.webp` | 514 × 552 | RGBA | Ornamento isolado à esquerda do nome, sem moldura ao redor do texto. |
 
 Há ainda **3 fontes WOFF2**, que não entram na contagem de imagens, em
 `public/game-lines/changeling/fonts/`.
@@ -297,11 +260,8 @@ imagens fundamentais de runtime**:
 12. uma marca-d'água da linha.
 13. um ornamento para a ação de compra de experiência.
 
-Se a linha possuir um destaque que precise envolver texto de largura variável,
-adicione **4 imagens segmentadas** — esquerda, centro A, centro B e direita —
-chegando a **17 imagens**, como em Changeling. Não crie esse conjunto para Mage
-apenas para imitar Kith: só o adote se houver um significado visual próprio,
-como Rote, Ruling ou outro estado que realmente peça essa ornamentação.
+Changeling acrescenta um único ornamento de Skill de Kith, chegando a **14 imagens**.
+Uma nova linha só precisa desse asset quando houver um estado próprio a destacar.
 
 O pacote-fonte atual de Changeling contém 14 arquivos em
 `assets/changeling-style/source/`. A diferença de contagem ocorre porque alguns
@@ -536,7 +496,7 @@ ou quebrar a instalação offline.
 | Divisores comuns | `.official-heading::before` e `::after` |
 | Divisor de Attributes | `.ctl-attributes-heading` e seus pseudo-elementos |
 | Linhas verticais | backgrounds de `.official-trait-grid`, `.official-sheet-body` e `.sheet-bottom-grid` |
-| Moldura da Skill de Kith | `.kith-skill-frame`, fórmulas das peças e `KithSkillName` |
+| Destaque da Skill de Kith | `.skill-highlight-kith .official-trait-name::before` |
 | Altura/largura global da folha | `.cod-sheet` em `app/css/globals.css` |
 
 Concentre mudanças em tokens e seletores de alto nível. Compensações diferentes

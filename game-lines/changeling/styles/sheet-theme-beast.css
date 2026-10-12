@@ -1,0 +1,330 @@
+/* ============================================================
+   5. BEAST
+   ============================================================ */
+
+@media screen {
+
+
+
+
+  /* Paleta da ficha e dos controles que herdam as cores da linha. */
+  body:has([data-changeling-sheet-theme="beast"]),
+  body:has([data-changeling-sheet-theme="beast"]) .line-theme-ctl {
+    --primary: #465f3d;
+    --primary-foreground: #f7f1e4;
+    --secondary: #e0e6d5;
+    --secondary-foreground: #2d3b2d;
+    --accent: #bcccae;
+    --accent-foreground: #2d3b2d;
+    --ring: #819b72;
+    --line-accent: #617b4c;
+    --line-strong: #2d3b2d;
+    --line-soft: #edf0e2;
+    --line-border: #aaba99;
+    --line-topbar-start: #203224;
+    --line-topbar-middle: #344b35;
+    --line-topbar-end: #465f3d;
+    --line-topbar-muted: #d9e4cc;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet {
+    --ctl-ink: #2d3b2d;
+    --ctl-ink-soft: rgb(45 59 45 / 48%);
+    --ctl-rule: rgb(45 59 45 / 34%);
+    --ctl-paper: #ede8d7;
+    --ctl-paper-light: rgb(247 241 228 / 68%);
+    --ctl-ornament-fill: #c8d0ae;
+    --sheet-accent: #617b4c;
+    --sheet-ink: #2d3b2d;
+    --ctl-title-divider-icon: var(--ctl-image-frame-side);
+    border-color: rgb(65 91 59 / 52%);
+    box-shadow: 0 16px 48px rgb(32 50 36 / 16%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet::after {
+    /* >>ALTERAR AQUI PARA TRANSPARENCIA BACKGROUND<< 0 = invisível; 1 = opaco. */
+    opacity: 0.2;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .skill-highlight-kith .official-trait-name::before {
+  content: "";
+  position: absolute;
+  left: -54px;
+  top: 50%;
+  width: 100px;
+  height: 68px;
+  transform: translateY(-53%);
+  background: var(--ctl-image-skill-highlight, url("/game-lines/changeling/images/skill-highlight.webp")) center / contain no-repeat;
+  pointer-events: none;
+}
+
+.app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet:not(.mobile-character-sheet) {
+    /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
+    --ctl-frame-top-center-shift: 0px 15px;
+    --ctl-frame-top-left-line-shift: 0px 15px;
+    --ctl-frame-top-right-line-shift: 0px 15px;
+    --ctl-frame-bottom-center-shift: 0px -15px;
+    --ctl-frame-bottom-left-line-shift: 0px -15px;
+    --ctl-frame-bottom-right-line-shift: 0px -15px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet.mobile-character-sheet {
+    /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
+    --ctl-frame-top-center-shift: 0px 9px;
+    --ctl-frame-top-left-line-shift: 0px 9px;
+    --ctl-frame-top-right-line-shift: 0px 9px;
+    --ctl-frame-bottom-center-shift: 0px -7px;
+    --ctl-frame-bottom-left-line-shift: 0px -7px;
+    --ctl-frame-bottom-right-line-shift: 0px -7px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet:not(.mobile-character-sheet) {
+    --ctl-frame-star-side-offset: 28px;
+    --ctl-frame-star-side-width: 26px;
+    --ctl-frame-star-side-height: 56px;
+    --ctl-frame-star-side-half-height: 13px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet.mobile-character-sheet {
+    --ctl-frame-star-side-offset: 25px;
+    --ctl-frame-star-side-width: 20px;
+    --ctl-frame-star-side-height: 36px;
+    --ctl-frame-star-side-half-height: 11px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-frame-edge-top::before,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-frame-edge-top::after,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-frame-edge-bottom::before,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-frame-edge-bottom::after {
+    background-image: linear-gradient(to bottom, transparent 0 10%, rgb(65 91 59 / 76%) 10% 30%, transparent 30% 57%, rgb(65 91 59 / 48%) 57% 78%, transparent 78% 100%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-frame-edge-left,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-frame-edge-right {
+    background-image: linear-gradient(to right, rgb(65 91 59 / 46%) 0 18%, transparent 18% 48%, rgb(65 91 59 / 76%) 48% 70%, transparent 70% 100%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .ctl-sheet-tab-list {
+    border-color: rgb(65 91 59 / 62%);
+    background: rgb(224 230 211 / 60%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .ctl-sheet-tab-list button {
+    border-right-color: rgb(65 91 59 / 34%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .ctl-sheet-tab-list button[data-state="active"] {
+    color: #f5f0df;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .ctl-sheet-tab-list button[data-state="active"]::before {
+    box-shadow: 0 0 0 1px rgb(65 91 59 / 35%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .official-sheet-body > section + section,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .official-sheet-body > .sheet-layout-column + .sheet-layout-column {
+    border-left-color: rgb(65 91 59 / 35%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .editable-line-row input::placeholder,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .notes-area textarea::placeholder {
+    color: rgb(45 59 45 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .tracker-help,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .experience-panel,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .notes-area small,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .experience-title small {
+    color: rgb(45 59 45 / 76%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .power-resource::before,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .experience-panel::before {
+    background: rgb(65 91 59 / 48%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .experience-totals div,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .experience-input,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .beat-controls,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .beat-resource {
+    border-color: rgb(65 91 59 / 26%);
+    background: rgb(247 241 228 / 55%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .experience-totals span,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .experience-input span,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .beat-controls legend,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .beat-resource > span {
+    color: rgb(45 59 45 / 70%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .experience-actions button,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .condition-manager > button,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .notes-area textarea,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .rule-power-card,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .selected-condition,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .selected-tilt {
+    border-color: rgb(65 91 59 / 38%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .experience-actions button:not(.ctl-purchase-trait-button),
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .condition-manager > button {
+    background: rgb(194 210 174 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .experience-actions button:not(.ctl-purchase-trait-button):hover,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .condition-manager > button:hover {
+    background: rgb(171 190 144 / 76%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button::before {
+    background: rgb(65 91 59 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button::after {
+    background: rgb(245 240 223 / 92%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button:hover::after {
+    background: #ccd6bc;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .notes-area textarea {
+    background-color: rgb(247 241 228 / 58%);
+    background-image: repeating-linear-gradient(transparent, transparent 23px, rgb(65 91 59 / 18%) 24px);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .rule-power-card,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .selected-condition,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .selected-tilt {
+    background: rgb(247 241 228 / 58%);
+  }
+
+  body:has([data-changeling-sheet-theme="beast"]) .ctl-dialog,
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="beast"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) {
+    --ctl-ink: #2d3b2d;
+    --sheet-accent: #617b4c;
+    --sheet-ink: #2d3b2d;
+    border-color: rgb(65 91 59 / 50%) !important;
+    background: rgb(247 241 228 / 98%) !important;
+    color: #2d3b2d;
+  }
+
+  body:has([data-changeling-sheet-theme="beast"]) .ctl-dialog :is(input, button, [data-slot="select-trigger"]),
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="beast"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    :is(input, button, [data-slot="select-trigger"]) {
+    border-color: rgb(65 91 59 / 38%);
+  }
+
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="beast"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    :is([data-slot="dialog-title"], [data-slot="alert-dialog-title"], strong),
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="beast"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    .experience-merit-catalog p {
+    color: #2d3b2d;
+  }
+
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="beast"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    .experience-merit-catalog small,
+  body:has([data-changeling-sheet-theme="beast"]) .ctl-dialog .merit-option small,
+  body:has([data-changeling-sheet-theme="beast"]) .ctl-dialog .experience-merit-catalog small {
+    color: rgb(45 59 45 / 72%);
+  }
+
+  body:has([data-changeling-sheet-theme="beast"]) .ctl-dialog .merit-option p,
+  body:has([data-changeling-sheet-theme="beast"]) .ctl-dialog .experience-merit-catalog p {
+    color: #2d3b2d;
+  }
+
+  /* O título ilustrado mantém sua proporção original. */
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .cod-sheet-title {
+    min-height: 185px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title > div {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title .ctl-title-mark {
+    width: 400px;
+    max-width: 100%;
+    aspect-ratio: 1983 / 793;
+    background-position: center;
+    translate: -5px -10px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title strong {
+    opacity: 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title strong {
+    translate: 0px 10px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title .ctl-title-mark {
+    width: min(350px, 86vw);
+    max-width: 100%;
+    aspect-ratio: 1983 / 793;
+    margin-inline: auto;
+    background-position: center;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet:not(.mobile-character-sheet) .official-heading.ctl-attributes-heading::before,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet:not(.mobile-character-sheet) .official-heading.ctl-attributes-heading::after {
+    background-size: auto 30px, calc(100% - 55px) auto;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet.mobile-character-sheet .official-heading.ctl-attributes-heading::before,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet.mobile-character-sheet .official-heading.ctl-attributes-heading::after {
+    background-size: auto 31px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .official-heading:not(.ctl-attributes-heading)::before,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .official-heading:not(.ctl-attributes-heading)::after {
+    height: 29px;
+    margin-block: -6.5px;
+    background-size: auto 29px, calc(100% - 47px) 1px, calc(100% - 47px) 1px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet.mobile-character-sheet .official-heading:not(.ctl-attributes-heading)::before,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet.mobile-character-sheet .official-heading:not(.ctl-attributes-heading)::after {
+    height: 27px;
+    margin-block: -6px;
+    background-size: auto 27px, calc(100% - 44px) 1px, calc(100% - 44px) 1px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title::before,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title::after {
+    background-size: auto 17px, calc(100% - 45px) 100%;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title::before,
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title::after {
+    background-size: auto 17px, calc(100% - 34px) 100%;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet {
+    --ctl-title-divider-icon: none;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .cod-sheet-title .ctl-title-side {
+    display: block;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title .ctl-title-side {
+    width: 41px;
+    height: 32px;
+    bottom: -5.5px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title .ctl-title-side {
+    width: 31px;
+    height: 24px;
+    bottom: -1.5px;
+  }
+}

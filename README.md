@@ -177,9 +177,11 @@ Changeling Desktop/Mobile sheets offer a theme selector beside the language sele
 
 `Default` uses `public/game-lines/changeling/images/`. Each direct `theme-*` subfolder adds an option automatically during development or the next build: for example, `theme-fairest` adds `Fairest`, and `theme-darkling` adds `Darkling`. Put replacement WebP images inside using exactly the default filenames (`title.webp`, `paper-texture.webp`, `frame-corner.webp`, etc.). Missing replacements use the default image. `theme-default` is reserved; no catalog or manual option registration is needed. Theme images remain static assets and use the existing service-worker cache after being requested online.
 
-Title sizing and positioning can be customized in `game-lines/changeling/styles/sheet-theme.css`. Its commented Default/Fairest blocks separate Desktop and Mobile and target the title image, `strong` and `p`. For another theme, copy the Fairest blocks and replace `fairest` with the folder suffix. `width`/`max-width` size the image, `font-size` sizes text, and `translate: X Y` offsets either element. All overrides are screen-only.
+Title sizing and positioning can be customized in `game-lines/changeling/styles/sheet-theme-<seeming>.css`. Each of the seven Seemings has its own file; shared controls and Default adjustments stay in `sheet-theme-base.css`. The commented blocks separate Desktop and Mobile and target the title image, `strong` and `p`. `width`/`max-width` size the image, `font-size` sizes text, and `translate: X Y` offsets either element. All overrides are screen-only.
 
-The same file includes separate Desktop/Mobile blocks for the assembled Kith Skill highlight frame. Adjust `translate: X Y` to move it and `scale` to resize it as a whole, without changing its automatic piece assembly, Skill text or dots. Initial values preserve the current appearance.
+Kith Skills use one `skill-highlight.webp` ornament overlapping the left margin of the Skill row, without indenting the name. Its size and position are set in `game-lines/changeling/styles/sheet.css`; the ornament does not depend on the translated name width.
+
+Each Seeming theme stylesheet has separate Desktop and Mobile controls for the upper and lower outer frame. `--ctl-frame-top-center-shift`, `--ctl-frame-top-left-line-shift`, and `--ctl-frame-top-right-line-shift` move the upper ornament and its two lines; replace `top` with `bottom` for independent lower controls. Set each to `X Y` lengths; positive values move right/down. The existing side ornaments and frame sizes remain independently adjustable.
 
 ## Runtime and deployment
 

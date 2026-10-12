@@ -7,7 +7,14 @@ import { getDeviceValue, setDeviceValue } from "@/lib/device-storage";
 import { useLanguage } from "@/lib/i18n";
 import themes from "virtual:changeling-sheet-themes";
 import { CHANGELING_THEME_STORAGE_KEY, sheetThemeCss } from "./sheet-theme";
-import "./styles/sheet-theme.css";
+import "./styles/sheet-theme-base.css";
+import "./styles/sheet-theme-fairest.css";
+import "./styles/sheet-theme-elemental.css";
+import "./styles/sheet-theme-ogre.css";
+import "./styles/sheet-theme-beast.css";
+import "./styles/sheet-theme-darkling.css";
+import "./styles/sheet-theme-wizened.css";
+import "./styles/sheet-theme-grimm.css";
 
 export default function ChangelingSheetThemeToolbar() {
   const { t } = useLanguage();

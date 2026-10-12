@@ -1,0 +1,269 @@
+/* ============================================================
+   5. WIZENED
+   ============================================================ */
+
+@media screen {
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet:not(.mobile-character-sheet) {
+    /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
+    --ctl-frame-top-center-shift: 0px 0px;
+    --ctl-frame-top-left-line-shift: 0px 0px;
+    --ctl-frame-top-right-line-shift: 0px 0px;
+    --ctl-frame-bottom-center-shift: 0px 0px;
+    --ctl-frame-bottom-left-line-shift: 0px 0px;
+    --ctl-frame-bottom-right-line-shift: 0px 0px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet.mobile-character-sheet {
+    /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
+    --ctl-frame-top-center-shift: 0px 0px;
+    --ctl-frame-top-left-line-shift: 0px 0px;
+    --ctl-frame-top-right-line-shift: 0px 0px;
+    --ctl-frame-bottom-center-shift: 0px 0px;
+    --ctl-frame-bottom-left-line-shift: 0px 0px;
+    --ctl-frame-bottom-right-line-shift: 0px 0px;
+  }
+
+
+  /* Paleta da ficha e dos controles que herdam as cores da linha. */
+  body:has([data-changeling-sheet-theme="wizened"]),
+  body:has([data-changeling-sheet-theme="wizened"]) .line-theme-ctl {
+    --primary: #566a55;
+    --primary-foreground: #f6f1e4;
+    --secondary: #dfe5d8;
+    --secondary-foreground: #39483b;
+    --accent: #cfc69e;
+    --accent-foreground: #39483b;
+    --ring: #9da782;
+    --line-accent: #75876a;
+    --line-strong: #39483b;
+    --line-soft: #edf0e5;
+    --line-border: #b4bca5;
+    --line-topbar-start: #2b3931;
+    --line-topbar-middle: #405146;
+    --line-topbar-end: #566a55;
+    --line-topbar-muted: #c7d0bd;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet {
+    --ctl-ink: #39483b;
+    --ctl-ink-soft: rgb(57 72 59 / 48%);
+    --ctl-rule: rgb(57 72 59 / 34%);
+    --ctl-paper: #eee9d8;
+    --ctl-paper-light: rgb(246 241 228 / 68%);
+    --ctl-ornament-fill: #cdc5a2;
+    --sheet-accent: #75876a;
+    --sheet-ink: #39483b;
+    --ctl-title-divider-icon: var(--ctl-image-frame-side);
+    border-color: rgb(86 106 85 / 52%);
+    box-shadow: 0 16px 48px rgb(43 57 49 / 16%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet::after {
+    /* >>ALTERAR AQUI PARA TRANSPARENCIA BACKGROUND<< 0 = invisível; 1 = opaco. */
+    opacity: 0.2;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet:not(.mobile-character-sheet) {
+    --ctl-frame-star-side-offset: 28px;
+    --ctl-frame-star-side-width: 26px;
+    --ctl-frame-star-side-height: 26px;
+    --ctl-frame-star-side-half-height: 13px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet.mobile-character-sheet {
+    --ctl-frame-star-side-offset: 24px;
+    --ctl-frame-star-side-width: 22px;
+    --ctl-frame-star-side-height: 22px;
+    --ctl-frame-star-side-half-height: 11px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-edge-top::before,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-edge-top::after,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-edge-bottom::before,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-edge-bottom::after {
+    background-image: linear-gradient(to bottom, transparent 0 10%, rgb(86 106 85 / 76%) 10% 30%, transparent 30% 57%, rgb(86 106 85 / 48%) 57% 78%, transparent 78% 100%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-edge-left,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-frame-edge-right {
+    background-image: linear-gradient(to right, rgb(86 106 85 / 46%) 0 18%, transparent 18% 48%, rgb(86 106 85 / 76%) 48% 70%, transparent 70% 100%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .ctl-sheet-tab-list {
+    border-color: rgb(86 106 85 / 62%);
+    background: rgb(223 229 213 / 60%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .ctl-sheet-tab-list button {
+    border-right-color: rgb(86 106 85 / 34%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .ctl-sheet-tab-list button[data-state="active"] {
+    color: #f4efdd;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .ctl-sheet-tab-list button[data-state="active"]::before {
+    box-shadow: 0 0 0 1px rgb(86 106 85 / 35%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .official-sheet-body > section + section,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .official-sheet-body > .sheet-layout-column + .sheet-layout-column {
+    border-left-color: rgb(86 106 85 / 35%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .editable-line-row input::placeholder,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .notes-area textarea::placeholder {
+    color: rgb(57 72 59 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .tracker-help,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-panel,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .notes-area small,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-title small {
+    color: rgb(57 72 59 / 76%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .power-resource::before,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-panel::before {
+    background: rgb(86 106 85 / 48%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-totals div,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-input,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .beat-controls,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .beat-resource {
+    border-color: rgb(86 106 85 / 26%);
+    background: rgb(246 241 228 / 55%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-totals span,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-input span,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .beat-controls legend,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .beat-resource > span {
+    color: rgb(57 72 59 / 70%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .skill-highlight-kith .official-trait-name::before {
+  content: "";
+  position: absolute;
+  left: -60px;
+  top: 50%;
+  width: 100px;
+  height: 88px;
+  transform: translateY(-48%);
+  background: var(--ctl-image-skill-highlight, url("/game-lines/changeling/images/skill-highlight.webp")) center / contain no-repeat;
+  pointer-events: none;
+}
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-actions button,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .condition-manager > button,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .notes-area textarea,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .rule-power-card,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .selected-condition,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .selected-tilt {
+    border-color: rgb(86 106 85 / 38%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-actions button:not(.ctl-purchase-trait-button),
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .condition-manager > button {
+    background: rgb(199 206 177 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-actions button:not(.ctl-purchase-trait-button):hover,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .condition-manager > button:hover {
+    background: rgb(172 185 145 / 76%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button::before {
+    background: rgb(86 106 85 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button::after {
+    background: rgb(244 239 221 / 92%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button:hover::after {
+    background: #d9d0ae;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .notes-area textarea {
+    background-color: rgb(246 241 228 / 58%);
+    background-image: repeating-linear-gradient(transparent, transparent 23px, rgb(86 106 85 / 18%) 24px);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .rule-power-card,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .selected-condition,
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .selected-tilt {
+    background: rgb(246 241 228 / 58%);
+  }
+
+  body:has([data-changeling-sheet-theme="wizened"]) .ctl-dialog,
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="wizened"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) {
+    --ctl-ink: #39483b;
+    --sheet-accent: #75876a;
+    --sheet-ink: #39483b;
+    border-color: rgb(86 106 85 / 50%) !important;
+    background: rgb(246 241 228 / 98%) !important;
+    color: #39483b;
+  }
+
+  body:has([data-changeling-sheet-theme="wizened"]) .ctl-dialog :is(input, button, [data-slot="select-trigger"]),
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="wizened"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    :is(input, button, [data-slot="select-trigger"]) {
+    border-color: rgb(86 106 85 / 38%);
+  }
+
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="wizened"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    :is([data-slot="dialog-title"], [data-slot="alert-dialog-title"], strong),
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="wizened"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    .experience-merit-catalog p {
+    color: #39483b;
+  }
+
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="wizened"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    .experience-merit-catalog small,
+  body:has([data-changeling-sheet-theme="wizened"]) .ctl-dialog .merit-option small,
+  body:has([data-changeling-sheet-theme="wizened"]) .ctl-dialog .experience-merit-catalog small {
+    color: rgb(57 72 59 / 72%);
+  }
+
+  body:has([data-changeling-sheet-theme="wizened"]) .ctl-dialog .merit-option p,
+  body:has([data-changeling-sheet-theme="wizened"]) .ctl-dialog .experience-merit-catalog p {
+    color: #39483b;
+  }
+
+  /* O título ilustrado mantém sua proporção original. */
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet .cod-sheet-title {
+    min-height: 92px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title > div {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title .ctl-title-mark {
+    width: 490px;
+    max-width: 100%;
+    aspect-ratio: 2045 / 338;
+    background-position: center;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title strong {
+    opacity: 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="wizened"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title .ctl-title-mark {
+    width: min(365px, 89vw);
+    max-width: 100%;
+    aspect-ratio: 2045 / 338;
+    margin-inline: auto;
+    background-position: center;
+  }
+}

@@ -16,6 +16,7 @@ import { changelingFavoredRegalia } from "@/lib/changeling-regalia";
 import { ANIMALS, VEHICLES, animalPresentation, vehiclePresentation } from "@/lib/companions";
 import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits, type ContractPresentationCatalog } from "./contract-presentation";
+import { useHomebrewPreferences } from "@/app/use-homebrew";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
@@ -126,8 +127,8 @@ function PrintCard({ title, meta, children, className = "" }: { title: ReactNode
 
 type ContractPrintData = { title: string; access: string; kind: string; facts: Array<[string, ReactNode]>; rows: Array<[string, ReactNode]> };
 
-function contractPrintData(baseDefinition: ContractDefinition, character: CharacterSheet, courts: readonly CourtDefinition[], presentation: ContractPresentationCatalog, locale: Locale, t: Translator): ContractPrintData {
-  const definition = contractPresentation(contractWithSupplementalBenefits(baseDefinition, []), locale, presentation);
+function contractPrintData(baseDefinition: ContractDefinition, character: CharacterSheet, courts: readonly CourtDefinition[], presentation: ContractPresentationCatalog, locale: Locale, t: Translator, supplementalBenefitSources: readonly string[]): ContractPrintData {
+  const definition = contractPresentation(contractWithSupplementalBenefits(baseDefinition, supplementalBenefitSources), locale, presentation);
   const summary = contractSummary(definition, locale);
   const data = character.line_data;
   const benefits = [String(data.seeming ?? ""), ...objectList(data.extra_contract_benefits).filter((item) => String(item.contractId) === definition.id).map((item) => String(item.seeming))]
@@ -242,6 +243,8 @@ function FlowPages({ blocks, characterName, startPage, onReadyChange, onPageCoun
 export function ChangelingPrintSheet({ character, options, catalogs, onReadyChange }: GameLinePrintSheetProps) {
   if (!catalogs) throw new Error("Changeling print sheet requires its catalog snapshot.");
   const { locale, t } = useLanguage();
+  const homebrewPreferences = useHomebrewPreferences();
+  const supplementalBenefitSources = homebrewPreferences.disabledIds.includes("h-seemings") ? [] : ["h-seemings"];
   const contractCatalog = catalogs.get<readonly ContractDefinition[]>("changeling-contracts");
   const coreMerits = catalogs.get<readonly MeritDefinition[]>("core-merits");
   const changelingMerits = catalogs.get<readonly MeritDefinition[]>("changeling-merits");
@@ -306,7 +309,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     const entitlementCatalog = entitlementCatalogPresentation(reference.entitlements, locale, reference.entitlementPresentation);
     const add = (section: string, sectionLabel: string, id: string, node: ReactNode) => blocks.push({ section, sectionLabel, id, node });
     if (options.powerDetails) contracts.forEach((contract, contractIndex) => {
-      const card = contractPrintData(contract, character, reference.courts, reference.contractPresentation, locale, t);
+      const card = contractPrintData(contract, character, reference.courts, reference.contractPresentation, locale, t, supplementalBenefitSources);
       const chunks = Array.from({ length: Math.max(1, Math.ceil(card.rows.length / 4)) }, (_, index) => card.rows.slice(index * 4, index * 4 + 4));
       chunks.forEach((rows, chunkIndex) => add("contracts", t("ui.contracts"), `contract-${contract.id}-${contractIndex}-${chunkIndex}`, <ContractCard data={card} rows={rows} continued={chunkIndex > 0} detailed/>));
     });
@@ -349,7 +352,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
   const experienceBeats = Math.max(0, Math.min(5, Math.trunc(Number(character.current_state?.experience_beats ?? 0) || 0)));
   const meritRows = principalMerits.slice(0, 8);
   const pageTwoMerits = [...principalMerits.slice(8), ...expanded.filter((merit) => !principalMerits.includes(merit))];
-  const contractRows = contracts.slice(0, 10).map((contract) => contractPrintData(contract, character, reference.courts, reference.contractPresentation, locale, t));
+  const contractRows = contracts.slice(0, 10).map((contract) => contractPrintData(contract, character, reference.courts, reference.contractPresentation, locale, t, supplementalBenefitSources));
   const seemingBlessing = seeming ? (locale === "en-US" ? seeming.blessingEn : seeming.blessing) : "";
   const seemingCurse = seeming ? (locale === "en-US" ? seeming.curseEn : seeming.curse) : "";
   return <div className="game-print-document ctl-print-document">

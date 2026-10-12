@@ -108,6 +108,7 @@ type ExperienceCatalogItem = {
   footerDetails?: Array<{ label: string; value: string; warning?: boolean }>;
   descriptionAfterDetails?: boolean;
   levels?: Array<{ label: string; value: string }>;
+  tables?: Array<{ title: string; columns: string[]; rows: string[][] }>;
 };
 
 export function ExperiencePowerPicker({
@@ -152,7 +153,7 @@ export function ExperiencePowerPicker({
       (category === "Todas" || (item.categories ?? [item.category]).includes(category)) &&
       (secondary === "Todos" || item.secondaryCategory === secondary) &&
       (!normalized ||
-        `${item.name} ${(item.categories ?? [item.category]).join(" ")} ${item.secondaryCategory ?? ""} ${item.description} ${item.meta} ${[...(item.details ?? []), ...(item.footerDetails ?? [])].map(({ label, value }) => `${label} ${value}`).join(" ")}`
+        `${item.name} ${(item.categories ?? [item.category]).join(" ")} ${item.secondaryCategory ?? ""} ${item.description} ${item.meta} ${[...(item.details ?? []), ...(item.footerDetails ?? [])].map(({ label, value }) => `${label} ${value}`).join(" ")} ${item.tables?.map((table) => `${table.title} ${table.columns.join(" ")} ${table.rows.flat().join(" ")}`).join(" ") ?? ""}`
           .toLocaleLowerCase("pt-BR")
           .includes(normalized)),
     );
@@ -208,9 +209,10 @@ export function ExperiencePowerPicker({
               <div>
                 <strong>{item.name}</strong>
                 <small>{item.meta}</small>
-                {!item.descriptionAfterDetails && <p>{item.description}</p>}
+                {!item.descriptionAfterDetails && item.description && <p>{item.description}</p>}
                 {item.details?.map(({ label, value, warning }) => <p className={warning ? "merit-prerequisites-missing" : undefined} key={`${label}-${value}`}><strong>{label}:</strong> {value}</p>)}
-                {item.descriptionAfterDetails && <p>{item.description}</p>}
+                {item.descriptionAfterDetails && item.description && <p>{item.description}</p>}
+                {item.tables?.map((table) => <div className="contract-detail-table" key={table.title}><strong>{table.title}</strong><table><thead><tr>{table.columns.map((column) => <th key={column}>{column}</th>)}</tr></thead><tbody>{table.rows.map((row, index) => <tr key={`${table.title}-${index}`}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>)}</tbody></table></div>)}
                 {item.footerDetails?.map(({ label, value, warning }) => <p className={warning ? "merit-prerequisites-missing" : undefined} key={`${label}-${value}`}><strong>{label}:</strong> {value}</p>)}
                 {item.levels?.map(({ label, value }) => <details key={label} onClick={(event) => event.stopPropagation()}><summary><strong>{label}</strong></summary><p>{value}</p></details>)}
               </div>

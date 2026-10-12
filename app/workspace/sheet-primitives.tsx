@@ -1,5 +1,5 @@
 "use client";
-import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useLanguage } from "@/lib/i18n";
 import { systemTerm } from "@/lib/system-terms";
 import { cycleHealthDamage, woundPenalty, type DamageLevel } from "@/lib/resource-rules";
@@ -11,13 +11,6 @@ const damageMessageKeys = { bashing: "ui.damageBashing", lethal: "ui.damageLetha
 export function pretty(value:string){return value.replace(/([A-Z])/g," $1").replace(/_/g," ").trim();}
 export function stringList(value:unknown){return Array.isArray(value)?value.map(String):[];}
 export function signed(value:number){return value>0?`+${value}`:String(value);}
-export function kithSkillMiddlePieceCount(nameWidth:number,frameHeight=38){
-  const scale=frameHeight/552;
-  const fixedWidth=(471+760)*scale;
-  const middleWidth=260*scale;
-  const requiredWidth=nameWidth+20;
-  return Math.max(0,Math.ceil((requiredWidth-fixedWidth)/middleWidth));
-}
 export function SheetHeading({children,className}:{children:ReactNode;className?:string}){const {locale}=useLanguage();return <h3 className={`official-heading${className?` ${className}`:""}`}><span>{typeof children==="string"?systemTerm(children,locale):children}</span></h3>;}
 export function CompactValues({values}:{values:Record<string,number|string>}){const {locale}=useLanguage();return <div className="compact-values">{Object.entries(values).map(([name,value])=><div key={name}><span>{systemTerm(pretty(name),locale)}</span><strong>{value}</strong></div>)}</div>;}
 
@@ -87,7 +80,7 @@ export function TraitLine({
   return (
     <div className={`official-trait-line${highlightTone ? ` skill-highlight-${highlightTone}` : ""}`}>
       <span className="official-trait-label" title={compactName ? localizedName : undefined} aria-label={note ? `${localizedName} (${note})` : localizedName}>
-        {highlightTone === "kith" ? <KithSkillName>{displayedName}</KithSkillName> : <span className="official-trait-name">{displayedName}</span>}
+        <span className="official-trait-name">{displayedName}</span>
         {note && <small title={note}>({note})</small>}
       </span>
       <DotValue value={value} />
@@ -95,34 +88,6 @@ export function TraitLine({
   );
 }
 
-function KithSkillName({children}:{children:string}) {
-  const nameRef=useRef<HTMLSpanElement>(null);
-  const [middleCount,setMiddleCount]=useState(0);
-  useLayoutEffect(()=>{
-    const name=nameRef.current;
-    if(!name)return;
-    let frame=0;
-    const measure=()=>{
-      cancelAnimationFrame(frame);
-      frame=requestAnimationFrame(()=>{
-        const nextCount=kithSkillMiddlePieceCount(name.getBoundingClientRect().width);
-        setMiddleCount((current)=>current===nextCount?current:nextCount);
-      });
-    };
-    measure();
-    const observer=new ResizeObserver(measure);
-    observer.observe(name);
-    return()=>{cancelAnimationFrame(frame);observer.disconnect();};
-  },[children]);
-  return <span ref={nameRef} className="official-trait-name">
-    <span className="kith-skill-name-text">{children}</span>
-    <span className="kith-skill-frame" aria-hidden="true">
-      <span className="kith-skill-piece kith-skill-left"/>
-      {Array.from({length:middleCount},(_,index)=><span key={index} className={`kith-skill-piece kith-skill-middle-${index%2+1}`}/>)}
-      <span className="kith-skill-piece kith-skill-right"/>
-    </span>
-  </span>;
-}
 export function DotValue({ value, max = 5, singleRow=false }: { value: number; max?: number; singleRow?:boolean }) {
   const { t }=useLanguage();
   const total = Math.max(max, Math.ceil(value / 5) * 5);

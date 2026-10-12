@@ -1,0 +1,364 @@
+/* ============================================================
+   5. OGRE
+   ============================================================ */
+
+@media screen {
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet:not(.mobile-character-sheet) {
+    /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
+    --ctl-frame-top-center-shift: 0px 0px;
+    --ctl-frame-top-left-line-shift: 0px 0px;
+    --ctl-frame-top-right-line-shift: 0px 0px;
+    --ctl-frame-bottom-center-shift: 0px 0px;
+    --ctl-frame-bottom-left-line-shift: 0px 0px;
+    --ctl-frame-bottom-right-line-shift: 0px 0px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet.mobile-character-sheet {
+    /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
+    --ctl-frame-top-center-shift: 0px 0px;
+    --ctl-frame-top-left-line-shift: 0px 0px;
+    --ctl-frame-top-right-line-shift: 0px 0px;
+    --ctl-frame-bottom-center-shift: 0px 0px;
+    --ctl-frame-bottom-left-line-shift: 0px 0px;
+    --ctl-frame-bottom-right-line-shift: 0px 0px;
+  }
+
+
+  /* Paleta da ficha e dos controles que herdam as cores da linha. */
+  body:has([data-changeling-sheet-theme="ogre"]),
+  body:has([data-changeling-sheet-theme="ogre"]) .line-theme-ctl {
+    --primary: #684735;
+    --primary-foreground: #f4eddb;
+    --secondary: #e3dac7;
+    --secondary-foreground: #302b27;
+    --accent: #d8c4a9;
+    --accent-foreground: #302b27;
+    --ring: #a47858;
+    --line-accent: #875337;
+    --line-strong: #302b27;
+    --line-soft: #eee4d1;
+    --line-border: #b7a48b;
+    --line-topbar-start: #282624;
+    --line-topbar-middle: #44332a;
+    --line-topbar-end: #684735;
+    --line-topbar-muted: #e8d9c1;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet {
+    --ctl-ink: #302b27;
+    --ctl-ink-soft: rgb(48 43 39 / 48%);
+    --ctl-rule: rgb(48 43 39 / 34%);
+    --ctl-paper: #e9dec8;
+    --ctl-paper-light: rgb(248 239 220 / 68%);
+    --ctl-ornament-fill: #ded0b7;
+    --sheet-accent: #875337;
+    --sheet-ink: #302b27;
+    --ctl-title-divider-icon: var(--ctl-image-frame-side);
+    border-color: rgb(104 71 53 / 52%);
+    box-shadow: 0 16px 48px rgb(40 38 36 / 16%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet::after {
+    /* >>ALTERAR AQUI PARA TRANSPARENCIA BACKGROUND<< 0 = invisível; 1 = opaco. */
+    opacity: 0.2;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet:not(.mobile-character-sheet) {
+    --ctl-frame-star-side-offset: 25px;
+    --ctl-frame-star-side-width: 44px;
+    --ctl-frame-star-side-height: 44px;
+    --ctl-frame-star-side-half-height: 22px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet.mobile-character-sheet {
+    --ctl-frame-star-side-offset: 22px;
+    --ctl-frame-star-side-width: 36px;
+    --ctl-frame-star-side-height: 36px;
+    --ctl-frame-star-side-half-height: 18px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-frame-star-side-top-left,
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-frame-star-side-top-right {
+    translate: 0 2px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-frame-star-side-bottom-left,
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-frame-star-side-bottom-right {
+    translate: 0 -2px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet .official-heading.ctl-attributes-heading::before,
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet .official-heading.ctl-attributes-heading::after {
+    background-image: var(--ctl-image-attributes-divider);
+    background-position: center;
+    background-size: 100% auto;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet .official-heading.ctl-attributes-heading::before {
+    transform: translateY(-50%) scaleX(-1);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet .official-heading.ctl-attributes-heading::after {
+    transform: translateY(-50%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-frame-edge-top::before,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-frame-edge-top::after,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-frame-edge-bottom::before,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-frame-edge-bottom::after {
+    background-image: linear-gradient(to bottom, transparent 0 10%, rgb(104 71 53 / 76%) 10% 30%, transparent 30% 57%, rgb(104 71 53 / 48%) 57% 78%, transparent 78% 100%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-frame-edge-left,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-frame-edge-right {
+    background-image: linear-gradient(to right, rgb(104 71 53 / 46%) 0 18%, transparent 18% 48%, rgb(104 71 53 / 76%) 48% 70%, transparent 70% 100%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .ctl-sheet-tab-list {
+    border-color: rgb(104 71 53 / 62%);
+    background: rgb(227 213 188 / 60%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .ctl-sheet-tab-list button {
+    border-right-color: rgb(104 71 53 / 34%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .ctl-sheet-tab-list button[data-state="active"] {
+    color: #f4ead5;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .ctl-sheet-tab-list button[data-state="active"]::before {
+    box-shadow: 0 0 0 1px rgb(104 71 53 / 35%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .official-sheet-body > section + section,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .official-sheet-body > .sheet-layout-column + .sheet-layout-column {
+    border-left-color: rgb(104 71 53 / 35%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .editable-line-row input::placeholder,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .notes-area textarea::placeholder {
+    color: rgb(48 43 39 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .tracker-help,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .experience-panel,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .notes-area small,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .experience-title small {
+    color: rgb(48 43 39 / 76%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .power-resource::before,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .experience-panel::before {
+    background: rgb(104 71 53 / 48%);
+  }
+
+   .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .skill-highlight-kith .official-trait-name::before {
+  content: "";
+  position: absolute;
+  left: -60px;
+  top: 50%;
+  width: 100px;
+  height: 55px;
+  transform: translateY(-49%);
+  background: var(--ctl-image-skill-highlight, url("/game-lines/changeling/images/skill-highlight.webp")) center / contain no-repeat;
+  pointer-events: none;
+}
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .experience-totals div,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .experience-input,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .beat-controls,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .beat-resource {
+    border-color: rgb(104 71 53 / 26%);
+    background: rgb(248 239 220 / 55%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .experience-totals span,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .experience-input span,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .beat-controls legend,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .beat-resource > span {
+    color: rgb(48 43 39 / 70%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .experience-actions button,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .condition-manager > button,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .notes-area textarea,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .rule-power-card,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .selected-condition,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .selected-tilt {
+    border-color: rgb(104 71 53 / 38%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .experience-actions button:not(.ctl-purchase-trait-button),
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .condition-manager > button {
+    background: rgb(218 199 168 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .experience-actions button:not(.ctl-purchase-trait-button):hover,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .condition-manager > button:hover {
+    background: rgb(197 167 129 / 76%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button::before {
+    background: rgb(104 71 53 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button::after {
+    background: rgb(244 235 213 / 92%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button:hover::after {
+    background: #ddc9aa;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .notes-area textarea {
+    background-color: rgb(248 239 220 / 58%);
+    background-image: repeating-linear-gradient(transparent, transparent 23px, rgb(104 71 53 / 18%) 24px);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .rule-power-card,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .selected-condition,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .selected-tilt {
+    background: rgb(248 239 220 / 58%);
+  }
+
+  body:has([data-changeling-sheet-theme="ogre"]) .ctl-dialog,
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="ogre"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) {
+    --ctl-ink: #302b27;
+    --sheet-accent: #875337;
+    --sheet-ink: #302b27;
+    border-color: rgb(104 71 53 / 50%) !important;
+    background: rgb(248 239 220 / 98%) !important;
+    color: #302b27;
+  }
+
+  body:has([data-changeling-sheet-theme="ogre"]) .ctl-dialog :is(input, button, [data-slot="select-trigger"]),
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="ogre"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    :is(input, button, [data-slot="select-trigger"]) {
+    border-color: rgb(104 71 53 / 38%);
+  }
+
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="ogre"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    :is([data-slot="dialog-title"], [data-slot="alert-dialog-title"], strong),
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="ogre"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    .experience-merit-catalog p {
+    color: #302b27;
+  }
+
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="ogre"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    .experience-merit-catalog small,
+  body:has([data-changeling-sheet-theme="ogre"]) .ctl-dialog .merit-option small,
+  body:has([data-changeling-sheet-theme="ogre"]) .ctl-dialog .experience-merit-catalog small {
+    color: rgb(48 43 39 / 72%);
+  }
+
+  body:has([data-changeling-sheet-theme="ogre"]) .ctl-dialog .merit-option p,
+  body:has([data-changeling-sheet-theme="ogre"]) .ctl-dialog .experience-merit-catalog p {
+    color: #302b27;
+  }
+
+  /* ---------- DESKTOP: TÍTULO ---------- */
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet .cod-sheet-title {
+    min-height: 190px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title > div {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title .ctl-title-mark {
+    width: 360px;
+    max-width: 100%;
+    aspect-ratio: 1788 / 880;
+    background-position: center;
+    translate: 0 -20px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title strong {
+    font-size: 20px;
+    top: 65%;
+    left: 350px;
+    translate: 0 0;
+    opacity: 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title p {
+    font-size: 13px;
+    top: 65%;
+    right: 0;
+    translate: 0 0;
+  }
+
+
+  /* ---------- MOBILE: TÍTULO ---------- */
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title .ctl-title-mark {
+    width: min(320px, 82vw);
+    max-width: 100%;
+    aspect-ratio: 1788 / 880;
+    position: relative;
+    left: 50%;
+    translate: -50% -10px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title strong {
+    font-size: clamp(16px, 4.2vw, 20px);
+    margin: -10px 35px 0 0;
+    translate: 0 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title p {
+    font-size: 10px;
+    translate: 0 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .cod-sheet-title::before,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .cod-sheet-title::after {
+    background-size: auto 17px, calc(100% - 85px) 100%;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet {
+    --ctl-title-divider-icon: none;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .cod-sheet-title .ctl-title-side {
+    display: block;
+    width: 80px;
+    height: 68px;
+    bottom: -23.5px;
+  }
+
+}

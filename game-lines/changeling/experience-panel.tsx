@@ -18,7 +18,7 @@ import { normalizeChangelingFrailties, seemingDisplayName } from "@/game-lines/c
 import { meritRatingsFor, type MeritDefinition } from "@/lib/merits";
 import { canAdvanceChangelingGrant, changelingExperienceMeritEligible, changelingMeritContextForSheet } from "./merit-context";
 import type { ContractDefinition } from "./contract-types";
-import { contractOutcomeSections, contractPresentation, contractWithSupplementalBenefits } from "./contract-presentation";
+import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "./contract-presentation";
 import { availableForeignClauseCourtIds } from "./contract-clauses";
 import { courtCanonicalId, courtDisplayName } from "@/lib/changeling-courts";
 import { entitlementCatalogPresentation, type EntitlementDefinition } from "@/game-lines/changeling/entitlements";
@@ -799,6 +799,9 @@ export function ExperiencePanel({
                     items={contractOptions.map((item) => {
                       const presented=contractPresentation(item,locale,reference.contractPresentation);
                       const categoryKey=contractCategoryKey(item), category=categoryKey==="court"?t("ui.court"):categoryKey==="independent"?t("ui.independent"):categoryKey==="goblin"?t("ui.goblin"):systemTerm(categoryKey,locale);
+                      const outcomes = contractOutcomeSections(presented, locale);
+                      const summary = contractSummary(presented, locale);
+                      const benefit = presented.seemingBenefits?.[String(character.line_data.seeming ?? "") as keyof typeof presented.seemingBenefits];
                       return {
                         id: item.id,
                         name: presented.name,
@@ -806,7 +809,21 @@ export function ExperiencePanel({
                         categories: homebrewCategoryKeys(category, item.sourceId),
                         secondaryCategory: item.type==="Comum"?t("ui.common"):t("ui.royal"),
                         sortPriority: Number(item.type === "Real"),
-                        description: contractOutcomeSections(presented,locale).map(section=>section.text).join(" "),
+                        description: summary ? `${t("ui.summary")}: ${summary}` : "",
+                        details: [
+                          ...(contractHasInvocationRoll(presented) === true ? [{ label: t("ui.dicePool"), value: presented.dicePool ?? t("ui.notListed") }] : []),
+                          { label: t("ui.cost"), value: presented.cost ?? t("ui.asDescribed") },
+                          { label: t("ui.actionDuration"), value: `${presented.action ?? t("ui.instant")} · ${presented.duration ?? t("ui.scene")}` },
+                          ...outcomes.slice(0, 1).map(({ label, text }) => ({ label, value: text })),
+                          ...(contractDisplayOptions(presented, locale).length ? [{ label: t("ui.options"), value: contractDisplayOptions(presented, locale).join(" · ") }] : []),
+                        ],
+                        tables: presented.detailTables,
+                        footerDetails: [
+                          ...outcomes.slice(1).map(({ label, text }) => ({ label, value: text })),
+                          ...(presented.loophole ? [{ label: t("ui.loophole"), value: presented.loophole }] : []),
+                          ...(item.goblinDebt ? [{ label: t("ui.goblinDebt"), value: item.goblinDebt }] : []),
+                          ...(benefit ? [{ label: `${t("ui.benefitFor")} ${seemingDisplayName(String(character.line_data.seeming ?? ""), locale)}`, value: benefit }] : []),
+                        ],
                         meta: `${item.type==="Comum"?t("ui.common"):t("ui.royal")} · ${systemTerm(item.regalia,locale)} · ${item.source} · p. ${item.page || "—"}`,
                       };
                     })}

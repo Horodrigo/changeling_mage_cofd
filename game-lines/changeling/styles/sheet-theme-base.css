@@ -1,0 +1,129 @@
+
+/* ============================================================
+   CHANGELING: THE LOST — CONFIGURAÇÕES DOS TEMAS
+   ============================================================
+
+   Temas:
+   DEFAULT, FAIREST, ELEMENTAL, OGRE
+
+   Os seletores desktop/mobile seguem o tipo real da ficha,
+   independentemente da largura da janela.
+
+   translate: X Y
+   X positivo = direita
+   Y positivo = baixo
+
+   scale: X Y
+   1.1 = aumento de 10%
+
+   ============================================================ */
+
+
+/* ============================================================
+   1. CONFIGURAÇÕES GLOBAIS
+   ============================================================ */
+
+.top-navigation .sheet-theme-trigger {
+  min-height: 44px;
+  gap: 6px;
+}
+
+.sheet-theme-error {
+  color: #b42318;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .top-navigation .sheet-theme-trigger {
+    min-width: 2.75rem;
+    padding-inline: 10px;
+  }
+
+  .top-navigation .sheet-theme-trigger span {
+    display: none;
+  }
+}
+
+
+/* ============================================================
+   2. DEFAULT
+   ============================================================ */
+
+@media screen {
+
+  .app-shell:has([data-changeling-sheet-theme="default"]) .ctl-sheet:not(.mobile-character-sheet) {
+    /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
+    --ctl-frame-top-center-shift: 0px 0px;
+    --ctl-frame-top-left-line-shift: 0px 0px;
+    --ctl-frame-top-right-line-shift: 0px 0px;
+    --ctl-frame-bottom-center-shift: 0px 0px;
+    --ctl-frame-bottom-left-line-shift: 0px 0px;
+    --ctl-frame-bottom-right-line-shift: 0px 0px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="default"]) .ctl-sheet.mobile-character-sheet {
+    /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
+    --ctl-frame-top-center-shift: 0px 0px;
+    --ctl-frame-top-left-line-shift: 0px 0px;
+    --ctl-frame-top-right-line-shift: 0px 0px;
+    --ctl-frame-bottom-center-shift: 0px 0px;
+    --ctl-frame-bottom-left-line-shift: 0px 0px;
+    --ctl-frame-bottom-right-line-shift: 0px 0px;
+  }
+
+
+  /* ---------- DESKTOP: TÍTULO ---------- */
+
+  .app-shell:has([data-changeling-sheet-theme="default"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title .ctl-title-mark {
+    width: 380px;
+    max-width: 100%;
+    translate: 0 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="default"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title strong {
+    font-size: 20px;
+    top: 65%;
+    left: 350px;
+    translate: 0 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="default"])
+    .ctl-sheet:not(.mobile-character-sheet)
+    .cod-sheet-title p {
+    font-size: 13px;
+    top: 65%;
+    right: 0;
+    translate: 0 0;
+  }
+
+
+  /* ---------- MOBILE: TÍTULO ---------- */
+
+  .app-shell:has([data-changeling-sheet-theme="default"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title .ctl-title-mark {
+    width: 100%;
+    max-width: 380px;
+    translate: 0 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="default"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title strong {
+    font-size: clamp(16px, 4.2vw, 20px);
+    margin: -10px 35px 0 0;
+    translate: 0 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="default"])
+    .ctl-sheet.mobile-character-sheet
+    .cod-sheet-title p {
+    font-size: 10px;
+    translate: 0 0;
+  }
+
+}

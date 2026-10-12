@@ -933,6 +933,18 @@ body:has(.line-theme-ctl)
 .ctl-frame-edge-bottom::after {
   right: 0;
 }
+.ctl-frame-edge-top::before {
+  translate: var(--ctl-frame-top-left-line-shift, 0px 0px);
+}
+.ctl-frame-edge-top::after {
+  translate: var(--ctl-frame-top-right-line-shift, 0px 0px);
+}
+.ctl-frame-edge-bottom::before {
+  translate: var(--ctl-frame-bottom-left-line-shift, 0px 0px);
+}
+.ctl-frame-edge-bottom::after {
+  translate: var(--ctl-frame-bottom-right-line-shift, 0px 0px);
+}
 
 .ctl-frame-edge-left,
 .ctl-frame-edge-right {
@@ -969,9 +981,11 @@ body:has(.line-theme-ctl)
 
 .ctl-frame-star-top {
   top: calc(var(--ctl-frame-rail-y) - var(--ctl-frame-star-half-height));
+  translate: var(--ctl-frame-top-center-shift, 0px 0px);
 }
 .ctl-frame-star-bottom {
   bottom: calc(var(--ctl-frame-rail-y) - var(--ctl-frame-star-half-height));
+  translate: var(--ctl-frame-bottom-center-shift, 0px 0px);
   transform: translateX(-50%) rotate(180deg);
 }
 
@@ -1102,6 +1116,20 @@ body:has(.line-theme-ctl)
     left center,
     right center;
 }
+
+.ctl-sheet .cod-sheet-title .ctl-title-side {
+  display: none;
+  position: absolute;
+  bottom: 2px;
+  background-image: var(--ctl-image-frame-side, url("/game-lines/changeling/images/frame-side.webp"));
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+}
+
+.ctl-sheet .cod-sheet-title .ctl-title-side-left { left: 0; }
+.ctl-sheet .cod-sheet-title .ctl-title-side-right { right: 0; transform: scaleX(-1); }
 
 .ctl-sheet .cod-sheet-title::after {
   right: 0;
@@ -1498,56 +1526,18 @@ body:has(.line-theme-ctl)
 
 .ctl-sheet .skill-highlight-kith .official-trait-name {
   position: relative;
-  isolation: isolate;
-  display: inline-grid;
-  place-items: center;
 }
 
-.ctl-sheet .kith-skill-name-text {
-  position: relative;
-  z-index: 1;
-}
-
-.ctl-sheet .kith-skill-frame {
+.ctl-sheet .skill-highlight-kith .official-trait-name::before {
+  content: "";
   position: absolute;
-  z-index: 0;
-  top: calc(50% - 3px);
-  left: calc(50% - 5px);
-  display: flex;
-  height: 38px;
-  transform: translate(-50%, -50%);
+  left: -66px;
+  top: 50%;
+  width: 100px;
+  height: 54px;
+  transform: translateY(-53%);
+  background: var(--ctl-image-skill-highlight, url("/game-lines/changeling/images/skill-highlight.webp")) center / contain no-repeat;
   pointer-events: none;
-}
-
-.ctl-sheet .kith-skill-piece {
-  display: block;
-  height: 100%;
-  flex: none;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-.ctl-sheet .kith-skill-left {
-  width: calc(38px * 760 / 552);
-  background-image: var(--ctl-image-skill-highlight-left, url("/game-lines/changeling/images/skill-highlight-left.webp"));
-}
-
-.ctl-sheet .kith-skill-middle-1,
-.ctl-sheet .kith-skill-middle-2 {
-  width: calc(38px * 260 / 552);
-}
-
-.ctl-sheet .kith-skill-middle-1 {
-  background-image: var(--ctl-image-skill-highlight-middle-1, url("/game-lines/changeling/images/skill-highlight-middle-1.webp"));
-}
-.ctl-sheet .kith-skill-middle-2 {
-  background-image: var(--ctl-image-skill-highlight-middle-2, url("/game-lines/changeling/images/skill-highlight-middle-2.webp"));
-}
-
-.ctl-sheet .kith-skill-right {
-  width: calc(38px * 471 / 552);
-  background-image: var(--ctl-image-skill-highlight-right, url("/game-lines/changeling/images/skill-highlight-right.webp"));
 }
 
 .ctl-sheet .court-summary-card .court-benefit-locked {
@@ -2968,53 +2958,20 @@ body:has(.line-theme-ctl)
 }
 .ctl-print-page .skill-highlight-kith .official-trait-name {
   position: relative;
-  isolation: isolate;
-  display: inline-grid;
-  place-items: center;
 }
 .ctl-print-page .skill-highlight-kith,
 .ctl-print-page .skill-highlight-kith > .official-trait-label {
   overflow: visible;
 }
-.ctl-print-page .kith-skill-name-text {
-  position: relative;
-  z-index: 1;
-}
-.ctl-print-page .kith-skill-frame {
+.ctl-print-page .skill-highlight-kith .official-trait-name::before {
+  content: "";
   position: absolute;
-  z-index: 0;
-  top: calc(50% - 0.25mm);
-  left: calc(50% - 1.5mm);
-  display: flex;
-  height: 7.5mm;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-.ctl-print-page .kith-skill-piece {
-  display: block;
-  height: 100%;
-  flex: none;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-.ctl-print-page .kith-skill-left {
-  width: calc(7.5mm * 760 / 552);
-  background-image: url("/game-lines/changeling/images/skill-highlight-left.webp");
-}
-.ctl-print-page .kith-skill-middle-1,
-.ctl-print-page .kith-skill-middle-2 {
-  width: calc(7.5mm * 260 / 552);
-}
-.ctl-print-page .kith-skill-middle-1 {
-  background-image: url("/game-lines/changeling/images/skill-highlight-middle-1.webp");
-}
-.ctl-print-page .kith-skill-middle-2 {
-  background-image: url("/game-lines/changeling/images/skill-highlight-middle-2.webp");
-}
-.ctl-print-page .kith-skill-right {
-  width: calc(7.5mm * 471 / 552);
-  background-image: url("/game-lines/changeling/images/skill-highlight-right.webp");
+  left: -13mm;
+  top: 50%;
+  width: 17mm;
+  height: 15mm;
+  transform: translateY(-50%);
+  background: url("/game-lines/changeling/images/skill-highlight.webp") center / contain no-repeat;
 }
 .ctl-print-merits {
   display: grid;

@@ -1,0 +1,278 @@
+/* ============================================================
+   5. GRIMM
+   ============================================================ */
+
+@media screen {
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet:not(.mobile-character-sheet) {
+    /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
+    --ctl-frame-top-center-shift: 0px 0px;
+    --ctl-frame-top-left-line-shift: 0px 0px;
+    --ctl-frame-top-right-line-shift: 0px 0px;
+    --ctl-frame-bottom-center-shift: 0px 0px;
+    --ctl-frame-bottom-left-line-shift: 0px 0px;
+    --ctl-frame-bottom-right-line-shift: 0px 0px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet.mobile-character-sheet {
+    /* X Y: positivo move para direita/baixo. Topo e base são independentes. */
+    --ctl-frame-top-center-shift: 0px 0px;
+    --ctl-frame-top-left-line-shift: 0px 0px;
+    --ctl-frame-top-right-line-shift: 0px 0px;
+    --ctl-frame-bottom-center-shift: 0px 0px;
+    --ctl-frame-bottom-left-line-shift: 0px 0px;
+    --ctl-frame-bottom-right-line-shift: 0px 0px;
+  }
+
+
+  /* Paleta da ficha e dos controles que herdam as cores da linha. */
+  body:has([data-changeling-sheet-theme="grimm"]),
+  body:has([data-changeling-sheet-theme="grimm"]) .line-theme-ctl {
+    --primary: #703d32;
+    --primary-foreground: #f7ecdc;
+    --secondary: #e9dbc8;
+    --secondary-foreground: #382922;
+    --accent: #cbb093;
+    --accent-foreground: #382922;
+    --ring: #a66550;
+    --line-accent: #8d4739;
+    --line-strong: #382922;
+    --line-soft: #f1e7d8;
+    --line-border: #bb9d83;
+    --line-topbar-start: #38231f;
+    --line-topbar-middle: #50312b;
+    --line-topbar-end: #703d32;
+    --line-topbar-muted: #d5b9a5;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet {
+    --ctl-ink: #382922;
+    --ctl-ink-soft: rgb(56 41 34 / 48%);
+    --ctl-rule: rgb(56 41 34 / 34%);
+    --ctl-paper: #f0e4d2;
+    --ctl-paper-light: rgb(247 236 220 / 68%);
+    --ctl-ornament-fill: #d2b299;
+    --sheet-accent: #8d4739;
+    --sheet-ink: #382922;
+    --ctl-title-divider-icon: var(--ctl-image-frame-side);
+    border-color: rgb(112 61 50 / 52%);
+    box-shadow: 0 16px 48px rgb(56 35 31 / 16%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet::after {
+    /* >>ALTERAR AQUI PARA TRANSPARENCIA BACKGROUND<< 0 = invisível; 1 = opaco. */
+    opacity: 0.2;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet:not(.mobile-character-sheet) {
+    --ctl-frame-star-side-offset: 28px;
+    --ctl-frame-star-side-width: 26px;
+    --ctl-frame-star-side-height: 26px;
+    --ctl-frame-star-side-half-height: 13px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet.mobile-character-sheet {
+    --ctl-frame-star-side-offset: 24px;
+    --ctl-frame-star-side-width: 22px;
+    --ctl-frame-star-side-height: 22px;
+    --ctl-frame-star-side-half-height: 11px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-frame-edge-top::before,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-frame-edge-top::after,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-frame-edge-bottom::before,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-frame-edge-bottom::after {
+    background-image: linear-gradient(to bottom, transparent 0 10%, rgb(112 61 50 / 76%) 10% 30%, transparent 30% 57%, rgb(112 61 50 / 48%) 57% 78%, transparent 78% 100%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-frame-edge-left,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-frame-edge-right {
+    background-image: linear-gradient(to right, rgb(112 61 50 / 46%) 0 18%, transparent 18% 48%, rgb(112 61 50 / 76%) 48% 70%, transparent 70% 100%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .ctl-sheet-tab-list {
+    border-color: rgb(112 61 50 / 62%);
+    background: rgb(233 216 194 / 60%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .ctl-sheet-tab-list button {
+    border-right-color: rgb(112 61 50 / 34%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .ctl-sheet-tab-list button[data-state="active"] {
+    color: #f5e8d5;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .ctl-sheet-tab-list button[data-state="active"]::before {
+    box-shadow: 0 0 0 1px rgb(112 61 50 / 35%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .official-sheet-body > section + section,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .official-sheet-body > .sheet-layout-column + .sheet-layout-column {
+    border-left-color: rgb(112 61 50 / 35%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .editable-line-row input::placeholder,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .notes-area textarea::placeholder {
+    color: rgb(56 41 34 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .skill-highlight-kith .official-trait-name::before {
+  content: "";
+  position: absolute;
+  left: -55px;
+  top: 50%;
+  width: 100px;
+  height: 55px;
+  transform: translateY(-51%);
+  background: var(--ctl-image-skill-highlight, url("/game-lines/changeling/images/skill-highlight.webp")) center / contain no-repeat;
+  pointer-events: none;
+}
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .tracker-help,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .experience-panel,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .notes-area small,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .experience-title small {
+    color: rgb(56 41 34 / 76%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .power-resource::before,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .experience-panel::before {
+    background: rgb(112 61 50 / 48%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .experience-totals div,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .experience-input,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .beat-controls,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .beat-resource {
+    border-color: rgb(112 61 50 / 26%);
+    background: rgb(247 236 220 / 55%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .experience-totals span,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .experience-input span,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .beat-controls legend,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .beat-resource > span {
+    color: rgb(56 41 34 / 70%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .experience-actions button,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .condition-manager > button,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .notes-area textarea,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .rule-power-card,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .selected-condition,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .selected-tilt {
+    border-color: rgb(112 61 50 / 38%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .experience-actions button:not(.ctl-purchase-trait-button),
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .condition-manager > button {
+    background: rgb(207 176 147 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .experience-actions button:not(.ctl-purchase-trait-button):hover,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .condition-manager > button:hover {
+    background: rgb(188 148 116 / 76%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button::before {
+    background: rgb(112 61 50 / 65%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button::after {
+    background: rgb(245 232 213 / 92%);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .experience-actions button.ctl-purchase-trait-button:hover::after {
+    background: #d9bea2;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .notes-area textarea {
+    background-color: rgb(247 236 220 / 58%);
+    background-image: repeating-linear-gradient(transparent, transparent 23px, rgb(112 61 50 / 18%) 24px);
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .rule-power-card,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .selected-condition,
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .selected-tilt {
+    background: rgb(247 236 220 / 58%);
+  }
+
+  body:has([data-changeling-sheet-theme="grimm"]) .ctl-dialog,
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="grimm"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"]) {
+    --ctl-ink: #382922;
+    --sheet-accent: #8d4739;
+    --sheet-ink: #382922;
+    border-color: rgb(112 61 50 / 50%) !important;
+    background: rgb(247 236 220 / 98%) !important;
+    color: #382922;
+  }
+
+  body:has([data-changeling-sheet-theme="grimm"]) .ctl-dialog :is(input, button, [data-slot="select-trigger"]),
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="grimm"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    :is(input, button, [data-slot="select-trigger"]) {
+    border-color: rgb(112 61 50 / 38%);
+  }
+
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="grimm"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    :is([data-slot="dialog-title"], [data-slot="alert-dialog-title"], strong),
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="grimm"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    .experience-merit-catalog p {
+    color: #382922;
+  }
+
+  body:has(.line-theme-ctl):has([data-changeling-sheet-theme="grimm"])
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"])
+    .experience-merit-catalog small,
+  body:has([data-changeling-sheet-theme="grimm"]) .ctl-dialog .merit-option small,
+  body:has([data-changeling-sheet-theme="grimm"]) .ctl-dialog .experience-merit-catalog small {
+    color: rgb(56 41 34 / 72%);
+  }
+
+  body:has([data-changeling-sheet-theme="grimm"]) .ctl-dialog .merit-option p,
+  body:has([data-changeling-sheet-theme="grimm"]) .ctl-dialog .experience-merit-catalog p {
+    color: #382922;
+  }
+
+  /* O título ilustrado mantém sua proporção original. */
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet .cod-sheet-title {
+    min-height: 185px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title > div {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title .ctl-title-mark {
+    width: 430px;
+    max-width: 100%;
+    aspect-ratio: 1994 / 789;
+    background-position: center;
+    translate: 0 -25px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title p {
+    translate: -140% 35px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title strong {
+    opacity: 0;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title strong {
+    translate: 0 15px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="grimm"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title .ctl-title-mark {
+    width: min(350px, 86vw);
+    max-width: 100%;
+    aspect-ratio: 1994 / 789;
+    margin-inline: auto;
+    background-position: center;
+  }
+}
