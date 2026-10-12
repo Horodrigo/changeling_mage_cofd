@@ -8,7 +8,7 @@ import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { useLanguage } from "@/lib/i18n";
 import { catalogDisplayName } from "@/lib/localized-catalog";
 import { alphabetical } from "@/lib/option-order";
-import { ARMORS, EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
+import { ARMORS, EQUIPMENT, SHIELDS, WEAPONS, armorCoverage, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
 import { VEHICLES, vehiclePresentation } from "@/lib/companions";
 import { TILTS, tiltPresentation, type TiltDefinition } from "@/lib/tilts";
 import { RuleSelect } from "./rule-select";
@@ -30,12 +30,17 @@ export function CombatPage({
     equipmentIds = stringList(character.line_data.combat_equipment),
     vehicleIds = stringList(character.line_data.companion_vehicles),
     tiltIds = stringList(character.line_data.combat_tilts),
-    armorId = String(character.line_data.combat_armor ?? "");
+    armorId = String(character.line_data.combat_armor ?? ""),
+    shieldId = String(character.line_data.combat_shield ?? ""),
+    helmet = character.line_data.combat_helmet === true,
+    strength = Number(character.attributes.Strength ?? 0);
   const presentedArmors=ARMORS.map((item)=>combatItemPresentation(item,locale));
   const presentedWeapons=WEAPONS.map((item)=>combatItemPresentation(item,locale));
+  const presentedShields=SHIELDS.map((item)=>combatItemPresentation(item,locale));
   const presentedEquipment=EQUIPMENT.map((item)=>combatItemPresentation(item,locale));
   const presentedVehicles=VEHICLES.map((item)=>vehiclePresentation(item,locale));
   const armor = presentedArmors.find((item) => item.id === armorId),
+    shield = presentedShields.find((item) => item.id === shieldId),
     weapons = weaponIds
       .map((id) => presentedWeapons.find((item) => item.id === id))
       .filter((item): item is NonNullable<typeof item> => Boolean(item)),
@@ -48,12 +53,14 @@ export function CombatPage({
     updateSheet(next);
   };
   const weaponDetails = (item: (typeof presentedWeapons)[number]) => {
-    const params = { kind: item.kind, damage: item.damage, initiative: signed(item.initiative), strength: item.strength, size: item.size, range: item.ranges ?? "", capacity: item.clip ?? "" };
-    return item.ranges && item.clip ? t("combat.weaponDetailsRangeCapacity", params) : item.ranges ? t("combat.weaponDetailsRange", params) : item.clip ? t("combat.weaponDetailsCapacity", params) : t("combat.weaponDetails", params);
+    if (item.kind === "Grenades" || (item.kind as string) === "Granadas") return `${t("combat.grenadeDetails", { damage: item.damage, blast: item.blastArea ?? 0, force: item.force ?? "—", range: item.ranges ?? "", strength: item.strength, initiative: signed(item.initiative), availability: item.availability })} · ${item.source}`;
+    const params = { kind: item.kind, damage: item.damage, initiative: signed(item.initiative), strength: item.strengthText ?? item.strength, size: item.sizeText ?? item.size, range: item.ranges ?? "", capacity: item.clip ?? "" };
+    const details = item.ranges && item.clip ? t("combat.weaponDetailsRangeCapacity", params) : item.ranges ? t("combat.weaponDetailsRange", params) : item.clip ? t("combat.weaponDetailsCapacity", params) : t("combat.weaponDetails", params);
+    return `${details} · ${t("combat.availability")} ${item.availability} · ${item.source}`;
   };
   const equipmentDetails = (item: (typeof presentedEquipment)[number]) => t("combat.equipmentDetails", { category: item.category, bonus: item.bonus, durability: item.durability, size: item.size, structure: item.structure, availability: item.availability });
   const vehicleDetails = (item: (typeof presentedVehicles)[number]) => t("combat.vehicleDetails", { modifier: signed(item.diceModifier), size: item.size, durability: item.durability, structure: item.structure, speed: item.speed });
-  const combatValues = derivedTraitsWithArmor(derived, armorId);
+  const combatValues = derivedTraitsWithArmor(derived, armorId, shieldId, helmet);
   return (
     <div className="combat-page">
       <section>
@@ -91,27 +98,26 @@ export function CombatPage({
           }
           options={[
             { value: "none", label: t("combat.noArmor") },
-            ...presentedArmors.map((item) => ({
+            ...presentedArmors.filter(item => item.strength <= strength || item.id === armorId).map((item) => ({
               value: item.id,
-              label: `${item.name} · ${item.general}/${item.ballistic}`,
+              label: `${item.name} · ${item.general}/${item.ballistic} · ${t("combat.strength")} ${item.strength}`,
+              group: item.era === "Modern" ? t("combat.modern") : t("combat.historical"),
+              localized: true,
             })),
           ]}
         />
         {armor && (
           <div className="armor-summary">
             <strong>{armor.name}</strong>
-            <span>{t("combat.armorSummary", { general: armor.general, ballistic: armor.ballistic, defense: signed(armor.defense), speed: signed(armor.speed), coverage: armor.coverage })}</span>
+            <span>{t("combat.armorSummary", { general: armor.general, ballistic: armor.ballistic, defense: signed(armor.defense), speed: signed(armor.speed), coverage: armorCoverage(ARMORS.find(item => item.id === armor.id), helmet, locale) })} · {t("combat.availability")} {armor.availability} · {armor.source}</span>
           </div>
         )}
+        {armor && !ARMORS.find(item => item.id === armor.id)?.coverage.includes("head") && (strength >= 2 || helmet) && <label className="combat-helmet-option"><input type="checkbox" checked={helmet} onChange={event => setData("combat_helmet", event.target.checked)}/>{t("combat.helmet")}</label>}
+        <SheetHeading>{t("combat.shield")}</SheetHeading>
+        <RuleSelect value={shieldId || "none"} onChange={value => setData("combat_shield", value === "none" ? "" : value)} options={[{value:"none",label:t("combat.noShield"),localized:true},...presentedShields.filter(item => item.strength <= strength || item.id === shieldId).map(item => ({value:item.id,label:`${item.name} · +${item.size} ${t("ui.defense")} · ${t("combat.initiative")} ${signed(item.initiative)} · ${t("combat.strength")} ${item.strength} · ${t("combat.availability")} ${item.availability}`,localized:true}))]}/>
+        {shield && <p className="combat-note">{t("combat.shieldDefenseNote")} {t("combat.shieldRangedNote")}</p>}
         <SheetHeading>{t("combat.weapons")}</SheetHeading>
-        <LoadoutCatalog
-          title={t("combat.selectWeapons")}
-          items={presentedWeapons}
-          selected={weaponIds}
-          describe={weaponDetails}
-          details={(item) => item.special ?? t("combat.noSpecialProperty")}
-          onChange={(value) => setData("combat_weapons", value)}
-        />
+        <div className="combat-weapon-categories">{(["Melee", "Ranged", "Grenades"] as const).map(kind => { const items = presentedWeapons.filter(item => item.kind === kind || item.kind === {Melee:"Corpo a corpo",Ranged:"Distância",Grenades:"Granadas"}[kind]).filter(item => item.strength <= strength && !WEAPONS.find(weapon => weapon.id === item.id)?.name.startsWith("Shield")); return <LoadoutCatalog key={kind} title={t(({Melee:"combat.melee",Ranged:"combat.ranged",Grenades:"combat.grenades"} as const)[kind])} items={items} selected={weaponIds} describe={weaponDetails} details={item => item.special ?? t("combat.noSpecialProperty")} onChange={value => setData("combat_weapons", [...weaponIds.filter(id => !items.some(item => item.id === id)), ...value.filter(id => items.some(item => item.id === id))])}/>; })}</div>
         <div className="loadout-list">
           {weapons.map((item) => (
             <article key={item.id}>

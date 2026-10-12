@@ -20,11 +20,18 @@ const portuguese = /\b(?:Armadura|Armas|Ataque|Atordoar|Automotiv|Braços|Briga|
 
 test("o catálogo de combate possui apresentação inglesa completa", () => {
   const all = [...combat.WEAPONS, ...combat.ARMORS, ...combat.EQUIPMENT];
-  assert.equal(all.length, 70);
-  assert.equal(combat.WEAPONS.filter((item) => item.kind === "Distância").length, 10);
-  assert.equal(combat.WEAPONS.filter((item) => item.kind === "Corpo a corpo").length, 17);
-  assert.equal(combat.ARMORS.length, 7);
+  assert.equal(all.length, 133);
+  assert.equal(combat.WEAPONS.filter((item) => item.kind === "Ranged").length, 23);
+  assert.equal(combat.WEAPONS.filter((item) => item.kind === "Melee").length, 50);
+  assert.equal(combat.WEAPONS.filter((item) => item.kind === "Grenades").length, 8);
+  assert.equal(combat.ARMORS.length, 16);
+  assert.deepEqual(combat.SHIELDS.map((item) => item.id).sort(), ["escudo-grande", "escudo-pequeno"]);
   assert.equal(combat.EQUIPMENT.length, 36);
+  for (const item of [...combat.WEAPONS, ...combat.ARMORS]) {
+    assert.ok(item.name && item.translatedName && item.source, item.id);
+    assert.ok(Number.isInteger(item.availability) && item.availability >= 0, item.id);
+    if (item.special) assert.ok(item.specialPt, item.id);
+  }
   for (const source of all) {
     const item = combat.combatItemPresentation(source, "en-US");
     const visible = [item.name, item.kind, item.category, item.effect, item.special, item.coverage]
@@ -33,8 +40,11 @@ test("o catálogo de combate possui apresentação inglesa completa", () => {
     assert.doesNotMatch(visible, portuguese, source.id);
   }
   assert.equal(combat.combatItemPresentation(combat.WEAPONS.find((item) => item.id === "besta"), "en-US").name, "Crossbow");
-  assert.match(combat.combatItemPresentation(combat.WEAPONS.find((item) => item.id === "besta"), "en-US").special, /stake through the heart.*−3.*5 damage/);
+  assert.match(combat.combatItemPresentation(combat.WEAPONS.find((item) => item.id === "besta"), "en-US").special, /impale as per stake/);
+  assert.equal(combat.combatItemPresentation(combat.WEAPONS.find((item) => item.id === "besta"), "pt-BR").name, "Besta");
   assert.equal(combat.combatItemPresentation(combat.ARMORS.find((item) => item.id === "armadura-placas"), "en-US").coverage, "Torso, arms, legs");
+  assert.equal(combat.ARMORS.find((item) => item.id === "cota-malha-pernas").coverage, "Torso, arms, legs");
+  assert.equal(combat.ARMORS.find((item) => item.id === "heavy-hides").availability, 1);
   assert.equal(combat.combatItemPresentation(combat.EQUIPMENT.find((item) => item.id === "software-de-invasao"), "en-US").name, "Cracking Software");
 });
 
@@ -46,6 +56,10 @@ test("Derived Traits applies equipped armor once and formats General/Ballistic",
     Initiative: 6,
     Armor: "3/5",
   });
+  assert.equal(combat.derivedTraitsWithArmor({ Defense: 4 }, "equipamento-antitumulto", "escudo-pequeno", true).Defense, 3);
+  assert.equal(combat.derivedTraitsWithArmor({ Initiative: 6 }, "", "escudo-pequeno", false).Initiative, 4);
+  assert.equal(combat.derivedTraitsWithArmor({ Defense: 2 }, "bomb-suit", "", false).Defense, 0);
+  assert.equal(combat.armorCoverage(combat.ARMORS.find((item) => item.id === "colete-kevlar"), true, "en-US"), "Torso, head");
 });
 
 test("os 9 veículos e 21 animais possuem apresentação inglesa completa", () => {
