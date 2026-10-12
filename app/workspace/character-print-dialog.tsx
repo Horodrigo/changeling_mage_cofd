@@ -35,6 +35,7 @@ export function CharacterPrintDialog({
   const previewContentRef = useRef<HTMLDivElement>(null);
   const [PrintSheet, setPrintSheet] = useState<ComponentType<GameLinePrintSheetProps> | null>(null);
   const [ready, setReady] = useState(false);
+  const [removePaperTexture, setRemovePaperTexture] = useState(false);
   const [previewSize, setPreviewSize] = useState({ width: 0, height: 0, scale: 1 });
   const [options, setOptions] = useState<GameLinePrintOptions>({
     expandedMeritDetails: false,
@@ -57,6 +58,7 @@ export function CharacterPrintDialog({
     const preview = previewRef.current;
     const printable = previewContentRef.current?.querySelector<HTMLElement>(".game-print-document");
     if (!preview || !printable) return;
+    printable.classList.toggle("print-without-paper-texture", removePaperTexture);
     const resize = () => {
       const width = printable.scrollWidth;
       const height = printable.scrollHeight;
@@ -68,7 +70,7 @@ export function CharacterPrintDialog({
     observer.observe(printable);
     resize();
     return () => observer.disconnect();
-  }, [open, PrintSheet, ready, options]);
+  }, [open, PrintSheet, ready, options, removePaperTexture]);
 
   function print() {
     const preview = previewRef.current;
@@ -103,6 +105,10 @@ export function CharacterPrintDialog({
           <DialogTitle>{t("ui.printCharacterSheet")}</DialogTitle>
           <DialogDescription>{t("ui.thePreviewUsesA4PagesAndExcludesApplication")}</DialogDescription>
         </DialogHeader>
+        <div className="character-print-options"><label>
+          <Checkbox checked={removePaperTexture} onCheckedChange={(checked) => setRemovePaperTexture(checked === true)}/>
+          <span>{t("ui.printRemovePaperTexture")}</span>
+        </label></div>
         {character.game_line === "CtL" && <div className="character-print-options">
           <label>
             <Checkbox checked={options.powerDetails} onCheckedChange={(checked) => setOptions((current) => ({ ...current, powerDetails: checked === true }))}/>

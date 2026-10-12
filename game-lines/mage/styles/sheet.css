@@ -1284,7 +1284,7 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
     linear-gradient(to bottom,transparent,rgba(42,91,124,.38) 5%,rgba(42,91,124,.38) 95%,transparent),
     linear-gradient(to bottom,transparent,rgba(30,77,108,.68) 5%,rgba(30,77,108,.68) 95%,transparent),
     linear-gradient(to bottom,transparent,rgba(42,91,124,.38) 5%,rgba(42,91,124,.38) 95%,transparent),
-    url("/game-lines/mage/images/mage-paper-texture.webp");
+    var(--print-paper-texture, url("/game-lines/mage/images/mage-paper-texture.webp"));
   background-position:
     left var(--mta-print-frame-rail-edge) top 4.5mm,
     left var(--mta-print-frame-rail-edge) top 5.5mm,

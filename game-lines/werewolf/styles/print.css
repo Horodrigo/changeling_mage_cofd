@@ -1,0 +1,45 @@
+@font-face { font-family:"Werewolf Arnova"; src:url("/game-lines/werewolf/fonts/arnova.woff2") format("woff2"); font-weight:400; font-style:normal; font-display:swap; }
+.wtf-print-document { display:grid; justify-content:center; gap:18px; color:#30251f; font:8.5pt/1.25 Georgia,"Times New Roman",serif; }
+.wtf-print-page {
+  position:relative; box-sizing:border-box; width:210mm; min-width:210mm; height:297mm; overflow:hidden;
+  padding:9mm 12mm 8mm; background-color:#faf7f0;
+  background-image:linear-gradient(90deg,#b9a79632,transparent 7%,transparent 93%,#b9a79632),var(--print-paper-texture,url("/game-lines/werewolf/images/paper-texture.webp"));
+  background-size:auto,768px; box-shadow:0 8px 26px #39261f40;
+  print-color-adjust:exact; -webkit-print-color-adjust:exact;
+}
+.wtf-print-page > header { display:flex; align-items:end; justify-content:space-between; height:23mm; margin-bottom:3mm; padding:0 1mm 2mm; border-bottom:.35mm solid #713c31; color:#713c31; text-transform:uppercase; }
+.wtf-print-page > header strong { font:400 22pt/1 "Werewolf Arnova",Georgia,serif; letter-spacing:.05em; }
+.wtf-print-page > header span { font:700 7pt/1.3 Inter,Arial,sans-serif; letter-spacing:.18em; }
+.wtf-print-page > footer { position:absolute; right:12mm; bottom:3mm; color:#715e52; font:6pt Inter,Arial,sans-serif; }
+.wtf-print-heading { margin:2.2mm 0 1mm; padding-bottom:.7mm; border-bottom:.25mm solid #a88370; color:#713c31; font:400 11pt/1.1 "Werewolf Arnova",Georgia,serif; }
+.wtf-print-identity { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1mm 3mm; }
+.wtf-print-identity .cod-print-field { min-width:0; }
+.wtf-print-attributes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:3mm; }
+.wtf-print-columns { display:grid; grid-template-columns:1.08fr 1fr .82fr; gap:4mm; align-items:start; }
+.wtf-print-columns > section { min-width:0; }
+.wtf-print-page .official-trait-block { margin-bottom:1.2mm; }
+.wtf-print-page .official-trait-block h4 { min-height:4mm; margin:0; text-align:center; font-size:8pt; }
+.wtf-print-page .official-trait-line { min-height:4mm; font-size:7.6pt; }
+.wtf-print-page .official-trait-line small { font-size:5.5pt; }
+.wtf-print-page .official-dots { gap:.4mm; }
+.wtf-print-page .official-dots i { width:2mm; height:2mm; }
+.wtf-print-page .cod-print-dots,.wtf-print-page .cod-print-boxes { margin:1mm 0; }
+.wtf-print-page .cod-print-dots i,.wtf-print-page .cod-print-boxes i { width:2.2mm; height:2.2mm; }
+.wtf-print-page .cod-print-lines > div,.wtf-print-page .cod-print-rated-lines > div { min-height:4.5mm; border-color:#aa9484; }
+.wtf-print-page .cod-print-rated-lines > div { font-size:7pt; }
+.wtf-print-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:2mm; }
+.wtf-print-page .cod-print-experience { margin-top:1mm; }
+.wtf-print-forms { display:grid; gap:0; margin-bottom:2mm; }
+.wtf-print-forms > div { display:grid; grid-template-columns:2fr repeat(5,1fr); min-height:6mm; align-items:center; border-bottom:.2mm solid #b8a394; text-align:center; }
+.wtf-print-forms > div > :first-child { text-align:left; }
+.wtf-print-forms > div:first-child { color:#713c31; font-size:7pt; }
+.wtf-print-powers > div:not(.cod-print-lines) { display:grid; grid-template-columns:25mm 1fr 38mm; gap:2mm; min-height:6mm; align-items:center; border-bottom:.2mm solid #b8a394; }
+.wtf-print-powers > div > :first-child,.wtf-print-powers > div > :last-child { color:#66574d; font-size:7pt; }
+.wtf-print-combat { display:grid; grid-template-columns:1fr 1fr; gap:5mm; }
+.wtf-print-notes { display:grid; grid-template-columns:1fr auto; gap:5mm; }
+.wtf-print-notes img { max-width:44mm; max-height:65mm; width:auto; height:auto; object-fit:contain; }
+@media print {
+  body.character-printing .wtf-print-document { display:block!important; width:210mm!important; min-width:210mm!important; gap:0!important; }
+  body.character-printing .wtf-print-page { width:210mm!important; min-width:210mm!important; height:297mm!important; margin:0!important; box-shadow:none!important; break-after:page; page-break-after:always; }
+  body.character-printing .wtf-print-page:last-child { break-after:auto; page-break-after:auto; }
+}

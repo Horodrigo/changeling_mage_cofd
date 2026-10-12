@@ -337,13 +337,14 @@ test("workspace routes builder and sheet surfaces through the registry shells", 
 });
 
 test("workspace print capability is driven entirely by registration", async () => {
-  const [workspace, contract, mortal, changeling, mage, vampire] = await Promise.all([
+  const [workspace, contract, mortal, changeling, mage, vampire, werewolf] = await Promise.all([
     source("app/workspace.tsx"),
     source("lib/game-line-contracts/game-line-registration.ts"),
     source("game-lines/mortal/registration.ts"),
     source("game-lines/changeling/registration.ts"),
     source("game-lines/mage/registration.ts"),
     source("game-lines/vampire/registration.ts"),
+    source("game-lines/werewolf/registration.ts"),
   ]);
 
   assert.match(contract, /loadPrintSheet\?/);
@@ -352,6 +353,7 @@ test("workspace print capability is driven entirely by registration", async () =
   assert.match(changeling, /loadPrintSheet\s*:/);
   assert.match(mage, /loadPrintSheet\s*:/);
   assert.match(vampire, /loadPrintSheet\s*:/);
+  assert.match(werewolf, /loadPrintSheet\s*:/);
 
   assert.match(
     workspace,
@@ -450,7 +452,7 @@ test("production build manifest keeps builder, sheet, and print closures line-is
     }
   }
 
-  for (const line of ["mortal", "mage", "changeling", "vampire"]) {
+  for (const line of ["mortal", "mage", "changeling", "vampire", "werewolf"]) {
     const key = `game-lines/${line}/print.tsx`;
     assert.ok(manifest[key], `missing manifest entry: ${key}`);
     const others = ["mortal", "mage", "changeling", "vampire", "werewolf"].filter((candidate) => candidate !== line);

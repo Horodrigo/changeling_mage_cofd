@@ -29,3 +29,4 @@
   body.character-printing .character-print-surface, body.character-printing .character-print-surface * { animation: none !important; transition: none !important; print-color-adjust: exact !important; -webkit-print-color-adjust: exact !important; }
   body.character-printing .character-print-surface .game-print-document { position: static !important; display: block !important; width: 210mm !important; min-width: 210mm !important; transform: none !important; }
 }
+.game-print-document.print-without-paper-texture { --print-paper-texture: none; }

@@ -281,7 +281,7 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
   overflow:hidden;
   padding:9mm 12mm 8mm;
   background-color:#e8edf0;
-  background-image:linear-gradient(rgba(245,248,249,.86),rgba(245,248,249,.86)),url("/game-lines/mortal/images/paper-texture.webp");
+  background-image:linear-gradient(rgba(245,248,249,.86),rgba(245,248,249,.86)),var(--print-paper-texture, url("/game-lines/mortal/images/paper-texture.webp"));
   background-size:auto,128mm 128mm;
   box-shadow:0 8px 26px #1c2d3740;
   print-color-adjust:exact;

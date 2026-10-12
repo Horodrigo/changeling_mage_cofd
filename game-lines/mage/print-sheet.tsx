@@ -60,7 +60,7 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
   ];
   const arcana = data.arcana && typeof data.arcana === "object" ? data.arcana as Record<string, number> : {};
   const derived = derivedWithPermanentMerits(character);
-  const printDerived = isBlankPrintCharacter(character) ? undefined : derivedTraitsWithArmor(derived, data.combat_armor);
+  const printDerived = isBlankPrintCharacter(character) ? undefined : derivedTraitsWithArmor(derived, data.combat_armor, data.combat_shield, data.combat_helmet);
   const health = Math.max(1, Number(derived.Health ?? 5));
   const willpower = Math.max(1, Number(derived.Willpower ?? 1));
   const currentWillpower = Math.max(0, Math.min(willpower, Number(character.current_state.willpower_current ?? willpower)));

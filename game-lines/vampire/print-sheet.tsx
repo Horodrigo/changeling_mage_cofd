@@ -86,7 +86,7 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   const bloodBonds = objectArray(character.current_state.blood_bonds).map((item) => [String(item.subject ?? "").trim(), Number(item.stage) > 0 ? `${t("ui.stage")} ${Number(item.stage)}` : "", String(item.notes ?? "").trim()].filter(Boolean).join(" · "));
   const bloodPotency = Math.max(1, Math.min(10, Number(data.blood_potency ?? 1)));
   const derived = vampireDerived(character.attributes, character.skills, disciplines, bloodPotency, reference);
-  const printDerived = isBlankPrintCharacter(character) ? undefined : derivedTraitsWithArmor(derived, data.combat_armor);
+  const printDerived = isBlankPrintCharacter(character) ? undefined : derivedTraitsWithArmor(derived, data.combat_armor, data.combat_shield, data.combat_helmet);
   const health = Math.max(1, Number(derived.Health ?? 5));
   const baseWillpower = Math.max(1, Number(derived.Willpower ?? 1));
   const willpower = Math.max(1, baseWillpower - Math.max(0, Math.min(baseWillpower - 1, Number(character.current_state.willpower_lost_dots ?? 0))));

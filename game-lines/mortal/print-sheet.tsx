@@ -57,7 +57,7 @@ export function MortalPrintSheet({ character, catalogs, onReadyChange }: GameLin
   });
   const selectedConditions = objectList(character.current_state.conditions).map((item) => conditions.find((condition) => condition.id === String(item.id))?.name ?? String(item.id ?? "")).filter(Boolean);
   const derived = derivedWithPermanentMerits(character);
-  const printDerived = isBlankPrintCharacter(character) ? undefined : derivedTraitsWithArmor(derived, data.combat_armor);
+  const printDerived = isBlankPrintCharacter(character) ? undefined : derivedTraitsWithArmor(derived, data.combat_armor, data.combat_shield, data.combat_helmet);
   const health = Math.max(1, Number(derived.Health ?? 6));
   const willpower = Math.max(1, Number(derived.Willpower ?? 2));
   const currentWillpower = Math.max(0, Math.min(willpower, Number(character.current_state.willpower_current ?? willpower)));
