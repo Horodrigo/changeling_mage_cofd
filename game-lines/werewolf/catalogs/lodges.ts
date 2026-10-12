@@ -44,7 +44,7 @@ export function werewolfLodgePresentation(
   catalog: WerewolfLodgeCatalog,
   locale: "pt-BR" | "en-US",
 ): WerewolfLodgeDefinition {
-  if (locale !== "pt-BR") return lodge;
+  if (locale !== "pt-BR" || lodge.homebrew) return lodge;
   const translated = catalog.presentation[lodge.id] ?? lodge.presentationPt;
   if (!translated) return lodge;
   return {

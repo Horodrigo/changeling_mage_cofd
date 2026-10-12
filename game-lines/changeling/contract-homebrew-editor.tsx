@@ -9,9 +9,10 @@ import { Textarea } from "@/components/ui/textarea";
 import type { ContractDefinition, SeemingKey } from "./contract-types";
 import type { CourtDefinition } from "@/lib/changeling-courts";
 import { useLanguage } from "@/lib/i18n";
-import { systemTerm } from "@/lib/system-terms";
 import { CONTRACT_HOMEBREW_SOURCE, CONTRACT_HOMEBREW_SOURCE_ID, contractHomebrewId, normalizeContractHomebrew } from "./contract-homebrews";
 import { REGALIA, seemingDisplayName } from "./creation-rules";
+import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
+import { changelingRegaliaName } from "./catalog-homebrews";
 
 type ContractCategory = "Regalia" | "Court" | "Independent" | "Goblin";
 const SEEMINGS: SeemingKey[] = ["Beast", "Darkling", "Elemental", "Fairest", "Grimm", "Ogre", "Wizened"];
@@ -34,6 +35,9 @@ export function ContractHomebrewEditor({ open, onOpenChange, initial, courts, on
   onSave: (definition: ContractDefinition) => void;
 }) {
   const { locale, t } = useLanguage();
+  const catalogHomebrews = useChangelingCatalogHomebrews();
+  const customRegalia = catalogHomebrews.filter((item) => item.entryType === "regalia");
+  const regalia = [...REGALIA, ...customRegalia.map((item) => item.name)];
   const [value, setValue] = useState<ContractDefinition>(() => initial ? structuredClone(initial) : emptyContract());
   const [error, setError] = useState("");
   const category = categoryFor(value);
@@ -45,7 +49,7 @@ export function ContractHomebrewEditor({ open, onOpenChange, initial, courts, on
       const court = courts[0];
       return { ...current, categoryKind: "Corte", regalia: court?.name ?? "Court", goblin: undefined, courtIds: court ? [court.id] : [] };
     }
-    return { ...current, categoryKind: "Regalia", regalia: REGALIA.includes(current.regalia) ? current.regalia : REGALIA[0], goblin: undefined, courtIds: undefined };
+    return { ...current, categoryKind: "Regalia", regalia: regalia.includes(current.regalia) ? current.regalia : REGALIA[0], goblin: undefined, courtIds: undefined };
   });
   const chooseCourt = (id: string) => {
     const court = courts.find((item) => item.id === id);
@@ -69,7 +73,7 @@ export function ContractHomebrewEditor({ open, onOpenChange, initial, courts, on
           <Field label={t("ui.requiredName")}><Input value={value.name} onChange={(event) => set("name", event.target.value)}/></Field>
           <Field label={t("ui.requiredCategory")}><Select value={category} onValueChange={(next) => chooseCategory(next as ContractCategory)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="Regalia">{t("ui.regalia")}</SelectItem><SelectItem value="Court">{t("ui.court")}</SelectItem><SelectItem value="Independent">{t("ui.independent")}</SelectItem><SelectItem value="Goblin">{t("ui.goblin")}</SelectItem></SelectContent></Select></Field>
           {category !== "Goblin" && <Field label={t("ui.requiredTier")}><Select value={value.type} onValueChange={(next) => set("type", next)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="Comum">{t("ui.common")}</SelectItem><SelectItem value="Real">{t("ui.royal")}</SelectItem></SelectContent></Select></Field>}
-          {category === "Regalia" && <Field label={`${t("ui.regalia")} *`}><Select value={value.regalia} onValueChange={(next) => set("regalia", next)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{REGALIA.map((item) => <SelectItem key={item} value={item}>{systemTerm(item, locale)}</SelectItem>)}</SelectContent></Select></Field>}
+          {category === "Regalia" && <Field label={`${t("ui.regalia")} *`}><Select value={value.regalia} onValueChange={(next) => set("regalia", next)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{regalia.map((item) => <SelectItem key={item} value={item}>{changelingRegaliaName(item, locale, catalogHomebrews)}</SelectItem>)}</SelectContent></Select></Field>}
           {category === "Court" && <Field label={t("ui.requiredCourt")}><Select value={value.courtIds?.[0]} onValueChange={chooseCourt}><SelectTrigger><SelectValue placeholder={t("ui.chooseCourt")}/></SelectTrigger><SelectContent>{courts.map((court) => <SelectItem key={court.id} value={court.id}>{locale === "pt-BR" ? court.translatedName : court.name}</SelectItem>)}</SelectContent></Select></Field>}
           <Field wide label={t("ui.requiredDescription")}><Textarea value={value.description} onChange={(event) => set("description", event.target.value)}/></Field>
         </Section>

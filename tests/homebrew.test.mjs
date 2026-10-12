@@ -123,15 +123,20 @@ test("player-created Vampire catalog entries merge into their owning catalogs", 
   assert.equal(normalizeVampireCatalogHomebrew({ entryType: "clan", id: "bad", name: "Bad" }), null);
 });
 
-test("player-created Changeling Seemings, Kiths, and Courts merge without mutating static catalogs", async () => {
+test("player-created Changeling catalog content accepts one authored language and distinct Mantle fields", async () => {
   const { mergeChangelingReference, mergeChangelingSeemings, normalizeChangelingCatalogHomebrew } = await vite.ssrLoadModule("/game-lines/changeling/catalog-homebrews.ts");
   const seeming = normalizeChangelingCatalogHomebrew({ entryType: "seeming", id: "homebrew:changeling:seeming:test", name: "Moonborn", translatedName: "Nascido da Lua", favored: "Finesse", regalia: "Mirror", blessing: "Bênção.", blessingEn: "Blessing.", curse: "Maldição.", curseEn: "Curse." });
   const kith = normalizeChangelingCatalogHomebrew({ entryType: "kith", id: "homebrew:changeling:kith:test", name: "Lanternheart", skill: "Occult", description: "Carries a living light.", blessing: "The light reveals paths." });
   const court = normalizeChangelingCatalogHomebrew({ entryType: "court", id: "homebrew:changeling:court:test", name: "Moon Court", emotion: "Wonder", emotionPt: "Assombro", mantleBenefits: ["1", "2", "3", "4", "5"], mantleBenefitsPt: ["1", "2", "3", "4", "5"] });
+  const regalia = normalizeChangelingCatalogHomebrew({ entryType: "regalia", id: "homebrew:changeling:regalia:test", name: "Lantern", translatedName: "Lanterna" });
+  const singleLanguageCourt = normalizeChangelingCatalogHomebrew({ entryType: "court", id: "homebrew:changeling:court:one-language", name: "Moon Court", emotion: "Wonder", mantleBenefits: ["Same", "Same", "Three", "Four", "Five"] });
   const reference = { courts: [], kiths: [] };
   const merged = mergeChangelingReference(reference, [kith, court]);
   assert.equal(merged.kiths[0].name, "Lanternheart");
   assert.equal(merged.courts[0].name, "Moon Court");
   assert.equal(mergeChangelingSeemings([seeming]).Moonborn.regalia, "Mirror");
+  assert.equal(regalia.translatedName, "Lanterna");
+  assert.deepEqual(singleLanguageCourt.mantleBenefits, ["Same", "Same", "Three", "Four", "Five"]);
+  assert.deepEqual(singleLanguageCourt.mantleBenefitsPt, singleLanguageCourt.mantleBenefits);
   assert.deepEqual(reference, { courts: [], kiths: [] });
 });

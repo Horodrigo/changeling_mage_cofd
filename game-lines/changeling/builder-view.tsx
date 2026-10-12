@@ -21,6 +21,8 @@ import {
 import { SKILLS } from "@/lib/core/character/creation-rules";
 import { canSelectContract, contractCategoryKey } from "./builder-eligibility";
 import { canonicalRegalia, changelingFavoredRegalia } from "@/lib/changeling-regalia";
+import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
+import { changelingRegaliaName } from "./catalog-homebrews";
 import { courtPageCitation, type CourtDefinition } from "@/lib/changeling-courts";
 import { kithSearchText, kithSkillOptions, type KithDefinition } from "@/lib/changeling-kiths";
 import type { EntitlementDefinition } from "@/game-lines/changeling/entitlements";
@@ -91,11 +93,15 @@ const contractCategoryKeys = (contract: ContractDefinition) => homebrewCategoryK
 
 export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
   const { locale, t } = useLanguage();
+  const catalogHomebrews = useChangelingCatalogHomebrews();
+  const customRegalia = catalogHomebrews.filter((item) => item.entryType === "regalia");
+  const regaliaLabel = (name: string) => changelingRegaliaName(name, locale, catalogHomebrews);
   const homebrewPreferences = useHomebrewPreferences();
   const seemingData = props.seemingCatalog[props.seeming];
   const automaticRegalia = changelingFavoredRegalia({ primary_regalia: seemingData?.regalia, kith: props.kith, kith_custom: props.customKith });
   const availableRegalia = [
     ...REGALIA,
+    ...customRegalia.map((item) => item.name),
     ...props.contractCatalog
       .filter(
         (item: ContractDefinition & { categoryKind?: string }) =>
@@ -147,7 +153,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
           <div className="regalia-choice-stack">
             <span className="regalia-field-label">{t("ui.secondFavoredRegalia")}</span>
             <div className="regalia-information" aria-live="polite">
-              <strong>{props.secondRegalia ? systemTerm(props.secondRegalia, locale) : t("ui.secondRegalia")}</strong>
+              <strong>{props.secondRegalia ? regaliaLabel(props.secondRegalia) : t("ui.secondRegalia")}</strong>
               <p>{props.secondRegalia
                 ? t("ui.thisFavoredRegaliaGrantsAccessToItsRoyal", { p1: secondRegaliaRoyalCount })
                 : t("ui.chooseASecondFavoredRegaliaToUnlockAnother")}</p>
@@ -158,7 +164,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
                 <SelectContent>{regaliaGroups.map((group, index) => <SelectGroup key={group.label}>
                   {index > 0 && <SelectSeparator />}
                   <SelectLabel>{group.label}</SelectLabel>
-                  {group.options.map(item => <SelectItem key={item} value={item}>{systemTerm(item, locale)}</SelectItem>)}
+                  {group.options.map(item => <SelectItem key={item} value={item}>{regaliaLabel(item)}</SelectItem>)}
                 </SelectGroup>)}</SelectContent>
               </Select>
             </div>
