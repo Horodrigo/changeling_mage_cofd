@@ -51,7 +51,8 @@ test("theme module resolves at build time, and all existing Fairest assets map t
   }
   assert.match(sheetThemeCss(fairest), /^@media screen \{ \.cod-sheet\.ctl-sheet/);
   assert.equal(sheetThemeCss(), "");
-  assert.doesNotMatch(print, /--ctl-image-/);
+  assert.match(print, /--ctl-image-section-divider/);
+  assert.match(print, /data-changeling-print-theme/);
   assert.doesNotMatch(print, /theme-fairest/);
 });
 

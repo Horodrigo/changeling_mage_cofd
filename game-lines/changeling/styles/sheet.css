@@ -558,6 +558,12 @@ body:has(.line-theme-ctl) {
     auto,
     1024px 1024px;
 }
+.ctl-sheet .ctl-anchor-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.ctl-sheet .ctl-anchor-grid .rule-power-card { min-width: 0; }
+.ctl-sheet .ctl-anchor-grid .rule-power-summary { padding: 8px 12px; }
+.ctl-sheet .ctl-anchor-grid .rule-power-summary > strong { color: var(--ctl-ink); font: 400 18px/1.2 "Changeling Sheet", Georgia, serif; }
+.ctl-sheet .ctl-anchor-grid .rule-power-details p { margin: 0; white-space: pre-line; }
+@media (max-width: 767px) { .ctl-sheet .ctl-anchor-grid { grid-template-columns: minmax(0, 1fr); } }
 
 .ctl-dialog {
   border-color: rgba(23, 56, 35, 0.5) !important;
@@ -2674,7 +2680,7 @@ body:has(.line-theme-ctl)
       rgba(255, 254, 249, 0) 93%,
       rgba(202, 219, 190, 0.42) 100%
     ),
-    url("/game-lines/changeling/images/paper-texture.webp");
+    var(--print-paper-texture, var(--ctl-image-paper-texture, url("/game-lines/changeling/images/paper-texture.webp")));
   background-repeat: no-repeat, repeat;
   background-size:
     auto,
@@ -2685,6 +2691,33 @@ body:has(.line-theme-ctl)
   font-size: 8.8pt;
   print-color-adjust: exact;
   -webkit-print-color-adjust: exact;
+}
+.ctl-print-document[data-changeling-print-theme] .ctl-print-page {
+  --sheet-accent: var(--print-theme-accent);
+  --sheet-ink: var(--print-theme-ink);
+  --ctl-ink: var(--print-theme-ink);
+  --ctl-ink-soft: color-mix(in srgb, var(--print-theme-ink) 48%, transparent);
+  --ctl-rule: color-mix(in srgb, var(--print-theme-ink) 34%, transparent);
+  background-color: var(--print-theme-paper);
+}
+.ctl-print-document[data-changeling-print-theme="beast"] { --print-theme-ink:#2d3b2d; --print-theme-accent:#617b4c; --print-theme-paper:#ede8d7; }
+.ctl-print-document[data-changeling-print-theme="darkling"] { --print-theme-ink:#28283c; --print-theme-accent:#686989; --print-theme-paper:#ebe9ef; }
+.ctl-print-document[data-changeling-print-theme="elemental"] { --print-theme-ink:#244950; --print-theme-accent:#31777b; --print-theme-paper:#f3eddb; }
+.ctl-print-document[data-changeling-print-theme="fairest"] { --print-theme-ink:#573348; --print-theme-accent:#86516c; --print-theme-paper:#f6eae4; }
+.ctl-print-document[data-changeling-print-theme="grimm"] { --print-theme-ink:#382922; --print-theme-accent:#8d4739; --print-theme-paper:#f0e4d2; }
+.ctl-print-document[data-changeling-print-theme="ogre"] { --print-theme-ink:#302b27; --print-theme-accent:#875337; --print-theme-paper:#e9dec8; }
+.ctl-print-document[data-changeling-print-theme="wizened"] { --print-theme-ink:#39483b; --print-theme-accent:#75876a; --print-theme-paper:#eee9d8; }
+.ctl-print-document[data-changeling-print-theme] .ctl-print-card {
+  border: 0.2mm solid color-mix(in srgb, var(--print-theme-ink) 28%, transparent);
+  background: color-mix(in srgb, var(--print-theme-paper) 72%, white);
+  padding: 1.2mm 1.6mm;
+}
+.ctl-print-document[data-changeling-print-theme] .ctl-print-card > header small {
+  color: color-mix(in srgb, var(--print-theme-ink) 68%, transparent);
+}
+.ctl-print-document[data-changeling-print-theme="elemental"] .ctl-print-title-mark {
+  background-position: center;
+  background-size: 200% auto;
 }
 .ctl-print-page > * {
   position: relative;
@@ -2726,7 +2759,7 @@ body:has(.line-theme-ctl)
   width: 50%;
   height: 4.5mm;
   background-image:
-    url("/game-lines/changeling/images/section-divider.webp"),
+    var(--ctl-image-section-divider, url("/game-lines/changeling/images/section-divider.webp")),
     linear-gradient(
       transparent 43%,
       var(--ctl-ink-soft) 43%,
@@ -2764,7 +2797,7 @@ body:has(.line-theme-ctl)
   aspect-ratio: 998/190;
   overflow: hidden;
   color: transparent;
-  background: url("/game-lines/changeling/images/title.webp") left center/contain no-repeat;
+  background: var(--ctl-image-title, url("/game-lines/changeling/images/title.webp")) left center/contain no-repeat;
   font-size: 0;
   line-height: 0;
 }
@@ -2856,7 +2889,7 @@ body:has(.line-theme-ctl)
   height: 4.2mm;
   background-color: transparent;
   background-image:
-    url("/game-lines/changeling/images/section-divider.webp"),
+    var(--ctl-image-section-divider, url("/game-lines/changeling/images/section-divider.webp")),
     linear-gradient(var(--ctl-rule), var(--ctl-rule));
   background-position:
     left center,
@@ -2887,8 +2920,8 @@ body:has(.line-theme-ctl)
   min-width: 0;
 
   background-image:
-    url("/game-lines/changeling/images/attributes-divider-leaf.webp"),
-    url("/game-lines/changeling/images/attributes-divider.webp");
+    var(--ctl-image-attributes-divider-leaf, url("/game-lines/changeling/images/attributes-divider-leaf.webp")),
+    var(--ctl-image-attributes-divider, url("/game-lines/changeling/images/attributes-divider.webp"));
 
   background-position:
     100% center,
@@ -2925,7 +2958,7 @@ body:has(.line-theme-ctl)
   align-items: start;
 }
 .ctl-print-main-grid > section + section {
-  background-image: url("/game-lines/changeling/images/column-divider.webp");
+  background-image: var(--ctl-image-column-divider, url("/game-lines/changeling/images/column-divider.webp"));
   background-position: left top;
   background-repeat: repeat-y;
   background-size: 1.2mm auto;
@@ -2971,7 +3004,7 @@ body:has(.line-theme-ctl)
   width: 17mm;
   height: 15mm;
   transform: translateY(-50%);
-  background: url("/game-lines/changeling/images/skill-highlight.webp") center / contain no-repeat;
+  background: var(--ctl-image-skill-highlight, url("/game-lines/changeling/images/skill-highlight.webp")) center / contain no-repeat;
 }
 .ctl-print-merits {
   display: grid;
@@ -3237,7 +3270,7 @@ body:has(.line-theme-ctl)
   align-items: start;
 }
 .ctl-print-second-grid > section + section {
-  background-image: url("/game-lines/changeling/images/column-divider.webp");
+  background-image: var(--ctl-image-column-divider, url("/game-lines/changeling/images/column-divider.webp"));
   background-position: left top;
   background-repeat: repeat-y;
   background-size: 1.2mm auto;
@@ -3374,7 +3407,7 @@ body:has(.line-theme-ctl)
   flex: 1 1 0;
   height: 4.2mm;
   background-image:
-    url("/game-lines/changeling/images/section-divider.webp"),
+    var(--ctl-image-section-divider, url("/game-lines/changeling/images/section-divider.webp")),
     linear-gradient(var(--ctl-rule), var(--ctl-rule));
   background-position:
     left center,
@@ -3546,6 +3579,21 @@ body:has(.line-theme-ctl)
 .ctl-print-measure .ctl-print-flow-heading,
 .ctl-print-measure .ctl-print-flow-item {
   width: 87mm;
+}
+
+.ctl-print-document[data-changeling-print-theme="elemental"] .ctl-print-brand::before,
+.ctl-print-document[data-changeling-print-theme="elemental"] .ctl-print-brand::after,
+.ctl-print-document[data-changeling-print-theme="elemental"] .ctl-print-page .official-heading:not(.ctl-print-attributes-heading)::before,
+.ctl-print-document[data-changeling-print-theme="elemental"] .ctl-print-page .official-heading:not(.ctl-print-attributes-heading)::after,
+.ctl-print-document[data-changeling-print-theme="elemental"] .ctl-print-flow-heading::before,
+.ctl-print-document[data-changeling-print-theme="elemental"] .ctl-print-flow-heading::after {
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 0.5mm 0 6.8mm;
+  border-image-source: var(--ctl-image-section-divider, url("/game-lines/changeling/images/theme-elemental/section-divider.webp"));
+  border-image-slice: 155 12 156 150 fill;
+  border-image-width: 0 0.5mm 0 6.8mm;
+  background: none;
 }
 
 @media print {

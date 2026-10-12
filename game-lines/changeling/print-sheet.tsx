@@ -3,7 +3,10 @@ import Image from "next/image";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 
-import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { getDeviceValue } from "@/lib/device-storage";
+import themes from "virtual:changeling-sheet-themes";
+import { CHANGELING_THEME_STORAGE_KEY } from "./sheet-theme";
 import { pairPrintColumns, paginatePrintItems, type PrintFlowColumn, type PrintFlowItem } from "@/app/workspace/print-pagination";
 import { PrintIntegrityTrack } from "@/app/workspace/print-sheet-primitives";
 import { isBlankPrintCharacter } from "@/app/workspace/blank-print-character";
@@ -32,7 +35,7 @@ import { derivedWithPermanentMerits } from "./experience-shared";
 import { expandedConfigurationLines, meritConfigurationTitle } from "./sheet-merit-configurations";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
-import { mergeChangelingReference, mergeChangelingSeemings } from "./catalog-homebrews";
+import { changelingRegaliaName, mergeChangelingReference, mergeChangelingSeemings } from "./catalog-homebrews";
 import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
 import type { ChangelingReference } from "./catalogs/reference";
 import type { TokenDefinition } from "./catalogs/tokens";
@@ -241,6 +244,14 @@ function FlowPages({ blocks, characterName, startPage, onReadyChange, onPageCoun
 }
 
 export function ChangelingPrintSheet({ character, options, catalogs, onReadyChange }: GameLinePrintSheetProps) {
+  const [themeId, setThemeId] = useState("default");
+  useEffect(() => {
+    let active = true;
+    void getDeviceValue<string>(CHANGELING_THEME_STORAGE_KEY).then((id) => { if (active && id) setThemeId(id); }).catch(() => {});
+    return () => { active = false; };
+  }, []);
+  const theme = themes.find((item) => item.id === themeId);
+  const themeAssets = theme ? Object.fromEntries(Object.entries(theme.assets).map(([name, url]) => [`--ctl-image-${name}`, `url(${JSON.stringify(url)})`])) as CSSProperties : undefined;
   if (!catalogs) throw new Error("Changeling print sheet requires its catalog snapshot.");
   const { locale, t } = useLanguage();
   const homebrewPreferences = useHomebrewPreferences();
@@ -303,7 +314,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
   ];
   const otherTraits = isBlankPrintCharacter(character)
     ? { Size: "", Speed: "", Defense: "", Initiative: "", Armor: "" }
-    : derivedTraitsWithArmor(derived, data.combat_armor);
+    : derivedTraitsWithArmor(derived, data.combat_armor, data.combat_shield, data.combat_helmet);
   const flowBlocks = useMemo(() => {
     const blocks: PrintBlock[] = [];
     const entitlementCatalog = entitlementCatalogPresentation(reference.entitlements, locale, reference.entitlementPresentation);
@@ -353,9 +364,9 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
   const meritRows = principalMerits.slice(0, 8);
   const pageTwoMerits = [...principalMerits.slice(8), ...expanded.filter((merit) => !principalMerits.includes(merit))];
   const contractRows = contracts.slice(0, 10).map((contract) => contractPrintData(contract, character, reference.courts, reference.contractPresentation, locale, t, supplementalBenefitSources));
-  const seemingBlessing = seeming ? (locale === "en-US" ? seeming.blessingEn : seeming.blessing) : "";
-  const seemingCurse = seeming ? (locale === "en-US" ? seeming.curseEn : seeming.curse) : "";
-  return <div className="game-print-document ctl-print-document">
+  const seemingBlessing = seeming ? "homebrew" in seeming || locale !== "en-US" ? seeming.blessing : seeming.blessingEn : "";
+  const seemingCurse = seeming ? "homebrew" in seeming || locale !== "en-US" ? seeming.curse : seeming.curseEn : "";
+  return <div className="game-print-document ctl-print-document" data-changeling-print-theme={theme?.id} style={themeAssets}>
     <PrintPage page={1} total={total} title={character.character.name} main>
       <section className="ctl-print-identity">{identity.map(([label, value]) => <PrintField key={String(label)} label={String(label)} value={value}/>)}</section>
       <SheetHeading className="ctl-print-attributes-heading">{t("ui.attributes")}</SheetHeading>
@@ -365,7 +376,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
         <section>
           <SheetHeading>{t("ui.merits")}</SheetHeading>
           <div className="ctl-print-merits">{meritRows.map((merit, index) => { const definition = resolveMeritDefinition(merit, meritCatalog); const name = locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name; const detail = meritConfigurationTitle(merit.configuration, locale, reference.courts); const dots = effectiveMeritDots({ ...merit, definitionId: definition?.id }); return <div key={`${merit.name}-${index}`}><span>{name}{detail ? `: ${detail}` : ""}</span><DotValue value={dots} max={Math.max(5, dots)}/></div>; })}{Array.from({ length: Math.max(0, 8 - meritRows.length) }, (_, index) => <div className="blank" key={`blank-merit-${index}`}><span>&nbsp;</span><DotValue value={0} max={5}/></div>)}</div>
-          <SheetHeading>{t("ui.favoredRegalia")}</SheetHeading><PrintTextList values={changelingFavoredRegalia(data).map((value) => systemTerm(value, locale))} minimum={2}/>
+          <SheetHeading>{t("ui.favoredRegalia")}</SheetHeading><PrintTextList values={changelingFavoredRegalia(data).map((value) => changelingRegaliaName(value, locale, customCatalog))} minimum={2}/>
           <SheetHeading>{t("ui.frailties")}</SheetHeading><PrintTextList values={frailties.map((value) => value ? systemTerm(value, locale) : "")} minimum={frailties.length}/>
           <SheetHeading>{t("ui.aspirations")}</SheetHeading><PrintTextList values={cleanList(data.aspirations)} minimum={3}/>
           <SheetHeading>{t("ui.conditions")}</SheetHeading><PrintTextList values={selectedConditions.map((condition) => condition.name)} minimum={4}/>

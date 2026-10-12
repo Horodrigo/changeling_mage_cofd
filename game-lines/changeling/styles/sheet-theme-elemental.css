@@ -64,6 +64,18 @@
     opacity: 0.3;
   }
 
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .official-heading:not(.ctl-attributes-heading)::before,
+  .app-shell:has([data-changeling-sheet-theme="elemental"]) .ctl-sheet .official-heading:not(.ctl-attributes-heading)::after {
+    min-width: 28px;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 2px 0 26px;
+    border-image-source: var(--ctl-image-section-divider, url("/game-lines/changeling/images/theme-elemental/section-divider.webp"));
+    border-image-slice: 155 12 156 150 fill;
+    border-image-width: 0 2px 0 26px;
+    background: none;
+  }
+
   .app-shell:has([data-changeling-sheet-theme="elemental"])
     .ctl-sheet:not(.mobile-character-sheet) {
     --ctl-frame-star-side-offset: 34px;
