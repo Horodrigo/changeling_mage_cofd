@@ -230,14 +230,14 @@ test("Mage and Werewolf Mobile identities stack labels and values, including aff
   }
 });
 
-test("all Mobile sheets share Werewolf's wrapping tab geometry without changing line typography", async () => {
+test("all Mobile sheets wrap tabs while keeping each label on one line", async () => {
   const [shared, tabs, wolf] = await Promise.all([
     read("../app/css/globals.css"),
     read("../app/workspace/sheet-tabs.tsx"),
     read("../game-lines/werewolf/styles/mobile.css"),
   ]);
   assert.match(tabs, /className="ctl-sheet-tabs mobile-sheet-tabs"/);
-  assert.doesNotMatch(tabs, /scrollIntoView|scrollTo|document\.querySelector/, "Selecting a wrapped tab must not scroll the application viewport");
+  assert.doesNotMatch(tabs, /scrollIntoView|scrollTo|document\.querySelector/, "Selecting a tab must not scroll the application viewport");
   assert.match(tabs, /const select=\(next:string\)=>\{onValueChange\(next\);\}/);
   const list = shared.match(/\.cod-sheet\.mobile-character-sheet \.mobile-sheet-tabs > \.ctl-sheet-tab-list\s*\{([^}]+)\}/)[1];
   assert.match(list, /flex-wrap: wrap/);
@@ -246,8 +246,8 @@ test("all Mobile sheets share Werewolf's wrapping tab geometry without changing 
   const buttons = shared.match(/\.cod-sheet\.mobile-character-sheet \.mobile-sheet-tabs > \.ctl-sheet-tab-list button\s*\{([^}]+)\}/)[1];
   assert.match(buttons, /flex: 1 1 22%/);
   assert.match(buttons, /min-height: 44px/);
-  assert.match(buttons, /min-width: 0/);
-  assert.match(buttons, /white-space: normal/);
+  assert.match(buttons, /min-width: max-content/);
+  assert.match(buttons, /white-space: nowrap/);
   assert.doesNotMatch(buttons, /font:|font-family:|color:/);
   assert.match(shared, /ctl-sheet-tab-list button:nth-child\(-n\+3\)\s*\{\s*flex-basis: 30%/);
   assert.doesNotMatch(wolf.slice(0, wolf.indexOf(".mobile-sheet-page")), /flex-wrap:|flex-basis:/, "Werewolf consumes the common tab geometry");

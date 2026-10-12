@@ -25,7 +25,7 @@ export const vampireDesktopLayout = {
       columnClassNames: ["cod-main-skills sheet-skills-column", "cod-main-other sheet-center-column", "cod-main-core sheet-right-column"],
     },
   } satisfies MainSheetDesktopLayoutInput),
-  // Aba Details: Merits expandidos e a página de poderes do personagem.
+  // Aba Details: Mask/Dirge, Merits expandidos e a página de poderes do personagem.
   details: {
     sections: [{
       id: "content",
@@ -33,8 +33,9 @@ export const vampireDesktopLayout = {
       definition: {
         columns: 1,
         items: [
-          { id: "expandedMerits", column: 1, order: 1 },
-          { id: "powers", column: 1, order: 2 },
+          { id: "anchors", column: 1, order: 1 },
+          { id: "expandedMerits", column: 1, order: 2 },
+          { id: "powers", column: 1, order: 3 },
         ],
       },
     }],

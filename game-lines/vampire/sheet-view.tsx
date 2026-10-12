@@ -1433,7 +1433,9 @@ export function VampireCharacterPaper({
         catalog={merits}
         locale={locale}/>
     </>;
+  const anchorsSection = <section className="vtr-anchor-section"><SheetHeading>{t("ui.maskAndDirge")}</SheetHeading><div className="vtr-anchor-grid">{(["mask", "dirge"] as const).map(kind => { const anchor = kind === "mask" ? mask : dirge; const presented = anchor && vampireAnchorPresentation(anchor, locale); return <details key={kind} className="rule-power-card vampire-discipline-card"><summary className="rule-power-summary"><strong>{t(`sheet.${kind}`)}: {localized(anchor, locale)}</strong></summary><div className="rule-power-details">{presented && <><p><strong>{t("ui.recoverOneWillpower")}:</strong> {presented.singleWillpower}</p><p><strong>{t("ui.recoverAllWillpower")}:</strong> {presented.allWillpower}</p></>}</div></details>; })}</div></section>;
   const vampireMobileDetailsItems = {
+    anchors: anchorsSection,
     expandedMerits: expandedMeritsSection,
     humanity: humanitySection,
     banes: banesSection,
@@ -1442,7 +1444,7 @@ export function VampireCharacterPaper({
       catalog={conditionCatalog}
       onChange={(value) => setState("conditions", value)}/></>,
   };
-  const vampireDesktopDetailsItems = { expandedMerits: expandedMeritsSection, powers: powersPage };
+  const vampireDesktopDetailsItems = { anchors: anchorsSection, expandedMerits: expandedMeritsSection, powers: powersPage };
   const detailsPage = isMobile
     ? <SheetLayoutFlow id="vampire-mobile-details" definition={vampireMobileLayout.details} items={vampireMobileDetailsItems}/>
     : <SheetLayoutDesktopPage id="vampire-desktop-details" definition={vampireDesktopLayout.details} items={vampireDesktopDetailsItems}/>;
@@ -1719,6 +1721,7 @@ export function VampireCharacterPaper({
       stability={null}
       derived={derived}
       armorId={data.combat_armor}
+      shieldId={data.combat_shield} helmet={data.combat_helmet}
       experience={
         <VampireExperiencePanel
           character={character}

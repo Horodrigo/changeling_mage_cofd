@@ -179,7 +179,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, up
   const experience = <WerewolfExperiencePanel character={character} catalogs={catalogs} updateSheet={updateSheet} updateState={updateState}/>;
   const anchors = <>
     <SheetHeading>{t("werewolf.anchors")}</SheetHeading>
-    {reference.anchors.filter(anchor => anchor.id === data.blood || anchor.id === data.bone).map(anchor => <AnchorDetails key={anchor.id} anchor={anchor} reference={reference}/>)}
+    <div className="wtf-anchor-grid">{[data.blood, data.bone].map(id => reference.anchors.find(anchor => anchor.id === id)).filter((anchor): anchor is NonNullable<typeof anchor> => Boolean(anchor)).map(anchor => <AnchorDetails key={anchor.id} anchor={anchor} reference={reference}/>)}</div>
   </>;
   const forms = <>
     {mobile ? <MobileForm character={member} reference={reference} merits={ownMerits} value={currentForm} onChange={setForm}/>
@@ -187,6 +187,8 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, up
     <WerewolfPassives reference={reference} harmony={boundedHarmony(data.harmony)}/>
   </>;
   const powers = <>
+    <section className="wtf-gifts-rites">
+    <SheetHeading>{t("werewolf.giftsAndRites")}</SheetHeading>
     <div className="catalog-filters wtf-power-filters"><Input value={powerSearch} onChange={event => setPowerSearch(event.target.value)} aria-label={t("werewolf.searchPowers")} placeholder={t("werewolf.searchPowers")}/>
       <label>{t("ui.type")}<RuleSelect value={powerKind} onChange={setPowerKind} options={[
         { value: "all", label: t("ui.all"), localized: true }, { value: "moon", label: t("werewolf.moonGift"), localized: true },
@@ -194,6 +196,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, up
         { value: "wolf-rite", label: t("werewolf.wolfRites"), localized: true }, { value: "pack-rite", label: t("werewolf.packRites"), localized: true },
       ]}/></label>
     </div>
+    <div className="wtf-gifts-rites-grid"><div>
     <SheetHeading>{t("werewolf.gifts")}</SheetHeading>
     {[...new Set(knownWerewolfFacets(character))].map(id => {
       const parent = gifts.gifts.find(gift => gift.facets.some(facet => facet.id === id)), facet = parent?.facets.find(item => item.id === id);
@@ -202,6 +205,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, up
       if (facet && parent && ((powerKind !== "all" && powerKind !== parent.kind) || !`${facetName} ${giftName} ${facet.source}`.toLocaleLowerCase(locale).includes(powerSearch.trim().toLocaleLowerCase(locale)))) return null;
       return facet ? <details className="wtf-rule-disclosure" key={id}><summary>{facetName} · {giftName} · {t(`werewolf.renownNames.${facet.renown}`)}</summary><FacetRules facet={facet} gifts={gifts}/></details> : <p key={id}>{t("werewolf.missingSelectedFacet", { id })}</p>;
     })}
+    </div><div>
     <SheetHeading>{t("werewolf.rites")}</SheetHeading>
     {[...new Set([...werewolfIds(data.creation_rites), ...werewolfIds(data.learned_rites)])].map(id => {
       const rite = rites.rites.find(item => item.id === id);
@@ -209,6 +213,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, up
       if (rite && ((powerKind !== "all" && powerKind !== `${rite.kind}-rite`) || !`${riteName} ${rite.source}`.toLocaleLowerCase(locale).includes(powerSearch.trim().toLocaleLowerCase(locale)))) return null;
       return rite ? <details className="wtf-rule-disclosure" key={id}><summary>{locale === "pt-BR" ? rites.presentation.rites[id]?.name ?? rite.name : rite.name} · {rite.dots}</summary><RiteRules rite={rite} catalog={rites}/></details> : <p key={id}>{t("werewolf.missingSelectedRite", { id })}</p>;
     })}
+    </div></div></section>
     <FetishInventory value={fetishSelections(data.fetishes)} onChange={value => setLine("fetishes", value)} catalog={fetishes} gifts={gifts}/>
     <TotemEditor value={selectedTotem} onChange={value => updateSheet(changeWerewolfTotem(character, value, benefitCatalogs))} personalPoints={personalTotemPoints(character.merits, merits)} catalog={totem}
       state={selectedTotem ? totemState(state.werewolf_totem, selectedTotem.instanceId) : undefined} onStateChange={value => setState("werewolf_totem", value)}>
@@ -258,7 +263,7 @@ export function WerewolfCharacterPaper({ character, updateState, updateSheet, up
     <Tabs value={activeTab} onValueChange={setTab}><TabsList className="ctl-sheet-tab-list" aria-label={t("ui.characterPages")}>
       <TabsTrigger value="main">{t("ui.main")}</TabsTrigger><TabsTrigger value="forms">{t("werewolf.forms")}</TabsTrigger><TabsTrigger value="details">{t("ui.details")}</TabsTrigger>{hasLodge && <TabsTrigger value="lodge">{t("werewolf.lodgeTab")}</TabsTrigger>}<TabsTrigger value="combat">{t("ui.combat")}</TabsTrigger><TabsTrigger value="notes">{t("ui.notes")}</TabsTrigger>
     </TabsList><TabsContent value="main" className="ctl-sheet-page"><MainSheet className="wtf-main-body" layout={werewolfDesktopLayout.main} identityItems={identityFields} attributes={attributes} skills={skills} specificPowers={renownBlock} specificPowersTitle={t("werewolf.renown")} merits={meritList} aspirations={aspirationList} lineSections={harmony} conditions={conditionList}
-      health={health} willpower={willpower} powerStat={powerStat} fuel={essence} stability={null} derived={displayedDerived} armorId={data.combat_armor} experience={experience}/></TabsContent>
+      health={health} willpower={willpower} powerStat={powerStat} fuel={essence} stability={null} derived={displayedDerived} armorId={data.combat_armor} shieldId={data.combat_shield} helmet={data.combat_helmet} experience={experience}/></TabsContent>
       <TabsContent value="forms" className="ctl-sheet-page wtf-forms-page"><SheetLayoutDesktopPage id="werewolf-desktop-forms" definition={werewolfDesktopLayout.forms} items={{ forms }}/></TabsContent>
       {hasLodge && <TabsContent value="lodge" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-lodge" definition={werewolfDesktopLayout.lodge} items={{ directory: lodgePage }}/></TabsContent>}
       <TabsContent value="details" className="ctl-sheet-page powers-page"><SheetLayoutDesktopPage id="werewolf-desktop-details" definition={werewolfDesktopLayout.details} items={{ anchors, powers }}/></TabsContent>

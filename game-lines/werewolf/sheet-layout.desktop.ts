@@ -34,8 +34,8 @@ export const werewolfDesktopLayout = {
       definition: { columns: 1, items: [{ id: "forms", column: 1, order: 1 }] },
     }],
   },
-  // Aba Details: Anchors (Blood/Bone) e a superfície composta de Gifts, Rites,
-  // Fetishes/Talens e Totem.
+  // Aba Details: Blood/Bone em duas colunas; Gifts/Rites em duas colunas com busca;
+  // Fetishes/Talens e Totem abaixo.
   details: {
     sections: [{
       id: "content",

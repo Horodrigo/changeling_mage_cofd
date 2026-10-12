@@ -25,15 +25,15 @@ export const changelingDesktopLayout = {
       columnClassNames: ["cod-main-skills sheet-skills-column", "cod-main-other sheet-center-column", "cod-main-core sheet-right-column"],
     },
   } satisfies MainSheetDesktopLayoutInput),
-  // Aba Powers: seção 1 contém Contracts. Na seção 2, otherTraits reúne o Lore
-  // de Seeming/Kith e Goblin Debt; os demais slots mostram Court Lore e Merits
-  // expandidos. Oaths pertence exclusivamente à aba Notes.
+  // Aba Details: anchors Needle/Thread, Contracts, depois Lore de Seeming/Kith
+  // e Goblin Debt à esquerda; Court Lore e Merits expandidos à direita.
   poderes: {
     sections: [
-      { id: "contracts", order: 1, definition: { columns: 1, items: [{ id: "contracts", column: 1, order: 1 }] } },
+      { id: "anchors", order: 1, definition: { columns: 1, items: [{ id: "anchors", column: 1, order: 1 }] } },
+      { id: "contracts", order: 2, definition: { columns: 1, items: [{ id: "contracts", column: 1, order: 1 }] } },
       {
         id: "details",
-        order: 2,
+        order: 3,
         definition: {
           ...positions(2, [["otherTraits", 1, 1], ["courtLore", 2, 1], ["expandedMerits", 2, 2]]),
           sectionClassName: "powers-sheet-grid",

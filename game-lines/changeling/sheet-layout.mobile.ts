@@ -24,9 +24,9 @@ export const changelingMobileLayout = {
   resumo: flow(["identity", "aspirations", "experience"]),
   // Stats: Attributes; Skills.
   stats: flow(["attributes", "skills"]),
-  // Details: Merits; Merits expandidos; Court Lore; Frailties; Touchstones;
+  // Details: Needle/Thread; Merits; Merits expandidos; Court Lore; Frailties; Touchstones;
   // Clarity; Conditions.
-  detalhes: flow(["merits", "expandedMerits", "courtLore", "frailties", "touchstones", "clarity", "conditions"]),
+  detalhes: flow(["anchors", "merits", "expandedMerits", "courtLore", "frailties", "touchstones", "clarity", "conditions"]),
   // Powers: Wyrd/Glamour; Regalia favorecida; Contracts; Goblin Debt;
   // Seeming Lore; Kith Lore.
   poderes: flow(["resource", "regalia", "contracts", "goblinDebt", "seemingLore", "kithLore"]),

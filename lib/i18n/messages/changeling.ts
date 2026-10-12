@@ -9,6 +9,7 @@ export const changelingMessages = {
       "Seeming": "Feições"
     },
     "ui": {
+      "needleAndThread": "Agulha e Linha",
       "coreRegalia": "Core",
       "changelingSheetTheme": "Tema da ficha",
       "changelingSheetThemeCurrent": "Tema da ficha: {theme}",
@@ -451,6 +452,7 @@ export const changelingMessages = {
       "generalArmor": "Armadura geral",
       "goblin": "Goblin",
       "regalia": "Regalia",
+      "optionalRegaliaTranslation": "Tradução da Regalia (opcional)",
       "goblinDebt": "Débito Goblin",
       "goblinDebtOf10": "Débito Goblin: {p1} de 10",
       "groupedByRegaliaCourtOrIndependentAccessWith": "Separados por Regalia, Corte ou Independente.",
@@ -578,6 +580,7 @@ export const changelingMessages = {
       "Seeming": "Seemings"
     },
     "ui": {
+      "needleAndThread": "Needle and Thread",
       "coreRegalia": "Core",
       "changelingSheetTheme": "Sheet theme",
       "changelingSheetThemeCurrent": "Sheet theme: {theme}",
@@ -1020,6 +1023,7 @@ export const changelingMessages = {
       "generalArmor": "General Armor",
       "goblin": "Goblin",
       "regalia": "Regalia",
+      "optionalRegaliaTranslation": "Regalia translation (optional)",
       "goblinDebt": "Goblin Debt",
       "goblinDebtOf10": "Goblin Debt: {p1} of 10",
       "groupedByRegaliaCourtOrIndependentAccessWith": "Grouped by Regalia, Court, or Independent access.",

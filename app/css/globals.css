@@ -499,6 +499,8 @@
 .armor-summary {
   margin-top: 8px;
 }
+.combat-helmet-option { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 12px; }
+.combat-weapon-categories { display: flex; flex-wrap: wrap; gap: 8px; }
 .loadout-dialog {
   width: min(920px, calc(100vw - 24px));
   max-width: 920px;
@@ -5069,7 +5071,7 @@ body:has([class*="line-theme-"])
   white-space: nowrap;
 }
 .official-trait-line small {
-  padding-left: 10px;
+  padding-left: 5px;
   min-width: 0;
   overflow: hidden;
   color: #707671;
@@ -6895,12 +6897,11 @@ body:has([class*="line-theme-"])
 
   .cod-sheet.mobile-character-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button {
     flex: 1 1 22%;
-    min-width: 0;
+    min-width: max-content;
     min-height: 44px;
     height: auto;
     padding: 6px 3px;
-    white-space: normal;
-    overflow-wrap: anywhere;
+    white-space: nowrap;
   }
 
   .cod-sheet.mobile-character-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button:nth-child(-n+3) {

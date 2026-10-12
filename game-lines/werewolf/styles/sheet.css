@@ -63,6 +63,10 @@ body:has(.line-theme-wtf) {
 .wtf-power-filters > * { flex: 1 1 200px; }
 .wtf-sheet .wtf-power-filters { align-items: end; }
 .wtf-sheet .wtf-power-filters > label { display: grid; gap: 4px; font: 12px/1.4 Inter, Arial, sans-serif; }
+.wtf-sheet:not(.mobile-character-sheet) [data-sheet-layout-page="werewolf-desktop-details"] .official-heading { margin: 0 0 0; }
+.wtf-sheet:not(.mobile-character-sheet) .wtf-anchor-grid,
+.wtf-sheet:not(.mobile-character-sheet) .wtf-gifts-rites-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.wtf-sheet .wtf-gifts-rites { min-width: 0; }
 .wtf-sheet .wtf-fetish-inventory > .panel-heading h3 { font-size: 19px; font-weight: 400; }
 .wtf-sheet .wtf-fetish-inventory > .panel-heading p { color: #67554a; font-size: 12px; line-height: 1.45; }
 .wtf-sheet .wtf-lodge-identity { min-width: 0; }

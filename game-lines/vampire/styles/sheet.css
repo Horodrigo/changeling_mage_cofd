@@ -574,6 +574,13 @@ body:has(.line-theme-vtr) {
   padding-top: 5px;
   outline: none;
 }
+.vtr-sheet .vtr-anchor-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.vtr-sheet .vtr-anchor-grid .rule-power-card { min-width: 0; border-color: var(--vtr-rule); border-radius: 0; background: var(--vtr-panel); box-shadow: none; }
+.vtr-sheet .vtr-anchor-grid .rule-power-summary { padding: 8px 12px; }
+.vtr-sheet .vtr-anchor-grid .rule-power-summary > strong { color: var(--vtr-ink); font: 400 16px/1.2 Georgia, "Times New Roman", serif; }
+.vtr-sheet .vtr-anchor-grid .rule-power-details { color: #675657; font-size: 12px; line-height: 1.45; }
+.vtr-sheet .vtr-anchor-grid .rule-power-details p { margin: 0 0 8px; }
+@media (max-width: 767px) { .vtr-sheet .vtr-anchor-grid { grid-template-columns: minmax(0, 1fr); } }
 
 /* --------------------------------------------------------------------------
    Identity
@@ -1559,7 +1566,7 @@ body:has(.line-theme-vtr) {
   padding: 9mm 15mm 8mm;
   border: .4mm solid rgba(77, 23, 28, .45);
   background-color: #eee5db;
-  background-image: linear-gradient(90deg, rgba(120, 54, 58, .08), transparent 7%, transparent 93%, rgba(120, 54, 58, .08)), repeating-linear-gradient(0deg, rgba(77, 23, 28, .018) 0, rgba(77, 23, 28, .018) .25mm, transparent .25mm, transparent 1.3mm);
+  background-image: linear-gradient(90deg, rgba(120, 54, 58, .08), transparent 7%, transparent 93%, rgba(120, 54, 58, .08)), var(--print-paper-texture, repeating-linear-gradient(0deg, rgba(77, 23, 28, .018) 0, rgba(77, 23, 28, .018) .25mm, transparent .25mm, transparent 1.3mm));
   box-shadow: 0 4px 22px #39131740;
   print-color-adjust: exact;
   -webkit-print-color-adjust: exact;

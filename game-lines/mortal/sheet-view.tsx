@@ -172,6 +172,7 @@ export function MortalCharacterPaper({ character, updateState, updateSheet, upda
           stability={integrityTrack}
           derived={derived}
           armorId={data.combat_armor}
+          shieldId={data.combat_shield} helmet={data.combat_helmet}
           experience={<MortalExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} />}
           lineSections={<><SheetHeading>{t("ui.breakingPoints")}</SheetHeading>{breakingPointList}</>}
           layout={mortalDesktopLayout.main}

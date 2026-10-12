@@ -23,7 +23,8 @@ export const vampireMobileLayout = {
   // Stats: Attributes; Skills.
   stats: flow(["attributes", "skills"]),
   // Details: Merits expandidos; Humanity; Banes; Conditions.
-  details: flow(["expandedMerits", "humanity", "banes", "conditions"]),
+  // Details: Mask/Dirge, expanded Merits, Humanity, Banes, Conditions.
+  details: flow(["anchors", "expandedMerits", "humanity", "banes", "conditions"]),
   // Powers: recurso de Blood Potency; Disciplines; escolhas Protean;
   // Disciplines de rituais; poderes adquiridos; Tricks.
   powers: flow(["bloodPotencyResource", "disciplines", "proteanChoices", "ritualDisciplines", "purchasedPowers", "tricks"]),

@@ -1012,6 +1012,7 @@ export function MageCharacterPaper({
                 }
                 derived={derived}
                 armorId={data.combat_armor}
+                shieldId={data.combat_shield} helmet={data.combat_helmet}
                 experience={
                   <MageExperiencePanel
                     character={character}

@@ -63,6 +63,8 @@ export const vampireMessages = {
       "otherPowers": "Outros Poderes"
     },
     "ui": {
+      "maskAndDirge": "Máscara e Lamento",
+      "recoverOneWillpower": "Recuperar 1 Força de Vontade", "recoverAllWillpower": "Recuperar toda a Força de Vontade",
       "linkedPower": "Poder vinculado",
       "linkedPowerReview": "Escolha um poder instantâneo. O Narrador avalia sua adequação; Rapidez exclui falas ou procedimentos físicos complexos.",
       "linkedPowerUnrecorded": "Poder vinculado não registrado",
@@ -521,6 +523,8 @@ export const vampireMessages = {
       "otherPowers": "Other Powers"
     },
     "ui": {
+      "maskAndDirge": "Mask and Dirge",
+      "recoverOneWillpower": "Recover 1 Willpower", "recoverAllWillpower": "Recover all Willpower",
       "linkedPower": "Linked power",
       "linkedPowerReview": "Choose an instant power. The Storyteller reviews suitability; Rapidity excludes complex speech or physical procedures.",
       "linkedPowerUnrecorded": "Linked power not recorded",

@@ -53,7 +53,7 @@ import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { mergeMeritHomebrews } from "@/lib/merit-homebrews";
 import { RuleSelect } from "@/app/workspace/rule-select";
 import { CLARITY_ATTACK_MODIFIERS,CLARITY_BREAKING_POINT_TIERS,clarityAttackPool } from "./clarity";
-import { mergeChangelingReference, mergeChangelingSeemings, type SeemingDefinition, type SeemingHomebrew } from "./catalog-homebrews";
+import { changelingRegaliaName, mergeChangelingReference, mergeChangelingSeemings, type SeemingDefinition, type SeemingHomebrew } from "./catalog-homebrews";
 import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
 import type { ChangelingReference } from "./catalogs/reference";
@@ -71,7 +71,7 @@ function presentKith(reference: ChangelingReference, value: unknown, locale: Loc
     const raw = String(value ?? "");
     const definition = findKithInCatalog(reference.kiths, value);
     if (custom || !definition) return { name: raw, description: "", blessing: "", skill: "" };
-    return locale === "en-US"
+    return "homebrew" in definition || locale === "en-US"
         ? { name: definition.name, description: definition.description, blessing: definition.blessing, skill: definition.skill }
         : reference.kithPresentation[definition.id] ?? { name: definition.translatedName ?? definition.name, description: definition.description, blessing: definition.blessing, skill: definition.skill };
 }
@@ -86,9 +86,9 @@ function presentCourt(catalog: readonly CourtDefinition[], value: unknown, local
     if (!definition) return undefined;
     return {
         ...definition,
-        name: locale === "en-US" ? definition.name : definition.translatedName,
-        emotion: locale === "en-US" ? definition.emotion : definition.emotionPt,
-        mantleBenefits: locale === "en-US" ? definition.mantleBenefits : definition.mantleBenefitsPt,
+        name: "homebrew" in definition || locale === "en-US" ? definition.name : definition.translatedName,
+        emotion: "homebrew" in definition || locale === "en-US" ? definition.emotion : definition.emotionPt,
+        mantleBenefits: "homebrew" in definition || locale === "en-US" ? definition.mantleBenefits : definition.mantleBenefitsPt,
     };
 }
 
@@ -99,7 +99,7 @@ function displayCourt(catalog: readonly CourtDefinition[], value: unknown, local
 }
 const seemingName = (catalog: Record<string, SeemingDefinition | SeemingHomebrew>, value: unknown, locale: Locale) => {
     const name = String(value ?? ""), definition = catalog[name];
-    return locale === "pt-BR" && definition && "translated" in definition ? definition.translated : seemingDisplayName(name, locale);
+    return definition && "homebrew" in definition ? definition.name : locale === "pt-BR" && definition && "translated" in definition ? definition.translated : seemingDisplayName(name, locale);
 };
 export function ChangelingCharacterPaper({ character, updateState, updateSheet, updateNarrative, catalogs, }: GameLineSheetProps) {
     if (!catalogs)
@@ -217,6 +217,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     const notes = String(character.current_state?.notes ?? "");
     const setState = (key: string, value: unknown) => updateState({ ...character.current_state, [key]: value });
     const claritySection = <ClaritySection maximum={clarityMaximum} damage={clarityDamage} wyrd={powerRating} seeming={String(data.seeming ?? "")} seemingCatalog={seemingCatalog} onChange={(value) => setState("clarity_damage", value)}/>;
+    const anchors = <section className="ctl-anchor-section"><SheetHeading>{t("ui.needleAndThread")}</SheetHeading><div className="ctl-anchor-grid">{(["needle", "thread"] as const).map(kind => <details key={kind} className="rule-power-card"><summary className="rule-power-summary"><strong>{t(`ui.${kind}`)}: {changelingAnchorDisplayName(kind, data[kind], locale)}</strong></summary><div className="rule-power-details"><p>{changelingAnchorRecovery(kind, data[kind], locale)}</p></div></details>)}</div></section>;
     if (isMobile) {
         const identity = <SheetLayoutSection id="identity-mobile" definition={changelingMobileLayout.main.identity} className="sheet-identity-grid" items={{
             name: <SheetField label={t("ui.name")} value={character.character.name}/>,
@@ -233,7 +234,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                 { value: "resumo", label: t("ui.summary") }, { value: "stats", label: t("ui.stats") },
                 { value: "detalhes", label: t("ui.details") },
                 { value: "poderes", label: t("ui.powers") },
-                ...(entitlementMerit ? [{ value: "entitlement", label: "Entitlement" }] : []),
+                ...(entitlementMerit ? [{ value: "entitlement", label: t("ui.entitlement") }] : []),
                 ...([]),
                 { value: "combate", label: t("ui.combat") },
                 ...(hasCompanions ? [{ value: "companheiros", label: t("ui.companions") }] : []), { value: "anotacoes", label: t("ui.notes") },
@@ -248,6 +249,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                   skills: <><SheetHeading>{t("ui.skills")}</SheetHeading><SheetCategoryLayout id="mobile-skills" definition={changelingMobileLayout.main.skills} className="mobile-trait-stack" render={category => <TraitBlock key={category} title={category} names={SKILLS[category as keyof typeof SKILLS]} values={effectiveSkills} specialties={specialties} highlightedNames={highlightedSkills} highlightTone={skillHighlightTone}/>} /></>,
                 }}/>,
                 detalhes: <SheetLayoutFlow id="changeling-mobile-details" definition={changelingMobileLayout.detalhes} items={{
+                  anchors,
                   merits: <><SheetHeading>{t("ui.merits")}</SheetHeading><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog}/></>,
                   expandedMerits: <><SheetHeading>{t("ui.expandedMerits")}</SheetHeading><ExpandedMeritList merits={expandedMerits} character={character} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog} tokenCatalog={tokenCatalog} hasAdjacentContent/></>,
                   courtLore: <CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/>,
@@ -258,7 +260,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                 }}/>,
                 poderes: <SheetLayoutFlow id="changeling-mobile-powers" definition={changelingMobileLayout.poderes} items={{
                   resource: <PowerResource name={t("ui.wyrd")} rating={powerRating} summary={wyrdSummary(powerRating, locale)} resourceName="Glamour" current={currentResource} maximum={resource.maximum} perTurn={resource.perTurn} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>,
-                  regalia: <><SheetHeading>{t("ui.favoredRegalia")}</SheetHeading><LineList items={changelingFavoredRegalia(data).map((value) => systemTerm(value, locale))}/></>,
+                  regalia: <><SheetHeading>{t("ui.favoredRegalia")}</SheetHeading><LineList items={changelingFavoredRegalia(data).map((value) => changelingRegaliaName(value, locale, customCatalog))}/></>,
                   contracts: <><SheetHeading>{t("ui.contracts")}</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} presentation={lineReference.contractPresentation} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} supplementalBenefitSources={supplementalBenefitSources} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/></>,
                   goblinDebt: <><SheetHeading>{t("ui.goblinDebt")}</SheetHeading><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/></>,
                   seemingLore: <SeemingLore seeming={String(data.seeming ?? "")} seemingCatalog={seemingCatalog}/>,
@@ -313,15 +315,16 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
                   )}/>
                 </>
               }
-              specificPowersTitle="Regalias Favorecidas" specificPowers={<><LineList items={changelingFavoredRegalia(data).map((value) => systemTerm(value, locale))}/><SheetHeading className="ctl-single-divider">{t("ui.frailties")}</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/></>}
+              specificPowersTitle="Regalias Favorecidas" specificPowers={<><LineList items={changelingFavoredRegalia(data).map((value) => changelingRegaliaName(value, locale, customCatalog))}/><SheetHeading className="ctl-single-divider">{t("ui.frailties")}</SheetHeading><FrailtyList values={frailties} onChange={(value) => updateLineData(updateSheet, character, "frailties", value)}/></>}
               merits={<><MeritSheetList character={character} merits={principalMerits} updateSheet={updateSheet} catalog={meritCatalog} courtCatalog={lineReference.courts} entitlementCatalog={entitlementCatalog}/><SheetHeading className="ctl-single-divider">{t("ui.touchstones")}</SheetHeading><EditableList values={touchstones} minimum={touchstoneSlots} maximum={touchstoneSlots} placeholder={t("ui.writeATouchstone")} onChange={(value) => updateLineData(updateSheet, character, "touchstones", value, updateNarrative)}/></>}
               aspirations={<EditableList values={aspirations} minimum={3} maximum={3} placeholder={t("ui.writeAnAspiration")} onChange={(value) => updateLineData(updateSheet, character, "aspirations", value, updateNarrative)}/>}
               conditions={<CoreConditionManager selected={selectedConditions} catalog={conditionCatalog} onChange={(value) => setState("conditions", value)}/>}
               health={<><SheetHeading>{t("ui.health")}</SheetHeading><HealthTrack health={health} damage={damage} onChange={(value) => setState("health_damage", value)}/></>} willpower={<><SheetHeading>{t("ui.willpower")}</SheetHeading><ResourceTrack label={t("ui.willpower")} current={currentWillpower} maximum={willpower} onChange={(value) => setState("willpower_current", value)}/></>}
-              powerStat={<MainPowerStat label={t("ui.wyrd")} value={powerRating} summary={wyrdSummary(powerRating, locale)}/>} fuel={<MainFuel label={t("ui.glamour")} current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>} stability={claritySection} derived={derived} armorId={data.combat_armor} experience={<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} reference={lineReference}/>} />
+              powerStat={<MainPowerStat label={t("ui.wyrd")} value={powerRating} summary={wyrdSummary(powerRating, locale)}/>} fuel={<MainFuel label={t("ui.glamour")} current={currentResource} maximum={resource.maximum} onChange={(value) => setState(resourceKey, value)} storedCurrent={hasStoredGlamour ? storedGlamour : undefined} storedMaximum={hasStoredGlamour ? powerRating : undefined} onStoredChange={setStoredGlamour}/>} stability={claritySection} derived={derived} armorId={data.combat_armor} shieldId={data.combat_shield} helmet={data.combat_helmet} experience={<ExperiencePanel character={character} updateSheet={updateSheet} catalogs={catalogs} reference={lineReference}/>} />
           </TabsContent>
           <TabsContent value="poderes" data-page-title="Detalhes" className="ctl-sheet-page powers-page">
             <SheetLayoutDesktopPage id="changeling-desktop-powers" definition={changelingDesktopLayout.poderes} items={{
+              anchors,
               contracts: <><SheetHeading>{t("ui.contracts")}</SheetHeading><ContractPowerList contracts={contracts} catalog={contractCatalog} presentation={lineReference.contractPresentation} courtCatalog={lineReference.courts} seeming={String(data.seeming ?? "")} court={String(data.court ?? "")} supplementalBenefitSources={supplementalBenefitSources} extraBenefits={objectList(data.extra_contract_benefits)} extraClauses={objectList(data.extra_contract_clauses)}/></>,
               otherTraits: <section><SheetHeading>{t("ui.otherTraits")}</SheetHeading><SeemingLore seeming={String(data.seeming ?? "")} seemingCatalog={seemingCatalog}/><KithLore data={data} reference={lineReference}/><GoblinDebtTrack value={goblinDebt} onChange={(value) => setState("goblin_debt", value)}/></section>,
               courtLore: <CourtLore data={data} merits={character.merits} courtCatalog={lineReference.courts}/>,
@@ -492,7 +495,7 @@ function ClaritySection({ maximum, damage, wyrd, seeming, seemingCatalog, onChan
       <Dialog open={open} onOpenChange={setOpen}><DialogContent className="experience-dialog clarity-breaking-point-dialog ctl-dialog"><DialogHeader><DialogTitle>{t("ui.clarityBreakingPoints")}</DialogTitle><DialogDescription>{t("ui.clarityBreakingPointDescription")}</DialogDescription></DialogHeader><div className="clarity-breaking-point-form">
         <label>{t("ui.baselineSeverity")}<RuleSelect value={String(severity)} onChange={value=>setSeverity(Number(value))} options={CLARITY_BREAKING_POINT_TIERS.map(item=>({value:String(item.dice),label:t("ui.clarityDice",{p1:item.dice})}))}/></label>
         <section className="clarity-breaking-point-examples"><strong>{t("ui.examplesAtSeverity",{p1:severity})}</strong><ul>{tier.examples.map(key=><li key={key}>{t(`ui.${key}`)}</li>)}</ul></section>
-        {seemingData&&<section className="clarity-seeming-breaking-point"><strong>{t("ui.seemingBreakingPoint",{p1:seemingName(seemingCatalog,seeming,locale)})}</strong><p>{locale==="pt-BR"?seemingData.curse:seemingData.curseEn}</p></section>}
+        {seemingData&&<section className="clarity-seeming-breaking-point"><strong>{t("ui.seemingBreakingPoint",{p1:seemingName(seemingCatalog,seeming,locale)})}</strong><p>{"homebrew" in seemingData || locale==="pt-BR"?seemingData.curse:seemingData.curseEn}</p></section>}
         <fieldset className="clarity-breaking-point-modifiers"><legend>{t("ui.attackModifiers")}</legend>{CLARITY_ATTACK_MODIFIERS.map(([key,value])=><label key={key}><input type="checkbox" checked={modifiers.includes(key)} onChange={event=>setModifiers(selected=>event.target.checked?[...selected,key]:selected.filter(item=>item!==key))}/><span>{t(`ui.${key}`)} <strong>{value>0?`+${value}`:value}</strong></span></label>)}</fieldset>
         <div className="clarity-breaking-point-total"><strong>{t("ui.clarityAttackPool")}: {pool<=0?t("ui.chanceDie"):t("ui.diceCount",{p1:pool})}</strong><small>{t("ui.clarityDamageReminder",{p1:wyrd})}</small></div>
       </div><DialogFooter><Button type="button" size="sm" className="catalog-dialog-done" onClick={()=>setOpen(false)}>{t("ui.close")}</Button></DialogFooter></DialogContent></Dialog>
@@ -694,8 +697,8 @@ function SeemingLore({ seeming, seemingCatalog }: {
         Wizened: 32,
     } as Record<string, number>)[seeming];
     return (<>
-      <LorePanel title={t("ui.blessingOf", { name: seemingName(seemingCatalog, seeming, locale) })} text={locale === "en-US" ? definition.blessingEn : definition.blessing} source={"source" in definition ? `${definition.source}${definition.page ? ` · p. ${definition.page}` : ""}` : `Changeling the Lost · p. ${page}`}/>
-      <LorePanel title={t("ui.curseOf", { name: seemingName(seemingCatalog, seeming, locale) })} text={locale === "en-US" ? definition.curseEn : definition.curse} source={"source" in definition ? `${definition.source}${definition.page ? ` · p. ${definition.page}` : ""}` : `Changeling the Lost · p. ${page}`}/>
+      <LorePanel title={t("ui.blessingOf", { name: seemingName(seemingCatalog, seeming, locale) })} text={"homebrew" in definition || locale !== "en-US" ? definition.blessing : definition.blessingEn} source={"source" in definition ? `${definition.source}${definition.page ? ` · p. ${definition.page}` : ""}` : `Changeling the Lost · p. ${page}`}/>
+      <LorePanel title={t("ui.curseOf", { name: seemingName(seemingCatalog, seeming, locale) })} text={"homebrew" in definition || locale !== "en-US" ? definition.curse : definition.curseEn} source={"source" in definition ? `${definition.source}${definition.page ? ` · p. ${definition.page}` : ""}` : `Changeling the Lost · p. ${page}`}/>
     </>);
 }
 function KithLore({ data, reference }: {

@@ -43,6 +43,8 @@ export function MainSheet({
   stability,
   derived,
   armorId,
+  shieldId,
+  helmet,
   experience,
   specificPowersTitle,
   lineSections,
@@ -64,6 +66,8 @@ export function MainSheet({
   stability: ReactNode;
   derived: Record<string, unknown>;
   armorId?: unknown;
+  shieldId?: unknown;
+  helmet?: unknown;
   experience: ReactNode;
   specificPowersTitle?: ReactNode;
   lineSections?: ReactNode;
@@ -71,7 +75,7 @@ export function MainSheet({
   className?: string;
 }) {
   const { t } = useLanguage();
-  const traits = derivedTraitsWithArmor(derived, armorId);
+  const traits = derivedTraitsWithArmor(derived, armorId, shieldId, helmet);
   const derivedRows: Array<[string, unknown]> = [
     [t("ui.size"), traits.Size],
     [t("ui.speed"), traits.Speed],
