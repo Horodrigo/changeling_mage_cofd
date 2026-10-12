@@ -18,14 +18,14 @@ type ContractCategory = "Regalia" | "Court" | "Independent" | "Goblin";
 const SEEMINGS: SeemingKey[] = ["Beast", "Darkling", "Elemental", "Fairest", "Grimm", "Ogre", "Wizened"];
 
 const emptyContract = (): ContractDefinition => ({
-  id: contractHomebrewId(), name: "", originalName: "", type: "Comum", categoryKind: "Regalia", regalia: REGALIA[0],
+  id: contractHomebrewId(), name: "", originalName: "", type: "Common", categoryKind: "Regalia", regalia: REGALIA[0],
   description: "", hasRoll: false, dicePool: "None", cost: "", action: "Instant", duration: "One scene", loophole: "",
   sourceId: CONTRACT_HOMEBREW_SOURCE_ID, source: CONTRACT_HOMEBREW_SOURCE, page: 0, homebrew: true,
 });
 
 const categoryFor = (item: ContractDefinition): ContractCategory => item.goblin || item.regalia === "Goblin"
   ? "Goblin"
-  : item.categoryKind === "Corte" ? "Court" : item.categoryKind === "Independente" ? "Independent" : "Regalia";
+  : item.categoryKind === "Court" ? "Court" : item.categoryKind === "Independent" ? "Independent" : "Regalia";
 
 export function ContractHomebrewEditor({ open, onOpenChange, initial, courts, onSave }: {
   open: boolean;
@@ -43,11 +43,11 @@ export function ContractHomebrewEditor({ open, onOpenChange, initial, courts, on
   const category = categoryFor(value);
   const set = (key: keyof ContractDefinition, next: unknown) => setValue((current) => ({ ...current, [key]: next }));
   const chooseCategory = (next: ContractCategory) => setValue((current) => {
-    if (next === "Goblin") return { ...current, type: "Comum", categoryKind: "Independente", regalia: "Goblin", goblin: true, courtIds: undefined };
-    if (next === "Independent") return { ...current, categoryKind: "Independente", regalia: "Independent", goblin: undefined, courtIds: undefined };
+    if (next === "Goblin") return { ...current, type: "Common", categoryKind: "Independent", regalia: "Goblin", goblin: true, courtIds: undefined };
+    if (next === "Independent") return { ...current, categoryKind: "Independent", regalia: "Independent", goblin: undefined, courtIds: undefined };
     if (next === "Court") {
       const court = courts[0];
-      return { ...current, categoryKind: "Corte", regalia: court?.name ?? "Court", goblin: undefined, courtIds: court ? [court.id] : [] };
+      return { ...current, categoryKind: "Court", regalia: court?.name ?? "Court", goblin: undefined, courtIds: court ? [court.id] : [] };
     }
     return { ...current, categoryKind: "Regalia", regalia: regalia.includes(current.regalia) ? current.regalia : REGALIA[0], goblin: undefined, courtIds: undefined };
   });
@@ -72,7 +72,7 @@ export function ContractHomebrewEditor({ open, onOpenChange, initial, courts, on
         <Section title={t("ui.identityAndAccess")}>
           <Field label={t("ui.requiredName")}><Input value={value.name} onChange={(event) => set("name", event.target.value)}/></Field>
           <Field label={t("ui.requiredCategory")}><Select value={category} onValueChange={(next) => chooseCategory(next as ContractCategory)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="Regalia">{t("ui.regalia")}</SelectItem><SelectItem value="Court">{t("ui.court")}</SelectItem><SelectItem value="Independent">{t("ui.independent")}</SelectItem><SelectItem value="Goblin">{t("ui.goblin")}</SelectItem></SelectContent></Select></Field>
-          {category !== "Goblin" && <Field label={t("ui.requiredTier")}><Select value={value.type} onValueChange={(next) => set("type", next)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="Comum">{t("ui.common")}</SelectItem><SelectItem value="Real">{t("ui.royal")}</SelectItem></SelectContent></Select></Field>}
+          {category !== "Goblin" && <Field label={t("ui.requiredTier")}><Select value={value.type} onValueChange={(next) => set("type", next)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectItem value="Common">{t("ui.common")}</SelectItem><SelectItem value="Royal">{t("ui.royal")}</SelectItem></SelectContent></Select></Field>}
           {category === "Regalia" && <Field label={`${t("ui.regalia")} *`}><Select value={value.regalia} onValueChange={(next) => set("regalia", next)}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{regalia.map((item) => <SelectItem key={item} value={item}>{changelingRegaliaName(item, locale, catalogHomebrews)}</SelectItem>)}</SelectContent></Select></Field>}
           {category === "Court" && <Field label={t("ui.requiredCourt")}><Select value={value.courtIds?.[0]} onValueChange={chooseCourt}><SelectTrigger><SelectValue placeholder={t("ui.chooseCourt")}/></SelectTrigger><SelectContent>{courts.map((court) => <SelectItem key={court.id} value={court.id}>{locale === "pt-BR" ? court.translatedName : court.name}</SelectItem>)}</SelectContent></Select></Field>}
           <Field wide label={t("ui.requiredDescription")}><Textarea value={value.description} onChange={(event) => set("description", event.target.value)}/></Field>

@@ -1,3 +1,4 @@
+import { canonicalContractClassification } from "./contract-identities";
 import type { ContractDefinition, SeemingKey } from "./contract-types";
 import { getDeviceValue, setDeviceValue, stageDeviceValue } from "@/lib/device-storage";
 import { HOMEBREW_EVENT } from "@/lib/homebrew";
@@ -13,15 +14,15 @@ const text = (value: unknown) => String(value ?? "").trim();
 const optional = (value: unknown) => text(value) || undefined;
 
 export function normalizeContractHomebrew(value: unknown): ContractDefinition | null {
-  const item = record(value), id = text(item.id), name = text(item.name), description = text(item.description);
+  const item = record(canonicalContractClassification(value)), id = text(item.id), name = text(item.name), description = text(item.description);
   const rawType = text(item.type), rawKind = text(item.categoryKind), rawRegalia = text(item.regalia);
-  if (!id.startsWith("homebrew:contract:") || !name || !description || !["Comum", "Real"].includes(rawType)) return null;
+  if (!id.startsWith("homebrew:contract:") || !name || !description || !["Common", "Royal"].includes(rawType)) return null;
 
   const goblin = item.goblin === true || rawRegalia === "Goblin";
-  const categoryKind: ContractDefinition["categoryKind"] = goblin ? "Independente" : ["Corte", "Independente", "Regalia"].includes(rawKind) ? rawKind as ContractDefinition["categoryKind"] : undefined;
+  const categoryKind: ContractDefinition["categoryKind"] = goblin ? "Independent" : ["Court", "Independent", "Regalia"].includes(rawKind) ? rawKind as ContractDefinition["categoryKind"] : undefined;
   const courtIds = [...new Set((Array.isArray(item.courtIds) ? item.courtIds : []).map(text).filter(Boolean))];
   if (!categoryKind) return null;
-  if (categoryKind === "Corte" && !courtIds.length) return null;
+  if (categoryKind === "Court" && !courtIds.length) return null;
   if (categoryKind === "Regalia" && !rawRegalia) return null;
 
   const hasRoll = item.hasRoll === true;
@@ -35,9 +36,9 @@ export function normalizeContractHomebrew(value: unknown): ContractDefinition | 
 
   const seemingInput = record(item.seemingBenefits);
   const seemingBenefits = Object.fromEntries(SEEMINGS.map((key) => [key, text(seemingInput[key])]).filter(([, entry]) => entry)) as Partial<Record<SeemingKey, string>>;
-  const regalia = goblin ? "Goblin" : categoryKind === "Independente" ? "Independent" : rawRegalia;
+  const regalia = goblin ? "Goblin" : categoryKind === "Independent" ? "Independent" : rawRegalia;
   return {
-    id, name, originalName: name, type: goblin ? "Comum" : rawType as "Comum" | "Real", categoryKind, regalia,
+    id, name, originalName: name, type: goblin ? "Common" : rawType as "Common" | "Royal", categoryKind, regalia,
     description, summary: optional(item.summary), effect, hasRoll, dicePool,
     cost, action, duration, loophole, success, exceptionalSuccess, failure, dramaticFailure, goblinDebt: optional(item.goblinDebt),
     ...(courtIds.length ? { courtIds } : {}), ...(Object.keys(seemingBenefits).length ? { seemingBenefits } : {}),

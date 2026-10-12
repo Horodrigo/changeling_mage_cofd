@@ -120,7 +120,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
     if (favoredAttribute && !favoredKey.split("|").includes(favoredAttribute)) setFavoredAttribute("");
   }, [favoredAttribute, setFavoredAttribute, favoredKey]);
   const secondRegaliaRoyalCount = props.contractCatalog.filter(
-    (contract) => contract.type === "Real" && contract.regalia === props.secondRegalia,
+    (contract) => contract.type === "Royal" && contract.regalia === props.secondRegalia,
   ).length;
   return (
     <div className="builder-section">
@@ -520,7 +520,7 @@ function ContractSelector({
         : systemTerm(category, locale);
   const categoryOptions = alphabetical([...new Set(catalog.flatMap(contractCategoryKeys))], categoryLabel, locale);
   const availableContracts = alphabetical(catalog, contractName,locale)
-    .sort((left, right) => Number(left.type === "Real") - Number(right.type === "Real"))
+    .sort((left, right) => Number(left.type === "Royal") - Number(right.type === "Royal"))
     .filter((contract) =>
       canSelectContract(
         contract,
@@ -529,9 +529,9 @@ function ContractSelector({
         courtCatalog,
         merits,
       ) &&
-      (typeFilter === "all" || (typeFilter === "common" ? contract.type === "Comum" : contract.type === "Real")) &&
+      (typeFilter === "all" || (typeFilter === "common" ? contract.type === "Common" : contract.type === "Royal")) &&
       (categoryFilter === "all" || contractCategoryKeys(contract).includes(categoryFilter)) &&
-      (!((contract.type === "Comum" ? commonFull : royalFull)) || contracts.some((item) => item.id === contract.id || item.originalName === contract.originalName)),
+      (!((contract.type === "Common" ? commonFull : royalFull)) || contracts.some((item) => item.id === contract.id || item.originalName === contract.originalName)),
     );
   const groups = alphabetical([...new Set(availableContracts.map(contractCategoryKey))], categoryLabel, locale)
     .map((category) => ({
@@ -555,8 +555,8 @@ function ContractSelector({
       )
     )
       return;
-    const start = contract.type === "Comum" ? 0 : 4;
-    const end = contract.type === "Comum" ? 4 : 6;
+    const start = contract.type === "Common" ? 0 : 4;
+    const end = contract.type === "Common" ? 4 : 6;
     const slot = contracts.findIndex(
       (item, index) => index >= start && index < end && !item.name,
     );
@@ -567,7 +567,7 @@ function ContractSelector({
   }
   function removeContract(index: number) {
     const next = [...contracts];
-    next[index] = emptyContract(index < 4 ? "Comum" : "Real");
+    next[index] = emptyContract(index < 4 ? "Common" : "Royal");
     setContracts(next);
   }
   function toggleContract(contract: ContractDefinition) {
@@ -617,9 +617,9 @@ function ContractSelector({
                   const displayOptions = contractDisplayOptions(presented, locale);
                   const outcomeSections = contractOutcomeSections(presented, locale);
                   const selected = contracts.some((item) => item.id === contract.id || item.originalName === contract.originalName);
-                  const full = contract.type === "Comum" ? commonFull : royalFull;
+                  const full = contract.type === "Common" ? commonFull : royalFull;
                   const benefit = presented.seemingBenefits?.[seeming as keyof typeof presented.seemingBenefits];
-                  return <SelectableCatalogCard className="merit-option" key={contract.id} selected={selected} disabled={!selected && full} label={contractName(contract)} onToggle={() => toggleContract(contract)}><div><strong>{contractName(contract)}</strong><small>{contract.goblin ? "Goblin" : contract.type === "Comum" ? t("ui.common") : t("ui.royal")} · {contract.source} · p. {contract.page || "—"}</small>{summary && <p className="rule-detail"><strong>{t("ui.summary")}:</strong> {summary}</p>}{contractHasInvocationRoll(presented) === true && <p className="rule-detail"><strong>{t("ui.dicePool")}:</strong> {presented.dicePool ?? t("ui.notListed")}</p>}{presented.cost && <p className="rule-detail"><strong>{t("ui.cost")}:</strong> {presented.cost}</p>}{displayOptions.length > 0 && <p className="rule-detail"><strong>{t("ui.options")}:</strong> {displayOptions.join(" · ")}</p>}{outcomeSections[0]?.text && <p className="rule-detail">{outcomeSections[0].text}</p>}{benefit && <p className="rule-detail"><strong>{t("ui.benefit")}:</strong> {benefit}</p>}</div></SelectableCatalogCard>;
+                  return <SelectableCatalogCard className="merit-option" key={contract.id} selected={selected} disabled={!selected && full} label={contractName(contract)} onToggle={() => toggleContract(contract)}><div><strong>{contractName(contract)}</strong><small>{contract.goblin ? "Goblin" : contract.type === "Common" ? t("ui.common") : t("ui.royal")} · {contract.source} · p. {contract.page || "—"}</small>{summary && <p className="rule-detail"><strong>{t("ui.summary")}:</strong> {summary}</p>}{contractHasInvocationRoll(presented) === true && <p className="rule-detail"><strong>{t("ui.dicePool")}:</strong> {presented.dicePool ?? t("ui.notListed")}</p>}{presented.cost && <p className="rule-detail"><strong>{t("ui.cost")}:</strong> {presented.cost}</p>}{displayOptions.length > 0 && <p className="rule-detail"><strong>{t("ui.options")}:</strong> {displayOptions.join(" · ")}</p>}{outcomeSections[0]?.text && <p className="rule-detail">{outcomeSections[0].text}</p>}{benefit && <p className="rule-detail"><strong>{t("ui.benefit")}:</strong> {benefit}</p>}</div></SelectableCatalogCard>;
                 })}
               </div>
             </section>
@@ -684,7 +684,7 @@ function ContractSelector({
                         item.originalName === contract.originalName,
                     );
                     const full =
-                      contract.type === "Comum"
+                      contract.type === "Common"
                         ? contracts.slice(0, 4).every((item) => item.name)
                         : contracts.slice(4).every((item) => item.name);
                     const benefit =
@@ -703,7 +703,7 @@ function ContractSelector({
                         <div>
                           <strong>{contractName(contract)}</strong>
                           <small>
-                            {contract.goblin ? "Goblin" : contract.type === "Comum" ? t("ui.common") : t("ui.royal")}{" "}
+                            {contract.goblin ? "Goblin" : contract.type === "Common" ? t("ui.common") : t("ui.royal")}{" "}
                             · {contract.source} · p. {contract.page || "—"}
                           </small>
                           {summary && <p className="rule-detail">
@@ -796,6 +796,6 @@ function favoredChoices(type: string) {
       : ["Resolve", "Stamina", "Composure"];
 }
 
-function emptyContract(type: "Comum" | "Real"): ContractSelection {
+function emptyContract(type: "Common" | "Royal"): ContractSelection {
   return { id: "", name: "", originalName: "", type, regalia: "", description: "", sourceId: "", source: "", page: 0 };
 }

@@ -22,5 +22,5 @@ export function changelingContractExperienceCost(
 ): number {
   if (contract.goblin) return 2;
   const favored = changelingFavoredRegalia(data).includes(canonicalRegalia(contract.regalia));
-  return contract.type === "Comum" ? (favored ? 2 : 3) : favored ? 3 : 4;
+  return contract.type === "Common" ? (favored ? 2 : 3) : favored ? 3 : 4;
 }

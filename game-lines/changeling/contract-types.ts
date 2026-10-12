@@ -4,8 +4,8 @@ export interface ContractDefinition {
   id: string;
   name: string;
   originalName: string;
-  type: "Comum" | "Real";
-  categoryKind?: "Corte" | "Independente" | "Regalia";
+  type: "Common" | "Royal";
+  categoryKind?: "Court" | "Independent" | "Regalia";
   regalia: string;
   description: string;
   summary?: string;

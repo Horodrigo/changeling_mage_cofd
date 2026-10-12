@@ -247,7 +247,7 @@ test("CtL creation Court reconciliation excludes XP from budget, preserves insta
 });
 
 test("CtL per-Court Contract access uses canonical Mantle/Goodwill IDs, not display names", () => {
-  const contract = { categoryKind: "Corte", type: "Real", regalia: "autumn", courtIds: ["autumn"] };
+  const contract = { categoryKind: "Court", type: "Royal", regalia: "autumn", courtIds: ["autumn"] };
   const official = { definitionId: "ctl-2ed:mantle", name: "Manto", dots: 3, configuration: { court: "autumn" } };
   assert.equal(canSelectContract(contract, [], "autumn", [], [official]), true);
   for (const definitionId of ["homebrew:mantle", "missing:mantle"]) {

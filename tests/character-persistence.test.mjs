@@ -221,3 +221,20 @@ test("current sheets apply only the selected line's merit synchronization",async
   assert.equal(mage.merits.some((merit)=>merit.name==="Mantle"),false);
   assert.equal(changeling.merits.some((merit)=>merit.name==="Mantle"&&merit.grantedBy==="Corte"),true);
 });
+
+test("legacy Contract classifications become English without translating authored fields or rewriting receipts", async () => {
+  const { changelingRules } = await vite.ssrLoadModule("/game-lines/changeling/rules.ts");
+  const { canonicalContractClassification } = await vite.ssrLoadModule("/game-lines/changeling/contract-identities.ts");
+  const current = sheet("CtL");
+  const contract = { id: "homebrew:contract:mine", name: "Real", description: "Corte", type: "Real", categoryKind: "Corte", options: ["Comum"], regalia: "Mirror" };
+  current.line_data = { ...current.line_data, contracts: [contract], learned_contracts: [{ ...contract, id: "another", type: "Comum", categoryKind: "Independente" }] };
+  current.current_state.experience_history = [{ id: "receipt", experience: -4, description: "Texto autoral", undo: { kind: "contract", id: contract.id } }];
+  const before = structuredClone(current), result = changelingRules.normalizeCharacter(current);
+  assert.deepEqual(result.line_data.contracts[0], { ...contract, type: "Royal", categoryKind: "Court" });
+  assert.equal(result.line_data.learned_contracts[0].type, "Common");
+  assert.equal(result.line_data.learned_contracts[0].categoryKind, "Independent");
+  assert.deepEqual(result.current_state.experience_history, current.current_state.experience_history);
+  assert.deepEqual(changelingRules.normalizeCharacter(JSON.parse(JSON.stringify(result))), result);
+  assert.deepEqual(current, before);
+  for (const value of [null, "Autoral", 4, [], { type: "Unknown", categoryKind: "Unknown", name: "Comum" }]) assert.deepEqual(canonicalContractClassification(value), value);
+});

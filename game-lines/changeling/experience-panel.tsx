@@ -807,8 +807,8 @@ export function ExperiencePanel({
                         name: presented.name,
                         category,
                         categories: homebrewCategoryKeys(category, item.sourceId),
-                        secondaryCategory: item.type==="Comum"?t("ui.common"):t("ui.royal"),
-                        sortPriority: Number(item.type === "Real"),
+                        secondaryCategory: item.type==="Common"?t("ui.common"):t("ui.royal"),
+                        sortPriority: Number(item.type === "Royal"),
                         description: summary ? `${t("ui.summary")}: ${summary}` : "",
                         details: [
                           ...(contractHasInvocationRoll(presented) === true ? [{ label: t("ui.dicePool"), value: presented.dicePool ?? t("ui.notListed") }] : []),
@@ -824,7 +824,7 @@ export function ExperiencePanel({
                           ...(item.goblinDebt ? [{ label: t("ui.goblinDebt"), value: item.goblinDebt }] : []),
                           ...(benefit ? [{ label: `${t("ui.benefitFor")} ${seemingDisplayName(String(character.line_data.seeming ?? ""), locale)}`, value: benefit }] : []),
                         ],
-                        meta: `${item.type==="Comum"?t("ui.common"):t("ui.royal")} · ${systemTerm(item.regalia,locale)} · ${item.source} · p. ${item.page || "—"}`,
+                        meta: `${item.type==="Common"?t("ui.common"):t("ui.royal")} · ${systemTerm(item.regalia,locale)} · ${item.source} · p. ${item.page || "—"}`,
                       };
                     })}
                     selectedId={selectedContract?.id ?? ""}

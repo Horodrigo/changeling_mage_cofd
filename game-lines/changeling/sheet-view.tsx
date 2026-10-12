@@ -672,7 +672,7 @@ function ContractPowerList({ contracts, catalog, presentation, courtCatalog, see
             return (<details className="rule-power-card" key={`${definition.id}-${index}`}>
               <summary className="rule-power-summary">
                 <strong>{locale === "en-US" ? definition.originalName ?? definition.name : definition.name}</strong>
-                <Badge variant={definition.goblin ? "default" : "outline"}>{definition.goblin ? "Goblin" : definition.type === "Comum" ? t("ui.common") : t("ui.royal")}</Badge>
+                <Badge variant={definition.goblin ? "default" : "outline"}>{definition.goblin ? "Goblin" : definition.type === "Common" ? t("ui.common") : t("ui.royal")}</Badge>
                 <small>{systemTerm(definition.regalia, locale)} · {definition.source}{definition.page ? ` · p. ${definition.page}` : ""}</small>
               </summary>
               <div className="rule-power-details">{details}</div>

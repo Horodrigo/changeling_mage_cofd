@@ -62,7 +62,7 @@ function ChangelingHomebrew({ catalogs }: GameLineHomebrewProps) {
         ...detail(t("ui.loophole"), presented.loophole), ...seemingBenefits, ...courtBenefits,
         ...detail(t("ui.goblinDebt"), presented.goblinDebt),
       ],
-      tier: item.type === "Comum" ? t("ui.commonContracts") : t("ui.royalContracts"), tierOrder: item.type === "Comum" ? 0 : 1, ...(item.homebrew ? { customContract: item } : {}),
+      tier: item.type === "Common" ? t("ui.commonContracts") : t("ui.royalContracts"), tierOrder: item.type === "Common" ? 0 : 1, ...(item.homebrew ? { customContract: item } : {}),
     });
   }
   for (const item of catalogs.get<MeritDefinition[]>("changeling-merits")) add({

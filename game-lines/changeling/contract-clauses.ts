@@ -8,7 +8,7 @@ export function availableForeignClauseCourtIds(
   purchased: ReadonlySet<string>,
 ) {
   const ownCourt = courtCanonicalId(currentCourt);
-  const threshold = contract.type === "Comum" ? 1 : 3;
+  const threshold = contract.type === "Common" ? 1 : 3;
   return Object.keys(contract.courtClauses ?? {}).filter((courtId) =>
     courtId !== ownCourt &&
     (goodwill.get(courtId) ?? 0) >= threshold &&

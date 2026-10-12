@@ -129,6 +129,8 @@ Keep independent lazy loaders for rules, Builder, Sheet, and catalog groups. Do 
 
 The registry may eagerly import lightweight registration objects. Registration modules must not statically import their heavy implementations.
 
+Changeling Contract classifications persist as `Common`/`Royal` and `Court`/`Independent`/`Regalia`; labels are localized only by the owning UI. `contract-identities.ts` bridges exact old PT enum values in schema-2 Contract selections and v1 player-created Homebrews. The owning normalization preserves all other fields, IDs and receipts; remove the bridge when these old records are unsupported.
+
 ## Catalog Architecture
 
 Static RPG content should remain data under `public/shared/data/**` for common/Core catalogs and `public/game-lines/<line>/data/**` for line-owned catalogs. Catalog infrastructure is generic and group-driven; each game-line registration declares the groups required by its Builder and Sheet surfaces. The versioned resource manifest lives at `public/shared/data/catalog-manifest.json`. Catalog entries also carry a build-maintained SHA-256 hash; `scripts/build-verified.mjs` compares each manifest URL during every build and increments only changed entries. Canonical line Merits belong to their own public line folder even when other lines can purchase them; the shared Merit discovery index does not transfer ownership.

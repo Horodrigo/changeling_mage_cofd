@@ -156,9 +156,9 @@ function contractPrintData(baseDefinition: ContractDefinition, character: Charac
   definition.detailTables?.forEach((table) => rows.push([table.title, <table className="ctl-print-detail-table" key={table.title}><thead><tr>{table.columns.map((column) => <th key={column}>{column}</th>)}</tr></thead><tbody>{table.rows.map((row, rowIndex) => <tr key={`${table.title}-${rowIndex}`}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>)}</tbody></table>]));
   if (definition.goblinDebt) rows.push([t("ui.goblinDebt"), definition.goblinDebt]);
   const name = locale === "en-US" ? definition.originalName ?? definition.name : definition.name;
-  const kind = definition.goblin ? "Goblin" : definition.type === "Comum" ? t("ui.common") : t("ui.royal");
+  const kind = definition.goblin ? "Goblin" : definition.type === "Common" ? t("ui.common") : t("ui.royal");
   const courtNames = definition.courtIds?.map((courtId) => courtName(courts, courtId, locale)).filter(Boolean).join(", ");
-  const access = definition.categoryKind === "Corte" ? definition.courtFamily || courtNames || systemTerm(definition.regalia, locale) : systemTerm(definition.regalia, locale);
+  const access = definition.categoryKind === "Court" ? definition.courtFamily || courtNames || systemTerm(definition.regalia, locale) : systemTerm(definition.regalia, locale);
   const roll = contractHasInvocationRoll(definition) === true && definition.dicePool?.trim() ? definition.dicePool : t("ui.none");
   const facts: Array<[string, ReactNode]> = [
     [`${t("ui.cost")}:`, definition.cost?.trim() || t("ui.none")],

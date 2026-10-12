@@ -48,7 +48,7 @@ test("player-created Merits preserve exact ratings and enforce only structured p
 test("player-created Changeling Contracts are normalized at storage boundary", async () => {
   const { mergeContractHomebrews, normalizeContractHomebrew } = await vite.ssrLoadModule("/game-lines/changeling/contract-homebrews.ts");
   const item = normalizeContractHomebrew({
-    id: "homebrew:contract:test", name: "Borrowed Moon", type: "Real", categoryKind: "Corte", regalia: "Moon Court", courtIds: ["moon"],
+    id: "homebrew:contract:test", name: "Borrowed Moon", type: "Royal", categoryKind: "Court", regalia: "Moon Court", courtIds: ["moon"],
     description: "Borrow the moonlight.", hasRoll: true, dicePool: "Presence + Occult + Mantle", cost: "●●", action: "Instant", duration: "One scene", loophole: "Sing to the moon.",
     success: "The moon answers.", exceptionalSuccess: "It answers completely.", failure: "Nothing happens.", dramaticFailure: "The moon takes offense.",
     seemingBenefits: { Darkling: "Hide in the borrowed light.", Beast: "" },
@@ -59,8 +59,8 @@ test("player-created Changeling Contracts are normalized at storage boundary", a
   assert.deepEqual(item.seemingBenefits, { Darkling: "Hide in the borrowed light." });
   assert.equal(mergeContractHomebrews([{ ...item, id: "official" }], [item]).length, 2);
 
-  const goblin = normalizeContractHomebrew({ ...item, id: "homebrew:contract:goblin", type: "Real", categoryKind: "Independente", regalia: "Goblin", goblin: true, courtIds: [] });
-  assert.equal(goblin.type, "Comum");
+  const goblin = normalizeContractHomebrew({ ...item, id: "homebrew:contract:goblin", type: "Royal", categoryKind: "Independent", regalia: "Goblin", goblin: true, courtIds: [] });
+  assert.equal(goblin.type, "Common");
   assert.equal(normalizeContractHomebrew({ id: "homebrew:contract:bad", name: "Bad" }), null);
 });
 
@@ -139,4 +139,16 @@ test("player-created Changeling catalog content accepts one authored language an
   assert.deepEqual(singleLanguageCourt.mantleBenefits, ["Same", "Same", "Three", "Four", "Five"]);
   assert.deepEqual(singleLanguageCourt.mantleBenefitsPt, singleLanguageCourt.mantleBenefits);
   assert.deepEqual(reference, { courts: [], kiths: [] });
+});
+
+test("legacy Homebrew Contract enum values import canonically while authored Portuguese survives", async () => {
+  const { normalizeContractHomebrew } = await vite.ssrLoadModule("/game-lines/changeling/contract-homebrews.ts");
+  const legacy = { id: "homebrew:contract:legacy", name: "Minha Corte Real", type: "Real", categoryKind: "Corte", regalia: "Moon Court", courtIds: ["moon"], description: "Descrição autoral", cost: "Meu custo", action: "Minha ação", duration: "Minha duração", loophole: "Minha brecha", effect: "Meu efeito" };
+  const before = structuredClone(legacy), next = normalizeContractHomebrew(legacy);
+  assert.ok(next);
+  assert.equal(next.type, "Royal"); assert.equal(next.categoryKind, "Court");
+  for (const key of ["id", "name", "description", "cost", "action", "duration", "loophole", "effect"]) assert.equal(next[key], legacy[key]);
+  assert.deepEqual(normalizeContractHomebrew(JSON.parse(JSON.stringify(next))), next);
+  assert.deepEqual(legacy, before);
+  assert.equal(normalizeContractHomebrew({ ...legacy, type: "Unknown" }), null);
 });

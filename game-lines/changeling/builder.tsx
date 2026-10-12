@@ -67,7 +67,7 @@ function normalizeCustomCourt(value: unknown): CustomCourtDefinition | null {
   return { name: String(item.name ?? ""), emotion: String(item.emotion ?? ""), mantleBenefits };
 }
 
-function emptyContract(type: "Comum" | "Real"): ContractSelection {
+function emptyContract(type: "Common" | "Royal"): ContractSelection {
   return { id: "", name: "", originalName: "", type, regalia: "", description: "", dicePool: "", sourceId: "", source: "", page: 0 };
 }
 
@@ -77,9 +77,9 @@ function readContracts(initial: CharacterSheet | null | undefined, catalog: read
     : [];
   return Array.from({ length: 6 }, (_, index) => {
     const raw = saved[index];
-    if (!raw) return emptyContract(index < 4 ? "Comum" : "Real");
+    if (!raw) return emptyContract(index < 4 ? "Common" : "Royal");
     const found = catalog.find((item) => item.id === String(raw.id ?? "") || item.name === String(raw.name ?? "") || item.originalName === String(raw.name ?? ""));
-    return found ? { ...found } : { ...emptyContract(index < 4 ? "Comum" : "Real"), name: String(raw.name ?? ""), originalName: String(raw.name ?? ""), regalia: translateRegalia(String(raw.regalia ?? "")) };
+    return found ? { ...found } : { ...emptyContract(index < 4 ? "Common" : "Royal"), name: String(raw.name ?? ""), originalName: String(raw.name ?? ""), regalia: translateRegalia(String(raw.regalia ?? "")) };
   });
 }
 
@@ -197,8 +197,8 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
     if (!customKith && kithCreationChoice(selectedKith?.id) && !kithChoice.trim()) add(3, "kith-choice", t("ui.kithBlessingChoice"));
     const favoredRegalia = changelingFavoredRegalia({ primary_regalia: seemingCatalog[seeming]?.regalia, second_regalia: secondRegalia, kith, kith_custom: customKith });
     if (
-      contracts.slice(0, 4).filter((item) => item.name && item.type === "Comum" && canSelectContract(item, favoredRegalia, court, reference.courts, meritContext.merits)).length !== 4 ||
-      contracts.slice(4, 6).filter((item) => item.name && item.type === "Real" && canSelectContract(item, favoredRegalia, court, reference.courts, meritContext.merits)).length !== 2
+      contracts.slice(0, 4).filter((item) => item.name && item.type === "Common" && canSelectContract(item, favoredRegalia, court, reference.courts, meritContext.merits)).length !== 4 ||
+      contracts.slice(4, 6).filter((item) => item.name && item.type === "Royal" && canSelectContract(item, favoredRegalia, court, reference.courts, meritContext.merits)).length !== 2
     ) add(3, "contracts", t("ui.fourCommonContractsAndTwoRoyalContractsAllowed"));
     return result;
   })();

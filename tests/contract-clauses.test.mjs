@@ -8,8 +8,8 @@ const vite = await createServer({ appType:"custom", configFile:false, root, reso
 after(async () => vite.close());
 const clauses = await vite.ssrLoadModule("/game-lines/changeling/contract-clauses.ts");
 
-const common = { id:"common", type:"Comum", courtClauses:{sun:"S",moon:"M"} };
-const royal = { id:"royal", type:"Real", courtClauses:{sun:"S",moon:"M"} };
+const common = { id:"common", type:"Common", courtClauses:{sun:"S",moon:"M"} };
+const royal = { id:"royal", type:"Royal", courtClauses:{sun:"S",moon:"M"} };
 
 test("Court Goodwill 1 libera Clause Common estrangeira, mas não Royal", () => {
   const goodwill = new Map([["moon", 1]]);

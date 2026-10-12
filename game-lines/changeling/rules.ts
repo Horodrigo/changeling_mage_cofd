@@ -1,3 +1,4 @@
+import { canonicalContractClassification } from "./contract-identities";
 import { canonicalTraitHistory } from "@/lib/core/character/trait-identities";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
@@ -52,6 +53,7 @@ export const changelingRules: GameLineRulesModule = {
           ? { ...item, definitionId: "h-seemings:power-behind-the-throne" } : item),
       line_data: {
         ...character.line_data,
+        ...Object.fromEntries(["contracts", "learned_contracts"].filter(key => Array.isArray(character.line_data[key])).map(key => [key, (character.line_data[key] as unknown[]).map(canonicalContractClassification)])),
         frailties: normalizeChangelingFrailties(character.line_data.frailties, wyrd),
       },
     };

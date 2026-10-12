@@ -12,20 +12,20 @@ function courtCanonicalId(courts: readonly CourtDefinition[], value: unknown) {
 }
 
 export function canSelectContract(
-  contract: { type: "Comum" | "Real"; regalia: string; categoryKind?: string; courtClauses?: Record<string, string>; courtIds?: string[] },
+  contract: { type: "Common" | "Royal"; regalia: string; categoryKind?: string; courtClauses?: Record<string, string>; courtIds?: string[] },
   favoredRegalia: readonly string[],
   court: string,
   courts: readonly CourtDefinition[],
   merits: readonly Pick<MeritSelection, "name" | "definitionId" | "sourceId" | "dots" | "configuration">[] = [],
 ) {
   const selectedCourt = courtCanonicalId(courts, court).toLocaleLowerCase();
-  const courtContract = contract.categoryKind === "Corte" || new Set([
+  const courtContract = contract.categoryKind === "Court" || new Set([
     "Primavera", "Verão", "Outono", "Inverno", "Cortes Adicionais",
     ...courts.map((definition) => definition.translatedName),
   ]).has(contract.regalia);
   if (courtContract) {
-    const mantleRequired = contract.type === "Comum" ? 1 : 3;
-    const goodwillRequired = contract.type === "Comum" ? 2 : 5;
+    const mantleRequired = contract.type === "Common" ? 1 : 3;
+    const goodwillRequired = contract.type === "Common" ? 2 : 5;
     const qualifies = (merit: Pick<MeritSelection, "name" | "definitionId" | "sourceId" | "dots">) =>
       changelingMeritId(merit) === "ctl-2ed:mantle" && merit.dots >= mantleRequired ||
       changelingMeritId(merit) === "ctl-2ed:court-goodwill" && merit.dots >= goodwillRequired;
@@ -37,14 +37,14 @@ export function canSelectContract(
     return (targetCourts.length ? targetCourts : [contract.regalia])
       .some((target) => hasAccess(courtCanonicalId(courts, target).toLocaleLowerCase()));
   }
-  if (contract.categoryKind === "Independente" || ["Independent", "Independente"].includes(contract.regalia)) return true;
-  if (contract.type === "Real") return favoredRegalia.includes(contract.regalia);
+  if (contract.categoryKind === "Independent" || ["Independent", "Independente"].includes(contract.regalia)) return true;
+  if (contract.type === "Royal") return favoredRegalia.includes(contract.regalia);
   return true;
 }
 
 export function contractCategoryKey(contract: { goblin?: boolean; regalia: string; categoryKind?: string; courtIds?: string[]; courtClauses?: Record<string, string> }) {
   if (contract.goblin || contract.regalia === "Goblin") return "goblin";
-  if (contract.categoryKind === "Corte" || contract.regalia === "All" || contract.courtIds?.length || contract.courtClauses) return "court";
-  if (contract.categoryKind === "Independente" || ["Independent", "Independente"].includes(contract.regalia)) return "independent";
+  if (contract.categoryKind === "Court" || contract.regalia === "All" || contract.courtIds?.length || contract.courtClauses) return "court";
+  if (contract.categoryKind === "Independent" || ["Independent", "Independente"].includes(contract.regalia)) return "independent";
   return contract.regalia;
 }

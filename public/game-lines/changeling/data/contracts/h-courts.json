@@ -1,6 +1,6 @@
 [
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Circadian",
@@ -9,7 +9,7 @@
     "id": "h-courts:circadian:frost-fire-glance",
     "name": "Frost-Fire Glance",
     "originalName": "Frost-Fire Glance",
-    "type": "Comum",
+    "type": "Common",
     "page": 103,
     "summary": "Make a small visible object dangerously hot or cold.",
     "description": "Make a small visible object dangerously hot or cold.",
@@ -26,7 +26,7 @@
     "loophole": "The object belongs to the changeling."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Circadian",
@@ -35,7 +35,7 @@
     "id": "h-courts:circadian:horizon-step",
     "name": "Horizon Step",
     "originalName": "Horizon Step",
-    "type": "Comum",
+    "type": "Common",
     "page": 103,
     "summary": "Create a simple bridge or ladder from sunlight or moonlight.",
     "description": "Create a simple bridge or ladder from sunlight or moonlight.",
@@ -52,7 +52,7 @@
     "loophole": "The changeling is wearing suspenders."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Circadian",
@@ -61,7 +61,7 @@
     "id": "h-courts:circadian:secrets-and-lies",
     "name": "Secrets and Lies",
     "originalName": "Secrets and Lies",
-    "type": "Comum",
+    "type": "Common",
     "page": 103,
     "summary": "Discover a secret or deception guarded by the target.",
     "description": "Discover a secret or deception guarded by the target.",
@@ -81,7 +81,7 @@
     "loophole": "The changeling committed a crime within the last 24 hours."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Circadian",
@@ -90,7 +90,7 @@
     "id": "h-courts:circadian:shimmering-mirage",
     "name": "Shimmering Mirage",
     "originalName": "Shimmering Mirage",
-    "type": "Comum",
+    "type": "Common",
     "page": 104,
     "summary": "Surround someone with dazzling light or a moonlit echo that makes attacks difficult.",
     "description": "Surround someone with dazzling light or a moonlit echo that makes attacks difficult.",
@@ -107,7 +107,7 @@
     "loophole": "The changeling looks directly at the sun or moon while invoking the Contract."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Circadian",
@@ -116,7 +116,7 @@
     "id": "h-courts:circadian:twin-beacons",
     "name": "Twin Beacons",
     "originalName": "Twin Beacons",
-    "type": "Comum",
+    "type": "Common",
     "page": 104,
     "summary": "Illuminate the way ahead while obscuring the trail behind.",
     "description": "Illuminate the way ahead while obscuring the trail behind.",
@@ -133,7 +133,7 @@
     "loophole": "The changeling carries a lantern."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Circadian",
@@ -142,7 +142,7 @@
     "id": "h-courts:circadian:celestial-summons",
     "name": "Celestial Summons",
     "originalName": "Celestial Summons",
-    "type": "Real",
+    "type": "Royal",
     "page": 104,
     "summary": "Compel a target in the same freehold or city to make their way to the changeling.",
     "description": "Compel a target in the same freehold or city to make their way to the changeling.",
@@ -162,7 +162,7 @@
     "loophole": "The changeling has some form of authority over the target."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Circadian",
@@ -171,7 +171,7 @@
     "id": "h-courts:circadian:climate-change",
     "name": "Climate Change",
     "originalName": "Climate Change",
-    "type": "Real",
+    "type": "Royal",
     "page": 105,
     "summary": "Bring extreme heat or cold to a wide surrounding area.",
     "description": "Bring extreme heat or cold to a wide surrounding area.",
@@ -191,7 +191,7 @@
     "loophole": "The real environmental condition affected the area within the last month."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Circadian",
@@ -200,7 +200,7 @@
     "id": "h-courts:circadian:celestial-might",
     "name": "Celestial Might",
     "originalName": "Celestial Might",
-    "type": "Real",
+    "type": "Royal",
     "page": 105,
     "summary": "Channel sunlight or moonlight into a weapon so it can inflict aggravated damage.",
     "description": "Channel sunlight or moonlight into a weapon so it can inflict aggravated damage.",
@@ -220,7 +220,7 @@
     "loophole": "The weapon bears a permanent image of the appropriate sun or moon."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Circadian",
@@ -229,7 +229,7 @@
     "id": "h-courts:circadian:celestial-shield",
     "name": "Celestial Shield",
     "originalName": "Celestial Shield",
-    "type": "Real",
+    "type": "Royal",
     "page": 105,
     "summary": "Shape sunlight or moonlight into a handheld shield or immobile barricade.",
     "description": "Shape sunlight or moonlight into a handheld shield or immobile barricade.",
@@ -246,7 +246,7 @@
     "loophole": "The changeling uses the shield to protect another person under her care or authority."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Circadian",
@@ -255,7 +255,7 @@
     "id": "h-courts:circadian:vigil-of-silver-and-gold",
     "name": "Vigil of Silver and Gold",
     "originalName": "Vigil of Silver and Gold",
-    "type": "Real",
+    "type": "Royal",
     "page": 105,
     "summary": "Ward an owned or responsible area and sense everyone crossing its boundary.",
     "description": "Ward an owned or responsible area and sense everyone crossing its boundary.",
@@ -272,7 +272,7 @@
     "loophole": "The changeling owns land or a building within the protected area."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Undercourt",
@@ -281,7 +281,7 @@
     "id": "h-courts:undercourt:goodnight-moon",
     "name": "Goodnight Moon",
     "originalName": "Goodnight Moon",
-    "type": "Comum",
+    "type": "Common",
     "page": 106,
     "summary": "Tell a beloved childhood story to grant a companion restorative sleep.",
     "description": "Tell a beloved childhood story to grant a companion restorative sleep.",
@@ -297,7 +297,7 @@
     "loophole": "Both changeling and target are wearing pajamas."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Undercourt",
@@ -306,7 +306,7 @@
     "id": "h-courts:undercourt:pep-talk",
     "name": "Pep Talk",
     "originalName": "Pep Talk",
-    "type": "Comum",
+    "type": "Common",
     "page": 106,
     "summary": "Encourage someone to bring their best to a chosen Skill.",
     "description": "Encourage someone to bring their best to a chosen Skill.",
@@ -319,7 +319,7 @@
     "loophole": "The changeling has no dots in that Skill."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Undercourt",
@@ -328,7 +328,7 @@
     "id": "h-courts:undercourt:nothing-to-see-here",
     "name": "Nothing to See Here",
     "originalName": "Nothing to See Here",
-    "type": "Comum",
+    "type": "Common",
     "page": 106,
     "summary": "Reduce the emotional impact of a recent traumatic or supernatural event and support recovery.",
     "description": "Reduce the emotional impact of a recent traumatic or supernatural event and support recovery.",
@@ -344,7 +344,7 @@
     "loophole": "The changeling experienced the event with the target."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Undercourt",
@@ -353,7 +353,7 @@
     "id": "h-courts:undercourt:rooted-in-the-past",
     "name": "Rooted in the Past",
     "originalName": "Rooted in the Past",
-    "type": "Comum",
+    "type": "Common",
     "page": 106,
     "summary": "Use nostalgia to ward the changeling's emotions against influence.",
     "description": "Use nostalgia to ward the changeling's emotions against influence.",
@@ -366,7 +366,7 @@
     "loophole": "The changeling eats a favorite childhood food."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Undercourt",
@@ -375,7 +375,7 @@
     "id": "h-courts:undercourt:safeguarded-supplies",
     "name": "Safeguarded Supplies",
     "originalName": "Safeguarded Supplies",
-    "type": "Comum",
+    "type": "Common",
     "page": 107,
     "summary": "Protect a complex item so it continues functioning in the Hedge.",
     "description": "Protect a complex item so it continues functioning in the Hedge.",
@@ -391,7 +391,7 @@
     "loophole": "The changeling slept with the item under their pillow the previous night."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Undercourt",
@@ -400,7 +400,7 @@
     "id": "h-courts:undercourt:family-friendly-feud",
     "name": "Family-Friendly Feud",
     "originalName": "Family-Friendly Feud",
-    "type": "Real",
+    "type": "Royal",
     "page": 107,
     "summary": "Make violence in the vicinity less lethal.",
     "description": "Make violence in the vicinity less lethal.",
@@ -413,7 +413,7 @@
     "loophole": "The changeling has used no curse words within the last day."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Undercourt",
@@ -422,7 +422,7 @@
     "id": "h-courts:undercourt:frozen-in-time",
     "name": "Frozen in Time",
     "originalName": "Frozen in Time",
-    "type": "Real",
+    "type": "Royal",
     "page": 107,
     "summary": "Trap a listening target in a spoken memory loop.",
     "description": "Trap a listening target in a spoken memory loop.",
@@ -438,7 +438,7 @@
     "loophole": "An analog clock is visible nearby."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Undercourt",
@@ -447,7 +447,7 @@
     "id": "h-courts:undercourt:hearths-respite",
     "name": "Hearth's Respite",
     "originalName": "Hearth's Respite",
-    "type": "Real",
+    "type": "Royal",
     "page": 107,
     "summary": "Turn the changeling's home or establishment into a sanctuary of calm and recovery.",
     "description": "Turn the changeling's home or establishment into a sanctuary of calm and recovery.",
@@ -463,7 +463,7 @@
     "loophole": "A visible picture of the changeling's mortal family hangs nearby."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Undercourt",
@@ -472,7 +472,7 @@
     "id": "h-courts:undercourt:protection-of-the-innocent",
     "name": "Protection of the Innocent",
     "originalName": "Protection of the Innocent",
-    "type": "Real",
+    "type": "Royal",
     "page": 108,
     "summary": "Place a mortal under strong protection against supernatural harm.",
     "description": "Place a mortal under strong protection against supernatural harm.",
@@ -488,7 +488,7 @@
     "loophole": "The Contract has never before been used on this mortal."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Undercourt",
@@ -497,7 +497,7 @@
     "id": "h-courts:undercourt:shared-remembrance",
     "name": "Shared Remembrance",
     "originalName": "Shared Remembrance",
-    "type": "Real",
+    "type": "Royal",
     "page": 108,
     "summary": "Experience one of the target's memories through their senses.",
     "description": "Experience one of the target's memories through their senses.",
@@ -513,7 +513,7 @@
     "loophole": "The changeling tells the target one of his own important memories."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Weather",
@@ -522,7 +522,7 @@
     "id": "h-courts:weather:brainstorm",
     "name": "Brainstorm",
     "originalName": "Brainstorm",
-    "type": "Comum",
+    "type": "Common",
     "page": 108,
     "summary": "Send a flash of inspiration into another person's thoughts.",
     "description": "Send a flash of inspiration into another person's thoughts.",
@@ -539,7 +539,7 @@
     "loophole": "The target is sleeping peacefully and receives the inspiration on waking."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Weather",
@@ -548,7 +548,7 @@
     "id": "h-courts:weather:cloud-gazing",
     "name": "Cloud Gazing",
     "originalName": "Cloud Gazing",
-    "type": "Comum",
+    "type": "Common",
     "page": 108,
     "summary": "Read weather patterns to foresee events during the next 24 hours.",
     "description": "Read weather patterns to foresee events during the next 24 hours.",
@@ -568,7 +568,7 @@
     "loophole": "Draw an eye in condensation on a window."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Weather",
@@ -577,7 +577,7 @@
     "id": "h-courts:weather:light-as-a-feather",
     "name": "Light as a Feather",
     "originalName": "Light as a Feather",
-    "type": "Comum",
+    "type": "Common",
     "page": 109,
     "summary": "Call winds to prevent harm from a fall.",
     "description": "Call winds to prevent harm from a fall.",
@@ -594,7 +594,7 @@
     "loophole": "The changeling is outdoors in natural wind."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Weather",
@@ -603,7 +603,7 @@
     "id": "h-courts:weather:troubled-hearts-confession",
     "name": "Troubled Heart's Confession",
     "originalName": "Troubled Heart's Confession",
-    "type": "Comum",
+    "type": "Common",
     "page": 109,
     "summary": "Discern what currently troubles the target most.",
     "description": "Discern what currently troubles the target most.",
@@ -623,7 +623,7 @@
     "loophole": "Changeling and target willingly hold hands."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Weather",
@@ -632,7 +632,7 @@
     "id": "h-courts:weather:whispering-winds",
     "name": "Whispering Winds",
     "originalName": "Whispering Winds",
-    "type": "Comum",
+    "type": "Common",
     "page": 109,
     "summary": "Send a short spoken message on the wind.",
     "description": "Send a short spoken message on the wind.",
@@ -649,7 +649,7 @@
     "loophole": "The changeling told a secret to an enemy since the sun last crossed the horizon."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Weather",
@@ -658,7 +658,7 @@
     "id": "h-courts:weather:nothing-to-see-here",
     "name": "Nothing to See Here",
     "originalName": "Nothing to See Here",
-    "type": "Real",
+    "type": "Royal",
     "page": 109,
     "summary": "Summon dense fog that conceals perceptions and supernatural activity.",
     "description": "Summon dense fog that conceals perceptions and supernatural activity.",
@@ -675,7 +675,7 @@
     "loophole": "Since the last sunrise, spend at least two consecutive waking hours blindfolded or otherwise blinded."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Weather",
@@ -684,7 +684,7 @@
     "id": "h-courts:weather:rain-of-terror",
     "name": "Rain of Terror",
     "originalName": "Rain of Terror",
-    "type": "Real",
+    "type": "Royal",
     "page": 110,
     "summary": "Conjure a vast storm of impossible phenomena that traumatizes witnesses.",
     "description": "Conjure a vast storm of impossible phenomena that traumatizes witnesses.",
@@ -704,7 +704,7 @@
     "loophole": "From the area's highest point, scatter samples that simulate the intended weather."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Weather",
@@ -713,7 +713,7 @@
     "id": "h-courts:weather:storm-of-the-century",
     "name": "Storm of the Century",
     "originalName": "Storm of the Century",
-    "type": "Real",
+    "type": "Royal",
     "page": 110,
     "summary": "Build a prolonged violent storm from selectable effects.",
     "description": "Build a prolonged violent storm from selectable effects.",
@@ -740,7 +740,7 @@
     "loophole": "Carve a lightning bolt into the changeling's flesh and suffer 1 lethal damage."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Weather",
@@ -749,7 +749,7 @@
     "id": "h-courts:weather:tempestuous-hearts",
     "name": "Tempestuous Hearts",
     "originalName": "Tempestuous Hearts",
-    "type": "Real",
+    "type": "Royal",
     "page": 111,
     "summary": "Channel Bedlam through a remarkable weather phenomenon.",
     "description": "Channel Bedlam through a remarkable weather phenomenon.",
@@ -766,7 +766,7 @@
     "loophole": "Incite Bedlam without focusing on one emotion, intensifying each person's current emotions."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Weather",
@@ -775,7 +775,7 @@
     "id": "h-courts:weather:thunder-steed",
     "name": "Thunder Steed",
     "originalName": "Thunder Steed",
-    "type": "Real",
+    "type": "Royal",
     "page": 111,
     "summary": "Travel across a storm as a bolt of lightning.",
     "description": "Travel across a storm as a bolt of lightning.",
@@ -792,7 +792,7 @@
     "loophole": "Since the sun last crossed the horizon, spend an hour exposed to natural rain."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Zodiac",
@@ -801,7 +801,7 @@
     "id": "h-courts:zodiac:balancing-the-four-humours",
     "name": "Balancing the Four Humours",
     "originalName": "Balancing the Four Humours",
-    "type": "Comum",
+    "type": "Common",
     "page": 111,
     "summary": "Rebalance a patient's symbolic elements to cure disease.",
     "description": "Rebalance a patient's symbolic elements to cure disease.",
@@ -820,7 +820,7 @@
     "loophole": "Use an antiquated treatment such as bloodletting, trepanation, or heated glass that inflicts damage."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Zodiac",
@@ -829,7 +829,7 @@
     "id": "h-courts:zodiac:horoscope",
     "name": "Horoscope",
     "originalName": "Horoscope",
-    "type": "Comum",
+    "type": "Common",
     "page": 111,
     "summary": "Impress broad astrological advice upon a target until sunrise.",
     "description": "Impress broad astrological advice upon a target until sunrise.",
@@ -851,7 +851,7 @@
     "loophole": "The advice matches the target's published horoscope for that day in a publication at hand."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Zodiac",
@@ -860,7 +860,7 @@
     "id": "h-courts:zodiac:match-made-in-heaven",
     "name": "Match Made in Heaven",
     "originalName": "Match Made in Heaven",
-    "type": "Comum",
+    "type": "Common",
     "page": 112,
     "summary": "Bring two people into emotional alignment or drive them apart.",
     "description": "Bring two people into emotional alignment or drive them apart.",
@@ -882,7 +882,7 @@
     "loophole": "A third party asked the changeling to act as matchmaker or poison pill."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Zodiac",
@@ -891,7 +891,7 @@
     "id": "h-courts:zodiac:star-sign",
     "name": "Star Sign",
     "originalName": "Star Sign",
-    "type": "Comum",
+    "type": "Common",
     "page": 112,
     "summary": "Read the astrological influences that shape a target's personality.",
     "description": "Read the astrological influences that shape a target's personality.",
@@ -913,7 +913,7 @@
     "loophole": "Consult the target's stars as part of a genuine astrological reading."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Zodiac",
@@ -922,7 +922,7 @@
     "id": "h-courts:zodiac:stellar-thread",
     "name": "Stellar Thread",
     "originalName": "Stellar Thread",
-    "type": "Comum",
+    "type": "Common",
     "page": 113,
     "summary": "Let fate draw the changeling toward something important to an Aspiration.",
     "description": "Let fate draw the changeling toward something important to an Aspiration.",
@@ -941,7 +941,7 @@
     "loophole": "The changeling seeks a solution to a time-sensitive problem with no more than one hour remaining."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Zodiac",
@@ -950,7 +950,7 @@
     "id": "h-courts:zodiac:aether-crossing",
     "name": "Aether Crossing",
     "originalName": "Aether Crossing",
-    "type": "Real",
+    "type": "Royal",
     "page": 113,
     "summary": "Enter a large elemental mass and emerge through its uninterrupted extent.",
     "description": "Enter a large elemental mass and emerge through its uninterrupted extent.",
@@ -969,7 +969,7 @@
     "loophole": "Carry a sample of every element, such as a flame, running fan, earth, and water."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Zodiac",
@@ -978,7 +978,7 @@
     "id": "h-courts:zodiac:age-of-aquarius",
     "name": "Age of Aquarius",
     "originalName": "Age of Aquarius",
-    "type": "Real",
+    "type": "Royal",
     "page": 114,
     "summary": "Overlay an alternate social destiny and identity upon a target.",
     "description": "Overlay an alternate social destiny and identity upon a target.",
@@ -1000,7 +1000,7 @@
     "loophole": "During the same scene, the target expressed dissatisfaction with their life or desire for a change."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Zodiac",
@@ -1009,7 +1009,7 @@
     "id": "h-courts:zodiac:assuming-the-stellar-mantle",
     "name": "Assuming the Stellar Mantle",
     "originalName": "Assuming the Stellar Mantle",
-    "type": "Real",
+    "type": "Royal",
     "page": 114,
     "summary": "Draw out a target's sun sign and grant three fitting Skill Specialties.",
     "description": "Draw out a target's sun sign and grant three fitting Skill Specialties.",
@@ -1051,7 +1051,7 @@
     ]
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Zodiac",
@@ -1060,7 +1060,7 @@
     "id": "h-courts:zodiac:elemental-cycle",
     "name": "Elemental Cycle",
     "originalName": "Elemental Cycle",
-    "type": "Real",
+    "type": "Royal",
     "page": 115,
     "summary": "Permanently transform a limited mass of one classical element into another.",
     "description": "Permanently transform a limited mass of one classical element into another.",
@@ -1079,7 +1079,7 @@
     "loophole": "Transform along the cycle: fire to earth, earth to air, air to water, or water to fire."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Zodiac",
@@ -1088,7 +1088,7 @@
     "id": "h-courts:zodiac:restringing-the-loom",
     "name": "Restringing the Loom",
     "originalName": "Restringing the Loom",
-    "type": "Real",
+    "type": "Royal",
     "page": 115,
     "summary": "Sever an externally imposed fate, destiny, or doom.",
     "description": "Sever an externally imposed fate, destiny, or doom.",
@@ -1107,7 +1107,7 @@
     "loophole": "The destiny was imposed by the changeling or a motley member."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Directional",
@@ -1116,7 +1116,7 @@
     "id": "h-courts:directional:break-in",
     "name": "Break In",
     "originalName": "Break In",
-    "type": "Comum",
+    "type": "Common",
     "page": 130,
     "summary": "Open a locked Hedgeway without its required Key, at a lasting personal cost.",
     "description": "Open a locked Hedgeway without its required Key, at a lasting personal cost.",
@@ -1136,7 +1136,7 @@
     "loophole": "Encourage a mortal nearby to indulge their Vice."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Directional",
@@ -1145,7 +1145,7 @@
     "id": "h-courts:directional:key-to-the-heart",
     "name": "Key to the Heart",
     "originalName": "Key to the Heart",
-    "type": "Comum",
+    "type": "Common",
     "page": 131,
     "summary": "Discover the most effective leverage for a Social maneuver against the target.",
     "description": "Discover the most effective leverage for a Social maneuver against the target.",
@@ -1168,7 +1168,7 @@
     "loophole": "Openly state a similar weakness of the changeling where others can hear."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Directional",
@@ -1177,7 +1177,7 @@
     "id": "h-courts:directional:know-the-path",
     "name": "Know the Path",
     "originalName": "Know the Path",
-    "type": "Comum",
+    "type": "Common",
     "page": 131,
     "summary": "Learn a trod's destination and instinctively navigate its route.",
     "description": "Learn a trod's destination and instinctively navigate its route.",
@@ -1197,7 +1197,7 @@
     "loophole": "Carry a physical map of an area the changeling has never visited."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Directional",
@@ -1206,7 +1206,7 @@
     "id": "h-courts:directional:redirect-trod",
     "name": "Redirect Trod",
     "originalName": "Redirect Trod",
-    "type": "Comum",
+    "type": "Common",
     "page": 131,
     "summary": "Send pursuers leaving a trod to an unpredictable alternate destination.",
     "description": "Send pursuers leaving a trod to an unpredictable alternate destination.",
@@ -1226,7 +1226,7 @@
     "loophole": "Smash or otherwise break a compass."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Directional",
@@ -1235,7 +1235,7 @@
     "id": "h-courts:directional:show-me-the-way",
     "name": "Show Me the Way",
     "originalName": "Show Me the Way",
-    "type": "Comum",
+    "type": "Common",
     "page": 132,
     "summary": "Find the fastest route to a nearby loved person or treasured object.",
     "description": "Find the fastest route to a nearby loved person or treasured object.",
@@ -1255,7 +1255,7 @@
     "loophole": "Carry a piece of the sought subject, such as hair or clothing."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Directional",
@@ -1264,7 +1264,7 @@
     "id": "h-courts:directional:all-roads-closed",
     "name": "All Roads Closed",
     "originalName": "All Roads Closed",
-    "type": "Real",
+    "type": "Royal",
     "page": 132,
     "summary": "Fill every route to a defended location with obstructive hazards.",
     "description": "Fill every route to a defended location with obstructive hazards.",
@@ -1287,7 +1287,7 @@
     "loophole": "Walk 800 steps in a cardinal direction away from the location."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Directional",
@@ -1296,7 +1296,7 @@
     "id": "h-courts:directional:cast-out",
     "name": "Cast Out",
     "originalName": "Cast Out",
-    "type": "Real",
+    "type": "Royal",
     "page": 133,
     "summary": "Expel a target through the nearest Hedgeway and strand them on the other side.",
     "description": "Expel a target through the nearest Hedgeway and strand them on the other side.",
@@ -1319,7 +1319,7 @@
     "loophole": "Force together two repelling magnets that have never touched."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Directional",
@@ -1328,7 +1328,7 @@
     "id": "h-courts:directional:create-path",
     "name": "Create Path",
     "originalName": "Create Path",
-    "type": "Real",
+    "type": "Royal",
     "page": 133,
     "summary": "Hedgespin a temporary trod to a chosen endpoint.",
     "description": "Hedgespin a temporary trod to a chosen endpoint.",
@@ -1351,7 +1351,7 @@
     "loophole": "Possess one of the changeling's Icons personally recovered from the Thorns within the last 24 hours."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Directional",
@@ -1360,7 +1360,7 @@
     "id": "h-courts:directional:escape-route",
     "name": "Escape Route",
     "originalName": "Escape Route",
-    "type": "Real",
+    "type": "Royal",
     "page": 133,
     "summary": "Open a portal without asking and optionally control its destination.",
     "description": "Open a portal without asking and optionally control its destination.",
@@ -1380,7 +1380,7 @@
     "loophole": "Create a cloud such as smoke, dust, or flour."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Directional",
@@ -1389,7 +1389,7 @@
     "id": "h-courts:directional:labyrinth",
     "name": "Labyrinth",
     "originalName": "Labyrinth",
-    "type": "Real",
+    "type": "Royal",
     "page": 134,
     "summary": "Trap a victim's perceptions inside an illusory maze.",
     "description": "Trap a victim's perceptions inside an illusory maze.",
@@ -1412,7 +1412,7 @@
     "loophole": "Carry a completed puzzle and return it to its unsolved state."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Dragon",
@@ -1421,7 +1421,7 @@
     "id": "h-courts:dragon:all-as-one",
     "name": "All as One",
     "originalName": "All as One",
-    "type": "Comum",
+    "type": "Common",
     "page": 135,
     "summary": "Improve the contributions of a group performing teamwork.",
     "description": "Improve the contributions of a group performing teamwork.",
@@ -1439,7 +1439,7 @@
     "loophole": "Carry something created through the communal work of insects, such as honeycomb or part of an ant colony."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Dragon",
@@ -1448,7 +1448,7 @@
     "id": "h-courts:dragon:equilibrium",
     "name": "Equilibrium",
     "originalName": "Equilibrium",
-    "type": "Comum",
+    "type": "Common",
     "page": 135,
     "summary": "Maintain physical balance against difficult terrain and outside forces.",
     "description": "Maintain physical balance against difficult terrain and outside forces.",
@@ -1466,7 +1466,7 @@
     "loophole": "Perform the action in defense of the freehold."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Dragon",
@@ -1475,7 +1475,7 @@
     "id": "h-courts:dragon:find-the-center",
     "name": "Find the Center",
     "originalName": "Find the Center",
-    "type": "Comum",
+    "type": "Common",
     "page": 135,
     "summary": "Steady the changeling's perceptions during a Clarity breaking point.",
     "description": "Steady the changeling's perceptions during a Clarity breaking point.",
@@ -1493,7 +1493,7 @@
     "loophole": "Burn incense the changeling personally made."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Dragon",
@@ -1502,7 +1502,7 @@
     "id": "h-courts:dragon:self-harmony",
     "name": "Self-Harmony",
     "originalName": "Self-Harmony",
-    "type": "Comum",
+    "type": "Common",
     "page": 136,
     "summary": "Strengthen Defense, including against firearms, through bodily harmony.",
     "description": "Strengthen Defense, including against firearms, through bodily harmony.",
@@ -1520,7 +1520,7 @@
     "loophole": "Practice a martial art during the scene."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Dragon",
@@ -1529,7 +1529,7 @@
     "id": "h-courts:dragon:tat-tvam-asi",
     "name": "Tat Tvam Asi",
     "originalName": "Tat Tvam Asi",
-    "type": "Comum",
+    "type": "Common",
     "page": 136,
     "summary": "Resist Bedlam and comparable supernatural emotional influence.",
     "description": "Resist Bedlam and comparable supernatural emotional influence.",
@@ -1547,7 +1547,7 @@
     "loophole": "Perform an act of self-affirmation or self-care during the scene."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Dragon",
@@ -1556,7 +1556,7 @@
     "id": "h-courts:dragon:harmony-enforced",
     "name": "Harmony Enforced",
     "originalName": "Harmony Enforced",
-    "type": "Real",
+    "type": "Royal",
     "page": 136,
     "summary": "Suppress physical violence throughout a nearby conflict.",
     "description": "Suppress physical violence throughout a nearby conflict.",
@@ -1577,7 +1577,7 @@
     "loophole": "Scatter dove feathers around the affected area."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Dragon",
@@ -1586,7 +1586,7 @@
     "id": "h-courts:dragon:one-with-the-elements",
     "name": "One with the Elements",
     "originalName": "One with the Elements",
-    "type": "Real",
+    "type": "Royal",
     "page": 137,
     "summary": "Become immune to present Environmental Tilts and redirect their damage.",
     "description": "Become immune to present Environmental Tilts and redirect their damage.",
@@ -1604,7 +1604,7 @@
     "loophole": "Self-inflict 1 bashing damage with something related to the relevant Tilt."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Dragon",
@@ -1613,7 +1613,7 @@
     "id": "h-courts:dragon:shifting-balance",
     "name": "Shifting Balance",
     "originalName": "Shifting Balance",
-    "type": "Real",
+    "type": "Royal",
     "page": 137,
     "summary": "Redistribute willing characters' Defense, Initiative, and Speed.",
     "description": "Redistribute willing characters' Defense, Initiative, and Speed.",
@@ -1631,7 +1631,7 @@
     "loophole": "Balance scales using symbols of wood, fire, earth, metal, and water."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Dragon",
@@ -1640,7 +1640,7 @@
     "id": "h-courts:dragon:steal-harmony",
     "name": "Steal Harmony",
     "originalName": "Steal Harmony",
-    "type": "Real",
+    "type": "Royal",
     "page": 137,
     "summary": "Penalize a category of the victim's Skills for several actions.",
     "description": "Penalize a category of the victim's Skills for several actions.",
@@ -1661,7 +1661,7 @@
     "loophole": "Steal something physical or intangible from the victim within the last 24 hours."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Dragon",
@@ -1670,7 +1670,7 @@
     "id": "h-courts:dragon:weaponize-mob",
     "name": "Weaponize Mob",
     "originalName": "Weaponize Mob",
-    "type": "Real",
+    "type": "Royal",
     "page": 137,
     "summary": "Turn a tense crowd into a riot directed at a chosen target.",
     "description": "Turn a tense crowd into a riot directed at a chosen target.",
@@ -1691,7 +1691,7 @@
     "loophole": "Invoke it where an argument or other conflict has already made the situation a powder keg."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Tide",
@@ -1700,7 +1700,7 @@
     "id": "h-courts:tide:any-port-in-a-storm",
     "name": "Any Port in a Storm",
     "originalName": "Any Port in a Storm",
-    "type": "Comum",
+    "type": "Common",
     "page": 139,
     "summary": "Locate the nearest shelter from the changeling's current danger.",
     "description": "Locate the nearest shelter from the changeling's current danger.",
@@ -1722,7 +1722,7 @@
     "loophole": "Wear a symbol of the North Star as jewelry, a pin, or a tattoo."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Tide",
@@ -1731,7 +1731,7 @@
     "id": "h-courts:tide:fair-winds-and-following-seas",
     "name": "Fair Winds and Following Seas",
     "originalName": "Fair Winds and Following Seas",
-    "type": "Comum",
+    "type": "Common",
     "page": 139,
     "summary": "Distribute a reserve of bonus dice among companions.",
     "description": "Distribute a reserve of bonus dice among companions.",
@@ -1750,7 +1750,7 @@
     "loophole": "Cast an albatross feather into the sea."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Tide",
@@ -1759,7 +1759,7 @@
     "id": "h-courts:tide:mirrorways",
     "name": "Mirrorways",
     "originalName": "Mirrorways",
-    "type": "Comum",
+    "type": "Common",
     "page": 139,
     "summary": "Use a large reflective surface as a Hedgeway.",
     "description": "Use a large reflective surface as a Hedgeway.",
@@ -1778,7 +1778,7 @@
     "loophole": "Swallow a cup of seawater."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Tide",
@@ -1787,7 +1787,7 @@
     "id": "h-courts:tide:the-sea-remembers",
     "name": "The Sea Remembers",
     "originalName": "The Sea Remembers",
-    "type": "Comum",
+    "type": "Common",
     "page": 140,
     "summary": "Ask the sea to locate a lost object or restore a lost memory.",
     "description": "Ask the sea to locate a lost object or restore a lost memory.",
@@ -1809,7 +1809,7 @@
     "loophole": "Successfully meditate for an hour since the tide last changed."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Tide",
@@ -1818,7 +1818,7 @@
     "id": "h-courts:tide:widows-walk",
     "name": "Widow's Walk",
     "originalName": "Widow's Walk",
-    "type": "Comum",
+    "type": "Common",
     "page": 140,
     "summary": "Survey an area with heightened perception and investigative insight.",
     "description": "Survey an area with heightened perception and investigative insight.",
@@ -1837,7 +1837,7 @@
     "loophole": "Traverse a widow's walk since the tide last changed."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Tide",
@@ -1846,7 +1846,7 @@
     "id": "h-courts:tide:davy-jones-locker",
     "name": "Davy Jones' Locker",
     "originalName": "Davy Jones' Locker",
-    "type": "Real",
+    "type": "Royal",
     "page": 140,
     "summary": "Conjure a violent marine tempest and enhance it with Flooded, Drowning, or debris.",
     "description": "Conjure a violent marine tempest and enhance it with Flooded, Drowning, or debris.",
@@ -1873,7 +1873,7 @@
     "loophole": "Whistle an entire sea shanty from memory."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Tide",
@@ -1882,7 +1882,7 @@
     "id": "h-courts:tide:dredge-the-depths",
     "name": "Dredge the Depths",
     "originalName": "Dredge the Depths",
-    "type": "Real",
+    "type": "Royal",
     "page": 141,
     "summary": "Locate useful valuables throughout a wide area.",
     "description": "Locate useful valuables throughout a wide area.",
@@ -1904,7 +1904,7 @@
     "loophole": "Offer something personally valuable to the sea during the same scene."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Tide",
@@ -1913,7 +1913,7 @@
     "id": "h-courts:tide:gone-by-the-board",
     "name": "Gone by the Board",
     "originalName": "Gone by the Board",
-    "type": "Real",
+    "type": "Royal",
     "page": 141,
     "summary": "Ensure a named lost item eventually returns to its owner.",
     "description": "Ensure a named lost item eventually returns to its owner.",
@@ -1932,7 +1932,7 @@
     "loophole": "Invoke during the same tide in which the item was lost."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Tide",
@@ -1941,7 +1941,7 @@
     "id": "h-courts:tide:red-sky-at-morning",
     "name": "Red Sky at Morning",
     "originalName": "Red Sky at Morning",
-    "type": "Real",
+    "type": "Royal",
     "page": 142,
     "summary": "Receive a visible warning shortly before an imminent threat.",
     "description": "Receive a visible warning shortly before an imminent threat.",
@@ -1960,7 +1960,7 @@
     "loophole": "Give a warning signal such as ringing a bell or sounding a ship's horn during invocation."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Tide",
@@ -1969,7 +1969,7 @@
     "id": "h-courts:tide:red-sky-at-night",
     "name": "Red Sky at Night",
     "originalName": "Red Sky at Night",
-    "type": "Real",
+    "type": "Royal",
     "page": 142,
     "summary": "Restore a group's resolve through shared entertainment.",
     "description": "Restore a group's resolve through shared entertainment.",
@@ -1988,7 +1988,7 @@
     "loophole": "Offer everyone food or drink made by the changeling."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Traders",
@@ -1997,7 +1997,7 @@
     "id": "h-courts:traders:caveat-emptor",
     "name": "Caveat Emptor",
     "originalName": "Caveat Emptor",
-    "type": "Comum",
+    "type": "Common",
     "page": 143,
     "summary": "Make a seller reveal an omitted fact about the goods in a negotiated transaction.",
     "description": "Make a seller reveal an omitted fact about the goods in a negotiated transaction.",
@@ -2019,7 +2019,7 @@
     "loophole": "Catch the vendor in a lie during the scene without using a Contract."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Traders",
@@ -2028,7 +2028,7 @@
     "id": "h-courts:traders:faceless-masses",
     "name": "Faceless Masses",
     "originalName": "Faceless Masses",
-    "type": "Comum",
+    "type": "Common",
     "page": 143,
     "summary": "Become ordinary and forgettable within a crowd.",
     "description": "Become ordinary and forgettable within a crowd.",
@@ -2047,7 +2047,7 @@
     "loophole": "Have bought or traded for a mask within the last day."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Traders",
@@ -2056,7 +2056,7 @@
     "id": "h-courts:traders:lets-make-a-deal",
     "name": "Let's Make a Deal",
     "originalName": "Let's Make a Deal",
-    "type": "Comum",
+    "type": "Common",
     "page": 144,
     "summary": "Find the person selling what the Wyrd believes the changeling needs most.",
     "description": "Find the person selling what the Wyrd believes the changeling needs most.",
@@ -2075,7 +2075,7 @@
     "loophole": "Drop a coin of pure copper as payment to the Wyrd."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Traders",
@@ -2084,7 +2084,7 @@
     "id": "h-courts:traders:stockpile-surplus",
     "name": "Stockpile Surplus",
     "originalName": "Stockpile Surplus",
-    "type": "Comum",
+    "type": "Common",
     "page": 144,
     "summary": "Temporarily store Glamour above the changeling's normal maximum.",
     "description": "Temporarily store Glamour above the changeling's normal maximum.",
@@ -2103,7 +2103,7 @@
     "loophole": "Find a squirrel, chipmunk, or similar animal's stash without magic during the last 24 hours."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Traders",
@@ -2112,7 +2112,7 @@
     "id": "h-courts:traders:window-shopper",
     "name": "Window Shopper",
     "originalName": "Window Shopper",
-    "type": "Comum",
+    "type": "Common",
     "page": 144,
     "summary": "Create credentials that permit temporary access to a restricted commercial area.",
     "description": "Create credentials that permit temporary access to a restricted commercial area.",
@@ -2131,7 +2131,7 @@
     "loophole": "Carry a defaced or expired version of the appropriate credential."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Traders",
@@ -2140,7 +2140,7 @@
     "id": "h-courts:traders:always-solvent",
     "name": "Always Solvent",
     "originalName": "Always Solvent",
-    "type": "Real",
+    "type": "Royal",
     "page": 145,
     "summary": "Produce locally suitable currency for one significant purchase.",
     "description": "Produce locally suitable currency for one significant purchase.",
@@ -2159,7 +2159,7 @@
     "loophole": "Carry coins from at least five different countries."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Traders",
@@ -2168,7 +2168,7 @@
     "id": "h-courts:traders:cook-the-books",
     "name": "Cook the Books",
     "originalName": "Cook the Books",
-    "type": "Real",
+    "type": "Royal",
     "page": 145,
     "summary": "Deny a collection of Goblin Debt and prevent further collection temporarily.",
     "description": "Deny a collection of Goblin Debt and prevent further collection temporarily.",
@@ -2187,7 +2187,7 @@
     "loophole": "Admit during the scene to cheating or conning someone the changeling exploited."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Traders",
@@ -2196,7 +2196,7 @@
     "id": "h-courts:traders:if-two-are-dead",
     "name": "If Two Are Dead",
     "originalName": "If Two Are Dead",
-    "type": "Real",
+    "type": "Royal",
     "page": 145,
     "summary": "Prevent participants from revealing a deal to outsiders.",
     "description": "Prevent participants from revealing a deal to outsiders.",
@@ -2218,7 +2218,7 @@
     "loophole": "Share a different significant secret with every intended subject."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Traders",
@@ -2227,7 +2227,7 @@
     "id": "h-courts:traders:raise-the-band",
     "name": "Raise the Band",
     "originalName": "Raise the Band",
-    "type": "Real",
+    "type": "Royal",
     "page": 146,
     "summary": "Conscript a hobgoblin band to defend the freehold through violence.",
     "description": "Conscript a hobgoblin band to defend the freehold through violence.",
@@ -2246,7 +2246,7 @@
     "loophole": "Assemble the hobgoblins without magic beforehand and rally them with a stirring speech."
   },
   {
-    "categoryKind": "Corte",
+    "categoryKind": "Court",
     "sourceId": "h-courts",
     "source": "Book of Courts",
     "regalia": "Traders",
@@ -2255,7 +2255,7 @@
     "id": "h-courts:traders:supply-and-demand",
     "name": "Supply and Demand",
     "originalName": "Supply and Demand",
-    "type": "Real",
+    "type": "Royal",
     "page": 147,
     "summary": "Force a merchant to accept something the changeling possesses as payment.",
     "description": "Force a merchant to accept something the changeling possesses as payment.",

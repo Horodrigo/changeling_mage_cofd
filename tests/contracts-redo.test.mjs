@@ -319,7 +319,7 @@ test("bloco Jewels do livro básico está completo", () => {
 });
 
 test("tradução pt-BR dos Contratos Comuns de Jewels está completa", () => {
-  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Jewels"&&item.type==="Comum");
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Jewels"&&item.type==="Common");
   assert.equal(items.length,5);
   for(const item of items){
     const text=CONTRACT_PRESENTATION_PT[item.id];
@@ -351,7 +351,7 @@ test("bloco Mirror do livro básico está completo sem Options duplicadas", () =
 });
 
 test("tradução pt-BR dos Contratos Comuns de Mirror está completa", () => {
-  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Mirror"&&item.type==="Comum");
+  const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Mirror"&&item.type==="Common");
   assert.equal(items.length,5);
   for(const item of items){
     const text=CONTRACT_PRESENTATION_PT[item.id];
@@ -441,7 +441,7 @@ test("tradução pt-BR do bloco Sword está completa", () => {
 test("bloco Spring do livro básico está completo como Contratos de Corte", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Spring");
   assert.equal(items.length,10);
-  assert.ok(items.every((item)=>item.categoryKind==="Corte"));
+  assert.ok(items.every((item)=>item.categoryKind==="Court"));
   assert.deepEqual(items.map((item)=>item.page),[151,151,151,151,152,152,152,152,153,153]);
 });
 
@@ -457,7 +457,7 @@ test("tradução pt-BR do bloco Spring está completa", () => {
 test("bloco Summer do livro básico está completo como Contratos de Corte", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Summer");
   assert.equal(items.length,10);
-  assert.ok(items.every((item)=>item.categoryKind==="Corte"));
+  assert.ok(items.every((item)=>item.categoryKind==="Court"));
   assert.deepEqual(items.map((item)=>item.page),[153,154,154,155,155,155,155,155,156,156]);
 });
 
@@ -473,7 +473,7 @@ test("tradução pt-BR do bloco Summer está completa", () => {
 test("bloco Autumn do livro básico está completo como Contratos de Corte", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Autumn");
   assert.equal(items.length,10);
-  assert.ok(items.every((item)=>item.categoryKind==="Corte"));
+  assert.ok(items.every((item)=>item.categoryKind==="Court"));
   assert.deepEqual(items.map((item)=>item.page),[156,156,157,157,157,157,158,158,158,158]);
 });
 
@@ -489,7 +489,7 @@ test("tradução pt-BR do bloco Autumn está completa", () => {
 test("bloco Winter do livro básico está completo como Contratos de Corte", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.regalia==="Winter");
   assert.equal(items.length,10);
-  assert.ok(items.every((item)=>item.categoryKind==="Corte"));
+  assert.ok(items.every((item)=>item.categoryKind==="Court"));
   assert.deepEqual(items.map((item)=>item.page),[159,159,159,159,160,160,161,161,161,161]);
   assert.equal(items.filter((item)=>item.hasRoll).length,6);
 });
@@ -506,7 +506,7 @@ test("tradução pt-BR do bloco Winter está completa", () => {
 test("bloco Goblin do livro básico está completo", () => {
   const items=CONTRACTS.filter((item)=>item.sourceId==="ctl-core"&&item.goblin);
   assert.equal(items.length,10);
-  assert.ok(items.every((item)=>item.regalia==="Goblin"&&item.categoryKind==="Independente"));
+  assert.ok(items.every((item)=>item.regalia==="Goblin"&&item.categoryKind==="Independent"));
   assert.deepEqual(items.map((item)=>item.page),[162,162,163,163,163,163,164,164,164,164]);
   assert.equal(items.filter((item)=>item.hasRoll).length,2);
   assert.equal(items.find((item)=>item.originalName==="Goblin's Eye")?.options?.length,7);

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 266,
+  "catalogVersion": 272,
   "catalogs": {
     "werewolf-totem-powers": {
       "version": 3,
@@ -173,34 +173,34 @@
       "hash": "03b12a8de2706c0280e0ebb783b0cbe6203069d501bfc871915d1718bb8bed07"
     },
     "changeling-contracts-h-courts": {
-      "version": 3,
+      "version": 4,
       "url": "/game-lines/changeling/data/contracts/h-courts.json",
-      "hash": "920702fddef51b3b6cf279b32eb70686feea4808cbcb35bc276bf7b9b47905ec"
+      "hash": "aedce918d47991c25edc9828a00614a36a3c044b54daa7aaba7e1510d33d12ec"
     },
     "changeling-contracts-ctl-oak-ash-thorn": {
-      "version": 3,
+      "version": 4,
       "url": "/game-lines/changeling/data/contracts/ctl-oak-ash-thorn.json",
-      "hash": "201131b51fd31c8eabc61ee184b1e68545cce443d5765595a21ca7ff6696d861"
+      "hash": "7cc83d0df7cd78748fff3bc451ed063d3a3d84e1722146ea230f6153b56337d0"
     },
     "changeling-contracts-ctl-the-hedge": {
-      "version": 3,
+      "version": 4,
       "url": "/game-lines/changeling/data/contracts/ctl-the-hedge.json",
-      "hash": "7b5d6d43191ba0481e74d86851672bacc679cc737340d75e3a4d188801c92b92"
+      "hash": "295178fca0fa0d7141f0f8c30e953ce4ce8ee155d24059ea3893c15b69f363a7"
     },
     "changeling-contracts-ctl-dark-eras": {
-      "version": 3,
+      "version": 4,
       "url": "/game-lines/changeling/data/contracts/ctl-dark-eras.json",
-      "hash": "413d5c54c3404a364c0ca9528458b2f135289918186c29667a1aeaf4335c79d0"
+      "hash": "741617fb99f9b98e601e50147b71876eb197f4037c612c0fd92a750f408ada25"
     },
     "changeling-contracts-ctl-kith-and-kin": {
-      "version": 3,
+      "version": 4,
       "url": "/game-lines/changeling/data/contracts/ctl-kith-and-kin.json",
-      "hash": "4cd4a4dc0520f11333447f5ccb0c039f39ad9ea1aad963343f24ec3971faad8e"
+      "hash": "cb36db1b3afc20e7489e47c7a8e74e3498c270ddef46fee0d82ef66ed99f1d0a"
     },
     "changeling-contracts-ctl-core": {
-      "version": 3,
+      "version": 4,
       "url": "/game-lines/changeling/data/contracts/ctl-core.json",
-      "hash": "5b12bc92a769636f9ae2bc59d5abf80be212c589691dd83386190b8d418b8511"
+      "hash": "fe1c584c8758e75bb13a8611fbe4eaba25d1105dcbb81a0d98dcb890faca0a13"
     },
     "changeling-contracts-h-courts-pt": {
       "version": 3,
