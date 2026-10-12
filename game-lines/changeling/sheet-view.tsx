@@ -40,7 +40,7 @@ import { changelingMobileLayout } from "./sheet-layout.mobile";
 import { meritPresentation } from "@/lib/merit-presentation";
 import { MeritDetails } from "@/app/workspace/merit-details";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
-import { changelingMeritId } from "./merit-identities";
+import { changelingMeritId, isChangelingCourtGrant } from "./merit-identities";
 import { normalizeClarityDamage,normalizeDamage,powerResourceLimits,type ClarityDamageLevel } from "@/lib/resource-rules";
 import { useMemo, useState } from "react";
 import { SheetCategoryLayout, SheetLayoutDesktopPage, SheetLayoutFlow, SheetLayoutSection } from "@/app/workspace/sheet-layout";
@@ -206,7 +206,7 @@ export function ChangelingCharacterPaper({ character, updateState, updateSheet, 
     };
     const goblinDebt = boundedNumber(character.current_state?.goblin_debt, 10, 0);
     const expandedMerits = character.merits.filter((item) => changelingMeritId(item) !== "oak-ash-thorn:entitlement" && isExpanded(item) && !item.grantedBy);
-    const principalMerits = character.merits.filter((item) => !item.grantedBy || item.grantedBy === "Corte");
+    const principalMerits = character.merits.filter((item) => !item.grantedBy || isChangelingCourtGrant(item));
     const selectedConditions = [
         ...selectedConditionList(character.current_state?.conditions, conditionCatalog),
         ...stringList(data.merit_granted_conditions).map((id) => ({
@@ -548,7 +548,7 @@ function MeritSheetList({ merits, catalog, courtCatalog, }: {
     entitlementCatalog: readonly EntitlementDefinition[];
 }) {
     const { locale, t } = useLanguage();
-    const availableCatalog = catalog, visible = merits.filter((item) => !item.grantedBy || item.grantedBy === "Corte");
+    const availableCatalog = catalog, visible = merits.filter((item) => !item.grantedBy || isChangelingCourtGrant(item));
     return (<div className="sheet-merits single-column">
       {visible.length ? (visible.map((item, index) => {
             const definition = resolveMeritDefinition(item, availableCatalog);
@@ -739,7 +739,7 @@ function CourtLore({ data, merits, courtCatalog, main = false, }: {
     const emotion = custom ? String(custom.emotion ?? "") : String(official?.emotion ?? "");
     const benefits = custom && Array.isArray(custom.mantleBenefits)
         ? custom.mantleBenefits.map(String)
-        : official?.mantleBenefits ?? [], dots = merits.find((item) => changelingMeritId(item) === "ctl-2ed:mantle" && item.grantedBy === "Corte")?.dots ?? 1;
+        : official?.mantleBenefits ?? [], dots = merits.find((item) => isChangelingCourtGrant(item))?.dots ?? 1;
     if (main)
         return (<details className="expanded-merit-card court-summary-card">
       <summary>

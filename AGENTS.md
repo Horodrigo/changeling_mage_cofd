@@ -166,6 +166,8 @@ Core Condition membership is defined by its catalog group, not by the cited book
 
 - Vampire owns Ortam recipe choices in `ortam-recipes.ts`, keyed by canonical recipe IDs. The shared Vampire XP panel (also used for creation advancement) grants three choices at the first dot, including Essence Vitale Absolue, then two per additional dot up to five; already owned recipes are never duplicated. New receipts store the selected IDs, target rating and paid cost. Refunds remove only those choices, reject later Ortam advancement and retained power dependencies, and preserve old receipts without inferring their recipe grants. Opening a sheet never grants recipes or rewrites prior purchases. The base creation Discipline allocation continues to exclude Bloodline Disciplines.
 
+Changeling Mantle grants use the English producer marker `Court`. The owning identity predicate recognizes the schema-2 `Corte` marker only for canonical Mantle; normalization changes that marker without changing instance IDs, allocations, authored configuration or XP history. Creation, sheet and refund eligibility consume the same predicate. Remove this compatibility branch when old grant records are unsupported.
+
 Core may own generic Merit storage, ratings, rendering, configuration plumbing, neutral requirements, and extension dispatch. Line-specific eligibility, automatic grants, synchronization, special configuration, and derived effects belong to the line.
 
 - Use stable Merit and configuration IDs. Never dispatch special behavior from translated or display names.

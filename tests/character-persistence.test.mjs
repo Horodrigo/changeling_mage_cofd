@@ -219,7 +219,7 @@ test("current sheets apply only the selected line's merit synchronization",async
   const mage=await normalizeGameLineCharacter(normalizeStoredSheet({...sheet("MtA"),line_data:{order:"Orderless"}}));
   const changeling=await normalizeGameLineCharacter(normalizeStoredSheet({...sheet("CtL"),line_data:{court:"Spring"}}));
   assert.equal(mage.merits.some((merit)=>merit.name==="Mantle"),false);
-  assert.equal(changeling.merits.some((merit)=>merit.name==="Mantle"&&merit.grantedBy==="Corte"),true);
+  assert.equal(changeling.merits.some((merit)=>merit.name==="Mantle"&&merit.grantedBy==="Court"),true);
 });
 
 test("legacy Contract classifications become English without translating authored fields or rewriting receipts", async () => {

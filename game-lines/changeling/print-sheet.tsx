@@ -1,4 +1,5 @@
 "use client";
+import { isChangelingCourtGrant } from "./merit-identities";
 import Image from "next/image";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { effectiveMeritDots } from "@/lib/shared-merit-dots";
@@ -284,7 +285,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
     return found ? [found] : (saved.id && saved.name ? [saved as unknown as ContractDefinition] : []);
   }), [contractCatalog, data.contracts, data.learned_contracts]);
   const expanded = useMemo(() => character.merits.filter((merit) => !merit.grantedBy && (meritCatalog.some((item) => item.name === merit.name && item.levels?.length) || ["Contacts", "Multilingual"].includes(merit.name))), [character.merits, meritCatalog]);
-  const principalMerits = character.merits.filter((merit) => !merit.grantedBy || merit.grantedBy === "Corte");
+  const principalMerits = character.merits.filter((merit) => !merit.grantedBy || isChangelingCourtGrant(merit));
   const courtDisplay = courtName(reference.courts, data.court, locale);
   const kith = useMemo(() => kithPresentation(reference, data.kith, locale, Boolean(data.kith_custom)), [data.kith, data.kith_custom, locale, reference]);
   const kithSkillNames = useMemo(() => {

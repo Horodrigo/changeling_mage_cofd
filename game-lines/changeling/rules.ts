@@ -1,3 +1,4 @@
+import { isChangelingCourtGrant } from "./merit-identities";
 import { canonicalContractClassification } from "./contract-identities";
 import { canonicalTraitHistory } from "@/lib/core/character/trait-identities";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
@@ -48,7 +49,7 @@ export const changelingRules: GameLineRulesModule = {
       // Production schema-2 recovery for the former distributed Book of Seemings label.
       // Only this owning normalization may attach its known ID; never rename authored
       // labels or replace explicit IDs. Delete when these ID-less rows are unsupported.
-      merits: recoverChangelingMeritAllocations(character).map(item =>
+      merits: recoverChangelingMeritAllocations(character).map(item => isChangelingCourtGrant(item) && item.grantedBy === "Corte" ? { ...item, grantedBy: "Court" } : item).map(item =>
         !item.definitionId && item.name === "Throne" && item.sourceId === "h-seemings"
           ? { ...item, definitionId: "h-seemings:power-behind-the-throne" } : item),
       line_data: {

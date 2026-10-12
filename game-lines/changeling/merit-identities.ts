@@ -20,3 +20,7 @@ export const CHANGELING_MERIT_IDENTITIES = [
  * Explicit IDs always win. Delete the bridge when ID-less selections are no longer supported. */
 export const changelingMeritId = (merit: Pick<MeritSelection, "name" | "definitionId" | "sourceId">) =>
   merit.definitionId ?? resolveMeritDefinition(merit, CHANGELING_MERIT_IDENTITIES)?.id;
+
+/** Production schema-2 Court producer bridge; remove Corte when old grant records are unsupported. */
+export const isChangelingCourtGrant = (merit: MeritSelection) =>
+  (merit.grantedBy === "Court" || merit.grantedBy === "Corte") && changelingMeritId(merit) === "ctl-2ed:mantle";

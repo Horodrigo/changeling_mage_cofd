@@ -1,3 +1,4 @@
+import { isChangelingCourtGrant } from "./merit-identities";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import { meritContextForSheet, meritPrerequisitesMet, meritGroupedPrerequisitesMet, type MeritDefinition, type MeritPrerequisiteContext } from "@/lib/merits";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
@@ -70,7 +71,7 @@ export function changelingMeritPrerequisitesMet(merit: Pick<MeritDefinition, "na
 }
 
 export function canAdvanceChangelingGrant(merit: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[]) {
-  return merit.grantedBy === "Corte" && resolveMeritDefinition(merit, catalog)?.id === "ctl-2ed:mantle";
+  return isChangelingCourtGrant(merit) && resolveMeritDefinition(merit, catalog)?.id === "ctl-2ed:mantle";
 }
 
 export function changelingExperienceMeritEligible(definition: MeritDefinition, context: ChangelingMeritContext) {

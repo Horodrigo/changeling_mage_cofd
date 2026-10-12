@@ -297,3 +297,28 @@ test("CtL Entitlement prerequisites and selection reject explicit Homebrew/unava
   assert.equal(current.merits[0].definitionId, "homebrew:entitlement");
   assert.equal(current.line_data.entitlement, undefined);
 });
+
+test("Court grant marker becomes English without losing an exact paid Mantle instance or accepting namesakes", async () => {
+  const { changelingRules } = await vite.ssrLoadModule("/game-lines/changeling/rules.ts");
+  const { isChangelingCourtGrant } = await vite.ssrLoadModule("/game-lines/changeling/merit-identities.ts");
+  const current = sheet();
+  current.line_data.court = "autumn";
+  const mantle = { definitionId: "ctl-2ed:mantle", instanceId: "paid-court", name: "Mantle", sourceId: "ctl-2ed", dots: 3, creationDots: 1, experienceDots: 2, grantedBy: "Corte", configuration: { court: "autumn", note: "Minha escolha" } };
+  const namesake = { ...mantle, definitionId: "homebrew:mantle", instanceId: "authored", configuration: { note: "Autoral" } };
+  current.merits = [mantle, namesake];
+  const before = structuredClone(current);
+  const normalized = changelingRules.normalizeCharacter(current);
+  assert.equal(normalized.merits[0].grantedBy, "Court");
+  assert.deepEqual(normalized.merits[1], namesake);
+  assert.equal(isChangelingCourtGrant(namesake), false);
+  assert.equal(isChangelingCourtGrant({ ...mantle, definitionId: "unavailable" }), false);
+  assert.deepEqual(normalized.current_state, current.current_state);
+  const synced = grants.synchronizeChangelingBuilderMeritGrants(structuredClone(normalized));
+  const retained = synced.merits.find(item => item.instanceId === mantle.instanceId);
+  assert.deepEqual(retained, { ...mantle, grantedBy: "Court", source: "Changeling the Lost" });
+  synced.line_data.court = "courtless";
+  const removed = grants.synchronizeChangelingBuilderMeritGrants(synced).merits.find(item => item.instanceId === mantle.instanceId);
+  assert.equal(removed.dots, 2); assert.equal(removed.experienceDots, 2); assert.equal(removed.grantedBy, undefined);
+  assert.deepEqual(removed.configuration, mantle.configuration);
+  assert.deepEqual(current, before);
+});

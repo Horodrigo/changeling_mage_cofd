@@ -50,7 +50,7 @@ import { useChangelingCatalogHomebrews } from "./use-catalog-homebrews";
 import type { ChangelingReference } from "./catalogs/reference";
 import { recoverChangelingMeritAllocations } from "./merit-allocation";
 import { reconcileChangelingCreationMerits } from "./builder-merit-grants";
-import { changelingMeritId } from "./merit-identities";
+import { isChangelingCourtGrant } from "./merit-identities";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 
 const translateRegalia = (value: string) => value;
@@ -94,7 +94,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
   if (!catalogs) throw new Error("Changeling builder requires its catalog snapshot.");
   const common = useCommonBuilderState(initial, player, {
     experienceHistoryKey: "experience_history",
-    grantedMeritSources: ["Corte"],
+    grantedMeritSources: ["Court", "Corte"],
     adjustAttributes: (values) => {
       const bonus = String(initial?.line_data.favored_attribute ?? "");
       if (bonus && values[bonus] > 1) values[bonus] -= 1;
@@ -166,7 +166,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
     return {
     gameLine: "CtL", archetypes: ["changeling"], attributes: common.attributes, skills: common.skills,
     seeming, kith, wyrd, court,
-    mantle: court && !["sem corte", "courtless"].includes(court.toLowerCase()) ? Math.max(1, merits.find(item => changelingMeritId(item) === "ctl-2ed:mantle" && item.grantedBy === "Corte")?.dots ?? 1) : 0,
+    mantle: court && !["sem corte", "courtless"].includes(court.toLowerCase()) ? Math.max(1, merits.find(item => isChangelingCourtGrant(item))?.dots ?? 1) : 0,
     merits,
     specializations: commonMeritSpecializations(common.specializations, merits),
     meritCatalog,
