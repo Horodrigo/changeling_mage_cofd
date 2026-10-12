@@ -56,7 +56,7 @@ import { resolveMeritDefinition } from "@/lib/merit-identity";
 const translateRegalia = (value: string) => value;
 
 function translateCourt(value: string) {
-  return ({ Courtless: "Sem Corte", Spring: "spring", Primavera: "spring", Summer: "summer", Verão: "summer", Autumn: "autumn", Outono: "autumn", Winter: "winter", Inverno: "winter" } as Record<string, string>)[value] ?? value;
+  return ({ Courtless: "", courtless: "", "Sem Corte": "", Spring: "spring", Primavera: "spring", Summer: "summer", Verão: "summer", Autumn: "autumn", Outono: "autumn", Winter: "winter", Inverno: "winter" } as Record<string, string>)[value] ?? value;
 }
 
 function normalizeCustomCourt(value: unknown): CustomCourtDefinition | null {
@@ -128,7 +128,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
   const [customKithSkill, setCustomKithSkill] = useState(String(initial?.line_data.kith_skill ?? ""));
   const [customKithDescription, setCustomKithDescription] = useState(String(initial?.line_data.kith_description ?? ""));
   const [customKith, setCustomKith] = useState(Boolean(initial?.line_data.kith_custom));
-  const [court, setCourt] = useState(translateCourt(String(initial?.line_data.court ?? "")));
+  const [court, setCourt] = useState(initial?.line_data.custom_court ? String(initial.line_data.court ?? "") : translateCourt(String(initial?.line_data.court ?? "")));
   const [customCourt, setCustomCourt] = useState<CustomCourtDefinition | null>(() => normalizeCustomCourt(initial?.line_data.custom_court));
   const [needle, setNeedle] = useState(canonicalChangelingAnchorName("needle", initial?.line_data.needle));
   const [thread, setThread] = useState(canonicalChangelingAnchorName("thread", initial?.line_data.thread));
@@ -229,7 +229,7 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
       }), common.meritWasRemoved),
       line_data: {
         ...(source?.line_data ?? {}), seeming, kith, kith_choice: customKith ? "" : kithChoice,
-        court: court || "Sem Corte", needle, thread, touchstone,
+        court: court || "courtless", needle, thread, touchstone,
         creation_wyrd: wyrd, wyrd: Math.min(10, wyrd + sourceProgression.advancement),
         frailties: normalizeChangelingFrailties(source?.line_data.frailties, wyrd + sourceProgression.advancement),
         custom_court: customCourt, kith_custom: customKith,

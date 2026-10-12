@@ -23,8 +23,9 @@ test("second Regalia follows locale, excludes Seeming then Shadowsoul affinities
       const { blankPrintCharacter } = await server.ssrLoadModule("/app/workspace/blank-print-character.ts");
       const reference = { courts: [], kiths: [], entitlements: [], entitlementPresentation: {}, contractPresentation: {}, tokenPresentation: [], kithPresentation: {} };
       const catalogs = { get: id => id === "changeling-reference" ? reference : [] };
-      const render = initial => renderToStaticMarkup(createElement(LanguageProvider, null, createElement(builder.changelingBuilder.Component, { initial, catalogs, onSave() {}, onSaveDraft() {}, onCancel() {} })));
+      const render = initial => renderToStaticMarkup(createElement(LanguageProvider, null, createElement(builder.changelingBuilder.Component, { player: "Test", initial, catalogs, onSave() {}, onSaveDraft() {}, onCancel() {} })));
       render(undefined);
+      assert.equal(builder.captured.buildCharacter(undefined, true).line_data.court, "courtless");
       assert.ok(view.regaliaChoices.options.includes("Mirror"));
       assert.deepEqual(view.regaliaChoices.groups.map(group => group.label), ["Core", locale === "pt-BR" ? "Suplementos" : "Supplements"]);
       assert.deepEqual(view.regaliaChoices.groups[0].options, ["Crown", "Jewels", "Mirror", "Shield", "Steed", "Sword"]);

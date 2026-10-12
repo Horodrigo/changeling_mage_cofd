@@ -54,6 +54,7 @@ export const changelingRules: GameLineRulesModule = {
           ? { ...item, definitionId: "h-seemings:power-behind-the-throne" } : item),
       line_data: {
         ...character.line_data,
+        ...(!character.line_data.custom_court && ["Sem Corte", "Courtless"].includes(String(character.line_data.court)) ? { court: "courtless" } : {}),
         ...Object.fromEntries(["contracts", "learned_contracts"].filter(key => Array.isArray(character.line_data[key])).map(key => [key, (character.line_data[key] as unknown[]).map(canonicalContractClassification)])),
         frailties: normalizeChangelingFrailties(character.line_data.frailties, wyrd),
       },

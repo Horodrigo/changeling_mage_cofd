@@ -238,3 +238,16 @@ test("legacy Contract classifications become English without translating authore
   assert.deepEqual(current, before);
   for (const value of [null, "Autoral", 4, [], { type: "Unknown", categoryKind: "Unknown", name: "Comum" }]) assert.deepEqual(canonicalContractClassification(value), value);
 });
+
+test("Courtless sentinel is canonical while explicit custom Court text remains authored", async () => {
+  const { changelingRules } = await vite.ssrLoadModule("/game-lines/changeling/rules.ts");
+  for (const court of ["Sem Corte", "Courtless", "courtless"]) {
+    const current = sheet("CtL"); current.line_data.court = court;
+    const before = structuredClone(current);
+    assert.equal(changelingRules.normalizeCharacter(current).line_data.court, "courtless");
+    current.line_data.custom_court = { name: court, description: "Minha descrição" };
+    assert.equal(changelingRules.normalizeCharacter(current).line_data.court, court);
+    delete current.line_data.custom_court;
+    assert.deepEqual(current, before);
+  }
+});

@@ -129,6 +129,8 @@ Keep independent lazy loaders for rules, Builder, Sheet, and catalog groups. Do 
 
 The registry may eagerly import lightweight registration objects. Registration modules must not statically import their heavy implementations.
 
+Changeling saves the absence of Court as `courtless`; the owning schema-2 normalizer accepts the previous exact `Sem Corte`/`Courtless` sentinels only when no explicit custom Court is present. Keep custom Court text unchanged; remove this alias bridge when old sentinels are unsupported.
+
 Changeling Contract classifications persist as `Common`/`Royal` and `Court`/`Independent`/`Regalia`; labels are localized only by the owning UI. `contract-identities.ts` bridges exact old PT enum values in schema-2 Contract selections and v1 player-created Homebrews. The owning normalization preserves all other fields, IDs and receipts; remove the bridge when these old records are unsupported.
 
 ## Catalog Architecture

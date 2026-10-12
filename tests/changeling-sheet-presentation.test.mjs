@@ -22,16 +22,17 @@ const selection = (definition, locale = "en-US", linked = true) => ({
 
 test("Changeling Regalia display localizes both mobile and desktop without changing affinities", async () => {
   const { changelingFavoredRegalia } = await vite.ssrLoadModule("/lib/changeling-regalia.ts");
-  const { systemTerm } = await vite.ssrLoadModule("/lib/system-terms.ts");
+  const { changelingRegaliaName } = await vite.ssrLoadModule("/game-lines/changeling/catalog-homebrews.ts");
   const data = { primary_regalia: "Crown", second_regalia: "Sword", kith: "Shadowsoul" };
   const before = structuredClone(data);
   const favored = changelingFavoredRegalia(data);
   assert.deepEqual(favored, ["Crown", "Sword", "Mirror"]);
-  assert.deepEqual(favored.map((value) => systemTerm(value, "pt-BR")), ["Coroa", "Espada", "Espelho"]);
-  assert.deepEqual(favored.map((value) => systemTerm(value, "en-US")), favored);
+  assert.deepEqual(favored.map((value) => changelingRegaliaName(value, "pt-BR", [])), ["Coroa", "Espada", "Espelho"]);
+  assert.deepEqual(favored.map((value) => changelingRegaliaName(value, "en-US", [])), favored);
   assert.deepEqual(data, before);
   const sheet = await read("game-lines/changeling/sheet-view.tsx");
-  assert.equal(sheet.match(/LineList items=\{changelingFavoredRegalia\(data\)\.map\(\(value\) => systemTerm\(value, locale\)\)\}/g)?.length, 2);
+  assert.match(sheet, /specificPowersTitle=\{t\("ui\.favoredRegalia"\)\}/);
+  assert.equal(sheet.match(/LineList items=\{changelingFavoredRegalia\(data\)\.map\(\(value\) => changelingRegaliaName\(value, locale, customCatalog\)\)\}/g)?.length, 2);
 });
 
 test("mobile Changeling Oaths precede Notes and no longer occupy Powers", async () => {
