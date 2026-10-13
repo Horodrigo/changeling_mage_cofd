@@ -639,7 +639,16 @@
     "source": "Signs of Sorcery",
     "page": 65,
     "summary": "Increase or decrease a computerized device’s equipment bonus for processing, receiving, and transferring data by one per Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Sorvedouro de Dados",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Aumenta ou diminui em 1 por ponto de Potência o bônus de equipamento de um dispositivo computadorizado para processar, receber e transmitir dados.",
+      "description": "Aumenta ou diminui em 1 por ponto de Potência o bônus de equipamento de um dispositivo computadorizado para processar, receber e transmitir dados.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:forces-3-energize-object",
@@ -662,7 +671,16 @@
     "source": "Signs of Sorcery",
     "page": 69,
     "summary": "For one Mana, prepare an object to store up to Potency spells, each cast into it for another Mana. The stored spells remain controlled but inactive until an appropriate kinetic action activates the object; anyone may trigger it, and untriggered spells end with Energize Object.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Energizar Objeto",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Por 1 Mana, prepara um objeto para armazenar até um número de feitiços igual à Potência. Conjurar cada feitiço no objeto custa mais 1 Mana; qualquer pessoa pode ativá-lo aplicando a força apropriada, como disparar uma arma, lançar um objeto ou acionar um interruptor. Os feitiços armazenados terminam se a maga cancelar Energizar Objeto ou sua Duração acabar.",
+      "description": "Por 1 Mana, prepara um objeto para armazenar até um número de feitiços igual à Potência. Conjurar cada feitiço no objeto custa mais 1 Mana; qualquer pessoa pode ativá-lo aplicando a força apropriada, como disparar uma arma, lançar um objeto ou acionar um interruptor. Os feitiços armazenados terminam se a maga cancelar Energizar Objeto ou sua Duração acabar.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:forces-3-gravitic-supremacy",
@@ -715,7 +733,16 @@
     "source": "Signs of Sorcery",
     "page": 65,
     "summary": "Allow a device to function for the Duration without consuming energy from batteries, fuel, an outlet, or another installed power source.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Movimento Perpétuo",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Permite que um dispositivo funcione durante a Duração sem consumir energia de baterias, combustível, tomada ou qualquer outra fonte instalada.",
+      "description": "Permite que um dispositivo funcione durante a Duração sem consumir energia de baterias, combustível, tomada ou qualquer outra fonte instalada.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:forces-3-rapid-access-memory",
@@ -738,7 +765,16 @@
     "source": "Signs of Sorcery",
     "page": 69,
     "summary": "Prepare software on a computer-compatible object for Imbue Item, allowing its spell to activate when connected to a computer and specified interface conditions are met. The software or its user casts from the object’s stored Mana and cannot function after that Mana is exhausted.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Memória de Acesso Rápido",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Prepara um software em objeto compatível com computador para o Aperfeiçoamento Imbuir Item. O feitiço imbuído pode ser ativado quando o objeto é conectado a um computador e as condições de interface definidas pela maga são satisfeitas. Usa a Mana armazenada no objeto; sem essa reserva, o software não pode conjurar o feitiço.",
+      "description": "Prepara um software em objeto compatível com computador para o Aperfeiçoamento Imbuir Item. O feitiço imbuído pode ser ativado quando o objeto é conectado a um computador e as condições de interface definidas pela maga são satisfeitas. Usa a Mana armazenada no objeto; sem essa reserva, o software não pode conjurar o feitiço.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:forces-3-telekinesis",
