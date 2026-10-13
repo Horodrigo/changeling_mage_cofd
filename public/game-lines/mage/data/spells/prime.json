@@ -677,8 +677,17 @@
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
     "page": 28,
-    "summary": "For one Mana, enchant a camera or recorder so it captures Supernal energies. Mages may later examine the recording with Active or Focused Mage Sight as though studying the recorded scene.",
-    "summaryReviewed": true
+    "summary": "For one Mana, enchant a camera or recorder to capture Supernal energies. Mages may study its recordings with Active or Focused Mage Sight as though present, but only one recording per Potency retains that information after the spell ends.",
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Câmera Obscura",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Por 1 Mana, encanta uma câmera ou gravador para registrar energias Supernas. Uma maga pode estudar a gravação com Visão Mágica Ativa ou Focada como se estivesse no local. A informação Superna se apaga ao fim da Duração; apenas uma gravação por ponto de Potência pode conservá-la.",
+      "description": "Por 1 Mana, encanta uma câmera ou gravador para registrar energias Supernas. Uma maga pode estudar a gravação com Visão Mágica Ativa ou Focada como se estivesse no local. A informação Superna se apaga ao fim da Duração; apenas uma gravação por ponto de Potência pode conservá-la. +2 Alcance e 1 Mana: As gravações feitas enquanto o feitiço está ativo conservam essa informação de modo duradouro.",
+      "reach": "+2 Alcance e 1 Mana: As gravações feitas enquanto o feitiço está ativo conservam essa informação de modo duradouro."
+    }
   },
   {
     "id": "mta-2ed:prime-3-channel-mana",
@@ -863,7 +872,16 @@
     "source": "Signs of Sorcery",
     "page": 69,
     "summary": "Prepare a defined room or space for the Imbue Item Attainment, using the appropriate Area Scale. Its persistent or triggered spell affects occupants, but the space stores no Mana, so each user supplies any required Mana.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Imbuir Cômodo",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Prepara um cômodo ou espaço definido para o Aperfeiçoamento Imbuir Item, usando a Escala de Área apropriada. Os ocupantes podem ativar o feitiço persistente ou disparado, mas o espaço não armazena Mana; cada usuário paga a Mana necessária.",
+      "description": "Prepara um cômodo ou espaço definido para o Aperfeiçoamento Imbuir Item, usando a Escala de Área apropriada. Os ocupantes podem ativar o feitiço persistente ou disparado, mas o espaço não armazena Mana; cada usuário paga a Mana necessária.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-mana-battery",
@@ -885,7 +903,16 @@
     "source": "Signs of Sorcery",
     "page": 70,
     "summary": "Prepare an object for Imbue Item so it receives a Mana pool instead of a spell. Required imbuement successes equal the desired capacity; the stored Mana can power spells and can be replenished with Channel Mana.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Bateria de Mana",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Prepara um objeto para armazenar uma reserva de Mana por meio de Imbuir Item, em vez de um feitiço. O número de sucessos exigido na imbuição é igual à capacidade desejada. Qualquer pessoa em contato pode retirar Mana para si ou usá-la para conjurar; a reserva pode ser recarregada com Canalizar Mana.",
+      "description": "Prepara um objeto para armazenar uma reserva de Mana por meio de Imbuir Item, em vez de um feitiço. O número de sucessos exigido na imbuição é igual à capacidade desejada. Qualquer pessoa em contato pode retirar Mana para si ou usá-la para conjurar; a reserva pode ser recarregada com Canalizar Mana.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:prime-3-platonic-form",
@@ -937,8 +964,17 @@
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
     "page": 72,
-    "summary": "For at least one Mana, alter a mage’s imbuement process so an item created before the spell ends always targets its user when activated, regardless of the original spell’s intended subject.",
-    "summaryReviewed": true
+    "summary": "For one Mana, alter a mage’s imbuement process so an item created before the spell ends always targets its user when activated, regardless of the original spell’s intended subject.",
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Alvo Primário",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Por 1 Mana, altera o processo de imbuição de uma maga: o item criado antes do fim da Duração sempre afeta seu usuário, independentemente do alvo normal do feitiço imbuído.",
+      "description": "Por 1 Mana, altera o processo de imbuição de uma maga: o item criado antes do fim da Duração sempre afeta seu usuário, independentemente do alvo normal do feitiço imbuído.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-reveal-marks",
@@ -961,7 +997,16 @@
     "source": "Signs of Sorcery",
     "page": 74,
     "summary": "Reveal every Signature Nimbus associated with a subject and add Potency to Focused Mage Sight rolls made to scrutinize those signatures.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Revelar Marcas",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Revela todos os Nimbus de Assinatura associados ao alvo e concede bônus igual à Potência nas jogadas de Visão Mágica Focada para examiná-los.",
+      "description": "Revela todos os Nimbus de Assinatura associados ao alvo e concede bônus igual à Potência nas jogadas de Visão Mágica Focada para examiná-los. +1 Alcance: Também acrescenta a Potência a Choques de Vontades para revelar um Nimbus de Assinatura oculto.",
+      "reach": "+1 Alcance: Também acrescenta a Potência a Choques de Vontades para revelar um Nimbus de Assinatura oculto."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-scribe-palimpsest",
@@ -983,7 +1028,16 @@
     "source": "Signs of Sorcery",
     "page": 84,
     "summary": "For one Mana, inscribe one rote into an erased or overwritten Grimoire. The Storyteller chooses an Arcanum, and later castings of the rote behave as though they included that Arcanum at dots equal to Potency, producing unpredictable conjunctional effects.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Inscrever Palimpsesto",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Total de pontos dos Arcanos usados na Rota + 1",
+      "summary": "Por 1 Mana, inscreve uma Rota em um Grimório apagado ou sobrescrito. O Narrador escolhe um Arcano; ao conjurar a Rota desse Grimório, ela incorpora pontos nesse Arcano iguais à Potência, produzindo efeitos combinados imprevisíveis.",
+      "description": "Por 1 Mana, inscreve uma Rota em um Grimório apagado ou sobrescrito. O Narrador escolhe um Arcano; ao conjurar a Rota desse Grimório, ela incorpora pontos nesse Arcano iguais à Potência, produzindo efeitos combinados imprevisíveis. +1 Alcance e 1 Mana: A Duração torna-se duradoura.",
+      "reach": "+1 Alcance e 1 Mana: A Duração torna-se duradoura."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-spirit-vessel",
@@ -1006,7 +1060,16 @@
     "source": "Signs of Sorcery",
     "page": 69,
     "summary": "Prepare a spirit for the Imbue Item Attainment. The spell must cross the Gauntlet or target a Manifested spirit, and the entity automatically Withstands with Resistance.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Recipiente Espiritual",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Resistência",
+      "summary": "Prepara um espírito para o Aperfeiçoamento Imbuir Item. A magia precisa atravessar a Barreira ou atingir um espírito Manifestado; o espírito resiste automaticamente com seu Atributo Resistência.",
+      "description": "Prepara um espírito para o Aperfeiçoamento Imbuir Item. A magia precisa atravessar a Barreira ou atingir um espírito Manifestado; o espírito resiste automaticamente com seu Atributo Resistência.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-steal-mana",
@@ -1028,7 +1091,16 @@
     "source": "Signs of Sorcery",
     "page": 72,
     "summary": "For one Mana, alter a mage’s imbuement process so an item steals its Mana capacity from each user on activation. Excess stolen Mana dissipates; if the user lacks enough Mana, each missing point instead inflicts one bashing damage.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Roubar Mana",
+      "practice": "Desfiamento",
+      "primaryFactor": "Duração",
+      "withstand": "Vigor",
+      "summary": "Por 1 Mana, altera a imbuição de um item para que ele retire de seu usuário a Mana necessária ao ativar o feitiço. A Mana acima da capacidade do item se dissipa; cada ponto que o usuário não puder fornecer causa um ponto de dano contundente.",
+      "description": "Por 1 Mana, altera a imbuição de um item para que ele retire de seu usuário a Mana necessária ao ativar o feitiço. A Mana acima da capacidade do item se dissipa; cada ponto que o usuário não puder fornecer causa um ponto de dano contundente.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:prime-3-stealing-fire",
@@ -1081,7 +1153,16 @@
     "source": "Signs of Sorcery",
     "page": 70,
     "summary": "For one Mana, prepare an item to hold up to Potency touch- or self-range spells, each stored for another Mana. A stored spell activates when someone spends one Mana to use it; otherwise it ends if its own Duration or Stored Spell expires or is canceled.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Feitiço Armazenado",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Por 1 Mana, prepara um item para conter até Potência feitiços de alcance pessoal ou de toque. Cada feitiço armazenado exige mais 1 Mana e não se ativa até que alguém toque o item e gaste 1 Mana; o efeito permanece sob controle da conjuradora até ser liberado. Os feitiços terminam se a Duração deles ou deste feitiço acabar, ou se este for cancelado.",
+      "description": "Por 1 Mana, prepara um item para conter até Potência feitiços de alcance pessoal ou de toque. Cada feitiço armazenado exige mais 1 Mana e não se ativa até que alguém toque o item e gaste 1 Mana; o efeito permanece sob controle da conjuradora até ser liberado. Os feitiços terminam se a Duração deles ou deste feitiço acabar, ou se este for cancelado.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:prime-4-apocalypse",
