@@ -3,6 +3,7 @@
 ## X01 — persistência
 
 - Identificar valores de catálogo e configuração ainda persistidos em português, inclusive em Homebrews importados. Converter somente aliases exatos da linha proprietária; preservar texto autoral, IDs, compras e estornos.
+- Corrigir a reabertura de Rotes e Praxes em Mage: `readSpells` ainda aceita nome/originalName mesmo quando há ID explícito e descarta snapshots cujo catálogo esteja indisponível. Resolver IDs primeiro, aceitar nome antigo somente se for inequívoco e preservar a escolha existente.
 - Após os lotes restantes, verificar criação, edição, importação, exportação, reabertura e troca EN/PT nas cinco linhas. O JSON deve manter identidades canônicas em inglês, exceto texto escrito pelo usuário.
 
 ## Vampire
