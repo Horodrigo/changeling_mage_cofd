@@ -1,26 +1,23 @@
-# Auditoria de tradução — trabalho pendente
+# Auditoria de tradução — pendências
 
-## X01 — persistência e histórico
+## X01 — persistência
 
-- Inventariar e normalizar os valores de catálogo e configuração ainda salvos em português, inclusive em Homebrews importados. Migrar apenas aliases exatos identificados pela linha proprietária, preservando texto autoral, IDs, compras e estornos.
-- Decidir quais campos de `line_data.learned_contracts` precisam continuar como snapshot de contingência e como tratar textos PT históricos que não coincidam com a apresentação atual.
-- Decidir como apresentar rótulos históricos de origem ambígua, inclusive nomes antigos de `undead_companions` que podem ser automáticos ou escritos pelo jogador, sem reescrever snapshots e recibos.
-- Ao concluir os lotes restantes, verificar criação, edição, importação, exportação, reabertura e ida e volta EN/PT nas cinco linhas. O JSON deve salvar chaves e escolhas canônicas em inglês, exceto texto escrito pelo usuário.
+- Identificar valores de catálogo e configuração ainda persistidos em português, inclusive em Homebrews importados. Converter somente aliases exatos da linha proprietária; preservar texto autoral, IDs, compras e estornos.
+- Decidir quais campos de `line_data.learned_contracts` precisam permanecer como snapshot de contingência e como exibir textos PT históricos sem correspondência exata com o catálogo atual.
+- Decidir como exibir nomes históricos de origem ambígua em `undead_companions` (nome automático ou escrito pelo jogador), sem reescrever snapshots ou recibos.
+- Após os lotes restantes, verificar criação, edição, importação, exportação, reabertura e troca EN/PT nas cinco linhas. O JSON deve manter identidades canônicas em inglês, exceto texto escrito pelo usuário.
 
 ## Vampire
 
-- **Lithopedia — escolhas gratuitas:** implementar o rito gratuito no primeiro ponto e os ritos posteriores condicionados a Status na Bloodline, conforme Strange Shades p. 28. Avisar o usuário antes de acrescentar esse subsistema; integrar criação, Experience, ficha e estorno sem inferir concessões antigas.
-- **Hidden Devotions — fonte original:** conferir os textos do autor para Rapidity / Slow and Steady, sobretudo faixas de preço e adequação do alvo a procedimentos ou falas complexas. Não usar a reprodução pública ou o índice local como confirmação da fonte.
-- **BFFs, Violent Coercion e Manic Depression:** conferir na fonte original a resistência contra alvos sobrenaturais de outras linhas. O índice local diz Composure + Tolerance; os registros atuais usam Composure + Blood Potency. Não alterar a mecânica apenas com base no índice.
-- **Conditions de Hidden Devotions:** obter os textos completos de Coerced, Quelled, Manic e Melancholic; então cadastrar efeitos, resoluções, Atos e identidades próprios. Distinguir Coerced de Leveraged/Coagido Core e conferir as referências a Addiction e Swooning.
-- **Materialized e Power Surge:** localizar regras completas na fonte antes de cadastrar essas Conditions; atualmente há apenas nomes traduzidos em referências.
+- **Lithopedia:** implementar a escolha do rito gratuito no primeiro ponto e dos ritos posteriores condicionados a Status na Bloodline (Strange Shades p. 28), em criação, Experience, ficha e estorno. Avisar o usuário antes de acrescentar esse subsistema; não inferir concessões em compras antigas.
+- **Hidden Devotions:** conferir na fonte original Rapidity e Slow and Steady, especialmente preço e adequação de alvos com procedimentos ou falas complexas.
+- **BFFs, Violent Coercion e Manic Depression:** conferir na fonte original a resistência de alvos sobrenaturais de outras linhas; o índice local e o catálogo divergem entre Composure + Tolerance e Composure + Blood Potency.
+- **Coerced, Quelled, Manic e Melancholic:** obter os textos completos de Hidden Devotions e cadastrar efeitos, resolução, Ato e identidades próprios. Distinguir Coerced de Leveraged/Coagido Core; conferir as referências a Addiction e Swooning.
+- **Materialized e Power Surge:** localizar as regras completas e cadastrar as Conditions; por enquanto só há nomes localizados nas referências.
 
 ## Mage
 
-| Área | Trabalho pendente |
-| --- | --- |
-| G02 — Merits | Traduzir nome, requisitos, descrição e níveis aplicáveis dos **42/71 Merits** restantes em `public/game-lines/mage/data/merits*.json`. Manter requisitos e identidades canônicos para parsers e compras. |
-| G04 — Legacies | Localizar as **16 Legacies** e **43 Attainments** em `game-lines/mage/catalog-data/legacies*.json`: nomes descritivos, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções. Preservar nomes próprios. |
-| G05 — Conditions | Traduzir as **24/25 Conditions** ainda sem apresentação PT: nome, descrição, resolução e Ato. Conferir Megalomaniacal e Rampant com suas próprias entradas. |
-
-- **Haunted Grimoire — elegibilidade:** corrigir no índice de Spells as variantes históricas Death 4 e Mind 4 conforme Signs of Sorcery p. 86 (Spirit 4 + Prime 1; Death 5 como substituição), preservando IDs, escolhas e recibos.
+- **G02 — Merits:** localizar nome, requisitos, descrição e níveis dos **42/71 Merits** restantes em `public/game-lines/mage/data/merits*.json`, sem alterar requisitos canônicos, IDs ou compras.
+- **G04 — Legacies:** localizar as **16 Legacies** e **43 Attainments** em `game-lines/mage/catalog-data/legacies*.json`: títulos descritivos, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções. Preservar nomes próprios.
+- **G05 — Conditions:** localizar as **24/25 Conditions** restantes: nome, descrição, resolução e Ato; conferir Megalomaniacal e Rampant com as respectivas entradas.
+- **Haunted Grimoire:** corrigir a elegibilidade das variantes históricas Death 4 e Mind 4 no índice de Spells conforme Signs of Sorcery p. 86 (Spirit 4 + Prime 1; Death 5 como substituição), preservando IDs, escolhas e recibos.
