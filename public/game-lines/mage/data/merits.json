@@ -71,15 +71,15 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened; Astral Adept, Resolve •••",
-    "description": "Make a Clash of Wills to meditate into the Oneiros of a mage whose soul stone you possess, instead of your own.",
+    "description": "Use a mage's soul stone to meditate into that mage's Oneiros instead of your own. This provokes a Clash of Wills using Gnosis + Resolve. On an exceptional success, attempts to force you out are Withstood by your Resolve. On failure, you still enter, but the owner senses you and you take a penalty equal to their Resolve to navigate, interact with the environment or Goetia, or leave.",
     "page": 91,
     "priority": 2,
     "translatedName": "Intruso Astral",
-    "descriptionEn": "Make a Clash of Wills to meditate into the Oneiros of a mage whose soul stone you possess, instead of your own.",
+    "descriptionEn": "Use a mage's soul stone to meditate into that mage's Oneiros instead of your own. This provokes a Clash of Wills using Gnosis + Resolve. On an exceptional success, attempts to force you out are Withstood by your Resolve. On failure, you still enter, but the owner senses you and you take a penalty equal to their Resolve to navigate, interact with the environment or Goetia, or leave.",
     "presentationPt": {
       "name": "Intruso Astral",
       "prerequisites": "Desperto; Adepto Astral; Perseverança •••",
-      "description": "Faça um Choque de Vontades para meditar e entrar no Oneiros de um mago cuja Pedra da Alma você possui, em vez de entrar no seu próprio Oneiros."
+      "description": "Use a Pedra da Alma de outro mago para meditar e entrar no Oneiros dele em vez do seu. Isso provoca um Choque de Vontades com Gnose + Perseverança. Com sucesso excepcional, tentativas de expulsá-lo sofrem Resistência igual à sua Perseverança. Mesmo se falhar, você entra, mas o dono percebe sua presença e você sofre penalidade igual à Perseverança dele para navegar, interagir com o ambiente ou Goétia, ou sair."
     }
   },
   {
@@ -267,15 +267,15 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened; Composure •••",
-    "description": "When your character has another mage's soul stone you can counterspell any Arcanum from its owner, applying Merit dots as your Arcanum rating. If used as a Yantra during a Prime dispellation, reduce Withstand by dots in this Merit.",
+    "description": "With another mage's soul stone, you may Counterspell its creator's spells in any Arcanum if you meet the Attainment's other requirements. Each Merit dot acts as an Arcanum dot for this purpose; you may use your own higher rating instead. Using the stone as a Yantra in a Prime dispellation reduces the subject spell's Withstand by Merit dots.",
     "page": 91,
     "priority": 2,
     "translatedName": "Alma Dominante",
-    "descriptionEn": "When your character has another mage's soul stone you can counterspell any Arcanum from its owner, applying Merit dots as your Arcanum rating. If used as a Yantra during a Prime dispellation, reduce Withstand by dots in this Merit.",
+    "descriptionEn": "With another mage's soul stone, you may Counterspell its creator's spells in any Arcanum if you meet the Attainment's other requirements. Each Merit dot acts as an Arcanum dot for this purpose; you may use your own higher rating instead. Using the stone as a Yantra in a Prime dispellation reduces the subject spell's Withstand by Merit dots.",
     "presentationPt": {
       "name": "Alma Dominante",
       "prerequisites": "Desperto; Compostura •••",
-      "description": "Enquanto possuir a Pedra da Alma de outro mago, você pode lançar Contrafeitiço contra qualquer Arcano de seu dono usando os pontos deste Mérito como sua classificação no Arcano. Se usar a Pedra da Alma como Yantra em uma dissipação de Primórdio, reduza a Resistência pelos pontos deste Mérito."
+      "description": "Com a Pedra da Alma de outro mago, você pode usar Contrafeitiço contra os feitiços do criador em qualquer Arcano se cumprir os demais requisitos do Aperfeiçoamento. Cada ponto deste Mérito conta como um ponto no Arcano para esse fim; você pode usar sua própria classificação se for maior. Usar a Pedra da Alma como Yantra numa dissipação de Primórdio reduz a Resistência do feitiço alvo pelos pontos do Mérito."
     }
   },
   {
@@ -307,11 +307,16 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened; Empathy ••",
-    "description": "See flashbacks of a soul stone's owner. Gain exceptional success off 3 dice for active mage sight to investigate a mystery based on the soul stone's Path. Once per story, meditate on the soul stone to ask yes or no questions about the mystery.",
+    "description": "A dead mage's soul stone shows visions of its creator's life. When using Focused Mage Sight to Scrutinize a Mystery based on the stone's Path Arcana, achieve exceptional success with three successes instead of five. Once per story, spend Willpower and an instant action meditating with the stone to ask a yes/no question about a Mystery; the vision may reveal further clues.",
     "page": 91,
     "priority": 2,
-    "translatedName": "Echo Chamber",
-    "descriptionEn": "See flashbacks of a soul stone's owner. Gain exceptional success off 3 dice for active mage sight to investigate a mystery based on the soul stone's Path. Once per story, meditate on the soul stone to ask yes or no questions about the mystery."
+    "translatedName": "Câmara de Ecos",
+    "descriptionEn": "A dead mage's soul stone shows visions of its creator's life. When using Focused Mage Sight to Scrutinize a Mystery based on the stone's Path Arcana, achieve exceptional success with three successes instead of five. Once per story, spend Willpower and an instant action meditating with the stone to ask a yes/no question about a Mystery; the vision may reveal further clues.",
+    "presentationPt": {
+      "name": "Câmara de Ecos",
+      "prerequisites": "Desperto; Empatia ••",
+      "description": "A Pedra da Alma de um mago morto mostra visões da vida de seu criador. Ao usar Visão Mágica Focada para Escrutinar um Mistério baseado nos Arcanos do Caminho da Pedra, obtenha sucesso excepcional com três sucessos em vez de cinco. Uma vez por história, gaste um ponto de Força de Vontade e uma ação instantânea meditando com a Pedra para fazer uma pergunta de sim ou não sobre um Mistério; a visão pode revelar pistas adicionais."
+    }
   },
   {
     "id": "mta-2ed:enhanced-item",
@@ -360,11 +365,16 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened; Dream or Astral Adept, Mind ••",
-    "description": "Spend Mana while using active mage sight to roll Clash of Wills to check if you are under some form of illusion, hallucination, forced astral journey or other supernatural power that separates you from reality.",
+    "description": "While using Active Mage Sight, spend one Mana and an instant action with your soul stone to Clash using Gnosis + Resolve against an illusion, hallucination, forced Astral journey, or other supernatural separation from reality. On success, the effect ends immediately and you perceive irregularities in the Mana flowing through the stone. The action's form depends on the stone; if no such effect exists, an unusual phenomenon still occurs.",
     "page": 91,
     "priority": 2,
-    "translatedName": "Epiphany Stone",
-    "descriptionEn": "Spend Mana while using active mage sight to roll Clash of Wills to check if you are under some form of illusion, hallucination, forced astral journey or other supernatural power that separates you from reality."
+    "translatedName": "Pedra da Epifania",
+    "descriptionEn": "While using Active Mage Sight, spend one Mana and an instant action with your soul stone to Clash using Gnosis + Resolve against an illusion, hallucination, forced Astral journey, or other supernatural separation from reality. On success, the effect ends immediately and you perceive irregularities in the Mana flowing through the stone. The action's form depends on the stone; if no such effect exists, an unusual phenomenon still occurs.",
+    "presentationPt": {
+      "name": "Pedra da Epifania",
+      "prerequisites": "Desperto; Sonho ou Adepto Astral; Mente ••",
+      "description": "Durante a Visão Mágica Ativa, gaste um ponto de Mana e uma ação instantânea usando sua Pedra da Alma para disputar um Choque de Vontades com Gnose + Perseverança contra uma ilusão, alucinação, viagem Astral forçada ou outro efeito sobrenatural que o afaste da realidade. Com sucesso, o efeito termina imediatamente e você percebe irregularidades na Mana que flui pela Pedra. A forma da ação depende da Pedra; se não houver esse efeito, ainda ocorre um fenômeno incomum."
+    }
   },
   {
     "id": "mta-2ed:familiar",
