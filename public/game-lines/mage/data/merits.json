@@ -2,9 +2,7 @@
   {
     "id": "mta-2ed:adamant-hand",
     "name": "Adamant Hand",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -25,9 +23,7 @@
   {
     "id": "mta-2ed:artifact",
     "name": "Artifact",
-    "ratings": [
-      3
-    ],
+    "ratings": [3],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -49,9 +45,7 @@
   {
     "id": "mta-2ed:astral-adept",
     "name": "Astral Adept",
-    "ratings": [
-      3
-    ],
+    "ratings": [3],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -71,9 +65,7 @@
   {
     "id": "mta-signs:astral-intruder",
     "name": "Astral Intruder",
-    "ratings": [
-      3
-    ],
+    "ratings": [3],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -88,13 +80,7 @@
   {
     "id": "mta-2ed:awakened-status",
     "name": "Awakened Status",
-    "ratings": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
+    "ratings": [1, 2, 3, 4, 5],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -104,15 +90,18 @@
     "page": 100,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Awakened Status",
-    "descriptionEn": "Consilium/Order Status: choose a Consilium or Order Caucus. Gain Status protections and use its dots for temporary magical requisitions; permanent requisitions increase Availability by two. Normally only one Order may have more than one dot: a second Order permits one dot, without requisitions. Seer Status also adds to Resources for mundane acquisitions. Status outside the home Caucus suffers the geographical penalties on Mage p. 100."
+    "translatedName": "Status Desperto",
+    "descriptionEn": "Consilium/Order Status: choose a Consilium or Order Caucus. Gain Status protections and use its dots for temporary magical requisitions; permanent requisitions increase Availability by two. Normally only one Order may have more than one dot: a second Order permits one dot, without requisitions. Seer Status also adds to Resources for mundane acquisitions. Status outside the home Caucus suffers the geographical penalties on Mage p. 100.",
+    "presentationPt": {
+      "name": "Status Desperto",
+      "prerequisites": "Desperto",
+      "description": "Escolha um Consilium ou Caucus de Ordem. Este Mérito concede as proteções de Status e permite requisitar recursos mágicos temporários com pontos iguais à classificação; requisições permanentes aumentam a Disponibilidade em dois. Normalmente apenas uma Ordem pode ter mais de um ponto de Status; em uma segunda Ordem, o limite é um ponto e não há requisições. O Status entre Videntes também aumenta Recursos para aquisições mundanas. Fora do Caucus de origem, aplicam-se as penalidades geográficas de Mage p. 100."
+    }
   },
   {
     "id": "mta-2ed:between-the-ticks",
     "name": "Between the Ticks",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -132,9 +121,7 @@
   {
     "id": "mta-signs:broad-dedication",
     "name": "Broad Dedication",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -149,9 +136,7 @@
   {
     "id": "mta-2ed:cabal-theme",
     "name": "Cabal Theme",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -171,9 +156,7 @@
   {
     "id": "mta-signs:cognoscente",
     "name": "Cognoscente",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -188,13 +171,7 @@
   {
     "id": "mta-signs:daimonomikon",
     "name": "Daimonomikon",
-    "ratings": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
+    "ratings": [1, 2, 3, 4, 5],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -237,13 +214,7 @@
   {
     "id": "mta-2ed:destiny",
     "name": "Destiny",
-    "ratings": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
+    "ratings": [1, 2, 3, 4, 5],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -252,19 +223,18 @@
     "description": "Each chapter, gain Destiny points equal to Merit dots. Spend one for rote quality before a mundane roll or to reroll a mundane action afterward, keeping the new result. Also spend Willpower to affect spellcasting. Record a Doom: Willpower gives only +2 dice (or +1 static) to avoid it; a failed action furthering it refunds the Willpower spent.",
     "page": 100,
     "priority": 2,
-    "translatedName": "Destiny",
-    "descriptionEn": "Each chapter, gain Destiny points equal to Merit dots. Spend one for rote quality before a mundane roll or to reroll a mundane action afterward, keeping the new result. Also spend Willpower to affect spellcasting. Record a Doom: Willpower gives only +2 dice (or +1 static) to avoid it; a failed action furthering it refunds the Willpower spent."
+    "translatedName": "Destino",
+    "descriptionEn": "Each chapter, gain Destiny points equal to Merit dots. Spend one for rote quality before a mundane roll or to reroll a mundane action afterward, keeping the new result. Also spend Willpower to affect spellcasting. Record a Doom: Willpower gives only +2 dice (or +1 static) to avoid it; a failed action furthering it refunds the Willpower spent.",
+    "presentationPt": {
+      "name": "Destino",
+      "prerequisites": "Desperto",
+      "description": "A cada sessão, receba pontos de Destino iguais à classificação deste Mérito. Gaste um antes de uma jogada mundana para conferir a qualidade de Rota, ou depois para repetir a jogada e aceitar o novo resultado. Também pode gastar Força de Vontade para afetar uma jogada de conjuração. Registre uma Ruína: gastar Força de Vontade para evitá-la concede apenas +2 dados, ou +1 a um valor estático; se uma ação que a favoreça falhar, recupere a Força de Vontade gasta nela."
+    }
   },
   {
     "id": "mta-signs:dominant-soul",
     "name": "Dominant Soul",
-    "ratings": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
+    "ratings": [1, 2, 3, 4, 5],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -279,13 +249,7 @@
   {
     "id": "mta-2ed:dream",
     "name": "Dream",
-    "ratings": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
+    "ratings": [1, 2, 3, 4, 5],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -294,15 +258,18 @@
     "description": "Once per chapter, after four hours of sleep or meditation, ask up to Merit dots yes/no questions about a topic you understand. The Storyteller answers accurately, using maybe only if neither answer is true. Enter your own dreams without a meditation roll.",
     "page": 101,
     "priority": 2,
-    "translatedName": "Dream",
-    "descriptionEn": "Once per chapter, after four hours of sleep or meditation, ask up to Merit dots yes/no questions about a topic you understand. The Storyteller answers accurately, using maybe only if neither answer is true. Enter your own dreams without a meditation roll."
+    "translatedName": "Sonho",
+    "descriptionEn": "Once per chapter, after four hours of sleep or meditation, ask up to Merit dots yes/no questions about a topic you understand. The Storyteller answers accurately, using maybe only if neither answer is true. Enter your own dreams without a meditation roll.",
+    "presentationPt": {
+      "name": "Sonho",
+      "prerequisites": "Desperto; Raciocínio •••; Compostura •••",
+      "description": "Uma vez por sessão, após pelo menos quatro horas de sono ou meditação, faça ao Narrador até um número de perguntas de sim ou não sobre um assunto que compreende igual aos pontos deste Mérito. Ele responde corretamente e só pode dizer “talvez” quando nenhuma das respostas é verdadeira. Você também entra nos próprios sonhos sem teste de meditação."
+    }
   },
   {
     "id": "mta-signs:echo-chamber",
     "name": "Echo Chamber",
-    "ratings": [
-      4
-    ],
+    "ratings": [4],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -317,9 +284,7 @@
   {
     "id": "mta-2ed:enhanced-item",
     "name": "Enhanced Item",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -330,16 +295,18 @@
     "unbounded": true,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Enhanced Item",
-    "descriptionEn": "Record an item and its indefinite spell enhancements. Each dot buys one dot of spells up to five; later Merit dots each buy half a dot of spells. Use the highest Arcanum of a conjunctional spell. A dot may instead buy +1 equipment bonus, Structure, or Durability. May share an item with Imbued Item, but not Artifact."
+    "translatedName": "Item Aprimorado",
+    "descriptionEn": "Record an item and its indefinite spell enhancements. Each dot buys one dot of spells up to five; later Merit dots each buy half a dot of spells. Use the highest Arcanum of a conjunctional spell. A dot may instead buy +1 equipment bonus, Structure, or Durability. May share an item with Imbued Item, but not Artifact.",
+    "presentationPt": {
+      "name": "Item Aprimorado",
+      "prerequisites": "Desperto",
+      "description": "Registre um item modificado por feitiços de Duração indefinida. Cada ponto do Mérito compra um ponto de feitiços até o quinto; depois disso, cada ponto adicional compra meio ponto de feitiços. Em feitiços com vários Arcana, use o mais alto para calcular o custo. Um ponto pode comprar +1 no bônus de equipamento, na Estrutura ou na Durabilidade em vez de um feitiço. O mesmo item pode ter o Mérito Item Imbuído, mas não o Mérito Artefato."
+    }
   },
   {
     "id": "mta-signs:enriched-item",
     "name": "Enriched Item",
-    "ratings": [
-      2,
-      4
-    ],
+    "ratings": [2, 4],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -355,9 +322,7 @@
   {
     "id": "mta-signs:epiphany-stone",
     "name": "Epiphany Stone",
-    "ratings": [
-      4
-    ],
+    "ratings": [4],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -372,10 +337,7 @@
   {
     "id": "mta-2ed:familiar",
     "name": "Familiar",
-    "ratings": [
-      2,
-      4
-    ],
+    "ratings": [2, 4],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -386,14 +348,17 @@
     "repeatable": true,
     "priority": 2,
     "translatedName": "Familiar",
-    "descriptionEn": "A bonded ghost, spirit, or Goetia. At two dots it has Rank 1; at four, Rank 2. Record the entity and whether it is in Twilight or Fettered to an item or animal. Its full traits follow the ephemeral entity rules."
+    "descriptionEn": "A bonded ghost, spirit, or Goetia. At two dots it has Rank 1; at four, Rank 2. Record the entity and whether it is in Twilight or Fettered to an item or animal. Its full traits follow the ephemeral entity rules.",
+    "presentationPt": {
+      "name": "Familiar",
+      "prerequisites": "Desperto",
+      "description": "A personagem estabelece um vínculo com um fantasma, espírito ou Goetia. Com dois pontos, a entidade tem Posto 1; com quatro, Posto 2. Registre a entidade e se ela permanece no Crepúsculo ou vinculada a um objeto ou animal. Suas demais características seguem as regras de entidades efêmeras."
+    }
   },
   {
     "id": "mta-2ed:fast-spells",
     "name": "Fast Spells",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -408,9 +373,7 @@
   {
     "id": "core-dark-eras:fire-keeper",
     "name": "Fire Keeper",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "core-dark-eras",
     "source": "Dark Eras",
@@ -425,9 +388,7 @@
   {
     "id": "mta-signs:fluent-high-speech",
     "name": "Fluent High Speech",
-    "ratings": [
-      3
-    ],
+    "ratings": [3],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -442,13 +403,7 @@
   {
     "id": "mta-2ed:grimoire",
     "name": "Grimoire",
-    "ratings": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
+    "ratings": [1, 2, 3, 4, 5],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -464,9 +419,7 @@
   {
     "id": "mta-signs:hidden-high-speech",
     "name": "Hidden High Speech",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -481,9 +434,7 @@
   {
     "id": "mta-2ed:high-speech",
     "name": "High Speech",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -498,9 +449,7 @@
   {
     "id": "mta-signs:imbued-ally",
     "name": "Imbued Ally",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -517,9 +466,7 @@
   {
     "id": "mta-2ed:imbued-item",
     "name": "Imbued Item",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -536,9 +483,7 @@
   {
     "id": "mta-signs:imposing-nimbus",
     "name": "Imposing Nimbus",
-    "ratings": [
-      3
-    ],
+    "ratings": [3],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -553,13 +498,7 @@
   {
     "id": "mta-2ed:infamous-mentor",
     "name": "Infamous Mentor",
-    "ratings": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
+    "ratings": [1, 2, 3, 4, 5],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -575,9 +514,7 @@
   {
     "id": "mta-signs:inheritance",
     "name": "Inheritance",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -592,9 +529,7 @@
   {
     "id": "mta-signs:keen-periphery",
     "name": "Keen Periphery",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -609,9 +544,7 @@
   {
     "id": "mta-signs:legacy-pedagogue",
     "name": "Legacy Pedagogue",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -626,9 +559,7 @@
   {
     "id": "mta-2ed:lex-magica",
     "name": "Lex Magica",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -643,9 +574,7 @@
   {
     "id": "mta-signs:mana-battery",
     "name": "Mana Battery",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -662,9 +591,7 @@
   {
     "id": "mta-2ed:mana-sensitivity",
     "name": "Mana Sensitivity",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -679,11 +606,7 @@
   {
     "id": "mta-2ed:mystery-cult-influence",
     "name": "Mystery Cult Influence",
-    "ratings": [
-      3,
-      4,
-      5
-    ],
+    "ratings": [3, 4, 5],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -729,11 +652,7 @@
       "en-US": "Awakened",
       "pt-BR": "Desperto"
     },
-    "ratings": [
-      1,
-      2,
-      3
-    ],
+    "ratings": [1, 2, 3],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -751,13 +670,7 @@
   {
     "id": "mta-signs:order-archive",
     "name": "Order Archive",
-    "ratings": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
+    "ratings": [1, 2, 3, 4, 5],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -772,9 +685,7 @@
   {
     "id": "mta-signs:perfected-item",
     "name": "Perfected Item",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -790,9 +701,7 @@
   {
     "id": "mta-signs:persistent-nimbus",
     "name": "Persistent Nimbus",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -807,10 +716,7 @@
   {
     "id": "mta-signs:piercing-glance",
     "name": "Piercing Glance",
-    "ratings": [
-      2,
-      4
-    ],
+    "ratings": [2, 4],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -825,9 +731,7 @@
   {
     "id": "core-dark-eras-2:plunder-mana",
     "name": "Plunder Mana",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "core-dark-eras-2",
     "source": "Dark Eras 2",
@@ -842,10 +746,7 @@
   {
     "id": "mta-2ed:potent-nimbus",
     "name": "Potent Nimbus",
-    "ratings": [
-      1,
-      2
-    ],
+    "ratings": [1, 2],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -860,9 +761,7 @@
   {
     "id": "mta-signs:potent-soul",
     "name": "Potent Soul",
-    "ratings": [
-      3
-    ],
+    "ratings": [3],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -877,9 +776,7 @@
   {
     "id": "mta-2ed:potent-resonance",
     "name": "Potent Resonance",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -894,9 +791,7 @@
   {
     "id": "mta-signs:profligate-dedication",
     "name": "Profligate Dedication",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -911,9 +806,7 @@
   {
     "id": "core-dark-eras:sea-s-hunger",
     "name": "Sea's Hunger",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "core-dark-eras",
     "source": "Dark Eras",
@@ -928,9 +821,7 @@
   {
     "id": "mta-signs:second-person-high-speech",
     "name": "Second-Person High Speech",
-    "ratings": [
-      3
-    ],
+    "ratings": [3],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -945,11 +836,7 @@
   {
     "id": "mta-2ed:shadow-name",
     "name": "Shadow Name",
-    "ratings": [
-      1,
-      2,
-      3
-    ],
+    "ratings": [1, 2, 3],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -964,9 +851,7 @@
   {
     "id": "mta-signs:shadow-self",
     "name": "Shadow Self",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -981,9 +866,7 @@
   {
     "id": "core-dark-eras:sky-s-whispers",
     "name": "Sky's Whispers",
-    "ratings": [
-      1
-    ],
+    "ratings": [1],
     "line": "MtA",
     "sourceId": "core-dark-eras",
     "source": "Dark Eras",
@@ -998,13 +881,7 @@
   {
     "id": "mta-signs:soul-dealer",
     "name": "Soul Dealer",
-    "ratings": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
+    "ratings": [1, 2, 3, 4, 5],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -1019,10 +896,7 @@
   {
     "id": "mta-signs:soul-stone",
     "name": "Soul Stone",
-    "ratings": [
-      1,
-      2
-    ],
+    "ratings": [1, 2],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -1038,9 +912,7 @@
   {
     "id": "core-dark-eras:spirit-warden",
     "name": "Spirit Warden",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "core-dark-eras",
     "source": "Dark Eras",
@@ -1055,10 +927,7 @@
   {
     "id": "mta-signs:stalwart-soul",
     "name": "Stalwart Soul",
-    "ratings": [
-      1,
-      2
-    ],
+    "ratings": [1, 2],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -1073,9 +942,7 @@
   {
     "id": "mta-signs:supernal-taxonomy",
     "name": "Supernal Taxonomy",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -1090,10 +957,7 @@
   {
     "id": "mta-signs:supernal-watcher",
     "name": "Supernal Watcher",
-    "ratings": [
-      2,
-      4
-    ],
+    "ratings": [2, 4],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -1108,9 +972,7 @@
   {
     "id": "mta-2ed:techn",
     "name": "Techné",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -1126,9 +988,7 @@
   {
     "id": "core-dark-eras:trail-walker",
     "name": "Trail Walker",
-    "ratings": [
-      2
-    ],
+    "ratings": [2],
     "line": "MtA",
     "sourceId": "core-dark-eras",
     "source": "Dark Eras",
@@ -1143,9 +1003,7 @@
   {
     "id": "mta-2ed:demesne",
     "name": "Demesne",
-    "ratings": [
-      3
-    ],
+    "ratings": [3],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -1161,13 +1019,7 @@
   {
     "id": "mta-2ed:hallow",
     "name": "Hallow",
-    "ratings": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
+    "ratings": [1, 2, 3, 4, 5],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -1183,13 +1035,7 @@
   {
     "id": "mta-2ed:sanctum",
     "name": "Sanctum",
-    "ratings": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
+    "ratings": [1, 2, 3, 4, 5],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",

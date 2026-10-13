@@ -21,7 +21,7 @@ const base={...mageMerits.MAGE_STATUS_REQUIREMENTS,gameLine:"MtA",archetypes:["a
 
 test("Mage Merit presentation switches EN/PT/EN without changing canonical requirements",async()=>{
  const {meritPresentation}=await vite.ssrLoadModule("/lib/merit-presentation.ts");
- for(const name of ["Adamant Hand","Artifact","Astral Adept","Between the Ticks","Cabal Theme"]){
+ for(const name of ["Adamant Hand","Artifact","Astral Adept","Awakened Status","Between the Ticks","Cabal Theme","Destiny","Dream","Enhanced Item","Familiar"]){
   const entry=merit(name);
   const canonical={id:entry.id,name:entry.name,prerequisites:entry.prerequisites,descriptionEn:entry.descriptionEn};
   assert.equal(meritPresentation(entry,"en-US",mageCatalog).name,name);
@@ -32,6 +32,8 @@ test("Mage Merit presentation switches EN/PT/EN without changing canonical requi
  }
  assert.match(meritPresentation(merit("Adamant Hand"),"pt-BR",mageCatalog).prerequisites,/Armas Brancas/);
  assert.match(meritPresentation(merit("Cabal Theme"),"pt-BR",mageCatalog).description,/Nome das Sombras/);
+ assert.match(meritPresentation(merit("Destiny"),"pt-BR",mageCatalog).description,/A cada sessão/);
+ assert.match(meritPresentation(merit("Enhanced Item"),"pt-BR",mageCatalog).description,/Item Imbuído/);
 });
 
 test("Mage configuration validation dispatches canonical IDs, not display names or Homebrew homonyms",()=>{

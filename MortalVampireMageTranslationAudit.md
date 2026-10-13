@@ -33,7 +33,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | V06 — Conditions | 73, incluindo 19 Homebrew, das quais duas erratas | 73/73 com PT completa e verificadas; quatro Conditions de anciões incluídas por autorização em 2026-10-09; lacunas de Hidden Devotions permanecem |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Rótulos e apresentação dos cultos traduzidos, incluindo benefícios e Especializações predefinidas. Children of the Thorns mantém as exclusões de escopo existentes |
 | G01 — Spells | 360/360 traduzidas | Nomes descritivos, resumos, descrições e metadados localizados; integração separada do parser |
-| G02 — Méritos | 71 (61 principais, dez suplementares), 31 níveis | 5/71 com nome, requisitos e descrição PT; restam 66 Merits e os níveis aplicáveis |
+| G02 — Méritos | 71 (61 principais, dez suplementares), 31 níveis | 10/71 com nome, requisitos e descrição PT; restam 61 Merits e os níveis aplicáveis |
 | G03 — Organizações | 17 Orders, 44 Factions, 12 Ministries | 11 Orders sem descrição PT; Factions/Tool Yantras e Ministries/Patron Exarchs |
 | G04 — Legacies | 16, 43 Attainments | Nomes, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções |
 | G05 — Conditions | 25 | Sem Alma traduzida e conferida; restam 24. Nome, descrição, resolução e Ato; nomes de Húbris já vinculados ao catálogo por ID |
@@ -74,7 +74,7 @@ Spirit completo: 36 Spells de Espírito • a ••••• em MtA 2e pp. 180�
 
 Time completo: 25 Spells de Tempo • a ••••• em MtA 2e pp. 186–191 e Signs of Sorcery p. 71 localizadas em `presentationPt`, incluindo os dois usos de Alcance de Postcognition, os limites de Feitiço Suspenso, a Duração da imbução de Time Limit e a opção de Adicionar Espaço ••• de Temporal Stutter. As 13 citações de página das Spells de Tempo ••• a ••••• do livro básico foram corrigidas para as páginas impressas, sem alterar IDs ou regras. Todas as 360 Spells têm apresentação PT; os catálogos canônicos em inglês continuam sendo a entrada de parsers e compras. Dados em `public/game-lines/mage/data/spells/`.
 
-Méritos Mage em execução: Adamant Hand, Artifact, Astral Adept, Between the Ticks e Cabal Theme em MtA 2e pp. 99–100 têm apresentação PT separada dos requisitos e descrições canônicos; IDs, classificações, efeitos de elegibilidade e compras permanecem estáveis. Os demais 66 Méritos e níveis internos ainda precisam de tradução.
+Méritos Mage em execução: dez Merits em MtA 2e pp. 99–101 têm apresentação PT separada dos requisitos e descrições canônicos: Adamant Hand, Artifact, Astral Adept, Awakened Status, Between the Ticks, Cabal Theme, Destiny, Dream, Enhanced Item e Familiar. Chapter é apresentado como sessão em Destiny/Dream, conforme decisão do usuário. IDs, classificações, elegibilidade e compras permanecem estáveis. Os demais 61 Méritos e níveis internos ainda precisam de tradução.
 
 Apresentar **Práticas, Fator Primário, Resistência, Alcance e Adicionar Arcana** quando aplicáveis. `spell-presentation.ts` extrai `Reach:`/`Add Arcanum` do texto inglês canônico; `presentationPt.reach` localiza a apresentação sem mudar essa entrada. Títulos de Práxis publicadas acompanham Spells; nomes autorais permanecem intactos.
 
