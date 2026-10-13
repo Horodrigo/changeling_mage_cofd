@@ -52,9 +52,9 @@ Referências de Conditions ainda necessárias: Materialized → Materializado. P
 
 ### Mage — detalhes de execução
 
-Lotes iniciais: 31 Spells de Death •/••/•••/•••• (MtA 2e pp. 128–133), com revisão visual e apresentação PT separada dos campos ingleses. Integração em criação, XP/histórico e ficha Desktop/Mobile; 18/18 testes direcionados de integração no primeiro lote; 17/17 de catálogo/persistência nos lotes seguintes; tipos e builds aprovados. Comparação confirmou os campos canônicos das 46 entradas de Death intactos; os lotes seguintes acrescentaram oito traduções da p. 129, sete da p. 130 e dez das pp. 131–133 apenas em `presentationPt`. `Exorcism` e `Revenant` exibem Adicionar Arcana em PT. Smoke de navegador não executado.
+Lotes iniciais: 38 Spells de Death •/••/•••/•••• (MtA 2e pp. 128–133), com revisão visual e apresentação PT separada dos campos ingleses. Integração em criação, XP/histórico e ficha Desktop/Mobile; 18/18 testes direcionados de integração no primeiro lote; 17/17 de catálogo/persistência nos lotes seguintes; tipos e builds aprovados. Comparação confirmou os campos canônicos das 46 entradas de Death intactos; os lotes seguintes acrescentaram oito traduções da p. 129, sete da p. 130 e dez das pp. 131–133 e mais sete das pp. 133–134 apenas em `presentationPt`. O livro básico de Death está completo; faltam oito de Signs of Sorcery. `Exorcism` e `Revenant` exibem Adicionar Arcana em PT. Smoke de navegador não executado.
 
-Spells pendentes: Death 15; Fate 30; Forces 38; Life 29; Matter 32; Mind 45; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
+Spells pendentes: Death 8; Fate 30; Forces 38; Life 29; Matter 32; Mind 45; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
 
 Apresentar **Práticas, Fator Primário, Resistência, Alcance e Adicionar Arcana** quando aplicáveis. `spell-presentation.ts` extrai `Reach:`/`Add Arcanum` do texto inglês canônico; `presentationPt.reach` localiza a apresentação sem mudar essa entrada. Títulos de Práxis publicadas acompanham Spells; nomes autorais permanecem intactos.
 

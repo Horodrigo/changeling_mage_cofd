@@ -1160,7 +1160,16 @@
     "source": "Mage the Awakening",
     "page": 133,
     "summaryReviewed": true,
-    "summary": "Deal one lethal damage per Potency through rapid bodily atrophy."
+    "summary": "Deal one lethal damage per Potency through rapid bodily atrophy.",
+    "presentationPt": {
+      "name": "Definhamento",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Atrofia rapidamente o corpo do alvo, causando um ponto de dano letal por ponto de Potência.",
+      "description": "Atrofia rapidamente o corpo do alvo, causando um ponto de dano letal por ponto de Potência. +1 Alcance e 1 Mana: Causa dano agravado em vez disso.",
+      "reach": "+1 Alcance e 1 Mana: Causa dano agravado em vez disso."
+    }
   },
   {
     "id": "mta-2ed:death-5-create-anchor",
@@ -1182,7 +1191,16 @@
     "source": "Mage the Awakening",
     "page": 133,
     "summaryReviewed": true,
-    "summary": "Apply a universal Anchor Condition to a subject that any ghost may use. If a ghost is also targeted, it becomes anchored to this new Anchor in addition to its existing Anchors."
+    "summary": "Apply a universal Anchor Condition to a subject that any ghost may use. If a ghost is also targeted, it becomes anchored to this new Anchor in addition to its existing Anchors.",
+    "presentationPt": {
+      "name": "Criar Âncora",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Aplica ao alvo uma Condition Âncora universal, que pode ser usada por qualquer fantasma. Se um fantasma também for alvo, ele fica ligado à nova Âncora além das Âncoras que já possui.",
+      "description": "Aplica ao alvo uma Condition Âncora universal, que pode ser usada por qualquer fantasma. Se um fantasma também for alvo, ele fica ligado à nova Âncora além das Âncoras que já possui.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:death-5-create-avernian-gate",
@@ -1204,7 +1222,16 @@
     "source": "Mage the Awakening",
     "page": 133,
     "summaryReviewed": true,
-    "summary": "Open an Iris between the material world and the upper Underworld, giving the area Death Resonance and the Gateway Condition for the Duration."
+    "summary": "Open an Iris between the material world and the upper Underworld, giving the area Death Resonance and the Gateway Condition for the Duration.",
+    "presentationPt": {
+      "name": "Criar Portal Averniano",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Abre uma Íris entre o mundo material e as camadas superiores do Submundo, dando à área Ressonância de Morte e a Condition Portal pela Duração.",
+      "description": "Abre uma Íris entre o mundo material e as camadas superiores do Submundo, dando à área Ressonância de Morte e a Condition Portal pela Duração. +1 Alcance: A Íris leva a qualquer lugar do Submundo que a conjuradora já tenha visitado.",
+      "reach": "+1 Alcance: A Íris leva a qualquer lugar do Submundo que a conjuradora já tenha visitado."
+    }
   },
   {
     "id": "mta-2ed:death-5-create-ghost",
@@ -1226,7 +1253,16 @@
     "source": "Mage the Awakening",
     "page": 133,
     "summaryReviewed": true,
-    "summary": "Create a loyal Rank 1 ghost in Twilight, optionally fashioned as an echo of a living or dead person, and command it without further spells for the Duration."
+    "summary": "Create a loyal Rank 1 ghost in Twilight, optionally fashioned as an echo of a living or dead person, and command it without further spells for the Duration.",
+    "presentationPt": {
+      "name": "Criar Fantasma",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Cria no Crepúsculo um fantasma leal de Posto 1, que pode imitar uma pessoa viva ou morta. A conjuradora pode lhe dar ordens sem feitiços adicionais pela Duração.",
+      "description": "Cria no Crepúsculo um fantasma leal de Posto 1, que pode imitar uma pessoa viva ou morta. A conjuradora pode lhe dar ordens sem feitiços adicionais pela Duração. +1 Alcance e 1 Mana: Cria um fantasma de Posto 2.",
+      "reach": "+1 Alcance e 1 Mana: Cria um fantasma de Posto 2."
+    }
   },
   {
     "id": "mta-2ed:death-5-deny-the-reaper",
@@ -1248,7 +1284,16 @@
     "source": "Mage the Awakening",
     "page": 133,
     "summaryReviewed": true,
-    "summary": "Reverse up to one month of decay per Potency, restoring lost bodily functions and irreparable damage in living subjects or repairing age-ravaged objects."
+    "summary": "Reverse up to one month of decay per Potency, restoring lost bodily functions and irreparable damage in living subjects or repairing age-ravaged objects.",
+    "presentationPt": {
+      "name": "Negar o Ceifador",
+      "practice": "Descriação",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Reverte até um mês de decomposição por ponto de Potência, restaurando funções corporais perdidas e danos irreparáveis em alvos vivos, ou reparando objetos deteriorados pelo tempo.",
+      "description": "Reverte até um mês de decomposição por ponto de Potência, restaurando funções corporais perdidas e danos irreparáveis em alvos vivos, ou reparando objetos deteriorados pelo tempo. +1 Alcance: Devolve temporariamente a vida a um morto recente sem sua alma; ele recebe Sem Alma e morre novamente quando o feitiço termina.",
+      "reach": "+1 Alcance: Devolve temporariamente a vida a um morto recente sem sua alma; ele recebe Sem Alma e morre novamente quando o feitiço termina."
+    }
   },
   {
     "id": "mta-2ed:death-5-empty-presence",
@@ -1270,7 +1315,16 @@
     "source": "Mage the Awakening",
     "page": 133,
     "summaryReviewed": true,
-    "summary": "Erase the subject's observable presence and evidence of existence: mundane detection fails, she becomes invisible, Social Doors reset, and all non-Paradox Conditions on or belonging to her resolve without Beats. Violence or overt destruction ends the spell; Active Mage Sight triggers a Clash, and Focused Mage Sight reveals her. Conditions stay resolved, while Doors return when it ends."
+    "summary": "Erase the subject's observable presence and evidence of existence: mundane detection fails, she becomes invisible, Social Doors reset, and all non-Paradox Conditions on or belonging to her resolve without Beats. Violence or overt destruction ends the spell; Active Mage Sight triggers a Clash, and Focused Mage Sight reveals her. Conditions stay resolved, while Doors return when it ends.",
+    "presentationPt": {
+      "name": "Presença Vazia",
+      "practice": "Descriação",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Apaga a presença observável do alvo e os indícios de sua existência: a detecção mundana falha, ele fica invisível, as Portas Sociais são removidas e todas as suas Conditions exceto as de Paradoxo se resolvem sem conceder Atos. Violência ou destruição evidente encerra o feitiço; a Visão de Mago Ativa provoca um Choque de Vontades, e a Visão de Mago Focada o revela. As Conditions continuam resolvidas, enquanto as Portas retornam ao fim do feitiço.",
+      "description": "Apaga a presença observável do alvo e os indícios de sua existência: a detecção mundana falha, ele fica invisível, as Portas Sociais são removidas e todas as suas Conditions exceto as de Paradoxo se resolvem sem conceder Atos. Violência ou destruição evidente encerra o feitiço; a Visão de Mago Ativa provoca um Choque de Vontades, e a Visão de Mago Focada o revela. As Conditions continuam resolvidas, enquanto as Portas retornam ao fim do feitiço.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:death-5-sever-the-awakened-soul",
@@ -1292,6 +1346,15 @@
     "source": "Mage the Awakening",
     "page": 133,
     "summaryReviewed": true,
-    "summary": "Unmake the protections around an Awakened soul, remove it, and place it in a prepared vessel or the caster's body; otherwise it waits in Twilight. The subject gains Soulless, or advances from Soulless to Enervated."
+    "summary": "Unmake the protections around an Awakened soul, remove it, and place it in a prepared vessel or the caster's body; otherwise it waits in Twilight. The subject gains Soulless, or advances from Soulless to Enervated.",
+    "presentationPt": {
+      "name": "Arrancar a Alma Desperta",
+      "practice": "Descriação",
+      "primaryFactor": "Potência",
+      "withstand": "Perseverança",
+      "summary": "Desfaz as proteções de uma alma Desperta, removendo-a e colocando-a em um receptáculo preparado ou no corpo da conjuradora; caso contrário, ela espera no Crepúsculo. O alvo recebe Sem Alma ou, se já estiver Sem Alma, passa a Enfraquecido.",
+      "description": "Desfaz as proteções de uma alma Desperta, removendo-a e colocando-a em um receptáculo preparado ou no corpo da conjuradora; caso contrário, ela espera no Crepúsculo. O alvo recebe Sem Alma ou, se já estiver Sem Alma, passa a Enfraquecido. +1 Alcance: Impõe Enfraquecido imediatamente. +1 Alcance adicional: Impõe Subjugado imediatamente.",
+      "reach": "+1 Alcance: Impõe Enfraquecido imediatamente. +1 Alcance adicional: Impõe Subjugado imediatamente."
+    }
   }
 ]
