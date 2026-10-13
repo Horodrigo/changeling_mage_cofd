@@ -143,7 +143,16 @@
     "source": "Mage the Awakening",
     "page": 160,
     "summary": "Disguise the subject’s thoughts and emotional responses, adding Potency to Subterfuge rolls made to conceal them. Supernatural attempts to read surface thoughts or emotions provoke a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Alterar Padrão Mental",
+      "practice": "Velamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Disfarça o fluxo mental e as emoções aparentes do alvo sem mudar o que ele realmente pensa ou sente. Soma a Potência às jogadas de Subterfúgio para sustentar a farsa; poderes que tentem ler seus pensamentos ou emoções superficiais provocam um Choque de Vontades.",
+      "description": "Disfarça o fluxo mental e as emoções aparentes do alvo sem mudar o que ele realmente pensa ou sente. Soma a Potência às jogadas de Subterfúgio para sustentar a farsa; poderes que tentem ler seus pensamentos ou emoções superficiais provocam um Choque de Vontades.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:mind-2-dream-reaching",
@@ -165,7 +174,16 @@
     "source": "Mage the Awakening",
     "page": 160,
     "summary": "Enter and observe a sleeping subject’s dream, influencing its course without appearing as an active participant. Cast on oneself, the spell guarantees recall of the mage’s own dreams.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Alcançar Sonhos",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Entra no sonho de um alvo adormecido para observá-lo e influenciar sua direção sem participar ativamente dele. Quando conjurado sobre si mesma, permite à maga recordar seus próprios sonhos.",
+      "description": "Entra no sonho de um alvo adormecido para observá-lo e influenciar sua direção sem participar ativamente dele. Quando conjurado sobre si mesma, permite à maga recordar seus próprios sonhos. +1 Alcance: A maga participa ativamente do sonho; quando conjurado sobre si mesma, produz sonho lúcido durante a Duração sem meditação.",
+      "reach": "+1 Alcance: A maga participa ativamente do sonho; quando conjurado sobre si mesma, produz sonho lúcido durante a Duração sem meditação."
+    }
   },
   {
     "id": "mta-2ed:mind-2-emotional-urging",
@@ -186,8 +204,17 @@
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 160,
-    "summary": "Intensify or suppress an emotion to open or close a number of Doors equal to Potency in Social maneuvering. The effect changes emotional pressure without dictating a specific action.",
-    "summaryReviewed": true
+    "summary": "Project a positive or negative emotion onto the subject to open or close one Door in Social maneuvering. The open Door may benefit anyone interacting with the subject; a previously opened Door may be closed.",
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Indução Emocional",
+      "practice": "Regência",
+      "primaryFactor": "Potência",
+      "withstand": "Compostura",
+      "summary": "Projeta no alvo uma emoção positiva ou negativa, abrindo ou fechando uma Porta na Manobra Social. A Porta aberta pode beneficiar qualquer pessoa que interaja com o alvo; a maga também pode fechar uma Porta aberta anteriormente.",
+      "description": "Projeta no alvo uma emoção positiva ou negativa, abrindo ou fechando uma Porta na Manobra Social. A Porta aberta pode beneficiar qualquer pessoa que interaja com o alvo; a maga também pode fechar uma Porta aberta anteriormente.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:mind-2-first-impressions",
@@ -209,7 +236,16 @@
     "source": "Mage the Awakening",
     "page": 160,
     "summary": "Raise or lower the subject’s impression level by Potency for Social maneuvering, resisted by Composure. The spell alters how others initially receive the subject rather than granting automatic cooperation.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Primeiras Impressões",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Muda a reação do alvo à próxima tentativa de Manobra Social contra ele, elevando ou reduzindo a primeira impressão em tantos níveis quanto a Potência.",
+      "description": "Muda a reação do alvo à próxima tentativa de Manobra Social contra ele, elevando ou reduzindo a primeira impressão em tantos níveis quanto a Potência.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:mind-2-incognito-presence",
@@ -220,7 +256,7 @@
     },
     "practice": "Veiling",
     "primaryFactor": "Duration",
-    "withstand": "",
+    "withstand": "Resolve",
     "roteSkills": [
       "Empathy",
       "Stealth",
@@ -231,7 +267,16 @@
     "source": "Mage the Awakening",
     "page": 160,
     "summary": "For one Mana, veil the subject’s psychic presence so observers overlook her and have difficulty remembering that she was present. Deliberate supernatural attempts to notice or recall her, including Active Mage Sight, provoke a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Presença Incógnita",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Por 1 Mana, esconde a presença psíquica do alvo: observadores desviam a atenção e mal se lembram de tê-lo visto. Tentativas sobrenaturais de perceber ou recordar sua presença, inclusive com Visão de Mago Ativa, provocam um Choque de Vontades.",
+      "description": "Por 1 Mana, esconde a presença psíquica do alvo: observadores desviam a atenção e mal se lembram de tê-lo visto. Tentativas sobrenaturais de perceber ou recordar sua presença, inclusive com Visão de Mago Ativa, provocam um Choque de Vontades.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:mind-2-memory-hole",
@@ -253,7 +298,16 @@
     "source": "Mage the Awakening",
     "page": 160,
     "summary": "Suppress one chosen memory per Potency so the subject cannot recall it during the spell. The memories return when the Duration ends.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Lacuna de Memória",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Suprime uma memória escolhida por ponto de Potência, impedindo o alvo de acessá-la ou recordá-la durante a Duração. As lembranças retornam quando o feitiço termina.",
+      "description": "Suprime uma memória escolhida por ponto de Potência, impedindo o alvo de acessá-la ou recordá-la durante a Duração. As lembranças retornam quando o feitiço termina.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:mind-2-mental-shield",
@@ -275,7 +329,16 @@
     "source": "Mage the Awakening",
     "page": 160,
     "summary": "Protect the subject from mental attacks and from Goetic Influences, Numina, or Manifestations that target the mind. Attempts covered by the ward provoke a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Escudo Mental",
+      "practice": "Proteção",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Protege o alvo contra ataques mentais, Númenes, Influências e Manifestações de Goetia e outros poderes que afetem a mente. Efeitos cobertos pelo escudo provocam um Choque de Vontades.",
+      "description": "Protege o alvo contra ataques mentais, Númenes, Influências e Manifestações de Goetia e outros poderes que afetem a mente. Efeitos cobertos pelo escudo provocam um Choque de Vontades. +1 Alcance: A proteção também se estende aos ataques físicos de Goetia.",
+      "reach": "+1 Alcance: A proteção também se estende aos ataques físicos de Goetia."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:mind-2-narcissus-mirror",
@@ -292,12 +355,21 @@
       "Occult",
       "Subterfuge"
     ],
-    "description": "The mage can reflect the mental and emotional effects of a Nimbus tilt back onto its source. Whenever the Mage is subjected to a tilt that affects a Mental or Social trait this spell provokes a Clash of Wills. If the mage wins affect the instigator of the Tilt. Can be cast if the Mage is already under the effects of a tilt to immediately create a Clash of Wills Substitute Life ••: This Spell affects Nimbus Tilts relating to Physical Traits or purely Physical effects instead Add Life ••: This Spell affects all types of Nimbus Tilt Add Prime ••: Affects other type of Supernatural Auras with the appropriate kinds of effects",
+    "description": "The mage can reflect the mental and emotional effects of a Nimbus tilt back onto its source. Whenever the Mage is subjected to a tilt that affects a Mental or Social trait this spell provokes a Clash of Wills. If the mage wins affect the instigator of the Tilt. Can be cast if the Mage is already under the effects of a tilt to immediately create a Clash of Wills Substitute Life •••: This Spell affects Nimbus Tilts relating to Physical Traits or purely Physical effects instead Add Life •••: This Spell affects all types of Nimbus Tilt Add Prime •••: Affects other type of Supernatural Auras with the appropriate kinds of effects",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
     "page": 94,
     "summary": "Reflect a Nimbus Tilt that affects the mage’s Mental or Social traits back on its source through a Clash of Wills. It can also be cast while such a Tilt is active to trigger the Clash immediately.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Espelho de Narcissus",
+      "practice": "Proteção",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Reflete ao emissor, por um Choque de Vontades, os efeitos Mentais ou Sociais de um Tilt do Nimbus que afete a maga. Se ela já estiver sob tal efeito, pode conjurar o feitiço para provocar o Choque imediatamente.",
+      "description": "Reflete ao emissor, por um Choque de Vontades, os efeitos Mentais ou Sociais de um Tilt do Nimbus que afete a maga. Se ela já estiver sob tal efeito, pode conjurar o feitiço para provocar o Choque imediatamente. Substituir Vida •••: Reflete Tilts do Nimbus que afetam características Físicas ou causam efeitos puramente físicos, em vez dos Mentais e Sociais. Adicionar Vida •••: Reflete todos os tipos de Tilt do Nimbus. Adicionar Primórdio •••: Também afeta auras sobrenaturais de outros tipos, usando as resistências normais de cada fonte.",
+      "reach": "Substituir Vida •••: Reflete Tilts do Nimbus que afetam características Físicas ou causam efeitos puramente físicos, em vez dos Mentais e Sociais. Adicionar Vida •••: Reflete todos os tipos de Tilt do Nimbus. Adicionar Primórdio •••: Também afeta auras sobrenaturais de outros tipos, usando as resistências normais de cada fonte."
+    }
   },
   {
     "id": "mta-2ed:mind-2-psychic-domination",
@@ -314,12 +386,21 @@
       "Intimidation",
       "Subterfuge"
     ],
-    "description": "Send one word commands to a subject that they are compelled to act upon, even against their will +1 Reach: take control of a subject, forcing him to take actions against their will. These actions cannot put him serious danger however +1 Reach: Force the subject to take an additional task",
+    "description": "Send a simple one-word command to the subject through thoughts and emotions. +1 Reach: Take full control to impose one task, provided it does not put the subject in serious danger or force suicide. +2 Reach and one Mana: Force any action without that restriction.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 161,
     "summary": "Project a one-word command as an urge the subject is compelled to follow, resisted by Resolve. The command cannot convey a sentence or complex plan through the basic spell.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Dominação Psíquica",
+      "practice": "Regência",
+      "primaryFactor": "Potência",
+      "withstand": "Perseverança",
+      "summary": "Envia ao alvo uma ordem simples de uma palavra como impulso mental e emocional, como dormir, comer, sentar ou defender-se. Ele sabe que a ideia não nasceu de si, mas é compelido a agir enquanto o feitiço permanecer ativo.",
+      "description": "Envia ao alvo uma ordem simples de uma palavra como impulso mental e emocional, como dormir, comer, sentar ou defender-se. Ele sabe que a ideia não nasceu de si, mas é compelido a agir enquanto o feitiço permanecer ativo. +1 Alcance: Assume controle completo para impor uma tarefa, mesmo com instruções detalhadas, desde que ela não exponha o alvo a perigo grave nem o obrigue a se suicidar. +2 Alcance e 1 Mana: Pode impor qualquer ação, sem essa limitação.",
+      "reach": "+1 Alcance: Assume controle completo para impor uma tarefa, mesmo com instruções detalhadas, desde que ela não exponha o alvo a perigo grave nem o obrigue a se suicidar. +2 Alcance e 1 Mana: Pode impor qualquer ação, sem essa limitação."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:mind-2-ritual-focus",
@@ -341,7 +422,16 @@
     "source": "Signs of Sorcery",
     "page": 55,
     "summary": "Link the caster’s mind with every Awakened participant covered by Scale while they cooperate on a single ritual spell. Secondary actors add Potency to the primary actor’s casting pool under the teamwork rules.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Foco Ritual",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Liga a mente da maga às de todos os participantes Despertos cobertos pela Escala, permitindo coordená-los durante a conjuração ritual de um feitiço. Pela regra de trabalho em equipe, cada participante secundário soma a Potência à sua parada de dados.",
+      "description": "Liga a mente da maga às de todos os participantes Despertos cobertos pela Escala, permitindo coordená-los durante a conjuração ritual de um feitiço. Pela regra de trabalho em equipe, cada participante secundário soma a Potência à sua parada de dados.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:mind-2-soul-windows",
@@ -363,7 +453,16 @@
     "source": "Signs of Sorcery",
     "page": 90,
     "summary": "Split sight or hearing through one of the mage’s Soul Stones, perceiving its surroundings in every direction without sympathetic range. The mage continues to perceive through her own body while using the remote sense.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Janelas da Alma",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Divide a visão ou audição da maga para perceber o entorno de uma de suas pedras da alma em todas as direções, sem exigir alcance simpático, enquanto ela continua percebendo pelo próprio corpo.",
+      "description": "Divide a visão ou audição da maga para perceber o entorno de uma de suas pedras da alma em todas as direções, sem exigir alcance simpático, enquanto ela continua percebendo pelo próprio corpo. Adicionar Forças ••: Projeta a voz pela pedra para falar com quem estiver perto ou cria um holograma luminoso de si mesma. +1 Alcance: Percebe o entorno da pedra com todos os sentidos. +1 Alcance por pedra adicional: Divide novamente os sentidos para observar outra pedra da alma ao mesmo tempo.",
+      "reach": "Adicionar Forças ••: Projeta a voz pela pedra para falar com quem estiver perto ou cria um holograma luminoso de si mesma. +1 Alcance: Percebe o entorno da pedra com todos os sentidos. +1 Alcance por pedra adicional: Divide novamente os sentidos para observar outra pedra da alma ao mesmo tempo."
+    }
   },
   {
     "id": "mta-2ed:mind-2-telepathy",
@@ -385,7 +484,16 @@
     "source": "Mage the Awakening",
     "page": 161,
     "summary": "Link subjects so their surface thoughts play through one another’s minds and deliberate messages can pass along the connection. Shared mental noise may grant a bonus or impose a penalty depending on whether it helps the task.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Telepatia",
+      "practice": "Regência",
+      "primaryFactor": "Potência",
+      "withstand": "Compostura",
+      "summary": "Liga os pensamentos superficiais dos alvos, permitindo que recebam impressões uns dos outros e enviem mensagens deliberadas. A Potência pode funcionar como bônus ou penalidade nas jogadas pertinentes entre os alvos; pessoas desacostumadas talvez precisem de Compostura + Empatia para comunicar-se com clareza.",
+      "description": "Liga os pensamentos superficiais dos alvos, permitindo que recebam impressões uns dos outros e enviem mensagens deliberadas. A Potência pode funcionar como bônus ou penalidade nas jogadas pertinentes entre os alvos; pessoas desacostumadas talvez precisem de Compostura + Empatia para comunicar-se com clareza. +1 Alcance: Transmite apenas os pensamentos que o emissor deseja compartilhar. +1 Alcance: Todos os alvos podem enviar e receber pensamentos; vários participantes inexperientes podem sofrer −2 em ações Mentais pelo ruído mental.",
+      "reach": "+1 Alcance: Transmite apenas os pensamentos que o emissor deseja compartilhar. +1 Alcance: Todos os alvos podem enviar e receber pensamentos; vários participantes inexperientes podem sofrer −2 em ações Mentais pelo ruído mental."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:mind-3-astral-grimoire",
