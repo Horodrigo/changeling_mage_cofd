@@ -10,7 +10,6 @@
 ## Vampire
 
 - **Lithopedia — escolhas gratuitas:** implementar o rito gratuito no primeiro ponto e os ritos posteriores condicionados a Status na Bloodline, conforme Strange Shades p. 28. Avisar o usuário antes de acrescentar esse subsistema; integrar criação, Experience, ficha e estorno sem inferir concessões antigas.
-- **Lithopedia — alcance:** corrigir os cinco resumos EN/PT que ainda dizem meia milha adicional por Potência; a decisão aprovada é uma milha por Potência, conforme Strange Shades p. 28.
 - **Hidden Devotions — fonte original:** conferir os textos do autor para Rapidity / Slow and Steady, sobretudo faixas de preço e adequação do alvo a procedimentos ou falas complexas. Não usar a reprodução pública ou o índice local como confirmação da fonte.
 - **BFFs, Violent Coercion e Manic Depression:** conferir na fonte original a resistência contra alvos sobrenaturais de outras linhas. O índice local diz Composure + Tolerance; os registros atuais usam Composure + Blood Potency. Não alterar a mecânica apenas com base no índice.
 - **Conditions de Hidden Devotions:** obter os textos completos de Coerced, Quelled, Manic e Melancholic; então cadastrar efeitos, resoluções, Atos e identidades próprios. Distinguir Coerced de Leveraged/Coagido Core e conferir as referências a Addiction e Swooning.
