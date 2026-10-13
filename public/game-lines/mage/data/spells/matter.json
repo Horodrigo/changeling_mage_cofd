@@ -329,7 +329,16 @@
     "source": "Mage the Awakening",
     "page": 156,
     "summary": "Modify wearable armor, spending each point of Potency to raise or lower ballistic armor, general armor, or its Defense penalty by one. Matter cannot use this spell to armor a living body directly.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Égide",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Altera um objeto vestível que concede Armadura, como uma roupa ou proteção. Para cada ponto de Potência, aumenta ou diminui em 1 a Armadura balística, a Armadura geral ou a penalidade de Defesa do objeto; não protege diretamente um corpo vivo sem vestimenta.",
+      "description": "Altera um objeto vestível que concede Armadura, como uma roupa ou proteção. Para cada ponto de Potência, aumenta ou diminui em 1 a Armadura balística, a Armadura geral ou a penalidade de Defesa do objeto; não protege diretamente um corpo vivo sem vestimenta. +1 Alcance: A Armadura do objeto torna-se imune ao efeito Perfurante de Armadura.",
+      "reach": "+1 Alcance: A Armadura do objeto torna-se imune ao efeito Perfurante de Armadura."
+    }
   },
   {
     "id": "mta-2ed:matter-3-alter-conductivity",
@@ -351,7 +360,16 @@
     "source": "Mage the Awakening",
     "page": 156,
     "summary": "Increase or decrease an object’s electrical conductivity by Potency. It can disable devices whose current cannot cause damage or modify damage conducted through the subject.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Alterar Condutividade",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Aumenta ou reduz a condutividade elétrica de um objeto. Cada ponto de Potência permite conduzir dois pontos de dano elétrico ou reduzir em dois o dano que o atravessa; reduzir o dano a zero pode desligar aparelhos elétricos. O objeto ainda precisa tocar uma fonte apropriada, e o feitiço não aumenta a energia que essa fonte fornece.",
+      "description": "Aumenta ou reduz a condutividade elétrica de um objeto. Cada ponto de Potência permite conduzir dois pontos de dano elétrico ou reduzir em dois o dano que o atravessa; reduzir o dano a zero pode desligar aparelhos elétricos. O objeto ainda precisa tocar uma fonte apropriada, e o feitiço não aumenta a energia que essa fonte fornece. +1 Alcance: Também altera a transmissão de outra forma de energia, como calor, som ou luz; cada forma adicional exige mais 1 Alcance.",
+      "reach": "+1 Alcance: Também altera a transmissão de outra forma de energia, como calor, som ou luz; cada forma adicional exige mais 1 Alcance."
+    }
   },
   {
     "id": "mta-2ed:matter-3-alter-integrity",
@@ -373,7 +391,16 @@
     "source": "Mage the Awakening",
     "page": 156,
     "summary": "Increase or decrease an object’s Durability by Potency, resisted by its existing Durability. Changes to Durability alter the protection against Structure damage rather than repairing damage already suffered.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Alterar Integridade Estrutural",
+      "practice": "Desfiamento ou Aperfeiçoamento",
+      "primaryFactor": "Potência",
+      "withstand": "Durabilidade",
+      "summary": "Aumenta ou diminui a Durabilidade de um objeto em 1 por ponto de Potência, resistido pela Durabilidade existente. A mudança não repara nem amplia por si só sua Estrutura.",
+      "description": "Aumenta ou diminui a Durabilidade de um objeto em 1 por ponto de Potência, resistido pela Durabilidade existente. A mudança não repara nem amplia por si só sua Estrutura. +1 Alcance: Ao reforçar o objeto, pode gastar Potência para acrescentar dois pontos de Estrutura em vez de um ponto de Durabilidade; se sofrer mais dano que sua Estrutura quando o feitiço terminar, ele se desmancha. +2 Alcance: O efeito torna-se duradouro.",
+      "reach": "+1 Alcance: Ao reforçar o objeto, pode gastar Potência para acrescentar dois pontos de Estrutura em vez de um ponto de Durabilidade; se sofrer mais dano que sua Estrutura quando o feitiço terminar, ele se desmancha. +2 Alcance: O efeito torna-se duradouro."
+    }
   },
   {
     "id": "mta-2ed:matter-3-crucible",
