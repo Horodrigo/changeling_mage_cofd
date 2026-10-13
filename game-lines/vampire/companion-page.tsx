@@ -73,7 +73,7 @@ export function VampireCompanionPage({
       {
         id: createRandomId(),
         animal_id: selectedAnimal.id,
-        name: animalPresentation(selectedAnimal, locale).name,
+        name: "",
         health_damage: [],
         undying: false,
       },

@@ -4,7 +4,7 @@
 
 - Concluir o inventário dos valores de catálogo e configuração ainda salvos em português nas linhas e nos Homebrews importados. Migrar somente aliases exatos e identificáveis pela linha proprietária; não inferir identidade de um nome homônimo nem alterar texto autoral. Verificar criação, edição, importação, exportação e reabertura.
 - Revisar `line_data.learned_contracts` em Changeling: ainda armazena cópias de definições. Decidir quais campos são seleções canônicas e quais são texto autoral; atualizar produtores e leitores junto da normalização, sem apagar escolhas antigas.
-- Revisar rótulos históricos cuja origem não é explícita. Manter snapshots opacos e recibos pagos intactos; quando houver identidade semântica inequívoca, apresentar no idioma atual sem reescrever o histórico.
+- Revisar rótulos históricos cuja origem não é explícita, inclusive nomes antigos de `undead_companions` que podem ser tanto o nome PT automático do animal quanto texto digitado pelo jogador. Manter snapshots opacos e recibos pagos intactos; quando houver identidade semântica inequívoca, apresentar no idioma atual sem reescrever o histórico.
 - Reexecutar testes de ida e volta EN/PT, identidade de Merits e estornos para as cinco linhas após os lotes restantes. Um JSON salvo/exportado deve conter chaves e escolhas canônicas em inglês, exceto texto explicitamente escrito pelo usuário.
 
 ## Vampire
