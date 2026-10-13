@@ -429,8 +429,8 @@
       "primaryFactor": "Duração",
       "withstand": "Perseverança",
       "summary": "Aprisiona uma alma deslocada em um recipiente capaz de conter líquido, protegendo-a contra fuga e ataques externos até o recipiente ser aberto ou quebrado, ou o feitiço terminar.",
-      "description": "Aprisiona uma alma deslocada em um recipiente capaz de conter líquido, protegendo-a contra fuga e ataques externos até o recipiente ser aberto ou quebrado, ou o feitiço terminar. +1 Alcance: Vincula a alma à conjuradora ou a uma pessoa com as Conditions Sem Alma, Enfraquecido ou Subjugado; um hospedeiro involuntário pode resistir. +2 Alcance e 1 Mana: Torna o vínculo duradouro.",
-      "reach": "+1 Alcance: Vincula a alma à conjuradora ou a uma pessoa com as Conditions Sem Alma, Enfraquecido ou Subjugado; um hospedeiro involuntário pode resistir. +2 Alcance e 1 Mana: Torna o vínculo duradouro."
+      "description": "Aprisiona uma alma deslocada em um recipiente capaz de conter líquido, protegendo-a contra fuga e ataques externos até o recipiente ser aberto ou quebrado, ou o feitiço terminar. +1 Alcance: Vincula a alma à conjuradora ou a uma pessoa com as Condições Sem Alma, Enfraquecido ou Subjugado; um hospedeiro involuntário pode resistir. +2 Alcance e 1 Mana: Torna o vínculo duradouro.",
+      "reach": "+1 Alcance: Vincula a alma à conjuradora ou a uma pessoa com as Condições Sem Alma, Enfraquecido ou Subjugado; um hospedeiro involuntário pode resistir. +2 Alcance e 1 Mana: Torna o vínculo duradouro."
     }
   },
   {
@@ -1018,9 +1018,9 @@
       "practice": "Desfazimento",
       "primaryFactor": "Potência",
       "withstand": "Posto",
-      "summary": "Remove de um fantasma ou de seu hospedeiro um número de Conditions de Manifestação igual à Potência; a remoção é duradoura, mas a entidade pode restabelecê-las normalmente.",
-      "description": "Remove de um fantasma ou de seu hospedeiro um número de Conditions de Manifestação igual à Potência; a remoção é duradoura, mas a entidade pode restabelecê-las normalmente. Adicionar Mente ou Espírito ••••: Afeta goécias ou espíritos. +1 Alcance: O alvo não pode recriar as Conditions removidas na mesma vítima ou no mesmo local até o fim do feitiço.",
-      "reach": "Adicionar Mente ou Espírito ••••: Afeta goécias ou espíritos. +1 Alcance: O alvo não pode recriar as Conditions removidas na mesma vítima ou no mesmo local até o fim do feitiço."
+      "summary": "Remove de um fantasma ou de seu hospedeiro um número de Condições de Manifestação igual à Potência; a remoção é duradoura, mas a entidade pode restabelecê-las normalmente.",
+      "description": "Remove de um fantasma ou de seu hospedeiro um número de Condições de Manifestação igual à Potência; a remoção é duradoura, mas a entidade pode restabelecê-las normalmente. Adicionar Mente ou Espírito ••••: Afeta goécias ou espíritos. +1 Alcance: O alvo não pode recriar as Condições removidas na mesma vítima ou no mesmo local até o fim do feitiço.",
+      "reach": "Adicionar Mente ou Espírito ••••: Afeta goécias ou espíritos. +1 Alcance: O alvo não pode recriar as Condições removidas na mesma vítima ou no mesmo local até o fim do feitiço."
     }
   },
   {
@@ -1081,8 +1081,8 @@
       "practice": "Modelagem",
       "primaryFactor": "Potência",
       "withstand": "Total de pontos de Arcano da Rote + Posto",
-      "summary": "Vincula um fantasma ou uma alma sem hospedeiro a um Grimório, conferindo-lhe Ressonante e Aberto. O Posto da entidade substitui Arcano da conjuradora menos um ao aumentar o Fator Primário de uma Rote. Ao conjurar uma Rote, o fantasma pode escapar por um Choque de Vontades; ao memorizar uma, pode tentar Possessão. Almas não podem possuir leitores nem causar Conditions. Constitui um Ato de Húbris contra Sabedoria Consciente.",
-      "description": "Vincula um fantasma ou uma alma sem hospedeiro a um Grimório, conferindo-lhe Ressonante e Aberto. O Posto da entidade substitui Arcano da conjuradora menos um ao aumentar o Fator Primário de uma Rote. Ao conjurar uma Rote, o fantasma pode escapar por um Choque de Vontades; ao memorizar uma, pode tentar Possessão. Almas não podem possuir leitores nem causar Conditions. Constitui um Ato de Húbris contra Sabedoria Consciente.",
+      "summary": "Vincula um fantasma ou uma alma sem hospedeiro a um Grimório, conferindo-lhe Ressonante e Aberto. O Posto da entidade substitui Arcano da conjuradora menos um ao aumentar o Fator Primário de uma Rote. Ao conjurar uma Rote, o fantasma pode escapar por um Choque de Vontades; ao memorizar uma, pode tentar Possessão. Almas não podem possuir leitores nem causar Condições. Constitui um Ato de Húbris contra Sabedoria Consciente.",
+      "description": "Vincula um fantasma ou uma alma sem hospedeiro a um Grimório, conferindo-lhe Ressonante e Aberto. O Posto da entidade substitui Arcano da conjuradora menos um ao aumentar o Fator Primário de uma Rote. Ao conjurar uma Rote, o fantasma pode escapar por um Choque de Vontades; ao memorizar uma, pode tentar Possessão. Almas não podem possuir leitores nem causar Condições. Constitui um Ato de Húbris contra Sabedoria Consciente.",
       "reach": ""
     }
   },
@@ -1112,8 +1112,8 @@
       "practice": "Modelagem",
       "primaryFactor": "Duração",
       "withstand": "Posto",
-      "summary": "Concede a um fantasma um número de Conditions de Manifestação igual à Potência, incluindo seus pré-requisitos. Ele assume imediatamente a Manifestação escolhida e não pode sair dela durante o feitiço; isso pode permitir que possua o próprio cadáver.",
-      "description": "Concede a um fantasma um número de Conditions de Manifestação igual à Potência, incluindo seus pré-requisitos. Ele assume imediatamente a Manifestação escolhida e não pode sair dela durante o feitiço; isso pode permitir que possua o próprio cadáver. Adicionar Mente ou Espírito ••••: Afeta goécias ou espíritos.",
+      "summary": "Concede a um fantasma um número de Condições de Manifestação igual à Potência, incluindo seus pré-requisitos. Ele assume imediatamente a Manifestação escolhida e não pode sair dela durante o feitiço; isso pode permitir que possua o próprio cadáver.",
+      "description": "Concede a um fantasma um número de Condições de Manifestação igual à Potência, incluindo seus pré-requisitos. Ele assume imediatamente a Manifestação escolhida e não pode sair dela durante o feitiço; isso pode permitir que possua o próprio cadáver. Adicionar Mente ou Espírito ••••: Afeta goécias ou espíritos.",
       "reach": "Adicionar Mente ou Espírito ••••: Afeta goécias ou espíritos."
     }
   },
@@ -1269,8 +1269,8 @@
       "practice": "Criação",
       "primaryFactor": "Duração",
       "withstand": "Perseverança",
-      "summary": "Aplica ao alvo uma Condition Âncora universal, que pode ser usada por qualquer fantasma. Se um fantasma também for alvo, ele fica ligado à nova Âncora além das Âncoras que já possui.",
-      "description": "Aplica ao alvo uma Condition Âncora universal, que pode ser usada por qualquer fantasma. Se um fantasma também for alvo, ele fica ligado à nova Âncora além das Âncoras que já possui.",
+      "summary": "Aplica ao alvo uma Condição Âncora universal, que pode ser usada por qualquer fantasma. Se um fantasma também for alvo, ele fica ligado à nova Âncora além das Âncoras que já possui.",
+      "description": "Aplica ao alvo uma Condição Âncora universal, que pode ser usada por qualquer fantasma. Se um fantasma também for alvo, ele fica ligado à nova Âncora além das Âncoras que já possui.",
       "reach": ""
     }
   },
@@ -1300,8 +1300,8 @@
       "practice": "Criação",
       "primaryFactor": "Duração",
       "withstand": "",
-      "summary": "Abre uma Íris entre o mundo material e as camadas superiores do Submundo, dando à área Ressonância de Morte e a Condition Portal pela Duração.",
-      "description": "Abre uma Íris entre o mundo material e as camadas superiores do Submundo, dando à área Ressonância de Morte e a Condition Portal pela Duração. +1 Alcance: A Íris leva a qualquer lugar do Submundo que a conjuradora já tenha visitado.",
+      "summary": "Abre uma Íris entre o mundo material e as camadas superiores do Submundo, dando à área Ressonância de Morte e a Condição Portal pela Duração.",
+      "description": "Abre uma Íris entre o mundo material e as camadas superiores do Submundo, dando à área Ressonância de Morte e a Condição Portal pela Duração. +1 Alcance: A Íris leva a qualquer lugar do Submundo que a conjuradora já tenha visitado.",
       "reach": "+1 Alcance: A Íris leva a qualquer lugar do Submundo que a conjuradora já tenha visitado."
     }
   },
@@ -1393,8 +1393,8 @@
       "practice": "Descriação",
       "primaryFactor": "Duração",
       "withstand": "Compostura",
-      "summary": "Apaga a presença observável do alvo e os indícios de sua existência: a detecção mundana falha, ele fica invisível, as Portas Sociais são removidas e todas as suas Conditions exceto as de Paradoxo se resolvem sem conceder Atos. Violência ou destruição evidente encerra o feitiço; a Visão de Mago Ativa provoca um Choque de Vontades, e a Visão de Mago Focada o revela. As Conditions continuam resolvidas, enquanto as Portas retornam ao fim do feitiço.",
-      "description": "Apaga a presença observável do alvo e os indícios de sua existência: a detecção mundana falha, ele fica invisível, as Portas Sociais são removidas e todas as suas Conditions exceto as de Paradoxo se resolvem sem conceder Atos. Violência ou destruição evidente encerra o feitiço; a Visão de Mago Ativa provoca um Choque de Vontades, e a Visão de Mago Focada o revela. As Conditions continuam resolvidas, enquanto as Portas retornam ao fim do feitiço.",
+      "summary": "Apaga a presença observável do alvo e os indícios de sua existência: a detecção mundana falha, ele fica invisível, as Portas Sociais são removidas e todas as suas Condições exceto as de Paradoxo se resolvem sem conceder Atos. Violência ou destruição evidente encerra o feitiço; a Visão de Mago Ativa provoca um Choque de Vontades, e a Visão de Mago Focada o revela. As Condições continuam resolvidas, enquanto as Portas retornam ao fim do feitiço.",
+      "description": "Apaga a presença observável do alvo e os indícios de sua existência: a detecção mundana falha, ele fica invisível, as Portas Sociais são removidas e todas as suas Condições exceto as de Paradoxo se resolvem sem conceder Atos. Violência ou destruição evidente encerra o feitiço; a Visão de Mago Ativa provoca um Choque de Vontades, e a Visão de Mago Focada o revela. As Condições continuam resolvidas, enquanto as Portas retornam ao fim do feitiço.",
       "reach": ""
     }
   },

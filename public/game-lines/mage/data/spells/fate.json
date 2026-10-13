@@ -180,8 +180,8 @@
       "practice": "Regência",
       "primaryFactor": "Potência",
       "withstand": "Compostura",
-      "summary": "Concede uma bênção ou impõe uma azaração ao alvo, combinando os efeitos padrão de Destino até o limite da Potência. As bênçãos podem melhorar jogadas mundanas ou conceder Conditions benéficas; as azarações podem impor penalidades, Complicações ou Conditions. Uma azaração hostil é resistida pela Compostura.",
-      "description": "Concede uma bênção ou impõe uma azaração ao alvo, combinando os efeitos padrão de Destino até o limite da Potência. As bênçãos podem melhorar jogadas mundanas ou conceder Conditions benéficas; as azarações podem impor penalidades, Complicações ou Conditions. Uma azaração hostil é resistida pela Compostura. +2 Alcance: A bênção ou azaração também pode afetar jogadas de conjuração. +2 Alcance e 1 Mana: Conjura o feitiço reflexivamente.",
+      "summary": "Concede uma bênção ou impõe uma azaração ao alvo, combinando os efeitos padrão de Destino até o limite da Potência. As bênçãos podem melhorar jogadas mundanas ou conceder Condições benéficas; as azarações podem impor penalidades, Complicações ou Condições. Uma azaração hostil é resistida pela Compostura.",
+      "description": "Concede uma bênção ou impõe uma azaração ao alvo, combinando os efeitos padrão de Destino até o limite da Potência. As bênçãos podem melhorar jogadas mundanas ou conceder Condições benéficas; as azarações podem impor penalidades, Complicações ou Condições. Uma azaração hostil é resistida pela Compostura. +2 Alcance: A bênção ou azaração também pode afetar jogadas de conjuração. +2 Alcance e 1 Mana: Conjura o feitiço reflexivamente.",
       "reach": "+2 Alcance: A bênção ou azaração também pode afetar jogadas de conjuração. +2 Alcance e 1 Mana: Conjura o feitiço reflexivamente."
     }
   },
@@ -273,8 +273,8 @@
       "practice": "Regência",
       "primaryFactor": "Duração",
       "withstand": "",
-      "summary": "Permite adivinhar corretamente, na primeira tentativa, um número de telefone, senha, combinação ou entrada semelhante e concede a Condition Informado na próxima jogada relevante. O feitiço manipula a entrada aleatória por meio do dispositivo; não localiza uma pessoa nem revela para onde o resultado leva.",
-      "description": "Permite adivinhar corretamente, na primeira tentativa, um número de telefone, senha, combinação ou entrada semelhante e concede a Condition Informado na próxima jogada relevante. O feitiço manipula a entrada aleatória por meio do dispositivo; não localiza uma pessoa nem revela para onde o resultado leva.",
+      "summary": "Permite adivinhar corretamente, na primeira tentativa, um número de telefone, senha, combinação ou entrada semelhante e concede a Condição Informado na próxima jogada relevante. O feitiço manipula a entrada aleatória por meio do dispositivo; não localiza uma pessoa nem revela para onde o resultado leva.",
+      "description": "Permite adivinhar corretamente, na primeira tentativa, um número de telefone, senha, combinação ou entrada semelhante e concede a Condição Informado na próxima jogada relevante. O feitiço manipula a entrada aleatória por meio do dispositivo; não localiza uma pessoa nem revela para onde o resultado leva.",
       "reach": ""
     }
   },
@@ -451,9 +451,9 @@
       "practice": "Tecelagem",
       "primaryFactor": "Potência",
       "withstand": "Compostura",
-      "summary": "Vincula o destino de vários alvos: dano, Complicações e Conditions indesejadas sofridas por um afetam todos os demais. A conjuradora integra o vínculo, a menos que aumente a Escala.",
-      "description": "Vincula o destino de vários alvos: dano, Complicações e Conditions indesejadas sofridas por um afetam todos os demais. A conjuradora integra o vínculo, a menos que aumente a Escala. +1 Alcance: O vínculo funciona em apenas um sentido para um dos alvos. +2 Alcance: Um alvo recebe dano, Complicações e Conditions indesejadas que infligir a outros, sem ficar vinculado a um alvo específico.",
-      "reach": "+1 Alcance: O vínculo funciona em apenas um sentido para um dos alvos. +2 Alcance: Um alvo recebe dano, Complicações e Conditions indesejadas que infligir a outros, sem ficar vinculado a um alvo específico."
+      "summary": "Vincula o destino de vários alvos: dano, Complicações e Condições indesejadas sofridas por um afetam todos os demais. A conjuradora integra o vínculo, a menos que aumente a Escala.",
+      "description": "Vincula o destino de vários alvos: dano, Complicações e Condições indesejadas sofridas por um afetam todos os demais. A conjuradora integra o vínculo, a menos que aumente a Escala. +1 Alcance: O vínculo funciona em apenas um sentido para um dos alvos. +2 Alcance: Um alvo recebe dano, Complicações e Condições indesejadas que infligir a outros, sem ficar vinculado a um alvo específico.",
+      "reach": "+1 Alcance: O vínculo funciona em apenas um sentido para um dos alvos. +2 Alcance: Um alvo recebe dano, Complicações e Condições indesejadas que infligir a outros, sem ficar vinculado a um alvo específico."
     }
   },
   {
@@ -583,7 +583,16 @@
     "source": "Mage the Awakening",
     "page": 137,
     "summary": "Provide a quest capable of dispelling a Fate-enforced supernatural curse once completed. The task grows from a minor errand to a major quest according to the curse’s strength; exceptionally powerful curses may require more elaborate atonement.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Expiação",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "Potência do efeito no alvo",
+      "summary": "Oferece uma missão capaz de encerrar uma maldição sobrenatural imposta por Destino quando for cumprida. A tarefa varia de um pequeno encargo a uma jornada importante conforme a força da maldição; maldições excepcionalmente poderosas podem exigir provações ainda maiores.",
+      "description": "Oferece uma missão capaz de encerrar uma maldição sobrenatural imposta por Destino quando for cumprida. A tarefa varia de um pequeno encargo a uma jornada importante conforme a força da maldição; maldições excepcionalmente poderosas podem exigir provações ainda maiores. +1 Alcance: Outra pessoa pode realizar a missão em nome do alvo; se ele não consentir, resiste com Perseverança.",
+      "reach": "+1 Alcance: Outra pessoa pode realizar a missão em nome do alvo; se ele não consentir, resiste com Perseverança."
+    }
   },
   {
     "id": "mta-2ed:fate-4-chaos-mastery",
@@ -605,7 +614,16 @@
     "source": "Mage the Awakening",
     "page": 138,
     "summary": "Direct complex probability within a subject or area to produce up to Potency physically possible outcomes, however unlikely. It cannot create supernatural effects, but may control a chaotic scene, cause biological events and suitable Conditions, reduce an action to a chance die, or direct an environmental hazard.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Domínio do Caos",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Direciona probabilidades complexas em um alvo ou área para produzir até um número de resultados fisicamente possíveis igual à Potência, por mais improváveis que sejam. Não cria efeitos sobrenaturais, mas pode controlar uma cena caótica, causar eventos biológicos e Condições apropriadas, reduzir uma ação a um dado de sorte ou direcionar um perigo ambiental.",
+      "description": "Direciona probabilidades complexas em um alvo ou área para produzir até um número de resultados fisicamente possíveis igual à Potência, por mais improváveis que sejam. Não cria efeitos sobrenaturais, mas pode controlar uma cena caótica, causar eventos biológicos e Condições apropriadas, reduzir uma ação a um dado de sorte ou direcionar um perigo ambiental.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:fate-4-divine-intervention",
@@ -627,7 +645,16 @@
     "source": "Mage the Awakening",
     "page": 138,
     "summary": "Replace one Aspiration with a stated goal and bind the subject’s luck to it. As a goad, failure to pursue the goal meaningfully within 24 hours causes a hex; as a ban, actively pursuing the forbidden goal causes the hex.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Intervenção Divina",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Perseverança",
+      "summary": "Substitui uma Aspiração por um objetivo declarado e vincula a sorte do alvo a ele. Como incentivo, deixar de persegui-lo de modo significativo por 24 horas impõe uma azaração; como proibição, a azaração ocorre ao tentar alcançar o objetivo proibido.",
+      "description": "Substitui uma Aspiração por um objetivo declarado e vincula a sorte do alvo a ele. Como incentivo, deixar de persegui-lo de modo significativo por 24 horas impõe uma azaração; como proibição, a azaração ocorre ao tentar alcançar o objetivo proibido.",
+      "reach": ""
+    }
   },
   {
     "id": "core-dark-eras-2:fate-4-masking-the-false-fae",
@@ -695,7 +722,16 @@
     "source": "Mage the Awakening",
     "page": 138,
     "summary": "Encourage a specified event to befall the subject when circumstances permit. If cooperation is necessary, Fate presents opportunities about once per week; the spell may place the subject in danger but cannot directly deal damage.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Fios do Destino",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Favorece a ocorrência de um evento especificado na vida do alvo assim que as circunstâncias permitirem. Se a colaboração dele for necessária, o Destino apresenta oportunidades cerca de uma vez por semana; o feitiço pode colocá-lo em perigo, mas não causa dano diretamente.",
+      "description": "Favorece a ocorrência de um evento especificado na vida do alvo assim que as circunstâncias permitirem. Se a colaboração dele for necessária, o Destino apresenta oportunidades cerca de uma vez por semana; o feitiço pode colocá-lo em perigo, mas não causa dano diretamente. +1 Alcance: Apresenta oportunidades de avançar rumo ao evento uma vez por dia.",
+      "reach": "+1 Alcance: Apresenta oportunidades de avançar rumo ao evento uma vez por dia."
+    }
   },
   {
     "id": "mta-2ed:fate-4-sever-oaths",
@@ -717,7 +753,16 @@
     "source": "Mage the Awakening",
     "page": 138,
     "summary": "Alter or remove Fate-enforced obligations and conditions: free a bound ephemeral entity, change a boon or hex, modify or negate an oath, change or dispel a conditional trigger, or alter the Doom granted by Destiny.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Romper Juramentos",
+      "practice": "Desfazimento",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Altera ou remove obrigações e condições impostas por Destino: liberta uma entidade efêmera vinculada, modifica uma bênção ou azaração, altera ou anula um juramento, muda ou dissipa um gatilho condicional, ou altera a Sina concedida pelo Mérito Destino. Pode realizar até um número desses efeitos igual à Potência.",
+      "description": "Altera ou remove obrigações e condições impostas por Destino: liberta uma entidade efêmera vinculada, modifica uma bênção ou azaração, altera ou anula um juramento, muda ou dissipa um gatilho condicional, ou altera a Sina concedida pelo Mérito Destino. Pode realizar até um número desses efeitos igual à Potência. +2 Alcance: Torna os efeitos duradouros.",
+      "reach": "+2 Alcance: Torna os efeitos duradouros."
+    }
   },
   {
     "id": "mta-2ed:fate-5-forge-destiny",
@@ -739,7 +784,16 @@
     "source": "Mage the Awakening",
     "page": 139,
     "summary": "Choose one transformation of the subject’s destiny: grant a Supernatural Merit with dots up to Potency, alter an existing Supernatural Merit by Potency, replace up to Potency Aspirations or Obsessions, or assign a Doom even without Destiny.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Forjar Destino",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Escolhe uma alteração no destino do alvo: concede um Mérito Sobrenatural com pontuação até a Potência, aumenta ou reduz um Mérito Sobrenatural existente pela Potência, substitui até esse número de Aspirações ou Obsessões, ou define sua Sina mesmo que não tenha o Mérito Destino.",
+      "description": "Escolhe uma alteração no destino do alvo: concede um Mérito Sobrenatural com pontuação até a Potência, aumenta ou reduz um Mérito Sobrenatural existente pela Potência, substitui até esse número de Aspirações ou Obsessões, ou define sua Sina mesmo que não tenha o Mérito Destino.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:fate-5-miracle",
@@ -761,7 +815,16 @@
     "source": "Mage the Awakening",
     "page": 140,
     "summary": "Gain Potency Intercessions to spend reflexively during the Duration. Each Intercession can add or remove one success after a roll, with a result below zero becoming a dramatic failure, or cause an immediately convenient and reasonably likely event within sensory range.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Milagre",
+      "practice": "Criação",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Concede um número de Intercessões igual à Potência, gastas reflexivamente durante a Duração. Cada uma pode acrescentar ou retirar um sucesso depois de uma jogada; um resultado reduzido abaixo de zero torna-se falha dramática. Alternativamente, provoca imediatamente um evento conveniente e razoavelmente provável dentro do alcance sensorial.",
+      "description": "Concede um número de Intercessões igual à Potência, gastas reflexivamente durante a Duração. Cada uma pode acrescentar ou retirar um sucesso depois de uma jogada; um resultado reduzido abaixo de zero torna-se falha dramática. Alternativamente, provoca imediatamente um evento conveniente e razoavelmente provável dentro do alcance sensorial. +1 Alcance: Gasta uma Intercessão e um ponto de Força de Vontade para causar um evento improvável, mas com precedente mundano. +2 Alcance: Também gasta 1 Mana para tornar possível um evento extraordinário, ainda que não impossível.",
+      "reach": "+1 Alcance: Gasta uma Intercessão e um ponto de Força de Vontade para causar um evento improvável, mas com precedente mundano. +2 Alcance: Também gasta 1 Mana para tornar possível um evento extraordinário, ainda que não impossível."
+    }
   },
   {
     "id": "mta-2ed:fate-5-pariah",
@@ -783,7 +846,16 @@
     "source": "Mage the Awakening",
     "page": 139,
     "summary": "Turn the world against the subject: impressions worsen by one level, or Social actions seeking kindness take a Potency penalty. Attempts to help suffer a hex, while attempts to harm receive a boon; the caster accounts separately for Reach used by each effect.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Pária",
+      "practice": "Descriação",
+      "primaryFactor": "Potência",
+      "withstand": "Compostura",
+      "summary": "Volta o mundo contra o alvo: sua impressão cai um nível ou suas ações Sociais para obter gentileza sofrem penalidade igual à Potência. Tentativas de ajudá-lo sofrem uma azaração; ações para prejudicá-lo recebem uma bênção. A conjuradora calcula separadamente o Alcance de cada efeito escolhido.",
+      "description": "Volta o mundo contra o alvo: sua impressão cai um nível ou suas ações Sociais para obter gentileza sofrem penalidade igual à Potência. Tentativas de ajudá-lo sofrem uma azaração; ações para prejudicá-lo recebem uma bênção. A conjuradora calcula separadamente o Alcance de cada efeito escolhido. +1 Alcance: Ajusta a sensibilidade da maldição, por exemplo para condenar tentativas de feri-lo sem intenção de matá-lo.",
+      "reach": "+1 Alcance: Ajusta a sensibilidade da maldição, por exemplo para condenar tentativas de feri-lo sem intenção de matá-lo."
+    }
   },
   {
     "id": "mta-2ed:fate-5-swarm-of-locusts",
@@ -805,6 +877,15 @@
     "source": "Mage the Awakening",
     "page": 140,
     "summary": "Create an overtly supernatural Fortean event across the area, such as a rain of frogs, swarm of locusts, or untimely eclipse. It produces Environmental Tilts chosen by the player and is a breaking point for most Sleepers.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Enxame de Gafanhotos",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Cria na área um evento fortiano ostensivamente sobrenatural, como uma chuva de rãs, um enxame de gafanhotos ou um eclipse fora de época. O evento aplica Complicações Ambientais escolhidas pelo jogador e constitui um Ponto de Ruptura imediato para a maioria dos Adormecidos que o presenciam.",
+      "description": "Cria na área um evento fortiano ostensivamente sobrenatural, como uma chuva de rãs, um enxame de gafanhotos ou um eclipse fora de época. O evento aplica Complicações Ambientais escolhidas pelo jogador e constitui um Ponto de Ruptura imediato para a maioria dos Adormecidos que o presenciam.",
+      "reach": ""
+    }
   }
 ]
