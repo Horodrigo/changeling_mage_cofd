@@ -920,7 +920,16 @@
     "source": "Mage the Awakening",
     "page": 145,
     "summary": "Destroy mundane electronic devices by degrading their electromagnetic energy; hardened equipment requires sufficient Potency and magical devices trigger a Clash of Wills. Against a living subject, the nervous-system disruption inflicts Potency lethal damage as a direct attack.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Pulso Eletromagnético",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Degrada a energia eletromagnética do alvo e danifica dispositivos eletrônicos. Pode desligar dispositivos elétricos comuns; aparelhos blindados exigem Potência igual à sua proteção. Contra seres vivos, causa dano letal igual à Potência no sistema nervoso.",
+      "description": "Degrada a energia eletromagnética do alvo e danifica dispositivos eletrônicos. Pode desligar dispositivos elétricos comuns; aparelhos blindados exigem Potência igual à sua proteção. Contra seres vivos, causa dano letal igual à Potência no sistema nervoso.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:forces-4-levitation",
@@ -942,7 +951,16 @@
     "source": "Mage the Awakening",
     "page": 145,
     "summary": "Float the subject at an air Speed equal to Potency while allowing applicable Defense; unwilling subjects Withstand with Stamina. The mage must spend an instant action each turn to direct movement, otherwise the subject stops and hangs in place.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Levitação",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Vigor",
+      "summary": "Faz o alvo flutuar pelo ar com Deslocamento igual à Potência. Ele pode usar Defesa contra ataques se aplicável, e um alvo involuntário resiste com Vigor. A maga pode direcionar seu movimento com uma ação instantânea por turno; se parar, o alvo fica suspenso onde estava.",
+      "description": "Faz o alvo flutuar pelo ar com Deslocamento igual à Potência. Ele pode usar Defesa contra ataques se aplicável, e um alvo involuntário resiste com Vigor. A maga pode direcionar seu movimento com uma ação instantânea por turno; se parar, o alvo fica suspenso onde estava. +1 Alcance: O alvo mantém o impulso entre turnos e flutua lentamente na direção inicial. +1 Alcance: O alvo voa com liberdade e manobrabilidade, soma Gnose da maga + Potência ao Deslocamento aéreo e conserva sua Defesa normal sem se exaurir.",
+      "reach": "+1 Alcance: O alvo mantém o impulso entre turnos e flutua lentamente na direção inicial. +1 Alcance: O alvo voa com liberdade e manobrabilidade, soma Gnose da maga + Potência ao Deslocamento aéreo e conserva sua Defesa normal sem se exaurir."
+    }
   },
   {
     "id": "mta-2ed:forces-4-rend-friction",
@@ -964,7 +982,16 @@
     "source": "Mage the Awakening",
     "page": 145,
     "summary": "Increase friction so every three yards moved inflicts one lethal damage, up to Potency, with mundane armor half effective. Alternatively, reduce friction to double travel before slowing per Potency, double weapon ranges, and penalize vehicle Handling by Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Manipular o Atrito",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Aumenta o atrito para causar 1 dano letal a cada 3 jardas que o alvo percorre em um turno, até o máximo de Potência; o alvo precisa estar em contato com o ar. Se reduzir o atrito, dobra a distância percorrida antes de perder velocidade por ponto de Potência e amplia da mesma forma o alcance de armas de projéteis. Veículos recebem penalidade de Condução igual à Potência e podem perder o controle.",
+      "description": "Aumenta o atrito para causar 1 dano letal a cada 3 jardas que o alvo percorre em um turno, até o máximo de Potência; o alvo precisa estar em contato com o ar. Se reduzir o atrito, dobra a distância percorrida antes de perder velocidade por ponto de Potência e amplia da mesma forma o alcance de armas de projéteis. Veículos recebem penalidade de Condução igual à Potência e podem perder o controle.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:forces-4-thunderbolt",
@@ -986,7 +1013,16 @@
     "source": "Mage the Awakening",
     "page": 146,
     "summary": "Channel ambient energy into the subject as a direct attack, inflicting lethal damage equal to Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Descarga de Energia",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Concentra energia ambiente em um ataque direto que causa dano letal igual à Potência.",
+      "description": "Concentra energia ambiente em um ataque direto que causa dano letal igual à Potência. +1 Alcance e 1 Mana: O dano passa a ser agravado.",
+      "reach": "+1 Alcance e 1 Mana: O dano passa a ser agravado."
+    }
   },
   {
     "id": "mta-2ed:forces-4-transform-energy",
@@ -1008,7 +1044,16 @@
     "source": "Mage the Awakening",
     "page": 146,
     "summary": "Convert one energy type into another at an equivalent level up to Potency, using the spell’s energy table to compare light, sound, heat, electricity, and fire.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Transformar Energia",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Converte uma forma de energia em outra de nível equivalente até a Potência, conforme a tabela de luz, som, calor, eletricidade e fogo.",
+      "description": "Converte uma forma de energia em outra de nível equivalente até a Potência, conforme a tabela de luz, som, calor, eletricidade e fogo. +1 Alcance: Reduz em um o nível da energia transformada; pode repetir este Alcance. +1 Alcance: Divide uma fonte de energia em duas formas distintas, ou conserva parte da forma original. +1 Alcance e 1 Mana: Aumenta em um o nível da energia transformada.",
+      "reach": "+1 Alcance: Reduz em um o nível da energia transformada; pode repetir este Alcance. +1 Alcance: Divide uma fonte de energia em duas formas distintas, ou conserva parte da forma original. +1 Alcance e 1 Mana: Aumenta em um o nível da energia transformada."
+    }
   },
   {
     "id": "mta-2ed:forces-5-adverse-weather",
@@ -1030,7 +1075,16 @@
     "source": "Mage the Awakening",
     "page": 146,
     "summary": "Create a major weather system within minutes, including tornadoes, tsunamis, monsoons, or hurricanes, or milder weather under otherwise clear conditions. It may create nearly any Extreme Environment up to level 4 and dissipates when the spell ends.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Clima Adverso",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Cria em minutos um sistema climático intenso, como tornado, tsunami, monção ou furacão. Pode produzir quase qualquer Ambiente Extremo até o nível 4; o fenômeno se dissipa ao fim do feitiço.",
+      "description": "Cria em minutos um sistema climático intenso, como tornado, tsunami, monção ou furacão. Pode produzir quase qualquer Ambiente Extremo até o nível 4; o fenômeno se dissipa ao fim do feitiço. +1 Alcance: Cria um clima drasticamente diferente das condições locais, como uma monção em plena estação seca.",
+      "reach": "+1 Alcance: Cria um clima drasticamente diferente das condições locais, como uma monção em plena estação seca."
+    }
   },
   {
     "id": "mta-2ed:forces-5-create-energy",
@@ -1052,7 +1106,16 @@
     "source": "Mage the Awakening",
     "page": 146,
     "summary": "Create light, including sunlight, fire, radiation, sound, or electricity from nothing at a level up to Potency. Created fire scales in heat with Potency, radiation creates a hazardous Extreme Environment, and Control spells may subsequently alter the energy.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Criar Energia",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Cria energia do nada, incluindo luz solar, fogo, radiação, som ou eletricidade, até o nível permitido pela Potência. O calor do fogo cresce com a Potência; a radiação cria um Ambiente Extremo perigoso para seres vivos. Outros feitiços de controle podem alterar a energia criada.",
+      "description": "Cria energia do nada, incluindo luz solar, fogo, radiação, som ou eletricidade, até o nível permitido pela Potência. O calor do fogo cresce com a Potência; a radiação cria um Ambiente Extremo perigoso para seres vivos. Outros feitiços de controle podem alterar a energia criada.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:forces-5-eradicate-energy",
@@ -1074,7 +1137,16 @@
     "source": "Mage the Awakening",
     "page": 146,
     "summary": "Explosively annihilate energy within a subject or area up to the level permitted by Potency. Used on a living creature, the spell is instantly fatal and is Withstood by Stamina.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Erradicar Energia",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "Vigor",
+      "summary": "Aniquila explosivamente a energia de um alvo ou área até o nível permitido pela Potência. Se usado em uma criatura viva, o efeito é instantaneamente fatal e é resistido por Vigor.",
+      "description": "Aniquila explosivamente a energia de um alvo ou área até o nível permitido pela Potência. Se usado em uma criatura viva, o efeito é instantaneamente fatal e é resistido por Vigor.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:forces-5-earthquake",
@@ -1096,6 +1168,15 @@
     "source": "Mage the Awakening",
     "page": 147,
     "summary": "Create an earthquake that deals Potency damage to every structure in the area; sturdy buildings subtract Durability, while small or flimsy structures do not. Living beings roll Dexterity + Athletics to keep their balance or suffer the consequences of falling and collapsing surroundings.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Terremoto",
+      "practice": "Criação",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Provoca um terremoto que causa dano igual à Potência a cada estrutura na área. Construções preparadas para terremotos subtraem Durabilidade; estruturas pequenas ou frágeis não a aplicam. Seres vivos podem rolar Destreza + Esportes para manter o equilíbrio; uma falha causa dano contundente pela queda, além do risco de desabamento.",
+      "description": "Provoca um terremoto que causa dano igual à Potência a cada estrutura na área. Construções preparadas para terremotos subtraem Durabilidade; estruturas pequenas ou frágeis não a aplicam. Seres vivos podem rolar Destreza + Esportes para manter o equilíbrio; uma falha causa dano contundente pela queda, além do risco de desabamento.",
+      "reach": ""
+    }
   }
 ]
