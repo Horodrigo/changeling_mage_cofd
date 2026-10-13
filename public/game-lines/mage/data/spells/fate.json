@@ -174,7 +174,16 @@
     "source": "Mage the Awakening",
     "page": 136,
     "summary": "Grant the subject a boon or impose a hex, using Potency to choose and combine the standard Fate effects. A hostile hex is Withstood by Composure.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Sorte Excepcional",
+      "practice": "Regência",
+      "primaryFactor": "Potência",
+      "withstand": "Compostura",
+      "summary": "Concede uma bênção ou impõe uma azaração ao alvo, combinando os efeitos padrão de Destino até o limite da Potência. As bênçãos podem melhorar jogadas mundanas ou conceder Conditions benéficas; as azarações podem impor penalidades, Complicações ou Conditions. Uma azaração hostil é resistida pela Compostura.",
+      "description": "Concede uma bênção ou impõe uma azaração ao alvo, combinando os efeitos padrão de Destino até o limite da Potência. As bênçãos podem melhorar jogadas mundanas ou conceder Conditions benéficas; as azarações podem impor penalidades, Complicações ou Conditions. Uma azaração hostil é resistida pela Compostura. +2 Alcance: A bênção ou azaração também pode afetar jogadas de conjuração. +2 Alcance e 1 Mana: Conjura o feitiço reflexivamente.",
+      "reach": "+2 Alcance: A bênção ou azaração também pode afetar jogadas de conjuração. +2 Alcance e 1 Mana: Conjura o feitiço reflexivamente."
+    }
   },
   {
     "id": "mta-2ed:fate-2-fabricate-fortune",
@@ -196,7 +205,16 @@
     "source": "Mage the Awakening",
     "page": 136,
     "summary": "Conceal or falsify the subject’s fate and Destiny. The deception can fool conditional Durations or triggers and create false omens under Fate scrutiny, subject to a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Forjar Fortuna",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Oculta ou falsifica o destino e o Mérito Destino do alvo. Pode enganar feitiços com Durações ou eventos condicionais e criar presságios falsos sob exame de Destino; tentativas mágicas de atravessar o disfarce provocam um Choque de Vontades.",
+      "description": "Oculta ou falsifica o destino e o Mérito Destino do alvo. Pode enganar feitiços com Durações ou eventos condicionais e criar presságios falsos sob exame de Destino; tentativas mágicas de atravessar o disfarce provocam um Choque de Vontades.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:fate-2-fools-rush-in",
@@ -218,7 +236,16 @@
     "source": "Mage the Awakening",
     "page": 136,
     "summary": "While entering a situation with little prior knowledge or preparation, the subject ignores untrained Skill penalties and improves first impressions by one level. Detailed reconnaissance or briefing prevents the spell from helping.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Os Tolos Se Precipitam",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Ao entrar sem preparo em uma situação, o alvo ignora penalidades por Perícias não treinadas e melhora sua primeira impressão em um nível. Reconhecimento ou instruções detalhadas impedem o benefício.",
+      "description": "Ao entrar sem preparo em uma situação, o alvo ignora penalidades por Perícias não treinadas e melhora sua primeira impressão em um nível. Reconhecimento ou instruções detalhadas impedem o benefício. +1 Alcance: Também concede bônus igual à Potência a esse número de jogadas escolhidas antes de serem feitas. +3 Alcance: O bônus também pode afetar jogadas de conjuração.",
+      "reach": "+1 Alcance: Também concede bônus igual à Potência a esse número de jogadas escolhidas antes de serem feitas. +3 Alcance: O bônus também pode afetar jogadas de conjuração."
+    }
   },
   {
     "id": "mta-2ed:fate-2-lucky-number",
@@ -240,7 +267,16 @@
     "source": "Mage the Awakening",
     "page": 136,
     "summary": "Correctly guess a phone number, password, combination, or similar input on the first attempt and gain Informed on the next relevant roll. The spell manipulates random input through the device; it does not locate a target or reveal where the result leads.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Número da Sorte",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Permite adivinhar corretamente, na primeira tentativa, um número de telefone, senha, combinação ou entrada semelhante e concede a Condition Informado na próxima jogada relevante. O feitiço manipula a entrada aleatória por meio do dispositivo; não localiza uma pessoa nem revela para onde o resultado leva.",
+      "description": "Permite adivinhar corretamente, na primeira tentativa, um número de telefone, senha, combinação ou entrada semelhante e concede a Condition Informado na próxima jogada relevante. O feitiço manipula a entrada aleatória por meio do dispositivo; não localiza uma pessoa nem revela para onde o resultado leva.",
+      "reach": ""
+    }
   },
   {
     "id": "core-dark-eras-2:fate-2-malleable-thorns",
@@ -285,7 +321,16 @@
     "source": "Mage the Awakening",
     "page": 136,
     "summary": "Find the nearest or most available person, place, or thing matching a general description within 24 hours, never a specific individual or object. Alternatively, gain temporary Allies, Contacts, Mentor, Resources, or Retainer up to Potency, usable no more than Potency times.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Alterar as Probabilidades",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Encontra em até 24 horas a pessoa, o lugar ou o objeto mais próximo ou acessível que corresponda a uma descrição geral, nunca um indivíduo ou objeto específico. Alternativamente, concede acesso temporário a Aliados, Contatos, Mentor, Recursos ou Retentor até a Potência, utilizável no máximo esse número de vezes.",
+      "description": "Encontra em até 24 horas a pessoa, o lugar ou o objeto mais próximo ou acessível que corresponda a uma descrição geral, nunca um indivíduo ou objeto específico. Alternativamente, concede acesso temporário a Aliados, Contatos, Mentor, Recursos ou Retentor até a Potência, utilizável no máximo esse número de vezes. +1 Alcance: Localiza o objeto desejado em até uma hora.",
+      "reach": "+1 Alcance: Localiza o objeto desejado em até uma hora."
+    }
   },
   {
     "id": "mta-2ed:fate-2-warding-gesture",
@@ -307,7 +352,16 @@
     "source": "Mage the Awakening",
     "page": 136,
     "summary": "Protect the subject against supernatural effects that manipulate fate or compel action, forcing a Clash of Wills for each attempt; existing alterations remain. The caster may also exclude protected subjects individually from her own area spells.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Gesto Protetor",
+      "practice": "Proteção",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Protege o alvo de efeitos sobrenaturais que alterem seu destino ou imponham uma ação, exigindo um Choque de Vontades a cada tentativa; alterações anteriores continuam. A conjuradora também pode excluir o alvo de seus feitiços de área, decidindo a cada conjuração.",
+      "description": "Protege o alvo de efeitos sobrenaturais que alterem seu destino ou imponham uma ação, exigindo um Choque de Vontades a cada tentativa; alterações anteriores continuam. A conjuradora também pode excluir o alvo de seus feitiços de área, decidindo a cada conjuração. +1 Alcance: Pode excluí-lo de qualquer feitiço ou Aperfeiçoamento que usar. +2 Alcance: Pode protegê-lo de efeitos sobrenaturais que atinjam uma área em vez de indivíduos.",
+      "reach": "+1 Alcance: Pode excluí-lo de qualquer feitiço ou Aperfeiçoamento que usar. +2 Alcance: Pode protegê-lo de efeitos sobrenaturais que atinjam uma área em vez de indivíduos."
+    }
   },
   {
     "id": "mta-2ed:fate-3-grave-misfortune",
