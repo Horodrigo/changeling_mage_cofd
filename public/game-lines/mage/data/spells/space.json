@@ -763,7 +763,16 @@
     "source": "Mage the Awakening",
     "page": 178,
     "summary": "Create a new sympathetic connection at a chosen strength, resisted by the desired Sympathy rating. The connection is Lasting but may weaken naturally with time and changing circumstances.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Criar Simpatia",
+      "practice": "Criação",
+      "primaryFactor": "Potência",
+      "withstand": "Força da conexão desejada",
+      "summary": "Cria no alvo uma nova conexão simpática com a pessoa ou coisa escolhida, resistida pela força desejada. A conexão é duradoura, mas pode enfraquecer naturalmente com o tempo e os acontecimentos.",
+      "description": "Cria no alvo uma nova conexão simpática com a pessoa ou coisa escolhida, resistida pela força desejada. A conexão é duradoura, mas pode enfraquecer naturalmente com o tempo e os acontecimentos. +1 Alcance: A conexão não se enfraquece; somente magia pode rompê-la. +2 Alcance: Também concede ao alvo um novo nome simpático que dura apenas enquanto o feitiço estiver ativo.",
+      "reach": "+1 Alcance: A conexão não se enfraquece; somente magia pode rompê-la. +2 Alcance: Também concede ao alvo um novo nome simpático que dura apenas enquanto o feitiço estiver ativo."
+    }
   },
   {
     "id": "mta-2ed:space-5-forge-no-chains",
@@ -785,7 +794,16 @@
     "source": "Mage the Awakening",
     "page": 178,
     "summary": "Prevent subjects from forming new sympathetic connections for the Duration; shed blood, hair, and similar traces do not link back to them. Space spells they leave behind also add Potency to their Opacity against Focused Mage Sight.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Não Forjar Correntes",
+      "practice": "Descriação",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Impede o alvo de formar novas conexões simpáticas pela Duração. Sangue, cabelo e outros vestígios deixados nesse período não se vinculam a ele; seus feitiços de Espaço também não deixam rastros normais e somam a Potência à Opacidade para investigação com Visão Mágica Focada.",
+      "description": "Impede o alvo de formar novas conexões simpáticas pela Duração. Sangue, cabelo e outros vestígios deixados nesse período não se vinculam a ele; seus feitiços de Espaço também não deixam rastros normais e somam a Potência à Opacidade para investigação com Visão Mágica Focada.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:space-5-pocket-dimension",
@@ -807,7 +825,16 @@
     "source": "Mage the Awakening",
     "page": 178,
     "summary": "Create a featureless space outside reality with no native Time or Twilight: contents remain in stasis, and entry requires teleportation unless an Iris is added. Spells inside avoid Paradox unless cast sympathetically outside; when the realm ends, everything returns to its exact entry point.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Dimensão de Bolso",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Cria um espaço fora da realidade física, sem Tempo nem Crepúsculo próprios. Tudo dentro fica em estase; sem uma Íris, só é possível entrar por teletransporte. Magias conjuradas ali não geram Paradoxo a menos que afetem algo fora por Alcance Simpático. No fim do efeito, o conteúdo retorna exatamente ao lugar de onde entrou.",
+      "description": "Cria um espaço fora da realidade física, sem Tempo nem Crepúsculo próprios. Tudo dentro fica em estase; sem uma Íris, só é possível entrar por teletransporte. Magias conjuradas ali não geram Paradoxo a menos que afetem algo fora por Alcance Simpático. No fim do efeito, o conteúdo retorna exatamente ao lugar de onde entrou. +1 Alcance: Cria uma Íris de entrada no mundo físico; outro Alcance define sua Chave. Adicionar Tempo ••: O Tempo transcorre normalmente dentro da dimensão, exigindo cuidado com o suprimento de ar. Adicionar Morte ••, Mente •• ou Espírito ••: Inclui o Crepúsculo correspondente.",
+      "reach": "+1 Alcance: Cria uma Íris de entrada no mundo físico; outro Alcance define sua Chave. Adicionar Tempo ••: O Tempo transcorre normalmente dentro da dimensão, exigindo cuidado com o suprimento de ar. Adicionar Morte ••, Mente •• ou Espírito ••: Inclui o Crepúsculo correspondente."
+    }
   },
   {
     "id": "mta-2ed:space-5-quarantine",
@@ -829,7 +856,16 @@
     "source": "Mage the Awakening",
     "page": 179,
     "summary": "Excise an area from Space so the outside world closes around its absence and nothing inside can leave. Unlike a newly created pocket, the removed place retains its own Time, Twilight, matter, and other existing properties.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Quarentena",
+      "practice": "Descriação",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Retira uma área do Espaço, fazendo o mundo exterior fechar-se sobre sua ausência. Quem está dentro não consegue sair e retorna ao interior por qualquer passagem; o local preserva seu próprio Tempo, Crepúsculo, matéria e demais propriedades.",
+      "description": "Retira uma área do Espaço, fazendo o mundo exterior fechar-se sobre sua ausência. Quem está dentro não consegue sair e retorna ao interior por qualquer passagem; o local preserva seu próprio Tempo, Crepúsculo, matéria e demais propriedades. +1 Alcance: Define uma Chave que permite entrar ou sair. Adicionar Mente ••••: Pessoas fora da área deixam de se lembrar dela pela Duração; quem está dentro ainda se lembra. Adicionar Tempo •••••: A área e seus ocupantes nunca existiram na história enquanto o feitiço durar; a história normal retorna quando ele termina.",
+      "reach": "+1 Alcance: Define uma Chave que permite entrar ou sair. Adicionar Mente ••••: Pessoas fora da área deixam de se lembrar dela pela Duração; quem está dentro ainda se lembra. Adicionar Tempo •••••: A área e seus ocupantes nunca existiram na história enquanto o feitiço durar; a história normal retorna quando ele termina."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:space-5-unnaming",
@@ -851,6 +887,15 @@
     "source": "Signs of Sorcery",
     "page": 94,
     "summary": "Erase the subject’s sympathetic name and replace it with the name most Sleepers would naturally use, resisted by Composure. Connections to the old name disappear, and sympathetic casting suffers until the caster learns the replacement.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Apagar o Nome",
+      "practice": "Descriação",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Apaga o nome simpático do alvo, substituindo-o imediatamente pelo nome que a maioria dos Adormecidos usaria para identificá-lo. Vínculos com o nome antigo desaparecem, e conjurações simpáticas sofrem penalidade até que o novo nome seja conhecido.",
+      "description": "Apaga o nome simpático do alvo, substituindo-o imediatamente pelo nome que a maioria dos Adormecidos usaria para identificá-lo. Vínculos com o nome antigo desaparecem, e conjurações simpáticas sofrem penalidade até que o novo nome seja conhecido. Adicionar Primórdio •••••: Em um Desperto, apaga em vez disso o Nome das Sombras e o Nimbus. O Nome das Sombras não é substituído automaticamente; o alvo precisa reconstruir sua identidade Superna.",
+      "reach": "Adicionar Primórdio •••••: Em um Desperto, apaga em vez disso o Nome das Sombras e o Nimbus. O Nome das Sombras não é substituído automaticamente; o alvo precisa reconstruir sua identidade Superna."
+    }
   }
 ]
