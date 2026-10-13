@@ -608,7 +608,16 @@
     "source": "Mage the Awakening",
     "page": 177,
     "summary": "Redefine up to Potency absolute directions within the area, such as north, south, up, or down, or redefine directions relative to a chosen subject. The basic spell redirects along straight lines.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Alterar Direção",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Redefine até Potência direções absolutas na área, como norte, sul, cima e baixo, ou direções relativas a um alvo. Movimentos e trajetórias passam a seguir essas novas direções, inicialmente em linha reta; manter o controle pode exigir Destreza + Atletismo ou Condução.",
+      "description": "Redefine até Potência direções absolutas na área, como norte, sul, cima e baixo, ou direções relativas a um alvo. Movimentos e trajetórias passam a seguir essas novas direções, inicialmente em linha reta; manter o controle pode exigir Destreza + Atletismo ou Condução. +1 Alcance: Redefine direções em curvas, voltas ou outras formas além de linhas retas, aplicando Potência como bônus ou penalidade às ações pertinentes.",
+      "reach": "+1 Alcance: Redefine direções em curvas, voltas ou outras formas além de linhas retas, aplicando Potência como bônus ou penalidade às ações pertinentes."
+    }
   },
   {
     "id": "mta-2ed:space-4-collapse",
@@ -630,7 +639,16 @@
     "source": "Mage the Awakening",
     "page": 177,
     "summary": "Force a subject and chosen object to occupy the same space, inflicting lethal damage equal to Potency. Normally the object is displaced after the attack rather than remaining inside the target.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Colapsar",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Faz o alvo e um objeto escolhido ocuparem o mesmo espaço, causando dano letal igual à Potência. O objeto normalmente é expulso depois do ataque.",
+      "description": "Faz o alvo e um objeto escolhido ocuparem o mesmo espaço, causando dano letal igual à Potência. O objeto normalmente é expulso depois do ataque. +1 Alcance e 1 Mana: O dano torna-se agravado. +1 Alcance: O objeto permanece dentro do alvo até ser retirado.",
+      "reach": "+1 Alcance e 1 Mana: O dano torna-se agravado. +1 Alcance: O objeto permanece dentro do alvo até ser retirado."
+    }
   },
   {
     "id": "mta-2ed:space-4-cut-threads",
@@ -652,7 +670,16 @@
     "source": "Mage the Awakening",
     "page": 177,
     "summary": "Sever one sympathetic connection per Potency, resisted by the connection’s Sympathy. The severance is Lasting, though a relationship can form a new connection through later interaction.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Cortar os Fios",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "Força da conexão simpática",
+      "summary": "Rompe uma conexão simpática por ponto de Potência, resistida pela força de cada vínculo. O rompimento é duradouro, embora novas interações possam formar outro vínculo.",
+      "description": "Rompe uma conexão simpática por ponto de Potência, resistida pela força de cada vínculo. O rompimento é duradouro, embora novas interações possam formar outro vínculo. +2 Alcance: Remove também o nome simpático do alvo, mas apenas pela Duração; ele retorna quando o feitiço termina.",
+      "reach": "+2 Alcance: Remove também o nome simpático do alvo, mas apenas pela Duração; ele retorna quando o feitiço termina."
+    }
   },
   {
     "id": "mta-2ed:space-4-secret-room",
@@ -674,7 +701,16 @@
     "source": "Mage the Awakening",
     "page": 178,
     "summary": "Increase or decrease an enclosed space along the Area Scale table by one step per Potency. Scale must encompass the space at its original size, while the exterior need not reflect its altered interior.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Sala Secreta",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Aumenta ou diminui um espaço fechado em um passo da Escala de Área por ponto de Potência, sem exigir que seu exterior acompanhe a mudança. A Escala da conjuração deve abranger a área no tamanho original. Quem for comprimido pelo encolhimento sofre dano letal igual à Potência e é expulso; quando o efeito acaba, o conteúdo de uma área ampliada reaparece fora dos limites originais.",
+      "description": "Aumenta ou diminui um espaço fechado em um passo da Escala de Área por ponto de Potência, sem exigir que seu exterior acompanhe a mudança. A Escala da conjuração deve abranger a área no tamanho original. Quem for comprimido pelo encolhimento sofre dano letal igual à Potência e é expulso; quando o efeito acaba, o conteúdo de uma área ampliada reaparece fora dos limites originais.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:space-4-teleportation",
@@ -696,7 +732,16 @@
     "source": "Mage the Awakening",
     "page": 178,
     "summary": "Move a subject instantly to another location. Sympathetic Range may apply to either the subject or destination, but not both in the basic spell.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Teletransporte",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Move instantaneamente o alvo para outro lugar. O destino e a posição inicial devem normalmente estar ao alcance dos sentidos, mas Alcance Simpático pode ser usado em uma dessas pontas.",
+      "description": "Move instantaneamente o alvo para outro lugar. O destino e a posição inicial devem normalmente estar ao alcance dos sentidos, mas Alcance Simpático pode ser usado em uma dessas pontas. +1 Alcance: Troca a posição de dois alvos cuja diferença de Tamanho não passe de um ponto. +2 Alcance: Permite usar Alcance Simpático tanto para o alvo quanto para o destino, resistido pelo vínculo mais fraco. Adicionar Morte ••, Espírito •• ou outro Arcano de um reino: Pode mover um alvo entre esse reino e o mundo físico.",
+      "reach": "+1 Alcance: Troca a posição de dois alvos cuja diferença de Tamanho não passe de um ponto. +2 Alcance: Permite usar Alcance Simpático tanto para o alvo quanto para o destino, resistido pelo vínculo mais fraco. Adicionar Morte ••, Espírito •• ou outro Arcano de um reino: Pode mover um alvo entre esse reino e o mundo físico."
+    }
   },
   {
     "id": "mta-2ed:space-5-create-sympathy",
