@@ -34,7 +34,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Rótulos e apresentação dos cultos traduzidos, incluindo benefícios e Especializações predefinidas. Children of the Thorns mantém as exclusões de escopo existentes |
 | G01 — Spells | 360/360 traduzidas | Nomes descritivos, resumos, descrições e metadados localizados; integração separada do parser |
 | G02 — Méritos | 71 (61 principais, dez suplementares), 31 níveis | 29/71 com nome, requisitos e descrição PT; restam 42 Merits e os níveis aplicáveis |
-| G03 — Organizações | 17 Orders, 44 Factions, 12 Ministries | 11 Orders sem descrição PT; Factions/Tool Yantras e Ministries/Patron Exarchs |
+| G03 — Organizações | 17 Orders, 44 Factions, 12 Ministries | 17 Orders com descrição PT; faltam Factions/Tool Yantras e Ministries/Patron Exarchs |
 | G04 — Legacies | 16, 43 Attainments | Nomes, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções |
 | G05 — Conditions | 25 | Sem Alma traduzida e conferida; restam 24. Nome, descrição, resolução e Ato; nomes de Húbris já vinculados ao catálogo por ID |
 
@@ -78,7 +78,7 @@ Méritos Mage em execução: 29 Merits têm apresentação PT separada dos requi
 
 Apresentar **Práticas, Fator Primário, Resistência, Alcance e Adicionar Arcana** quando aplicáveis. `spell-presentation.ts` extrai `Reach:`/`Add Arcanum` do texto inglês canônico; `presentationPt.reach` localiza a apresentação sem mudar essa entrada. Títulos de Práxis publicadas acompanham Spells; nomes autorais permanecem intactos.
 
-Orders sem descrição PT: Jnanashakti, Mahanizrayani, Samashti, Vajrastra, Ajivaki, Arcadian Mysteries, Karpani, Mantra Sadhaki, Weret-Hekau, Company of the Codex e Bay City Marshals. Os cinco Paths são nomes próprios. Os 20 Utility Attainments já são bilíngues e estão no dicionário Mage.
+As 17 Orders têm descrição PT, incluindo as 11 históricas e suplementares. Os cinco Paths são nomes próprios. Os 20 Utility Attainments já são bilíngues e estão no dicionário Mage.
 
 Legacies: The Eleventh Question, Chronologue, Engineers of the System, House of Ariadne, Perfected Adepts, Nighthawks, Tyrian Archons, Shapers of the Invisible, Logophages, Reality Stalkers, Stone Scribes, Illumined Path, Intendants of the Building, Nagaraja, Keepers of the Covenant e Kitchen Alchemists. Dados em `game-lines/mage/catalog-data/legacies*.json`; não somar novamente Méritos Mage distribuídos como Core.
 

@@ -96,7 +96,8 @@ test("unexpected character import failures show a localized notice instead of ra
 });
 
 test("Mage Order labels follow the active locale", async () => {
-  const { mageOrderLabel } = await vite.ssrLoadModule("/game-lines/mage/creation-rules.ts");
+  const { mageOrderLabel, MTA_ORDER_DESCRIPTIONS } = await vite.ssrLoadModule("/game-lines/mage/creation-rules.ts");
+  const { MAGE_ORDERS } = await vite.ssrLoadModule("/game-lines/mage/orders.ts");
 
   assert.equal(mageOrderLabel("Adamantine Arrow", "en-US"), "Adamantine Arrow");
   assert.equal(mageOrderLabel("Adamantine Arrow", "pt-BR"), "Seta Adamantina");
@@ -105,6 +106,11 @@ test("Mage Order labels follow the active locale", async () => {
   assert.equal(mageOrderLabel("Orderless", "pt-BR"), "Sem Ordem");
   assert.equal(mageOrderLabel("Orderless", "en-US"), "Orderless");
   assert.equal(mageOrderLabel("My authored order", "pt-BR"), "My authored order");
+  assert.equal(MAGE_ORDERS.length, 17);
+  for (const order of MAGE_ORDERS) {
+    assert.ok(order.descriptionPt, `${order.id} has a Portuguese description`);
+    assert.deepEqual(MTA_ORDER_DESCRIPTIONS[order.name], [order.descriptionPt, order.description]);
+  }
 });
 
 test("Contract outcomes and Courtless use dictionary labels without changing mechanics", async () => {
