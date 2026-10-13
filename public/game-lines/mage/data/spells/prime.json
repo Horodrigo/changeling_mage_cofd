@@ -647,7 +647,16 @@
     "source": "Mage the Awakening",
     "page": 168,
     "summary": "Strike with concentrated aetheric force as a direct attack, inflicting bashing damage equal to Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Ventos Etéreos",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Fere o alvo com ventos do Aether, causando dano contundente igual à Potência.",
+      "description": "Fere o alvo com ventos do Aether, causando dano contundente igual à Potência. +1 Alcance: Os ventos permanecem e impõem o Tilt Ambiental Ventos Fortes na área. +1 Alcance: Em vez de dano, destrói um ponto de Mana do alvo por ponto de Potência alocado; a Potência pode ser dividida entre dano e perda de Mana.",
+      "reach": "+1 Alcance: Os ventos permanecem e impõem o Tilt Ambiental Ventos Fortes na área. +1 Alcance: Em vez de dano, destrói um ponto de Mana do alvo por ponto de Potência alocado; a Potência pode ser dividida entre dano e perda de Mana."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-camera-obscura",
@@ -691,7 +700,16 @@
     "source": "Mage the Awakening",
     "page": 168,
     "summary": "Move Mana equal to Potency between valid vessels, including mages, Hallows, tass, and enchanted objects. Transfers remain subject to the caster’s Gnosis-derived Mana-per-turn limit.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Canalizar Mana",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Transfere uma quantidade de Mana igual à Potência entre recipientes em contato, incluindo magos, Fontes, Artefatos e tass. A transferência respeita o limite de Mana por turno da conjuradora derivado de sua Gnose.",
+      "description": "Transfere uma quantidade de Mana igual à Potência entre recipientes em contato, incluindo magos, Fontes, Artefatos e tass. A transferência respeita o limite de Mana por turno da conjuradora derivado de sua Gnose. +1 Alcance: Ignora esse limite e transfere toda a Mana como ação instantânea.",
+      "reach": "+1 Alcance: Ignora esse limite e transfere toda a Mana como ação instantânea."
+    }
   },
   {
     "id": "mta-2ed:prime-3-cleanse-pattern",
@@ -713,7 +731,16 @@
     "source": "Mage the Awakening",
     "page": 168,
     "summary": "Remove the effect of a dramatic failure on a Focused Mage Sight Revelation and erase a mage’s Signature Nimbus from the subject.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Purificar Padrão",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Remove de um alvo os efeitos de uma falha dramática em uma Revelação de Visão Mágica Focada. Também apaga o Nimbus de Assinatura de uma maga que esteja marcado nele.",
+      "description": "Remove de um alvo os efeitos de uma falha dramática em uma Revelação de Visão Mágica Focada. Também apaga o Nimbus de Assinatura de uma maga que esteja marcado nele.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:prime-3-display-of-power",
@@ -742,7 +769,16 @@
       }
     ],
     "summary": "Make the Imagos of spells cast in the area visible to every form of Active Mage Sight, allowing observers to perceive their construction while the spell lasts.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Exibição de Poder",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Torna os Imagos dos feitiços lançados na área visíveis a todas as formas de Visão Mágica Ativa, permitindo aos observadores analisar sua construção pela Duração.",
+      "description": "Torna os Imagos dos feitiços lançados na área visíveis a todas as formas de Visão Mágica Ativa, permitindo aos observadores analisar sua construção pela Duração. Adicionar Destino •: Também torna visíveis as cláusulas de Contracts feéricos. +2 Alcance e 1 Mana: Tentativas de Contrafeitiço contra magias afetadas recebem a qualidade de Rota.",
+      "reach": "Adicionar Destino •: Também torna visíveis as cláusulas de Contracts feéricos. +2 Alcance e 1 Mana: Tentativas de Contrafeitiço contra magias afetadas recebem a qualidade de Rota."
+    }
   },
   {
     "id": "mta-2ed:prime-3-ephemeral-enchantment",
@@ -759,12 +795,21 @@
       "Occult",
       "Weaponry"
     ],
-    "description": "Subject becomes solid to any and all Twilight entities +2 Reach: For one Mana, if the subject is a weapon it will inflict aggravated damage to one specified Twilight entity. Every additional entity costs one Mana",
+    "description": "Subject becomes solid to all Twilight entities, allowing mutual physical interaction. +2 Reach: For one Mana, a weapon becomes the bane of one specified Twilight being for one Mana per additional being; each extra being is also an additional Scale subject.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 169,
-    "summary": "Make a material subject solid to all Twilight entities, allowing mutual physical interaction regardless of their type or attunement.",
-    "summaryReviewed": true
+    "summary": "Make a material subject solid to all Twilight entities, allowing mutual physical interaction. With additional Reach and Mana, a weapon may become the bane of specified beings in Twilight.",
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Encantamento Efêmero",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Torna o alvo material sólido para qualquer entidade no Crepúsculo, permitindo interação física mútua com fantasmas, espíritos, anjos e outros seres, independentemente do tipo de Crepúsculo.",
+      "description": "Torna o alvo material sólido para qualquer entidade no Crepúsculo, permitindo interação física mútua com fantasmas, espíritos, anjos e outros seres, independentemente do tipo de Crepúsculo. +2 Alcance e 1 Mana: Se o alvo for uma arma, ela atua como Fraqueza de uma entidade específica no Crepúsculo. Cada entidade adicional custa 1 Mana e conta como alvo adicional na Escala.",
+      "reach": "+2 Alcance e 1 Mana: Se o alvo for uma arma, ela atua como Fraqueza de uma entidade específica no Crepúsculo. Cada entidade adicional custa 1 Mana e conta como alvo adicional na Escala."
+    }
   },
   {
     "id": "mta-2ed:prime-3-geomancy",
@@ -786,7 +831,16 @@
     "source": "Mage the Awakening",
     "page": 169,
     "summary": "Move ley lines within the affected area and reshape how their energies flow. The spell may also change a node’s Resonance Keyword.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Geomancia",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Redireciona linhas de energia na área e altera o fluxo de sua Ressonância. Pode mover linhas e os nós que formam, prender uma linha em outro ponto ou mudar a palavra-chave de Ressonância de um nó.",
+      "description": "Redireciona linhas de energia na área e altera o fluxo de sua Ressonância. Pode mover linhas e os nós que formam, prender uma linha em outro ponto ou mudar a palavra-chave de Ressonância de um nó.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-imbue-room",
@@ -852,8 +906,17 @@
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 169,
-    "summary": "For at least one Mana, create a Size 5 or smaller object of solid tass with base Durability 1 and one stored Mana. Allocate Potency to Durability, Mana capacity, or a tool bonus; each use of the bonus consumes Mana, and the construct crumbles when empty.",
-    "summaryReviewed": true
+    "summary": "For at least one Mana, create a Size 5 or smaller simple object of tass with base Durability 1 and one stored Mana. Allocate Potency to Durability, Mana capacity, or a tool bonus or weapon damage; each use of the bonus consumes Mana, and the construct crumbles when empty.",
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Forma Platônica",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Por pelo menos 1 Mana, cria um objeto ou ferramenta simples de tass, de Tamanho até 5, Durabilidade 1 e 1 Mana armazenada. Pode alocar Potência para elevar Durabilidade, capacidade de Mana ou bônus de equipamento/dano da arma; cada uso desse bônus consome 1 Mana. Ao esvaziar, o objeto se desfaz; Mana restante se perde no fim da Duração.",
+      "description": "Por pelo menos 1 Mana, cria um objeto ou ferramenta simples de tass, de Tamanho até 5, Durabilidade 1 e 1 Mana armazenada. Pode alocar Potência para elevar Durabilidade, capacidade de Mana ou bônus de equipamento/dano da arma; cada uso desse bônus consome 1 Mana. Ao esvaziar, o objeto se desfaz; Mana restante se perde no fim da Duração. Adicionar Forças •••: O objeto deixa de parecer obviamente mágico. +1 Alcance: Se for ferramenta, recebe 8-novamente. +2 Alcance: Pode criar um dispositivo complexo.",
+      "reach": "Adicionar Forças •••: O objeto deixa de parecer obviamente mágico. +1 Alcance: Se for ferramenta, recebe 8-novamente. +2 Alcance: Pode criar um dispositivo complexo."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-primary-subject",
@@ -987,7 +1050,16 @@
     "source": "Mage the Awakening",
     "page": 168,
     "summary": "Temporarily make a Sleeper a Sleepwalker, allowing conscious perception of magic. Breaking points caused by witnessed magic are delayed and resolved when the spell ends.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Roubar o Fogo",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Transforma temporariamente um Adormecido em Sonâmbulo, permitindo que veja magia conscientemente. Pontos de Ruptura por testemunhar magia e efeitos da Quiescência ficam suspensos pela Duração e ocorrem quando o feitiço termina.",
+      "description": "Transforma temporariamente um Adormecido em Sonâmbulo, permitindo que veja magia conscientemente. Pontos de Ruptura por testemunhar magia e efeitos da Quiescência ficam suspensos pela Duração e ocorrem quando o feitiço termina.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-3-stored-spell",
