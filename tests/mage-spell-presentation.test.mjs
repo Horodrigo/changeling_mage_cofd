@@ -25,7 +25,10 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
       assert.equal(saved.id, spell.id);
     }
     assert.deepEqual(spells, original);
-    assert.equal(spells.filter(spell => spell.presentationPt).length, 38);
+    assert.equal(spells.filter(spell => spell.presentationPt).length, 46);
+    const crafting = spells.find(spell => spell.id === "mta-signs-of-sorcery:death-4-soul-grafting");
+    assert.equal(crafting.name, "Soul Crafting");
+    assert.equal(mageSpellPresentation(crafting, "pt-BR").name, "Moldagem da Alma");
     assert.match(mageSpellPresentation(spells.find(spell => spell.name === "Exorcism"), "pt-BR").reach, /Adicionar Mente ou Espírito/);
     assert.match(mageSpellPresentation(spells.find(spell => spell.name === "Revenant"), "pt-BR").reach, /^Adicionar Mente ou Espírito/);
     assert.match(mageSpellPresentation(spells[1], "pt-BR").reach, /\+1 Alcance/);

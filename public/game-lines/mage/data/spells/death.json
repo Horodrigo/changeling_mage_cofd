@@ -329,7 +329,16 @@
     "source": "Signs of Sorcery",
     "page": 73,
     "summaryReviewed": true,
-    "summary": "While the spell remains active, the subject may safely relinquish her next spell by making a valuable blood sacrifice instead of spending a Willpower dot: dozens of small unintelligent creatures, a few intelligent animals, or one human."
+    "summary": "While the spell remains active, the subject may safely relinquish her next spell by making a valuable blood sacrifice instead of spending a Willpower dot: dozens of small unintelligent creatures, a few intelligent animals, or one human.",
+    "presentationPt": {
+      "name": "Renúncia Sacrificial",
+      "practice": "Regência",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Enquanto o feitiço estiver ativo, o alvo pode renunciar com segurança ao próximo feitiço fazendo um sacrifício de sangue valioso no lugar de gastar um ponto permanente de Força de Vontade: dezenas de pequenas criaturas sem inteligência, alguns animais inteligentes ou um ser humano.",
+      "description": "Enquanto o feitiço estiver ativo, o alvo pode renunciar com segurança ao próximo feitiço fazendo um sacrifício de sangue valioso no lugar de gastar um ponto permanente de Força de Vontade: dezenas de pequenas criaturas sem inteligência, alguns animais inteligentes ou um ser humano.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:death-2-shape-ephemera",
@@ -630,7 +639,16 @@
     "source": "Signs of Sorcery",
     "page": 64,
     "summaryReviewed": true,
-    "summary": "Make an ordinary object simultaneously material, Death-attuned Twilight ephemera, and shadow, allowing it to affect ghosts, Twilight objects, and magically crafted shadows while retaining its normal equipment bonuses. It keeps its material form if taken into Twilight for the Duration."
+    "summary": "Make an ordinary object simultaneously material, Death-attuned Twilight ephemera, and shadow, allowing it to affect ghosts, Twilight objects, and magically crafted shadows while retaining its normal equipment bonuses. It keeps its material form if taken into Twilight for the Duration.",
+    "presentationPt": {
+      "name": "Item Tocado pela Morte",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Faz um objeto comum existir simultaneamente como matéria, efêmera de Crepúsculo sintonizada com Morte e sombra. Ele pode afetar fantasmas, objetos no Crepúsculo e sombras criadas por magia, conserva seus bônus normais de equipamento e não perde a forma material se for levado ao Crepúsculo durante a Duração.",
+      "description": "Faz um objeto comum existir simultaneamente como matéria, efêmera de Crepúsculo sintonizada com Morte e sombra. Ele pode afetar fantasmas, objetos no Crepúsculo e sombras criadas por magia, conserva seus bônus normais de equipamento e não perde a forma material se for levado ao Crepúsculo durante a Duração.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:death-3-devouring-the-slain",
@@ -745,7 +763,16 @@
     "source": "Signs of Sorcery",
     "page": 73,
     "summaryReviewed": true,
-    "summary": "The next time the subject destroys a soul while this spell remains active, she may safely relinquish another spell as though she spent a Willpower dot. Add Prime 2: Destroy a soul stone instead."
+    "summary": "The next time the subject destroys a soul while this spell remains active, she may safely relinquish another spell as though she spent a Willpower dot. Add Prime 2: Destroy a soul stone instead.",
+    "presentationPt": {
+      "name": "Renúncia pela Ceifa",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Na próxima vez que o alvo destruir uma alma enquanto o feitiço estiver ativo, poderá renunciar a outro feitiço com segurança como se tivesse gasto um ponto permanente de Força de Vontade.",
+      "description": "Na próxima vez que o alvo destruir uma alma enquanto o feitiço estiver ativo, poderá renunciar a outro feitiço com segurança como se tivesse gasto um ponto permanente de Força de Vontade. Adicionar Primórdio ••: Pode destruir uma pedra da alma em vez de uma alma.",
+      "reach": "Adicionar Primórdio ••: Pode destruir uma pedra da alma em vez de uma alma."
+    }
   },
   {
     "id": "mta-2ed:death-3-quicken-corpse",
@@ -923,7 +950,16 @@
     "source": "Signs of Sorcery",
     "page": 69,
     "summaryReviewed": true,
-    "summary": "Prepare a Death-aligned subject for the Imbue Item Attainment: a ghostly Twilight object, ghost, ectoplasmic object, or corpse. Ghosts automatically Withstand and must be Manifested or reached in ghostly Twilight."
+    "summary": "Prepare a Death-aligned subject for the Imbue Item Attainment: a ghostly Twilight object, ghost, ectoplasmic object, or corpse. Ghosts automatically Withstand and must be Manifested or reached in ghostly Twilight.",
+    "presentationPt": {
+      "name": "Receptáculo Não Vivo",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Resistência",
+      "summary": "Prepara um alvo sintonizado com Morte para o Aperfeiçoamento Imbuir Item: objeto do Crepúsculo fantasmagórico, fantasma, objeto de ectoplasma ou cadáver. Fantasmas resistem automaticamente à conjuração e precisam estar Manifestados ou ao alcance no Crepúsculo fantasmagórico.",
+      "description": "Prepara um alvo sintonizado com Morte para o Aperfeiçoamento Imbuir Item: objeto do Crepúsculo fantasmagórico, fantasma, objeto de ectoplasma ou cadáver. Fantasmas resistem automaticamente à conjuração e precisam estar Manifestados ou ao alcance no Crepúsculo fantasmagórico.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:death-4-enervation",
@@ -1007,7 +1043,16 @@
     "source": "Signs of Sorcery",
     "page": 90,
     "summaryReviewed": true,
-    "summary": "From the soul stone of a dead mage, manifest a ghost in Twilight with Rank equal to half the creator's Gnosis and traits reflecting the creator's Path, Legacy, Shadow Name, recognizable personality, and selected memories. It can provide Legacy tutoring and is absorbed back into the stone when the spell ends; unlike the Mind version, it cannot be extracted into the caster's Oneiros."
+    "summary": "From the soul stone of a dead mage, manifest a ghost in Twilight with Rank equal to half the creator's Gnosis and traits reflecting the creator's Path, Legacy, Shadow Name, recognizable personality, and selected memories. It can provide Legacy tutoring and is absorbed back into the stone when the spell ends; unlike the Mind version, it cannot be extracted into the caster's Oneiros.",
+    "presentationPt": {
+      "name": "Evocação Goética (Substituto de Morte)",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Posto da entidade",
+      "summary": "Usa a pedra da alma de um mago falecido para manifestar no Crepúsculo um fantasma de Posto igual à metade da Gnose do criador, com características de sua Senda, Legado, Nome das Sombras, personalidade reconhecível e algumas memórias. Ele pode ensinar seu Legado e retorna à pedra quando o feitiço termina; ao contrário da versão de Mente, não pode ser extraído para o Oneiros da conjuradora.",
+      "description": "Usa a pedra da alma de um mago falecido para manifestar no Crepúsculo um fantasma de Posto igual à metade da Gnose do criador, com características de sua Senda, Legado, Nome das Sombras, personalidade reconhecível e algumas memórias. Ele pode ensinar seu Legado e retorna à pedra quando o feitiço termina; ao contrário da versão de Mente, não pode ser extraído para o Oneiros da conjuradora.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:death-4-haunted-grimoire",
@@ -1030,7 +1075,16 @@
     "source": "Signs of Sorcery",
     "page": 86,
     "summaryReviewed": true,
-    "summary": "Bind a ghost or unattached soul into a Grimoire, giving it Resonant and Open; the entity's Rank replaces the caster's Arcanum minus one when increasing a rote's Primary Factor. Whenever someone casts a rote, the ghost may escape through a Clash of Wills; when someone memorizes one, it may instead attempt Possession. Souls cannot possess readers or cause Conditions. This is an Act of Hubris against Understanding."
+    "summary": "Bind a ghost or unattached soul into a Grimoire, giving it Resonant and Open; the entity's Rank replaces the caster's Arcanum minus one when increasing a rote's Primary Factor. Whenever someone casts a rote, the ghost may escape through a Clash of Wills; when someone memorizes one, it may instead attempt Possession. Souls cannot possess readers or cause Conditions. This is an Act of Hubris against Understanding.",
+    "presentationPt": {
+      "name": "Grimório Assombrado",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Total de pontos de Arcano da Rote + Posto",
+      "summary": "Vincula um fantasma ou uma alma sem hospedeiro a um Grimório, conferindo-lhe Ressonante e Aberto. O Posto da entidade substitui Arcano da conjuradora menos um ao aumentar o Fator Primário de uma Rote. Ao conjurar uma Rote, o fantasma pode escapar por um Choque de Vontades; ao memorizar uma, pode tentar Possessão. Almas não podem possuir leitores nem causar Conditions. Constitui um Ato de Húbris contra Sabedoria Consciente.",
+      "description": "Vincula um fantasma ou uma alma sem hospedeiro a um Grimório, conferindo-lhe Ressonante e Aberto. O Posto da entidade substitui Arcano da conjuradora menos um ao aumentar o Fator Primário de uma Rote. Ao conjurar uma Rote, o fantasma pode escapar por um Choque de Vontades; ao memorizar uma, pode tentar Possessão. Almas não podem possuir leitores nem causar Conditions. Constitui um Ato de Húbris contra Sabedoria Consciente.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:death-4-revenant",
@@ -1084,7 +1138,16 @@
     "source": "Signs of Sorcery",
     "page": 87,
     "summaryReviewed": true,
-    "summary": "Inscribe one Legacy Attainment per casting into a vessel; the first casting includes initiation, and one to five castings can contain any consecutive portion through the fifth Attainment. The caster must have Gnosis 2, meet the inscribed level's prerequisites, and possess Arcana required for optional effects. Initiation costs 1 Arcane Experience, later Attainments use untutored costs, and the book is a +2 sympathetic Yantra for members."
+    "summary": "Inscribe one Legacy Attainment per casting into a vessel; the first casting includes initiation, and one to five castings can contain any consecutive portion through the fifth Attainment. The caster must have Gnosis 2, meet the inscribed level's prerequisites, and possess Arcana required for optional effects. Initiation costs 1 Arcane Experience, later Attainments use untutored costs, and the book is a +2 sympathetic Yantra for members.",
+    "presentationPt": {
+      "name": "Inscrever Daimonomikon",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Posto do Aperfeiçoamento + (10 − Gnose da conjuradora)",
+      "summary": "Inscreve um Aperfeiçoamento de Legado por conjuração em um receptáculo. A primeira inclui a iniciação; de uma a cinco conjurações podem abranger uma sequência até o quinto Aperfeiçoamento. A conjuradora precisa de Gnose 2, cumprir os pré-requisitos do nível inscrito e possuir os Arcanos de efeitos opcionais. A iniciação custa uma Experiência Arcana; Aperfeiçoamentos posteriores usam os custos sem tutor. O livro é uma Yantra simpática de +2 para membros do Legado.",
+      "description": "Inscreve um Aperfeiçoamento de Legado por conjuração em um receptáculo. A primeira inclui a iniciação; de uma a cinco conjurações podem abranger uma sequência até o quinto Aperfeiçoamento. A conjuradora precisa de Gnose 2, cumprir os pré-requisitos do nível inscrito e possuir os Arcanos de efeitos opcionais. A iniciação custa uma Experiência Arcana; Aperfeiçoamentos posteriores usam os custos sem tutor. O livro é uma Yantra simpática de +2 para membros do Legado. +1 Alcance e 1 Mana: Torna o efeito duradouro.",
+      "reach": "+1 Alcance e 1 Mana: Torna o efeito duradouro."
+    }
   },
   {
     "id": "mta-2ed:death-4-shadow-flesh",
@@ -1119,8 +1182,8 @@
   },
   {
     "id": "mta-signs-of-sorcery:death-4-soul-grafting",
-    "name": "Soul Grafting",
-    "originalName": "Soul Grafting",
+    "name": "Soul Crafting",
+    "originalName": "Soul Crafting",
     "requirements": {
       "Death": 4,
       "Prime": 4
@@ -1138,7 +1201,16 @@
     "source": "Signs of Sorcery",
     "page": 90,
     "summaryReviewed": true,
-    "summary": "Graft another mage's soul stone or unattached soul onto the subject's soul. It grants effective Gnosis +1/+2 for casting time, Aimed range, Clashes, Mana per turn, spell control, combined spells, and Yantras, but +2/+3 for Paradox and always risks Paradox; relevant Acts of Hubris affect either soul's owner. It is an Act of Hubris against Falling Wisdom."
+    "summary": "Graft another mage's soul stone or unattached soul onto the subject's soul. It grants effective Gnosis +1/+2 for casting time, Aimed range, Clashes, Mana per turn, spell control, combined spells, and Yantras, but +2/+3 for Paradox and always risks Paradox; relevant Acts of Hubris affect either soul's owner. It is an Act of Hubris against Falling Wisdom.",
+    "presentationPt": {
+      "name": "Moldagem da Alma",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Enxerta a pedra da alma de outro mago ou uma alma sem hospedeiro na alma do alvo. Concede Gnose efetiva +1 com uma pedra da alma ou +2 com uma alma completa para tempo de conjuração, alcance Mirado, Choques, Mana por turno, controle de feitiços, feitiços combinados e Yantras; para Paradoxo, o aumento é +2 ou +3 e sempre há risco de Paradoxo. Atos de Húbris relevantes afetam o dono de qualquer uma das almas. Constitui um Ato de Húbris contra Sabedoria Caída.",
+      "description": "Enxerta a pedra da alma de outro mago ou uma alma sem hospedeiro na alma do alvo. Concede Gnose efetiva +1 com uma pedra da alma ou +2 com uma alma completa para tempo de conjuração, alcance Mirado, Choques, Mana por turno, controle de feitiços, feitiços combinados e Yantras; para Paradoxo, o aumento é +2 ou +3 e sempre há risco de Paradoxo. Atos de Húbris relevantes afetam o dono de qualquer uma das almas. Constitui um Ato de Húbris contra Sabedoria Caída.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:death-4-withering",

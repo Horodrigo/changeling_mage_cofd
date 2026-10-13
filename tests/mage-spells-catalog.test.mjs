@@ -41,6 +41,7 @@ test("PDF-verified Codex typos use their printed English names", () => {
   for (const name of ["Craftsman's Eye","Goetic Evocation","Shared Sight","Fracture Grimoire"])
     assert.ok(SPELLS.some((spell)=>spell.name===name),name);
   assert.ok(SPELLS.some((spell)=>spell.name==="Goetic Evocation (Death Substitute)"&&spell.requirements.Death===4));
+  assert.ok(SPELLS.some((spell)=>spell.id==="mta-signs-of-sorcery:death-4-soul-grafting"&&spell.name==="Soul Crafting"));
 });
 
 test("Death summaries are fully reviewed against the offline PDFs", () => {
