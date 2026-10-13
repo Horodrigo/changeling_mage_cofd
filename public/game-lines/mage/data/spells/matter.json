@@ -422,7 +422,16 @@
     "source": "Mage the Awakening",
     "page": 157,
     "summary": "Perfect a tool to grant 8-Again on up to Potency uses, or improve a valuable substance’s Availability by Potency to no more than twice its original rating.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Crisol",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Aperfeiçoa um objeto: uma ferramenta recebe 8-novamente em um número de jogadas igual à Potência, ou um bem valioso soma a Potência à Disponibilidade, até o dobro de seu valor original.",
+      "description": "Aperfeiçoa um objeto: uma ferramenta recebe 8-novamente em um número de jogadas igual à Potência, ou um bem valioso soma a Potência à Disponibilidade, até o dobro de seu valor original. +1 Alcance e 1 Mana: A ferramenta recebe a qualidade de ação de Rote nesse número de jogadas; durante a Duração, mais 1 Mana renova o mesmo benefício. +1 Alcance: A Disponibilidade pode chegar ao triplo do valor original.",
+      "reach": "+1 Alcance e 1 Mana: A ferramenta recebe a qualidade de ação de Rote nesse número de jogadas; durante a Duração, mais 1 Mana renova o mesmo benefício. +1 Alcance: A Disponibilidade pode chegar ao triplo do valor original."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:matter-3-hone-the-perfected-form",
@@ -444,7 +453,16 @@
     "source": "Signs of Sorcery",
     "page": 61,
     "summary": "For one Mana, transmute one continuous piece of iron, gold, silver, mercury, copper, tin, or lead into its corresponding Perfected Metal for the Duration.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Aperfeiçoar a Forma",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Por 1 Mana, transmuta uma peça contínua de ferro, ouro, prata, mercúrio, cobre, estanho ou chumbo em seu Metal Aperfeiçoado correspondente durante a Duração. A peça precisa caber na Escala do feitiço.",
+      "description": "Por 1 Mana, transmuta uma peça contínua de ferro, ouro, prata, mercúrio, cobre, estanho ou chumbo em seu Metal Aperfeiçoado correspondente durante a Duração. A peça precisa caber na Escala do feitiço. +2 Alcance: Também aperfeiçoa outra substância adequada, como vidro ou gemas. Adicionar Forças •••: Também pode aperfeiçoar fogo.",
+      "reach": "+2 Alcance: Também aperfeiçoa outra substância adequada, como vidro ou gemas. Adicionar Forças •••: Também pode aperfeiçoar fogo."
+    }
   },
   {
     "id": "mta-2ed:matter-3-nigredo-and-albedo",
@@ -466,7 +484,16 @@
     "source": "Mage the Awakening",
     "page": 157,
     "summary": "Repair or damage an object’s Structure by Potency. Damage normally applies Durability, while repairs restore lost Structure without changing the object’s maximum.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Nigredo e Albedo",
+      "practice": "Desfiamento ou Aperfeiçoamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Repara a Estrutura perdida de um objeto ou lhe causa dano igual à Potência. Ao danificá-lo, aplica-se sua Durabilidade normalmente; a reparação não aumenta a Estrutura máxima.",
+      "description": "Repara a Estrutura perdida de um objeto ou lhe causa dano igual à Potência. Ao danificá-lo, aplica-se sua Durabilidade normalmente; a reparação não aumenta a Estrutura máxima. +1 Alcance: O dano ignora a Durabilidade.",
+      "reach": "+1 Alcance: O dano ignora a Durabilidade."
+    }
   },
   {
     "id": "mta-2ed:matter-3-shrink-and-grow",
@@ -488,7 +515,16 @@
     "source": "Mage the Awakening",
     "page": 157,
     "summary": "Increase or decrease an object’s Size by one per Potency, resisted by Durability. Size 0 objects can shrink only to roughly the size of a dime.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Encolher e Crescer",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Durabilidade",
+      "summary": "Aumenta ou diminui o Tamanho de um objeto em um ponto por ponto de Potência; um objeto de Tamanho 0 pode encolher até aproximadamente o tamanho de uma moeda pequena. O objeto resiste com Durabilidade.",
+      "description": "Aumenta ou diminui o Tamanho de um objeto em um ponto por ponto de Potência; um objeto de Tamanho 0 pode encolher até aproximadamente o tamanho de uma moeda pequena. O objeto resiste com Durabilidade. Adicionar Vida •••: Também afeta seres vivos; um alvo involuntário resiste com Vigor.",
+      "reach": "Adicionar Vida •••: Também afeta seres vivos; um alvo involuntário resiste com Vigor."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:matter-3-spell-potion",
@@ -511,7 +547,16 @@
     "source": "Signs of Sorcery",
     "page": 70,
     "summary": "For one Mana, turn food or drink into a vessel for up to Potency touch- or self-range spells, each stored for an additional Mana. The spells remain controlled and inactive until someone consumes the potion; consuming it empty provides no nutrition, and stored spells end with Spell Potion.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Poção de Feitiço",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Por 1 Mana, prepara alimento ou bebida para armazenar até um número de feitiços igual à Potência. Cada feitiço armazenado deve ter alcance de toque ou pessoal e exige mais 1 Mana para ser conjurado no item. Os efeitos só se ativam quando alguém o ingere; se ingerido vazio, não nutre. Feitiços não ativados terminam com a Poção de Feitiço.",
+      "description": "Por 1 Mana, prepara alimento ou bebida para armazenar até um número de feitiços igual à Potência. Cada feitiço armazenado deve ter alcance de toque ou pessoal e exige mais 1 Mana para ser conjurado no item. Os efeitos só se ativam quando alguém o ingere; se ingerido vazio, não nutre. Feitiços não ativados terminam com a Poção de Feitiço.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:matter-3-state-change",
@@ -533,7 +578,16 @@
     "source": "Mage the Awakening",
     "page": 157,
     "summary": "Move inorganic matter one step between solid, liquid, and gas without changing its temperature. Newly solid matter has Durability equal to Potency and Structure equal to Durability + Size; when the spell ends, it returns to its natural state while retaining its current shape.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Mudança de Estado",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Durabilidade",
+      "summary": "Muda matéria inorgânica um passo entre sólido, líquido e gasoso sem alterar sua temperatura. A matéria solidificada tem Durabilidade igual à Potência e Estrutura igual à Durabilidade + Tamanho; ao terminar o feitiço, retorna ao estado natural mas mantém sua forma atual.",
+      "description": "Muda matéria inorgânica um passo entre sólido, líquido e gasoso sem alterar sua temperatura. A matéria solidificada tem Durabilidade igual à Potência e Estrutura igual à Durabilidade + Tamanho; ao terminar o feitiço, retorna ao estado natural mas mantém sua forma atual. +1 Alcance: Muda diretamente entre sólido e gás. Adicionar Forças •••: Também transforma matéria em plasma.",
+      "reach": "+1 Alcance: Muda diretamente entre sólido e gás. Adicionar Forças •••: Também transforma matéria em plasma."
+    }
   },
   {
     "id": "mta-2ed:matter-3-windstrike",
@@ -555,7 +609,16 @@
     "source": "Mage the Awakening",
     "page": 157,
     "summary": "Drive air or another fluid into the subject as an attack, inflicting bashing damage equal to Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Golpe de Vento",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Lança ar, água ou outro fluido contra um alvo como ataque, causando dano contundente igual à Potência.",
+      "description": "Lança ar, água ou outro fluido contra um alvo como ataque, causando dano contundente igual à Potência. +1 Alcance: A matéria deslocada persiste nas proximidades após a conjuração e causa um Tilt ambiental apropriado, como Inundado ou Ventos Fortes.",
+      "reach": "+1 Alcance: A matéria deslocada persiste nas proximidades após a conjuração e causa um Tilt ambiental apropriado, como Inundado ou Ventos Fortes."
+    }
   },
   {
     "id": "mta-2ed:matter-3-wonderful-machine",
@@ -577,7 +640,16 @@
     "source": "Mage the Awakening",
     "page": 157,
     "summary": "Transfer one mechanical quality per Potency from component objects into another machine, including swapping weapon characteristics or concealing a firearm within a device. The resulting machine combines functions without creating capabilities absent from its components.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Máquina Maravilhosa",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Integra peças de objetos mecânicos distintos em uma única máquina para obter o resultado desejado. Cada ponto de Potência permite transferir uma qualidade mecânica entre componentes, como substituir características de uma arma ou ocultá-la dentro de outro aparelho.",
+      "description": "Integra peças de objetos mecânicos distintos em uma única máquina para obter o resultado desejado. Cada ponto de Potência permite transferir uma qualidade mecânica entre componentes, como substituir características de uma arma ou ocultá-la dentro de outro aparelho. Adicionar Vida •••: Pode enxertar qualidades da máquina em um ser vivo ou qualidades do ser vivo na máquina.",
+      "reach": "Adicionar Vida •••: Pode enxertar qualidades da máquina em um ser vivo ou qualidades do ser vivo na máquina."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:matter-4-endless-bounty",

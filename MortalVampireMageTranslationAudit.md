@@ -32,7 +32,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | V05 — Poderes | 553 poderes, 140 níveis internos; 1 Tilt da linha | 23/23 Disciplinas, seus 110 níveis, 5/5 Disciplinas Rituais, 2/2 Açoites, 5/5 fórmulas de Kimiya, 7/7 Sacrilégios de Therion, 10/10 Invocações de Gaiola Dourada, 5/5 Detournements, 6/6 Espirais com 30 níveis e 19/19 Escamas e 76/76 ritos de Crúac e 32/32 milagres Tebanos e 356/356 Devoções com PT; Aura de Sedução Sinuosa aprovada em 2026-10-09 |
 | V06 — Conditions | 73, incluindo 19 Homebrew, das quais duas erratas | 73/73 com PT completa e verificadas; quatro Conditions de anciões incluídas por autorização em 2026-10-09; lacunas de Hidden Devotions permanecem |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Rótulos e apresentação dos cultos traduzidos, incluindo benefícios e Especializações predefinidas. Children of the Thorns mantém as exclusões de escopo existentes |
-| G01 — Spells | 204 restantes (156/360 traduzidas) | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
+| G01 — Spells | 196 restantes (164/360 traduzidas) | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
 | G02 — Méritos | 71 (61 principais, dez suplementares), 31 níveis | Nome, requisitos, descrição e níveis |
 | G03 — Organizações | 17 Orders, 44 Factions, 12 Ministries | 11 Orders sem descrição PT; Factions/Tool Yantras e Ministries/Patron Exarchs |
 | G04 — Legacies | 16, 43 Attainments | Nomes, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções |
@@ -60,9 +60,9 @@ Forces completo: 38 Spells de MtA 2e pp. 140–147 e Signs of Sorcery pp. 65/69 
 
 Life completo: 29 Spells de MtA 2e pp. 148–153 e Signs of Sorcery pp. 65/69/72/85–86 localizadas em `presentationPt`, mantendo os campos canônicos. Em Purificar o Corpo, o bônus vale para a próxima jogada de resistência, conforme o livro. A redação de Purgar Doença segue a comparação de Potência e gravidade da p. 150. Grimório Vivo usa a mesma categoria de Sabedoria 4–7 (Consciente) da interface.
 
-Matter em execução: 13 Spells de Matter •/••/••• em MtA 2e pp. 154–157 localizadas em `presentationPt`, mantendo os campos canônicos.
+Matter em execução: 21 Spells de Matter •/••/••• em MtA 2e pp. 154–158 e Signs of Sorcery pp. 61–62/70 localizadas em `presentationPt`, mantendo os campos canônicos.
 
-Spells pendentes: Matter 19; Mind 45; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
+Spells pendentes: Matter 11; Mind 45; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
 
 Apresentar **Práticas, Fator Primário, Resistência, Alcance e Adicionar Arcana** quando aplicáveis. `spell-presentation.ts` extrai `Reach:`/`Add Arcanum` do texto inglês canônico; `presentationPt.reach` localiza a apresentação sem mudar essa entrada. Títulos de Práxis publicadas acompanham Spells; nomes autorais permanecem intactos.
 
