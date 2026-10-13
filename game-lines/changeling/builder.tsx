@@ -17,6 +17,7 @@ import { ChangelingBuilderView, type ContractSelection, type CustomCourtDefiniti
 import { MobileChangelingBuilderTemplate } from "./mobile-builder-template";
 import {
   canonicalChangelingAnchorName,
+  canonicalChangelingCourt,
   normalizeChangelingFrailties,
 } from "./creation-rules";
 import { canSelectContract } from "./builder-eligibility";
@@ -56,7 +57,8 @@ import { resolveMeritDefinition } from "@/lib/merit-identity";
 const translateRegalia = (value: string) => value;
 
 function translateCourt(value: string) {
-  return ({ Courtless: "", courtless: "", "Sem Corte": "", Spring: "spring", Primavera: "spring", Summer: "summer", Verão: "summer", Autumn: "autumn", Outono: "autumn", Winter: "winter", Inverno: "winter" } as Record<string, string>)[value] ?? value;
+  const court = canonicalChangelingCourt(value);
+  return court === "courtless" ? "" : court;
 }
 
 function normalizeCustomCourt(value: unknown): CustomCourtDefinition | null {

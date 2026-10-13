@@ -248,15 +248,30 @@ test("legacy Contract classifications become English without translating authore
   assert.deepEqual(canonicalContractClassification({ regalia: "  Minha Regalia  ", name: "Coroa" }), { regalia: "  Minha Regalia  ", name: "Coroa" });
 });
 
-test("Courtless sentinel is canonical while explicit custom Court text remains authored", async () => {
+test("legacy Court and anchor choices become canonical while custom Court text remains authored", async () => {
   const { changelingRules } = await vite.ssrLoadModule("/game-lines/changeling/rules.ts");
-  for (const court of ["Sem Corte", "Courtless", "courtless"]) {
+  for (const [court, expected] of [["Sem Corte", "courtless"], ["Courtless", "courtless"], ["courtless", "courtless"], ["Primavera", "spring"], ["Summer", "summer"], ["Outono", "autumn"], ["Inverno", "winter"]]) {
     const current = sheet("CtL"); current.line_data.court = court;
+    current.line_data.needle = "Mestre de Xadrez";
+    current.line_data.thread = "Aceitação";
+    current.current_state.experience_history = [{ id: "receipt", description: "Texto autoral", undo: { kind: "merit", instanceId: "kept" } }];
     const before = structuredClone(current);
-    assert.equal(changelingRules.normalizeCharacter(current).line_data.court, "courtless");
+    const result = changelingRules.normalizeCharacter(current);
+    assert.equal(result.line_data.court, expected);
+    assert.equal(result.line_data.needle, "Chess Master");
+    assert.equal(result.line_data.thread, "Acceptance");
+    assert.deepEqual(result.current_state.experience_history, before.current_state.experience_history);
+    assert.equal((await normalizeGameLineCharacter(normalizeStoredSheet(current))).line_data.court, expected);
+    assert.deepEqual(changelingRules.normalizeCharacter(JSON.parse(JSON.stringify(result))), result);
     current.line_data.custom_court = { name: court, description: "Minha descrição" };
     assert.equal(changelingRules.normalizeCharacter(current).line_data.court, court);
     delete current.line_data.custom_court;
     assert.deepEqual(current, before);
   }
+  const authored = sheet("CtL");
+  authored.line_data = { ...authored.line_data, court: "  Minha Court  ", needle: "  Needle autoral  ", thread: "  Thread autoral  " };
+  const result = changelingRules.normalizeCharacter(authored);
+  assert.equal(result.line_data.court, authored.line_data.court);
+  assert.equal(result.line_data.needle, authored.line_data.needle);
+  assert.equal(result.line_data.thread, authored.line_data.thread);
 });

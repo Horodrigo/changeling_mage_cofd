@@ -3,7 +3,7 @@ import { canonicalContractClassification } from "./contract-identities";
 import { canonicalTraitHistory } from "@/lib/core/character/trait-identities";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
-import { normalizeChangelingFrailties } from "./creation-rules";
+import { canonicalChangelingAnchorName, canonicalChangelingCourt, normalizeChangelingFrailties } from "./creation-rules";
 import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants";
 import { recoverChangelingMeritAllocations } from "./merit-allocation";
 import { INTERDISCIPLINARY_SPECIALTY_ID } from "@/lib/core/character/specialty-merits";
@@ -55,7 +55,9 @@ export const changelingRules: GameLineRulesModule = {
           ? { ...item, definitionId: "h-seemings:power-behind-the-throne" } : item),
       line_data: {
         ...character.line_data,
-        ...(!character.line_data.custom_court && ["Sem Corte", "Courtless"].includes(String(character.line_data.court)) ? { court: "courtless" } : {}),
+        ...(!character.line_data.custom_court && typeof character.line_data.court === "string" ? { court: canonicalChangelingCourt(character.line_data.court) } : {}),
+        ...(typeof character.line_data.needle === "string" ? { needle: canonicalChangelingAnchorName("needle", character.line_data.needle) } : {}),
+        ...(typeof character.line_data.thread === "string" ? { thread: canonicalChangelingAnchorName("thread", character.line_data.thread) } : {}),
         ...(typeof character.line_data.primary_regalia === "string" ? { primary_regalia: canonicalStoredRegalia(character.line_data.primary_regalia) } : {}),
         ...(typeof character.line_data.second_regalia === "string" ? { second_regalia: canonicalStoredRegalia(character.line_data.second_regalia) } : {}),
         ...Object.fromEntries(["contracts", "learned_contracts"].filter(key => Array.isArray(character.line_data[key])).map(key => [key, (character.line_data[key] as unknown[]).map(canonicalContractClassification)])),

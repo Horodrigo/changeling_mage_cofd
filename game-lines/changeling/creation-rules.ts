@@ -24,6 +24,17 @@ export const CTL_NEEDLES = CTL_NEEDLE_DEFINITIONS.map((item) => item.name);
 
 export const CTL_THREADS = CTL_THREAD_DEFINITIONS.map((item) => item.name);
 
+const LEGACY_COURT_NAMES: Record<string, string> = {
+  Courtless: "courtless", "Sem Corte": "courtless",
+  Spring: "spring", Primavera: "spring",
+  Summer: "summer", "Verão": "summer",
+  Autumn: "autumn", Outono: "autumn",
+  Winter: "winter", Inverno: "winter",
+};
+
+/** Exact schema-2 Court bridge; custom Court names stay outside this mapping. */
+export const canonicalChangelingCourt = (value: string) => LEGACY_COURT_NAMES[value] ?? value;
+
 const LEGACY_NEEDLE_NAMES: Record<string, string> = {
   "Mestre de Xadrez": "Chess Master",
   Comandante: "Commander",
