@@ -329,7 +329,16 @@
     "source": "Mage the Awakening",
     "page": 150,
     "summary": "Attack living tissue directly, inflicting bashing damage equal to Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Ferir a Carne",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Agride diretamente os tecidos de um ser vivo e causa dano contundente igual à Potência.",
+      "description": "Agride diretamente os tecidos de um ser vivo e causa dano contundente igual à Potência. +1 Alcance: Agrava em −1 qualquer penalidade por ferimentos que o alvo já sofra.",
+      "reach": "+1 Alcance: Agrava em −1 qualquer penalidade por ferimentos que o alvo já sofra."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:life-3-contact-high",
@@ -351,7 +360,16 @@
     "source": "Signs of Sorcery",
     "page": 65,
     "summary": "Make the subject exude a drug that affects anyone whose bare skin touches it for one scene. The caster chooses whether it adds or subtracts Potency from Initiative, and a living carrier is also affected.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Euforia por Contato",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Faz o alvo exsudar uma droga que age sobre o sistema nervoso de qualquer pessoa que toque sua pele, afetando-a por uma cena. A maga escolhe se a droga soma ou subtrai a Potência da Iniciativa; um portador vivo também é afetado.",
+      "description": "Faz o alvo exsudar uma droga que age sobre o sistema nervoso de qualquer pessoa que toque sua pele, afetando-a por uma cena. A maga escolhe se a droga soma ou subtrai a Potência da Iniciativa; um portador vivo também é afetado. +1 Alcance: Um portador vivo torna-se imune, mas ainda transmite a droga pelo toque.",
+      "reach": "+1 Alcance: Um portador vivo torna-se imune, mas ainda transmite a droga pelo toque."
+    }
   },
   {
     "id": "mta-2ed:life-3-degrading-the-form",
@@ -373,7 +391,16 @@
     "source": "Mage the Awakening",
     "page": 150,
     "summary": "Reduce one of the subject’s Physical Attributes by Potency, to a minimum of one, for the Duration. The resulting reductions affect derived traits normally.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Degradar a Forma",
+      "practice": "Desfiamento",
+      "primaryFactor": "Duração",
+      "withstand": "Vigor",
+      "summary": "Reduz pela Potência um Atributo Físico escolhido ao conjurar, até o mínimo de 1, como se o alvo sofresse doença, ferimento ou defeito genético. Os valores derivados acompanham a redução.",
+      "description": "Reduz pela Potência um Atributo Físico escolhido ao conjurar, até o mínimo de 1, como se o alvo sofresse doença, ferimento ou defeito genético. Os valores derivados acompanham a redução. +1 Alcance: Afeta um segundo Atributo Físico, dividindo a Potência entre ambos; pode aplicar este Alcance duas vezes para afetar os três.",
+      "reach": "+1 Alcance: Afeta um segundo Atributo Físico, dividindo a Potência entre ambos; pode aplicar este Alcance duas vezes para afetar os três."
+    }
   },
   {
     "id": "mta-2ed:life-3-honing-the-form",
@@ -395,7 +422,16 @@
     "source": "Mage the Awakening",
     "page": 150,
     "summary": "Increase one Physical Attribute by Potency without exceeding the subject’s normal maximum. Derived traits change with the enhanced Attribute.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Aprimorar a Forma",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Aumenta pela Potência um Atributo Físico escolhido ao conjurar, sem ultrapassar o máximo natural do alvo. Vantagens e características derivadas acompanham o aumento.",
+      "description": "Aumenta pela Potência um Atributo Físico escolhido ao conjurar, sem ultrapassar o máximo natural do alvo. Vantagens e características derivadas acompanham o aumento. +1 Alcance: Afeta um segundo Atributo Físico, dividindo a Potência entre ambos; pode aplicar este Alcance duas vezes para afetar os três. +1 Alcance e 1 Mana: Pode elevar um Atributo acima do máximo natural do alvo.",
+      "reach": "+1 Alcance: Afeta um segundo Atributo Físico, dividindo a Potência entre ambos; pode aplicar este Alcance duas vezes para afetar os três. +1 Alcance e 1 Mana: Pode elevar um Atributo acima do máximo natural do alvo."
+    }
   },
   {
     "id": "mta-2ed:life-3-knit",
@@ -417,7 +453,16 @@
     "source": "Mage the Awakening",
     "page": 150,
     "summary": "Heal two points of bashing damage per Potency by accelerating natural recovery. The spell cannot restore lethal or aggravated damage without its respective Reach effects.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Recompor",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Acelera a recuperação natural e cura dois pontos de dano contundente por ponto de Potência. Ferimentos ou danos que o corpo não curaria por si só continuam fora do efeito básico.",
+      "description": "Acelera a recuperação natural e cura dois pontos de dano contundente por ponto de Potência. Ferimentos ou danos que o corpo não curaria por si só continuam fora do efeito básico. +1 Alcance: Cura um ponto de dano letal por Potência em vez de dois contundentes. +1 Alcance: Cura Tilts pessoais, como Braço Lesionado. +1 Alcance: Cura o dano de privação como se o alvo tivesse comido e bebido adequadamente. +1 Alcance: Reproduz os benefícios de uma noite inteira de sono, inclusive recuperar um ponto de Força de Vontade quando cabível.",
+      "reach": "+1 Alcance: Cura um ponto de dano letal por Potência em vez de dois contundentes. +1 Alcance: Cura Tilts pessoais, como Braço Lesionado. +1 Alcance: Cura o dano de privação como se o alvo tivesse comido e bebido adequadamente. +1 Alcance: Reproduz os benefícios de uma noite inteira de sono, inclusive recuperar um ponto de Força de Vontade quando cabível."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:life-3-living-vessel",
@@ -440,7 +485,16 @@
     "source": "Signs of Sorcery",
     "page": 69,
     "summary": "Prepare any living subject for the Imbue Item Attainment. The unwilling subject Withstands with Stamina, and the imbuement must otherwise follow the Attainment’s rules.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Receptáculo Vivo",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Vigor",
+      "summary": "Prepara um ser vivo para o Aperfeiçoamento Imbuir Item, permitindo que a maga imbua nele um feitiço segundo as regras desse Aperfeiçoamento. Um alvo involuntário resiste com Vigor.",
+      "description": "Prepara um ser vivo para o Aperfeiçoamento Imbuir Item, permitindo que a maga imbua nele um feitiço segundo as regras desse Aperfeiçoamento. Um alvo involuntário resiste com Vigor.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:life-3-many-faces",
@@ -462,7 +516,16 @@
     "source": "Mage the Awakening",
     "page": 150,
     "summary": "Physically reshape a living subject’s appearance, sex, voice, scent, and related biology, making the changes real rather than illusory. It can restore impaired organs or senses and redistribute Physical Attribute dots, but cannot replace missing limbs or organs.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Muitos Rostos",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Vigor",
+      "summary": "Altera fisicamente a aparência e a biologia de um ser vivo dentro dos limites de sua espécie e idade, inclusive sexo, voz, cheiro, visão e outros sentidos. Pode redistribuir pontos entre os Atributos Físicos até a Potência, sem mudar o total, reduzir um deles a zero ou superar o máximo do alvo. Órgãos e membros ausentes não reaparecem.",
+      "description": "Altera fisicamente a aparência e a biologia de um ser vivo dentro dos limites de sua espécie e idade, inclusive sexo, voz, cheiro, visão e outros sentidos. Pode redistribuir pontos entre os Atributos Físicos até a Potência, sem mudar o total, reduzir um deles a zero ou superar o máximo do alvo. Órgãos e membros ausentes não reaparecem. Adicionar Tempo •••: Também pode alterar a idade física do alvo.",
+      "reach": "Adicionar Tempo •••: Também pode alterar a idade física do alvo."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:life-3-steal-life-force",
@@ -484,7 +547,16 @@
     "source": "Signs of Sorcery",
     "page": 72,
     "summary": "For one Mana, alter a mage’s imbuement process so an item created before this spell ends becomes cursed. Casting its imbued spell drains one lethal damage from the user per Mana spent; if the item has no Mana, it replenishes one Mana by inflicting one lethal damage on the next person who touches it.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Roubar Força Vital",
+      "practice": "Desfiamento",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Por 1 Mana, altera o processo com que uma maga imbui um item, tornando-o amaldiçoado se criado antes de terminar a Duração. Ao conjurar o feitiço imbuído, o item rouba de seu usuário um ponto de dano letal por Mana gasta. Sem Mana, repõe um ponto ao causar um ponto de dano letal na próxima pessoa que o tocar.",
+      "description": "Por 1 Mana, altera o processo com que uma maga imbui um item, tornando-o amaldiçoado se criado antes de terminar a Duração. Ao conjurar o feitiço imbuído, o item rouba de seu usuário um ponto de dano letal por Mana gasta. Sem Mana, repõe um ponto ao causar um ponto de dano letal na próxima pessoa que o tocar.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:life-3-transform-life",
@@ -506,7 +578,16 @@
     "source": "Mage the Awakening",
     "page": 150,
     "summary": "Grant a living subject one biological feature per Potency from another organism, such as claws, gills, venom, limbs, lungs, or enhanced senses. Features use appropriate equipment bonuses or game traits and must remain biologically plausible.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Transformar a Vida",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Vigor",
+      "summary": "Concede a um ser vivo uma característica biológica de outro organismo por ponto de Potência, como garras, guelras, veneno, adaptação ambiental, sentidos novos ou armadura natural. O alvo sabe usar instintivamente as características recebidas, com seus bônus e limites próprios.",
+      "description": "Concede a um ser vivo uma característica biológica de outro organismo por ponto de Potência, como garras, guelras, veneno, adaptação ambiental, sentidos novos ou armadura natural. O alvo sabe usar instintivamente as características recebidas, com seus bônus e limites próprios. +2 Alcances: Características concedidas por um efeito de Duração indefinida podem ser transmitidas aos descendentes do alvo.",
+      "reach": "+2 Alcances: Características concedidas por um efeito de Duração indefinida podem ser transmitidas aos descendentes do alvo."
+    }
   },
   {
     "id": "mta-2ed:life-4-accelerate-growth",
