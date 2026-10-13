@@ -73,13 +73,16 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
       assert.equal(mageSpellSelection(spell).description, spell.description);
     }
     const mind = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/mind.json", import.meta.url), "utf8"));
-    assert.equal(mind.filter(spell => spell.presentationPt).length, 30);
+    assert.equal(mind.filter(spell => spell.presentationPt).length, 45);
     assert.match(mageSpellPresentation(mind.find(spell => spell.name === "Know Nature"), "pt-BR").reach, /\+1 Alcance/);
     assert.equal(mind.find(spell => spell.name === "Incognito Presence").withstand, "Resolve");
     assert.match(mageSpellPresentation(mind.find(spell => spell.name === "Narcissus' Mirror"), "en-US").reach, /Substitute Life •••/);
     assert.match(mageSpellPresentation(mind.find(spell => spell.name === "Narcissus' Mirror"), "pt-BR").reach, /Substituir Vida •••/);
     assert.match(mageSpellPresentation(mind.find(spell => spell.name === "Goetic Summons"), "pt-BR").reach, /Adicionar Espírito •• ou Morte ••/);
     assert.match(mageSpellPresentation(mind.find(spell => spell.name === "Give Me That"), "pt-BR").reach, /Adicionar Espaço •••/);
+    assert.match(mageSpellPresentation(mind.find(spell => spell.name === "Psychic Projection"), "pt-BR").reach, /Adicionar Espírito ••/);
+    assert.match(mageSpellPresentation(mind.find(spell => spell.name === "Haunted Grimoire"), "pt-BR").reach, /Substituir Morte •••••/);
+    assert.equal(mind.find(spell => spell.name === "Possession").page, 164);
     assert.match(mageSpellPresentation(spells[1], "pt-BR").reach, /\+1 Alcance/);
     assert.match(spells[1].description, /\+1 Reach:/);
     const homebrew = { id: "homebrew:spell:author", name: "Minha magia", originalName: "Minha magia", summary: "Texto autoral", description: "Texto autoral" };

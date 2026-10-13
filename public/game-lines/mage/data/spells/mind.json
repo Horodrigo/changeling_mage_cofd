@@ -521,10 +521,10 @@
       "name": "Grimório Astral",
       "practice": "Tecelagem",
       "primaryFactor": "Potência",
-      "withstand": "Total de pontos dos Arcanos usados na Rotina",
-      "summary": "Por 1 Mana, inscreve uma Rotina por conjuração no Oneiros do alvo. Um Desperto pode conjurá-la sem entrar no Astral; fazê-lo enquanto segura a representação astral do Grimório, ou invoca sua Goetia, concede bônus de equipamento de +2.",
-      "reach": "+1 Alcance: Inscreve o Grimório no Temenos, onde qualquer visitante pode usá-lo, mas apenas a representação astral ou sua Goetia permite conjurar as Rotinas, sem bônus de equipamento. +1 Alcance e 1 Mana: A Duração torna-se duradoura. +2 Alcance: Inscreve o Grimório na Anima Mundi, onde se manifesta como constelações ou formações rochosas, e decifrá-lo constitui um Mistério.",
-      "description": "Por 1 Mana, inscreve uma Rotina por conjuração no Oneiros do alvo. Um Desperto pode conjurá-la sem entrar no Astral; fazê-lo enquanto segura a representação astral do Grimório, ou invoca sua Goetia, concede bônus de equipamento de +2. +1 Alcance: Inscreve o Grimório no Temenos, onde qualquer visitante pode usá-lo, mas apenas a representação astral ou sua Goetia permite conjurar as Rotinas, sem bônus de equipamento. +1 Alcance e 1 Mana: A Duração torna-se duradoura. +2 Alcance: Inscreve o Grimório na Anima Mundi, onde se manifesta como constelações ou formações rochosas, e decifrá-lo constitui um Mistério."
+      "withstand": "Total de pontos dos Arcanos usados na Rota",
+      "summary": "Por 1 Mana, inscreve uma Rota por conjuração no Oneiros do alvo. Um Desperto pode conjurá-la sem entrar no Astral; fazê-lo enquanto segura a representação astral do Grimório, ou invoca sua Goetia, concede bônus de equipamento de +2.",
+      "reach": "+1 Alcance: Inscreve o Grimório no Temenos, onde qualquer visitante pode usá-lo, mas apenas a representação astral ou sua Goetia permite conjurar as Rotas, sem bônus de equipamento. +1 Alcance e 1 Mana: A Duração torna-se duradoura. +2 Alcance: Inscreve o Grimório na Anima Mundi, onde se manifesta como constelações ou formações rochosas, e decifrá-lo constitui um Mistério.",
+      "description": "Por 1 Mana, inscreve uma Rota por conjuração no Oneiros do alvo. Um Desperto pode conjurá-la sem entrar no Astral; fazê-lo enquanto segura a representação astral do Grimório, ou invoca sua Goetia, concede bônus de equipamento de +2. +1 Alcance: Inscreve o Grimório no Temenos, onde qualquer visitante pode usá-lo, mas apenas a representação astral ou sua Goetia permite conjurar as Rotas, sem bônus de equipamento. +1 Alcance e 1 Mana: A Duração torna-se duradoura. +2 Alcance: Inscreve o Grimório na Anima Mundi, onde se manifesta como constelações ou formações rochosas, e decifrá-lo constitui um Mistério."
     }
   },
   {
@@ -952,7 +952,16 @@
     "source": "Signs of Sorcery",
     "page": 86,
     "summary": "For one Mana, bind a Goetia into a Grimoire, making it Resonant and Open. Its Rank replaces the caster’s Arcanum minus one when increasing a rote’s Primary Factor, but casting or memorizing a rote may let it escape or possess the reader through a Clash of Wills; this is an Act of Hubris against Understanding.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Grimório Assombrado",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Total de pontos dos Arcanos usados na Rota + Posto",
+      "summary": "Por 1 Mana, vincula um espírito a um Grimório, concedendo-lhe as Condições Aberto e Ressonante. O espírito integra as inscrições, sem Númena, Influências ou reserva de Essência. Ao conjurar uma Rota dali, o fator primário aumenta em Posto − 1 em vez da classificação de Arcano da conjuradora; um Choque de Vontades pode libertar o espírito. Ao memorizar uma Rota, o leitor também arrisca ser possuído. A conjuração é um Ato de Húbris contra Sabedoria de Compreensão.",
+      "description": "Por 1 Mana, vincula um espírito a um Grimório, concedendo-lhe as Condições Aberto e Ressonante. O espírito integra as inscrições, sem Númena, Influências ou reserva de Essência. Ao conjurar uma Rota dali, o fator primário aumenta em Posto − 1 em vez da classificação de Arcano da conjuradora; um Choque de Vontades pode libertar o espírito. Ao memorizar uma Rota, o leitor também arrisca ser possuído. A conjuração é um Ato de Húbris contra Sabedoria de Compreensão. Substituir Morte •••••: Pode vincular um fantasma ou alma desencarnada ao Grimório; almas não podem possuir leitores.",
+      "reach": "Substituir Morte •••••: Pode vincular um fantasma ou alma desencarnada ao Grimório; almas não podem possuir leitores."
+    }
   },
   {
     "id": "mta-2ed:mind-4-possession",
@@ -972,9 +981,18 @@
     "description": "Can possess the subject inflicting the Possessed Condition(see p. 261)",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 165,
+    "page": 164,
     "summary": "Project the mage’s consciousness into the subject and impose Possessed, taking control of the body while the mage’s own body becomes inert. The mage uses the host’s physical capabilities but retains her own mind.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Possessão",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Perseverança",
+      "summary": "Projeta a consciência da maga para o corpo do alvo, impondo a Condição Possuído e assumindo o controle. Ela usa os Atributos Físicos do hospedeiro e seus próprios Atributos Mentais e Sociais; seu corpo fica em coma. Pode gastar Mana para substituir os Atributos Físicos do hospedeiro pelos seus ou anular a penalidade de −3 nas ações Físicas.",
+      "description": "Projeta a consciência da maga para o corpo do alvo, impondo a Condição Possuído e assumindo o controle. Ela usa os Atributos Físicos do hospedeiro e seus próprios Atributos Mentais e Sociais; seu corpo fica em coma. Pode gastar Mana para substituir os Atributos Físicos do hospedeiro pelos seus ou anular a penalidade de −3 nas ações Físicas.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:mind-4-gain-skill",
@@ -996,7 +1014,16 @@
     "source": "Mage the Awakening",
     "page": 163,
     "summary": "Grant dots in one Skill equal to Potency up to the subject’s normal maximum, even if the subject had no prior training. The knowledge lasts only for the spell’s Duration.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Conceder Perícia",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Concede ao alvo pontos em uma Perícia iguais à Potência, até seu máximo normal, mesmo que ele não a conhecesse.",
+      "description": "Concede ao alvo pontos em uma Perícia iguais à Potência, até seu máximo normal, mesmo que ele não a conhecesse. +1 Alcance: Divide os pontos concedidos entre mais uma Perícia; pode repetir para outras Perícias. +1 Alcance e 1 Mana: Pode superar o máximo normal de uma das Perícias concedidas.",
+      "reach": "+1 Alcance: Divide os pontos concedidos entre mais uma Perícia; pode repetir para outras Perícias. +1 Alcance e 1 Mana: Pode superar o máximo normal de uma das Perícias concedidas."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:mind-4-goetic-evocation",
@@ -1018,7 +1045,16 @@
     "source": "Signs of Sorcery",
     "page": 90,
     "summary": "Convert the soul-stuff in a Soul Stone into a Twilight Goetia with Rank equal to half its creator’s Gnosis. Its traits reflect the creator’s Path, Legacy, and Shadow Name, and its limited memories can provide Legacy tutoring; when the spell ends, it is destroyed and reabsorbed by the stone.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Evocação Goética",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Posto da entidade evocada",
+      "summary": "Extrai parte da psique preservada em uma pedra da alma e a transforma em Goetia no Crepúsculo, de Posto igual à metade da Gnose da criadora. Ela reflete Caminho, Legado e Nome das Sombras da criadora e pode ajudar a ensinar sua Legado; ao terminar a Duração, retorna à pedra e é destruída.",
+      "description": "Extrai parte da psique preservada em uma pedra da alma e a transforma em Goetia no Crepúsculo, de Posto igual à metade da Gnose da criadora. Ela reflete Caminho, Legado e Nome das Sombras da criadora e pode ajudar a ensinar sua Legado; ao terminar a Duração, retorna à pedra e é destruída. Substituir Morte •••••: Pode manifestar um fantasma a partir de uma pedra da alma criada por uma maga morta. +2 Alcance: Pode extrair a Goetia diretamente para o próprio Oneiros, usando suas memórias e recebendo bônus de um ponto nas Perícias apropriadas ao conjurar Rotas. Se a criadora da pedra estava no patamar de Sabedoria Caída, isso impõe −1 em jogadas de degeneração por Atos de Húbris e aumenta em um a Resistência à Invocação Goética usada para remover a Goetia.",
+      "reach": "Substituir Morte •••••: Pode manifestar um fantasma a partir de uma pedra da alma criada por uma maga morta. +2 Alcance: Pode extrair a Goetia diretamente para o próprio Oneiros, usando suas memórias e recebendo bônus de um ponto nas Perícias apropriadas ao conjurar Rotas. Se a criadora da pedra estava no patamar de Sabedoria Caída, isso impõe −1 em jogadas de degeneração por Atos de Húbris e aumenta em um a Resistência à Invocação Goética usada para remover a Goetia."
+    }
   },
   {
     "id": "mta-2ed:mind-4-hallucination",
@@ -1040,7 +1076,16 @@
     "source": "Mage the Awakening",
     "page": 163,
     "summary": "Create a sensory illusion perceived by the subject through every sense except touch. It behaves as directed but cannot cause direct harm or physically interact.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Alucinação",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Compostura",
+      "summary": "Cria uma ilusão que o alvo percebe com todos os sentidos exceto o tato. A ilusão parece real, mas não pode agir fisicamente nem causar dano.",
+      "description": "Cria uma ilusão que o alvo percebe com todos os sentidos exceto o tato. A ilusão parece real, mas não pode agir fisicamente nem causar dano. +1 Alcance: O alvo acredita poder tocar a ilusão; ela continua incapaz de atacar ou feri-lo.",
+      "reach": "+1 Alcance: O alvo acredita poder tocar a ilusão; ela continua incapaz de atacar ou feri-lo."
+    }
   },
   {
     "id": "mta-2ed:mind-4-mind-flay",
@@ -1062,7 +1107,16 @@
     "source": "Mage the Awakening",
     "page": 164,
     "summary": "Tear apart the subject’s mind, inflicting lethal damage equal to Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Dilacerar a Mente",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Dilacera a mente consciente e subconsciente do alvo, causando dano letal igual à Potência.",
+      "description": "Dilacera a mente consciente e subconsciente do alvo, causando dano letal igual à Potência. +1 Alcance: Também impõe o Tilt Insano. +2 Alcance e 1 Mana: O dano passa a ser agravado.",
+      "reach": "+1 Alcance: Também impõe o Tilt Insano. +2 Alcance e 1 Mana: O dano passa a ser agravado."
+    }
   },
   {
     "id": "mta-2ed:mind-4-psychic-projection",
@@ -1084,7 +1138,16 @@
     "source": "Mage the Awakening",
     "page": 164,
     "summary": "Project the subject’s consciousness out of the body into mental Twilight or another person’s dreams, resisted by Resolve. The body remains behind and inert; projecting through the Gauntlet with Spirit is instead Withstood by the Gauntlet rating.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Projeção Psíquica",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Projeta a consciência do alvo ao Crepúsculo mental ou aos sonhos de outra pessoa, deixando seu corpo em coma. A projeção é intangível, interage mentalmente e permanece vulnerável a poderes sobrenaturais que afetem a mente. Se morrer fora do corpo, o alvo retorna com a Condição Alma Abalada.",
+      "description": "Projeta a consciência do alvo ao Crepúsculo mental ou aos sonhos de outra pessoa, deixando seu corpo em coma. A projeção é intangível, interage mentalmente e permanece vulnerável a poderes sobrenaturais que afetem a mente. Se morrer fora do corpo, o alvo retorna com a Condição Alma Abalada. Adicionar Espírito ••: Pode projetar a consciência através da Barreira até a Sombra; nesse caso, a Resistência é a classificação da Barreira.",
+      "reach": "Adicionar Espírito ••: Pode projetar a consciência através da Barreira até a Sombra; nesse caso, a Resistência é a classificação da Barreira."
+    }
   },
   {
     "id": "mta-2ed:mind-4-psychic-reprogramming",
@@ -1106,7 +1169,16 @@
     "source": "Mage the Awakening",
     "page": 164,
     "summary": "Change one personality element per Potency: Virtue, Vice, an Aspiration, Obsession, a non-Physical Persistent Condition, or move one dot between two Mental Skills or two Social Skills. The changes last for the spell’s Duration and are resisted by Resolve.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Reprogramação Psíquica",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Perseverança",
+      "summary": "Altera um aspecto da personalidade do alvo por ponto de Potência: Virtude, Vício, Aspiração de curto ou longo prazo, Obsessão, uma Condição Persistente não Física, ou transfere um ponto entre duas Perícias Mentais ou duas Sociais.",
+      "description": "Altera um aspecto da personalidade do alvo por ponto de Potência: Virtude, Vício, Aspiração de curto ou longo prazo, Obsessão, uma Condição Persistente não Física, ou transfere um ponto entre duas Perícias Mentais ou duas Sociais. +1 Alcance: Por ponto de Potência, também pode transferir um ponto entre dois Atributos Mentais ou dois Sociais.",
+      "reach": "+1 Alcance: Por ponto de Potência, também pode transferir um ponto entre dois Atributos Mentais ou dois Sociais."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:mind-4-scribe-daimonomikon",
@@ -1129,7 +1201,16 @@
     "source": "Signs of Sorcery",
     "page": 87,
     "summary": "For one Mana, inscribe one Legacy Attainment per casting into a vessel; consecutive castings may hold initiation through the fifth Attainment. The caster must meet the relevant Gnosis, Legacy, and optional-Arcanum prerequisites; readers pay applicable Arcane Experience and members treat it as a +2 sympathetic Yantra.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Inscrever Daimonomikon",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Posto do Aperfeiçoamento + (10 − Gnose da conjuradora)",
+      "summary": "Por 1 Mana, inscreve um Aperfeiçoamento de Legado por conjuração em um Daimonomikon. A primeira inscrição inclui iniciação, Arcano primário, Yantras e Oblações; as seguintes podem chegar ao quinto Aperfeiçoamento. A conjuradora precisa de Gnose 2 ou mais e satisfazer os requisitos inscritos. Leitores pagam a Experiência Arcana aplicável; membros da Legado recebem Yantra simpática de +2 dados.",
+      "description": "Por 1 Mana, inscreve um Aperfeiçoamento de Legado por conjuração em um Daimonomikon. A primeira inscrição inclui iniciação, Arcano primário, Yantras e Oblações; as seguintes podem chegar ao quinto Aperfeiçoamento. A conjuradora precisa de Gnose 2 ou mais e satisfazer os requisitos inscritos. Leitores pagam a Experiência Arcana aplicável; membros da Legado recebem Yantra simpática de +2 dados. +1 Alcance e 1 Mana: A Duração torna-se duradoura.",
+      "reach": "+1 Alcance e 1 Mana: A Duração torna-se duradoura."
+    }
   },
   {
     "id": "mta-2ed:mind-4-terrorize",
@@ -1151,7 +1232,16 @@
     "source": "Mage the Awakening",
     "page": 164,
     "summary": "Overwhelm the subject’s mind with terror, imposing Insensate for the Duration or until resolved, resisted by Composure.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Aterrorizar",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Compostura",
+      "summary": "Submerge o alvo em medo e pavor, impondo o Tilt Insensível pela Duração ou até ele ser resolvido.",
+      "description": "Submerge o alvo em medo e pavor, impondo o Tilt Insensível pela Duração ou até ele ser resolvido. +1 Alcance: Impõe a Condição Quebrado em vez do Tilt Insensível.",
+      "reach": "+1 Alcance: Impõe a Condição Quebrado em vez do Tilt Insensível."
+    }
   },
   {
     "id": "mta-2ed:mind-5-amorality",
@@ -1173,7 +1263,16 @@
     "source": "Mage the Awakening",
     "page": 164,
     "summary": "Remove either Virtue or Vice for the Duration. Without Virtue, indulging Vice restores two Willpower; without Vice, the subject cannot willingly perform an action that would cause a breaking point or Act of Hubris.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Amoralidade",
+      "practice": "Descriação",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Remove a Virtude ou o Vício do alvo pela Duração. Sem Virtude, ceder ao Vício restaura dois pontos de Força de Vontade; sem Vício, ele não consegue agir voluntariamente de forma a causar um Ponto de Ruptura ou Ato de Húbris.",
+      "description": "Remove a Virtude ou o Vício do alvo pela Duração. Sem Virtude, ceder ao Vício restaura dois pontos de Força de Vontade; sem Vício, ele não consegue agir voluntariamente de forma a causar um Ponto de Ruptura ou Ato de Húbris.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:mind-5-no-exit",
@@ -1195,7 +1294,16 @@
     "source": "Mage the Awakening",
     "page": 164,
     "summary": "Trap the subject inside an inescapable internal mental world, leaving the body catatonic for the Duration. Reading the subject’s thoughts or memories reveals the presence of the constructed reality.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Sem Saída",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Prende o alvo em um ciclo contínuo dentro da própria mente. Enquanto revive o ciclo, seu corpo permanece quase catatônico e não consegue agir; ler sua mente ou suas memórias revela o efeito. Tentativas sobrenaturais de introduzir novos pensamentos provocam um Choque de Vontades.",
+      "description": "Prende o alvo em um ciclo contínuo dentro da própria mente. Enquanto revive o ciclo, seu corpo permanece quase catatônico e não consegue agir; ler sua mente ou suas memórias revela o efeito. Tentativas sobrenaturais de introduzir novos pensamentos provocam um Choque de Vontades.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:mind-5-mind-wipe",
@@ -1217,7 +1325,16 @@
     "source": "Mage the Awakening",
     "page": 164,
     "summary": "Impose Amnesia and erase one continuous month of the subject’s life per Potency, with the caster choosing which span is lost. The memories remain unavailable for the spell’s Duration unless made Lasting through Reach.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Apagar a Mente",
+      "practice": "Descriação",
+      "primaryFactor": "Potência",
+      "withstand": "Perseverança",
+      "summary": "Apaga um período contínuo de memórias equivalente a um mês por ponto de Potência e impõe a Condição Amnésia pela Duração.",
+      "description": "Apaga um período contínuo de memórias equivalente a um mês por ponto de Potência e impõe a Condição Amnésia pela Duração. +1 Alcance: Escolhe memórias específicas em vez de apagar um período contínuo. +2 Alcance: O efeito torna-se duradouro.",
+      "reach": "+1 Alcance: Escolhe memórias específicas em vez de apagar um período contínuo. +2 Alcance: O efeito torna-se duradouro."
+    }
   },
   {
     "id": "mta-2ed:mind-5-psychic-genesis",
@@ -1239,7 +1356,16 @@
     "source": "Mage the Awakening",
     "page": 165,
     "summary": "Create a self-aware Rank 1 Goetia in Twilight as the mage’s loyal servant for the Duration. The mage defines its identity and directs its actions within the capabilities of a created consciousness.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Gênese Psíquica",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Cria uma consciência autoconsciente no Crepúsculo, uma Goetia de Posto 1 leal à maga, capaz de seguir suas ordens pela Duração.",
+      "description": "Cria uma consciência autoconsciente no Crepúsculo, uma Goetia de Posto 1 leal à maga, capaz de seguir suas ordens pela Duração. +1 Alcance: A consciência conta como Sonâmbulo ao auxiliar em conjurações rituais. +1 Alcance e 1 Mana: Sua classificação sobe para Posto 2.",
+      "reach": "+1 Alcance: A consciência conta como Sonâmbulo ao auxiliar em conjurações rituais. +1 Alcance e 1 Mana: Sua classificação sobe para Posto 2."
+    }
   },
   {
     "id": "mta-2ed:mind-5-social-networking",
@@ -1261,6 +1387,15 @@
     "source": "Mage the Awakening",
     "page": 165,
     "summary": "Create social ties represented by one dot of Allies, Contacts, or Status per Potency, distributed as the mage chooses. The relationships exist for the spell’s Duration and operate through plausible people and institutions.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Rede de Relações",
+      "practice": "Criação",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Cria relações sociais onde não havia nenhuma, concedendo ao alvo um ponto de Aliados, Contatos ou Status por ponto de Potência, à escolha da maga.",
+      "description": "Cria relações sociais onde não havia nenhuma, concedendo ao alvo um ponto de Aliados, Contatos ou Status por ponto de Potência, à escolha da maga.",
+      "reach": ""
+    }
   }
 ]
