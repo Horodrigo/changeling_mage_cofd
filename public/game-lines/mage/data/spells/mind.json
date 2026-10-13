@@ -516,7 +516,16 @@
     "source": "Signs of Sorcery",
     "page": 85,
     "summary": "For one Mana, inscribe one rote per casting into the mage’s Oneiros. The mage can cast it without entering the Astral, while using its Astral representation or summoned Goetia provides a two-die equipment bonus.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Grimório Astral",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Total de pontos dos Arcanos usados na Rotina",
+      "summary": "Por 1 Mana, inscreve uma Rotina por conjuração no Oneiros do alvo. Um Desperto pode conjurá-la sem entrar no Astral; fazê-lo enquanto segura a representação astral do Grimório, ou invoca sua Goetia, concede bônus de equipamento de +2.",
+      "reach": "+1 Alcance: Inscreve o Grimório no Temenos, onde qualquer visitante pode usá-lo, mas apenas a representação astral ou sua Goetia permite conjurar as Rotinas, sem bônus de equipamento. +1 Alcance e 1 Mana: A Duração torna-se duradoura. +2 Alcance: Inscreve o Grimório na Anima Mundi, onde se manifesta como constelações ou formações rochosas, e decifrá-lo constitui um Mistério.",
+      "description": "Por 1 Mana, inscreve uma Rotina por conjuração no Oneiros do alvo. Um Desperto pode conjurá-la sem entrar no Astral; fazê-lo enquanto segura a representação astral do Grimório, ou invoca sua Goetia, concede bônus de equipamento de +2. +1 Alcance: Inscreve o Grimório no Temenos, onde qualquer visitante pode usá-lo, mas apenas a representação astral ou sua Goetia permite conjurar as Rotinas, sem bônus de equipamento. +1 Alcance e 1 Mana: A Duração torna-se duradoura. +2 Alcance: Inscreve o Grimório na Anima Mundi, onde se manifesta como constelações ou formações rochosas, e decifrá-lo constitui um Mistério."
+    }
   },
   {
     "id": "mta-2ed:mind-3-augment-mind",
@@ -600,7 +609,16 @@
     "source": "Signs of Sorcery",
     "page": 73,
     "summary": "Prepare the subject to relinquish a spell through psychic trauma instead of spending a Willpower dot. The next Act of Hubris, breaking point, or equivalent roll suffers a penalty equal to Potency and supplies the required breaking point.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Renúncia Traumática",
+      "practice": "Desfiamento",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "O próximo Ato de Húbris, Ponto de Ruptura ou equivalente sofrido pelo alvo recebe penalidade igual à Potência. Depois disso, o próximo alvo a renunciar a um feitiço, que pode ser a mesma pessoa, o faz em segurança como se tivesse gasto um ponto de Força de Vontade.",
+      "reach": "+1 Alcance: O alvo sofre imediatamente um Ponto de Ruptura.",
+      "description": "O próximo Ato de Húbris, Ponto de Ruptura ou equivalente sofrido pelo alvo recebe penalidade igual à Potência. Depois disso, o próximo alvo a renunciar a um feitiço, que pode ser a mesma pessoa, o faz em segurança como se tivesse gasto um ponto de Força de Vontade. +1 Alcance: O alvo sofre imediatamente um Ponto de Ruptura."
+    }
   },
   {
     "id": "mta-2ed:mind-3-clear-thoughts",
@@ -684,7 +702,16 @@
     "source": "Signs of Sorcery",
     "page": 66,
     "summary": "Make an item evoke overwhelming ownership in anyone who sees it. A viewer who fails to Withstand with Composure gains the Persistent Obsession Condition focused on possessing the object.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Me Dá Isso",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "O objeto desperta um forte sentimento de posse em quem o vê. Cada observador que não superar a Resistência com Compostura recebe a Condição Persistente Obsessão, voltada a possuir o objeto.",
+      "reach": "Adicionar Espaço •••: Quem tiver a Condição Obsessão em relação ao objeto também estabelece com ele um vínculo simpático forte pela Duração.",
+      "description": "O objeto desperta um forte sentimento de posse em quem o vê. Cada observador que não superar a Resistência com Compostura recebe a Condição Persistente Obsessão, voltada a possuir o objeto. Adicionar Espaço •••: Quem tiver a Condição Obsessão em relação ao objeto também estabelece com ele um vínculo simpático forte pela Duração."
+    }
   },
   {
     "id": "mta-2ed:mind-3-goetic-summons",
@@ -831,7 +858,16 @@
     "source": "Signs of Sorcery",
     "page": 28,
     "summary": "Allow the subject to comprehend and translate spoken or written High Speech as though using Mage Sight. The spell does not grant the ability to speak or write High Speech and does not prevent Dissonance or Quiescence.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Tradução Superna",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Permite ao alvo compreender e traduzir a Alta Fala falada ou escrita como se tivesse a Visão Mágica Periférica. Não concede a capacidade de falar ou escrever a Alta Fala nem impede Quiescência ou Dissonância.",
+      "reach": "",
+      "description": "Permite ao alvo compreender e traduzir a Alta Fala falada ou escrita como se tivesse a Visão Mágica Periférica. Não concede a capacidade de falar ou escrever a Alta Fala nem impede Quiescência ou Dissonância."
+    }
   },
   {
     "id": "mta-2ed:mind-3-read-the-depths",
