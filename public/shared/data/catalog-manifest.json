@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 340,
+  "catalogVersion": 341,
   "catalogs": {
     "werewolf-totem-powers": {
       "version": 3,
@@ -323,9 +323,9 @@
       "hash": "118245dbb48bb0a85ac19968439d2d3da3050f6c8ee689678fbc7755d85b7c54"
     },
     "mage-conditions": {
-      "version": 7,
+      "version": 8,
       "url": "/game-lines/mage/data/conditions.json",
-      "hash": "4f5c2287717bed30a3f0dfb364cb81d469bd227513a780e413cbb8ed3545f148"
+      "hash": "1c2b69b540577f71bd9af207a6f0c4d94eff364bf1f975ec43a8631f2bc92eb6"
     },
     "vampire-clans": {
       "version": 7,
