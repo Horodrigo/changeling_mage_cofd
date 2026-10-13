@@ -133,7 +133,7 @@ Changeling saves the absence of Court as `courtless`; the owning schema-2 normal
 
 Changeling Contract classifications persist as `Common`/`Royal` and `Court`/`Independent`/`Regalia`; labels are localized only by the owning UI. `contract-identities.ts` bridges exact old PT enum values in schema-2 Contract selections and v1 player-created Homebrews. The owning normalization preserves all other fields, IDs and receipts; remove the bridge when these old records are unsupported.
 
-Mage Spell translations live in each catalog entry's `presentationPt`. `spell-presentation.ts` supplies a render-only view for creation, Experience and Desktop/Mobile sheets; parsers and purchases retain English canonical fields. The owning normalizer removes only this presentation metadata from saved Rotes, Praxes and Inured Spells, preserving authored fields and receipts. Saved selections resolve current presentation by exact catalog ID.
+Mage Spell translations live in each catalog entry's `presentationPt`. `spell-presentation.ts` supplies a render-only view for creation, Experience and Desktop/Mobile sheets; parsers and purchases retain English canonical fields. The owning normalizer removes presentation metadata from saved Rotes, Praxes and Inured Spells and resolves exact PT Skill aliases in their Rote Skill choices, preserving authored fields and receipts. It also canonicalizes selected Rote Skills in Order data and the canonical Nameless Order/Faction Member Merit configurations, while leaving explicit Homebrew namesakes alone. Saved selections resolve current presentation by exact catalog ID.
 
 ## Catalog Architecture
 

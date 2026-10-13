@@ -117,6 +117,41 @@ test("line-owned selected Attribute choices use English IDs without changing unk
   assert.equal(Object.hasOwn((await normalizeGameLineCharacter(normalizeStoredSheet(absent))).line_data, "resistance_bonus"), false);
 });
 
+test("Mage Rote Skill selections normalize by ID and stay canonical when Merit grants regenerate", async () => {
+  const current = sheet("MtA");
+  current.line_data = { order: "Nameless", custom_order: { name: "Ordem Autoral", description: "Texto autoral", roteSkills: ["Erudição", "Ocultismo", "Ciência"] },
+    rote_skills: ["Erudição", "Ocultismo", "Ciência"], rotes: [{ id: "rote:mine", name: "Rota Autoral", roteSkill: "Armas Brancas", roteSkills: ["Armas Brancas", "Melee"], presentationPt: { name: "Rota traduzida" } }],
+    learned_rotes: [{ id: "rote:paid", name: "Outra Rota", roteSkill: "Política" }], praxes: [{ id: "praxis:mine", name: "Nome autoral", roteSkills: ["Empatia com Animais"] }] };
+  current.merits = [
+    { definitionId: "core-2ed:mystery-cult-initiation", sourceId: "core-2ed", instanceId: "initiation", name: "Mystery Cult Initiation", dots: 2, grantedBy: "Nameless Order", configuration: { cult: "Ordem Autoral", level_2_rote_skills: ["Erudição", "Ocultismo", "Ciência"] } },
+    { definitionId: "mta-tome:faction-member", sourceId: "mta-tome", instanceId: "faction", name: "Faction Member", dots: 3, configuration: { roteSkill: "Política", factionId: "authorial-faction" } },
+    { definitionId: "homebrew:fake:faction-member", sourceId: "homebrew:fake", instanceId: "authored", name: "Faction Member", dots: 3, configuration: { roteSkill: "Política", notes: "Autoral" } },
+  ];
+  current.current_state = { mage_experience_history: [{ id: "paid", cost: 3, undo: { kind: "merit", instanceId: "faction" } }], mage_experience_available: 7 };
+  const before = structuredClone(current);
+  const { mageRules } = await vite.ssrLoadModule("/game-lines/mage/rules.ts");
+  const normalized = mageRules.normalizeCharacter(normalizeStoredSheet(current));
+  assert.deepEqual(normalized.line_data.rote_skills, ["Academics", "Occult", "Science"]);
+  assert.deepEqual(normalized.line_data.custom_order, { ...before.line_data.custom_order, roteSkills: ["Academics", "Occult", "Science"] });
+  assert.deepEqual(normalized.line_data.rotes[0].roteSkills, ["Weaponry", "Weaponry"]);
+  assert.equal(normalized.line_data.rotes[0].roteSkill, "Weaponry");
+  assert.equal(normalized.line_data.rotes[0].name, "Rota Autoral");
+  assert.equal(normalized.line_data.rotes[0].presentationPt, undefined);
+  assert.equal(normalized.line_data.learned_rotes[0].roteSkill, "Politics");
+  assert.deepEqual(normalized.line_data.praxes[0].roteSkills, ["Animal Ken"]);
+  assert.deepEqual(normalized.merits[0].configuration.level_2_rote_skills, ["Academics", "Occult", "Science"]);
+  assert.equal(normalized.merits[1].configuration.roteSkill, "Politics");
+  assert.deepEqual([normalized.merits[2].definitionId, normalized.merits[2].instanceId, normalized.merits[2].name, normalized.merits[2].configuration],
+    [before.merits[2].definitionId, before.merits[2].instanceId, before.merits[2].name, before.merits[2].configuration], "An explicit Homebrew namesake stays authored");
+  assert.deepEqual(normalized.current_state, before.current_state);
+  const saved = await normalizeGameLineCharacter(normalizeStoredSheet(current));
+  assert.deepEqual(saved.line_data.rote_skills, ["Academics", "Occult", "Science", "Politics"]);
+  assert.deepEqual(saved.merits.find(item => item.instanceId === "initiation").configuration.level_2_rote_skills, ["Academics", "Occult", "Science"]);
+  assert.deepEqual(saved.current_state, normalized.current_state);
+  assert.deepEqual(await normalizeGameLineCharacter(normalizeStoredSheet(JSON.parse(JSON.stringify(saved)))), saved);
+  assert.deepEqual(current, before);
+});
+
 test("canonical Skill reconciliation does not count as an authored Specialty edit or remove its linked Merit", async () => {
   const { reconcileSpecialtyMerits } = await vite.ssrLoadModule("/lib/core/character/specialty-merits.ts");
   const merit = { definitionId: "core-2ed:interdisciplinary-specialty", name: "Interdisciplinary Specialty", sourceId: "core-2ed", instanceId: "paid-link", dots: 1, experienceDots: 1, configuration: { specialty_skill: "Armas Brancas", specialty_name: "Nome autoral" } };
