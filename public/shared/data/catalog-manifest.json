@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 327,
+  "catalogVersion": 328,
   "catalogs": {
     "werewolf-totem-powers": {
       "version": 3,
@@ -268,9 +268,9 @@
       "hash": "eac61e665d86c396385e526db948adf40cbf2488a9defbeb679aadabbdc1fad0"
     },
     "merits-mage": {
-      "version": 7,
+      "version": 8,
       "url": "/game-lines/mage/data/merits.json",
-      "hash": "3bbf56babdd216126fe762b0bfc05b3b4a1188edb9f6dd760f7d0c5243b1f727"
+      "hash": "9ba67fe065fcfa6b06d446412ad17e3da91359f26ea33d023e364b503dd6ba20"
     },
     "merits-mage-supplements": {
       "version": 3,

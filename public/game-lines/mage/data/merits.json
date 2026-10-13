@@ -74,8 +74,13 @@
     "description": "Make a Clash of Wills to meditate into the Oneiros of a mage whose soul stone you possess, instead of your own.",
     "page": 91,
     "priority": 2,
-    "translatedName": "Astral Intruder",
-    "descriptionEn": "Make a Clash of Wills to meditate into the Oneiros of a mage whose soul stone you possess, instead of your own."
+    "translatedName": "Intruso Astral",
+    "descriptionEn": "Make a Clash of Wills to meditate into the Oneiros of a mage whose soul stone you possess, instead of your own.",
+    "presentationPt": {
+      "name": "Intruso Astral",
+      "prerequisites": "Desperto; Adepto Astral; Perseverança •••",
+      "description": "Faça um Choque de Vontades para meditar e entrar no Oneiros de um mago cuja Pedra da Alma você possui, em vez de entrar no seu próprio Oneiros."
+    }
   },
   {
     "id": "mta-2ed:awakened-status",
@@ -130,8 +135,13 @@
     "description": "Instill your nimbus into a specific Yantra that aligns with your spellcasting, making your Dedicated Tool any kind of Yantra.",
     "page": 57,
     "priority": 2,
-    "translatedName": "Broad Dedication",
-    "descriptionEn": "Instill your nimbus into a specific Yantra that aligns with your spellcasting, making your Dedicated Tool any kind of Yantra."
+    "translatedName": "Dedicação Ampla",
+    "descriptionEn": "Instill your nimbus into a specific Yantra that aligns with your spellcasting, making your Dedicated Tool any kind of Yantra.",
+    "presentationPt": {
+      "name": "Dedicação Ampla",
+      "prerequisites": "Desperto; Primórdio •",
+      "description": "Imbua seu Nimbus em uma Yantra específica alinhada à sua conjuração. Assim, sua Ferramenta Dedicada pode ser qualquer tipo de Yantra."
+    }
   },
   {
     "id": "mta-2ed:cabal-theme",
@@ -166,7 +176,12 @@
     "page": 87,
     "priority": 2,
     "translatedName": "Cognoscente",
-    "descriptionEn": "Rotes cast from your Grimoires do not double ritual casting time. You may imprint your Signature Nimbus into a scribed rote. Once per story, gain +2 on a Social roll relying on your reputation as a scribe and the benefits of Occultation 3; this latter benefit does not function if you already have Occultation."
+    "descriptionEn": "Rotes cast from your Grimoires do not double ritual casting time. You may imprint your Signature Nimbus into a scribed rote. Once per story, gain +2 on a Social roll relying on your reputation as a scribe and the benefits of Occultation 3; this latter benefit does not function if you already have Occultation.",
+    "presentationPt": {
+      "name": "Cognoscente",
+      "prerequisites": "Desperto; Primórdio •••; Erudição ou Ocultismo ••",
+      "description": "Rotas conjuradas a partir de seus Grimórios não dobram o tempo de conjuração ritual. Você pode inscrever seu Nimbus de Assinatura em uma Rota registrada por escrito. Uma vez por história, receba +2 em um teste Social baseado em sua reputação como escriba e os benefícios de Ocultação 3; este último benefício não funciona se você já possui Ocultação."
+    }
   },
   {
     "id": "mta-signs:daimonomikon",
@@ -209,7 +224,19 @@
     ],
     "priority": 2,
     "translatedName": "Daimonomikon",
-    "descriptionEn": "A text for a particular Legacy, granting access to initiation and Attainments up to the purchased level if their prerequisites are met. A text containing only one Attainment costs one Experience less, minimum one. It does not grant Attainments automatically."
+    "descriptionEn": "A text for a particular Legacy, granting access to initiation and Attainments up to the purchased level if their prerequisites are met. A text containing only one Attainment costs one Experience less, minimum one. It does not grant Attainments automatically.",
+    "presentationPt": {
+      "name": "Daimonomikon",
+      "prerequisites": "Desperto",
+      "description": "Texto sobre um Legado específico que dá acesso à iniciação e aos Aperfeiçoamentos até a classificação comprada, desde que seus requisitos sejam atendidos. Um texto com apenas um Aperfeiçoamento custa uma Experiência a menos, mínimo de uma. O Mérito não concede Aperfeiçoamentos automaticamente.",
+      "levels": [
+        { "rating": 1, "name": "Iniciado", "description": "Acesso ao primeiro Aperfeiçoamento do Legado registrado." },
+        { "rating": 2, "name": "Aprendiz", "description": "Acesso ao segundo Aperfeiçoamento do Legado registrado." },
+        { "rating": 3, "name": "Discípulo", "description": "Acesso ao terceiro Aperfeiçoamento do Legado registrado." },
+        { "rating": 4, "name": "Adepto", "description": "Acesso ao quarto Aperfeiçoamento do Legado registrado." },
+        { "rating": 5, "name": "Mestre/Holístico", "description": "Acesso ao quinto Aperfeiçoamento do Legado registrado." }
+      ]
+    }
   },
   {
     "id": "mta-2ed:destiny",
@@ -243,8 +270,13 @@
     "description": "When your character has another mage's soul stone you can counterspell any Arcanum from its owner, applying Merit dots as your Arcanum rating. If used as a Yantra during a Prime dispellation, reduce Withstand by dots in this Merit.",
     "page": 91,
     "priority": 2,
-    "translatedName": "Dominant Soul",
-    "descriptionEn": "When your character has another mage's soul stone you can counterspell any Arcanum from its owner, applying Merit dots as your Arcanum rating. If used as a Yantra during a Prime dispellation, reduce Withstand by dots in this Merit."
+    "translatedName": "Alma Dominante",
+    "descriptionEn": "When your character has another mage's soul stone you can counterspell any Arcanum from its owner, applying Merit dots as your Arcanum rating. If used as a Yantra during a Prime dispellation, reduce Withstand by dots in this Merit.",
+    "presentationPt": {
+      "name": "Alma Dominante",
+      "prerequisites": "Desperto; Compostura •••",
+      "description": "Enquanto possuir a Pedra da Alma de outro mago, você pode lançar Contrafeitiço contra qualquer Arcano de seu dono usando os pontos deste Mérito como sua classificação no Arcano. Se usar a Pedra da Alma como Yantra em uma dissipação de Primórdio, reduza a Resistência pelos pontos deste Mérito."
+    }
   },
   {
     "id": "mta-2ed:dream",

@@ -21,7 +21,7 @@ const base={...mageMerits.MAGE_STATUS_REQUIREMENTS,gameLine:"MtA",archetypes:["a
 
 test("Mage Merit presentation switches EN/PT/EN without changing canonical requirements",async()=>{
  const {meritPresentation}=await vite.ssrLoadModule("/lib/merit-presentation.ts");
- for(const name of ["Adamant Hand","Artifact","Astral Adept","Awakened Status","Between the Ticks","Cabal Theme","Destiny","Dream","Enhanced Item","Familiar","Fast Spells","Grimoire","Hallow","High Speech","Imbued Item"]){
+ for(const name of ["Adamant Hand","Artifact","Astral Adept","Astral Intruder","Awakened Status","Between the Ticks","Broad Dedication","Cabal Theme","Cognoscente","Daimonomikon","Destiny","Dominant Soul","Dream","Enhanced Item","Familiar","Fast Spells","Grimoire","Hallow","High Speech","Imbued Item"]){
   const entry=merit(name);
   const canonical={id:entry.id,name:entry.name,prerequisites:entry.prerequisites,descriptionEn:entry.descriptionEn};
   assert.equal(meritPresentation(entry,"en-US",mageCatalog).name,name);
@@ -36,6 +36,8 @@ test("Mage Merit presentation switches EN/PT/EN without changing canonical requi
  assert.match(meritPresentation(merit("Enhanced Item"),"pt-BR",mageCatalog).description,/Item Imbuído/);
  assert.equal(meritPresentation(merit("Hallow"),"pt-BR",mageCatalog).name,"Nascente de Mana");
  assert.equal(meritPresentation(merit("Awakened Status"),"pt-BR",mageCatalog).name,"Status dos Despertos");
+ assert.equal(meritPresentation(merit("Daimonomikon"),"pt-BR",mageCatalog).levels[4].name,"Mestre/Holístico");
+ assert.equal(meritPresentation(merit("Daimonomikon"),"en-US",mageCatalog).levels[4].name,"Master/Holistic");
 });
 
 test("Mage configuration validation dispatches canonical IDs, not display names or Homebrew homonyms",()=>{
