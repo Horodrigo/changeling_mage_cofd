@@ -32,7 +32,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | V05 — Poderes | 553 poderes, 140 níveis internos; 1 Tilt da linha | 23/23 Disciplinas, seus 110 níveis, 5/5 Disciplinas Rituais, 2/2 Açoites, 5/5 fórmulas de Kimiya, 7/7 Sacrilégios de Therion, 10/10 Invocações de Gaiola Dourada, 5/5 Detournements, 6/6 Espirais com 30 níveis e 19/19 Escamas e 76/76 ritos de Crúac e 32/32 milagres Tebanos e 356/356 Devoções com PT; Aura de Sedução Sinuosa aprovada em 2026-10-09 |
 | V06 — Conditions | 73, incluindo 19 Homebrew, das quais duas erratas | 73/73 com PT completa e verificadas; quatro Conditions de anciões incluídas por autorização em 2026-10-09; lacunas de Hidden Devotions permanecem |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Rótulos e apresentação dos cultos traduzidos, incluindo benefícios e Especializações predefinidas. Children of the Thorns mantém as exclusões de escopo existentes |
-| G01 — Spells | 185 restantes (175/360 traduzidas) | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
+| G01 — Spells | 181 restantes (179/360 traduzidas) | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
 | G02 — Méritos | 71 (61 principais, dez suplementares), 31 níveis | Nome, requisitos, descrição e níveis |
 | G03 — Organizações | 17 Orders, 44 Factions, 12 Ministries | 11 Orders sem descrição PT; Factions/Tool Yantras e Ministries/Patron Exarchs |
 | G04 — Legacies | 16, 43 Attainments | Nomes, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções |
@@ -62,7 +62,9 @@ Life completo: 29 Spells de MtA 2e pp. 148–153 e Signs of Sorcery pp. 65/69/72
 
 Matter completo: 32 Spells de MtA 2e pp. 154–159 e Signs of Sorcery pp. 61–62/66/70 localizadas em `presentationPt`. Signs p. 62 corrigiu o nome canônico do componente de Forge Sophis (`brontium`) e os três pontos de outro Arcana exigidos pela opção de Forge Thaumium, preservando IDs e demais campos canônicos.
 
-Spells pendentes: Mind 45; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
+Mind em execução: quatro Spells de Mind • em MtA 2e pp. 159–160 localizadas em `presentationPt`, mantendo os campos canônicos.
+
+Spells pendentes: Mind 41; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
 
 Apresentar **Práticas, Fator Primário, Resistência, Alcance e Adicionar Arcana** quando aplicáveis. `spell-presentation.ts` extrai `Reach:`/`Add Arcanum` do texto inglês canônico; `presentationPt.reach` localiza a apresentação sem mudar essa entrada. Títulos de Práxis publicadas acompanham Spells; nomes autorais permanecem intactos.
 
