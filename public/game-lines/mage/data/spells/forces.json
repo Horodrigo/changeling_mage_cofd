@@ -236,7 +236,16 @@
     "source": "Mage the Awakening",
     "page": 142,
     "summary": "Redirect or diminish existing electrical current through conductive paths, controlling one power line per Potency. The mage may arc current into a target, divert it away to reduce electrical damage by Potency, or lower its power one level per Potency, but cannot amplify or create electricity.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Controlar Eletricidade",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Redireciona ou diminui uma corrente elétrica existente por condutores, controlando uma linha de energia por ponto de Potência. Pode lançar a corrente contra um alvo, desviá-la para reduzir dano elétrico pela Potência ou baixar sua intensidade um nível por ponto de Potência, mas não pode amplificar nem criar eletricidade.",
+      "description": "Redireciona ou diminui uma corrente elétrica existente por condutores, controlando uma linha de energia por ponto de Potência. Pode lançar a corrente contra um alvo, desviá-la para reduzir dano elétrico pela Potência ou baixar sua intensidade um nível por ponto de Potência, mas não pode amplificar nem criar eletricidade.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:forces-2-control-fire",
@@ -258,7 +267,16 @@
     "source": "Mage the Awakening",
     "page": 142,
     "summary": "Alter an existing fire’s heat or size by one level per Potency, distributing the changes between those factors. Reducing either below level one extinguishes the fire; diminished flames may spread again after the spell ends if fuel remains.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Controlar Fogo",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Altera o calor ou tamanho de um fogo existente em um nível por ponto de Potência, distribuindo as mudanças entre os dois fatores. Reduzir qualquer deles abaixo do nível 1 apaga o fogo; se ainda houver combustível, as chamas reduzidas podem se espalhar novamente depois que o feitiço terminar.",
+      "description": "Altera o calor ou tamanho de um fogo existente em um nível por ponto de Potência, distribuindo as mudanças entre os dois fatores. Reduzir qualquer deles abaixo do nível 1 apaga o fogo; se ainda houver combustível, as chamas reduzidas podem se espalhar novamente depois que o feitiço terminar.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:forces-2-control-gravity",
@@ -280,7 +298,16 @@
     "source": "Mage the Awakening",
     "page": 142,
     "summary": "Redirect gravity within the area so unsecured subjects and objects fall upward or horizontally. The spell changes direction rather than strength; trapped creatures may attempt an appropriate action to grab support or escape.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Controlar Gravidade",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Redireciona a gravidade na área para que objetos e alvos sem apoio caiam para cima ou na horizontal. Muda sua direção, não sua força; pessoas afetadas podem tentar se agarrar a um suporte ou escapar.",
+      "description": "Redireciona a gravidade na área para que objetos e alvos sem apoio caiam para cima ou na horizontal. Muda sua direção, não sua força; pessoas afetadas podem tentar se agarrar a um suporte ou escapar.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:forces-2-control-heat",
@@ -302,7 +329,16 @@
     "source": "Mage the Awakening",
     "page": 142,
     "summary": "Raise or lower the area’s temperature by one Extreme Environment level per Potency, measured from temperate room temperature and capable of crossing between cold and heat.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Controlar Calor",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Aumenta ou reduz a temperatura da área em um nível de Ambiente Extremo por ponto de Potência, partindo da temperatura ambiente e podendo passar do frio ao calor.",
+      "description": "Aumenta ou reduz a temperatura da área em um nível de Ambiente Extremo por ponto de Potência, partindo da temperatura ambiente e podendo passar do frio ao calor.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:forces-2-control-light",
@@ -324,7 +360,16 @@
     "source": "Mage the Awakening",
     "page": 142,
     "summary": "Double or halve existing light per Potency and focus, disperse, refract, or change its wavelength without altering the source itself. These manipulations can impose Poor Light but do not inherently add heat or damage the light source.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Controlar Luz",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Dobra ou reduz à metade a luz existente por ponto de Potência e pode focalizá-la, dispersá-la, refratá-la ou mudar seu comprimento de onda sem alterar a fonte. Pode impor Pouca Luz, mas não produz calor automaticamente nem danifica a fonte luminosa.",
+      "description": "Dobra ou reduz à metade a luz existente por ponto de Potência e pode focalizá-la, dispersá-la, refratá-la ou mudar seu comprimento de onda sem alterar a fonte. Pode impor Pouca Luz, mas não produz calor automaticamente nem danifica a fonte luminosa. +1 Alcance: Cria reflexos ou um apagão completo, impondo a Complicação Cego na área afetada ou proporcionando cobertura visual substancial.",
+      "reach": "+1 Alcance: Cria reflexos ou um apagão completo, impondo a Complicação Cego na área afetada ou proporcionando cobertura visual substancial."
+    }
   },
   {
     "id": "mta-2ed:forces-2-control-sound",
@@ -346,7 +391,16 @@
     "source": "Mage the Awakening",
     "page": 142,
     "summary": "Double or halve sound volume per Potency, redirect or focus existing sounds, and alter tone or voice. The spell can isolate a sound to selected listeners, listen across the affected Scale, penalize hearing-based Perception by the caster’s Arcanum, or produce Deafened when sufficiently loud.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Controlar Som",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Dobra ou reduz à metade o volume do som por ponto de Potência, redireciona ou focaliza sons existentes e altera timbre ou voz. Pode isolar um som para ouvintes escolhidos, ouvir através da Escala afetada, penalizar a Percepção auditiva pelos pontos de Forças da conjuradora ou impor Surdo com ruídos suficientemente altos.",
+      "description": "Dobra ou reduz à metade o volume do som por ponto de Potência, redireciona ou focaliza sons existentes e altera timbre ou voz. Pode isolar um som para ouvintes escolhidos, ouvir através da Escala afetada, penalizar a Percepção auditiva pelos pontos de Forças da conjuradora ou impor Surdo com ruídos suficientemente altos. +1 Alcance: Cria ecos que impõem penalidade a Furtividade na área afetada. +1 Alcance: Concede bônus igual à Potência nas jogadas de Percepção auditiva na área.",
+      "reach": "+1 Alcance: Cria ecos que impõem penalidade a Furtividade na área afetada. +1 Alcance: Concede bônus igual à Potência nas jogadas de Percepção auditiva na área."
+    }
   },
   {
     "id": "mta-2ed:forces-2-control-weather",
@@ -368,7 +422,16 @@
     "source": "Mage the Awakening",
     "page": 143,
     "summary": "Reshape existing weather within minutes, changing weather-based Extreme Environments by up to Potency and never beyond level 4, and creating appropriate Environmental Tilts. The caster receives no automatic protection from the conditions created.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Controlar Clima",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Molda o clima existente em minutos, alterando os níveis de Ambiente Extremo ligados ao tempo em até a Potência, nunca acima do nível 4, e criando Complicações Ambientais adequadas. A conjuradora não recebe proteção automática contra o clima criado.",
+      "description": "Molda o clima existente em minutos, alterando os níveis de Ambiente Extremo ligados ao tempo em até a Potência, nunca acima do nível 4, e criando Complicações Ambientais adequadas. A conjuradora não recebe proteção automática contra o clima criado. +1 Alcance: As mudanças climáticas acontecem mais gradualmente, durante algumas horas. +2 Alcance: Permite mudanças mais drásticas, como transformar uma manhã ensolarada em granizo.",
+      "reach": "+1 Alcance: As mudanças climáticas acontecem mais gradualmente, durante algumas horas. +2 Alcance: Permite mudanças mais drásticas, como transformar uma manhã ensolarada em granizo."
+    }
   },
   {
     "id": "mta-2ed:forces-2-environmental-shield",
@@ -390,7 +453,16 @@
     "source": "Mage the Awakening",
     "page": 143,
     "summary": "Grant complete resistance to Conditions and Tilts caused indirectly by environments up to an Extreme Environment level equal to Potency. It does not prevent drowning, crushing waves, or a deliberately directed lightning strike, and magical weather requires a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Escudo Ambiental",
+      "practice": "Proteção",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Protege completamente contra Condições e Complicações causadas indiretamente por ambientes até um nível de Ambiente Extremo igual à Potência. Não impede afogamento, esmagamento por ondas nem um raio deliberadamente dirigido ao alvo; clima mágico exige um Choque de Vontades.",
+      "description": "Protege completamente contra Condições e Complicações causadas indiretamente por ambientes até um nível de Ambiente Extremo igual à Potência. Não impede afogamento, esmagamento por ondas nem um raio deliberadamente dirigido ao alvo; clima mágico exige um Choque de Vontades.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:forces-2-invisibility",
@@ -412,7 +484,16 @@
     "source": "Mage the Awakening",
     "page": 143,
     "summary": "Mask the subject from all forms of light, making it invisible even to cameras and specialized lenses. The spell does not conceal sound.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Invisibilidade",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Oculta o alvo de todas as formas de luz, tornando-o invisível até para câmeras e lentes especializadas. O feitiço não abafa seus sons.",
+      "description": "Oculta o alvo de todas as formas de luz, tornando-o invisível até para câmeras e lentes especializadas. O feitiço não abafa seus sons.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:forces-2-kinetic-blow",
