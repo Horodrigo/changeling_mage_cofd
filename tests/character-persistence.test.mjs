@@ -152,6 +152,30 @@ test("Mage Rote Skill selections normalize by ID and stay canonical when Merit g
   assert.deepEqual(current, before);
 });
 
+test("Mage saves published Order identities in English and keeps legacy grant instances and XP", async () => {
+  const current = sheet("MtA");
+  current.line_data = { order: "Seta Adamantina", rote_skills: ["Atletismo"] };
+  current.merits = [
+    { definitionId: "mta-2ed:awakened-status", instanceId: "status", name: "Awakened Status", sourceId: "mta-2ed", dots: 3, creationDots: 1, experienceDots: 2, grantedBy: "Ordem", configuration: { domain: "Seta Adamantina" } },
+    { definitionId: "mta-2ed:high-speech", instanceId: "speech", name: "High Speech", sourceId: "mta-2ed", dots: 1, grantedBy: "Ordem" },
+    { definitionId: "homebrew:status", instanceId: "authored", name: "Awakened Status", sourceId: "homebrew", dots: 1, grantedBy: "Ordem", configuration: { domain: "Seta Adamantina" } },
+  ];
+  current.current_state = { mage_experience_history: [{ id: "paid", cost: 6, undo: { kind: "merit", instanceId: "status" } }], mage_experience_available: 4 };
+  const before = structuredClone(current);
+  const normalized = await normalizeGameLineCharacter(normalizeStoredSheet(current));
+  assert.equal(normalized.line_data.order, "Adamantine Arrow");
+  for (const id of ["status", "speech"]) assert.equal(normalized.merits.find(item => item.instanceId === id).grantedBy, "Order");
+  const status = normalized.merits.find(item => item.instanceId === "status");
+  assert.deepEqual([status.dots, status.creationDots, status.experienceDots, status.configuration.domain], [3, 1, 2, "Adamantine Arrow"]);
+  assert.deepEqual(normalized.merits.find(item => item.instanceId === "authored"), normalizeStoredSheet(current).merits[2]);
+  assert.deepEqual(normalized.current_state, before.current_state);
+  assert.deepEqual(await normalizeGameLineCharacter(normalizeStoredSheet(JSON.parse(JSON.stringify(normalized)))), normalized);
+  assert.deepEqual(current, before);
+  const authored = sheet("MtA");
+  authored.line_data = { order: "Seta Adamantina", custom_order: { name: "Seta Adamantina", description: "Ordem do jogador", roteSkills: [] } };
+  assert.equal((await normalizeGameLineCharacter(normalizeStoredSheet(authored))).line_data.order, "Seta Adamantina");
+});
+
 test("canonical Skill reconciliation does not count as an authored Specialty edit or remove its linked Merit", async () => {
   const { reconcileSpecialtyMerits } = await vite.ssrLoadModule("/lib/core/character/specialty-merits.ts");
   const merit = { definitionId: "core-2ed:interdisciplinary-specialty", name: "Interdisciplinary Specialty", sourceId: "core-2ed", instanceId: "paid-link", dots: 1, experienceDots: 1, configuration: { specialty_skill: "Armas Brancas", specialty_name: "Nome autoral" } };

@@ -449,7 +449,7 @@ export function MageCharacterPaper({
   const principalMerits = character.merits.filter(
     (item) =>
       !item.grantedBy ||
-      ["Ordem", "Nameless Order"].includes(String(item.grantedBy)),
+      ["Order", "Ordem", "Nameless Order"].includes(String(item.grantedBy)),
   );
   const selectedConditions = [
     ...selectedConditionList(
@@ -2000,7 +2000,7 @@ function MeritSheetList({
     visible = merits.filter(
       (item) =>
         !item.grantedBy ||
-        ["Ordem", "Nameless Order"].includes(String(item.grantedBy)),
+        ["Order", "Ordem", "Nameless Order"].includes(String(item.grantedBy)),
     );
   return (
     <div className="sheet-merits single-column">

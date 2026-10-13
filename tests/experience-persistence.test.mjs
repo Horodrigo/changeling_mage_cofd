@@ -248,7 +248,7 @@ test("Mantle gratuito mantém o ponto inicial ao comprar, sincronizar e reembols
 });
 
 test("outros Méritos gratuitos preservam o ponto inicial durante avanços", () => {
-  for (const [name, grantedBy] of [["Awakened Status","Ordem"],["Mystery Cult Initiation","Nameless Order"]]) {
+  for (const [name, grantedBy] of [["Awakened Status","Order"],["Mystery Cult Initiation","Nameless Order"]]) {
     const merit = {name,dots:1,grantedBy};
     merits.addExperienceMeritDots(merit, 3);
     assert.deepEqual(
@@ -300,7 +300,7 @@ test("Seer Ministries own their Rote Skills while historical affiliations receiv
   const seer={game_line:"MtA",line_data:{order:"Seers of the Throne",affiliation_id:"hegemony"},merits:[],specializations:[]};
   mageMeritConfigurations.synchronizeMeritGrants(seer);
   assert.deepEqual(seer.line_data.rote_skills,["Politics","Persuasion","Empathy"]);
-  assert.deepEqual(seer.merits.filter(item=>item.grantedBy==="Ordem").map(item=>item.name).sort(),["Awakened Status","High Speech"]);
+  assert.deepEqual(seer.merits.filter(item=>item.grantedBy==="Order").map(item=>item.name).sort(),["Awakened Status","High Speech"]);
 
   const historical={game_line:"MtA",line_data:{order:"Company of the Codex",affiliation_id:"hegemony",rote_skills:["Firearms"]},merits:[],specializations:[]};
   mageMeritConfigurations.synchronizeMeritGrants(historical);

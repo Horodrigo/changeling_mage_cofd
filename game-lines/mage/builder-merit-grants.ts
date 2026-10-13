@@ -16,9 +16,9 @@ export const NAMELESS_HIGH_SPEECH_BENEFIT = JSON.stringify({ definitionId: "mta-
  */
 function templateMeritId(merit: MeritSelection) {
   if (merit.definitionId) return merit.definitionId;
-  if (!["Ordem", "Nameless Order"].includes(String(merit.grantedBy))) return undefined;
+  if (!["Order", "Ordem", "Nameless Order"].includes(String(merit.grantedBy))) return undefined;
   if (merit.name === "High Speech" && (!merit.sourceId || merit.sourceId === "mta-2ed")) return "mta-2ed:high-speech";
-  if (merit.name === "Awakened Status" && merit.grantedBy === "Ordem" && (!merit.sourceId || merit.sourceId === "mta-2ed")) return "mta-2ed:awakened-status";
+  if (merit.name === "Awakened Status" && ["Order", "Ordem"].includes(String(merit.grantedBy)) && (!merit.sourceId || merit.sourceId === "mta-2ed")) return "mta-2ed:awakened-status";
   if (merit.name === "Mystery Cult Initiation" && merit.grantedBy === "Nameless Order" && (!merit.sourceId || merit.sourceId === "core-2ed")) return "core-2ed:mystery-cult-initiation";
   return undefined;
 }
@@ -34,7 +34,7 @@ function withoutFreeTemplateDot(merit: MeritSelection, definitionId: string | un
 /** Builder rows contain creation dots only; XP is recomposed from the saved source by mergeCreationMerits. */
 export function reconcileMageCreationMeritGrants(current: readonly MeritSelection[], wanted: readonly MeritSelection[], catalog: readonly MeritDefinition[]) {
   const id = (merit: MeritSelection) => merit.definitionId || resolveMeritDefinition(merit, catalog)?.id;
-  const automatic = (merit: MeritSelection) => ["Ordem", "Nameless Order"].includes(String(merit.grantedBy)) &&
+  const automatic = (merit: MeritSelection) => ["Order", "Ordem", "Nameless Order"].includes(String(merit.grantedBy)) &&
     ["mta-2ed:awakened-status", "mta-2ed:high-speech", "core-2ed:mystery-cult-initiation"].includes(id(merit) ?? "");
   const wantedIds = new Set(wanted.map(id).filter(Boolean));
   const paidWithExperience = (definitionId: string | undefined) => definitionId && current.some(merit => id(merit) === definitionId && !merit.grantedBy && Number(merit.experienceDots ?? 0) > 0);
@@ -50,7 +50,7 @@ export function reconcileMageCreationMeritGrants(current: readonly MeritSelectio
   });
   return [...retained, ...wanted.filter(grant => !paidWithExperience(id(grant))).map(grant => {
     const definitionId = id(grant);
-    const existing = definitionId ? current.find(merit => id(merit) === definitionId && (merit.grantedBy === grant.grantedBy || (!merit.grantedBy && !Number(merit.experienceDots ?? 0)))) : undefined;
+    const existing = definitionId ? current.find(merit => id(merit) === definitionId && (merit.grantedBy === grant.grantedBy || (grant.grantedBy === "Order" && merit.grantedBy === "Ordem") || (!merit.grantedBy && !Number(merit.experienceDots ?? 0)))) : undefined;
     return { ...existing, instanceId: existing?.instanceId ?? createRandomId(), ...grant, dots: Math.max(1, Number(existing?.dots ?? 1)), configuration: { ...normalizeMeritConfiguration(existing?.configuration), ...grant.configuration } };
   })];
 }
@@ -61,7 +61,7 @@ export function synchronizeMageBuilderMeritGrants(sheet: CharacterSheet) {
   const affiliation=selectedAffiliation?.parentOrder===order?selectedAffiliation:undefined;
   if(selectedAffiliation&&!affiliation)sheet.line_data.affiliation_id="";
   const automatic = sheet.merits.filter((item) =>
-    (item.grantedBy === "Ordem" && ["mta-2ed:awakened-status", "mta-2ed:high-speech"].includes(templateMeritId(item) ?? "")) ||
+    (["Order", "Ordem"].includes(String(item.grantedBy)) && ["mta-2ed:awakened-status", "mta-2ed:high-speech"].includes(templateMeritId(item) ?? "")) ||
     (item.grantedBy === "Nameless Order" && ["core-2ed:mystery-cult-initiation", "mta-2ed:high-speech"].includes(templateMeritId(item) ?? "")),
   );
   const wantedIds = hasStandardCreationOrderBenefits(order) ? ["mta-2ed:awakened-status", "mta-2ed:high-speech"] : order === "Nameless" ? ["core-2ed:mystery-cult-initiation"] : [];
@@ -73,9 +73,9 @@ export function synchronizeMageBuilderMeritGrants(sheet: CharacterSheet) {
   });
   if (hasStandardCreationOrderBenefits(order)) {
     const status = automatic.find((item) => templateMeritId(item) === "mta-2ed:awakened-status");
-    sheet.merits.push({ ...status, definitionId: "mta-2ed:awakened-status", instanceId: status?.instanceId ?? `order-status-${order}`, name: "Awakened Status", dots: Math.max(1, Number(status?.dots ?? 1)), creationDots: Math.max(1, Number(status?.creationDots ?? (Number(status?.dots ?? 1) - Number(status?.experienceDots ?? 0)))), experienceDots: Math.max(0, Number(status?.experienceDots ?? 0)), sourceId: "mta-2ed", source: "Mage the Awakening", configuration: { domain: order, name: order }, grantedBy: "Ordem" });
+    sheet.merits.push({ ...status, definitionId: "mta-2ed:awakened-status", instanceId: status?.instanceId ?? `order-status-${order}`, name: "Awakened Status", dots: Math.max(1, Number(status?.dots ?? 1)), creationDots: Math.max(1, Number(status?.creationDots ?? (Number(status?.dots ?? 1) - Number(status?.experienceDots ?? 0)))), experienceDots: Math.max(0, Number(status?.experienceDots ?? 0)), sourceId: "mta-2ed", source: "Mage the Awakening", configuration: { domain: order, name: order }, grantedBy: "Order" });
     const speech = automatic.find((item) => templateMeritId(item) === "mta-2ed:high-speech");
-    sheet.merits.push({ ...speech, definitionId: "mta-2ed:high-speech", instanceId: speech?.instanceId ?? `high-speech-${order}`, name: "High Speech", dots: 1, creationDots: 1, experienceDots: 0, sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {}, grantedBy: "Ordem" });
+    sheet.merits.push({ ...speech, definitionId: "mta-2ed:high-speech", instanceId: speech?.instanceId ?? `high-speech-${order}`, name: "High Speech", dots: 1, creationDots: 1, experienceDots: 0, sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {}, grantedBy: "Order" });
   } else if (order === "Nameless") {
     const initiation = automatic.find((item) => templateMeritId(item) === "core-2ed:mystery-cult-initiation");
     const custom = sheet.line_data.custom_order && typeof sheet.line_data.custom_order === "object" ? sheet.line_data.custom_order as Record<string, unknown> : {};

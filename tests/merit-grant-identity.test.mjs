@@ -326,12 +326,13 @@ test("Mage Faction Member Rote Skills follow canonical identity without reclassi
 test("Mage creation grants identify official choices by ID, preserve Homebrew namesakes and keep existing XP instances", () => {
   const fake = { ...selection("mta-2ed:awakened-status", undefined), definitionId: "homebrew:status", instanceId: "authored", configuration: { domain: "Authored", name: "Authored" } };
   const paid = selection("mta-2ed:awakened-status", "Ordem", 3, { instanceId: "order-status", creationDots: 1, experienceDots: 2, name: "Changed display", configuration: { domain: "Free Council" } });
-  const wanted = [selection("mta-2ed:awakened-status", "Ordem", 1, { configuration: { domain: "Free Council" } }), selection("mta-2ed:high-speech", "Ordem")];
+  const wanted = [selection("mta-2ed:awakened-status", "Order", 1, { configuration: { domain: "Free Council" } }), selection("mta-2ed:high-speech", "Order")];
   const current = [fake, { ...paid, dots: paid.creationDots }], before = JSON.stringify(current);
   const next = mageGrants.reconcileMageCreationMeritGrants(current, wanted, templateCatalog);
   assert.deepEqual(next.find(item => item.instanceId === "authored"), fake);
   assert.equal(next.find(item => item.definitionId === "mta-2ed:awakened-status").instanceId, paid.instanceId);
   assert.equal(next.find(item => item.instanceId === paid.instanceId).experienceDots, 2);
+  assert.equal(next.find(item => item.instanceId === paid.instanceId).grantedBy, "Order");
   assert.equal(next.find(item => item.instanceId === paid.instanceId).dots, 1);
   assert.equal(mergeCreationMerits([fake, paid], next).find(item => item.instanceId === paid.instanceId).dots, 3);
   assert.ok(next.some(item => item.definitionId === "mta-2ed:high-speech" && item.instanceId));
@@ -343,7 +344,7 @@ test("Mage creation grants identify official choices by ID, preserve Homebrew na
 
 test("Mage template changes retain purchased dots and their instance, while ID-less automatic grants receive canonical IDs", () => {
   const paid = selection("core-2ed:mystery-cult-initiation", "Nameless Order", 4, { instanceId: "paid-cult", creationDots: 1, experienceDots: 3, configuration: { cult: "Authored" } });
-  const wanted = [selection("mta-2ed:awakened-status", "Ordem"), selection("mta-2ed:high-speech", "Ordem")];
+  const wanted = [selection("mta-2ed:awakened-status", "Order"), selection("mta-2ed:high-speech", "Order")];
   const creation = mageGrants.reconcileMageCreationMeritGrants([{ ...paid, dots: paid.creationDots }], wanted, templateCatalog);
   assert.equal(creation.some(item => item.instanceId === paid.instanceId), false);
   const next = mergeCreationMerits([paid], creation);
@@ -373,6 +374,7 @@ test("Mage template changes retain purchased dots and their instance, while ID-l
   sheet.merits = [legacy];
   mageGrants.synchronizeMageBuilderMeritGrants(sheet);
   assert.equal(sheet.merits.find(item => item.instanceId === "legacy").definitionId, "mta-2ed:awakened-status");
+  assert.equal(sheet.merits.find(item => item.instanceId === "legacy").grantedBy, "Order");
   const markedNamesake = { ...legacy, definitionId: "homebrew:status" };
   sheet.merits = [markedNamesake];
   mageGrants.synchronizeMageBuilderMeritGrants(sheet);

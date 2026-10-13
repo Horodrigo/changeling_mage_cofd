@@ -78,7 +78,7 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
     [t("ui.player"), character.character.player], [t("ui.virtue"), data.virtue], [t("ui.order"), order],
     [t("ui.chronicle"), character.character.chronicle], [t("ui.vice"), data.vice], ["Legacy", legacy?.name ?? ""],
   ];
-  const meritRows = character.merits.filter((merit) => !merit.grantedBy || ["Ordem", "Nameless Order"].includes(String(merit.grantedBy))).slice(0, 9).map((merit) => {
+  const meritRows = character.merits.filter((merit) => !merit.grantedBy || ["Order", "Ordem", "Nameless Order"].includes(String(merit.grantedBy))).slice(0, 9).map((merit) => {
     const definition = meritCatalog.find((item) => item.name === merit.name);
     return { name: locale === "en-US" ? definition?.name ?? merit.name : definition?.translatedName ?? merit.name, rating: effectiveMeritDots({ ...merit, definitionId: definition?.id }) };
   });

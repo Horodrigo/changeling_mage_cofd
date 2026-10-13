@@ -133,7 +133,7 @@ test("Changeling Court access and printed remainder use the same owning predicat
 test("each line owns canonical grant upgrade eligibility; translated, foreign, unavailable and Homebrew identities cannot impersonate a grant", () => {
   for (const [id, marker, eligible] of [
     ["ctl-2ed:mantle", "Corte", canAdvanceChangelingGrant],
-    ["mta-2ed:awakened-status", "Ordem", canAdvanceMageGrant],
+    ["mta-2ed:awakened-status", "Order", canAdvanceMageGrant],
     ["core-2ed:mystery-cult-initiation", "Nameless Order", canAdvanceMageGrant],
     ["wtf-2ed:totem", "werewolf:creation-totem", canAdvanceWerewolfGrant],
   ]) {
@@ -156,7 +156,7 @@ test("each line owns canonical grant upgrade eligibility; translated, foreign, u
       assert.equal(other(selection, catalog), false);
     assert.equal(JSON.stringify(selection), before);
   }
-  for (const [id, marker] of [["mta-2ed:high-speech", "Ordem"], ["core-2ed:language", "werewolf:first-tongue"]]) {
+  for (const [id, marker] of [["mta-2ed:high-speech", "Order"], ["core-2ed:language", "werewolf:first-tongue"]]) {
     const definition = catalog.find(item => item.id === id);
     const merit = { definitionId: id, name: definition.name, dots: 1, grantedBy: marker };
     assert.equal(canAdvanceMageGrant(merit, catalog), false);

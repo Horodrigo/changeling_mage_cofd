@@ -34,7 +34,7 @@ export const MAGE_STATUS_REQUIREMENTS = {
 
 export function canAdvanceMageGrant(merit: CharacterSheet["merits"][number], catalog: readonly MeritDefinition[]) {
   const id = resolveMeritDefinition(merit, catalog)?.id;
-  return (merit.grantedBy === "Ordem" && id === "mta-2ed:awakened-status") ||
+  return (["Order", "Ordem"].includes(String(merit.grantedBy)) && id === "mta-2ed:awakened-status") ||
     (merit.grantedBy === "Nameless Order" && id === "core-2ed:mystery-cult-initiation");
 }
 

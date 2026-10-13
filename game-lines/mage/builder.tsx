@@ -114,7 +114,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
   const common = useCommonBuilderState(initial, player, {
     experienceHistoryKey: "mage_experience_history",
     purchasedSpecialties: experienceSpecialties(initial),
-    grantedMeritSources: ["Ordem", "Nameless Order"],
+    grantedMeritSources: ["Order", "Ordem", "Nameless Order"],
     adjustAttributes: (values) => {
       const bonus = String(initial?.line_data.resistance_bonus ?? "");
       if (bonus && values[bonus] > 1) values[bonus] -= 1;
@@ -172,8 +172,8 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
   useEffect(() => {
     const wanted: MeritSelection[] = hasStandardCreationOrderBenefits(order)
       ? [
-          { definitionId: "mta-2ed:awakened-status", name: "Awakened Status", dots: 1, grantedBy: "Ordem", sourceId: "mta-2ed", source: "Mage the Awakening", configuration: { domain: order, name: order } },
-          { definitionId: "mta-2ed:high-speech", name: "High Speech", dots: 1, grantedBy: "Ordem", sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {} },
+          { definitionId: "mta-2ed:awakened-status", name: "Awakened Status", dots: 1, grantedBy: "Order", sourceId: "mta-2ed", source: "Mage the Awakening", configuration: { domain: order, name: order } },
+          { definitionId: "mta-2ed:high-speech", name: "High Speech", dots: 1, grantedBy: "Order", sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {} },
         ]
       : order === "Nameless"
         ? [{ definitionId: "core-2ed:mystery-cult-initiation", name: "Mystery Cult Initiation", dots: 1, grantedBy: "Nameless Order", sourceId: "core-2ed", source: "Chronicles of Darkness", configuration: { ...normalizeMeritConfiguration(customOrder?.initiation), cult: customOrder?.name ?? "", level_1_type: "merit", level_1_merits: [NAMELESS_HIGH_SPEECH_BENEFIT] } }]
@@ -266,7 +266,7 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
           return { ...item, ...(definition ? { definitionId: definition.id } : {}), configuration: normalizeMeritConfiguration(item.configuration), sourceId: definition?.sourceId ?? item.sourceId, source: definition?.source ?? item.source };
         }), common.meritWasRemoved),
         ...(hasStandardCreationOrderBenefits(order) && !common.merits.some((item) => resolveMeritDefinition(item, meritCatalog)?.id === "mta-2ed:high-speech") && !source?.merits.some((item) => resolveMeritDefinition(item, meritCatalog)?.id === "mta-2ed:high-speech" && item.experienceDots)
-          ? [{ definitionId: "mta-2ed:high-speech", name: "High Speech", dots: 1, sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {}, grantedBy: "Ordem" }]
+          ? [{ definitionId: "mta-2ed:high-speech", name: "High Speech", dots: 1, sourceId: "mta-2ed", source: "Mage the Awakening", configuration: {}, grantedBy: "Order" }]
           : []),
       ],
       line_data: {

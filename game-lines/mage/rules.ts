@@ -6,6 +6,7 @@ import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
 import { commonMeritId } from "@/lib/core/character/merit-identities";
 import { removeSpecialtyMeritGrantChoices } from "@/lib/core/character/specialty-merits";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
+import { MAGE_ORDERS } from "./orders";
 
 const numberValue = (value: unknown) => {
   const parsed = Number(value);
@@ -37,6 +38,11 @@ export const mageRules: GameLineRulesModule = {
     const line_data = { ...character.line_data };
     const canonicalSkill = (value: unknown) => typeof value === "string" ? canonicalTraitId("skills", value) : value;
     if (typeof line_data.resistance_bonus === "string") line_data.resistance_bonus = canonicalTraitId("attributes", line_data.resistance_bonus);
+    const customOrder = line_data.custom_order && typeof line_data.custom_order === "object" && !Array.isArray(line_data.custom_order) ? line_data.custom_order as Record<string, unknown> : null;
+    if (typeof line_data.order === "string" && line_data.order !== customOrder?.name) {
+      const published = MAGE_ORDERS.find(order => order.translatedName && order.translatedName === line_data.order);
+      line_data.order = published?.name ?? ({ "Sem Ordem": "Orderless", "Ordem sem Nome": "Nameless" } as Record<string, string>)[line_data.order] ?? line_data.order;
+    }
     if (Array.isArray(line_data.rote_skills)) line_data.rote_skills = line_data.rote_skills.map(canonicalSkill);
     if (line_data.custom_order && typeof line_data.custom_order === "object" && !Array.isArray(line_data.custom_order)) {
       const custom = line_data.custom_order as Record<string, unknown>;
@@ -56,11 +62,15 @@ export const mageRules: GameLineRulesModule = {
     const merits = character.merits?.map(merit => {
       const nameless = merit.grantedBy === "Nameless Order" && resolveMeritDefinition(merit, [{ id: "core-2ed:mystery-cult-initiation", name: "Mystery Cult Initiation", sourceId: "core-2ed" }])?.id === "core-2ed:mystery-cult-initiation";
       const faction = resolveMeritDefinition(merit, [{ id: "mta-tome:faction-member", name: "Faction Member", sourceId: "mta-tome" }])?.id === "mta-tome:faction-member";
-      if (!merit.configuration || (!nameless && !faction)) return merit;
+      const orderGrant = merit.grantedBy === "Ordem" && Boolean(resolveMeritDefinition(merit, [
+        { id: "mta-2ed:awakened-status", name: "Awakened Status", sourceId: "mta-2ed" },
+        { id: "mta-2ed:high-speech", name: "High Speech", sourceId: "mta-2ed" },
+      ]));
+      if (!merit.configuration || (!nameless && !faction)) return orderGrant ? { ...merit, grantedBy: "Order" } : merit;
       const configuration = { ...merit.configuration };
       if (nameless && Array.isArray(configuration.level_2_rote_skills)) configuration.level_2_rote_skills = configuration.level_2_rote_skills.map(canonicalSkill) as string[];
       if (faction && typeof configuration.roteSkill === "string") configuration.roteSkill = canonicalSkill(configuration.roteSkill) as string;
-      return { ...merit, configuration };
+      return { ...merit, configuration, ...(orderGrant ? { grantedBy: "Order" } : {}) };
     });
     return { ...character, ...(merits ? { merits } : {}), line_data, current_state: canonicalTraitHistory(character.current_state, "mage_experience_history") };
   },
