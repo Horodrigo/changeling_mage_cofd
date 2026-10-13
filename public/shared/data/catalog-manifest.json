@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 320,
+  "catalogVersion": 321,
   "catalogs": {
     "werewolf-totem-powers": {
       "version": 3,
@@ -158,9 +158,9 @@
       "hash": "ff04a9eb67ee0de850e44e20f31d452f4c519fbd1172c64e41c93d5b0563fdec"
     },
     "mage-spells-spirit": {
-      "version": 5,
+      "version": 6,
       "url": "/game-lines/mage/data/spells/spirit.json",
-      "hash": "e87de10fa47edc26fdd6dccc2d443f47a9ee59ee5c6c7eab24fefc4963a3ed18"
+      "hash": "1c6fd095c31f5faa7d59e10cbd3391f468f95198f010116523180d2af6f1a32b"
     },
     "mage-spells-time": {
       "version": 2,

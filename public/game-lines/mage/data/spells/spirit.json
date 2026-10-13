@@ -670,7 +670,16 @@
     "source": "Mage the Awakening",
     "page": 182,
     "summary": "Strip up to Potency Manifestation Conditions from a spirit of Rank 5 or less, resisted by Rank. The removal is Lasting, though the entity may establish those Conditions again normally.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Banimento Espiritual",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "Posto",
+      "summary": "Remove até Potência Condições de Manifestação de um espírito de Posto até 5, resistido por Posto. A remoção é duradoura, embora o espírito possa criar as Condições de novo normalmente.",
+      "description": "Remove até Potência Condições de Manifestação de um espírito de Posto até 5, resistido por Posto. A remoção é duradoura, embora o espírito possa criar as Condições de novo normalmente. Adicionar Morte •••• ou Mente ••••: Aplica o efeito a fantasmas ou Goetia, respectivamente. +1 Alcance: O mesmo alvo não pode recriar as Condições removidas até a Duração terminar.",
+      "reach": "Adicionar Morte •••• ou Mente ••••: Aplica o efeito a fantasmas ou Goetia, respectivamente. +1 Alcance: O mesmo alvo não pode recriar as Condições removidas até a Duração terminar."
+    }
   },
   {
     "id": "mta-2ed:spirit-4-bind-spirit",
@@ -692,7 +701,16 @@
     "source": "Mage the Awakening",
     "page": 183,
     "summary": "Impose up to Potency Manifestation Conditions on a spirit of Rank 5 or less for the Duration, resisted by Rank.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Vincular Espírito",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Posto",
+      "summary": "Impõe até Potência Condições de Manifestação a um espírito de Posto até 5, resistido por Posto. Pode criar Condições prévias necessárias; o espírito manifesta-se imediatamente no lugar escolhido pela maga e não pode sair dele enquanto o feitiço durar.",
+      "description": "Impõe até Potência Condições de Manifestação a um espírito de Posto até 5, resistido por Posto. Pode criar Condições prévias necessárias; o espírito manifesta-se imediatamente no lugar escolhido pela maga e não pode sair dele enquanto o feitiço durar. Adicionar Morte •••• ou Mente ••••: Aplica o efeito a fantasmas ou Goetia, respectivamente.",
+      "reach": "Adicionar Morte •••• ou Mente ••••: Aplica o efeito a fantasmas ou Goetia, respectivamente."
+    }
   },
   {
     "id": "mta-2ed:spirit-4-craft-fetish",
@@ -714,7 +732,16 @@
     "source": "Mage the Awakening",
     "page": 183,
     "summary": "Bind a hibernating spirit into an item, giving the fetish access to up to Potency of its Influence dots and Numina, powered by the spirit’s Essence pool. Triggering the bound spirit’s Ban or Bane destroys the fetish; an empty fetish instead stores 10 + Potency Essence.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Criar Fetiche",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Posto",
+      "summary": "Prende um espírito em hibernação dentro de um objeto, permitindo usar parte de suas Influências e Númena. Exige um ponto de Potência por ponto de Influência e por Númen concedido; as habilidades gastam a reserva de Essência do espírito. Se ele acumular Essência igual ao Corpus, escapa e o feitiço termina; acionar sua Proibição ou Fraqueza destrói o fetiche. Também pode criar um fetiche sem espírito, capaz de guardar 10 + Potência pontos de Essência.",
+      "description": "Prende um espírito em hibernação dentro de um objeto, permitindo usar parte de suas Influências e Númena. Exige um ponto de Potência por ponto de Influência e por Númen concedido; as habilidades gastam a reserva de Essência do espírito. Se ele acumular Essência igual ao Corpus, escapa e o feitiço termina; acionar sua Proibição ou Fraqueza destrói o fetiche. Também pode criar um fetiche sem espírito, capaz de guardar 10 + Potência pontos de Essência.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:spirit-4-familiar",
@@ -736,7 +763,16 @@
     "source": "Mage the Awakening",
     "page": 183,
     "summary": "Create a willing familiar bond between the subject and a willing Rank 1 or 2 spirit, granting the Familiar Merit for the Duration. Either participant may end the relationship according to the Merit’s rules.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Familiar",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Cria um vínculo voluntário entre a maga e um espírito de Posto até 2, concedendo o Mérito Familiar e a Condição de Manifestação Familiar pela Duração. Ambos precisam consentir e podem encerrar o vínculo.",
+      "description": "Cria um vínculo voluntário entre a maga e um espírito de Posto até 2, concedendo o Mérito Familiar e a Condição de Manifestação Familiar pela Duração. Ambos precisam consentir e podem encerrar o vínculo. Substituir Morte •••• ou Mente ••••: Vincula um fantasma ou uma Goetia como Familiar, respectivamente.",
+      "reach": "Substituir Morte •••• ou Mente ••••: Vincula um fantasma ou uma Goetia como Familiar, respectivamente."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:spirit-4-haunted-grimoire",
@@ -804,7 +840,16 @@
     "source": "Mage the Awakening",
     "page": 183,
     "summary": "Attack a subject with destructive spiritual force, inflicting lethal damage equal to Potency. It can affect spirits in Twilight on the caster’s side of the Gauntlet.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Grito da Sombra",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Ataca o alvo com efêmera e Essência destrutivas, causando dano letal igual à Potência. Pode atingir seres físicos ou espíritos no Crepúsculo.",
+      "description": "Ataca o alvo com efêmera e Essência destrutivas, causando dano letal igual à Potência. Pode atingir seres físicos ou espíritos no Crepúsculo. +1 Alcance e 1 Mana: O dano torna-se agravado. +1 Alcance: Pode dividir a Potência entre dano e destruição da Essência no Padrão do alvo, um ponto por ponto. +1 Alcance: Impõe a Condição Aberto. +1 Alcance: Atinge alvos do outro lado da Barreira, resistido pela Força da Barreira.",
+      "reach": "+1 Alcance e 1 Mana: O dano torna-se agravado. +1 Alcance: Pode dividir a Potência entre dano e destruição da Essência no Padrão do alvo, um ponto por ponto. +1 Alcance: Impõe a Condição Aberto. +1 Alcance: Atinge alvos do outro lado da Barreira, resistido pela Força da Barreira."
+    }
   },
   {
     "id": "mta-2ed:spirit-4-shape-spirit",
@@ -826,7 +871,16 @@
     "source": "Mage the Awakening",
     "page": 184,
     "summary": "Apply up to Potency changes to a spirit: alter nature, redistribute Attributes or Influences, heal one lethal Corpus each, replace Manifestations or Numina, or rewrite Ban or Bane. Appearance and Size may also change within Scale, but traits remain within Rank limits and revert when the spell ends.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Moldar Espírito",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Posto",
+      "summary": "Aplica até Potência mudanças em um espírito, resistido por Posto: altera sua natureza, redistribui Atributos ou Influências, cura um ponto de dano letal do Corpus por efeito, troca Manifestações ou Númena, ou reescreve Proibição ou Fraqueza. Pode alterar forma e Tamanho dentro da Escala; características respeitam os limites do Posto e voltam ao normal no fim da Duração.",
+      "description": "Aplica até Potência mudanças em um espírito, resistido por Posto: altera sua natureza, redistribui Atributos ou Influências, cura um ponto de dano letal do Corpus por efeito, troca Manifestações ou Númena, ou reescreve Proibição ou Fraqueza. Pode alterar forma e Tamanho dentro da Escala; características respeitam os limites do Posto e voltam ao normal no fim da Duração. +1 Alcance e 1 Mana: Pode curar dano agravado.",
+      "reach": "+1 Alcance e 1 Mana: Pode curar dano agravado."
+    }
   },
   {
     "id": "mta-2ed:spirit-4-twilit-body",
@@ -848,7 +902,16 @@
     "source": "Mage the Awakening",
     "page": 184,
     "summary": "Transform the mage and worn equipment into Spirit-attuned ephemera, placing them in Twilight for the Duration. The subject interacts with the corresponding ephemeral state rather than becoming a spirit.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Corpo Crepuscular",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Transforma o alvo e o que veste ou carrega em efêmera sintonizada com Espírito, colocando-o no Crepúsculo pela Duração. O alvo continua sendo ele mesmo e interage com o estado efêmero correspondente.",
+      "description": "Transforma o alvo e o que veste ou carrega em efêmera sintonizada com Espírito, colocando-o no Crepúsculo pela Duração. O alvo continua sendo ele mesmo e interage com o estado efêmero correspondente. +1 Alcance: Pode ficar imaterial mesmo em reinos onde normalmente não existe Crepúsculo.",
+      "reach": "+1 Alcance: Pode ficar imaterial mesmo em reinos onde normalmente não existe Crepúsculo."
+    }
   },
   {
     "id": "mta-2ed:spirit-4-world-walker",
@@ -870,7 +933,16 @@
     "source": "Mage the Awakening",
     "page": 184,
     "summary": "Move the subject directly across the Gauntlet without opening a portal, resisted by Gauntlet Strength. The crossing carries the subject between the material world and Shadow.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Caminhante de Mundos",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Força da Barreira",
+      "summary": "Transporta o alvo diretamente através da Barreira entre o mundo físico e a Sombra, sem abrir uma passagem, resistido pela Força da Barreira. Se o alvo for espírito ou objeto efêmero, aparece no Crepúsculo.",
+      "description": "Transporta o alvo diretamente através da Barreira entre o mundo físico e a Sombra, sem abrir uma passagem, resistido pela Força da Barreira. Se o alvo for espírito ou objeto efêmero, aparece no Crepúsculo. +1 Alcance: Concede a um espírito atravessado a Condição Materializado pela Duração.",
+      "reach": "+1 Alcance: Concede a um espírito atravessado a Condição Materializado pela Duração."
+    }
   },
   {
     "id": "mta-2ed:spirit-5-annihilate-spirit",
