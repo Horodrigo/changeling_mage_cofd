@@ -16,7 +16,7 @@ import { ARCANA, MTA_ORDERS, MTA_ORDER_DESCRIPTIONS, MTA_ORDER_LABELS, MTA_PATHS
 import { arcanaCreationErrors, meetsArcanaRequirements } from "./builder-eligibility";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import type { MeritSelection } from "@/lib/core/character/character-types";
-import { findMageAffiliation, hasStandardCreationOrderBenefits, mageAffiliationsFor } from "./orders";
+import { findMageAffiliation, hasStandardCreationOrderBenefits, mageAffiliationPresentation, mageAffiliationsFor } from "./orders";
 import type { MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import { MAGE_MERIT_CONFIGURATIONS, masqueConfigurationDots } from "./merit-configurations";
 import type { MeritDefinition } from "@/lib/merits";
@@ -145,6 +145,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
   const neededPraxes = props.gnosis;
   const hasCreationOrderBenefits = hasStandardCreationOrderBenefits(props.order) || props.order === "Nameless"&&props.orderRoteSkills.length===3;
   const affiliations=mageAffiliationsFor(props.order),affiliation=findMageAffiliation(props.affiliationId);
+  const presentedAffiliation = affiliation && mageAffiliationPresentation(affiliation, locale);
   return (
     <div className="builder-section">
       <span className="kicker">{t("ui.step3MAGE")}</span>
@@ -177,7 +178,7 @@ export function MageBuilderView(props: MageBuilderViewProps) {
         </div>
         <div className="mta-template-column">
           <OrderSelector {...props} invalid={props.missing("order")} />
-          {affiliations.length>0&&<div className="template-choice-field"><Choice label={t("ui.ministryOptional")} value={props.affiliationId||"__none"} setValue={(value)=>props.setAffiliationId(value==="__none"?"":value)} options={["__none",...affiliations.map((item)=>item.id)]} optionLabels={{__none:t("ui.noMinistry"),...Object.fromEntries(affiliations.map((item)=>[item.id,item.name]))}}/>{affiliation&&<p>{affiliation.description} · {affiliation.patronExarch}{affiliation.additionalPatronExarchs?.length?` / ${affiliation.additionalPatronExarchs.join(" / ")}`:""}</p>}</div>}
+          {affiliations.length>0&&<div className="template-choice-field"><Choice label={t("ui.ministryOptional")} value={props.affiliationId||"__none"} setValue={(value)=>props.setAffiliationId(value==="__none"?"":value)} options={["__none",...affiliations.map((item)=>item.id)]} optionLabels={{__none:t("ui.noMinistry"),...Object.fromEntries(affiliations.map((item)=>[item.id,item.name]))}}/>{presentedAffiliation&&<p>{presentedAffiliation.description} · {presentedAffiliation.patrons}</p>}</div>}
         </div>
         <div className="mta-template-column mta-virtue-vice">
           <label className={props.missing("virtue") ? "missing-field" : ""}>

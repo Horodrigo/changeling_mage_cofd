@@ -78,7 +78,7 @@ import { useLanguage, type Locale } from "@/lib/i18n";
 import { mageMessages } from "@/lib/i18n/messages/mage";
 import { catalogDisplayName } from "@/lib/localized-catalog";
 import { findLegacy, normalizeLegacyState } from "@/game-lines/mage/legacies";
-import { findMageAffiliation } from "@/game-lines/mage/orders";
+import { findMageAffiliation, mageAffiliationPresentation } from "@/game-lines/mage/orders";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import {
   mageNimbusConnection,
@@ -2106,6 +2106,7 @@ function MageOrderSummary({ data }: { data: Record<string, unknown> }) {
       : undefined;
   const orderKey = String(data.order ?? "Orderless");
   const affiliation = findMageAffiliation(data.affiliation_id);
+  const presentedAffiliation = affiliation && mageAffiliationPresentation(affiliation, locale);
   const name =
     orderKey === "Orderless"
       ? t("ui.orderless")
@@ -2133,13 +2134,10 @@ function MageOrderSummary({ data }: { data: Record<string, unknown> }) {
       <strong>{name}</strong>
       {description && <p>{description}</p>}
       {affiliation && (
-        <p>
-          <strong>{t("ui.ministry")}:</strong> {affiliation.name} ·{" "}
-          {affiliation.patronExarch}
-          {affiliation.additionalPatronExarchs?.length
-            ? ` / ${affiliation.additionalPatronExarchs.join(" / ")}`
-            : ""}
-        </p>
+        <>
+          <p><strong>{t("ui.ministry")}:</strong> {affiliation.name} · {presentedAffiliation?.patrons}</p>
+          <p>{presentedAffiliation?.description}</p>
+        </>
       )}
       {skills.length > 0 && (
         <small>

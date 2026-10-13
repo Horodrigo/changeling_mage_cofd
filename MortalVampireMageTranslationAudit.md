@@ -29,7 +29,7 @@ Atualização: **2026-10-13**. Esta lista contém somente trabalho ainda não co
 | Área | Trabalho pendente |
 | --- | --- |
 | G02 — Merits | Traduzir nome, requisitos, descrição e níveis aplicáveis dos **42/71 Merits** restantes em `public/game-lines/mage/data/merits*.json`. Manter requisitos e identidades canônicos para parsers e compras. |
-| G03 — organizações | Localizar descrições e Tool Yantras das **44 Factions** e descrições/Patron Exarchs das **12 Ministries** na criação e nas fichas Desktop/Mobile. Orders já estão completas e não entram nesta contagem. |
+| G03 — organizações | Localizar descrições e Tool Yantras das **44 Factions** na criação e nas fichas Desktop/Mobile. Orders e Ministries já estão completas. |
 | G04 — Legacies | Localizar as **16 Legacies** e **43 Attainments** em `game-lines/mage/catalog-data/legacies*.json`: nomes descritivos, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções. Preservar nomes próprios. Nighthawks, Nameless and Accursed p. 29: segundo Attainment exige **Prime 2 e Larceny 3**; iniciação/primeiro mantêm Larceny 2. |
 | G05 — Conditions | Traduzir as **24/25 Conditions** ainda sem apresentação PT: nome, descrição, resolução e Ato. Conferir Megalomaniacal e Rampant com suas próprias entradas; os nomes de Húbris já são resolvidos por ID. |
 

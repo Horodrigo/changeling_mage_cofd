@@ -113,6 +113,23 @@ test("Mage Order labels follow the active locale", async () => {
   }
 });
 
+test("Mage Ministry descriptions and patron Exarch titles switch EN/PT/EN without changing catalog identities", async () => {
+  const { MAGE_AFFILIATIONS, mageAffiliationPresentation } = await vite.ssrLoadModule("/game-lines/mage/orders.ts");
+  assert.equal(MAGE_AFFILIATIONS.length, 12);
+  for (const affiliation of MAGE_AFFILIATIONS) {
+    assert.ok(affiliation.descriptionPt, `${affiliation.id} has a Portuguese description`);
+    const before = JSON.stringify(affiliation);
+    assert.equal(mageAffiliationPresentation(affiliation, "en-US").description, affiliation.description);
+    assert.equal(mageAffiliationPresentation(affiliation, "pt-BR").description, affiliation.descriptionPt);
+    assert.equal(mageAffiliationPresentation(affiliation, "en-US").description, affiliation.description);
+    assert.equal(JSON.stringify(affiliation), before);
+  }
+  const kyrian = MAGE_AFFILIATIONS.find(item => item.id === "kyrian");
+  assert.equal(mageAffiliationPresentation(kyrian, "pt-BR").patrons, "Profeta / Ruína");
+  assert.equal(mageAffiliationPresentation(kyrian, "en-US").patrons, "Prophet / Ruin");
+  assert.deepEqual([kyrian.patronExarch, kyrian.additionalPatronExarchs], ["Prophet", ["Ruin"]]);
+});
+
 test("Contract outcomes and Courtless use dictionary labels without changing mechanics", async () => {
   const { translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
   const { contractOutcomeSections } = await vite.ssrLoadModule("/game-lines/changeling/contract-presentation.ts");
