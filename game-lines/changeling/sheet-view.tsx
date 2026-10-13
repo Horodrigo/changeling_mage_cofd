@@ -712,7 +712,8 @@ function KithLore({ data, reference }: {
     const skill = String(presentation?.skill ?? definition?.skill ?? data.kith_skill ?? "");
     const description = String(presentation?.description ?? definition?.description ?? data.kith_description ?? "");
     const blessing = String(presentation?.blessing ?? definition?.blessing ?? data.kith_blessing ?? "");
-    const source = String(definition?.source ?? data.kith_source ?? "");
+    const storedSource = String(definition?.source ?? data.kith_source ?? "");
+    const source = data.kith_custom && ["Player-created", "Criação do jogador"].includes(storedSource) ? t("ui.playerCreated") : storedSource;
     const page = Number(definition?.page ?? data.kith_page ?? 0);
     const choice = String(data.kith_choice ?? "").trim();
     const choiceDefinition = kithCreationChoice(definition?.id);

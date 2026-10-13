@@ -61,6 +61,7 @@ export const changelingRules: GameLineRulesModule = {
         ...(typeof character.line_data.favored_attribute === "string" ? { favored_attribute: canonicalTraitId("attributes", character.line_data.favored_attribute) } : {}),
         ...(typeof character.line_data.primary_regalia === "string" ? { primary_regalia: canonicalStoredRegalia(character.line_data.primary_regalia) } : {}),
         ...(typeof character.line_data.second_regalia === "string" ? { second_regalia: canonicalStoredRegalia(character.line_data.second_regalia) } : {}),
+        ...(character.line_data.kith_custom && character.line_data.kith_source === "Criação do jogador" ? { kith_source: "Player-created" } : {}),
         ...Object.fromEntries(["contracts", "learned_contracts"].filter(key => Array.isArray(character.line_data[key])).map(key => [key, (character.line_data[key] as unknown[]).map(canonicalContractClassification)])),
         frailties: normalizeChangelingFrailties(character.line_data.frailties, wyrd),
       },

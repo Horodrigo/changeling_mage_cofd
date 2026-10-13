@@ -361,3 +361,18 @@ test("legacy Court and anchor choices become canonical while custom Court text r
   assert.equal(result.line_data.needle, authored.line_data.needle);
   assert.equal(result.line_data.thread, authored.line_data.thread);
 });
+
+test("custom Changeling Kith source uses English storage without changing authored Kith text", async () => {
+  const current = sheet("CtL");
+  current.line_data = { kith: "Frátria Autoral", kith_custom: { name: "Frátria Autoral", blessing: "Bênção autoral" }, kith_source: "Criação do jogador" };
+  const before = structuredClone(current);
+  const normalized = await normalizeGameLineCharacter(normalizeStoredSheet(current));
+  assert.equal(normalized.line_data.kith_source, "Player-created");
+  assert.deepEqual(normalized.line_data.kith_custom, before.line_data.kith_custom);
+  assert.equal(normalized.line_data.kith, "Frátria Autoral");
+  assert.deepEqual(await normalizeGameLineCharacter(normalizeStoredSheet(JSON.parse(JSON.stringify(normalized)))), normalized);
+  assert.deepEqual(current, before);
+  const authored = sheet("CtL");
+  authored.line_data = { ...current.line_data, kith_source: "Fonte escrita pelo jogador" };
+  assert.equal((await normalizeGameLineCharacter(normalizeStoredSheet(authored))).line_data.kith_source, "Fonte escrita pelo jogador");
+});
