@@ -527,13 +527,18 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened",
-    "description": "Modify a linked Retainer or Familiar with one imbued spell. Cost is its highest Arcanum, plus one dot per extra Mana capacity beyond the initial one. No five-dot ceiling. The ally or a touching Mana user who knows the trigger can activate it; each cast costs at least one Mana. Record the spell and trigger.",
+    "description": "Modify a linked Retainer or Familiar with one imbued spell. Cost is its highest Arcanum, plus one dot per extra Mana capacity beyond the initial one; no five-dot ceiling. The ally may trigger the spell using Mana or its own Essence if a spirit or ghost. A touching Mana user who knows the trigger may also activate it. Each cast costs at least one Mana; an Awakened user rolls the spell's Arcanum rating + Gnosis. Record the spell and trigger.",
     "page": 76,
     "unbounded": true,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Imbued Ally",
-    "descriptionEn": "Modify a linked Retainer or Familiar with one imbued spell. Cost is its highest Arcanum, plus one dot per extra Mana capacity beyond the initial one. No five-dot ceiling. The ally or a touching Mana user who knows the trigger can activate it; each cast costs at least one Mana. Record the spell and trigger."
+    "translatedName": "Aliado Imbuído",
+    "descriptionEn": "Modify a linked Retainer or Familiar with one imbued spell. Cost is its highest Arcanum, plus one dot per extra Mana capacity beyond the initial one; no five-dot ceiling. The ally may trigger the spell using Mana or its own Essence if a spirit or ghost. A touching Mana user who knows the trigger may also activate it. Each cast costs at least one Mana; an Awakened user rolls the spell's Arcanum rating + Gnosis. Record the spell and trigger.",
+    "presentationPt": {
+      "name": "Aliado Imbuído",
+      "prerequisites": "Desperto",
+      "description": "Modifique um Lacaio ou Familiar vinculado com um feitiço imbuído. O custo é o maior Arcano do feitiço, mais um ponto por capacidade adicional de Mana além do ponto inicial; não há limite de cinco pontos. O aliado pode ativá-lo com Mana ou com sua própria Essência, se for espírito ou fantasma. Quem puder gastar Mana, conhecer o gatilho e tocar o aliado também pode ativá-lo. Cada conjuração custa pelo menos 1 Mana; um usuário Desperto testa a classificação do Arcano do feitiço + Gnose. Registre o feitiço e o gatilho."
+    }
   },
   {
     "id": "mta-2ed:imbued-item",
@@ -566,11 +571,16 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened",
-    "description": "Your characters Nimbus is a true force of Nature. Whenever someone succumbs to their Nimbus Tilt spend a point of willpower to convert the Tilt into a Persistent Condition for that person. That condition gains an extra resolution option of successfully defeating your character on a contested roll or causing her harm.",
+    "description": "When someone succumbs to your Immediate Nimbus Tilt, spend one Willpower to turn it into an appropriate Persistent Condition for that person. The Condition gains another resolution option: defeat you in a contested roll or cause you harm.",
     "page": 95,
     "priority": 2,
-    "translatedName": "Imposing Nimbus",
-    "descriptionEn": "Your characters Nimbus is a true force of Nature. Whenever someone succumbs to their Nimbus Tilt spend a point of willpower to convert the Tilt into a Persistent Condition for that person. That condition gains an extra resolution option of successfully defeating your character on a contested roll or causing her harm."
+    "translatedName": "Nimbus Imponente",
+    "descriptionEn": "When someone succumbs to your Immediate Nimbus Tilt, spend one Willpower to turn it into an appropriate Persistent Condition for that person. The Condition gains another resolution option: defeat you in a contested roll or cause you harm.",
+    "presentationPt": {
+      "name": "Nimbus Imponente",
+      "prerequisites": "Desperto",
+      "description": "Quando alguém sofrer o Tilt do seu Nimbus Imediato, gaste um ponto de Força de Vontade para transformá-lo em uma Condição Persistente apropriada à pessoa. A Condição recebe uma forma adicional de resolução: derrotar você em um teste disputado ou lhe causar algum dano."
+    }
   },
   {
     "id": "mta-2ed:infamous-mentor",
@@ -585,8 +595,13 @@
     "page": 102,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Infamous Mentor",
-    "descriptionEn": "Link one Mentor of at least this Merit rating. Record that Mentor's Order and Consilium Status and Social Merits totaling twice Infamous Mentor dots. You may invoke them by name-dropping and accepting the social consequences. These are conditional borrowed benefits, not permanent grants to the student's sheet."
+    "translatedName": "Mentor Infame",
+    "descriptionEn": "Link one Mentor of at least this Merit rating. Record that Mentor's Order and Consilium Status and Social Merits totaling twice Infamous Mentor dots. You may invoke them by name-dropping and accepting the social consequences. These are conditional borrowed benefits, not permanent grants to the student's sheet.",
+    "presentationPt": {
+      "name": "Mentor Infame",
+      "prerequisites": "Desperto; Mentor com classificação igual ou superior",
+      "description": "Vincule um Mentor cuja classificação seja pelo menos igual à deste Mérito. Registre o Status dele na Ordem e no Consilium e escolha Méritos Sociais equivalentes ao dobro dos pontos de Mentor Infame. Você pode recorrer a esse Status e a esses Méritos ao mencionar o nome do Mentor e aceitar as consequências sociais. Esses benefícios são emprestados sob condição; não são concessões permanentes à ficha do pupilo."
+    }
   },
   {
     "id": "mta-signs:inheritance",
@@ -600,8 +615,13 @@
     "description": "The Mage can use their bloodline as a +1 Yantra to any spell appropriate to their ancestors' reputation. If the spell is cast on a subject who knows their heritage and is aware of the spell being cast, this becomes +2.",
     "page": 57,
     "priority": 2,
-    "translatedName": "Inheritance",
-    "descriptionEn": "The Mage can use their bloodline as a +1 Yantra to any spell appropriate to their ancestors' reputation. If the spell is cast on a subject who knows their heritage and is aware of the spell being cast, this becomes +2."
+    "translatedName": "Herança",
+    "descriptionEn": "The Mage can use their bloodline as a +1 Yantra to any spell appropriate to their ancestors' reputation. If the spell is cast on a subject who knows their heritage and is aware of the spell being cast, this becomes +2.",
+    "presentationPt": {
+      "name": "Herança",
+      "prerequisites": "Desperto; Fama •",
+      "description": "Use sua linhagem como Yantra de +1 dado para feitiços adequados à reputação dos antepassados. Se o alvo conhecer sua herança e souber que você está conjurando o feitiço sobre ele, o bônus sobe para +2 dados."
+    }
   },
   {
     "id": "mta-signs:keen-periphery",
