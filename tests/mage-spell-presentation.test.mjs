@@ -114,12 +114,14 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
       assert.equal(mageSpellSelection(spell).description, spell.description);
     }
     const spirit = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/spirit.json", import.meta.url), "utf8"));
-    assert.equal(spirit.filter(spell => spell.presentationPt).length, 29);
+    assert.equal(spirit.filter(spell => spell.presentationPt).length, 36);
     assert.match(mageSpellPresentation(spirit.find(spell => spell.name === "Exorcist's Eye"), "pt-BR").reach, /Adicionar Morte • ou Mente •/);
     assert.match(mageSpellPresentation(spirit.find(spell => spell.name === "Channel Essence"), "pt-BR").reach, /Adicionar Morte •• ou Mente ••/);
     assert.doesNotMatch(mageSpellPresentation(spirit.find(spell => spell.name === "Ephemeral Shield"), "en-US").reach, /Add Death|Add Mind/);
     assert.match(mageSpellPresentation(spirit.find(spell => spell.name === "Spirit Summons"), "pt-BR").reach, /Força da Barreira/);
     assert.match(mageSpellPresentation(spirit.find(spell => spell.name === "Banishment"), "pt-BR").reach, /Adicionar Morte •••• ou Mente ••••/);
+    assert.match(mageSpellPresentation(spirit.find(spell => spell.name === "Spirit Manse"), "pt-BR").reach, /Força da Barreira/);
+    assert.equal(mageSpellPresentation(spirit.find(spell => spell.name === "Haunted Grimoire"), "pt-BR").name, "Grimório Assombrado");
     assert.match(mageSpellPresentation(spells[1], "pt-BR").reach, /\+1 Alcance/);
     assert.match(spells[1].description, /\+1 Reach:/);
     const homebrew = { id: "homebrew:spell:author", name: "Minha magia", originalName: "Minha magia", summary: "Texto autoral", description: "Texto autoral" };

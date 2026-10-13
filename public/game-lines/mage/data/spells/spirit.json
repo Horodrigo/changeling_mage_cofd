@@ -795,7 +795,16 @@
     "source": "Signs of Sorcery",
     "page": 86,
     "summary": "For one Mana, bind a spirit into a Grimoire, making it Resonant and Open. Its Rank replaces the caster’s Arcanum minus one when increasing a rote’s Primary Factor, but casting or memorizing a rote may let it escape or possess the reader through a Clash of Wills; this is an Act of Hubris against Understanding.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Grimório Assombrado",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Total de pontos dos Arcanos usados na Rota + Posto",
+      "summary": "Por 1 Mana, vincula um espírito a um Grimório, concedendo-lhe as Condições Aberto e Ressonante. O espírito integra as inscrições, sem Númena, Influências ou reserva de Essência. Ao conjurar uma Rota dali, o fator primário aumenta em Posto − 1 em vez da classificação de Arcano da conjuradora; um Choque de Vontades pode libertar o espírito. Ao memorizar uma Rota, o leitor também arrisca ser possuído. A conjuração é um Ato de Húbris contra Sabedoria de Compreensão.",
+      "description": "Por 1 Mana, vincula um espírito a um Grimório, concedendo-lhe as Condições Aberto e Ressonante. O espírito integra as inscrições, sem Númena, Influências ou reserva de Essência. Ao conjurar uma Rota dali, o fator primário aumenta em Posto − 1 em vez da classificação de Arcano da conjuradora; um Choque de Vontades pode libertar o espírito. Ao memorizar uma Rota, o leitor também arrisca ser possuído. A conjuração é um Ato de Húbris contra Sabedoria de Compreensão. Substituir Morte •••••: Pode vincular um fantasma ou alma desencarnada ao Grimório; almas não podem possuir leitores.",
+      "reach": "Substituir Morte •••••: Pode vincular um fantasma ou alma desencarnada ao Grimório; almas não podem possuir leitores."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:spirit-4-scribe-daimonomikon",
@@ -818,7 +827,16 @@
     "source": "Signs of Sorcery",
     "page": 87,
     "summary": "For one Mana, inscribe one Legacy Attainment per casting into a vessel; consecutive castings may hold initiation through the fifth Attainment. The caster must meet relevant prerequisites; readers pay applicable Arcane Experience and members treat it as a +2 sympathetic Yantra.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Inscrever Daimonomikon",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Posto do Aperfeiçoamento + (10 − Gnose da conjuradora)",
+      "summary": "Por 1 Mana, inscreve um Aperfeiçoamento de Legado por conjuração em um Daimonomikon. A primeira inscrição inclui iniciação, Arcano primário, Yantras e Oblações; as seguintes podem chegar ao quinto Aperfeiçoamento. A conjuradora precisa de Gnose 2 ou mais e satisfazer os requisitos inscritos. Leitores pagam a Experiência Arcana aplicável; membros do Legado recebem Yantra simpática de +2 dados.",
+      "description": "Por 1 Mana, inscreve um Aperfeiçoamento de Legado por conjuração em um Daimonomikon. A primeira inscrição inclui iniciação, Arcano primário, Yantras e Oblações; as seguintes podem chegar ao quinto Aperfeiçoamento. A conjuradora precisa de Gnose 2 ou mais e satisfazer os requisitos inscritos. Leitores pagam a Experiência Arcana aplicável; membros do Legado recebem Yantra simpática de +2 dados. +1 Alcance e 1 Mana: A Duração torna-se duradoura.",
+      "reach": "+1 Alcance e 1 Mana: A Duração torna-se duradoura."
+    }
   },
   {
     "id": "mta-2ed:spirit-4-shadow-scream",
@@ -964,7 +982,16 @@
     "source": "Mage the Awakening",
     "page": 184,
     "summary": "Utterly destroy a spirit of Rank 5 or less instead of reducing it to hibernation, resisted by Rank. The spirit may spend one Essence for a final Power + Finesse Clash of Wills; if it loses, no Essence or Corpus preserves it.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Aniquilar Espírito",
+      "practice": "Descriação",
+      "primaryFactor": "Potência",
+      "withstand": "Posto",
+      "summary": "Destrói completamente um espírito de Posto até 5, resistido por Posto. Ele pode gastar 1 Essência para uma última disputa de Choque de Vontades com Poder + Refinamento. Se a magia vencer, o espírito desaparece definitivamente, mesmo que ainda tenha Corpus ou Essência; não entra em hibernação.",
+      "description": "Destrói completamente um espírito de Posto até 5, resistido por Posto. Ele pode gastar 1 Essência para uma última disputa de Choque de Vontades com Poder + Refinamento. Se a magia vencer, o espírito desaparece definitivamente, mesmo que ainda tenha Corpus ou Essência; não entra em hibernação.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:spirit-5-birth-spirit",
@@ -986,7 +1013,16 @@
     "source": "Mage the Awakening",
     "page": 184,
     "summary": "Awaken dormant Essence as a new Rank 1 spirit for the Duration. It is not controlled by the mage, though newborn spirits often feel respect or gratitude toward their creator.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Gerar Espírito",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Desperta Essência adormecida como um novo espírito de Posto 1. Ele não fica sob o controle da maga, embora possa sentir respeito ou gratidão por sua criadora.",
+      "description": "Desperta Essência adormecida como um novo espírito de Posto 1. Ele não fica sob o controle da maga, embora possa sentir respeito ou gratidão por sua criadora. +1 Alcance e 1 Mana: O espírito criado é de Posto 2.",
+      "reach": "+1 Alcance e 1 Mana: O espírito criado é de Posto 2."
+    }
   },
   {
     "id": "mta-2ed:spirit-5-create-locus",
@@ -1008,7 +1044,16 @@
     "source": "Mage the Awakening",
     "page": 184,
     "summary": "Turn a location bearing Resonant into a locus for the Duration, resisted by Gauntlet Strength. The basic locus permits access to stored or naturally available Essence but does not generate extra Essence each day.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Criar Locus",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "Força da Barreira",
+      "summary": "Transforma um lugar com a Condição Ressonante em um Locus pela Duração, resistido pela Força da Barreira. Espíritos podem usar poderes através da Barreira sem a Manifestação Alcançar; tentativas de atravessá-la recebem +2 dados, e espíritos cuja natureza corresponda à Ressonância do Locus se curam no dobro do ritmo normal.",
+      "description": "Transforma um lugar com a Condição Ressonante em um Locus pela Duração, resistido pela Força da Barreira. Espíritos podem usar poderes através da Barreira sem a Manifestação Alcançar; tentativas de atravessá-la recebem +2 dados, e espíritos cuja natureza corresponda à Ressonância do Locus se curam no dobro do ritmo normal. +1 Alcance: O Locus gera Essência por dia igual à Potência.",
+      "reach": "+1 Alcance: O Locus gera Essência por dia igual à Potência."
+    }
   },
   {
     "id": "mta-2ed:spirit-5-essence-fountain",
@@ -1030,7 +1075,16 @@
     "source": "Mage the Awakening",
     "page": 185,
     "summary": "Create Essence equal to Potency in the subject’s Pattern with one Resonance the mage has previously encountered.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Fonte de Essência",
+      "practice": "Criação",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Gera Essência igual à Potência no Padrão do alvo, com uma Ressonância escolhida pela maga entre as que já encontrou.",
+      "description": "Gera Essência igual à Potência no Padrão do alvo, com uma Ressonância escolhida pela maga entre as que já encontrou. +1 Alcance: A Essência pode conter várias Ressonâncias que a maga já encontrou.",
+      "reach": "+1 Alcance: A Essência pode conter várias Ressonâncias que a maga já encontrou."
+    }
   },
   {
     "id": "mta-2ed:spirit-5-spirit-manse",
@@ -1052,6 +1106,15 @@
     "source": "Mage the Awakening",
     "page": 185,
     "summary": "Create an extradimensional Place That Isn’t in the Shadow, shaped by the mage’s Path and Nimbus and unconnected to a physical location. For the Duration, it grants Safe Place dots equal to Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Morada Espiritual",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Cria um espaço extradimensional na Sombra, sem correspondência com um lugar físico, moldado pelo Caminho e pelo Nimbus da maga. Pela Duração, concede o Mérito Local Seguro com pontos iguais à Potência.",
+      "description": "Cria um espaço extradimensional na Sombra, sem correspondência com um lugar físico, moldado pelo Caminho e pelo Nimbus da maga. Pela Duração, concede o Mérito Local Seguro com pontos iguais à Potência. +1 Alcance: Cria uma Íris entre a Morada e o mundo material, podendo estabelecer uma Chave; o feitiço passa a ser resistido pela Força da Barreira.",
+      "reach": "+1 Alcance: Cria uma Íris entre a Morada e o mundo material, podendo estabelecer uma Chave; o feitiço passa a ser resistido pela Força da Barreira."
+    }
   }
 ]

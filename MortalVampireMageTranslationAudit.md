@@ -32,7 +32,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | V05 — Poderes | 553 poderes, 140 níveis internos; 1 Tilt da linha | 23/23 Disciplinas, seus 110 níveis, 5/5 Disciplinas Rituais, 2/2 Açoites, 5/5 fórmulas de Kimiya, 7/7 Sacrilégios de Therion, 10/10 Invocações de Gaiola Dourada, 5/5 Detournements, 6/6 Espirais com 30 níveis e 19/19 Escamas e 76/76 ritos de Crúac e 32/32 milagres Tebanos e 356/356 Devoções com PT; Aura de Sedução Sinuosa aprovada em 2026-10-09 |
 | V06 — Conditions | 73, incluindo 19 Homebrew, das quais duas erratas | 73/73 com PT completa e verificadas; quatro Conditions de anciões incluídas por autorização em 2026-10-09; lacunas de Hidden Devotions permanecem |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Rótulos e apresentação dos cultos traduzidos, incluindo benefícios e Especializações predefinidas. Children of the Thorns mantém as exclusões de escopo existentes |
-| G01 — Spells | 32 restantes (328/360 traduzidas) | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
+| G01 — Spells | 25 restantes (335/360 traduzidas) | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
 | G02 — Méritos | 71 (61 principais, dez suplementares), 31 níveis | Nome, requisitos, descrição e níveis |
 | G03 — Organizações | 17 Orders, 44 Factions, 12 Ministries | 11 Orders sem descrição PT; Factions/Tool Yantras e Ministries/Patron Exarchs |
 | G04 — Legacies | 16, 43 Attainments | Nomes, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções |
@@ -70,9 +70,9 @@ Prime completo: 50 Spells de Primórdio • a ••••• em MtA 2e pp. 165�
 
 Space completo: 29 Spells de Espaço • a ••••• em MtA 2e pp. 172–179 e Signs of Sorcery pp. 66/73/94 localizadas em `presentationPt`, com nomes, regras e Alcance conferidos visualmente. Optimal Container usa o Tamanho total combinado dos objetos, conforme o livro.
 
-Spirit em execução: 29 Spells de Espírito • a •••• em MtA 2e pp. 180–184 e Signs of Sorcery p. 66 localizadas em `presentationPt`, distinguindo Proibição de Fraqueza e apresentando a resistência pela Barreira quando aplicável. Ephemeral Shield foi alinhado ao livro: a opção de Alcance para ataques físicos de espíritos permanece, sem opções extras de Morte/Mente não impressas. Spiritual Tool mantém os bônus normais de equipamento. Craft Fetish apresenta a alternativa sem espírito como parte da regra básica, não como opção de Alcance.
+Spirit completo: 36 Spells de Espírito • a ••••• em MtA 2e pp. 180–185 e Signs of Sorcery pp. 66/86–87 localizadas em `presentationPt`, distinguindo Proibição de Fraqueza e apresentando a resistência pela Barreira quando aplicável. Ephemeral Shield foi alinhado ao livro: a opção de Alcance para ataques físicos de espíritos permanece, sem opções extras de Morte/Mente não impressas. Spiritual Tool mantém os bônus normais de equipamento. Craft Fetish apresenta a alternativa sem espírito como parte da regra básica, não como opção de Alcance. Os títulos e efeitos compartilhados de Haunted Grimoire e Scribe Daimonomikon seguem suas apresentações já verificadas nas outras Arcana, sem alterar as identidades das entradas.
 
-Spells pendentes: Spirit 7; Time 25. Dados em `public/game-lines/mage/data/spells/`.
+Spells pendentes: Time 25. Dados em `public/game-lines/mage/data/spells/`.
 
 Apresentar **Práticas, Fator Primário, Resistência, Alcance e Adicionar Arcana** quando aplicáveis. `spell-presentation.ts` extrai `Reach:`/`Add Arcanum` do texto inglês canônico; `presentationPt.reach` localiza a apresentação sem mudar essa entrada. Títulos de Práxis publicadas acompanham Spells; nomes autorais permanecem intactos.
 
