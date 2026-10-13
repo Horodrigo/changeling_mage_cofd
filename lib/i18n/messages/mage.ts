@@ -186,7 +186,7 @@ export const mageMessages = {
         "entityTraits": "Características da entidade",
         "grimoireName": "Nome do Grimório",
         "rotes": "Rotas",
-        "hallowName": "Nome do Santuário",
+        "hallowName": "Nome da Nascente de Mana",
         "location": "Localização",
         "resonanceAndTass": "Ressonância e tass",
         "retainerOrFamiliar": "Lacaio ou Familiar",

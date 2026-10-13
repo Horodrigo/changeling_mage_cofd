@@ -90,10 +90,10 @@
     "page": 100,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Status Desperto",
+    "translatedName": "Status dos Despertos",
     "descriptionEn": "Consilium/Order Status: choose a Consilium or Order Caucus. Gain Status protections and use its dots for temporary magical requisitions; permanent requisitions increase Availability by two. Normally only one Order may have more than one dot: a second Order permits one dot, without requisitions. Seer Status also adds to Resources for mundane acquisitions. Status outside the home Caucus suffers the geographical penalties on Mage p. 100.",
     "presentationPt": {
-      "name": "Status Desperto",
+      "name": "Status dos Despertos",
       "prerequisites": "Desperto",
       "description": "Escolha um Consilium ou Caucus de Ordem. Este Mérito concede as proteções de Status e permite requisitar recursos mágicos temporários com pontos iguais à classificação; requisições permanentes aumentam a Disponibilidade em dois. Normalmente apenas uma Ordem pode ter mais de um ponto de Status; em uma segunda Ordem, o limite é um ponto e não há requisições. O Status entre Videntes também aumenta Recursos para aquisições mundanas. Fora do Caucus de origem, aplicam-se as penalidades geográficas de Mage p. 100."
     }
@@ -367,8 +367,13 @@
     "description": "Opponents Defend against your aim spells as they do against firearms",
     "page": 101,
     "priority": 2,
-    "translatedName": "Fast Spells",
-    "descriptionEn": "Opponents Defend against your aim spells as they do against firearms"
+    "translatedName": "Feitiços Rápidos",
+    "descriptionEn": "Opponents Defend against your aim spells as they do against firearms",
+    "presentationPt": {
+      "name": "Feitiços Rápidos",
+      "prerequisites": "Desperto; Armas de Fogo ••; Tempo •",
+      "description": "Os alvos aplicam Defesa contra seus feitiços mirados como fariam contra armas de fogo: em regra, não a aplicam, a menos que possuam um poder sobrenatural que permita defender-se de disparos."
+    }
   },
   {
     "id": "core-dark-eras:fire-keeper",
@@ -413,8 +418,13 @@
     "page": 101,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Grimoire",
-    "descriptionEn": "Record a book containing up to two rotes per Merit dot. If you can cast them, follow its instructions to cast as rotes or learn them with Experience. Owning the book does not automatically teach its rotes."
+    "translatedName": "Grimório",
+    "descriptionEn": "Record a book containing up to two rotes per Merit dot. If you can cast them, follow its instructions to cast as rotes or learn them with Experience. Owning the book does not automatically teach its rotes.",
+    "presentationPt": {
+      "name": "Grimório",
+      "prerequisites": "Desperto",
+      "description": "Registre um livro que contém até duas Rotas por ponto deste Mérito, de qualquer classificação de Arcano. Se puder conjurá-las, siga as instruções para usá-las como Rotas ou aprendê-las com Experiências. Possuir o Grimório não ensina suas Rotas automaticamente."
+    }
   },
   {
     "id": "mta-signs:hidden-high-speech",
@@ -443,8 +453,13 @@
     "description": "Use High Speech as a Yantra.",
     "page": 102,
     "priority": 2,
-    "translatedName": "High Speech",
-    "descriptionEn": "Use High Speech as a Yantra."
+    "translatedName": "Alta Fala",
+    "descriptionEn": "Use High Speech as a Yantra.",
+    "presentationPt": {
+      "name": "Alta Fala",
+      "prerequisites": "Desperto",
+      "description": "Permite usar Alta Fala como Yantra ao conjurar feitiços."
+    }
   },
   {
     "id": "mta-signs:imbued-ally",
@@ -477,8 +492,13 @@
     "unbounded": true,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Imbued Item",
-    "descriptionEn": "An item with one triggered spell. Cost is its highest Arcanum plus one per included Utility Attainment; each extra dot buys two Mana capacity beyond the initial one. No five-dot ceiling. Each cast costs at least one Mana and uses the spell's Arcanum plus the Awakened user's Gnosis. Record the spell and trigger. May combine with Enhanced Item, not Artifact."
+    "translatedName": "Item Imbuído",
+    "descriptionEn": "An item with one triggered spell. Cost is its highest Arcanum plus one per included Utility Attainment; each extra dot buys two Mana capacity beyond the initial one. No five-dot ceiling. Each cast costs at least one Mana and uses the spell's Arcanum plus the Awakened user's Gnosis. Record the spell and trigger. May combine with Enhanced Item, not Artifact.",
+    "presentationPt": {
+      "name": "Item Imbuído",
+      "prerequisites": "Desperto",
+      "description": "Um item guarda um feitiço ativado por um gatilho registrado, que qualquer usuário capaz de acionar pode disparar. O custo é o maior Arcano do feitiço mais um ponto por Aperfeiçoamento Utilitário incluído; cada ponto extra do Mérito compra mais dois pontos de capacidade de Mana além do inicial. Não há limite de cinco pontos. Cada ativação custa pelo menos 1 Mana; um usuário Desperto testa o Arcano do feitiço + sua Gnose. Registre o feitiço e o gatilho. Pode coexistir com Item Aprimorado, mas não com Artefato."
+    }
   },
   {
     "id": "mta-signs:imposing-nimbus",
@@ -1029,8 +1049,13 @@
     "page": 101,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Hallow",
-    "descriptionEn": "A secured geomantic wellspring produces Mana equal to its rating each day and may hold up to three times its rating as unharvested tass."
+    "translatedName": "Nascente de Mana",
+    "descriptionEn": "A secured geomantic wellspring produces Mana equal to its rating each day and may hold up to three times its rating as unharvested tass.",
+    "presentationPt": {
+      "name": "Nascente de Mana",
+      "prerequisites": "Desperto",
+      "description": "Uma nascente geomântica protegida produz por dia um ponto de Mana por ponto do Mérito. A Mana não colhida se condensa em tass; a nascente pode guardar até três vezes sua classificação em tass antes de ficar dormente. Uma Cabala pode compartilhar a Nascente de Mana."
+    }
   },
   {
     "id": "mta-2ed:sanctum",
