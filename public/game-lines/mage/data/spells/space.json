@@ -174,7 +174,16 @@
     "source": "Mage the Awakening",
     "page": 174,
     "summary": "Transfer up to Potency known sympathetic connections between the caster and affected subjects, resisted by the relevant Sympathy. Each transferred connection leaves its original holder for the Duration.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Tomar Emprestados os Fios",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "Conexão simpática",
+      "summary": "Transfere até Potência conexões simpáticas conhecidas entre a maga e os alvos, resistidas pela força das conexões. Durante a Duração, quem as recebeu passa a possuí-las e o portador anterior as perde; uma conexão preexistente com a mesma pessoa pode ser substituída.",
+      "description": "Transfere até Potência conexões simpáticas conhecidas entre a maga e os alvos, resistidas pela força das conexões. Durante a Duração, quem as recebeu passa a possuí-las e o portador anterior as perde; uma conexão preexistente com a mesma pessoa pode ser substituída. +1 Alcance: Transfere conexões diretamente entre dois alvos, sem envolver a maga. +1 Alcance: Copia as conexões em vez de transferi-las.",
+      "reach": "+1 Alcance: Transfere conexões diretamente entre dois alvos, sem envolver a maga. +1 Alcance: Copia as conexões em vez de transferi-las."
+    }
   },
   {
     "id": "mta-2ed:space-2-break-boundary",
@@ -196,7 +205,16 @@
     "source": "Mage the Awakening",
     "page": 174,
     "summary": "Allow the subject to bypass an obstacle blocking an otherwise valid path, such as slipping around a locked door or through a barred route. The basic spell does not let an immobilized subject pass solid barriers or fit through impossibly narrow gaps.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Romper Limites",
+      "practice": "Regência",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Permite ao alvo contornar um obstáculo físico que bloqueia um caminho real, como uma porta trancada ou uma janela gradeada. Ele ainda precisa percorrer o caminho e não atravessa uma parede sólida sem uma passagem.",
+      "description": "Permite ao alvo contornar um obstáculo físico que bloqueia um caminho real, como uma porta trancada ou uma janela gradeada. Ele ainda precisa percorrer o caminho e não atravessa uma parede sólida sem uma passagem. +1 Alcance: Pode caber por passagens estreitas demais para seu corpo, desde que haja caminho. +2 Alcance: Mesmo um alvo imóvel pode passar através de um obstáculo e aparecer do outro lado.",
+      "reach": "+1 Alcance: Pode caber por passagens estreitas demais para seu corpo, desde que haja caminho. +2 Alcance: Mesmo um alvo imóvel pode passar através de um obstáculo e aparecer do outro lado."
+    }
   },
   {
     "id": "mta-2ed:space-2-lying-maps",
@@ -218,7 +236,16 @@
     "source": "Mage the Awakening",
     "page": 174,
     "summary": "Convince the subject that a route chosen by the caster is the correct path to a stated destination, resisted by Resolve. The subject follows the false spatial certainty while the spell lasts.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Mapas Mentirosos",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Faz o alvo ter certeza de que um caminho escolhido pela maga é a rota correta para o destino declarado. Se ele conferir um mapa, GPS ou orientação semelhante, a jogada de navegação fica reduzida a um dado de sorte; mesmo com sucesso, a rota falsa ainda lhe parece correta.",
+      "description": "Faz o alvo ter certeza de que um caminho escolhido pela maga é a rota correta para o destino declarado. Se ele conferir um mapa, GPS ou orientação semelhante, a jogada de navegação fica reduzida a um dado de sorte; mesmo com sucesso, a rota falsa ainda lhe parece correta.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:space-2-scrying",
@@ -240,7 +267,16 @@
     "source": "Mage the Awakening",
     "page": 174,
     "summary": "Open a sensory window onto a distant location through a sympathetic connection. The caster can observe and cast spells through it as though present, subject to sympathetic range, and may make the window visible or invisible to nearby observers.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Vidência",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Abre uma janela sensorial para um lugar distante por meio de uma conexão simpática. A imagem e a perspectiva dependem da Yantra simpática usada; a maga pode observar ou lançar feitiços em alvos visíveis como se os visse remotamente. Pode deixar a janela visível ou invisível a quem esteja no local.",
+      "description": "Abre uma janela sensorial para um lugar distante por meio de uma conexão simpática. A imagem e a perspectiva dependem da Yantra simpática usada; a maga pode observar ou lançar feitiços em alvos visíveis como se os visse remotamente. Pode deixar a janela visível ou invisível a quem esteja no local. Adicionar Destino ••: Escolhe quem, do outro lado da janela, pode vê-la.",
+      "reach": "Adicionar Destino ••: Escolhe quem, do outro lado da janela, pode vê-la."
+    }
   },
   {
     "id": "mta-2ed:space-2-secret-door",
@@ -262,7 +298,16 @@
     "source": "Mage the Awakening",
     "page": 175,
     "summary": "Hide a passageway from mundane perception so observers overlook or misinterpret it. Supernatural detection provokes a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Porta Secreta",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Oculta uma passagem, porta, estrada ou interseção das percepções mundanas, fazendo observadores ignorá-la ou entendê-la como algo comum. Descobri-la por magia provoca um Choque de Vontades.",
+      "description": "Oculta uma passagem, porta, estrada ou interseção das percepções mundanas, fazendo observadores ignorá-la ou entendê-la como algo comum. Descobri-la por magia provoca um Choque de Vontades. +1 Alcance: Define uma Chave que permite enxergar a passagem.",
+      "reach": "+1 Alcance: Define uma Chave que permite enxergar a passagem."
+    }
   },
   {
     "id": "mta-2ed:space-2-veil-sympathy",
@@ -284,7 +329,16 @@
     "source": "Mage the Awakening",
     "page": 175,
     "summary": "Conceal one sympathetic connection belonging to the subject, resisted by its Sympathy. Attempts to perceive the hidden connection fail unless they overcome the veil.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Velar Simpatia",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "Força da conexão simpática",
+      "summary": "Oculta uma conexão simpática conhecida do alvo, resistida pela força desse vínculo. Detectá-la ou usá-la exige superar o feitiço em um Choque de Vontades.",
+      "description": "Oculta uma conexão simpática conhecida do alvo, resistida pela força desse vínculo. Detectá-la ou usá-la exige superar o feitiço em um Choque de Vontades. +1 Alcance: Em vez de ocultar, faz o alvo parecer ligado a outra pessoa ou coisa. +1 Alcance: Também impede usar o alvo como Yantra simpática; cada ponto de Potência reduz sua utilidade em um grau. +2 Alcance: Suprime todas as conexões simpáticas do alvo, em ambas as direções, resistido pelo vínculo mais forte.",
+      "reach": "+1 Alcance: Em vez de ocultar, faz o alvo parecer ligado a outra pessoa ou coisa. +1 Alcance: Também impede usar o alvo como Yantra simpática; cada ponto de Potência reduz sua utilidade em um grau. +2 Alcance: Suprime todas as conexões simpáticas do alvo, em ambas as direções, resistido pelo vínculo mais forte."
+    }
   },
   {
     "id": "mta-2ed:space-2-ward",
@@ -306,7 +360,16 @@
     "source": "Mage the Awakening",
     "page": 176,
     "summary": "Prevent spatial manipulation across or within the protected area, forcing conflicting Space effects into a Clash of Wills. Ordinary movement remains possible.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Salvaguarda",
+      "practice": "Proteção",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Impede manipulações de Espaço dentro ou através da área protegida. Magias e poderes sobrenaturais conflitantes provocam um Choque de Vontades, e a maga percebe quando a proteção é atacada. Deslocamento comum continua possível.",
+      "description": "Impede manipulações de Espaço dentro ou através da área protegida. Magias e poderes sobrenaturais conflitantes provocam um Choque de Vontades, e a maga percebe quando a proteção é atacada. Deslocamento comum continua possível. +1 Alcance: Define uma Chave que permite usar magia de Espaço na área. +2 Alcance: Aplica a proteção a uma Íris ou sua Chave, impedindo que ela se abra enquanto a magia durar; poderes que tentem abri-la provocam um Choque de Vontades.",
+      "reach": "+1 Alcance: Define uma Chave que permite usar magia de Espaço na área. +2 Alcance: Aplica a proteção a uma Íris ou sua Chave, impedindo que ela se abra enquanto a magia durar; poderes que tentem abri-la provocam um Choque de Vontades."
+    }
   },
   {
     "id": "mta-2ed:space-3-ban",

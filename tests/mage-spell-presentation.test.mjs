@@ -100,8 +100,9 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
       assert.equal(mageSpellSelection(spell).description, spell.description);
     }
     const space = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/space.json", import.meta.url), "utf8"));
-    assert.equal(space.filter(spell => spell.presentationPt).length, 5);
+    assert.equal(space.filter(spell => spell.presentationPt).length, 12);
     assert.match(mageSpellPresentation(space.find(spell => spell.name === "Correspondence"), "pt-BR").reach, /\+2 Alcance/);
+    assert.match(mageSpellPresentation(space.find(spell => spell.name === "Scrying"), "pt-BR").reach, /Adicionar Destino ••/);
     assert.match(mageSpellPresentation(spells[1], "pt-BR").reach, /\+1 Alcance/);
     assert.match(spells[1].description, /\+1 Reach:/);
     const homebrew = { id: "homebrew:spell:author", name: "Minha magia", originalName: "Minha magia", summary: "Texto autoral", description: "Texto autoral" };
