@@ -31,3 +31,13 @@ export function canonicalContractSnapshot(value: unknown, catalog: readonly Cont
   }
   return next;
 }
+
+export function ownedContractDefinition(value: Record<string, unknown>, catalog: readonly ContractDefinition[]): ContractDefinition | undefined {
+  const id = typeof value.id === "string" ? value.id : "";
+  const sourceId = typeof value.sourceId === "string" ? value.sourceId : "";
+  if (id) return catalog.find(item => item.id === id && (!sourceId || item.sourceId === sourceId));
+  const name = typeof value.name === "string" ? value.name : "";
+  if (!name) return undefined;
+  const matches = catalog.filter(item => item.name === name && (!sourceId || item.sourceId === sourceId));
+  return matches.length === 1 ? matches[0] : undefined;
+}

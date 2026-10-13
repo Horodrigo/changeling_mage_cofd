@@ -18,6 +18,7 @@ import { normalizeChangelingFrailties, seemingDisplayName } from "@/game-lines/c
 import { meritRatingsFor, type MeritDefinition } from "@/lib/merits";
 import { canAdvanceChangelingGrant, changelingExperienceMeritEligible, changelingMeritContextForSheet } from "./merit-context";
 import type { ContractDefinition } from "./contract-types";
+import { ownedContractDefinition } from "./contract-identities";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, contractWithSupplementalBenefits } from "./contract-presentation";
 import { availableForeignClauseCourtIds } from "./contract-clauses";
 import { courtCanonicalId, courtDisplayName } from "@/lib/changeling-courts";
@@ -111,7 +112,7 @@ export function ExperiencePanel({
   const staticEntitlements: readonly EntitlementDefinition[] = entitlementCatalogPresentation(reference.entitlements, locale, reference.entitlementPresentation);
   const entitlementCatalog = [...staticEntitlements,...customEntitlements.filter((custom)=>!staticEntitlements.some((item)=>item.id===custom.id))];
   const contractsCatalog = contractCatalog.map(item=>contractWithSupplementalBenefits(item,homebrewPreferences.disabledIds.includes("h-seemings")?[]:["h-seemings"]));
-  const findContractInCatalog = (id: string) => contractsCatalog.find((item) => item.id === id || item.name === id);
+  const findContractInCatalog = (id: string) => contractsCatalog.find((item) => item.id === id);
   const state = character.current_state ?? {};
   const beats = boundedNumber(state.experience_beats, 5, 0);
   const legacyTotal = Math.max(
@@ -182,7 +183,7 @@ export function ExperiencePanel({
   const goodwill = new Map(objectList(character.line_data.court_goodwill_benefits).map((item) => [String(item.court), Number(item.dots ?? 0)]));
   const currentCourtId = courtCanonicalId(character.line_data.court);
   const benefitOptions = ownedContracts.flatMap((saved) => {
-    const definition = findContractInCatalog(String(saved.id ?? saved.name ?? ""));
+    const definition = ownedContractDefinition(saved, contractsCatalog);
     if (!definition) return [];
     const presented = contractPresentation(definition, locale, reference.contractPresentation);
     const seemingOptions = Object.keys(definition.seemingBenefits ?? {})

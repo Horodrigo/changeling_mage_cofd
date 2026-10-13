@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs,TabsContent,TabsList,TabsTrigger } from "@/components/ui/tabs";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { ContractDefinition } from "./contract-types";
+import { ownedContractDefinition } from "./contract-identities";
 import type { ConditionDefinition } from "@/lib/catalog/catalog-types";
 import type { CourtDefinition } from "@/lib/changeling-courts";
 import { kithCreationChoice } from "./kith-choices";
@@ -581,9 +582,9 @@ function ContractPowerList({ contracts, catalog, presentation, courtCatalog, see
       {contracts
             .filter((item) => item.name)
             .map((item, index) => {
-            const baseDefinition = catalog.find((entry) => entry.id === String(item.id ?? "") || entry.name === String(item.name ?? "")) ??
-                (item as unknown as ContractDefinition);
-            const definition = contractPresentation(contractWithSupplementalBenefits(baseDefinition, supplementalBenefitSources), locale, presentation);
+            const found = ownedContractDefinition(item, catalog);
+            const baseDefinition = contractWithSupplementalBenefits(found ?? (item as unknown as ContractDefinition), supplementalBenefitSources);
+            const definition = found ? contractPresentation(baseDefinition, locale, presentation) : baseDefinition;
             const summary = contractSummary(definition, locale);
             if (!definition?.id)
                 return null;

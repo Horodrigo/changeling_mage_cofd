@@ -3,8 +3,6 @@
 ## X01 — persistência
 
 - Identificar valores de catálogo e configuração ainda persistidos em português, inclusive em Homebrews importados. Converter somente aliases exatos da linha proprietária; preservar texto autoral, IDs, compras e estornos.
-- Decidir quais campos de `line_data.learned_contracts` precisam permanecer como snapshot de contingência e como exibir textos PT históricos sem correspondência exata com o catálogo atual.
-- Decidir como exibir nomes históricos de origem ambígua em `undead_companions` (nome automático ou escrito pelo jogador), sem reescrever snapshots ou recibos.
 - Após os lotes restantes, verificar criação, edição, importação, exportação, reabertura e troca EN/PT nas cinco linhas. O JSON deve manter identidades canônicas em inglês, exceto texto escrito pelo usuário.
 
 ## Vampire

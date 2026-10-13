@@ -19,7 +19,22 @@ const CONTRACT_NAME_ALIASES = Object.fromEntries(
   CONTRACTS.flatMap((contract) => [[contract.name, contract.id], [contract.originalName, contract.id]]),
 );
 const { contractPresentation, contractSummary, contractWithSupplementalBenefits } = await vite.ssrLoadModule("/game-lines/changeling/contract-presentation.ts");
+const { ownedContractDefinition } = await vite.ssrLoadModule("/game-lines/changeling/contract-identities.ts");
 const OFFLINE_INDEX = JSON.parse(readFileSync(new URL("./fixtures/official-contracts-index.json", import.meta.url), "utf8"));
+
+test("owned Contracts use canonical IDs and only unambiguous legacy names", () => {
+  const catalog = [
+    { id: "core:mirror", sourceId: "ctl-core", name: "Mirror" },
+    { id: "homebrew:mirror", sourceId: "homebrew", name: "Mirror" },
+    { id: "core:sword", sourceId: "ctl-core", name: "Sword" },
+  ];
+  assert.equal(ownedContractDefinition({ id: "homebrew:mirror", name: "Mirror" }, catalog), catalog[1]);
+  assert.equal(ownedContractDefinition({ name: "Mirror", sourceId: "ctl-core" }, catalog), catalog[0]);
+  assert.equal(ownedContractDefinition({ name: "Sword" }, catalog), catalog[2]);
+  assert.equal(ownedContractDefinition({ name: "Mirror" }, catalog), undefined);
+  assert.equal(ownedContractDefinition({ id: "missing", name: "Sword" }, catalog), undefined);
+  assert.equal(ownedContractDefinition({ id: "core:mirror", sourceId: "homebrew", name: "Mirror" }, catalog), undefined);
+});
 
 test("tradução pt-BR cobre os 260 Contratos canônicos", () => {
   assert.deepEqual(Object.keys(CONTRACT_PRESENTATION_PT).sort(), CONTRACTS.map((contract) => contract.id).sort());
