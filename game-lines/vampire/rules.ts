@@ -1,4 +1,4 @@
-import { canonicalTraitHistory } from "@/lib/core/character/trait-identities";
+import { canonicalTraitHistory, canonicalTraitId } from "@/lib/core/character/trait-identities";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import type { GameLineValidationIssue } from "@/lib/game-line-contracts/game-line-rules";
@@ -66,9 +66,10 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
       ...data,
       clan_id: clanId,
       bloodline_id: bloodlineId,
-      bloodline_favored_attribute: String(data.bloodline_favored_attribute ?? ""),
+      bloodline_favored_attribute: canonicalTraitId("attributes", String(data.bloodline_favored_attribute ?? "")),
       clan_bane_active: data.clan_bane_active !== false,
-      favored_attribute: String(data.favored_attribute ?? ""),
+      favored_attribute: canonicalTraitId("attributes", String(data.favored_attribute ?? "")),
+      ...(Array.isArray(data.favored_attributes) ? { favored_attributes: data.favored_attributes.map(value => typeof value === "string" ? canonicalTraitId("attributes", value) : value) } : {}),
       covenant_id: covenantId,
       covenant_ids: covenantIds,
       humanity,

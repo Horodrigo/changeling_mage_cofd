@@ -1,5 +1,5 @@
 import { mageSpellSelection } from "./spell-presentation";
-import { canonicalTraitHistory } from "@/lib/core/character/trait-identities";
+import { canonicalTraitHistory, canonicalTraitId } from "@/lib/core/character/trait-identities";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
 import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
@@ -35,6 +35,7 @@ function mageDerived(character: CharacterSheet): CharacterSheet["derived"] {
 export const mageRules: GameLineRulesModule = {
   normalizeCharacter(character) {
     const line_data = { ...character.line_data };
+    if (typeof line_data.resistance_bonus === "string") line_data.resistance_bonus = canonicalTraitId("attributes", line_data.resistance_bonus);
     for (const key of ["rotes", "praxes", "learned_rotes", "learned_praxes", "inured_spells"]) {
       const values = line_data[key];
       if (Array.isArray(values)) line_data[key] = values.map(value => value && typeof value === "object" ? mageSpellSelection(value) : value);

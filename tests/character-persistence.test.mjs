@@ -90,6 +90,33 @@ test("schema-2 PT Attribute and Skill aliases normalize to English, with existin
   assert.deepEqual(normalized.skills, { Occult: 3 });
 });
 
+test("line-owned selected Attribute choices use English IDs without changing unknown values or receipts", async () => {
+  const cases = [
+    ["CtL", { favored_attribute: "Presença" }, { favored_attribute: "Presence" }],
+    ["MtA", { resistance_bonus: "Perseverança" }, { resistance_bonus: "Resolve" }],
+    ["VtR", { favored_attribute: "Destreza", favored_attributes: ["Força", "Dexterity", "  Minha escolha  "], bloodline_favored_attribute: "Manipulação" },
+      { favored_attribute: "Dexterity", favored_attributes: ["Strength", "Dexterity", "  Minha escolha  "], bloodline_favored_attribute: "Manipulation" }],
+  ];
+  for (const [line, choices, expected] of cases) {
+    const current = sheet(line);
+    Object.assign(current.line_data, choices);
+    current.current_state = { experience_available: 7, experience_spent: 3, experience_total: 10,
+      [line === "CtL" ? "experience_history" : line === "MtA" ? "mage_experience_history" : "vampire_experience_history"]: [{ id: "paid", cost: 3, undo: { kind: "merit", instanceId: "owned" } }] };
+    const before = structuredClone(current);
+    const normalized = await normalizeGameLineCharacter(normalizeStoredSheet(current));
+    for (const [key, value] of Object.entries(expected)) assert.deepEqual(normalized.line_data[key], value, `${line}.${key}`);
+    for (const key of ["experience_available", "experience_spent", "experience_total", line === "CtL" ? "experience_history" : line === "MtA" ? "mage_experience_history" : "vampire_experience_history"])
+      assert.deepEqual(normalized.current_state[key], before.current_state[key], `${line}.${key}`);
+    assert.deepEqual(await normalizeGameLineCharacter(normalizeStoredSheet(JSON.parse(JSON.stringify(normalized)))), normalized);
+    assert.deepEqual(current, before);
+  }
+  const authored = sheet("CtL");
+  authored.line_data.favored_attribute = "  Atributo autoral  ";
+  assert.equal((await normalizeGameLineCharacter(normalizeStoredSheet(authored))).line_data.favored_attribute, authored.line_data.favored_attribute);
+  const absent = sheet("MtA");
+  assert.equal(Object.hasOwn((await normalizeGameLineCharacter(normalizeStoredSheet(absent))).line_data, "resistance_bonus"), false);
+});
+
 test("canonical Skill reconciliation does not count as an authored Specialty edit or remove its linked Merit", async () => {
   const { reconcileSpecialtyMerits } = await vite.ssrLoadModule("/lib/core/character/specialty-merits.ts");
   const merit = { definitionId: "core-2ed:interdisciplinary-specialty", name: "Interdisciplinary Specialty", sourceId: "core-2ed", instanceId: "paid-link", dots: 1, experienceDots: 1, configuration: { specialty_skill: "Armas Brancas", specialty_name: "Nome autoral" } };
