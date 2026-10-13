@@ -353,8 +353,13 @@
     "page": 76,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Enriched Item",
-    "descriptionEn": "Choose an item and a spell. At two dots, that spell gains a +1 tool Yantra when cast on the item, which also has +1 equipment bonus (or 1/1 armor) over a mundane equivalent. At four dots, its Yantra and equipment bonuses are +2."
+    "translatedName": "Item Enriquecido",
+    "descriptionEn": "Choose an item and a spell. At two dots, that spell gains a +1 tool Yantra when cast on the item, which also has +1 equipment bonus (or 1/1 armor) over a mundane equivalent. At four dots, its Yantra and equipment bonuses are +2.",
+    "presentationPt": {
+      "name": "Item Enriquecido",
+      "prerequisites": "Desperto",
+      "description": "Escolha um item e um feitiço. Com dois pontos, o item oferece Yantra de ferramenta de +1 dado quando esse feitiço é conjurado sobre ele; também tem bônus de equipamento +1, ou armadura 1/1, em relação a um item mundano equivalente. Com quatro pontos, o bônus da Yantra é +2 dados e o bônus de equipamento aumenta para +2."
+    }
   },
   {
     "id": "mta-signs:epiphany-stone",
@@ -440,12 +445,17 @@
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
     "category": "Mage",
-    "prerequisites": "Awakened; Awakened, Presence ••••, Expression•••",
-    "description": "You may converse at length in High Speech. Persuasion and Intimidation rolls with mages and supernal entities that use the High Speech gain +2, and Expression rolls are not reduced to chance dice. Participating in a supernal summoning reduces the target number by two.",
+    "prerequisites": "Awakened; Presence ••••, Expression •••",
+    "description": "You may converse at length in High Speech. Persuasion and Intimidation rolls using it with mages and Supernal entities gain +2 dice, and Expression rolls are not reduced to chance dice. Participating in a Supernal summoning reduces the successes needed by two.",
     "page": 26,
     "priority": 2,
-    "translatedName": "Fluent High Speech",
-    "descriptionEn": "You may converse at length in High Speech. Persuasion and Intimidation rolls with mages and supernal entities that use the High Speech gain +2, and Expression rolls are not reduced to chance dice. Participating in a supernal summoning reduces the target number by two."
+    "translatedName": "Alta Fala Fluente",
+    "descriptionEn": "You may converse at length in High Speech. Persuasion and Intimidation rolls using it with mages and Supernal entities gain +2 dice, and Expression rolls are not reduced to chance dice. Participating in a Supernal summoning reduces the successes needed by two.",
+    "presentationPt": {
+      "name": "Alta Fala Fluente",
+      "prerequisites": "Desperto; Presença ••••; Expressão •••",
+      "description": "Você pode conversar longamente em Alta Fala. Testes de Persuasão e Intimidação que a utilizem contra magos e entidades Supernas recebem +2 dados, e testes de Expressão não se reduzem a um dado de sorte. Ao participar da invocação de uma entidade Superna, reduza em dois os sucessos necessários."
+    }
   },
   {
     "id": "mta-2ed:grimoire",
@@ -476,12 +486,17 @@
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
     "category": "Mage",
-    "prerequisites": "Awakened; Awakened, Manipulation •••, Expression •••",
+    "prerequisites": "Awakened; Manipulation •••, Expression •••",
     "description": "Your character may use mundane language to conceal a message in High Speech. Sleepers or Sleepwalkers who hear or read the message do not hear glossolalia or read gibberish. Use at no cost when writing, though speaking this way is taxing and requires a point of Willpower",
     "page": 26,
     "priority": 2,
-    "translatedName": "Hidden High Speech",
-    "descriptionEn": "Your character may use mundane language to conceal a message in High Speech. Sleepers or Sleepwalkers who hear or read the message do not hear glossolalia or read gibberish. Use at no cost when writing, though speaking this way is taxing and requires a point of Willpower"
+    "translatedName": "Alta Fala Oculta",
+    "descriptionEn": "Your character may use mundane language to conceal a message in High Speech. Sleepers or Sleepwalkers who hear or read the message do not hear glossolalia or read gibberish. Use at no cost when writing, though speaking this way is taxing and requires a point of Willpower",
+    "presentationPt": {
+      "name": "Alta Fala Oculta",
+      "prerequisites": "Desperto; Manipulação •••; Expressão •••",
+      "description": "Você pode esconder uma mensagem em Alta Fala dentro da linguagem comum. Adormecidos e Sonâmbulos que a ouçam ou leiam não percebem glossolalia nem palavras sem sentido. Escrever dessa forma não tem custo; falar exige gastar um ponto de Força de Vontade."
+    }
   },
   {
     "id": "mta-2ed:high-speech",

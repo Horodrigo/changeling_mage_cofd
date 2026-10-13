@@ -21,7 +21,7 @@ const base={...mageMerits.MAGE_STATUS_REQUIREMENTS,gameLine:"MtA",archetypes:["a
 
 test("Mage Merit presentation switches EN/PT/EN without changing canonical requirements",async()=>{
  const {meritPresentation}=await vite.ssrLoadModule("/lib/merit-presentation.ts");
- for(const name of ["Adamant Hand","Artifact","Astral Adept","Astral Intruder","Awakened Status","Between the Ticks","Broad Dedication","Cabal Theme","Cognoscente","Daimonomikon","Destiny","Dominant Soul","Dream","Echo Chamber","Enhanced Item","Epiphany Stone","Familiar","Fast Spells","Grimoire","Hallow","High Speech","Imbued Item"]){
+ for(const name of ["Adamant Hand","Artifact","Astral Adept","Astral Intruder","Awakened Status","Between the Ticks","Broad Dedication","Cabal Theme","Cognoscente","Daimonomikon","Destiny","Dominant Soul","Dream","Echo Chamber","Enhanced Item","Enriched Item","Epiphany Stone","Familiar","Fast Spells","Fluent High Speech","Grimoire","Hallow","Hidden High Speech","High Speech","Imbued Item"]){
   const entry=merit(name);
   const canonical={id:entry.id,name:entry.name,prerequisites:entry.prerequisites,descriptionEn:entry.descriptionEn};
   assert.equal(meritPresentation(entry,"en-US",mageCatalog).name,name);
@@ -42,6 +42,9 @@ test("Mage Merit presentation switches EN/PT/EN without changing canonical requi
  assert.match(meritPresentation(merit("Dominant Soul"),"pt-BR",mageCatalog).description,/demais requisitos do Aperfeiçoamento/);
  assert.match(meritPresentation(merit("Echo Chamber"),"pt-BR",mageCatalog).description,/três sucessos em vez de cinco.*Uma vez por história/);
  assert.match(meritPresentation(merit("Epiphany Stone"),"pt-BR",mageCatalog).description,/Gnose \+ Perseverança.*Com sucesso, o efeito termina/);
+ assert.equal(merit("Fluent High Speech").prerequisites,"Awakened; Presence ••••, Expression •••");
+ assert.equal(merit("Hidden High Speech").prerequisites,"Awakened; Manipulation •••, Expression •••");
+ assert.match(meritPresentation(merit("Fluent High Speech"),"pt-BR",mageCatalog).description,/reduza em dois os sucessos necessários/);
 });
 
 test("Mage configuration validation dispatches canonical IDs, not display names or Homebrew homonyms",()=>{
