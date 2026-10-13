@@ -3,6 +3,7 @@ import { normalizeMeritConfiguration, type MeritConfiguration } from "@/lib/core
 import { synchronizeCommonMeritGrants } from "@/lib/core/character/synchronize-merit-grants";
 import shadowCultCatalog from "./catalog-data/shadow-cults.json";
 import { createRandomId } from "@/lib/random-id";
+import { canonicalTrait } from "@/lib/merit-requirements";
 
 const TEMPLATE_SOURCE = "Vampire Template";
 export const SHADOW_CULT_SOURCE = "Vampire Shadow Cult";
@@ -25,6 +26,11 @@ export function shadowCultGrantId(merit: MeritSelection) {
   if (Object.hasOwn(configuration, "shadowCultId")) return String(configuration.shadowCultId);
   return SHADOW_CULT_IDS.find(id => merit.grantedBy === SHADOW_CULT_SOURCE && merit.instanceId === `shadow-cult-${id}`) ??
     SHADOW_CULT_IDS.find(id => configuration.cult === SHADOW_CULTS[id].name);
+}
+
+export function shadowCultMatches(merit: MeritSelection, cultId: string, aliases: readonly string[]) {
+  const recordedId = shadowCultGrantId(merit);
+  return recordedId !== undefined ? recordedId === cultId : aliases.some(name => canonicalTrait(name) === canonicalTrait(merit.configuration?.cult));
 }
 
 /**

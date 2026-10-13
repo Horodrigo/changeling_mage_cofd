@@ -19,7 +19,7 @@ import { systemTerm } from "@/lib/system-terms";
 import type { VampireMechanics, VampirePowers, VampireReference, VampirePurchasablePower, VampireRitualDisciplineDefinition } from "./catalog-types";
 import { recordRatings, synchronizeAutomaticBloodlineDevotions, synchronizeBloodTetherPack, vampireBloodTetherLashes, vampireCovenantAffiliationDots, vampireCovenantIds, vampireCovenantStatus, vampireDerived, vampireDisciplineAvailable, vampireDisciplineDisplayName, vampireDevotionPrerequisitesMet, vampireDisciplineOptionPrerequisitesMet, vampireDevotionAvailable, vampireDevotionExperienceCost } from "./creation-rules";
 import { refundVampireAdvancement, type VampireAdvancementUndo } from "./experience-refunds";
-import { synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
+import { shadowCultMatches, synchronizeVampireBuilderMeritGrants } from "./builder-merit-grants";
 import { VAMPIRE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { vampireMeritContextForSheet, vampireMeritEligible, vampireMeritFilterCategory } from "./merit-eligibility";
 import { useHomebrewPreferences } from "@/app/use-homebrew";
@@ -114,7 +114,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const covenantStatusFor = (id: string) => {
     const definition = reference.covenants.find((item) => item.id === id);
     if (!definition) return 0;
-    if (definition.group === "shadow-cult") return Math.max(0, ...character.merits.filter((item) => resolveMeritDefinition(item, meritCatalog)?.id === "core-2ed:mystery-cult-initiation" && [definition.id, definition.name, definition.translatedName].some((name) => String(item.configuration?.cult ?? "").localeCompare(name, undefined, { sensitivity: "base" }) === 0)).map((item) => Number(item.dots) || 0));
+    if (definition.group === "shadow-cult") return Math.max(0, ...character.merits.filter((item) => resolveMeritDefinition(item, meritCatalog)?.id === "core-2ed:mystery-cult-initiation" && shadowCultMatches(item, definition.id, [definition.id, definition.name, definition.translatedName])).map((item) => Number(item.dots) || 0));
     return vampireCovenantStatus(character, id, definition.name, definition.translatedName);
   };
   const disciplines = recordRatings(character.line_data.disciplines, disciplineNames, 10);

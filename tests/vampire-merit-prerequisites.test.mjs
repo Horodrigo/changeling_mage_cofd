@@ -127,6 +127,15 @@ test("known Devotions, qualified Cult references and narrative prerequisites", (
   assert.equal(buy(id, { ...context, configuration: { clan: "mekhet" } }), false);
   assert.equal(parse("Mystery Cult Initiation (The Sect) •", { ...ctx, merits: [owned("core-2ed:mystery-cult-initiation", 1, { cult: "Other" })] }), false);
   assert.equal(parse("Mystery Cult Initiation (The Sect) •", { ...ctx, merits: [owned("core-2ed:mystery-cult-initiation", 1, { cult: "The Sect" })] }), true);
+  const cult = owned("core-2ed:mystery-cult-initiation", 2, { cult: "Moirai", shadowCultId: "inconnu" });
+  const cultContext = { ...ctx, merits: [cult] };
+  assert.equal(parse("Moirai Initiation ••", cultContext), false, "An explicit Cult ID wins over the displayed name");
+  assert.equal(parse("Inconnu Initiation ••", cultContext), true);
+  assert.equal(parse("Mystery Cult Initiation (Moirai) •", cultContext), false);
+  assert.equal(parse("Mystery Cult Initiation (Inconnu) •", cultContext), true);
+  assert.equal(parse("Mystery Cult Initiation (The Sect) •", { ...ctx, merits: [{ ...cult, configuration: { cult: "The Sect", shadowCultId: "inconnu" } }] }), false);
+  assert.equal(parse("Shadow Cult", { ...ctx, merits: [{ ...cult, configuration: { cult: "Moirai", shadowCultId: "missing:cult" } }] }), false);
+  assert.equal(parse("Moirai Initiation ••", { ...ctx, merits: [owned("core-2ed:mystery-cult-initiation", 2, { cult: "Moirai" })] }), true, "Legacy ID-less Cult names remain readable");
   assert.equal(parse("Member of a colony", ctx), true);
   assert.equal(parse("Embraced as a child or teenager", { ...ctx, gameLine: "CtL" }), false);
 });

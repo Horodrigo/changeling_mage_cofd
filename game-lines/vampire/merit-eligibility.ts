@@ -5,6 +5,7 @@ import { canonicalTrait, requirementTrait, textRequirementMet } from "@/lib/meri
 import { VAMPIRE_DISCIPLINES } from "./creation-rules";
 import type { VampireCovenantDefinition, VampirePurchasablePower } from "./catalog-types";
 import { BLOODCRAFTING_ID, bloodcraftingConfigurationMet } from "./bloodcrafting";
+import { shadowCultGrantId, shadowCultMatches } from "./builder-merit-grants";
 
 export type VampireMeritContext = MeritPrerequisiteContext & {
   bloodlineId?: string;
@@ -75,11 +76,16 @@ export function vampireTextPrerequisitesMet(value: string | undefined, context: 
     if (/^no Potent Curse$/i.test(clause)) return !context.conditionIds?.includes("vtr-better-feared:potent-curse");
     if (/^cannot have a Crúac Style Merit$/i.test(clause)) return !(context.merits ?? []).some(item => { const definition = resolveMeritDefinition(item, context.meritCatalog ?? []); return item.dots > 0 && definition && isCruacStyle(definition); });
     if (/^Not a member of the Circle of the Crone$/i.test(clause)) return !context.archetypes?.includes("circle-of-the-crone");
-    if (/^Shadow Cult$/i.test(clause)) return Boolean(context.covenants?.some(item => item.group === "shadow-cult" && (context.archetypes?.includes(item.id) || ownedMerits(context, "core-2ed:mystery-cult-initiation").some(merit => affiliationNames(context, item.id).has(canonicalTrait(merit.configuration?.cult))))));
+    if (/^Shadow Cult$/i.test(clause)) return Boolean(context.covenants?.some(item => item.group === "shadow-cult" && (context.archetypes?.includes(item.id) || ownedMerits(context, "core-2ed:mystery-cult-initiation").some(merit => shadowCultMatches(merit, item.id, [item.id, item.name, item.translatedName])))));
     const initiation = clause.match(/^(Inconnu|Moirai) Initiation (•+)$/i);
-    if (initiation) return ownedMerits(context, "core-2ed:mystery-cult-initiation").some(item => item.dots >= initiation[2].length && affiliationNames(context, initiation[1]).has(canonicalTrait(item.configuration?.cult)));
+    if (initiation) return ownedMerits(context, "core-2ed:mystery-cult-initiation").some(item => item.dots >= initiation[2].length && Boolean(context.covenants?.some(cult => cult.group === "shadow-cult" && affiliationNames(context, initiation[1]).has(canonicalTrait(cult.id)) && shadowCultMatches(item, cult.id, [cult.id, cult.name, cult.translatedName]))));
     const cult = clause.match(/^(Mystery Cult Initiation|Dynasty Membership) \((.+)\) (•+)$/i);
-    if (cult) return ownedMerits(context, cult[1] === "Dynasty Membership" ? "vtr-dynasty-membership" : "core-2ed:mystery-cult-initiation").some(item => item.dots >= cult[3].length && canonicalTrait(item.configuration?.cult ?? item.configuration?.dynasty) === canonicalTrait(cult[2]));
+    if (cult) return ownedMerits(context, cult[1] === "Dynasty Membership" ? "vtr-dynasty-membership" : "core-2ed:mystery-cult-initiation").some(item => {
+      if (item.dots < cult[3].length) return false;
+      const shadowCult = cult[1] === "Mystery Cult Initiation" ? context.covenants?.find(entry => entry.group === "shadow-cult" && [entry.id, entry.name, entry.translatedName].some(name => canonicalTrait(name) === canonicalTrait(cult[2]))) : undefined;
+      if (cult[1] === "Mystery Cult Initiation" && shadowCultGrantId(item) !== undefined && !shadowCult) return false;
+      return shadowCult ? shadowCultMatches(item, shadowCult.id, [shadowCult.id, shadowCult.name, shadowCult.translatedName]) : canonicalTrait(item.configuration?.cult ?? item.configuration?.dynasty) === canonicalTrait(cult[2]);
+    });
     if (/^Cannot have Kindred Status in the chosen covenant$/i.test(clause)) {
       const chosen = String(context.configuration?.group ?? "");
       if (context.configuration && !chosen.trim()) return false;
