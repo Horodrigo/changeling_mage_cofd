@@ -310,7 +310,7 @@ function SpellSelector({
   allowedRoteSkills?:string[];
 }) {
   const { locale, t } = useLanguage();
-  const present = (spell: SpellDefinition) => mageSpellPresentation(catalog.find(item => item.id === spell.id) ?? spell, locale);
+  const present = (spell: SpellDefinition) => mageSpellPresentation(catalog.find(item => item.id === spell.id && (!spell.sourceId || item.sourceId === spell.sourceId)) ?? spell, locale);
   const spellName = (spell: SpellDefinition) => present(spell).name;
   const [search, setSearch] = useState("");
   const [arcanaFilter, setArcanaFilter] = useState("__all");

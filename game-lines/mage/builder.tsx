@@ -34,6 +34,7 @@ import { useMeritHomebrews } from "@/app/use-merit-homebrews";
 import { activeMeritCatalog } from "@/lib/merit-homebrews";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { activeSpellCatalog } from "./spell-homebrews";
+import { readBuilderSpells } from "./spell-selection";
 import { useSpellHomebrews } from "./use-spell-homebrews";
 import type { MageFactionDefinition } from "./factions";
 import { mageMeritSelectionProblems, MAGE_STATUS_REQUIREMENTS, type MageMeritContext } from "./merits";
@@ -87,26 +88,6 @@ function experienceSpecialties(initial: CharacterSheet | null | undefined) {
     .map((undo) => ({ skill: String(undo.skill), name: String(undo.name) }));
 }
 
-function readSpells(
-  initial: CharacterSheet | null | undefined,
-  key: string,
-  count: number,
-  catalog: readonly SpellDefinition[],
-): Array<SpellSelection | null> {
-  const raw = initial?.line_data[key];
-  const source = Array.isArray(raw) ? raw : [];
-  const result = source.slice(0, count).map((value): SpellSelection | null => {
-    const record = value && typeof value === "object" ? value as Record<string, unknown> : null;
-    const name = typeof value === "string" ? value : String(record?.name ?? "");
-    const found = catalog.find((spell) =>
-      spell.id === record?.id || spell.originalName === record?.originalName || spell.name === name || spell.originalName === name,
-    );
-    return found ? { ...found, roteSkill: String(record?.roteSkill ?? found.roteSkills[0] ?? "") } : null;
-  });
-  while (result.length < count) result.push(null);
-  return result;
-}
-
 function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, catalogs }: GameLineBuilderProps) {
   const { locale, t } = useLanguage();
   if (initial && initial.game_line !== "MtA") throw new Error("Mage builder received a non-Mage character.");
@@ -149,8 +130,8 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
   const gnosisProgression = mageBuilderPowerProgression(initial);
   const [gnosis, setGnosis] = useState(gnosisProgression.creation);
   const [arcana, setArcana] = useState<Record<string, number>>(() => editableArcana(initial));
-  const [rotes, setRotes] = useState<Array<SpellSelection | null>>(() => readSpells(initial, "rotes", 3, spellCatalog));
-  const [praxes, setPraxes] = useState<Array<SpellSelection | null>>(() => readSpells(initial, "praxes", 3, spellCatalog));
+  const [rotes, setRotes] = useState<Array<SpellSelection | null>>(() => readBuilderSpells(initial, "rotes", 3, spellCatalog));
+  const [praxes, setPraxes] = useState<Array<SpellSelection | null>>(() => readBuilderSpells(initial, "praxes", 3, spellCatalog));
   const setMerits = common.setMerits;
 
   const namelessInitiation = common.merits.find((item) => resolveMeritDefinition(item, meritCatalog)?.id === "core-2ed:mystery-cult-initiation" && item.grantedBy === "Nameless Order");

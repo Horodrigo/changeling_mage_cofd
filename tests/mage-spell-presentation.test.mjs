@@ -9,6 +9,7 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
   const server = await createServer({ configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] } });
   try {
     const { mageSpellPresentation, mageSpellSelection } = await server.ssrLoadModule("/game-lines/mage/spell-presentation.ts");
+    const { readBuilderSpells } = await server.ssrLoadModule("/game-lines/mage/spell-selection.ts");
     const { mageRules } = await server.ssrLoadModule("/game-lines/mage/rules.ts");
     const spells = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/death.json", import.meta.url), "utf8"));
     const original = structuredClone(spells);
@@ -139,6 +140,19 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
     const homebrew = { id: "homebrew:spell:author", name: "Minha magia", originalName: "Minha magia", summary: "Texto autoral", description: "Texto autoral" };
     assert.equal(mageSpellPresentation(homebrew, "pt-BR").name, homebrew.name);
     assert.deepEqual(mageSpellSelection(homebrew), homebrew);
+    const haunted = [spells, mind, spirit].map(items => items.find(item => item.name === "Haunted Grimoire"));
+    assert.equal(new Set(haunted.map(item => item.id)).size, 3);
+    const known = readBuilderSpells({ line_data: { rotes: [{ ...haunted[1], roteSkill: "Occult" }] } }, "rotes", 3, haunted);
+    assert.equal(known[0].id, haunted[1].id);
+    assert.equal(known[0].roteSkill, "Occult");
+    assert.equal(readBuilderSpells({ line_data: { praxes: ["Haunted Grimoire"] } }, "praxes", 1, haunted)[0], null);
+    const unavailable = { ...haunted[1], id: "missing:spell", sourceId: "missing", roteSkill: "Academics", summary: "Authored snapshot" };
+    const recovered = readBuilderSpells({ line_data: { rotes: [unavailable] } }, "rotes", 1, haunted)[0];
+    assert.deepEqual(recovered, mageSpellSelection(unavailable));
+    assert.equal(recovered.presentationPt, undefined);
+    const mismatchedSource = { ...haunted[0], sourceId: "another-source" };
+    assert.deepEqual(readBuilderSpells({ line_data: { rotes: [mismatchedSource] } }, "rotes", 1, haunted)[0], mageSpellSelection({ ...mismatchedSource, roteSkill: mismatchedSource.roteSkills[0] }));
+    assert.equal(readBuilderSpells({ line_data: { praxes: [spells[0].name] } }, "praxes", 1, spells)[0]?.id, spells[0].id);
     const history = [{ id: "receipt", regular: 1, arcane: 0, undo: { kind: "spell", key: "learned_praxes", id: spells[1].id } }];
     const character = { line_data: { learned_praxes: [spells[1], homebrew] }, current_state: { mage_experience_history: history } };
     const normalized = mageRules.normalizeCharacter(character);
