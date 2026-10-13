@@ -214,7 +214,7 @@ test("Tome factions are complete and Faction Member validates Order-specific cho
   assert.ok(faction.roteSkills.length>=1,faction.name);
   assert.equal(faction.source,"Tome of the Pentacle",faction.name);
  }
- for(const faction of factions.filter(item=>item.orders.length===1)){
+ for(const faction of factions){
   assert.ok(faction.description,faction.name);
   assert.ok(faction.presentationPt?.toolYantra,faction.name);
   assert.ok(faction.presentationPt?.description,faction.name);
