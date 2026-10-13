@@ -174,7 +174,16 @@
     "source": "Mage the Awakening",
     "page": 148,
     "summary": "Consciously regulate the subject’s breathing, heartbeat, metabolism, reflexes, and bodily odors. The spell can add Potency to Initiative, halve bashing healing time, and suppress or intensify appropriate biological functions.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Controle Corporal",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Regula respiração, batimentos, metabolismo, reflexos e odores do alvo. Cada ponto de Potência reduz pela metade sua necessidade de oxigênio, dobra o intervalo entre efeitos de toxinas, reduz pela metade a comida necessária e dobra o intervalo para sofrer privação ou fadiga, soma +1 à Iniciativa e reduz pela metade o tempo de cura de dano contundente. A maga também pode ajustar os odores e feromônios que o corpo produz.",
+      "description": "Regula respiração, batimentos, metabolismo, reflexos e odores do alvo. Cada ponto de Potência reduz pela metade sua necessidade de oxigênio, dobra o intervalo entre efeitos de toxinas, reduz pela metade a comida necessária e dobra o intervalo para sofrer privação ou fadiga, soma +1 à Iniciativa e reduz pela metade o tempo de cura de dano contundente. A maga também pode ajustar os odores e feromônios que o corpo produz. +1 Alcance: O alvo recebe armadura 1/0 durante a Duração. +2 Alcances: Cada ponto de Potência também reduz pela metade o tempo de cura de dano letal.",
+      "reach": "+1 Alcance: O alvo recebe armadura 1/0 durante a Duração. +2 Alcances: Cada ponto de Potência também reduz pela metade o tempo de cura de dano letal."
+    }
   },
   {
     "id": "mta-2ed:life-2-control-instincts",
@@ -196,7 +205,16 @@
     "source": "Mage the Awakening",
     "page": 149,
     "summary": "Trigger a specific instinctive response in an animal, including a human, imposing an appropriate Condition for the Duration. Ordinary living creatures are valid subjects; supernatural creatures require additional Reach.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Controlar Instintos",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Provoca uma reação instintiva específica em um animal, incluindo humanos, e impõe a Condição adequada à resposta desejada. Pode fazer o alvo fugir, sentir fome, cansar ou reagir de outra maneira natural à sua espécie, mesmo sem o estímulo habitual.",
+      "description": "Provoca uma reação instintiva específica em um animal, incluindo humanos, e impõe a Condição adequada à resposta desejada. Pode fazer o alvo fugir, sentir fome, cansar ou reagir de outra maneira natural à sua espécie, mesmo sem o estímulo habitual. +1 Alcance: Também afeta criaturas sobrenaturais vivas.",
+      "reach": "+1 Alcance: Também afeta criaturas sobrenaturais vivas."
+    }
   },
   {
     "id": "mta-2ed:life-2-lure-and-repel",
@@ -218,7 +236,16 @@
     "source": "Mage the Awakening",
     "page": 149,
     "summary": "Make the subject attract or repel a chosen organism. Affected creatures must resist the urge to approach or avoid it; plants and bacteria count as Resolve 0, while intelligent beings retain judgment once they confront the stimulus.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Atrair e Repelir",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Torna o alvo atrativo ou repulsivo para um tipo de organismo. As criaturas atraídas ou repelidas resistem ao efeito para entrar na área; plantas e microrganismos têm Perseverança 0 para esse fim. O feitiço não as obriga a confiar no alvo nem impede que reajam a perigos.",
+      "description": "Torna o alvo atrativo ou repulsivo para um tipo de organismo. As criaturas atraídas ou repelidas resistem ao efeito para entrar na área; plantas e microrganismos têm Perseverança 0 para esse fim. O feitiço não as obriga a confiar no alvo nem impede que reajam a perigos. +1 Alcance: Criaturas atraídas tratam o alvo com benevolência e podem lhe oferecer comida ou pequenos favores. +1 Alcance: Criaturas inteligentes consideram o alvo agradável, se atraídas, ou desagradável, se repelidas, em sua primeira impressão para Manobra Social.",
+      "reach": "+1 Alcance: Criaturas atraídas tratam o alvo com benevolência e podem lhe oferecer comida ou pequenos favores. +1 Alcance: Criaturas inteligentes consideram o alvo agradável, se atraídas, ou desagradável, se repelidas, em sua primeira impressão para Manobra Social."
+    }
   },
   {
     "id": "mta-2ed:life-2-mutable-mask",
@@ -240,7 +267,16 @@
     "source": "Mage the Awakening",
     "page": 149,
     "summary": "Create an illusory biological disguise that changes apparent facial structure, body features, sex, voice, scent, and similar traits. Physical evidence and biometric examination still reveal the truth, and the basic spell cannot copy a specific person.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Máscara Mutável",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "Vigor",
+      "summary": "Altera ilusoriamente a aparência, sexo aparente, voz, cheiro e outros traços superficiais do alvo. Pode enganar pessoas e reconhecimento facial, mas exames biométricos como impressões digitais revelam a verdade; o efeito básico não imita uma pessoa específica.",
+      "description": "Altera ilusoriamente a aparência, sexo aparente, voz, cheiro e outros traços superficiais do alvo. Pode enganar pessoas e reconhecimento facial, mas exames biométricos como impressões digitais revelam a verdade; o efeito básico não imita uma pessoa específica. +2 Alcances: Reproduz a aparência de uma pessoa específica, incluindo cicatrizes e impressões digitais.",
+      "reach": "+2 Alcances: Reproduz a aparência de uma pessoa específica, incluindo cicatrizes e impressões digitais."
+    }
   },
   {
     "id": "mta-2ed:life-2-purge-illness",
@@ -262,7 +298,16 @@
     "source": "Mage the Awakening",
     "page": 149,
     "summary": "Reduce a disease’s Severity by Potency; if Potency equals or exceeds its Severity, cure it completely. Otherwise the illness continues at its reduced rating.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Purgar Doença",
+      "practice": "Regência",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Compara a Potência à gravidade de uma doença: quando a Potência é menor, reduz a gravidade pela diferença entre as duas; quando é maior, elimina a doença do alvo.",
+      "description": "Compara a Potência à gravidade de uma doença: quando a Potência é menor, reduz a gravidade pela diferença entre as duas; quando é maior, elimina a doença do alvo.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:life-3-bruise-flesh",
