@@ -299,7 +299,16 @@
     "source": "Dark Eras 2",
     "page": 377,
     "summary": "Gain Potency Hedgespinning successes to spend on subtle shifts while the spell lasts. The mage states a goal, but the Storyteller decides how the Hedge reshapes itself to fulfill it, often with unintended consequences.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Espinhos Maleáveis",
+      "practice": "Regência",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "A maga molda a Sebe com um número de sucessos de Tecer a Sebe igual à Potência, para produzir mudanças sutis enquanto o feitiço durar. Ela declara um objetivo, mas o Narrador decide como a Sebe se rearranja para alcançá-lo, muitas vezes com consequências imprevistas.",
+      "description": "A maga molda a Sebe com um número de sucessos de Tecer a Sebe igual à Potência, para produzir mudanças sutis enquanto o feitiço durar. Ela declara um objetivo, mas o Narrador decide como a Sebe se rearranja para alcançá-lo, muitas vezes com consequências imprevistas. +1 Alcance: Também pode provocar mudanças de paradigma.",
+      "reach": "+1 Alcance: Também pode provocar mudanças de paradigma."
+    }
   },
   {
     "id": "mta-2ed:fate-2-shifting-the-odds",
@@ -538,7 +547,16 @@
     "source": "Signs of Sorcery",
     "page": 64,
     "summary": "Temporarily make an ordinary object function as the plausible tool needed for a stated task. When used for that purpose, its equipment bonus increases by Potency to a maximum of +5; an otherwise unsuitable object begins at zero.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "A Ferramenta Certa",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Faz um objeto comum funcionar temporariamente como a ferramenta plausível necessária para uma tarefa declarada. Ao ser usado para esse fim, seu bônus de equipamento aumenta pela Potência, até o máximo de +5; um objeto normalmente inadequado começa com bônus zero.",
+      "description": "Faz um objeto comum funcionar temporariamente como a ferramenta plausível necessária para uma tarefa declarada. Ao ser usado para esse fim, seu bônus de equipamento aumenta pela Potência, até o máximo de +5; um objeto normalmente inadequado começa com bônus zero.",
+      "reach": ""
+    }
   },
   {
     "id": "core-dark-eras-2:fate-3-wyrdbound-oaths",
@@ -561,7 +579,16 @@
     "source": "Dark Eras 2",
     "page": 379,
     "summary": "Make the mage a valid participant in Wyrd-backed oaths, though she cannot initiate them. Breaking the oath or letting the spell expire before fulfilling it inflicts Oathbreaker, granting subjects of her Fate spells +1 Withstand until it resolves.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Juramentos Vinculados à Wyrd",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Permite que a maga participe de juramentos sustentados pela Wyrd, mas não que os inicie. Quebrar o juramento ou deixar o feitiço terminar antes de cumpri-lo impõe a Condição Quebrador de Juramento; até resolvê-la, os alvos de seus feitiços de Destino recebem +1 para resistir.",
+      "description": "Permite que a maga participe de juramentos sustentados pela Wyrd, mas não que os inicie. Quebrar o juramento ou deixar o feitiço terminar antes de cumpri-lo impõe a Condição Quebrador de Juramento; até resolvê-la, os alvos de seus feitiços de Destino recebem +1 para resistir. +2 Alcance: Torna o efeito duradouro.",
+      "reach": "+2 Alcance: Torna o efeito duradouro."
+    }
   },
   {
     "id": "mta-2ed:fate-4-atonement",
@@ -677,7 +704,16 @@
     "source": "Dark Eras 2",
     "page": 376,
     "summary": "Connect a Supernal entity to the Wyrd so changelings may bargain with it for unique Contracts and sufficiently powerful entities may enter court Bargains. The spell enables the agreement but does not waive persuasion, prices, Experience costs, or the resulting supernatural Debt.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Mascarar os Falsos Fae",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Cria um vínculo entre uma entidade Superna e a Wyrd, permitindo que changelings negociem Contratos singulares com ela e, se a entidade for suficientemente poderosa, Barganhas de corte. O feitiço viabiliza o acordo, mas não elimina persuasão, preços, custos de Experiência nem a Dívida sobrenatural resultante. Liberar Paradoxo ou obter falha dramática pode vincular o Contrato a uma entidade Abissal.",
+      "description": "Cria um vínculo entre uma entidade Superna e a Wyrd, permitindo que changelings negociem Contratos singulares com ela e, se a entidade for suficientemente poderosa, Barganhas de corte. O feitiço viabiliza o acordo, mas não elimina persuasão, preços, custos de Experiência nem a Dívida sobrenatural resultante. Liberar Paradoxo ou obter falha dramática pode vincular o Contrato a uma entidade Abissal. Adicionar Morte, Mente ou Espírito ••••: Permite negociar Contratos com fantasmas, goécias ou espíritos, respectivamente.",
+      "reach": "Adicionar Morte, Mente ou Espírito ••••: Permite negociar Contratos com fantasmas, goécias ou espíritos, respectivamente."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:fate-4-scribe-daimonomikon",
@@ -700,7 +736,16 @@
     "source": "Signs of Sorcery",
     "page": 87,
     "summary": "Inscribe one Legacy Attainment per casting into a vessel; consecutive castings may hold initiation through the fifth Attainment. The caster must meet the relevant Gnosis, Legacy, and optional-Arcanum prerequisites; readers pay the applicable Arcane Experience, and members treat the vessel as a +2 sympathetic Yantra.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Inscrever Daimonomikon",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Posto do Aperfeiçoamento + (10 − Gnose da conjuradora)",
+      "summary": "Inscreve um Aperfeiçoamento de Legado por conjuração em um receptáculo; conjurações consecutivas podem reunir a iniciação e os cinco Aperfeiçoamentos. A conjuradora precisa cumprir os pré-requisitos pertinentes de Gnose, Legado e Arcanos para efeitos opcionais. Os leitores pagam a Experiência Arcana aplicável; membros do Legado tratam o receptáculo como Yantra simpática de +2.",
+      "description": "Inscreve um Aperfeiçoamento de Legado por conjuração em um receptáculo; conjurações consecutivas podem reunir a iniciação e os cinco Aperfeiçoamentos. A conjuradora precisa cumprir os pré-requisitos pertinentes de Gnose, Legado e Arcanos para efeitos opcionais. Os leitores pagam a Experiência Arcana aplicável; membros do Legado tratam o receptáculo como Yantra simpática de +2. +1 Alcance e 1 Mana: Torna o efeito duradouro.",
+      "reach": "+1 Alcance e 1 Mana: Torna o efeito duradouro."
+    }
   },
   {
     "id": "mta-2ed:fate-4-strings-of-fate",
