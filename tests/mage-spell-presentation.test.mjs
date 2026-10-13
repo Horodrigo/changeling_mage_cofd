@@ -31,6 +31,13 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
     assert.equal(mageSpellPresentation(crafting, "pt-BR").name, "Moldagem da Alma");
     assert.match(mageSpellPresentation(spells.find(spell => spell.name === "Exorcism"), "pt-BR").reach, /Adicionar Mente ou Espírito/);
     assert.match(mageSpellPresentation(spells.find(spell => spell.name === "Revenant"), "pt-BR").reach, /^Adicionar Mente ou Espírito/);
+    const fate = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/fate.json", import.meta.url), "utf8"));
+    assert.equal(fate.filter(spell => spell.presentationPt).length, 5);
+    for (const spell of fate.filter(spell => spell.presentationPt)) {
+      assert.equal(mageSpellPresentation(spell, "en-US").name, spell.name);
+      assert.equal(mageSpellPresentation(spell, "pt-BR").name, spell.presentationPt.name);
+      assert.equal(mageSpellSelection(spell).description, spell.description);
+    }
     assert.match(mageSpellPresentation(spells[1], "pt-BR").reach, /\+1 Alcance/);
     assert.match(spells[1].description, /\+1 Reach:/);
     const homebrew = { id: "homebrew:spell:author", name: "Minha magia", originalName: "Minha magia", summary: "Texto autoral", description: "Texto autoral" };

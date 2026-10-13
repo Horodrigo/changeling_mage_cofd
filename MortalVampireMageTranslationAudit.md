@@ -54,7 +54,9 @@ Referências de Conditions ainda necessárias: Materialized → Materializado. P
 
 Death completo: 46 Spells de Death •/••/•••/•••• (MtA 2e pp. 128–133), com revisão visual e apresentação PT separada dos campos ingleses. Integração em criação, XP/histórico e ficha Desktop/Mobile; 18/18 testes direcionados de integração no lote final; 17/17 de catálogo/persistência nos lotes intermediários; tipos e builds aprovados. Comparação confirmou os campos canônicos das 46 entradas de Death intactos; os lotes seguintes acrescentaram oito traduções da p. 129, sete da p. 130 e dez das pp. 131–133 e mais sete das pp. 133–134 apenas em `presentationPt`. O livro básico de Death e as oito entradas de Signs of Sorcery estão traduzidos. O título canônico do suplemento foi corrigido de `Soul Grafting` para `Soul Crafting`, conforme Signs of Sorcery p. 90, preservando o ID histórico; a apresentação PT é Moldagem da Alma. `Exorcism` e `Revenant` exibem Adicionar Arcana em PT. Smoke de navegador não executado.
 
-Spells pendentes: Fate 30; Forces 38; Life 29; Matter 32; Mind 45; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
+Fate em execução: cinco Spells de MtA 2e pp. 134–135 localizadas em `presentationPt`, sem alterar os campos canônicos.
+
+Spells pendentes: Fate 25; Forces 38; Life 29; Matter 32; Mind 45; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
 
 Apresentar **Práticas, Fator Primário, Resistência, Alcance e Adicionar Arcana** quando aplicáveis. `spell-presentation.ts` extrai `Reach:`/`Add Arcanum` do texto inglês canônico; `presentationPt.reach` localiza a apresentação sem mudar essa entrada. Títulos de Práxis publicadas acompanham Spells; nomes autorais permanecem intactos.
 
