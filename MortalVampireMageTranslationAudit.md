@@ -56,7 +56,9 @@ Death completo: 46 Spells de Death •/••/•••/•••• (MtA 2e pp.
 
 Fate completo: 30 Spells de MtA 2e pp. 134–140, Signs of Sorcery pp. 64/87 e Dark Eras 2 pp. 376–379 localizadas em `presentationPt`, sem alterar os campos canônicos. As apresentações já traduzidas de Death/Fate uniformizam Condition/Conditions como Condição/Condições; 18/18 testes direcionados (incluindo EN/PT/EN), build e hashes aprovados no lote final; os campos canônicos das 30 entradas permaneceram iguais.
 
-Spells pendentes: Forces 38; Life 29; Matter 32; Mind 45; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
+Forces em execução: sete Spells iniciais de MtA 2e pp. 140–141 localizadas em `presentationPt`, mantendo seus campos canônicos.
+
+Spells pendentes: Forces 31; Life 29; Matter 32; Mind 45; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
 
 Apresentar **Práticas, Fator Primário, Resistência, Alcance e Adicionar Arcana** quando aplicáveis. `spell-presentation.ts` extrai `Reach:`/`Add Arcanum` do texto inglês canônico; `presentationPt.reach` localiza a apresentação sem mudar essa entrada. Títulos de Práxis publicadas acompanham Spells; nomes autorais permanecem intactos.
 
