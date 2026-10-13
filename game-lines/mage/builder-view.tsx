@@ -1,5 +1,7 @@
 "use client";
 
+import { mageSpellPresentation } from "./spell-presentation";
+
 import { useState } from "react";
 import { Plus, Search, ShieldCheck, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -307,7 +309,8 @@ function SpellSelector({
   allowedRoteSkills?:string[];
 }) {
   const { locale, t } = useLanguage();
-  const spellName = (spell: SpellDefinition) => locale === "pt-BR" ? spell.name : (spell.originalName || spell.name);
+  const present = (spell: SpellDefinition) => mageSpellPresentation(catalog.find(item => item.id === spell.id) ?? spell, locale);
+  const spellName = (spell: SpellDefinition) => present(spell).name;
   const [search, setSearch] = useState("");
   const [arcanaFilter, setArcanaFilter] = useState("__all");
   const [levelFilter, setLevelFilter] = useState("__all");
@@ -325,7 +328,7 @@ function SpellSelector({
       (sourceFilter === "__all" || spell.sourceId === sourceFilter) &&
       (practiceFilter === "__all" || spell.practice === practiceFilter) &&
       (!normalized ||
-        `${spell.name} ${spell.originalName} ${spell.source} ${Object.keys(spell.requirements).join(" ")}`
+        `${spellName(spell)} ${spell.name} ${spell.originalName} ${spell.source} ${Object.keys(spell.requirements).join(" ")}`
           .toLocaleLowerCase("pt-BR")
           .includes(normalized)),
   );
@@ -378,14 +381,14 @@ function SpellSelector({
         <div>
           <strong>{spellName(spell)}</strong>
           <small>{arcanaSource(spell)}</small>
-          <p className="rule-detail"><strong>{t("ui.practice")}:</strong> {spell.practice}</p>
-          <p className="rule-detail"><strong>{t("ui.primaryFactor")}:</strong> {spell.primaryFactor}</p>
-          {spell.withstand && <p className="rule-detail"><strong>{t("ui.withstand")}:</strong> {spell.withstand}</p>}
+          <p className="rule-detail"><strong>{t("ui.practice")}:</strong> {present(spell).practice}</p>
+          <p className="rule-detail"><strong>{t("ui.primaryFactor")}:</strong> {present(spell).primaryFactor}</p>
+          {spell.withstand && <p className="rule-detail"><strong>{t("ui.withstand")}:</strong> {present(spell).withstand}</p>}
           {rote && spell.roteSkills.length > 0 && <p className="rule-detail"><strong>{t("ui.roteSkill")}:</strong> {spell.roteSkills.filter((skill)=>!allowedRoteSkills?.length||allowedRoteSkills.includes(skill)).map(skill => systemTerm(skill, locale)).join(", ")}</p>}
           <p className="rule-detail">
-            <strong>{t("ui.summary")}:</strong> {spellSummary(spell, t("ui.spellDescriptionUnavailable"))}
+            <strong>{t("ui.summary")}:</strong> {(present(spell).summary || t("ui.spellDescriptionUnavailable"))}
           </p>
-          {spellReach(spell) && <p className="rule-detail"><strong>{t("ui.reach")}:</strong> {spellReach(spell)}</p>}
+          {present(spell).reach && <p className="rule-detail"><strong>{t("ui.reach")}:</strong> {present(spell).reach}</p>}
         </div>
       </SelectableCatalogCard>
     );
@@ -413,11 +416,11 @@ function SpellSelector({
           const roteSkillOptions=item.roteSkills.filter((skill)=>!allowedRoteSkills?.length||allowedRoteSkills.includes(skill));
           return (
             <details className="rule-power-card" key={`${item.id}-${index}`}>
-              <summary className="rule-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {t("ui.remove7d41cc")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>{t("ui.practice")}:</strong> {item.practice}</span><span className="spell-card-rule-line"><strong>{t("ui.primaryFactor")}:</strong> {item.primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{t("ui.withstand")}:</strong> {item.withstand}</span>}{rote&&roteSkillOptions.length>0&&<span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={t("ui.roteSkill")} value={roteSkillOptions.includes(item.roteSkill??"")?item.roteSkill??"":""} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={roteSkillOptions}/></span>}</summary>
+              <summary className="rule-power-summary"><strong>{spellName(item)}</strong><span className="spell-card-actions"><Badge variant={rote ? "secondary" : "outline"}>{rote ? t("ui.rote") : t("ui.praxis")}</Badge><Button type="button" variant="ghost" size="sm" onClick={(event) => { event.preventDefault(); event.stopPropagation(); remove(index); }}><Trash2 /> {t("ui.remove7d41cc")}</Button></span><small>{arcanaSource(item)}</small><span className="spell-card-rule-line"><strong>{t("ui.practice")}:</strong> {present(item).practice}</span><span className="spell-card-rule-line"><strong>{t("ui.primaryFactor")}:</strong> {present(item).primaryFactor}</span>{item.withstand && <span className="spell-card-rule-line"><strong>{t("ui.withstand")}:</strong> {present(item).withstand}</span>}{rote&&roteSkillOptions.length>0&&<span className="collapsed-rote-skill" onClick={(event)=>event.stopPropagation()} onKeyDown={(event)=>event.stopPropagation()}><Choice label={t("ui.roteSkill")} value={roteSkillOptions.includes(item.roteSkill??"")?item.roteSkill??"":""} setValue={(value) => { const next = [...values]; next[index] = { ...item, roteSkill: value }; setValues(next); }} options={roteSkillOptions}/></span>}</summary>
               <div className="rule-power-details">
                 <dl>
-                  <div><dt>{t("ui.summary")}</dt><dd>{spellSummary(item, t("ui.spellDescriptionUnavailable"))}</dd></div>
-                  {spellReach(item) && <div><dt>{t("ui.reach")}</dt><dd>{spellReach(item)}</dd></div>}
+                  <div><dt>{t("ui.summary")}</dt><dd>{(present(item).summary || t("ui.spellDescriptionUnavailable"))}</dd></div>
+                  {present(item).reach && <div><dt>{t("ui.reach")}</dt><dd>{present(item).reach}</dd></div>}
                 </dl>
               </div>
             </details>
@@ -437,7 +440,7 @@ function SpellSelector({
             <Choice value={arcanaFilter} setValue={setArcanaFilter} options={["__all",...Object.keys(arcanaLabels)]} optionLabels={{__all:t("ui.allArcana"),...arcanaLabels}} />
             <Choice value={levelFilter} setValue={setLevelFilter} options={["__all","1","2","3","4","5"]} optionLabels={{__all:t("ui.allLevels"),...Object.fromEntries([1,2,3,4,5].map(level=>[String(level),`${t("ui.level")} ${level}`]))}} />
             <Choice value={sourceFilter} setValue={setSourceFilter} options={["__all",...new Set(catalog.map(spell=>spell.sourceId))]} optionLabels={{__all:t("ui.allSources729d47"),...Object.fromEntries(catalog.map(spell=>[spell.sourceId,spell.source]))}} />
-            <Choice value={practiceFilter} setValue={setPracticeFilter} options={["__all",...new Set(catalog.map(spell=>spell.practice))]} optionLabels={{__all:t("ui.allPractices")}} />
+            <Choice value={practiceFilter} setValue={setPracticeFilter} options={["__all",...new Set(catalog.map(spell=>spell.practice))]} optionLabels={{...Object.fromEntries(catalog.filter(spell => present(spell).practice !== spell.practice).map(spell => [spell.practice, present(spell).practice])), __all:t("ui.allPractices")}} />
           </div>
           <div className="merit-catalog spell-groups">
             {Array.from(groups.entries())
@@ -462,19 +465,4 @@ function SpellSelector({
       </Dialog>
     </>
   );
-}
-
-
-
-function spellSummary(spell: SpellDefinition, fallback: string) {
-  if (spell.summary?.trim()) return spell.summary.trim();
-  const description = spell.description?.trim() || fallback;
-  return description.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || description;
-}
-
-function spellReach(spell: SpellDefinition) {
-  const description = spell.description?.trim() ?? "";
-  const firstReach = description.search(/(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:/i);
-  if (firstReach < 0) return "";
-  return description.slice(firstReach).replace(/\s+(?=(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:)/gi, " · ");
 }

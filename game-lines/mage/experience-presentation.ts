@@ -1,3 +1,5 @@
+
+import { mageSpellPresentation } from "./spell-presentation";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import type { MageAdvancementUndo } from "./experience-refunds";
@@ -34,7 +36,7 @@ export function mageExperienceLabel(entry: MageExperienceEntry, character: Chara
   if (undo.kind === "spell") {
     const spell = spells.find(item => item.id === undo.id);
     const kind = translate(locale, undo.key === "learned_rotes" ? "ui.rote" : "ui.praxis");
-    return `${kind}: ${spell ? locale === "en-US" ? spell.originalName || spell.name : spell.name : undo.id}`;
+    return `${kind}: ${spell ? mageSpellPresentation(spell, locale).name : undo.id}`;
   }
   if (undo.kind === "wisdomLoss") return entry.act
     ? `${translate(locale, "ui.actOfHubris")}: ${entry.act}`

@@ -1,3 +1,4 @@
+import { mageSpellSelection } from "./spell-presentation";
 import { canonicalTraitHistory } from "@/lib/core/character/trait-identities";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
@@ -33,7 +34,12 @@ function mageDerived(character: CharacterSheet): CharacterSheet["derived"] {
 /** Mage-owned persistence effects run only after the current schema is valid. */
 export const mageRules: GameLineRulesModule = {
   normalizeCharacter(character) {
-    return { ...character, current_state: canonicalTraitHistory(character.current_state, "mage_experience_history") };
+    const line_data = { ...character.line_data };
+    for (const key of ["rotes", "praxes", "learned_rotes", "learned_praxes", "inured_spells"]) {
+      const values = line_data[key];
+      if (Array.isArray(values)) line_data[key] = values.map(value => value && typeof value === "object" ? mageSpellSelection(value) : value);
+    }
+    return { ...character, line_data, current_state: canonicalTraitHistory(character.current_state, "mage_experience_history") };
   },
   onSpecialtyMeritsRemoved(character, removed) {
     return { ...character, merits: removeSpecialtyMeritGrantChoices(character.merits, removed, merit => commonMeritId(merit) ??

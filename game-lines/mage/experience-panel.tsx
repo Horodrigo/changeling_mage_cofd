@@ -1,4 +1,6 @@
 "use client";
+
+import { mageSpellPresentation } from "./spell-presentation";
 import { meritProblemMessage } from "@/lib/merit-ui";
 import { useState } from "react";
 import { History, RotateCcw } from "lucide-react";
@@ -215,11 +217,11 @@ export function MageExperiencePanel({
     label = `${t("ui.gnosis")} ${intendedRating}`;
   } else if (purchase === "rote") {
     cost = 1;
-    label = (locale==="en-US"?selectedSpell?.originalName:selectedSpell?.name) ?? t("ui.rote");
+    label = (selectedSpell ? mageSpellPresentation(selectedSpell, locale).name : undefined) ?? t("ui.rote");
   } else if (purchase === "praxis") {
     cost = 1;
     mode = "arcane";
-    label = (locale==="en-US"?selectedSpell?.originalName:selectedSpell?.name) ?? t("ui.praxis");
+    label = (selectedSpell ? mageSpellPresentation(selectedSpell, locale).name : undefined) ?? t("ui.praxis");
   } else if (purchase === "wisdom") {
     cost = 2 * ratingAmount;
     mode = "arcane";
@@ -566,10 +568,10 @@ export function MageExperiencePanel({
                       const [mainArcanum, level] = requirements[0] ?? ["Outro", 0];
                       return {
                         id: spell.id,
-                        name: locale==="en-US"?(spell.originalName||spell.name):spell.name,
+                        name: mageSpellPresentation(spell, locale).name,
                         category: systemTerm(mainArcanum,locale),
                         secondaryCategory: `${t("ui.level")} ${level}`,
-                        description: spell.description ?? "",
+                        description: mageSpellPresentation(spell, locale).description,
                         meta: `${formatSpellRequirements(spell.requirements, locale)} · ${spell.source} · p. ${spell.page || "—"}`,
                       };
                     })}

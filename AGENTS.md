@@ -133,6 +133,8 @@ Changeling saves the absence of Court as `courtless`; the owning schema-2 normal
 
 Changeling Contract classifications persist as `Common`/`Royal` and `Court`/`Independent`/`Regalia`; labels are localized only by the owning UI. `contract-identities.ts` bridges exact old PT enum values in schema-2 Contract selections and v1 player-created Homebrews. The owning normalization preserves all other fields, IDs and receipts; remove the bridge when these old records are unsupported.
 
+Mage Spell translations live in each catalog entry's `presentationPt`. `spell-presentation.ts` supplies a render-only view for creation, Experience and Desktop/Mobile sheets; parsers and purchases retain English canonical fields. The owning normalizer removes only this presentation metadata from saved Rotes, Praxes and Inured Spells, preserving authored fields and receipts. Saved selections resolve current presentation by exact catalog ID.
+
 ## Catalog Architecture
 
 Static RPG content should remain data under `public/shared/data/**` for common/Core catalogs and `public/game-lines/<line>/data/**` for line-owned catalogs. Catalog infrastructure is generic and group-driven; each game-line registration declares the groups required by its Builder and Sheet surfaces. The versioned resource manifest lives at `public/shared/data/catalog-manifest.json`. Catalog entries also carry a build-maintained SHA-256 hash; `scripts/build-verified.mjs` compares each manifest URL during every build and increments only changed entries. Canonical line Merits belong to their own public line folder even when other lines can purchase them; the shared Merit discovery index does not transfer ownership.

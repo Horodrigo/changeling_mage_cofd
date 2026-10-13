@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -15,14 +16,14 @@ test("Mage creation/sheet description fallbacks and Legacy controls follow EN/PT
   for (const locale of ["en-US", "pt-BR", "en-US"]) {
     const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false }, optimizeDeps: { noDiscovery: true, include: [] }, plugins: [{ name: "mage-interface-test-surface", enforce: "pre", transform(code, id) {
       const path = id.replaceAll("\\", "/");
-      if (path.endsWith("/game-lines/mage/builder-view.tsx")) return `${code}\nexport { SpellSelector, spellReach };`;
-      if (path.endsWith("/game-lines/mage/sheet-view.tsx")) return `${code}\nexport { SpellColumn, spellItemReach, MageAttainmentList };`;
+      if (path.endsWith("/game-lines/mage/builder-view.tsx")) return `${code}\nexport { SpellSelector };`;
+      if (path.endsWith("/game-lines/mage/sheet-view.tsx")) return `${code}\nexport { SpellColumn, MageAttainmentList };`;
       if (locale === "pt-BR" && path.endsWith("/lib/i18n.tsx")) return code.replace('const serverLocale = ():Locale => "en-US";', 'const serverLocale = ():Locale => "pt-BR";');
     } }] });
     try {
       const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
-      const { SpellSelector, spellReach } = await vite.ssrLoadModule("/game-lines/mage/builder-view.tsx");
-      const { SpellColumn, spellItemReach, MageAttainmentList } = await vite.ssrLoadModule("/game-lines/mage/sheet-view.tsx");
+      const { SpellSelector } = await vite.ssrLoadModule("/game-lines/mage/builder-view.tsx");
+      const { SpellColumn, MageAttainmentList } = await vite.ssrLoadModule("/game-lines/mage/sheet-view.tsx");
       const { mageMessages } = await vite.ssrLoadModule("/lib/i18n/messages/mage.ts");
       const { LegacyPage } = await vite.ssrLoadModule("/game-lines/mage/legacy-page.tsx");
       const refuseMutation = () => { throw new Error("Rendering mutated data"); };
@@ -36,8 +37,22 @@ test("Mage creation/sheet description fallbacks and Legacy controls follow EN/PT
         assert.ok(html.includes("+1 Reach: Author effect. · Add Fate 2: · +2 Reach: Author addition."));
         if (locale === "en-US") assert.doesNotMatch(html, /Descrição não disponível/);
       }
-      assert.equal(spellReach(reached), "+1 Reach: Author effect. · Add Fate 2: · +2 Reach: Author addition.");
-      assert.equal(spellItemReach(reached, [reached]), spellReach(reached));
+      const { mageSpellPresentation } = await vite.ssrLoadModule("/game-lines/mage/spell-presentation.ts");
+      assert.equal(mageSpellPresentation(reached, locale).reach, "+1 Reach: Author effect. · Add Fate 2: · +2 Reach: Author addition.");
+
+      const catalog = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/death.json", import.meta.url), "utf8"));
+      const { mageSpellSelection } = await vite.ssrLoadModule("/game-lines/mage/spell-presentation.ts");
+      const saved = mageSpellSelection(catalog[1]);
+      const selectedBefore = JSON.stringify(saved);
+      for (const html of [
+        render(SpellSelector, { title: "Rotes", count: 1, values: [saved], setValues: refuseMutation, rote: true, arcana: { Death: 2 }, catalog }),
+        render(SpellColumn, { items: [saved], catalog }),
+      ]) {
+        assert.ok(html.includes(locale === "pt-BR" ? "Aprofundar Sombras" : "Deepen Shadows"));
+        assert.ok(html.includes(locale === "pt-BR" ? "Compulsão" : "Compelling"));
+        assert.ok(html.includes(locale === "pt-BR" ? "+1 Alcance" : "+1 Reach"));
+      }
+      assert.equal(JSON.stringify(saved), selectedBefore);
       const legacy = render(LegacyPage, { character, meritCatalog: [], updateSheet: refuseMutation, onDiscard: refuseMutation });
       assert.ok(legacy.includes(translate(locale, "ui.legacyTutelage")), locale);
       assert.ok(legacy.includes(translate(locale, "ui.oneExperience")), locale);

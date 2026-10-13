@@ -1,4 +1,6 @@
 "use client";
+
+import { mageSpellPresentation } from "./spell-presentation";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 import { MeritDetails } from "@/app/workspace/merit-details";
@@ -245,9 +247,9 @@ export function MageCharacterPaper({
     )
     .map((spell) => ({
       id: spell.id,
-      name: locale === "en-US" ? spell.originalName : spell.name,
+      name: mageSpellPresentation(spell, locale).name,
       category: Object.keys(spell.requirements).map(name => systemTerm(name, locale)).join(" + "),
-      description: spell.summary ?? spell.description ?? "",
+      description: mageSpellPresentation(spell, locale).summary,
       meta: `${formatSpellRequirements(spell.requirements, locale)} · ${spell.source} · p. ${spell.page || "—"}`,
     })), [spellCatalog, arcana, praxes, locale]);
   const addGrantedPraxis = (id: string) => {
@@ -270,9 +272,9 @@ export function MageCharacterPaper({
     )
     .map((spell) => ({
       id: spell.id,
-      name: locale === "en-US" ? spell.originalName : spell.name,
+      name: mageSpellPresentation(spell, locale).name,
       category: Object.keys(spell.requirements).map(name => systemTerm(name, locale)).join(" + "),
-      description: spell.summary ?? spell.description ?? "",
+      description: mageSpellPresentation(spell, locale).summary,
       meta: `${formatSpellRequirements(spell.requirements, locale)} · ${spell.source} · p. ${spell.page || "—"}`,
     }));
   const setInuredSpells = (items: Array<Record<string, unknown>>) => {
@@ -687,7 +689,7 @@ export function MageCharacterPaper({
                   wisdom: <MageWisdomSection
                     wisdom={Number(data.wisdom ?? 7)}
                     gnosis={gnosis}
-                    inuredSpells={inuredSpells}
+                    inuredSpells={inuredSpells.map(item => ({ ...item, name: mageSpellPresentation(spellCatalog.find(spell => spell.id === item.id) ?? item, locale).name }))}
                     conditions={conditionCatalog}
                     available={availableInuredSpells}
                     locale={locale}
@@ -1001,7 +1003,7 @@ export function MageCharacterPaper({
                   <MageWisdomSection
                     wisdom={Number(data.wisdom ?? 7)}
                     gnosis={gnosis}
-                    inuredSpells={inuredSpells}
+                    inuredSpells={inuredSpells.map(item => ({ ...item, name: mageSpellPresentation(spellCatalog.find(spell => spell.id === item.id) ?? item, locale).name }))}
                     conditions={conditionCatalog}
                     available={availableInuredSpells}
                     locale={locale}
@@ -1908,18 +1910,16 @@ function SpellColumn({
       )} · ${String(item.source ?? "")} · p. ${String(item.page ?? "—")}`;
   return (
     <div className="mage-spell-lines">
-      {items.map((item, index) => (
-        <details
+      {items.map((item, index) => {
+        const definition = catalog.find(spell => spell.id === item.id);
+        const presented = mageSpellPresentation(definition ?? item, locale);
+        return <details
           className="rule-power-card"
           key={`${String(item.id ?? item.name)}-${index}`}
         >
           <summary className="rule-power-summary">
             <strong>
-              {String(
-                locale === "en-US"
-                  ? (item.originalName ?? item.name)
-                  : (item.name ?? item.originalName ?? ""),
-              )}
+              {presented.name}
             </strong>
             {onRemove && (
               <Button
@@ -1938,15 +1938,15 @@ function SpellColumn({
             )}
             <small>{arcanaSource(item)}</small>
             <span className="spell-card-rule-line">
-              <strong>{t("ui.practice")}:</strong> {String(item.practice ?? "")}
+              <strong>{t("ui.practice")}:</strong> {presented.practice}
             </span>
             <span className="spell-card-rule-line">
               <strong>{t("ui.primaryFactor")}:</strong>{" "}
-              {String(item.primaryFactor ?? "")}
+              {presented.primaryFactor}
             </span>
-            {Boolean(item.withstand) && (
+            {Boolean(presented.withstand) && (
               <span className="spell-card-rule-line">
-                <strong>{t("ui.withstand")}:</strong> {String(item.withstand)}
+                <strong>{t("ui.withstand")}:</strong> {presented.withstand}
               </span>
             )}
             {showSkill && Boolean(item.roteSkill) && (
@@ -1959,17 +1959,17 @@ function SpellColumn({
           <div className="rule-power-details">
             <p>
               <strong>{t("ui.summary")}:</strong>{" "}
-              {spellItemSummary(item, catalog, t("ui.spellDescriptionUnavailable"))}
+              {presented.summary || t("ui.spellDescriptionUnavailable")}
             </p>
-            {spellItemReach(item, catalog) && (
+            {presented.reach && (
               <p>
                 <strong>{t("ui.reach")}:</strong>{" "}
-                {spellItemReach(item, catalog)}
+                {presented.reach}
               </p>
             )}
           </div>
-        </details>
-      ))}
+        </details>;
+      })}
       {Array.from(
         { length: Math.max(0, minimumRows - items.length) },
         (_, index) => (
@@ -2149,43 +2149,6 @@ function MageOrderSummary({ data }: { data: Record<string, unknown> }) {
       )}
     </section>
   );
-}
-function spellItemSummary(
-  item: Record<string, unknown>,
-  catalog: readonly SpellDefinition[],
-  fallback: string,
-) {
-  const current = catalog.find(
-    (spell) =>
-      spell.id === String(item.id ?? "") ||
-      spell.originalName === String(item.originalName ?? item.name ?? ""),
-  );
-  const reviewedSummary = String(current?.summary ?? item.summary ?? "").trim();
-  if (reviewedSummary) return reviewedSummary;
-  const description =
-    String(current?.description ?? item.description ?? "").trim() ||
-    fallback;
-  return description.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || description;
-}
-function spellItemReach(
-  item: Record<string, unknown>,
-  catalog: readonly SpellDefinition[],
-) {
-  const current = catalog.find(
-      (spell) =>
-        spell.id === String(item.id ?? "") ||
-        spell.originalName === String(item.originalName ?? item.name ?? ""),
-    ),
-    description = String(current?.description ?? item.description ?? "").trim(),
-    index = description.search(/(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:/i);
-  return index < 0
-    ? ""
-    : description
-        .slice(index)
-        .replace(
-          /\s+(?=(?:Add [A-Za-z]+\s*[•●\d]+:\s*)?\+\d+ Reach:)/gi,
-          " · ",
-        );
 }
 function selectedConditionList(
   value: unknown,
