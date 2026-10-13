@@ -20,7 +20,7 @@ export class CharacterLifecycleError extends Error {
 
 async function hydrateCharacterCatalogs(gameLine: CharacterSheet["game_line"]) {
   const { loadCatalogGroups } = await import("@/game-lines/registry/catalog-group-registry");
-  await loadCatalogGroups(getGameLineRegistration(gameLine).catalogGroups.sheet);
+  return loadCatalogGroups(getGameLineRegistration(gameLine).catalogGroups.sheet);
 }
 
 async function normalizeCharacter(
@@ -28,9 +28,9 @@ async function normalizeCharacter(
   hydrateCatalogs: boolean,
   previous?: CharacterSheet,
 ): Promise<CharacterSheet> {
-  if (hydrateCatalogs) await hydrateCharacterCatalogs(sheet.game_line);
+  const catalogs = hydrateCatalogs ? await hydrateCharacterCatalogs(sheet.game_line) : undefined;
   const { normalizeStoredSheet } = await import("@/lib/character-persistence");
-  return normalizeGameLineCharacter(normalizeStoredSheet(sheet), previous);
+  return normalizeGameLineCharacter(normalizeStoredSheet(sheet), previous, catalogs);
 }
 
 export function prepareCharacterForOpen(sheet: CharacterSheet) {

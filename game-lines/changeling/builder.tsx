@@ -28,6 +28,7 @@ import { canonicalRegalia, changelingFavoredRegalia } from "@/lib/changeling-reg
 import type { KithDefinition } from "@/lib/changeling-kiths";
 import { kithCreationChoice } from "./kith-choices";
 import type { ContractDefinition } from "./contract-types";
+import { canonicalContractSnapshot } from "./contract-identities";
 import { contractWithSupplementalBenefits } from "./contract-presentation";
 import { meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
 import { changelingMeritPrerequisitesMet, type ChangelingMeritContext } from "./merit-context";
@@ -115,9 +116,10 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
   const customMerits = useMemo(() => allCustomMerits.filter(item => item.line === "CtL" || item.line === "Core"), [allCustomMerits]);
   const initialContracts = initial?.line_data.contracts;
   const initialContractIds = useMemo(() => new Set((Array.isArray(initialContracts) ? initialContracts : []).map((item) => String((item as Record<string, unknown>).id ?? ""))), [initialContracts]);
-  const contractCatalog = useMemo(() => mergeContractHomebrews(catalogs.get<readonly ContractDefinition[]>("changeling-contracts"), customContracts)
+  const officialContracts = catalogs.get<readonly ContractDefinition[]>("changeling-contracts");
+  const contractCatalog = useMemo(() => mergeContractHomebrews(officialContracts, customContracts)
     .filter((item) => initialContractIds.has(item.id) || homebrewContentActive(homebrewPreferences, item.id, item.sourceId))
-    .map((item) => contractWithSupplementalBenefits(item, homebrewPreferences.disabledIds.includes("h-seemings") ? [] : ["h-seemings"])), [catalogs, customContracts, initialContractIds, homebrewPreferences]);
+    .map((item) => contractWithSupplementalBenefits(item, homebrewPreferences.disabledIds.includes("h-seemings") ? [] : ["h-seemings"])), [officialContracts, customContracts, initialContractIds, homebrewPreferences]);
   const meritCatalog = useMemo(() => activeMeritCatalog([
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("changeling-merits"),
@@ -243,7 +245,9 @@ function ChangelingCharacterBuilder({ player, initial: storedInitial, onCancel, 
         primary_regalia: seemingCatalog[seeming]?.regalia ?? "",
         second_regalia: secondRegalia, favored_attribute: favoredAttribute,
         aspirations: common.aspirations, contracts,
-        learned_contracts: source?.line_data.learned_contracts ?? [],
+        learned_contracts: Array.isArray(source?.line_data.learned_contracts)
+          ? source.line_data.learned_contracts.map(item => canonicalContractSnapshot(item, officialContracts, reference.contractPresentation))
+          : source?.line_data.learned_contracts ?? [],
         extra_contract_benefits: source?.line_data.extra_contract_benefits ?? [],
         extra_contract_clauses: source?.line_data.extra_contract_clauses ?? [],
       },

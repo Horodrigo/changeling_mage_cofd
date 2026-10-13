@@ -334,6 +334,32 @@ test("legacy Contract classifications become English without translating authore
   assert.deepEqual(canonicalContractClassification({ regalia: "  Minha Regalia  ", name: "Coroa" }), { regalia: "  Minha Regalia  ", name: "Coroa" });
 });
 
+test("Changeling open/export restores only exact official Contract translations", async t => {
+  t.mock.method(globalThis, "fetch", async path => new Response(await readFile(new URL(`../public${path}`, import.meta.url), "utf8")));
+  const { prepareCharacterForOpen, prepareCharacterForSave } = await vite.ssrLoadModule("/app/workspace/character-lifecycle.ts");
+  const official = JSON.parse(await readFile(new URL("../public/game-lines/changeling/data/contracts/ctl-core.json", import.meta.url), "utf8"))[0];
+  const presentation = JSON.parse(await readFile(new URL("../public/game-lines/changeling/data/contracts/ctl-core-pt.json", import.meta.url), "utf8"));
+  const { contractPresentation } = await vite.ssrLoadModule("/game-lines/changeling/contract-presentation.ts");
+  const translated = presentation[official.id];
+  const current = sheet("CtL");
+  current.line_data = { contracts: [{ ...official, ...translated, loophole: "Texto autoral" }], learned_contracts: [{ ...official, ...translated, id: "unavailable:contract" }, { ...official, ...translated, homebrew: true }] };
+  current.current_state.experience_history = [{ id: "receipt", experience: -4, description: "Histórico", undo: { kind: "contract", id: official.id } }];
+  const before = structuredClone(current);
+  const normalized = await prepareCharacterForOpen(current);
+  assert.equal(normalized.line_data.contracts[0].name, official.name);
+  assert.equal(normalized.line_data.contracts[0].description, official.description);
+  assert.equal(normalized.line_data.contracts[0].dicePool, official.dicePool);
+  assert.equal(normalized.line_data.contracts[0].loophole, "Texto autoral");
+  assert.deepEqual(normalized.line_data.contracts[0].seemingBenefits, official.seemingBenefits);
+  assert.equal(contractPresentation(normalized.line_data.contracts[0], "pt-BR", presentation).name, translated.name);
+  assert.equal(contractPresentation(normalized.line_data.contracts[0], "en-US", presentation).name, official.name);
+  assert.deepEqual(normalized.line_data.learned_contracts, current.line_data.learned_contracts);
+  assert.deepEqual(normalized.current_state.experience_history, current.current_state.experience_history);
+  assert.deepEqual(await prepareCharacterForOpen(JSON.parse(JSON.stringify(normalized))), normalized);
+  assert.deepEqual(await prepareCharacterForSave(normalized), normalized);
+  assert.deepEqual(current, before);
+});
+
 test("legacy Court and anchor choices become canonical while custom Court text remains authored", async () => {
   const { changelingRules } = await vite.ssrLoadModule("/game-lines/changeling/rules.ts");
   for (const [court, expected] of [["Sem Corte", "courtless"], ["Courtless", "courtless"], ["courtless", "courtless"], ["Primavera", "spring"], ["Summer", "summer"], ["Outono", "autumn"], ["Inverno", "winter"]]) {

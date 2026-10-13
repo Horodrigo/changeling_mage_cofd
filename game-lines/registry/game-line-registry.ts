@@ -1,6 +1,7 @@
 import type { PersistedGameLineId } from "@/lib/core/character/game-line-ids";
 import type { GameLineRegistration } from "@/lib/game-line-contracts/game-line-registration";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
+import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
 import { reconcileSpecialtyMerits } from "@/lib/core/character/specialty-merits";
 import { preservePreviousCommonGrants } from "@/lib/core/character/synchronize-merit-grants";
 import { mortalRegistration } from "../mortal/registration";
@@ -33,11 +34,11 @@ export function listGameLineRegistrations(): readonly GameLineRegistration[] {
  * Canonical line-owned character pipeline after structural/core normalization:
  * normalize -> preserve prior free grant choices -> synchronize -> reconcile explicit Specialty edits -> derive.
  */
-export async function normalizeGameLineCharacter(character: CharacterSheet, previous?: CharacterSheet): Promise<CharacterSheet> {
+export async function normalizeGameLineCharacter(character: CharacterSheet, previous?: CharacterSheet, catalogs?: CatalogSnapshot): Promise<CharacterSheet> {
   const rules = await getGameLineRegistration(character.game_line).loadRules();
 
   let next = structuredClone(character);
-  next = rules.normalizeCharacter?.(next) ?? next;
+  next = rules.normalizeCharacter?.(next, catalogs) ?? next;
   if (previous?.id === next.id && previous.game_line === next.game_line) preservePreviousCommonGrants(next, previous);
   next = rules.synchronizeCharacter?.(next) ?? next;
 

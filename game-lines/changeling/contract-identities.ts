@@ -1,4 +1,6 @@
 import { canonicalStoredRegalia } from "@/lib/changeling-regalia";
+import type { ContractDefinition } from "./contract-types";
+import type { ContractPresentationCatalog } from "./contract-presentation";
 
 /** Production bridge for schema-2 selections and v1 Homebrews; remove when PT enum records are unsupported. */
 export function canonicalContractClassification(value: unknown): unknown {
@@ -10,4 +12,22 @@ export function canonicalContractClassification(value: unknown): unknown {
     ...(item.categoryKind === "Corte" ? { categoryKind: "Court" } : item.categoryKind === "Independente" ? { categoryKind: "Independent" } : {}),
     ...(typeof item.regalia === "string" ? { regalia: canonicalStoredRegalia(item.regalia) } : {}),
   };
+}
+
+/** Recover only exact published PT presentation fields; preserve all other snapshot text. */
+export function canonicalContractSnapshot(value: unknown, catalog: readonly ContractDefinition[], presentations: ContractPresentationCatalog): unknown {
+  const classified = canonicalContractClassification(value);
+  if (!classified || typeof classified !== "object" || Array.isArray(classified)) return classified;
+  const item = classified as Record<string, unknown>;
+  if (item.homebrew || typeof item.id !== "string" || typeof item.sourceId !== "string") return classified;
+  const official = catalog.find(entry => entry.id === item.id && entry.sourceId === item.sourceId);
+  const localized = presentations[item.id];
+  if (!official || !localized) return classified;
+  const canonical = official as unknown as Record<string, unknown>;
+  const next = { ...item };
+  for (const [field, translation] of Object.entries(localized)) {
+    if (!Object.hasOwn(item, field) || !Object.hasOwn(canonical, field)) continue;
+    if (JSON.stringify(item[field]) === JSON.stringify(translation)) next[field] = structuredClone(canonical[field]);
+  }
+  return next;
 }

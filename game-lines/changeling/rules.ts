@@ -1,5 +1,8 @@
 import { isChangelingCourtGrant } from "./merit-identities";
-import { canonicalContractClassification } from "./contract-identities";
+import { canonicalContractClassification, canonicalContractSnapshot } from "./contract-identities";
+import type { ContractDefinition } from "./contract-types";
+import type { ChangelingReference } from "./catalogs/reference";
+import type { CatalogSnapshot } from "@/lib/game-line-contracts/catalog-groups";
 import { canonicalTraitHistory, canonicalTraitId } from "@/lib/core/character/trait-identities";
 import type { CharacterSheet } from "@/lib/core/character/character-types";
 import type { GameLineRulesModule } from "@/lib/game-line-contracts/game-line-rules";
@@ -42,8 +45,13 @@ export const changelingRules: GameLineRulesModule = {
     if (!state || !removed.some(item => commonMeritId(item) === INTERDISCIPLINARY_SPECIALTY_ID && item.grantedBy === `Entitlement:${state.definitionId}`)) return character;
     return { ...character, line_data: { ...character.line_data, entitlement: { ...state, suspendedBenefitIds: [...new Set([...(state.suspendedBenefitIds ?? []), "hedge-interdisciplinary"])] } } };
   },
-  normalizeCharacter(character) {
+  normalizeCharacter(character, catalogs?: CatalogSnapshot) {
     const wyrd = numberValue(character.line_data.wyrd) || 1;
+    const contractCatalog = catalogs?.has("changeling-contracts") ? catalogs.get<readonly ContractDefinition[]>("changeling-contracts") : undefined;
+    const reference = catalogs?.has("changeling-reference") ? catalogs.get<ChangelingReference>("changeling-reference") : undefined;
+    const normalizeContract = (value: unknown) => contractCatalog && reference
+      ? canonicalContractSnapshot(value, contractCatalog, reference.contractPresentation)
+      : canonicalContractClassification(value);
     character = { ...character, current_state: canonicalTraitHistory(character.current_state, "experience_history") };
     return {
       ...character,
@@ -62,7 +70,7 @@ export const changelingRules: GameLineRulesModule = {
         ...(typeof character.line_data.primary_regalia === "string" ? { primary_regalia: canonicalStoredRegalia(character.line_data.primary_regalia) } : {}),
         ...(typeof character.line_data.second_regalia === "string" ? { second_regalia: canonicalStoredRegalia(character.line_data.second_regalia) } : {}),
         ...(character.line_data.kith_custom && character.line_data.kith_source === "Criação do jogador" ? { kith_source: "Player-created" } : {}),
-        ...Object.fromEntries(["contracts", "learned_contracts"].filter(key => Array.isArray(character.line_data[key])).map(key => [key, (character.line_data[key] as unknown[]).map(canonicalContractClassification)])),
+        ...Object.fromEntries(["contracts", "learned_contracts"].filter(key => Array.isArray(character.line_data[key])).map(key => [key, (character.line_data[key] as unknown[]).map(normalizeContract)])),
         frailties: normalizeChangelingFrailties(character.line_data.frailties, wyrd),
       },
     };

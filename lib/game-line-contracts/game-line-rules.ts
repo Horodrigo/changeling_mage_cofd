@@ -1,4 +1,5 @@
 import type { CharacterSheet, MeritSelection } from "@/lib/core/character/character-types";
+import type { CatalogSnapshot } from "./catalog-groups";
 
 export type GameLineValidationIssue = {
   field?: string;
@@ -10,7 +11,7 @@ export type GameLineValidationIssue = {
  * values; they must not mutate their input or perform persistence/network I/O.
  */
 export interface GameLineRulesModule {
-  normalizeCharacter?: (character: CharacterSheet) => CharacterSheet;
+  normalizeCharacter?: (character: CharacterSheet, catalogs?: CatalogSnapshot) => CharacterSheet;
   migrateCharacter?: (value: unknown, player: string) => CharacterSheet;
   deriveCharacterState?: (character: CharacterSheet) => CharacterSheet["derived"];
   validateCreation?: (character: CharacterSheet) => readonly GameLineValidationIssue[];
