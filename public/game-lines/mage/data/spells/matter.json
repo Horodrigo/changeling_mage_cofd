@@ -795,7 +795,16 @@
     "source": "Mage the Awakening",
     "page": 158,
     "summary": "Render a volume of inert matter partly or wholly insubstantial for the Duration. It remains in place and does not enter Twilight, but ceases to register as materially real.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Parede Fantasma",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Torna um volume de matéria inerte parcial ou totalmente insubstancial durante a Duração. O objeto permanece onde estava no mundo material e não entra no Crepúsculo, mas deixa de ser tangível.",
+      "description": "Torna um volume de matéria inerte parcial ou totalmente insubstancial durante a Duração. O objeto permanece onde estava no mundo material e não entra no Crepúsculo, mas deixa de ser tangível. Adicionar Morte •••, Mente ••• ou Espírito •••: Pode deslocar o objeto insubstancial para o Crepúsculo correspondente ao Arcano usado.",
+      "reach": "Adicionar Morte •••, Mente ••• ou Espírito •••: Pode deslocar o objeto insubstancial para o Crepúsculo correspondente ao Arcano usado."
+    }
   },
   {
     "id": "mta-2ed:matter-4-golem",
@@ -817,7 +826,16 @@
     "source": "Mage the Awakening",
     "page": 158,
     "summary": "Animate an object as a mindless Retainer rated equal to Potency for simple labor, combat, and similar tasks. It follows only its latest simple order, has no Defense, and retains material Durability with Structure equal to Durability + Size.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Golem",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Anima uma estátua ou outro objeto como Retentor sem mente, com pontuação igual à Potência, para trabalho simples, combate e tarefas semelhantes. Executa apenas a ordem simples mais recente; não possui Defesa e conserva a Durabilidade do material, com Estrutura igual à Durabilidade + Tamanho.",
+      "description": "Anima uma estátua ou outro objeto como Retentor sem mente, com pontuação igual à Potência, para trabalho simples, combate e tarefas semelhantes. Executa apenas a ordem simples mais recente; não possui Defesa e conserva a Durabilidade do material, com Estrutura igual à Durabilidade + Tamanho. Adicionar Morte •••• ou Espírito ••••: Vincula um fantasma ou espírito ao golem como inteligência animadora. Adicionar Mente •••••: Cria uma mente verdadeira para guiá-lo e informá-lo sobre suas funções.",
+      "reach": "Adicionar Morte •••• ou Espírito ••••: Vincula um fantasma ou espírito ao golem como inteligência animadora. Adicionar Mente •••••: Cria uma mente verdadeira para guiá-lo e informá-lo sobre suas funções."
+    }
   },
   {
     "id": "mta-2ed:matter-4-piercing-earth",
@@ -839,7 +857,16 @@
     "source": "Mage the Awakening",
     "page": 158,
     "summary": "Make solid matter rise and crush the subject as an attack, inflicting lethal damage equal to Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Terra Perfurante",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Faz matéria sólida erguer-se e esmagar o alvo como ataque, causando dano letal igual à Potência.",
+      "description": "Faz matéria sólida erguer-se e esmagar o alvo como ataque, causando dano letal igual à Potência. +1 Alcance: A matéria deformada persiste e causa um Tilt ambiental apropriado, como Terremoto. +1 Alcance e 1 Mana: O dano passa a ser agravado.",
+      "reach": "+1 Alcance: A matéria deformada persiste e causa um Tilt ambiental apropriado, como Terremoto. +1 Alcance e 1 Mana: O dano passa a ser agravado."
+    }
   },
   {
     "id": "mta-2ed:matter-4-transubstantiation",
@@ -861,7 +888,16 @@
     "source": "Mage the Awakening",
     "page": 158,
     "summary": "Transform one relatively pure inert substance into another, with quality or purchasing value equal to Potency. Both source and result must be coherent substances rather than intricate mixtures.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Transubstanciação",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Transforma uma substância inerte relativamente pura em outra. A pureza e a qualidade do produto dependem da Potência, tratada como bônus de equipamento ou pontos de Recursos para uma única compra, conforme aplicável; a fonte e o resultado devem ser substâncias coerentes, não misturas complexas.",
+      "description": "Transforma uma substância inerte relativamente pura em outra. A pureza e a qualidade do produto dependem da Potência, tratada como bônus de equipamento ou pontos de Recursos para uma única compra, conforme aplicável; a fonte e o resultado devem ser substâncias coerentes, não misturas complexas. +1 Alcance: Transmuta várias substâncias em uma só, ou uma em várias. Adicionar Vida ••••: Também pode transformar matéria em seres vivos ou seres vivos em matéria inerte; sem Mente •••••, o organismo criado age somente por instinto.",
+      "reach": "+1 Alcance: Transmuta várias substâncias em uma só, ou uma em várias. Adicionar Vida ••••: Também pode transformar matéria em seres vivos ou seres vivos em matéria inerte; sem Mente •••••, o organismo criado age somente por instinto."
+    }
   },
   {
     "id": "mta-2ed:matter-5-annihilate-matter",
@@ -883,7 +919,16 @@
     "source": "Mage the Awakening",
     "page": 158,
     "summary": "Completely erase inert matter, leaving no fragments or residue, resisted by Durability. The basic spell cannot destroy magical materials or objects.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Aniquilar Matéria",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "Durabilidade",
+      "summary": "Apaga completamente matéria inerte, sem deixar restos, fragmentos ou resíduos, resistido pela Durabilidade. O efeito básico não destrói objetos ou materiais mágicos.",
+      "description": "Apaga completamente matéria inerte, sem deixar restos, fragmentos ou resíduos, resistido pela Durabilidade. O efeito básico não destrói objetos ou materiais mágicos. +1 Alcance e 1 Mana: Pode destruir objetos mágicos; eles resistem com a Tolerância sobrenatural pertinente do objeto ou de seu criador, ou com Durabilidade se tal característica não existir.",
+      "reach": "+1 Alcance e 1 Mana: Pode destruir objetos mágicos; eles resistem com a Tolerância sobrenatural pertinente do objeto ou de seu criador, ou com Durabilidade se tal característica não existir."
+    }
   },
   {
     "id": "mta-2ed:matter-5-ex-nihilo",
@@ -905,7 +950,16 @@
     "source": "Mage the Awakening",
     "page": 158,
     "summary": "Create a simple tool or relatively uncomplicated machine from nothing, with Size set by Scale. Allocate Potency between the object’s Durability and equipment bonus.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Ex Nihilo",
+      "practice": "Criação",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Cria do nada um objeto simples ou máquina relativamente descomplicada, até o Tamanho permitido pela Escala. Distribui a Potência entre sua Durabilidade e seu bônus de equipamento.",
+      "description": "Cria do nada um objeto simples ou máquina relativamente descomplicada, até o Tamanho permitido pela Escala. Distribui a Potência entre sua Durabilidade e seu bônus de equipamento. +1 Alcance: Cria máquina complexa ou aparelho eletrônico, como carro ou smartphone, desde que funcione segundo princípios físicos conhecidos.",
+      "reach": "+1 Alcance: Cria máquina complexa ou aparelho eletrônico, como carro ou smartphone, desde que funcione segundo princípios físicos conhecidos."
+    }
   },
   {
     "id": "mta-2ed:matter-5-self-repairing-machine",
@@ -927,6 +981,15 @@
     "source": "Mage the Awakening",
     "page": 159,
     "summary": "Give a machine the ability to repair itself, restoring Structure equal to Potency once per day until it reaches its normal maximum.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Máquina Autorrestauradora",
+      "practice": "Criação",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Concede a um objeto a capacidade de reparar a própria Estrutura durante a Duração, recuperando pontos iguais à Potência uma vez por dia até seu máximo normal.",
+      "description": "Concede a um objeto a capacidade de reparar a própria Estrutura durante a Duração, recuperando pontos iguais à Potência uma vez por dia até seu máximo normal. +1 Alcance: Recupera a Potência em Estrutura a cada hora. +2 Alcance: Recupera a Potência em Estrutura a cada 15 minutos.",
+      "reach": "+1 Alcance: Recupera a Potência em Estrutura a cada hora. +2 Alcance: Recupera a Potência em Estrutura a cada 15 minutos."
+    }
   }
 ]
