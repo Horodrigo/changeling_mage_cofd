@@ -609,7 +609,16 @@
     "source": "Mage the Awakening",
     "page": 151,
     "summary": "Double a living subject’s growth rate once per Potency for the Duration. The subject returns to its actual age at the normal rate afterward, but dies of old age if accelerated beyond its natural lifespan before the spell ends.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Acelerar Crescimento",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Vigor",
+      "summary": "Dobra a velocidade de crescimento de um ser vivo por ponto de Potência durante a Duração. Ao terminar o feitiço, o alvo retorna à idade real no ritmo normal; se ultrapassou sua expectativa natural de vida, morre de velhice.",
+      "description": "Dobra a velocidade de crescimento de um ser vivo por ponto de Potência durante a Duração. Ao terminar o feitiço, o alvo retorna à idade real no ritmo normal; se ultrapassou sua expectativa natural de vida, morre de velhice. +1 Alcance: Quando o feitiço termina, o alvo rejuvenesce em minutos até a idade real. Deve rolar Vigor para evitar um coma de tantos dias quanto a Potência; quem morreu de velhice não volta à vida.",
+      "reach": "+1 Alcance: Quando o feitiço termina, o alvo rejuvenesce em minutos até a idade real. Deve rolar Vigor para evitar um coma de tantos dias quanto a Potência; quem morreu de velhice não volta à vida."
+    }
   },
   {
     "id": "mta-2ed:life-4-animal-minion",
@@ -631,7 +640,16 @@
     "source": "Mage the Awakening",
     "page": 151,
     "summary": "Take complete bodily control of a living subject while the mage’s own body lies inert. The mage uses the target’s Physical Attributes and her own Mental and Social Attributes, but unfamiliar mannerisms may reveal the possession.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Lacaio Animal",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Vigor",
+      "summary": "A maga assume o controle completo do corpo de um ser vivo, embora não acesse seus pensamentos; pode fazer tudo que aquele corpo normalmente faria. Seu próprio corpo fica inerte, sem Defesa e apenas vagamente consciente do ambiente durante a Duração. Movimentos e hábitos estranhos podem revelar a possessão.",
+      "description": "A maga assume o controle completo do corpo de um ser vivo, embora não acesse seus pensamentos; pode fazer tudo que aquele corpo normalmente faria. Seu próprio corpo fica inerte, sem Defesa e apenas vagamente consciente do ambiente durante a Duração. Movimentos e hábitos estranhos podem revelar a possessão. +1 Alcance: A maga compreende melhor os movimentos e hábitos do alvo e o controla de forma mais natural.",
+      "reach": "+1 Alcance: A maga compreende melhor os movimentos e hábitos do alvo e o controla de forma mais natural."
+    }
   },
   {
     "id": "mta-2ed:life-4-life-force-assault",
@@ -653,7 +671,16 @@
     "source": "Mage the Awakening",
     "page": 152,
     "summary": "Attack the vital force sustaining a living subject, inflicting lethal damage equal to Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Assalto à Força Vital",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Dilacera a energia vital de um ser vivo e causa dano letal igual à Potência.",
+      "description": "Dilacera a energia vital de um ser vivo e causa dano letal igual à Potência. +1 Alcance: Agrava em −2 qualquer penalidade por ferimentos que o alvo já sofra. +1 Alcance e 1 Mana: O dano passa a ser agravado.",
+      "reach": "+1 Alcance: Agrava em −2 qualquer penalidade por ferimentos que o alvo já sofra. +1 Alcance e 1 Mana: O dano passa a ser agravado."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:life-4-living-grimoire",
@@ -676,7 +703,16 @@
     "source": "Signs of Sorcery",
     "page": 85,
     "summary": "For one Mana, inscribe one rote per casting into a living plant or creature, turning its body into a readable Grimoire. Unwilling subjects resist with Stamina plus the rote’s total Arcanum dots, and creating the living inscription is an Act of Hubris against Understanding Wisdom.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Grimório Vivo",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Total de pontos de Arcana usados no Rote + Vigor",
+      "summary": "Por 1 Mana, inscreve um Rote por conjuração no corpo de uma planta ou criatura viva, tornando seus símbolos acessíveis como um Grimório. O alvo involuntário resiste com Vigor somado ao total de pontos de Arcana do Rote. Um alvo Desperto pode conjurar os Rotes inscritos mesmo sem vê-los; a transformação constitui um Ato de Húbris contra a Sabedoria 4–7 (Consciente).",
+      "description": "Por 1 Mana, inscreve um Rote por conjuração no corpo de uma planta ou criatura viva, tornando seus símbolos acessíveis como um Grimório. O alvo involuntário resiste com Vigor somado ao total de pontos de Arcana do Rote. Um alvo Desperto pode conjurar os Rotes inscritos mesmo sem vê-los; a transformação constitui um Ato de Húbris contra a Sabedoria 4–7 (Consciente).",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:life-4-mend",
@@ -698,7 +734,16 @@
     "source": "Mage the Awakening",
     "page": 152,
     "summary": "Heal two points of lethal damage per Potency by rewriting and closing the subject’s wounds. Aggravated damage requires Mana and the appropriate Reach.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Restaurar",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Fecha ferimentos e cura dois pontos de dano letal por ponto de Potência.",
+      "description": "Fecha ferimentos e cura dois pontos de dano letal por ponto de Potência. +1 Alcance: Apaga cicatrizes antigas ou deixadas pelo ferimento. +1 Alcance: Cura dano de privação como se o alvo tivesse comido e bebido adequadamente. +1 Alcance: Reproduz os benefícios de uma noite inteira de sono, inclusive recuperar um ponto de Força de Vontade quando cabível. +1 Alcance e 1 Mana: Também cura dano agravado.",
+      "reach": "+1 Alcance: Apaga cicatrizes antigas ou deixadas pelo ferimento. +1 Alcance: Cura dano de privação como se o alvo tivesse comido e bebido adequadamente. +1 Alcance: Reproduz os benefícios de uma noite inteira de sono, inclusive recuperar um ponto de Força de Vontade quando cabível. +1 Alcance e 1 Mana: Também cura dano agravado."
+    }
   },
   {
     "id": "mta-2ed:life-4-regeneration",
@@ -720,7 +765,16 @@
     "source": "Mage the Awakening",
     "page": 152,
     "summary": "For one Mana, regrow or replace a missing limb or organ over the spell’s Duration. The restored tissue withers rapidly when the spell expires unless the effect becomes Lasting.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Regeneração",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Por 1 Mana, restaura órgãos, membros e outros tecidos perdidos, inclusive danos cerebrais, infertilidade e defeitos congênitos, desde que o alvo esteja vivo. A Potência determina a parte recuperada; ela cresce a uma taxa aproximada de um minuto por ponto de Potência exigido. O tecido regenerado murcha rapidamente quando a Duração termina, a menos que o efeito se torne duradouro.",
+      "description": "Por 1 Mana, restaura órgãos, membros e outros tecidos perdidos, inclusive danos cerebrais, infertilidade e defeitos congênitos, desde que o alvo esteja vivo. A Potência determina a parte recuperada; ela cresce a uma taxa aproximada de um minuto por ponto de Potência exigido. O tecido regenerado murcha rapidamente quando a Duração termina, a menos que o efeito se torne duradouro.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:life-4-shapechanging",
@@ -742,7 +796,16 @@
     "source": "Mage the Awakening",
     "page": 152,
     "summary": "Transform the subject into another living creature while clothing and equipment remain unchanged. The new body provides its physical traits and instincts, which may require Resolve + Composure to resist; the subject retains mental identity unless instinct overwhelms it.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Metamorfose",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Vigor",
+      "summary": "Transforma o alvo em outra criatura viva; o fator de Escala deve cobrir o maior dos Tamanhos antes e depois da transformação. Roupas e equipamentos não mudam. Para resistir aos instintos fortes da nova forma, o alvo rola Compostura + Perseverança reflexivamente, somando Gnose ou sua Tolerância sobrenatural conforme apropriado.",
+      "description": "Transforma o alvo em outra criatura viva; o fator de Escala deve cobrir o maior dos Tamanhos antes e depois da transformação. Roupas e equipamentos não mudam. Para resistir aos instintos fortes da nova forma, o alvo rola Compostura + Perseverança reflexivamente, somando Gnose ou sua Tolerância sobrenatural conforme apropriado. Adicionar Matéria ••••: O equipamento se ajusta à nova forma. +1 Alcance com Matéria ••••: O equipamento torna-se parte da nova forma. +1 Alcance: Assume forma de enxame de pequenas criaturas. +1 Alcance: Conserva pleno controle da razão, sem resistir aos impulsos instintivos.",
+      "reach": "Adicionar Matéria ••••: O equipamento se ajusta à nova forma. +1 Alcance com Matéria ••••: O equipamento torna-se parte da nova forma. +1 Alcance: Assume forma de enxame de pequenas criaturas. +1 Alcance: Conserva pleno controle da razão, sem resistir aos impulsos instintivos."
+    }
   },
   {
     "id": "mta-2ed:life-5-create-life",
@@ -764,7 +827,16 @@
     "source": "Mage the Awakening",
     "page": 153,
     "summary": "Design and create a plant, fungus, animal, or other living organism. Without Mind 5 it is mindless and acts only on instinct; finite-Duration life vanishes when the spell ends, while permanent creation may constitute an Act of Hubris.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Criar Vida",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Cria uma planta, fungo, animal ou outro organismo vivo de uma espécie possível, até o Tamanho coberto pelo fator de Escala. Sem Mente, ele age apenas por instinto; seres humanos criados sem alma recebem a Condição Sem Alma. A criatura desaparece quando a Duração termina. Criá-la sabendo disso, ou deixá-la existir permanentemente, pode constituir um Ato de Húbris.",
+      "description": "Cria uma planta, fungo, animal ou outro organismo vivo de uma espécie possível, até o Tamanho coberto pelo fator de Escala. Sem Mente, ele age apenas por instinto; seres humanos criados sem alma recebem a Condição Sem Alma. A criatura desaparece quando a Duração termina. Criá-la sabendo disso, ou deixá-la existir permanentemente, pode constituir um Ato de Húbris. Adicionar Mente •••••: Concede à criatura uma mente verdadeira adequada à sua espécie. +1 Alcance: Acrescenta uma característica por ponto de Potência acima do mínimo necessário, conforme Transformar a Vida.",
+      "reach": "Adicionar Mente •••••: Concede à criatura uma mente verdadeira adequada à sua espécie. +1 Alcance: Acrescenta uma característica por ponto de Potência acima do mínimo necessário, conforme Transformar a Vida."
+    }
   },
   {
     "id": "mta-2ed:life-5-contagion",
@@ -786,7 +858,16 @@
     "source": "Mage the Awakening",
     "page": 153,
     "summary": "Create a disease with Severity equal to Potency, either inside a suitable container or in a living host. The disease may range from minor sickness to lethal plague and thereafter spreads according to its designed traits.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Contágio",
+      "practice": "Criação",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Cria uma doença de gravidade igual à Potência dentro de um recipiente adequado ou em um portador vivo. O mal se espalha pelos meios de transmissão escolhidos; quem é exposto rola Vigor + Perseverança, modificado pela gravidade, para evitar a infecção.",
+      "description": "Cria uma doença de gravidade igual à Potência dentro de um recipiente adequado ou em um portador vivo. O mal se espalha pelos meios de transmissão escolhidos; quem é exposto rola Vigor + Perseverança, modificado pela gravidade, para evitar a infecção. +1 Alcance: Cria uma doença inédita, cujos efeitos se manifestam ao mundo; como ninguém possui resistência prévia, as jogadas disputadas para resistir ou combater seus efeitos sofrem −5. Isso sempre constitui um Ato de Húbris.",
+      "reach": "+1 Alcance: Cria uma doença inédita, cujos efeitos se manifestam ao mundo; como ninguém possui resistência prévia, as jogadas disputadas para resistir ou combater seus efeitos sofrem −5. Isso sempre constitui um Ato de Húbris."
+    }
   },
   {
     "id": "mta-2ed:life-5-salt-the-earth",
@@ -808,6 +889,15 @@
     "source": "Mage the Awakening",
     "page": 153,
     "summary": "Destroy the vitality of all life in the area, creating an Extreme Environment with a level equal to Potency. The devastation affects plants, animals, and other living organisms rather than merely damaging individual targets.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Salgar a Terra",
+      "practice": "Desfazimento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Destrói a força vital de uma área ou indivíduo, matando plantas, animais, fungos e microrganismos afetados. Impede temporariamente a decomposição causada por micróbios e a fertilização; gestações existentes continuam se a gestante sobreviver. Cria um Ambiente Extremo de nível igual à Potência.",
+      "description": "Destrói a força vital de uma área ou indivíduo, matando plantas, animais, fungos e microrganismos afetados. Impede temporariamente a decomposição causada por micróbios e a fertilização; gestações existentes continuam se a gestante sobreviver. Cria um Ambiente Extremo de nível igual à Potência. +1 Alcance: Sobreviventes não podem crescer ou se curar naturalmente e sofrem −1 adicional nas penalidades por ferimentos.",
+      "reach": "+1 Alcance: Sobreviventes não podem crescer ou se curar naturalmente e sofrem −1 adicional nas penalidades por ferimentos."
+    }
   }
 ]

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 293,
+  "catalogVersion": 294,
   "catalogs": {
     "werewolf-totem-powers": {
       "version": 3,
@@ -133,9 +133,9 @@
       "hash": "16e346222230540ee6dfba01759716c8d246599cecd841dd81ab299ea830a4ef"
     },
     "mage-spells-life": {
-      "version": 5,
+      "version": 6,
       "url": "/game-lines/mage/data/spells/life.json",
-      "hash": "0474239855ea562a2ba720adce908d161c3bb5a157d8d4afb8c4bdc840ef2f61"
+      "hash": "4903484d93432079a50457dcca045694ec9a02e669a70e90071c9ef9838f68b1"
     },
     "mage-spells-matter": {
       "version": 2,
