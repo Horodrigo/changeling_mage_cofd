@@ -1184,7 +1184,16 @@
     "source": "Mage the Awakening",
     "page": 169,
     "summary": "Grant a Sleeper the ability to perceive Prime Mage Sight, resisted by Resolve. Other Arcana can be added at one dot and one Reach each to expand the granted Sight.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Apocalipse",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Concede ao alvo, inclusive a Adormecidos, Visão Mágica de Primórdio ajustada ao Caminho da conjuradora. Os Despertos podem controlá-la; os demais recebem Visão Mágica Ativa e não conseguem desligá-la pela Duração. O custo de Força de Vontade e a exposição traumática ainda se aplicam; esgotar a Força de Vontade pode impor a Condição Cego.",
+      "description": "Concede ao alvo, inclusive a Adormecidos, Visão Mágica de Primórdio ajustada ao Caminho da conjuradora. Os Despertos podem controlá-la; os demais recebem Visão Mágica Ativa e não conseguem desligá-la pela Duração. O custo de Força de Vontade e a exposição traumática ainda se aplicam; esgotar a Força de Vontade pode impor a Condição Cego. +1 Alcance e Adicionar qualquer outro Arcano •: Acrescenta a Visão desse Arcano. A conjuradora paga a Mana exigida para adicionar Arcanos Comuns ou Inferiores como se ativasse a própria Visão Mágica.",
+      "reach": "+1 Alcance e Adicionar qualquer outro Arcano •: Acrescenta a Visão desse Arcano. A conjuradora paga a Mana exigida para adicionar Arcanos Comuns ou Inferiores como se ativasse a própria Visão Mágica."
+    }
   },
   {
     "id": "mta-2ed:prime-4-celestial-fire",
@@ -1206,7 +1215,16 @@
     "source": "Mage the Awakening",
     "page": 170,
     "summary": "Attack the subject with Supernal fire, inflicting lethal damage equal to Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Fogo Celestial",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Ataca o alvo com fogo Superno, causando dano letal igual à Potência; também afeta entidades no Crepúsculo.",
+      "description": "Ataca o alvo com fogo Superno, causando dano letal igual à Potência; também afeta entidades no Crepúsculo. +1 Alcance: Incendeia objetos inflamáveis na cena. +1 Alcance e 1 Mana: O dano torna-se agravado. +1 Alcance: Pode alocar Potência para destruir um ponto de Mana do alvo por ponto, em vez de causar dano, dividindo-a livremente entre os dois efeitos.",
+      "reach": "+1 Alcance: Incendeia objetos inflamáveis na cena. +1 Alcance e 1 Mana: O dano torna-se agravado. +1 Alcance: Pode alocar Potência para destruir um ponto de Mana do alvo por ponto, em vez de causar dano, dividindo-a livremente entre os dois efeitos."
+    }
   },
   {
     "id": "mta-2ed:prime-4-destroy-tass",
@@ -1228,7 +1246,16 @@
     "source": "Mage the Awakening",
     "page": 170,
     "summary": "Destroy a quantity of tass, resisted by Durability. Its Mana is not annihilated but released back into the world, typically flowing toward the nearest Hallow.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Destruir Tass",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "Durabilidade",
+      "summary": "Destrói tass, resistido por sua Durabilidade. A Mana armazenada não é aniquilada: retorna ao mundo e costuma fluir para a Fonte mais próxima.",
+      "description": "Destrói tass, resistido por sua Durabilidade. A Mana armazenada não é aniquilada: retorna ao mundo e costuma fluir para a Fonte mais próxima.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:prime-4-hallow-dance",
@@ -1250,7 +1277,16 @@
     "source": "Mage the Awakening",
     "page": 170,
     "summary": "Awaken a dormant Hallow or suppress an active one, resisted by its rating. Awakening requires Potency at least equal to that rating; suppression reduces it by Potency and makes it dormant at zero.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Dança da Fonte",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Classificação da Fonte",
+      "summary": "Desperta uma Fonte dormente ou suprime uma ativa, resistido por sua classificação. Despertar exige Potência pelo menos igual à classificação; suprimir reduz a classificação efetiva pela Potência e torna a Fonte dormente se chegar a zero.",
+      "description": "Desperta uma Fonte dormente ou suprime uma ativa, resistido por sua classificação. Despertar exige Potência pelo menos igual à classificação; suprimir reduz a classificação efetiva pela Potência e torna a Fonte dormente se chegar a zero. +2 Alcance e 1 Mana: O efeito torna-se duradouro.",
+      "reach": "+2 Alcance e 1 Mana: O efeito torna-se duradouro."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-4-primal-transfer",
@@ -1316,7 +1352,16 @@
     "source": "Mage the Awakening",
     "page": 170,
     "summary": "Suppress any active Supernal spell for the Duration without needing its component Arcana, Withstood by the original caster’s highest relevant Arcanum. Unlike Dispel Magic, Prime alone is sufficient.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Dissipação Superna",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "Classificação do Arcano mais alto da conjuradora do feitiço alvo",
+      "summary": "Suprime qualquer feitiço Superno ativo pela Duração, resistido pela classificação do Arcano mais alto da conjuradora original. Primórdio sozinho basta, sem incluir os outros Arcanos do feitiço alvo.",
+      "description": "Suprime qualquer feitiço Superno ativo pela Duração, resistido pela classificação do Arcano mais alto da conjuradora original. Primórdio sozinho basta, sem incluir os outros Arcanos do feitiço alvo. Adicionar Destino •: Suprime seletivamente o feitiço em um número de alvos igual à Escala. +2 Alcance e 1 Mana: O efeito torna-se duradouro; a conjuradora original percebe a destruição se ainda estiver viva e não tiver renunciado ao feitiço.",
+      "reach": "Adicionar Destino •: Suprime seletivamente o feitiço em um número de alvos igual à Escala. +2 Alcance e 1 Mana: O efeito torna-se duradouro; a conjuradora original percebe a destruição se ainda estiver viva e não tiver renunciado ao feitiço."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-4-transfer-soul-stone",
@@ -1360,7 +1405,16 @@
     "source": "Mage the Awakening",
     "page": 170,
     "summary": "Sever the area’s connection to the Supernal: ley lines and nodes cease functioning, Hallows below Potency become dormant, and Sleepers who remain longer than a day gain Enervated without progressing to Thrall. Attempts to revive a Hallow add Potency to its Withstand rating.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Blasfêmia",
+      "practice": "Descriação",
+      "primaryFactor": "Potência",
+      "withstand": "Classificação da Fonte, se aplicável",
+      "summary": "Rompe a conexão Superna da área: linhas de energia e nós deixam de funcionar, Fontes com classificação menor que a Potência ficam dormentes, e Adormecidos presentes por mais de um dia recebem Enfraquecido sem avançar para Subjugado. Despertar uma Fonte ali acrescenta a Potência à Resistência dela.",
+      "description": "Rompe a conexão Superna da área: linhas de energia e nós deixam de funcionar, Fontes com classificação menor que a Potência ficam dormentes, e Adormecidos presentes por mais de um dia recebem Enfraquecido sem avançar para Subjugado. Despertar uma Fonte ali acrescenta a Potência à Resistência dela. +2 Alcance: O efeito torna-se duradouro. Sem obras geomânticas para sustentá-lo, linhas de energia e a saúde dos Adormecidos se recuperam em cerca de um mês; Fontes continuam dormentes.",
+      "reach": "+2 Alcance: O efeito torna-se duradouro. Sem obras geomânticas para sustentá-lo, linhas de energia e a saúde dos Adormecidos se recuperam em cerca de um mês; Fontes continuam dormentes."
+    }
   },
   {
     "id": "mta-2ed:prime-5-create-truth",
@@ -1382,7 +1436,16 @@
     "source": "Mage the Awakening",
     "page": 170,
     "summary": "For five Mana per Potency, overwrite Fallen conditions to create a Hallow rated equal to Potency, with Resonance appropriate to its location. An existing or desired Hallow rating Withstands the casting.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Criar Verdade",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "Classificação da Fonte desejada ou existente",
+      "summary": "Por 5 Mana por ponto de Potência, cria uma Fonte de classificação igual à Potência, com Ressonância adequada ao lugar, até o máximo de 5 pontos. A classificação de uma Fonte existente ou desejada resiste à conjuração.",
+      "description": "Por 5 Mana por ponto de Potência, cria uma Fonte de classificação igual à Potência, com Ressonância adequada ao lugar, até o máximo de 5 pontos. A classificação de uma Fonte existente ou desejada resiste à conjuração. +2 Alcance e 5 Mana: O efeito torna-se duradouro.",
+      "reach": "+2 Alcance e 5 Mana: O efeito torna-se duradouro."
+    }
   },
   {
     "id": "mta-2ed:prime-5-eidolon",
@@ -1404,7 +1467,16 @@
     "source": "Mage the Awakening",
     "page": 171,
     "summary": "For at least one Mana, create an obviously magical tass construct that may imitate objects, creatures, fire, fog, or environments without reproducing a hazard’s damage. It follows Platonic Form’s traits, can receive Retainer dots from Potency, obeys only simple orders, has no Defense, and does not crumble when emptied of Mana.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Eídolon",
+      "practice": "Criação",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Por pelo menos 1 Mana, cria uma construção animada de tass que pode imitar objetos, seres, fogo, névoa ou até ambientes sem reproduzir o dano de perigos. Segue Forma Platônica, mas não se desfaz ao esvaziar a Mana; pode receber pontos de Lacaio alocados da Potência. Obedece apenas ordens simples, não tem Defesa e pode ser recarregada.",
+      "description": "Por pelo menos 1 Mana, cria uma construção animada de tass que pode imitar objetos, seres, fogo, névoa ou até ambientes sem reproduzir o dano de perigos. Segue Forma Platônica, mas não se desfaz ao esvaziar a Mana; pode receber pontos de Lacaio alocados da Potência. Obedece apenas ordens simples, não tem Defesa e pode ser recarregada. Adicionar Forças •••: A construção deixa de parecer obviamente mágica. Adicionar Mente •••••: Pode receber mente própria, como em Gênese Psíquica.",
+      "reach": "Adicionar Forças •••: A construção deixa de parecer obviamente mágica. Adicionar Mente •••••: Pode receber mente própria, como em Gênese Psíquica."
+    }
   },
   {
     "id": "mta-2ed:prime-5-forge-purpose",
@@ -1426,7 +1498,16 @@
     "source": "Mage the Awakening",
     "page": 171,
     "summary": "Give the subject one of the caster’s Obsessions for the Duration, resisted by Resolve. If an Awakened subject already has the maximum number, replacing one requires a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Forjar Propósito",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança",
+      "summary": "Concede ao alvo uma das Obsessões da maga pela Duração. Se um Desperto já possui o máximo de Obsessões, substitui a mais recente após um Choque de Vontades.",
+      "description": "Concede ao alvo uma das Obsessões da maga pela Duração. Se um Desperto já possui o máximo de Obsessões, substitui a mais recente após um Choque de Vontades. +1 Alcance: Cria uma Obsessão totalmente nova em vez de copiar uma da maga.",
+      "reach": "+1 Alcance: Cria uma Obsessão totalmente nova em vez de copiar uma da maga."
+    }
   },
   {
     "id": "mta-2ed:prime-5-word-of-unmaking",
@@ -1448,6 +1529,15 @@
     "source": "Mage the Awakening",
     "page": 171,
     "summary": "Destroy a magical item other than an Artifact, resisted by its Merit rating or Durability. The item’s enchantment and physical vessel are both unmade.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Palavra de Descriação",
+      "practice": "Descriação",
+      "primaryFactor": "Potência",
+      "withstand": "Pontuação do Mérito ou Durabilidade",
+      "summary": "Destrói um item mágico e seu suporte físico, exceto Artefatos, resistido pela pontuação do Mérito do item ou por sua Durabilidade.",
+      "description": "Destrói um item mágico e seu suporte físico, exceto Artefatos, resistido pela pontuação do Mérito do item ou por sua Durabilidade. +2 Alcance: O item explode. Role sua pontuação de Mérito ou Durabilidade; a cada sucesso, quem estiver até uma jarda por ponto dessa classificação sofre um ponto de dano letal.",
+      "reach": "+2 Alcance: O item explode. Role sua pontuação de Mérito ou Durabilidade; a cada sucesso, quem estiver até uma jarda por ponto dessa classificação sofre um ponto de dano letal."
+    }
   }
 ]
