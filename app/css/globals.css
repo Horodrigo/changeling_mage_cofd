@@ -3673,11 +3673,14 @@ button {
   display: grid;
   gap: 10px;
 }
+.specialties-block {
+  max-width: 680px;
+}
 .specialty-row {
   display: grid;
-  grid-template-columns: minmax(180px, 0.8fr) minmax(240px, 1.2fr);
-  gap: 10px;
-  padding: 12px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 8px;
+  padding: 8px 10px;
   border: 1px solid #e5dde7;
   border-radius: 12px;
   background: #fcfafc;

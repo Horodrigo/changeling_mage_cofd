@@ -53,7 +53,7 @@ export type ChangelingBuilderViewProps = {
   favoredAttribute: string; setFavoredAttribute: Setter<string>; secondRegalia: string; setSecondRegalia: Setter<string>;
   needle: string; setNeedle: Setter<string>; thread: string; setThread: Setter<string>; touchstone: string; setTouchstone: Setter<string>;
   wyrd: number; setWyrd: Setter<number>; maximumPowerFromMerits: number; powerAdvancement: number;
-  aspirations: string[]; setAspirations: Setter<string[]>; meritContext: ChangelingMeritContext; meritCatalog: MeritDefinition[]; merits: MeritSelection[]; setMerits: Setter<MeritSelection[]>;
+  meritContext: ChangelingMeritContext; meritCatalog: MeritDefinition[]; merits: MeritSelection[]; setMerits: Setter<MeritSelection[]>;
   meritSpent: number; meritBudget: number; court: string; missing: MissingCheck;
   kith: string; setKith: Setter<string>; customKith: boolean; setCustomKith: Setter<boolean>;
   kithChoice: string; setKithChoice: Setter<string>; specialties: Specialty[];

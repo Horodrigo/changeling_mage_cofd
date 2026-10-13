@@ -15,7 +15,7 @@ import {
   useCommonBuilderState,
   type BuilderValidationIssue,
 } from "@/app/character-builder-shell";
-import { Aspirations, CommonIdentityStep, TraitsStep } from "@/app/builder/common-controls";
+import { CommonIdentityStep, TraitsStep } from "@/app/builder/common-controls";
 import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@/app/builder/common-merit-configurations";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { MeritPicker } from "@/app/builder/merit-picker";
@@ -214,7 +214,6 @@ function MortalCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft
         <label className={missing("virtue") ? "missing-field" : ""}>{t("ui.virtue")}<Input value={virtue} onChange={(event) => setVirtue(event.target.value)} /></label>
         <label className={missing("vice") ? "missing-field" : ""}>{t("ui.vice")}<Input value={vice} onChange={(event) => setVice(event.target.value)} /></label>
       </div>
-      <Aspirations values={common.aspirations} setValues={common.setAspirations} />
       <section className={missing("breakingPoints") ? "breaking-point-builder missing-field block" : "breaking-point-builder"}>
         <h3>{t("ui.breakingPoints")}</h3>
         {BREAKING_POINT_KEYS.map((key, index) => <label key={key}>{t(key)}<Textarea value={breakingPoints[index] ?? ""} onChange={(event) => { const next = [...breakingPoints]; next[index] = event.target.value; setBreakingPoints(next); }} /></label>)}

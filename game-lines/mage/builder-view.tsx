@@ -41,7 +41,7 @@ export type MageBuilderViewProps = {
   resistanceBonus: string; setResistanceBonus: Setter<string>; nimbus: string; setNimbus: Setter<string>; tool: string; setTool: Setter<string>;
   arcana: Record<string, number>; setArcana: Setter<Record<string, number>>; rotes: Array<SpellSelection | null>; setRotes: Setter<Array<SpellSelection | null>>;
   praxes: Array<SpellSelection | null>; setPraxes: Setter<Array<SpellSelection | null>>; spellCatalog: SpellDefinition[];
-  aspirations: string[]; setAspirations: Setter<string[]>; meritContext: MageMeritContext; meritCatalog: MeritDefinition[]; merits: MeritSelection[]; setMerits: Setter<MeritSelection[]>;
+  meritContext: MageMeritContext; meritCatalog: MeritDefinition[]; merits: MeritSelection[]; setMerits: Setter<MeritSelection[]>;
   factionCatalog: MageFactionDefinition[];
   meritSpent: number; meritBudget: number; missing: MissingCheck;
 };

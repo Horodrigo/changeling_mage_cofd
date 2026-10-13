@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { CharacterBuilderShell, builderCurrentState, commonCreationIssues, experienceTraitDots, isCreationDraft, useCommonBuilderState } from "@/app/character-builder-shell";
-import { Aspirations, CommonIdentityStep, TraitsStep } from "@/app/builder/common-controls";
+import { CommonIdentityStep, TraitsStep } from "@/app/builder/common-controls";
 import { MeritPicker } from "@/app/builder/merit-picker";
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@/app/builder/common-merit-configurations";
@@ -199,7 +199,7 @@ function WerewolfCharacterBuilder({ player, initial, onCancel, onSave, onSaveDra
     identity={<CommonIdentityStep name={common.name} setName={common.setName} nameLabel={t("ui.characterName")} concept={common.concept} setConcept={common.setConcept} player={common.playerName} setPlayer={common.setPlayerName} chronicle={common.chronicle} setChronicle={common.setChronicle} portrait={common.portrait} setPortrait={common.setPortrait} missing={missing}/>}
     traits={<TraitsStep attributes={common.attributes} setAttributes={common.setAttributes} skills={common.skills} setSkills={common.setSkills} specialties={common.specialties} setSpecialties={common.setSpecialties} missing={missing}/>}
     lineTemplate={<MobileWerewolfBuilderTemplate><><WerewolfCreationTemplate value={choices} onChange={setChoices} skills={common.skills} reference={reference} gifts={gifts} rites={rites} learnedRiteIds={learnedRiteIds}/>
-      <div className="builder-section wtf-merits"><Aspirations values={common.aspirations} setValues={common.setAspirations}/><p>{t("werewolf.freeCreationMerits")}</p>
+      <div className="builder-section wtf-merits"><p>{t("werewolf.freeCreationMerits")}</p>
         <MeritPicker merits={merits} setMerits={common.setMerits} catalog={meritCatalog} context={context} spent={spent} budget={budget} isEligible={eligible} isInlineConfiguration={isCommonInlineMeritConfiguration}
           renderConfiguration={({ merit, ownedMerits, inline, onChange }) => {
             const definition = werewolfMeritDefinition(merit, meritCatalog);

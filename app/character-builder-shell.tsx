@@ -157,7 +157,7 @@ export function useCommonBuilderState(
   const [specialties, setSpecialtyState] = useState<Specialty[]>(() =>
     editableSpecialties(initial, options.purchasedSpecialties ?? []),
   );
-  const [aspirations, setAspirations] = useState<string[]>(() =>
+  const [aspirations] = useState<string[]>(() =>
     readLineArray(initial, "aspirations", ["", "", ""]),
   );
   const [merits, setMerits] = useState<MeritSelection[]>(() => [
@@ -188,7 +188,7 @@ export function useCommonBuilderState(
     step, setStep, allowAdvancement, setAllowAdvancement, error, setError,
     name, setName, concept, setConcept, playerName, setPlayerName, chronicle, setChronicle, portrait, setPortrait,
     attributes, setAttributes, skills, setSkills,
-    specialties, setSpecialties, aspirations, setAspirations, merits, setMerits,
+    specialties, setSpecialties, aspirations, merits, setMerits,
     specializations,
     meritWasRemoved,
   };

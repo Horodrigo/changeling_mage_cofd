@@ -1,6 +1,7 @@
 "use client";
 
 import { Minus, Plus } from "lucide-react";
+import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { BufferedInput } from "@/components/ui/buffered-text";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -128,7 +129,7 @@ function DotGroups({ groups, values, setValues, base, maximum, budgets }: {
   })}</div>;
 }
 
-export function DotRow({ name, value, setValue, min, max, tag, canIncrease = true }: { name: string; value: number; setValue: Setter<number>; min: number; max: number; tag?: string; canIncrease?: boolean }) {
+export function DotRow({ name, value, setValue, min, max, tag, canIncrease = true }: { name: ReactNode; value: number; setValue: Setter<number>; min: number; max: number; tag?: string; canIncrease?: boolean }) {
   const { t } = useLanguage();
   return <div className="dot-row"><span>{name}{tag && <small>{tag}</small>}</span><div>
     <Button type="button" size="icon" variant="ghost" disabled={value <= min} onClick={() => setValue(value - 1)}><Minus /></Button>
@@ -152,11 +153,6 @@ function SkillSpecialtyChoice({ label, value, setValue }: { label: string; value
       {skills.map((skill) => <SelectItem key={skill} value={skill}>{systemTerm(skill, locale)}</SelectItem>)}
     </SelectGroup>)}</SelectContent>
   </Select></label>;
-}
-
-export function Aspirations({ values, setValues }: { values: string[]; setValues: Setter<string[]> }) {
-  const { t } = useLanguage();
-  return <div className="aspirations-block"><h3>{t("ui.aspirations")}</h3><div>{values.map((value, index) => <BufferedInput key={index} value={value} onValueCommit={(text) => updateArray(setValues, values, index, text)} placeholder={`${t("ui.aspiration")} ${index + 1}`} />)}</div></div>;
 }
 
 function updateArray<T>(setter: Setter<T[]>, values: T[], index: number, value: T) {
