@@ -8,6 +8,7 @@ import { synchronizeChangelingBuilderMeritGrants } from "./builder-merit-grants"
 import { recoverChangelingMeritAllocations } from "./merit-allocation";
 import { INTERDISCIPLINARY_SPECIALTY_ID } from "@/lib/core/character/specialty-merits";
 import { commonMeritId } from "@/lib/core/character/merit-identities";
+import { canonicalStoredRegalia } from "@/lib/changeling-regalia";
 
 const numberValue = (value: unknown) => {
   const parsed = Number(value);
@@ -55,6 +56,8 @@ export const changelingRules: GameLineRulesModule = {
       line_data: {
         ...character.line_data,
         ...(!character.line_data.custom_court && ["Sem Corte", "Courtless"].includes(String(character.line_data.court)) ? { court: "courtless" } : {}),
+        ...(typeof character.line_data.primary_regalia === "string" ? { primary_regalia: canonicalStoredRegalia(character.line_data.primary_regalia) } : {}),
+        ...(typeof character.line_data.second_regalia === "string" ? { second_regalia: canonicalStoredRegalia(character.line_data.second_regalia) } : {}),
         ...Object.fromEntries(["contracts", "learned_contracts"].filter(key => Array.isArray(character.line_data[key])).map(key => [key, (character.line_data[key] as unknown[]).map(canonicalContractClassification)])),
         frailties: normalizeChangelingFrailties(character.line_data.frailties, wyrd),
       },

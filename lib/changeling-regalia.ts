@@ -3,6 +3,9 @@ const REGALIA_ALIASES: Record<string, string> = {
   Corcel: "Steed", Espada: "Sword", Cálice: "Chalice", Moeda: "Coin",
   Cetro: "Scepter", Estrelas: "Stars", Espinho: "Thorn",
 };
+/** Exact schema-2 enum bridge; unknown authored values remain byte-for-byte intact. */
+export const canonicalStoredRegalia = (value: unknown) =>
+  typeof value === "string" ? REGALIA_ALIASES[value] ?? value : value;
 export const canonicalRegalia = (value: unknown) => {
   const name = String(value ?? "").trim();
   return REGALIA_ALIASES[name] ?? name;

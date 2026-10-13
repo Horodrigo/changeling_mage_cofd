@@ -226,17 +226,26 @@ test("legacy Contract classifications become English without translating authore
   const { changelingRules } = await vite.ssrLoadModule("/game-lines/changeling/rules.ts");
   const { canonicalContractClassification } = await vite.ssrLoadModule("/game-lines/changeling/contract-identities.ts");
   const current = sheet("CtL");
-  const contract = { id: "homebrew:contract:mine", name: "Real", description: "Corte", type: "Real", categoryKind: "Corte", options: ["Comum"], regalia: "Mirror" };
-  current.line_data = { ...current.line_data, contracts: [contract], learned_contracts: [{ ...contract, id: "another", type: "Comum", categoryKind: "Independente" }] };
+  const contract = { id: "homebrew:contract:mine", name: "Real", description: "Corte", type: "Real", categoryKind: "Corte", options: ["Comum"], regalia: "Joias" };
+  current.line_data = { ...current.line_data, primary_regalia: "Coroa", second_regalia: "Espelho", contracts: [contract], learned_contracts: [{ ...contract, id: "another", type: "Comum", categoryKind: "Independente", regalia: "Espada" }] };
   current.current_state.experience_history = [{ id: "receipt", experience: -4, description: "Texto autoral", undo: { kind: "contract", id: contract.id } }];
   const before = structuredClone(current), result = changelingRules.normalizeCharacter(current);
-  assert.deepEqual(result.line_data.contracts[0], { ...contract, type: "Royal", categoryKind: "Court" });
+  assert.deepEqual(result.line_data.contracts[0], { ...contract, type: "Royal", categoryKind: "Court", regalia: "Jewels" });
+  assert.equal(result.line_data.primary_regalia, "Crown");
+  assert.equal(result.line_data.second_regalia, "Mirror");
   assert.equal(result.line_data.learned_contracts[0].type, "Common");
   assert.equal(result.line_data.learned_contracts[0].categoryKind, "Independent");
+  assert.equal(result.line_data.learned_contracts[0].regalia, "Sword");
   assert.deepEqual(result.current_state.experience_history, current.current_state.experience_history);
+  const saved = await normalizeGameLineCharacter(normalizeStoredSheet(current));
+  assert.equal(saved.line_data.primary_regalia, "Crown");
+  assert.equal(saved.line_data.second_regalia, "Mirror");
+  assert.equal(saved.line_data.learned_contracts[0].regalia, "Sword");
+  assert.deepEqual(saved.current_state.experience_history, current.current_state.experience_history);
   assert.deepEqual(changelingRules.normalizeCharacter(JSON.parse(JSON.stringify(result))), result);
   assert.deepEqual(current, before);
   for (const value of [null, "Autoral", 4, [], { type: "Unknown", categoryKind: "Unknown", name: "Comum" }]) assert.deepEqual(canonicalContractClassification(value), value);
+  assert.deepEqual(canonicalContractClassification({ regalia: "  Minha Regalia  ", name: "Coroa" }), { regalia: "  Minha Regalia  ", name: "Coroa" });
 });
 
 test("Courtless sentinel is canonical while explicit custom Court text remains authored", async () => {
