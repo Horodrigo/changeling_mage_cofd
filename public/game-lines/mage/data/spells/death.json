@@ -714,7 +714,16 @@
     "source": "Mage the Awakening",
     "page": 131,
     "summaryReviewed": true,
-    "summary": "Call the nearest ghost in sensory range, a personally known ghost, or the nearest ghost matching a specified type; it cannot exceed Rank 5 or travel beyond its Anchor."
+    "summary": "Call the nearest ghost in sensory range, a personally known ghost, or the nearest ghost matching a specified type; it cannot exceed Rank 5 or travel beyond its Anchor.",
+    "presentationPt": {
+      "name": "Convocar Fantasma",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "Posto",
+      "summary": "Chama o fantasma mais próximo dentro do alcance sensorial, um fantasma conhecido pessoalmente ou o mais próximo de um tipo especificado. Ele não pode ter Posto maior que 5 nem viajar além do permitido por sua Âncora.",
+      "description": "Chama o fantasma mais próximo dentro do alcance sensorial, um fantasma conhecido pessoalmente ou o mais próximo de um tipo especificado. Ele não pode ter Posto maior que 5 nem viajar além do permitido por sua Âncora. +1 Alcance: Aplica Aberto à área e permite que o fantasma se Manifeste. +1 Alcance: Dá ao fantasma uma ordem de uma palavra. +1 Alcance, perto de uma Íris para o Submundo: Convoca fantasmas das proximidades da Íris no Submundo. +2 Alcance: Dá ao fantasma uma tarefa complexa, descrita em uma ou duas frases.",
+      "reach": "+1 Alcance: Aplica Aberto à área e permite que o fantasma se Manifeste. +1 Alcance: Dá ao fantasma uma ordem de uma palavra. +1 Alcance, perto de uma Íris para o Submundo: Convoca fantasmas das proximidades da Íris no Submundo. +2 Alcance: Dá ao fantasma uma tarefa complexa, descrita em uma ou duas frases."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:death-3-reaping-relinquishment",
@@ -758,7 +767,16 @@
     "source": "Mage the Awakening",
     "page": 131,
     "summaryReviewed": true,
-    "summary": "Animate a corpse as a loyal, mindless zombie that follows simple commands and functions as a Retainer with dots equal to Potency. It has its former Health, no Defense, uses Death Mage Armor damage rules, and is destroyed only when its final Health box is aggravated."
+    "summary": "Animate a corpse as a loyal, mindless zombie that follows simple commands and functions as a Retainer with dots equal to Potency. It has its former Health, no Defense, uses Death Mage Armor damage rules, and is destroyed only when its final Health box is aggravated.",
+    "presentationPt": {
+      "name": "Animar Cadáver",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Anima um cadáver como zumbi leal e sem mente, que segue ordens simples e funciona como um Retentor com pontos iguais à Potência. Tem a Vitalidade anterior, nenhuma Defesa, segue as regras de dano da Armadura de Mago de Morte e só é destruído quando sua última caixa de Vitalidade recebe dano agravado.",
+      "description": "Anima um cadáver como zumbi leal e sem mente, que segue ordens simples e funciona como um Retentor com pontos iguais à Potência. Tem a Vitalidade anterior, nenhuma Defesa, segue as regras de dano da Armadura de Mago de Morte e só é destruído quando sua última caixa de Vitalidade recebe dano agravado. +1 Alcance: Adapta o zumbi para combate, com parada de ataque igual à pontuação de Retentor, Defesa 3, Iniciativa 1 e Deslocamento 6. +2 Alcance e 1 Mana: Defesa 5, Iniciativa 3 e Deslocamento 8.",
+      "reach": "+1 Alcance: Adapta o zumbi para combate, com parada de ataque igual à pontuação de Retentor, Defesa 3, Iniciativa 1 e Deslocamento 6. +2 Alcance e 1 Mana: Defesa 5, Iniciativa 3 e Deslocamento 8."
+    }
   },
   {
     "id": "mta-2ed:death-3-quicken-ghost",
@@ -780,7 +798,16 @@
     "source": "Mage the Awakening",
     "page": 131,
     "summaryReviewed": true,
-    "summary": "Increase one ghost Attribute by 1 per Potency, up to its Rank limit, or heal one Corpus per Potency."
+    "summary": "Increase one ghost Attribute by 1 per Potency, up to its Rank limit, or heal one Corpus per Potency.",
+    "presentationPt": {
+      "name": "Revigorar Fantasma",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Aumenta um Atributo de um fantasma em 1 por ponto de Potência, até o limite de seu Posto, ou cura um ponto de Corpus por ponto de Potência.",
+      "description": "Aumenta um Atributo de um fantasma em 1 por ponto de Potência, até o limite de seu Posto, ou cura um ponto de Corpus por ponto de Potência. +2 Alcance e 1 Mana: Aumenta o Posto em 1, elevando seus limites e a Essência e concedendo um novo Númen.",
+      "reach": "+2 Alcance e 1 Mana: Aumenta o Posto em 1, elevando seus limites e a Essência e concedendo um novo Númen."
+    }
   },
   {
     "id": "mta-2ed:death-3-rotting-flesh",
@@ -802,7 +829,16 @@
     "source": "Mage the Awakening",
     "page": 132,
     "summaryReviewed": true,
-    "summary": "Deal one bashing damage per Potency through rapid decay."
+    "summary": "Deal one bashing damage per Potency through rapid decay.",
+    "presentationPt": {
+      "name": "Carne em Decomposição",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Causa um ponto de dano contundente por ponto de Potência ao apodrecer rapidamente a carne e os ossos do alvo.",
+      "description": "Causa um ponto de dano contundente por ponto de Potência ao apodrecer rapidamente a carne e os ossos do alvo. +1 Alcance: A aparência horrível também impõe −1 por ponto de Potência, até −3, nas jogadas Sociais pela Duração.",
+      "reach": "+1 Alcance: A aparência horrível também impõe −1 por ponto de Potência, até −3, nas jogadas Sociais pela Duração."
+    }
   },
   {
     "id": "mta-2ed:death-3-sever-soul",
@@ -824,7 +860,16 @@
     "source": "Mage the Awakening",
     "page": 132,
     "summaryReviewed": true,
-    "summary": "Rip a Sleeper's soul into Twilight, imposing Soulless until the spell ends and the soul can return; casting on an already Soulless subject advances it to Enervated."
+    "summary": "Rip a Sleeper's soul into Twilight, imposing Soulless until the spell ends and the soul can return; casting on an already Soulless subject advances it to Enervated.",
+    "presentationPt": {
+      "name": "Arrancar Alma",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "Perseverança",
+      "summary": "Arranca a alma de um Adormecido para o Crepúsculo e impõe Sem Alma até o fim do feitiço, quando a alma pode retornar; se o alvo já estiver Sem Alma, passa a Enfraquecido.",
+      "description": "Arranca a alma de um Adormecido para o Crepúsculo e impõe Sem Alma até o fim do feitiço, quando a alma pode retornar; se o alvo já estiver Sem Alma, passa a Enfraquecido. +1 Alcance: Impõe Enfraquecido imediatamente. +1 Alcance adicional: Impõe Subjugado imediatamente.",
+      "reach": "+1 Alcance: Impõe Enfraquecido imediatamente. +1 Alcance adicional: Impõe Subjugado imediatamente."
+    }
   },
   {
     "id": "mta-2ed:death-3-shadow-crafting",
@@ -846,7 +891,16 @@
     "source": "Mage the Awakening",
     "page": 132,
     "summaryReviewed": true,
-    "summary": "Harden shadows into a solid object with Durability 2 and either weapon rating 2, armor 2, or a +2 equipment bonus. The object remains visibly shadowy and casts no shadow of its own."
+    "summary": "Harden shadows into a solid object with Durability 2 and either weapon rating 2, armor 2, or a +2 equipment bonus. The object remains visibly shadowy and casts no shadow of its own.",
+    "presentationPt": {
+      "name": "Moldar Sombras",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Endurece sombras até formarem um objeto sólido, com Durabilidade 2 e dano de arma 2, proteção de armadura 2 ou bônus de equipamento +2. O objeto continua visivelmente sombrio e não projeta sombra.",
+      "description": "Endurece sombras até formarem um objeto sólido, com Durabilidade 2 e dano de arma 2, proteção de armadura 2 ou bônus de equipamento +2. O objeto continua visivelmente sombrio e não projeta sombra.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:death-3-unliving-vessel",
@@ -891,7 +945,16 @@
     "source": "Mage the Awakening",
     "page": 132,
     "summaryReviewed": true,
-    "summary": "Disable the subject's muscles, applying Arm Wrack or Leg Wrack for the Duration."
+    "summary": "Disable the subject's muscles, applying Arm Wrack or Leg Wrack for the Duration.",
+    "presentationPt": {
+      "name": "Enervação",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "Vigor",
+      "summary": "Impede o funcionamento dos músculos do alvo, aplicando Braço Lesionado ou Perna Lesionada pela Duração.",
+      "description": "Impede o funcionamento dos músculos do alvo, aplicando Braço Lesionado ou Perna Lesionada pela Duração. +1 Alcance: Aplica Imobilizado em vez disso.",
+      "reach": "+1 Alcance: Aplica Imobilizado em vez disso."
+    }
   },
   {
     "id": "mta-2ed:death-4-exorcism",
@@ -913,7 +976,16 @@
     "source": "Mage the Awakening",
     "page": 132,
     "summaryReviewed": true,
-    "summary": "Strip Manifestation Conditions equal to Potency from a ghost or its host; the Lasting removal may normally be reestablished. Add Mind or Spirit 4: Affect Goetia or spirits."
+    "summary": "Strip Manifestation Conditions equal to Potency from a ghost or its host; the Lasting removal may normally be reestablished. Add Mind or Spirit 4: Affect Goetia or spirits.",
+    "presentationPt": {
+      "name": "Exorcismo",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "Posto",
+      "summary": "Remove de um fantasma ou de seu hospedeiro um número de Conditions de Manifestação igual à Potência; a remoção é duradoura, mas a entidade pode restabelecê-las normalmente.",
+      "description": "Remove de um fantasma ou de seu hospedeiro um número de Conditions de Manifestação igual à Potência; a remoção é duradoura, mas a entidade pode restabelecê-las normalmente. Adicionar Mente ou Espírito ••••: Afeta goécias ou espíritos. +1 Alcance: O alvo não pode recriar as Conditions removidas na mesma vítima ou no mesmo local até o fim do feitiço.",
+      "reach": "Adicionar Mente ou Espírito ••••: Afeta goécias ou espíritos. +1 Alcance: O alvo não pode recriar as Conditions removidas na mesma vítima ou no mesmo local até o fim do feitiço."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:death-4-goetic-evocation-death-substitute",
@@ -980,7 +1052,16 @@
     "source": "Mage the Awakening",
     "page": 132,
     "summaryReviewed": true,
-    "summary": "Grant a ghost Manifestation Conditions equal to Potency, including prerequisites; it immediately enters the chosen Manifestation and cannot leave it during the spell. This can let a ghost Possess its corpse. Add Mind or Spirit 4: Affect Goetia or spirits."
+    "summary": "Grant a ghost Manifestation Conditions equal to Potency, including prerequisites; it immediately enters the chosen Manifestation and cannot leave it during the spell. This can let a ghost Possess its corpse. Add Mind or Spirit 4: Affect Goetia or spirits.",
+    "presentationPt": {
+      "name": "Revenante",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Posto",
+      "summary": "Concede a um fantasma um número de Conditions de Manifestação igual à Potência, incluindo seus pré-requisitos. Ele assume imediatamente a Manifestação escolhida e não pode sair dela durante o feitiço; isso pode permitir que possua o próprio cadáver.",
+      "description": "Concede a um fantasma um número de Conditions de Manifestação igual à Potência, incluindo seus pré-requisitos. Ele assume imediatamente a Manifestação escolhida e não pode sair dela durante o feitiço; isso pode permitir que possua o próprio cadáver. Adicionar Mente ou Espírito ••••: Afeta goécias ou espíritos.",
+      "reach": "Adicionar Mente ou Espírito ••••: Afeta goécias ou espíritos."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:death-4-scribe-daimonomikon",
@@ -1025,7 +1106,16 @@
     "source": "Mage the Awakening",
     "page": 132,
     "summaryReviewed": true,
-    "summary": "Transform the subject and personal possessions into a mass of animated shadow, either three-dimensional and insubstantial or two-dimensional and able to pass through cracks while remaining surface-bound. The subject retains traits, can move and cast but cannot take other physical actions, is immune to non-Supernal attacks, and is effectively invisible in darkness."
+    "summary": "Transform the subject and personal possessions into a mass of animated shadow, either three-dimensional and insubstantial or two-dimensional and able to pass through cracks while remaining surface-bound. The subject retains traits, can move and cast but cannot take other physical actions, is immune to non-Supernal attacks, and is effectively invisible in darkness.",
+    "presentationPt": {
+      "name": "Carne Sombria",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Vigor",
+      "summary": "Transforma o alvo e seus pertences em uma massa de sombras animadas, tridimensional e insubstancial ou bidimensional e capaz de atravessar frestas, mas presa às superfícies. O alvo conserva Atributos e Perícias; pode se mover e conjurar, mas não praticar outras ações físicas. É imune a ataques não Supernos e praticamente invisível na escuridão.",
+      "description": "Transforma o alvo e seus pertences em uma massa de sombras animadas, tridimensional e insubstancial ou bidimensional e capaz de atravessar frestas, mas presa às superfícies. O alvo conserva Atributos e Perícias; pode se mover e conjurar, mas não praticar outras ações físicas. É imune a ataques não Supernos e praticamente invisível na escuridão.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:death-4-soul-grafting",
