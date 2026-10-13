@@ -1059,7 +1059,7 @@
     "name": "Haunted Grimoire",
     "originalName": "Haunted Grimoire",
     "requirements": {
-      "Death": 4,
+      "Death": 5,
       "Prime": 1
     },
     "practice": "Patterning",

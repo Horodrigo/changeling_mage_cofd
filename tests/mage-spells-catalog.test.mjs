@@ -8,6 +8,7 @@ const SPELLS = (await Promise.all(
     JSON.parse(await readFile(new URL(`../public/game-lines/mage/data/spells/${name}.json`, import.meta.url), "utf8")),
   ),
 )).flat();
+const SPELL_INDEX = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/index.json", import.meta.url), "utf8"));
 
 const arcana = new Set(["Death","Fate","Forces","Life","Matter","Mind","Prime","Space","Spirit","Time"]);
 const skills = new Set(["Academics","Computer","Crafts","Investigation","Medicine","Occult","Politics","Science","Athletics","Brawl","Drive","Firearms","Larceny","Stealth","Survival","Weaponry","Animal Ken","Empathy","Expression","Intimidation","Persuasion","Socialize","Streetwise","Subterfuge"]);
@@ -42,6 +43,15 @@ test("PDF-verified Codex typos use their printed English names", () => {
     assert.ok(SPELLS.some((spell)=>spell.name===name),name);
   assert.ok(SPELLS.some((spell)=>spell.name==="Goetic Evocation (Death Substitute)"&&spell.requirements.Death===4));
   assert.ok(SPELLS.some((spell)=>spell.id==="mta-signs-of-sorcery:death-4-soul-grafting"&&spell.name==="Soul Crafting"));
+});
+
+test("Haunted Grimoire substitutes Death 5 or Mind 4 for Spirit 4 without changing IDs", () => {
+  const ids = ["death-4", "mind-4", "spirit-4"].map(arcanum => `mta-signs-of-sorcery:${arcanum}-haunted-grimoire`);
+  const expected = [{ Death: 5, Prime: 1 }, { Mind: 4, Prime: 1 }, { Spirit: 4, Prime: 1 }];
+  ids.forEach((id, index) => {
+    assert.deepEqual(SPELL_INDEX.find(spell => spell.id === id)?.requirements, expected[index]);
+    assert.deepEqual(SPELLS.find(spell => spell.id === id)?.requirements, expected[index]);
+  });
 });
 
 test("Death summaries are fully reviewed against the offline PDFs", () => {

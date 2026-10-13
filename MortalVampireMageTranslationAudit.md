@@ -17,4 +17,3 @@
 
 - **G02 — Merits:** localizar nome, requisitos, descrição e níveis dos **42/71 Merits** restantes em `public/game-lines/mage/data/merits*.json`, sem alterar requisitos canônicos, IDs ou compras.
 - **G04 — Legacies:** localizar as **16 Legacies** e **43 Attainments** em `game-lines/mage/catalog-data/legacies*.json`: títulos descritivos, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções. Preservar nomes próprios.
-- **Haunted Grimoire:** corrigir a elegibilidade das variantes históricas Death 4 e Mind 4 no índice de Spells conforme Signs of Sorcery p. 86 (Spirit 4 + Prime 1; Death 5 como substituição), preservando IDs, escolhas e recibos.
