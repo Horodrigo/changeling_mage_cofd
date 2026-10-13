@@ -12,7 +12,7 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
     const { mageRules } = await server.ssrLoadModule("/game-lines/mage/rules.ts");
     const spells = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/death.json", import.meta.url), "utf8"));
     const original = structuredClone(spells);
-    for (const spell of spells.slice(0, 6)) {
+    for (const spell of spells.filter(spell => spell.presentationPt)) {
       const en = mageSpellPresentation(spell, "en-US");
       const pt = mageSpellPresentation(spell, "pt-BR");
       assert.notEqual(pt.name, en.name);
@@ -25,6 +25,7 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
       assert.equal(saved.id, spell.id);
     }
     assert.deepEqual(spells, original);
+    assert.equal(spells.filter(spell => spell.presentationPt).length, 14);
     assert.match(mageSpellPresentation(spells[1], "pt-BR").reach, /\+1 Alcance/);
     assert.match(spells[1].description, /\+1 Reach:/);
     const homebrew = { id: "homebrew:spell:author", name: "Minha magia", originalName: "Minha magia", summary: "Texto autoral", description: "Texto autoral" };

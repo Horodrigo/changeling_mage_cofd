@@ -1,6 +1,6 @@
 # Auditoria de tradução — Mortal, Vampire e Mage
 
-Atualização: **2026-10-12**. **Meta retomada pelo usuário:** localização das etapas 1–2 e correções aprovadas de Méritos Core implementadas e verificadas; etapa 3 em execução; etapa 4 pendente. Correção X01 da regeneração dos cultos concluída e verificada.
+Atualização: **2026-10-13**. **Meta retomada pelo usuário:** localização das etapas 1–2 e correções aprovadas de Méritos Core implementadas e verificadas; etapa 3 em execução; etapa 4 pendente. Correção X01 da regeneração dos cultos concluída e verificada.
 
 ## Escopo e ordem
 
@@ -52,9 +52,9 @@ Referências de Conditions ainda necessárias: Materialized → Materializado. P
 
 ### Mage — detalhes de execução
 
-Primeiro lote: seis Spells de Death • (MtA 2e pp. 128–129), com revisão visual e apresentação PT separada dos campos ingleses. Integração em criação, XP/histórico e ficha Desktop/Mobile; 18/18 testes direcionados aprovados (incluindo renderização EN/PT/EN de seleções salvas), tipos e build aprovados. Comparação confirma os campos canônicos das 46 entradas de Death intactos; seis receberam apenas `presentationPt`. Smoke de navegador não executado.
+Primeiros lotes: 14 Spells de Death •/•• (MtA 2e pp. 128–130), com revisão visual e apresentação PT separada dos campos ingleses. Integração em criação, XP/histórico e ficha Desktop/Mobile; 18/18 testes direcionados de integração no primeiro lote e 17/17 testes de catálogo/persistência no segundo lote; tipos e builds aprovados. Comparação confirmou os campos canônicos das 46 entradas de Death intactos; o segundo lote acrescentou oito traduções em `presentationPt` para as entradas da p. 129. Smoke de navegador não executado.
 
-Spells pendentes: Death 40; Fate 30; Forces 38; Life 29; Matter 32; Mind 45; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
+Spells pendentes: Death 32; Fate 30; Forces 38; Life 29; Matter 32; Mind 45; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
 
 Apresentar **Práticas, Fator Primário, Resistência, Alcance e Adicionar Arcana** quando aplicáveis. `spell-presentation.ts` extrai `Reach:`/`Add Arcanum` do texto inglês canônico; `presentationPt.reach` localiza a apresentação sem mudar essa entrada. Títulos de Práxis publicadas acompanham Spells; nomes autorais permanecem intactos.
 
