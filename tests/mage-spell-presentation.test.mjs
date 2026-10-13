@@ -123,9 +123,17 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
     assert.match(mageSpellPresentation(spirit.find(spell => spell.name === "Spirit Manse"), "pt-BR").reach, /Força da Barreira/);
     assert.equal(mageSpellPresentation(spirit.find(spell => spell.name === "Haunted Grimoire"), "pt-BR").name, "Grimório Assombrado");
     const time = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/time.json", import.meta.url), "utf8"));
-    assert.equal(time.filter(spell => spell.presentationPt).length, 11);
+    assert.equal(time.filter(spell => spell.presentationPt).length, 25);
     assert.match(mageSpellPresentation(time.find(spell => spell.name === "Postcognition"), "pt-BR").reach, /\+1 Alcance: Continua ciente do entorno/);
     assert.match(mageSpellPresentation(time.find(spell => spell.name === "Veil of Moments"), "pt-BR").reach, /recuperar Mana/);
+    assert.match(mageSpellPresentation(time.find(spell => spell.name === "Temporal Stutter"), "pt-BR").reach, /Adicionar Espaço •••/);
+    assert.equal(time.find(spell => spell.name === "Acceleration").page, 188);
+    for (const spell of time) {
+      assert.equal(mageSpellPresentation(spell, "en-US").name, spell.name);
+      assert.equal(mageSpellPresentation(spell, "pt-BR").name, spell.presentationPt.name);
+      assert.equal(mageSpellPresentation(spell, "en-US").name, spell.name);
+      assert.equal(mageSpellSelection(spell).description, spell.description);
+    }
     assert.match(mageSpellPresentation(spells[1], "pt-BR").reach, /\+1 Alcance/);
     assert.match(spells[1].description, /\+1 Reach:/);
     const homebrew = { id: "homebrew:spell:author", name: "Minha magia", originalName: "Minha magia", summary: "Texto autoral", description: "Texto autoral" };

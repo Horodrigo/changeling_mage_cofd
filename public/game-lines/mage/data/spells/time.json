@@ -360,7 +360,16 @@
     "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 189
+    "page": 188,
+    "presentationPt": {
+      "name": "Aceleração",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Por 1 Mana, acelera o alvo: multiplica sua Velocidade pela Potência, permite aplicar Defesa contra armas de fogo e agir primeiro em cada turno, a menos que adie a ação. Pode interromper reflexivamente o turno de outra pessoa; ao Esquivar, adiciona a Potência à Defesa antes de dobrá-la.",
+      "description": "Por 1 Mana, acelera o alvo: multiplica sua Velocidade pela Potência, permite aplicar Defesa contra armas de fogo e agir primeiro em cada turno, a menos que adie a ação. Pode interromper reflexivamente o turno de outra pessoa; ao Esquivar, adiciona a Potência à Defesa antes de dobrá-la. +1 Alcance: Divide por Potência o tempo de cada jogada em ações prolongadas, sem alterar o intervalo de conjuração ritual. +1 Alcance e 1 Mana: As ações de Esquiva recebem a qualidade de Rota.",
+      "reach": "+1 Alcance: Divide por Potência o tempo de cada jogada em ações prolongadas, sem alterar o intervalo de conjuração ritual. +1 Alcance e 1 Mana: As ações de Esquiva recebem a qualidade de Rota."
+    }
   },
   {
     "id": "mta-2ed:time-3-chronos-curse",
@@ -382,7 +391,16 @@
     "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 190
+    "page": 189,
+    "presentationPt": {
+      "name": "Maldição de Chronos",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "Vigor",
+      "summary": "Por 1 Mana, desacelera o alvo, resistido por Vigor: divide sua Velocidade pela Potência, arredondando para baixo, reduz a Defesa pela Potência e o faz agir por último em cada turno. Se a Velocidade chegar a zero, parece preso no lugar.",
+      "description": "Por 1 Mana, desacelera o alvo, resistido por Vigor: divide sua Velocidade pela Potência, arredondando para baixo, reduz a Defesa pela Potência e o faz agir por último em cada turno. Se a Velocidade chegar a zero, parece preso no lugar. +1 Alcance e 1 Mana: O alvo perde toda a Defesa contra ataques. +1 Alcance: Multiplica por Potência o tempo por jogada de ações prolongadas, sem afetar o intervalo de conjuração ritual.",
+      "reach": "+1 Alcance e 1 Mana: O alvo perde toda a Defesa contra ataques. +1 Alcance: Multiplica por Potência o tempo por jogada de ações prolongadas, sem afetar o intervalo de conjuração ritual."
+    }
   },
   {
     "id": "mta-2ed:time-3-shifting-sands",
@@ -404,7 +422,16 @@
     "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 190
+    "page": 189,
+    "presentationPt": {
+      "name": "Areias Movediças",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "O alvo retrocede um número de turnos igual à Potência. Mantém ferimentos e Condições adquiridos e não recupera Mana nem Força de Vontade gastos; as outras magias conjuradas no intervalo desfeito são canceladas. A distorção é visível à Visão Mágica Ativa de Tempo até ele alcançar o presente; então, suas alterações na história tornam-se duradouras.",
+      "description": "O alvo retrocede um número de turnos igual à Potência. Mantém ferimentos e Condições adquiridos e não recupera Mana nem Força de Vontade gastos; as outras magias conjuradas no intervalo desfeito são canceladas. A distorção é visível à Visão Mágica Ativa de Tempo até ele alcançar o presente; então, suas alterações na história tornam-se duradouras. +1 Alcance: Retrocede uma cena inteira; esta opção pode ser aplicada várias vezes.",
+      "reach": "+1 Alcance: Retrocede uma cena inteira; esta opção pode ser aplicada várias vezes."
+    }
   },
   {
     "id": "mta-2ed:time-3-temporal-summoning",
@@ -426,7 +453,16 @@
     "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 190
+    "page": 189,
+    "presentationPt": {
+      "name": "Evocação Temporal",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Substitui temporariamente o alvo por uma versão anterior de si mesmo; edifícios podem voltar a estar intactos e ferimentos desaparecer. Sem Simpatia Temporal, só alcança um passado Inalterado. Quando a Duração termina, a versão atual retorna com ferimentos e Condições sofridos enquanto o feitiço vigorava. Não ressuscita mortos nem desfaz uma transformação em criatura sobrenatural.",
+      "description": "Substitui temporariamente o alvo por uma versão anterior de si mesmo; edifícios podem voltar a estar intactos e ferimentos desaparecer. Sem Simpatia Temporal, só alcança um passado Inalterado. Quando a Duração termina, a versão atual retorna com ferimentos e Condições sofridos enquanto o feitiço vigorava. Não ressuscita mortos nem desfaz uma transformação em criatura sobrenatural.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:time-3-time-limit",
@@ -449,7 +485,16 @@
     "summaryReviewed": true,
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
-    "page": 71
+    "page": 71,
+    "presentationPt": {
+      "name": "Limite de Tempo",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Durante a criação de um Item Imbuído, a magia é conjurada sobre o mago que usa o Aperfeiçoamento Imbuir Item, e o feitiço imbuído é liberado do controle ao fim do processo. Para cada usuário, o item funciona por uma semana por ponto de Potência e depois para; um novo usuário recebe seu próprio período. A Duração de Limite de Tempo deve cobrir todo o processo de imbuir.",
+      "description": "Durante a criação de um Item Imbuído, a magia é conjurada sobre o mago que usa o Aperfeiçoamento Imbuir Item, e o feitiço imbuído é liberado do controle ao fim do processo. Para cada usuário, o item funciona por uma semana por ponto de Potência e depois para; um novo usuário recebe seu próprio período. A Duração de Limite de Tempo deve cobrir todo o processo de imbuir. +1 Alcance: O limite passa a um mês por ponto de Potência para cada usuário.",
+      "reach": "+1 Alcance: O limite passa a um mês por ponto de Potência para cada usuário."
+    }
   },
   {
     "id": "mta-2ed:time-3-weight-of-years",
@@ -471,7 +516,16 @@
     "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 191
+    "page": 190,
+    "presentationPt": {
+      "name": "Peso dos Anos",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Envelhece rapidamente o alvo: causa dano contundente igual à Potência em seres vivos. Em objetos e estruturas, causa dano direto à Estrutura igual à Potência e reduz a Durabilidade em um para cada dois pontos de Estrutura perdidos.",
+      "description": "Envelhece rapidamente o alvo: causa dano contundente igual à Potência em seres vivos. Em objetos e estruturas, causa dano direto à Estrutura igual à Potência e reduz a Durabilidade em um para cada dois pontos de Estrutura perdidos. +1 Alcance: Também reduz o Atletismo de um alvo vivo pela Potência, por exaustão.",
+      "reach": "+1 Alcance: Também reduz o Atletismo de um alvo vivo pela Potência, por exaustão."
+    }
   },
   {
     "id": "mta-2ed:time-4-present-as-past",
@@ -493,7 +547,16 @@
     "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 191
+    "page": 190,
+    "presentationPt": {
+      "name": "Presente como Passado",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Por 1 Mana, permite ao alvo antecipar acontecimentos. Em combate, os afetados declaram suas ações no início do turno; o alvo pode agir em qualquer ponto da ordem de Iniciativa. Isso prevalece sobre outros efeitos sobrenaturais, exceto Tempo, que provoca Choque de Vontades. Em Manobra Social, adiciona Portas iguais à Potência contra abordagens dirigidas ao alvo ou remove essa quantidade das Portas de quem ele aborda.",
+      "description": "Por 1 Mana, permite ao alvo antecipar acontecimentos. Em combate, os afetados declaram suas ações no início do turno; o alvo pode agir em qualquer ponto da ordem de Iniciativa. Isso prevalece sobre outros efeitos sobrenaturais, exceto Tempo, que provoca Choque de Vontades. Em Manobra Social, adiciona Portas iguais à Potência contra abordagens dirigidas ao alvo ou remove essa quantidade das Portas de quem ele aborda.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:time-4-prophecy",
@@ -515,7 +578,16 @@
     "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 191
+    "page": 190,
+    "presentationPt": {
+      "name": "Profecia",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "A maga faz até Potência perguntas hipotéticas sobre o futuro. Cada resposta funciona como Adivinhação, mas considera o resultado mais provável caso a circunstância proposta aconteça.",
+      "description": "A maga faz até Potência perguntas hipotéticas sobre o futuro. Cada resposta funciona como Adivinhação, mas considera o resultado mais provável caso a circunstância proposta aconteça. +1 Alcance: Em uma interação social, pode remover Portas do alvo iguais à Potência.",
+      "reach": "+1 Alcance: Em uma interação social, pode remover Portas do alvo iguais à Potência."
+    }
   },
   {
     "id": "mta-2ed:time-4-rend-lifespan",
@@ -537,7 +609,16 @@
     "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 191
+    "page": 190,
+    "presentationPt": {
+      "name": "Dilacerar a Vida",
+      "practice": "Desfazimento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Arranca anos da vida do alvo e causa dano letal igual à Potência. Quem morre sob o efeito parece ter morrido de velhice; a critério do Narrador, mortos-vivos podem ser imunes.",
+      "description": "Arranca anos da vida do alvo e causa dano letal igual à Potência. Quem morre sob o efeito parece ter morrido de velhice; a critério do Narrador, mortos-vivos podem ser imunes. +1 Alcance e 1 Mana: O dano torna-se agravado.",
+      "reach": "+1 Alcance e 1 Mana: O dano torna-se agravado."
+    }
   },
   {
     "id": "mta-2ed:time-4-rewrite-history",
@@ -559,7 +640,16 @@
     "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 191
+    "page": 190,
+    "presentationPt": {
+      "name": "Reescrever a História",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Perseverança",
+      "summary": "Reescreve a história plausível do alvo como se ele tivesse feito outras escolhas, resistido por Perseverança. Sem Simpatia Temporal, só altera decisões recentes; com ela, pode alcançar mudanças mais antigas. Ao terminar a Duração, a história original volta, mas o alvo conserva lembranças vagas da vida alternativa. Em regra, não afeta criaturas sobrenaturais.",
+      "description": "Reescreve a história plausível do alvo como se ele tivesse feito outras escolhas, resistido por Perseverança. Sem Simpatia Temporal, só altera decisões recentes; com ela, pode alcançar mudanças mais antigas. Ao terminar a Duração, a história original volta, mas o alvo conserva lembranças vagas da vida alternativa. Em regra, não afeta criaturas sobrenaturais. +1 Alcance: Redistribui até Potência pontos de Perícias ou Méritos, respeitando seus máximos. +1 Alcance: Redistribui até Potência pontos de Atributos, sem ultrapassar o máximo do alvo nem ficar abaixo das prioridades da criação. +2 Alcance: Pode afetar criaturas sobrenaturais; sem apagar vantagens inatas, pode fazê-las experimentar uma fase anterior à transformação.",
+      "reach": "+1 Alcance: Redistribui até Potência pontos de Perícias ou Méritos, respeitando seus máximos. +1 Alcance: Redistribui até Potência pontos de Atributos, sem ultrapassar o máximo do alvo nem ficar abaixo das prioridades da criação. +2 Alcance: Pode afetar criaturas sobrenaturais; sem apagar vantagens inatas, pode fazê-las experimentar uma fase anterior à transformação."
+    }
   },
   {
     "id": "mta-2ed:time-4-temporal-stutter",
@@ -581,7 +671,16 @@
     "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 192
+    "page": 191,
+    "presentationPt": {
+      "name": "Solavanco Temporal",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Vigor",
+      "summary": "Envia o alvo para o futuro, resistido por Vigor. Ele desaparece até a Duração terminar e reaparece no mesmo lugar, mantendo o movimento que tinha. Se houver outro corpo no espaço de retorno, o menor em Tamanho recebe a Complicação Derrubado.",
+      "description": "Envia o alvo para o futuro, resistido por Vigor. Ele desaparece até a Duração terminar e reaparece no mesmo lugar, mantendo o movimento que tinha. Se houver outro corpo no espaço de retorno, o menor em Tamanho recebe a Complicação Derrubado. Adicionar Espaço •••: Com o Aperfeiçoamento Alcance Simpático, pode trazer o alvo de volta no destino escolhido, em vez do ponto de partida.",
+      "reach": "Adicionar Espaço •••: Com o Aperfeiçoamento Alcance Simpático, pode trazer o alvo de volta no destino escolhido, em vez do ponto de partida."
+    }
   },
   {
     "id": "mta-2ed:time-5-blink-of-an-eye",
@@ -603,7 +702,16 @@
     "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 192
+    "page": 191,
+    "presentationPt": {
+      "name": "Num Piscar de Olhos",
+      "practice": "Descriação",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Comprime a próxima ação prolongada do alvo em uma única ação instantânea, permitindo até Potência jogadas dessa ação no mesmo turno. Por padrão, não reduz o intervalo de conjuração ritual dos magos.",
+      "description": "Comprime a próxima ação prolongada do alvo em uma única ação instantânea, permitindo até Potência jogadas dessa ação no mesmo turno. Por padrão, não reduz o intervalo de conjuração ritual dos magos. +2 Alcance e 1 Mana: Pode afetar o intervalo de conjuração ritual; para esse cálculo, aumenta a Gnose efetiva pela Potência e reduz o intervalo em um turno por ponto acima de Gnose 10.",
+      "reach": "+2 Alcance e 1 Mana: Pode afetar o intervalo de conjuração ritual; para esse cálculo, aumenta a Gnose efetiva pela Potência e reduz o intervalo em um turno por ponto acima de Gnose 10."
+    }
   },
   {
     "id": "mta-2ed:time-5-corridors-of-time",
@@ -625,7 +733,16 @@
     "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 192
+    "page": 191,
+    "presentationPt": {
+      "name": "Corredores do Tempo",
+      "practice": "Descriação",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "O alvo ocupa seu próprio corpo num momento do passado e pode agir de outro modo a partir dali. A alteração é visível à Visão Mágica Ativa de Tempo. Sem Simpatia Temporal, só viaja a um passado Inalterado; com ela, pode rever decisões antigas. Permanece no passado pela Duração ou até alcançar o presente; então, a nova linha do tempo e suas mudanças tornam-se duradouras.",
+      "description": "O alvo ocupa seu próprio corpo num momento do passado e pode agir de outro modo a partir dali. A alteração é visível à Visão Mágica Ativa de Tempo. Sem Simpatia Temporal, só viaja a um passado Inalterado; com ela, pode rever decisões antigas. Permanece no passado pela Duração ou até alcançar o presente; então, a nova linha do tempo e suas mudanças tornam-se duradouras.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:time-5-temporal-pocket",
@@ -647,6 +764,15 @@
     "summaryReviewed": true,
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
-    "page": 192
+    "page": 191,
+    "presentationPt": {
+      "name": "Bolso Temporal",
+      "practice": "Criação",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Concede tempo extra ao alvo, enquanto o mundo ao redor parece congelado. Ele pode se mover, observar, pensar, curar-se, tocar objetos e conjurar em si mesmo; continua envelhecendo, sangrando e sujeito a Condições normais. Mover fisicamente, consumir ou ferir algo encerra o feitiço depois que essa ação termina.",
+      "description": "Concede tempo extra ao alvo, enquanto o mundo ao redor parece congelado. Ele pode se mover, observar, pensar, curar-se, tocar objetos e conjurar em si mesmo; continua envelhecendo, sangrando e sujeito a Condições normais. Mover fisicamente, consumir ou ferir algo encerra o feitiço depois que essa ação termina.",
+      "reach": ""
+    }
   }
 ]
