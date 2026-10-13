@@ -391,7 +391,16 @@
     "source": "Mage the Awakening",
     "page": 176,
     "summary": "Cut the affected area off from the surrounding world so light, sound, air, matter, and other phenomena cannot cross its boundary. Conditions inside persist, making an unventilated Ban potentially lethal.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Banimento",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Isola a área afetada do mundo exterior: nada entra nem sai através de seu limite, incluindo ar e luz. O interior conserva suas condições iniciais, mas o ar pode se esgotar. Atravessar o limite com magia ou poder sobrenatural provoca um Choque de Vontades.",
+      "description": "Isola a área afetada do mundo exterior: nada entra nem sai através de seu limite, incluindo ar e luz. O interior conserva suas condições iniciais, mas o ar pode se esgotar. Atravessar o limite com magia ou poder sobrenatural provoca um Choque de Vontades. Adicionar qualquer outro Arcano ••: Permite que alguns fenômenos desse Arcano atravessem o limite ou restringe o banimento apenas a esses fenômenos.",
+      "reach": "Adicionar qualquer outro Arcano ••: Permite que alguns fenômenos desse Arcano atravessem o limite ou restringe o banimento apenas a esses fenômenos."
+    }
   },
   {
     "id": "mta-2ed:space-3-co-location",
@@ -413,7 +422,16 @@
     "source": "Mage the Awakening",
     "page": 176,
     "summary": "Overlap multiple locations so someone able to perceive the effect may move reflexively from one to another once per turn. Without additional Reach, the overlap is not visible to ordinary senses and does not form an open portal.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Colocalização",
+      "practice": "Desfiamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Sobrepõe até Potência lugares. Quem percebe a sobreposição pode mover a si ou um objeto que toque de um local para outro como ação reflexa, uma vez por turno; só interage fisicamente com o lugar onde está. Sem Alcance adicional, a sobreposição não é visível aos sentidos comuns nem forma uma passagem aberta.",
+      "description": "Sobrepõe até Potência lugares. Quem percebe a sobreposição pode mover a si ou um objeto que toque de um local para outro como ação reflexa, uma vez por turno; só interage fisicamente com o lugar onde está. Sem Alcance adicional, a sobreposição não é visível aos sentidos comuns nem forma uma passagem aberta. +1 Alcance: Torna o conteúdo dos lugares sobrepostos visível a olho nu. +1 Alcance: Reduz a sobreposição a um plano bidimensional, criando um portal. +1 Alcance: Define uma Chave necessária para usá-la. +2 Alcance: Quem percebe a sobreposição pode mudar de lugar duas vezes por turno.",
+      "reach": "+1 Alcance: Torna o conteúdo dos lugares sobrepostos visível a olho nu. +1 Alcance: Reduz a sobreposição a um plano bidimensional, criando um portal. +1 Alcance: Define uma Chave necessária para usá-la. +2 Alcance: Quem percebe a sobreposição pode mudar de lugar duas vezes por turno."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:space-3-forced-sympathy",
@@ -435,7 +453,16 @@
     "source": "Signs of Sorcery",
     "page": 73,
     "summary": "For one Mana, alter a mage’s imbuement process so the resulting item gains Sympathetic Range and always targets the user’s closest sympathetic connection. The best carried Yantra determines the target, with physical proximity breaking ties; at minimum it selects the nearest person known by name.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Simpatia Forçada",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Por 1 Mana, altera a imbuição feita por outra maga em conjunto com Alcance Simpático. O item passa a atingir sempre a conexão simpática mais próxima de seu usuário: prevalece a melhor Yantra simpática que ele carrega, com proximidade física para desempatar; no mínimo, atinge a pessoa conhecida pelo nome mais próxima.",
+      "description": "Por 1 Mana, altera a imbuição feita por outra maga em conjunto com Alcance Simpático. O item passa a atingir sempre a conexão simpática mais próxima de seu usuário: prevalece a melhor Yantra simpática que ele carrega, com proximidade física para desempatar; no mínimo, atinge a pessoa conhecida pelo nome mais próxima.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:space-3-optimal-container",
@@ -456,8 +483,17 @@
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
     "page": 66,
-    "summary": "Expand a container’s internal dimensions so it can hold an object with Size up to the container’s own Size plus Potency. Its exterior dimensions remain unchanged.",
-    "summaryReviewed": true
+    "summary": "Expand a container’s internal dimensions so it can hold objects whose combined total Size is no greater than the container’s own Size plus Potency. Its exterior dimensions remain unchanged.",
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Recipiente Ideal",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Aumenta o espaço interno de um recipiente sem alterar seu exterior. Ele pode guardar objetos cujo Tamanho total combinado não supere seu próprio Tamanho mais a Potência.",
+      "description": "Aumenta o espaço interno de um recipiente sem alterar seu exterior. Ele pode guardar objetos cujo Tamanho total combinado não supere seu próprio Tamanho mais a Potência.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:space-3-perfect-sympathy",
@@ -479,7 +515,16 @@
     "source": "Mage the Awakening",
     "page": 176,
     "summary": "Give the subject 8-Again on actions directed at someone or something to which she has a Strong sympathetic connection.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Simpatia Perfeita",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Concede 8-novamente às ações dirigidas a uma pessoa ou coisa com a qual o alvo tenha conexão simpática Forte.",
+      "description": "Concede 8-novamente às ações dirigidas a uma pessoa ou coisa com a qual o alvo tenha conexão simpática Forte. +1 Alcance: Se o alvo de um feitiço estiver a Alcance Simpático, pode redirecioná-lo para uma das conexões Fortes dele após vencer um Choque de Vontades. +1 Alcance e 1 Mana: Concede qualidade de ação de Rota a até Potência ações relativas a uma conexão Forte. +1 Alcance: Estende os benefícios a conexões Médias.",
+      "reach": "+1 Alcance: Se o alvo de um feitiço estiver a Alcance Simpático, pode redirecioná-lo para uma das conexões Fortes dele após vencer um Choque de Vontades. +1 Alcance e 1 Mana: Concede qualidade de ação de Rota a até Potência ações relativas a uma conexão Forte. +1 Alcance: Estende os benefícios a conexões Médias."
+    }
   },
   {
     "id": "mta-2ed:space-3-warp",
@@ -501,7 +546,16 @@
     "source": "Mage the Awakening",
     "page": 177,
     "summary": "Twist the space occupied by a subject as a direct attack, inflicting bashing damage equal to Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Distorcer",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Torce o espaço ocupado pelo alvo e lhe causa dano contundente igual à Potência.",
+      "description": "Torce o espaço ocupado pelo alvo e lhe causa dano contundente igual à Potência. +1 Alcance: Também impõe Braço Lesionado ou Perna Lesionada.",
+      "reach": "+1 Alcance: Também impõe Braço Lesionado ou Perna Lesionada."
+    }
   },
   {
     "id": "mta-2ed:space-3-web-weaver",
@@ -523,7 +577,16 @@
     "source": "Mage the Awakening",
     "page": 177,
     "summary": "Strengthen one of the subject’s sympathetic connections by steps equal to Potency, resisted by Composure. The connection may later weaken naturally according to events and time.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Tecelão de Teias",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Fortalece uma conexão simpática do alvo em um grau por ponto de Potência, de Fraca para Média e depois Forte. Pode criar uma conexão Fraca com algo que o alvo tocou no último turno; eventos posteriores ainda podem enfraquecê-la.",
+      "description": "Fortalece uma conexão simpática do alvo em um grau por ponto de Potência, de Fraca para Média e depois Forte. Pode criar uma conexão Fraca com algo que o alvo tocou no último turno; eventos posteriores ainda podem enfraquecê-la. Adicionar Tempo ••: Usa Simpatia Temporal para fortalecer conexões com qualquer coisa que o alvo tocou no momento escolhido.",
+      "reach": "Adicionar Tempo ••: Usa Simpatia Temporal para fortalecer conexões com qualquer coisa que o alvo tocou no momento escolhido."
+    }
   },
   {
     "id": "mta-2ed:space-4-alter-direction",
