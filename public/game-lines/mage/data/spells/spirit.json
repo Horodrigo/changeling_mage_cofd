@@ -422,7 +422,16 @@
     "source": "Mage the Awakening",
     "page": 181,
     "summary": "Heal two points of bashing Corpus damage per Potency. The basic spell restores Corpus without changing Attributes or Rank.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Fortalecer Espírito",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Cura dois pontos de dano contundente no Corpus de um espírito por ponto de Potência. O efeito básico não muda seus Atributos nem seu Posto.",
+      "description": "Cura dois pontos de dano contundente no Corpus de um espírito por ponto de Potência. O efeito básico não muda seus Atributos nem seu Posto. +1 Alcance: Em vez de curar, aumenta em um um Atributo do espírito por ponto de Potência pela Duração, ainda sujeito ao máximo definido pelo Posto. +2 Alcance e 1 Mana: Eleva o Posto do espírito em um, aumentando também seus limites de Atributos e reserva de Essência, e concedendo uma nova Númen.",
+      "reach": "+1 Alcance: Em vez de curar, aumenta em um um Atributo do espírito por ponto de Potência pela Duração, ainda sujeito ao máximo definido pelo Posto. +2 Alcance e 1 Mana: Eleva o Posto do espírito em um, aumentando também seus limites de Atributos e reserva de Essência, e concedendo uma nova Númen."
+    }
   },
   {
     "id": "mta-2ed:spirit-3-erode-resonance",
@@ -444,7 +453,16 @@
     "source": "Mage the Awakening",
     "page": 181,
     "summary": "Remove an Open or Resonant Condition from a subject as a Lasting effect. The underlying circumstances may create the Condition again later.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Erodir Ressonância",
+      "practice": "Desfiamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Remove completamente do alvo uma Condição Aberto ou Ressonante. O efeito é duradouro, mas novas circunstâncias podem gerar a Condição outra vez.",
+      "description": "Remove completamente do alvo uma Condição Aberto ou Ressonante. O efeito é duradouro, mas novas circunstâncias podem gerar a Condição outra vez. +1 Alcance: Tentativas futuras de restabelecer a mesma Condição pela Duração sofrem penalidade igual à Potência.",
+      "reach": "+1 Alcance: Tentativas futuras de restabelecer a mesma Condição pela Duração sofrem penalidade igual à Potência."
+    }
   },
   {
     "id": "mta-2ed:spirit-3-howl-from-beyond",
@@ -466,7 +484,16 @@
     "source": "Mage the Awakening",
     "page": 182,
     "summary": "Assault a subject with spiritual force, inflicting bashing damage equal to Potency. The basic spell affects valid targets on the caster’s side of the Gauntlet.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Uivo do Além",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Fere o alvo com força espiritual, causando dano contundente igual à Potência. No efeito básico, só atinge alvos do mesmo lado da Barreira que a maga.",
+      "description": "Fere o alvo com força espiritual, causando dano contundente igual à Potência. No efeito básico, só atinge alvos do mesmo lado da Barreira que a maga. +1 Alcance: Também impõe a Condição Aberto. +1 Alcance: Atinge alvos do outro lado da Barreira, resistido pela Força da Barreira.",
+      "reach": "+1 Alcance: Também impõe a Condição Aberto. +1 Alcance: Atinge alvos do outro lado da Barreira, resistido pela Força da Barreira."
+    }
   },
   {
     "id": "mta-2ed:spirit-3-place-of-power",
@@ -488,7 +515,16 @@
     "source": "Mage the Awakening",
     "page": 182,
     "summary": "Raise or lower the Gauntlet Strength in the area by Potency, resisted by its current strength. The basic spell changes passage difficulty equally in both directions.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Lugar de Poder",
+      "practice": "Desfiamento ou Aperfeiçoamento",
+      "primaryFactor": "Potência",
+      "withstand": "Força da Barreira",
+      "summary": "Aumenta ou diminui a Força da Barreira na Área pela Potência, resistido por sua Força atual. O efeito básico modifica a passagem nas duas direções igualmente.",
+      "description": "Aumenta ou diminui a Força da Barreira na Área pela Potência, resistido por sua Força atual. O efeito básico modifica a passagem nas duas direções igualmente. +1 Alcance: Altera a Barreira de maneira diferente em cada lado, facilitando a entrada na Sombra e dificultando a saída, ou vice-versa.",
+      "reach": "+1 Alcance: Altera a Barreira de maneira diferente em cada lado, facilitando a entrada na Sombra e dificultando a saída, ou vice-versa."
+    }
   },
   {
     "id": "mta-2ed:spirit-3-reaching",
@@ -510,7 +546,16 @@
     "source": "Mage the Awakening",
     "page": 182,
     "summary": "Interact physically and magically across the Gauntlet for the Duration, resisted by Gauntlet Strength. The spell does not itself create a passage that others can cross.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Alcançar",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Força da Barreira",
+      "summary": "Permite à maga interagir física e magicamente com o outro lado da Barreira pela Duração, resistido pela Força da Barreira. O efeito básico não cria uma passagem para outros atravessarem.",
+      "description": "Permite à maga interagir física e magicamente com o outro lado da Barreira pela Duração, resistido pela Força da Barreira. O efeito básico não cria uma passagem para outros atravessarem. +1 Alcance: Abre uma Íris entre o mundo físico e a Sombra pela qual qualquer um pode passar. Outro Alcance permite definir sua Chave.",
+      "reach": "+1 Alcance: Abre uma Íris entre o mundo físico e a Sombra pela qual qualquer um pode passar. Outro Alcance permite definir sua Chave."
+    }
   },
   {
     "id": "mta-2ed:spirit-3-rouse-spirit",
@@ -532,7 +577,16 @@
     "source": "Mage the Awakening",
     "page": 182,
     "summary": "Wake a hibernating spirit before it restores itself. Potency must equal or exceed the difference between its current Essence and full Corpus; it awakens in its current damaged state.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Despertar Espírito",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Potência",
+      "withstand": "Posto",
+      "summary": "Acorda prematuramente um espírito em hibernação. Exige Potência pelo menos igual à diferença entre a Essência atual do espírito e seu Corpus total; ele desperta imediatamente ainda ferido.",
+      "description": "Acorda prematuramente um espírito em hibernação. Exige Potência pelo menos igual à diferença entre a Essência atual do espírito e seu Corpus total; ele desperta imediatamente ainda ferido. +1 Alcance por aplicação: O espírito acorda com uma caixa adicional de dano no Corpus curada.",
+      "reach": "+1 Alcance por aplicação: O espírito acorda com uma caixa adicional de dano no Corpus curada."
+    }
   },
   {
     "id": "mta-2ed:spirit-3-spirit-summons",
@@ -554,7 +608,16 @@
     "source": "Mage the Awakening",
     "page": 182,
     "summary": "Call the nearest local spirit, a known spirit, or one matching a specified Resonance, resisted by Rank. The basic spell brings it to the caster but neither opens it to Manifestation nor compels obedience.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Invocação Espiritual",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "Posto",
+      "summary": "Chama o espírito mais próximo na área, um espírito conhecido ou um que corresponda à Ressonância especificada, resistido por Posto. O efeito básico não lhe concede Manifestação nem obediência. Espíritos acima de Posto 5 não são afetados.",
+      "description": "Chama o espírito mais próximo na área, um espírito conhecido ou um que corresponda à Ressonância especificada, resistido por Posto. O efeito básico não lhe concede Manifestação nem obediência. Espíritos acima de Posto 5 não são afetados. +1 Alcance: Cria também a Condição Aberto na área. +1 Alcance: Impõe uma ordem de uma palavra. +1 Alcance: Pode chamar da Sombra; fora de uma Íris aberta, a Resistência é o maior valor entre Posto e Força da Barreira, e o espírito ainda precisa ser capaz de atravessá-la. +2 Alcance: Impõe uma tarefa complexa descrita em uma ou duas frases.",
+      "reach": "+1 Alcance: Cria também a Condição Aberto na área. +1 Alcance: Impõe uma ordem de uma palavra. +1 Alcance: Pode chamar da Sombra; fora de uma Íris aberta, a Resistência é o maior valor entre Posto e Força da Barreira, e o espírito ainda precisa ser capaz de atravessá-la. +2 Alcance: Impõe uma tarefa complexa descrita em uma ou duas frases."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:spirit-3-spiritual-tool",
@@ -575,8 +638,17 @@
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
     "page": 66,
-    "summary": "Make an object simultaneously material in the physical world and the Shadow, able to interact with spirits in Twilight and the Shadow. It retains its material form when carried between realms and upon returning.",
-    "summaryReviewed": true
+    "summary": "Make an object simultaneously material in the physical world and the Shadow, able to interact with spirits in Twilight and the Shadow. It keeps its normal equipment bonuses and retains its material form when carried between realms and upon returning.",
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Ferramenta Espiritual",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Torna um objeto sintonizado com a Sombra sem perder sua forma material ou bônus de equipamento. Ele passa a existir também na Sombra e pode interagir com espíritos no Crepúsculo ou naquele reino; se levado entre mundos, mantém a forma ao retornar.",
+      "description": "Torna um objeto sintonizado com a Sombra sem perder sua forma material ou bônus de equipamento. Ele passa a existir também na Sombra e pode interagir com espíritos no Crepúsculo ou naquele reino; se levado entre mundos, mantém a forma ao retornar.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:spirit-4-banishment",
