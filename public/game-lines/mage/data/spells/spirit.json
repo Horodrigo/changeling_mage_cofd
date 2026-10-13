@@ -174,7 +174,16 @@
     "source": "Mage the Awakening",
     "page": 180,
     "summary": "Seal a source of Essence so any spirit or other entity attempting to feed from it must overcome the spell in a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Selar a Fonte",
+      "practice": "Proteção",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Protege uma fonte de Essência. Espíritos, lobisomens ou outras criaturas que tentem extrair Essência dela precisam vencer um Choque de Vontades.",
+      "description": "Protege uma fonte de Essência. Espíritos, lobisomens ou outras criaturas que tentem extrair Essência dela precisam vencer um Choque de Vontades.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:spirit-2-channel-essence",
@@ -196,7 +205,16 @@
     "source": "Mage the Awakening",
     "page": 180,
     "summary": "Move Essence equal to Potency from a Resonant Condition or suitable vessel into a spirit, limited by the caster’s Gnosis-derived Mana per turn. The mage may instead store Essence in her own Pattern, sharing her maximum capacity between Mana and Essence.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Canalizar Essência",
+      "practice": "Regência",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Transfere Essência igual à Potência de uma Condição Ressonante ou outro recipiente para um espírito. Pode guardá-la no próprio Padrão da maga mesmo após o fim do feitiço, mas Mana e Essência juntas não podem superar sua capacidade máxima de Mana; a transferência por turno respeita o limite derivado da Gnose.",
+      "description": "Transfere Essência igual à Potência de uma Condição Ressonante ou outro recipiente para um espírito. Pode guardá-la no próprio Padrão da maga mesmo após o fim do feitiço, mas Mana e Essência juntas não podem superar sua capacidade máxima de Mana; a transferência por turno respeita o limite derivado da Gnose. Adicionar Morte •• ou Mente ••: Também transfere Essência a fantasmas ou Goetia, respectivamente. +1 Alcance: Pode retirar Essência diretamente de um espírito, resistido por seu Posto.",
+      "reach": "Adicionar Morte •• ou Mente ••: Também transfere Essência a fantasmas ou Goetia, respectivamente. +1 Alcance: Pode retirar Essência diretamente de um espírito, resistido por seu Posto."
+    }
   },
   {
     "id": "mta-2ed:spirit-2-command-spirit",
@@ -218,7 +236,16 @@
     "source": "Mage the Awakening",
     "page": 181,
     "summary": "Force a spirit of Rank 5 or less to perform up to Potency discrete actions, resisted by Rank. An unfinished command ends when the spell’s Duration expires.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Comandar Espírito",
+      "practice": "Regência",
+      "primaryFactor": "Potência",
+      "withstand": "Posto",
+      "summary": "Obriga um espírito de Posto até 5 a cumprir até Potência ações distintas pela Duração, resistido por Posto. Ordens contrárias à autopreservação dele provocam um Choque de Vontades; tarefas não concluídas podem ser abandonadas quando a magia termina.",
+      "description": "Obriga um espírito de Posto até 5 a cumprir até Potência ações distintas pela Duração, resistido por Posto. Ordens contrárias à autopreservação dele provocam um Choque de Vontades; tarefas não concluídas podem ser abandonadas quando a magia termina.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:spirit-2-ephemeral-shield",
@@ -235,12 +262,21 @@
       "Medicine",
       "Stealth"
     ],
-    "description": "Any Spirit Numina, Influences and Manifestations, Spirit Spells  and werewolf Gifts aimed at subject provoke a Clash of Wills +1 Reach: A Spirits physical attacks are likewise affected Add Death 2 or Mind 2: Shield affects ghosts or Goetia respectively",
+    "description": "Spirit Numina, Influences, Manifestations, Spirit spells, and werewolf Gifts directed at the subject provoke a Clash of Wills. +1 Reach: The shield also protects against spirits’ physical attacks.",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 181,
     "summary": "Ward the subject against spirit Numina, Influences, Manifestations, Spirit spells, and werewolf Gifts, causing each targeted effect to provoke a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Escudo Efêmero",
+      "practice": "Proteção",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Protege o alvo de Númena, Influências, Manifestações, feitiços de Espírito e Dons de lobisomem dirigidos a ele; cada ataque sobrenatural precisa vencer um Choque de Vontades.",
+      "description": "Protege o alvo de Númena, Influências, Manifestações, feitiços de Espírito e Dons de lobisomem dirigidos a ele; cada ataque sobrenatural precisa vencer um Choque de Vontades. +1 Alcance: A proteção também se aplica aos ataques físicos de espíritos.",
+      "reach": "+1 Alcance: A proteção também se aplica aos ataques físicos de espíritos."
+    }
   },
   {
     "id": "mta-2ed:spirit-2-gossamer-touch",
@@ -262,7 +298,16 @@
     "source": "Mage the Awakening",
     "page": 181,
     "summary": "Make the subject physically solid to spirits in Twilight, allowing mutual touch and combat for the Duration.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Toque Etéreo",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Torna o corpo do alvo sólido para espíritos no Crepúsculo, permitindo contato e combate físico pela Duração.",
+      "description": "Torna o corpo do alvo sólido para espíritos no Crepúsculo, permitindo contato e combate físico pela Duração. Adicionar Morte •• ou Mente ••: Estende o efeito a fantasmas ou Goetia, respectivamente. +1 Alcance: Objetos carregados pelo alvo também se tornam sólidos para espíritos. +1 Alcance: Seus ataques desarmados contra espíritos contam como arma com dano igual à Potência.",
+      "reach": "Adicionar Morte •• ou Mente ••: Estende o efeito a fantasmas ou Goetia, respectivamente. +1 Alcance: Objetos carregados pelo alvo também se tornam sólidos para espíritos. +1 Alcance: Seus ataques desarmados contra espíritos contam como arma com dano igual à Potência."
+    }
   },
   {
     "id": "mta-2ed:spirit-2-opener-of-the-way",
@@ -284,7 +329,16 @@
     "source": "Mage the Awakening",
     "page": 181,
     "summary": "Change a subject’s Resonant Condition into Open, or an Open Condition back into Resonant, for the spell’s Duration.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Abridor do Caminho",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Converte a Condição Ressonante do alvo em Aberto, ou Aberto em Ressonante, pela Duração.",
+      "description": "Converte a Condição Ressonante do alvo em Aberto, ou Aberto em Ressonante, pela Duração.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:spirit-2-shadow-walk",
@@ -306,7 +360,16 @@
     "source": "Mage the Awakening",
     "page": 181,
     "summary": "Veil the subject from the notice of spirits and Spirit magic. Supernatural attempts to perceive the concealed subject provoke a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Passo na Sombra",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Oculta o alvo da atenção de espíritos e da magia de Espírito. Tentativas sobrenaturais de percebê-lo provocam um Choque de Vontades.",
+      "description": "Oculta o alvo da atenção de espíritos e da magia de Espírito. Tentativas sobrenaturais de percebê-lo provocam um Choque de Vontades.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:spirit-2-slumber",
@@ -328,7 +391,16 @@
     "source": "Mage the Awakening",
     "page": 181,
     "summary": "Slow a hibernating spirit’s recovery so it regains only one Essence every number of days equal to Potency instead of one per day. The spirit Withstands with Rank.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Hibernação",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "Posto",
+      "summary": "Retarda a recuperação de um espírito em hibernação: ele recupera um ponto de Essência a cada número de dias igual à Potência, em vez de um ponto por dia. O espírito resiste com seu Posto.",
+      "description": "Retarda a recuperação de um espírito em hibernação: ele recupera um ponto de Essência a cada número de dias igual à Potência, em vez de um ponto por dia. O espírito resiste com seu Posto.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:spirit-3-bolster-spirit",
