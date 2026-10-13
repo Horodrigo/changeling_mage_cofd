@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 331,
+  "catalogVersion": 332,
   "catalogs": {
     "werewolf-totem-powers": {
       "version": 3,
@@ -168,9 +168,9 @@
       "hash": "378be4521db29abd27163f480fa34f8e9688eda21c8f0759a1bda84b49002874"
     },
     "mage-factions": {
-      "version": 2,
+      "version": 3,
       "url": "/game-lines/mage/data/factions.json",
-      "hash": "03b12a8de2706c0280e0ebb783b0cbe6203069d501bfc871915d1718bb8bed07"
+      "hash": "078880fb43bd1ee6d525f03be66666681b8feaac63a4ec6967085e551e76363e"
     },
     "changeling-contracts-h-courts": {
       "version": 4,

@@ -214,6 +214,11 @@ test("Tome factions are complete and Faction Member validates Order-specific cho
   assert.ok(faction.roteSkills.length>=1,faction.name);
   assert.equal(faction.source,"Tome of the Pentacle",faction.name);
  }
+ for(const faction of factions.filter(item=>item.orders.length===1&&item.orders[0]==="Adamantine Arrow")){
+  assert.ok(faction.description,faction.name);
+  assert.ok(faction.presentationPt?.toolYantra,faction.name);
+  assert.ok(faction.presentationPt?.description,faction.name);
+ }
  const factionMember=merit("Faction Member");
  const status=(domain,dots)=>({name:"Awakened Status",dots,configuration:{domain}});
  const context={...base,order:"Mysterium",merits:[status("Mysterium",2)]};

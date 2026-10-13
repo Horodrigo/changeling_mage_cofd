@@ -4,6 +4,8 @@ export type MageFactionDefinition = {
   orders: string[];
   heretical: boolean;
   toolYantra: string;
+  description?: string;
+  presentationPt?: { toolYantra: string; description: string };
   roteSkills: string[];
   sourceId: string;
   source: string;
