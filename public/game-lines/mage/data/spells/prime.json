@@ -1308,7 +1308,16 @@
     "source": "Signs of Sorcery",
     "page": 71,
     "summary": "Transfer control of up to Potency spells cast by the mage to another mage, resisted by Composure. The recipient assumes spell control for the Duration, after which control returns to the original caster.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Transferência Primordial",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Transfere a outra maga o controle de até Potência feitiços conjurados pela primeira, resistido por Compostura. A destinatária pode mantê-los ou encerrá-los; quando a Duração termina, o controle retorna à conjuradora original.",
+      "description": "Transfere a outra maga o controle de até Potência feitiços conjurados pela primeira, resistido por Compostura. A destinatária pode mantê-los ou encerrá-los; quando a Duração termina, o controle retorna à conjuradora original. +2 Alcance: Se a magia for imbuída num item com Potência ao menos igual à dos outros feitiços incluídos, o usuário Desperto recebe o controle deles e pode redistribuir Alcance e fatores. Se já atingiu seu limite de controle de feitiços, soma um dado ao risco de Paradoxo.",
+      "reach": "+2 Alcance: Se a magia for imbuída num item com Potência ao menos igual à dos outros feitiços incluídos, o usuário Desperto recebe o controle deles e pode redistribuir Alcance e fatores. Se já atingiu seu limite de controle de feitiços, soma um dado ao risco de Paradoxo."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-4-scribe-daimonomikon",
@@ -1330,7 +1339,16 @@
     "source": "Signs of Sorcery",
     "page": 87,
     "summary": "For one Mana, inscribe one Legacy Attainment per casting into a vessel; consecutive castings may hold initiation through the fifth Attainment. The caster must meet the relevant prerequisites; readers pay applicable Arcane Experience and members treat it as a +2 sympathetic Yantra.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Inscrever Daimonomikon",
+      "practice": "Modelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Posto do Aperfeiçoamento + (10 − Gnose da conjuradora)",
+      "summary": "Por 1 Mana, inscreve um Aperfeiçoamento de Legado por conjuração em um Daimonomikon. A primeira inscrição inclui iniciação, Arcano primário, Yantras e Oblações; as seguintes podem chegar ao quinto Aperfeiçoamento. A conjuradora precisa de Gnose 2 ou mais e satisfazer os requisitos inscritos. Leitores pagam a Experiência Arcana aplicável; membros do Legado recebem Yantra simpática de +2 dados.",
+      "description": "Por 1 Mana, inscreve um Aperfeiçoamento de Legado por conjuração em um Daimonomikon. A primeira inscrição inclui iniciação, Arcano primário, Yantras e Oblações; as seguintes podem chegar ao quinto Aperfeiçoamento. A conjuradora precisa de Gnose 2 ou mais e satisfazer os requisitos inscritos. Leitores pagam a Experiência Arcana aplicável; membros do Legado recebem Yantra simpática de +2 dados. +1 Alcance e 1 Mana: A Duração torna-se duradoura.",
+      "reach": "+1 Alcance e 1 Mana: A Duração torna-se duradoura."
+    }
   },
   {
     "id": "mta-2ed:prime-4-supernal-dispellation",
@@ -1383,7 +1401,16 @@
     "source": "Signs of Sorcery",
     "page": 91,
     "summary": "Move a Soul Stone from its current vessel into another object of Size 2 or smaller, Withstood by its creator’s Resolve. The old vessel retains the creator’s Signature Nimbus for one additional week.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Transferir Pedra da Alma",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Perseverança da criadora da pedra da alma",
+      "summary": "Move uma pedra da alma de seu recipiente atual para outro objeto de Tamanho até 2, resistido pela Perseverança da criadora. O recipiente anterior conserva seu Nimbus de Assinatura por mais uma semana.",
+      "description": "Move uma pedra da alma de seu recipiente atual para outro objeto de Tamanho até 2, resistido pela Perseverança da criadora. O recipiente anterior conserva seu Nimbus de Assinatura por mais uma semana. +2 Alcance: A Duração torna-se duradoura.",
+      "reach": "+2 Alcance: A Duração torna-se duradoura."
+    }
   },
   {
     "id": "mta-2ed:prime-5-blasphemy",

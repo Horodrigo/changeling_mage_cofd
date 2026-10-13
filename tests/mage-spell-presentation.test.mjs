@@ -84,7 +84,7 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
     assert.match(mageSpellPresentation(mind.find(spell => spell.name === "Haunted Grimoire"), "pt-BR").reach, /Substituir Morte •••••/);
     assert.equal(mind.find(spell => spell.name === "Possession").page, 164);
     const prime = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/prime.json", import.meta.url), "utf8"));
-    assert.equal(prime.filter(spell => spell.presentationPt).length, 47);
+    assert.equal(prime.filter(spell => spell.presentationPt).length, 50);
     assert.match(mageSpellPresentation(prime.find(spell => spell.name === "Sacred Geometry"), "pt-BR").reach, /Adicionar Morte • ou Espírito •/);
     assert.match(mageSpellPresentation(prime.find(spell => spell.name === "Shared Sight"), "pt-BR").reach, /Adicionar qualquer outro Arcano •/);
     assert.match(mageSpellPresentation(prime.find(spell => spell.name === "Words of Truth"), "pt-BR").reach, /Condição Inspirado/);
@@ -93,6 +93,12 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
     assert.match(mageSpellPresentation(prime.find(spell => spell.name === "Ephemeral Enchantment"), "pt-BR").reach, /Fraqueza de uma entidade específica/);
     assert.match(mageSpellPresentation(prime.find(spell => spell.name === "Scribe Palimpsest"), "pt-BR").reach, /\+1 Alcance e 1 Mana/);
     assert.match(mageSpellPresentation(prime.find(spell => spell.name === "Eidolon"), "pt-BR").reach, /Adicionar Mente •••••/);
+    for (const spell of prime) {
+      assert.equal(mageSpellPresentation(spell, "en-US").name, spell.name);
+      assert.equal(mageSpellPresentation(spell, "pt-BR").name, spell.presentationPt.name);
+      assert.equal(mageSpellPresentation(spell, "en-US").name, spell.name);
+      assert.equal(mageSpellSelection(spell).description, spell.description);
+    }
     assert.match(mageSpellPresentation(spells[1], "pt-BR").reach, /\+1 Alcance/);
     assert.match(spells[1].description, /\+1 Reach:/);
     const homebrew = { id: "homebrew:spell:author", name: "Minha magia", originalName: "Minha magia", summary: "Texto autoral", description: "Texto autoral" };
