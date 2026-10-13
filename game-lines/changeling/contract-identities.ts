@@ -32,7 +32,7 @@ export function canonicalContractSnapshot(value: unknown, catalog: readonly Cont
   return next;
 }
 
-export function ownedContractDefinition(value: Record<string, unknown>, catalog: readonly ContractDefinition[]): ContractDefinition | undefined {
+export function ownedContractDefinition(value: { id?: unknown; sourceId?: unknown; name?: unknown }, catalog: readonly ContractDefinition[]): ContractDefinition | undefined {
   const id = typeof value.id === "string" ? value.id : "";
   const sourceId = typeof value.sourceId === "string" ? value.sourceId : "";
   if (id) return catalog.find(item => item.id === id && (!sourceId || item.sourceId === sourceId));

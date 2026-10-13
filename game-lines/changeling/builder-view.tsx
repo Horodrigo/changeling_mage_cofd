@@ -28,6 +28,7 @@ import { kithSearchText, kithSkillOptions, type KithDefinition } from "@/lib/cha
 import type { EntitlementDefinition } from "@/game-lines/changeling/entitlements";
 import { kithCreationChoice } from "./kith-choices";
 import type { ContractDefinition } from "./contract-types";
+import { ownedContractDefinition } from "./contract-identities";
 import { contractDisplayOptions, contractHasInvocationRoll, contractOutcomeSections, contractPresentation, contractSummary, type ContractPresentationCatalog } from "./contract-presentation";
 import type { MeritSelection, Specialty } from "@/lib/core/character/character-types";
 import type { MeritDefinition } from "@/lib/merits";
@@ -502,7 +503,8 @@ function ContractSelector({
   presentation: ContractPresentationCatalog;
 }) {
   const { locale, t } = useLanguage();
-  const contractName = (item: ContractDefinition | ContractSelection) => contractPresentation(item,locale,presentation).name;
+  const presentContract = (item: ContractSelection) => ownedContractDefinition(item, catalog) ? contractPresentation(item, locale, presentation) : item;
+  const contractName = (item: ContractSelection) => presentContract(item).name;
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -531,7 +533,7 @@ function ContractSelector({
       ) &&
       (typeFilter === "all" || (typeFilter === "common" ? contract.type === "Common" : contract.type === "Royal")) &&
       (categoryFilter === "all" || contractCategoryKeys(contract).includes(categoryFilter)) &&
-      (!((contract.type === "Common" ? commonFull : royalFull)) || contracts.some((item) => item.id === contract.id || item.originalName === contract.originalName)),
+      (!((contract.type === "Common" ? commonFull : royalFull)) || contracts.some((item) => item.id === contract.id)),
     );
   const groups = alphabetical([...new Set(availableContracts.map(contractCategoryKey))], categoryLabel, locale)
     .map((category) => ({
@@ -548,11 +550,7 @@ function ContractSelector({
     .filter((group) => group.items.length);
   function addContract(contract: ContractDefinition) {
     if (
-      contracts.some(
-        (item) =>
-          item.id === contract.id ||
-          item.originalName === contract.originalName,
-      )
+      contracts.some((item) => item.id === contract.id)
     )
       return;
     const start = contract.type === "Common" ? 0 : 4;
@@ -571,9 +569,7 @@ function ContractSelector({
     setContracts(next);
   }
   function toggleContract(contract: ContractDefinition) {
-    const selectedIndex = contracts.findIndex(
-      (item) => item.id === contract.id || item.originalName === contract.originalName,
-    );
+    const selectedIndex = contracts.findIndex((item) => item.id === contract.id);
     if (selectedIndex >= 0) {
       removeContract(selectedIndex);
       return;
@@ -616,7 +612,7 @@ function ContractSelector({
                   const summary = contractSummary(presented, locale);
                   const displayOptions = contractDisplayOptions(presented, locale);
                   const outcomeSections = contractOutcomeSections(presented, locale);
-                  const selected = contracts.some((item) => item.id === contract.id || item.originalName === contract.originalName);
+                  const selected = contracts.some((item) => item.id === contract.id);
                   const full = contract.type === "Common" ? commonFull : royalFull;
                   const benefit = presented.seemingBenefits?.[seeming as keyof typeof presented.seemingBenefits];
                   return <SelectableCatalogCard className="merit-option" key={contract.id} selected={selected} disabled={!selected && full} label={contractName(contract)} onToggle={() => toggleContract(contract)}><div><strong>{contractName(contract)}</strong><small>{contract.goblin ? "Goblin" : contract.type === "Common" ? t("ui.common") : t("ui.royal")} · {contract.source} · p. {contract.page || "—"}</small>{summary && <p className="rule-detail"><strong>{t("ui.summary")}:</strong> {summary}</p>}{contractHasInvocationRoll(presented) === true && <p className="rule-detail"><strong>{t("ui.dicePool")}:</strong> {presented.dicePool ?? t("ui.notListed")}</p>}{presented.cost && <p className="rule-detail"><strong>{t("ui.cost")}:</strong> {presented.cost}</p>}{displayOptions.length > 0 && <p className="rule-detail"><strong>{t("ui.options")}:</strong> {displayOptions.join(" · ")}</p>}{outcomeSections[0]?.text && <p className="rule-detail">{outcomeSections[0].text}</p>}{benefit && <p className="rule-detail"><strong>{t("ui.benefit")}:</strong> {benefit}</p>}</div></SelectableCatalogCard>;
@@ -631,7 +627,7 @@ function ContractSelector({
       <div className="rule-power-list creation-power-list">
         {contracts.map((item,index)=>{
           if(!item.name)return <article className="creation-power-empty" key={index}><Badge variant={index<4?"secondary":"outline"}>{index<4?t("ui.common"):t("ui.royal")}</Badge><div><strong>{t("ui.availableSlot")}</strong><small>{t("ui.chooseFromTheCatalog")}</small></div></article>;
-          const presented=contractPresentation(item,locale,presentation),summary=contractSummary(presented,locale),displayOptions=contractDisplayOptions(presented,locale),outcomes=contractOutcomeSections(presented,locale);
+          const presented=presentContract(item),summary=contractSummary(presented,locale),displayOptions=contractDisplayOptions(presented,locale),outcomes=contractOutcomeSections(presented,locale);
           const benefit=presented.seemingBenefits?.[seeming as keyof typeof presented.seemingBenefits];
           return <details className="rule-power-card" key={`${item.id}-${index}`}>
             <summary className="rule-power-summary"><strong>{contractName(item)}</strong><Badge variant={item.goblin?"default":"outline"}>{item.goblin?"Goblin":index<4?t("ui.common"):t("ui.royal")}</Badge><small>{categoryLabel(contractCategoryKey(item))} · {item.source} · p. {item.page||"—"}</small></summary>
@@ -678,11 +674,7 @@ function ContractSelector({
                     const summary = contractSummary(presented, locale);
                     const displayOptions = contractDisplayOptions(presented, locale);
                     const outcomeSections = contractOutcomeSections(presented, locale);
-                    const selected = contracts.some(
-                      (item) =>
-                        item.id === contract.id ||
-                        item.originalName === contract.originalName,
-                    );
+                    const selected = contracts.some((item) => item.id === contract.id);
                     const full =
                       contract.type === "Common"
                         ? contracts.slice(0, 4).every((item) => item.name)

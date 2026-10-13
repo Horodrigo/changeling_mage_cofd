@@ -34,6 +34,10 @@ test("owned Contracts use canonical IDs and only unambiguous legacy names", () =
   assert.equal(ownedContractDefinition({ name: "Mirror" }, catalog), undefined);
   assert.equal(ownedContractDefinition({ id: "missing", name: "Sword" }, catalog), undefined);
   assert.equal(ownedContractDefinition({ id: "core:mirror", sourceId: "homebrew", name: "Mirror" }, catalog), undefined);
+  const namesakes = CONTRACTS.filter(item => item.originalName === "Nothing to See Here");
+  assert.equal(namesakes.length, 2);
+  for (const item of namesakes) assert.equal(ownedContractDefinition(item, namesakes), item);
+  assert.equal(ownedContractDefinition({ name: "Nothing to See Here" }, namesakes), undefined);
 });
 
 test("tradução pt-BR cobre os 260 Contratos canônicos", () => {

@@ -28,7 +28,7 @@ import { canonicalRegalia, changelingFavoredRegalia } from "@/lib/changeling-reg
 import type { KithDefinition } from "@/lib/changeling-kiths";
 import { kithCreationChoice } from "./kith-choices";
 import type { ContractDefinition } from "./contract-types";
-import { canonicalContractSnapshot } from "./contract-identities";
+import { canonicalContractSnapshot, ownedContractDefinition } from "./contract-identities";
 import { contractWithSupplementalBenefits } from "./contract-presentation";
 import { meritSelectionProblems, type MeritDefinition } from "@/lib/merits";
 import { changelingMeritPrerequisitesMet, type ChangelingMeritContext } from "./merit-context";
@@ -55,7 +55,6 @@ import { reconcileChangelingCreationMerits } from "./builder-merit-grants";
 import { isChangelingCourtGrant } from "./merit-identities";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 
-const translateRegalia = (value: string) => value;
 
 function translateCourt(value: string) {
   const court = canonicalChangelingCourt(value);
@@ -81,8 +80,8 @@ function readContracts(initial: CharacterSheet | null | undefined, catalog: read
   return Array.from({ length: 6 }, (_, index) => {
     const raw = saved[index];
     if (!raw) return emptyContract(index < 4 ? "Common" : "Royal");
-    const found = catalog.find((item) => item.id === String(raw.id ?? "") || item.name === String(raw.name ?? "") || item.originalName === String(raw.name ?? ""));
-    return found ? { ...found } : { ...emptyContract(index < 4 ? "Common" : "Royal"), name: String(raw.name ?? ""), originalName: String(raw.name ?? ""), regalia: translateRegalia(String(raw.regalia ?? "")) };
+    const found = ownedContractDefinition(raw, catalog);
+    return found ? { ...found } : { ...emptyContract(index < 4 ? "Common" : "Royal"), ...raw } as ContractSelection;
   });
 }
 
