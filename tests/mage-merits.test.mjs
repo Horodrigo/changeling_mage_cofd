@@ -19,6 +19,21 @@ const mageCatalog=[...rawMageCatalog.reduce((selected,item)=>{const current=sele
 const merit=(name)=>mageCatalog.find(item=>item.name===name);
 const base={...mageMerits.MAGE_STATUS_REQUIREMENTS,gameLine:"MtA",archetypes:["awakened"],meritCatalog:mageCatalog,attributes:{},skills:{},arcana:{},gnosis:1,path:"Acanthus",order:"Nameless",merits:[]};
 
+test("Mage Merit presentation switches EN/PT/EN without changing canonical requirements",async()=>{
+ const {meritPresentation}=await vite.ssrLoadModule("/lib/merit-presentation.ts");
+ for(const name of ["Adamant Hand","Artifact","Astral Adept","Between the Ticks","Cabal Theme"]){
+  const entry=merit(name);
+  const canonical={id:entry.id,name:entry.name,prerequisites:entry.prerequisites,descriptionEn:entry.descriptionEn};
+  assert.equal(meritPresentation(entry,"en-US",mageCatalog).name,name);
+  assert.equal(meritPresentation(entry,"pt-BR",mageCatalog).name,entry.presentationPt.name);
+  assert.equal(meritPresentation(entry,"pt-BR",mageCatalog).prerequisites,entry.presentationPt.prerequisites);
+  assert.equal(meritPresentation(entry,"en-US",mageCatalog).name,name);
+  assert.deepEqual({id:entry.id,name:entry.name,prerequisites:entry.prerequisites,descriptionEn:entry.descriptionEn},canonical);
+ }
+ assert.match(meritPresentation(merit("Adamant Hand"),"pt-BR",mageCatalog).prerequisites,/Armas Brancas/);
+ assert.match(meritPresentation(merit("Cabal Theme"),"pt-BR",mageCatalog).description,/Nome das Sombras/);
+});
+
 test("Mage configuration validation dispatches canonical IDs, not display names or Homebrew homonyms",()=>{
  for(const name of ["Sanctum","Demesne","Infamous Mentor","Imbued Ally","Order Archive","Awakened Status","Adamant Hand","Cabal Theme","Faction Member","Prelacy","Profane Tool","Svikiro"]){
   const official={...merit(name),prerequisites:undefined,requirements:undefined};

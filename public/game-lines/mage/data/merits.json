@@ -2,7 +2,9 @@
   {
     "id": "mta-2ed:adamant-hand",
     "name": "Adamant Hand",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -12,13 +14,20 @@
     "page": 99,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Adamant Hand",
-    "descriptionEn": "Choose Athletics, Brawl, or Weaponry at 3+. Using that Skill in combat is a reflexive Order tool Yantra for an instant spell on a subsequent turn, or a reflexive spell in the same turn. May be purchased separately for each eligible Skill."
+    "translatedName": "Mão Adamantina",
+    "descriptionEn": "Choose Athletics, Brawl, or Weaponry at 3+. Using that Skill in combat is a reflexive Order tool Yantra for an instant spell on a subsequent turn, or a reflexive spell in the same turn. May be purchased separately for each eligible Skill.",
+    "presentationPt": {
+      "name": "Mão Adamantina",
+      "prerequisites": "Desperto; Status na Seta Adamantina •; Atletismo, Briga ou Armas Brancas •••",
+      "description": "Escolha Atletismo, Briga ou Armas Brancas com pelo menos três pontos. Usar essa Perícia em combate serve como Yantra reflexiva de ferramenta da Ordem: adiciona dados a um feitiço instantâneo conjurado em turno posterior ou a um feitiço reflexivo no mesmo turno. É possível comprar o Mérito separadamente para cada Perícia elegível."
+    }
   },
   {
     "id": "mta-2ed:artifact",
     "name": "Artifact",
-    "ratings": [3],
+    "ratings": [
+      3
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -29,13 +38,20 @@
     "unbounded": true,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Artifact",
-    "descriptionEn": "A Supernal item with its own effects. Cost: highest Arcanum of its greatest effect (minimum 3), plus half the highest Arcanum of each additional effect, rounded up, plus one per included Utility Attainment. No five-dot limit. Mana capacity is twice Merit dots; effective Gnosis is half dots, rounded up. Record its effects and activation circumstances. Its highest Arcanum determines its Path tool affinity. Paradox and Reach follow Mage pp. 99–100."
+    "translatedName": "Artefato",
+    "descriptionEn": "A Supernal item with its own effects. Cost: highest Arcanum of its greatest effect (minimum 3), plus half the highest Arcanum of each additional effect, rounded up, plus one per included Utility Attainment. No five-dot limit. Mana capacity is twice Merit dots; effective Gnosis is half dots, rounded up. Record its effects and activation circumstances. Its highest Arcanum determines its Path tool affinity. Paradox and Reach follow Mage pp. 99–100.",
+    "presentationPt": {
+      "name": "Artefato",
+      "prerequisites": "Desperto",
+      "description": "Item Superno com efeitos próprios. O custo é o maior Arcano de seu efeito principal (mínimo de três), mais metade do maior Arcano de cada efeito adicional, arredondada para cima, e um ponto por Aperfeiçoamento Utilitário incluído; não há limite de cinco pontos. A reserva de Mana vale o dobro dos pontos do Mérito, e a Gnose efetiva é metade deles, arredondada para cima. Registre efeitos e condições de ativação. O Arcano mais alto determina sua afinidade como ferramenta do Caminho. Paradoxo e Alcance seguem Mage pp. 99–100."
+    }
   },
   {
     "id": "mta-2ed:astral-adept",
     "name": "Astral Adept",
-    "ratings": [3],
+    "ratings": [
+      3
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -44,13 +60,20 @@
     "description": "Choose an attunement ceremony. After performing it, spend one Willpower to meditate into the Astral Realms without a place of power. The printed prerequisite also permits Sleepwalkers; this catalog exposes the Awakened version.",
     "page": 100,
     "priority": 2,
-    "translatedName": "Astral Adept",
-    "descriptionEn": "Choose an attunement ceremony. After performing it, spend one Willpower to meditate into the Astral Realms without a place of power. The printed prerequisite also permits Sleepwalkers; this catalog exposes the Awakened version."
+    "translatedName": "Adepto Astral",
+    "descriptionEn": "Choose an attunement ceremony. After performing it, spend one Willpower to meditate into the Astral Realms without a place of power. The printed prerequisite also permits Sleepwalkers; this catalog exposes the Awakened version.",
+    "presentationPt": {
+      "name": "Adepto Astral",
+      "prerequisites": "Desperto",
+      "description": "Escolha uma cerimônia de sintonização. Depois de realizá-la, gaste um ponto de Força de Vontade para meditar e entrar nos Reinos Astrais sem precisar de um lugar de poder. O livro também admite Sonâmbulos; esta entrada do catálogo representa a versão para Despertos."
+    }
   },
   {
     "id": "mta-signs:astral-intruder",
     "name": "Astral Intruder",
-    "ratings": [3],
+    "ratings": [
+      3
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -65,7 +88,13 @@
   {
     "id": "mta-2ed:awakened-status",
     "name": "Awakened Status",
-    "ratings": [1, 2, 3, 4, 5],
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -81,7 +110,9 @@
   {
     "id": "mta-2ed:between-the-ticks",
     "name": "Between the Ticks",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -90,13 +121,20 @@
     "description": "Once per scene can take -1 from Initiative to add +1 to an action for a turn, or vice versa",
     "page": 100,
     "priority": 2,
-    "translatedName": "Between the Ticks",
-    "descriptionEn": "Once per scene can take -1 from Initiative to add +1 to an action for a turn, or vice versa"
+    "translatedName": "Entre os Instantes",
+    "descriptionEn": "Once per scene can take -1 from Initiative to add +1 to an action for a turn, or vice versa",
+    "presentationPt": {
+      "name": "Entre os Instantes",
+      "prerequisites": "Desperto; Raciocínio •••; Tempo •",
+      "description": "Uma vez por cena, reduza a Iniciativa em 1 para adicionar +1 dado a uma ação naquele turno, ou sofra −1 dado na ação para receber +1 na Iniciativa."
+    }
   },
   {
     "id": "mta-signs:broad-dedication",
     "name": "Broad Dedication",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -111,7 +149,9 @@
   {
     "id": "mta-2ed:cabal-theme",
     "name": "Cabal Theme",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -120,13 +160,20 @@
     "description": "Record the cabal theme's name and description. Each member counts Shadow Name as one dot higher for persona Yantras, even without Shadow Name or above three dots. Agreement and membership of the cabal are handled outside the app.",
     "page": 100,
     "priority": 2,
-    "translatedName": "Cabal Theme",
-    "descriptionEn": "Record the cabal theme's name and description. Each member counts Shadow Name as one dot higher for persona Yantras, even without Shadow Name or above three dots. Agreement and membership of the cabal are handled outside the app."
+    "translatedName": "Tema da Cabala",
+    "descriptionEn": "Record the cabal theme's name and description. Each member counts Shadow Name as one dot higher for persona Yantras, even without Shadow Name or above three dots. Agreement and membership of the cabal are handled outside the app.",
+    "presentationPt": {
+      "name": "Tema da Cabala",
+      "prerequisites": "Desperto; pertencer a uma Cabala cujos membros também possuem este Mérito",
+      "description": "Registre o nome e a descrição do tema da Cabala. Cada membro conta o Mérito Nome das Sombras como um ponto acima para Yantras de persona, mesmo sem possuí-lo ou se sua classificação já ultrapassar três pontos. O acordo e a composição da Cabala são definidos pelos jogadores."
+    }
   },
   {
     "id": "mta-signs:cognoscente",
     "name": "Cognoscente",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -141,7 +188,13 @@
   {
     "id": "mta-signs:daimonomikon",
     "name": "Daimonomikon",
-    "ratings": [1, 2, 3, 4, 5],
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -184,7 +237,13 @@
   {
     "id": "mta-2ed:destiny",
     "name": "Destiny",
-    "ratings": [1, 2, 3, 4, 5],
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -199,7 +258,13 @@
   {
     "id": "mta-signs:dominant-soul",
     "name": "Dominant Soul",
-    "ratings": [1, 2, 3, 4, 5],
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -214,7 +279,13 @@
   {
     "id": "mta-2ed:dream",
     "name": "Dream",
-    "ratings": [1, 2, 3, 4, 5],
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -229,7 +300,9 @@
   {
     "id": "mta-signs:echo-chamber",
     "name": "Echo Chamber",
-    "ratings": [4],
+    "ratings": [
+      4
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -244,7 +317,9 @@
   {
     "id": "mta-2ed:enhanced-item",
     "name": "Enhanced Item",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -261,7 +336,10 @@
   {
     "id": "mta-signs:enriched-item",
     "name": "Enriched Item",
-    "ratings": [2, 4],
+    "ratings": [
+      2,
+      4
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -277,7 +355,9 @@
   {
     "id": "mta-signs:epiphany-stone",
     "name": "Epiphany Stone",
-    "ratings": [4],
+    "ratings": [
+      4
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -292,7 +372,10 @@
   {
     "id": "mta-2ed:familiar",
     "name": "Familiar",
-    "ratings": [2, 4],
+    "ratings": [
+      2,
+      4
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -308,7 +391,9 @@
   {
     "id": "mta-2ed:fast-spells",
     "name": "Fast Spells",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -323,7 +408,9 @@
   {
     "id": "core-dark-eras:fire-keeper",
     "name": "Fire Keeper",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "core-dark-eras",
     "source": "Dark Eras",
@@ -338,7 +425,9 @@
   {
     "id": "mta-signs:fluent-high-speech",
     "name": "Fluent High Speech",
-    "ratings": [3],
+    "ratings": [
+      3
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -353,7 +442,13 @@
   {
     "id": "mta-2ed:grimoire",
     "name": "Grimoire",
-    "ratings": [1, 2, 3, 4, 5],
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -369,7 +464,9 @@
   {
     "id": "mta-signs:hidden-high-speech",
     "name": "Hidden High Speech",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -384,7 +481,9 @@
   {
     "id": "mta-2ed:high-speech",
     "name": "High Speech",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -399,7 +498,9 @@
   {
     "id": "mta-signs:imbued-ally",
     "name": "Imbued Ally",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -416,7 +517,9 @@
   {
     "id": "mta-2ed:imbued-item",
     "name": "Imbued Item",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -433,7 +536,9 @@
   {
     "id": "mta-signs:imposing-nimbus",
     "name": "Imposing Nimbus",
-    "ratings": [3],
+    "ratings": [
+      3
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -448,7 +553,13 @@
   {
     "id": "mta-2ed:infamous-mentor",
     "name": "Infamous Mentor",
-    "ratings": [1, 2, 3, 4, 5],
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -464,7 +575,9 @@
   {
     "id": "mta-signs:inheritance",
     "name": "Inheritance",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -479,7 +592,9 @@
   {
     "id": "mta-signs:keen-periphery",
     "name": "Keen Periphery",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -494,7 +609,9 @@
   {
     "id": "mta-signs:legacy-pedagogue",
     "name": "Legacy Pedagogue",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -509,7 +626,9 @@
   {
     "id": "mta-2ed:lex-magica",
     "name": "Lex Magica",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -524,7 +643,9 @@
   {
     "id": "mta-signs:mana-battery",
     "name": "Mana Battery",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -541,7 +662,9 @@
   {
     "id": "mta-2ed:mana-sensitivity",
     "name": "Mana Sensitivity",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -556,7 +679,11 @@
   {
     "id": "mta-2ed:mystery-cult-influence",
     "name": "Mystery Cult Influence",
-    "ratings": [3, 4, 5],
+    "ratings": [
+      3,
+      4,
+      5
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -598,8 +725,15 @@
   {
     "id": "mta-2ed:occultation",
     "name": "Occultation",
-    "nameQualifier": { "en-US": "Awakened", "pt-BR": "Desperto" },
-    "ratings": [1, 2, 3],
+    "nameQualifier": {
+      "en-US": "Awakened",
+      "pt-BR": "Desperto"
+    },
+    "ratings": [
+      1,
+      2,
+      3
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -607,7 +741,9 @@
     "prerequisites": "Awakened; Cannot have Fame",
     "description": "Penalize magical aura-reading, identification and tracking of your Signature Nimbus by Merit dots. Sympathy's Withstand against targeting you has a minimum equal to these dots. Incompatible with Fame; public notoriety may cause its loss.",
     "page": 103,
-    "excludes": ["Fame"],
+    "excludes": [
+      "Fame"
+    ],
     "priority": 2,
     "translatedName": "Occultation",
     "descriptionEn": "Penalize magical aura-reading, identification and tracking of your Signature Nimbus by Merit dots. Sympathy's Withstand against targeting you has a minimum equal to these dots. Incompatible with Fame; public notoriety may cause its loss."
@@ -615,7 +751,13 @@
   {
     "id": "mta-signs:order-archive",
     "name": "Order Archive",
-    "ratings": [1, 2, 3, 4, 5],
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -630,7 +772,9 @@
   {
     "id": "mta-signs:perfected-item",
     "name": "Perfected Item",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -646,7 +790,9 @@
   {
     "id": "mta-signs:persistent-nimbus",
     "name": "Persistent Nimbus",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -661,7 +807,10 @@
   {
     "id": "mta-signs:piercing-glance",
     "name": "Piercing Glance",
-    "ratings": [2, 4],
+    "ratings": [
+      2,
+      4
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -676,7 +825,9 @@
   {
     "id": "core-dark-eras-2:plunder-mana",
     "name": "Plunder Mana",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "core-dark-eras-2",
     "source": "Dark Eras 2",
@@ -691,7 +842,10 @@
   {
     "id": "mta-2ed:potent-nimbus",
     "name": "Potent Nimbus",
-    "ratings": [1, 2],
+    "ratings": [
+      1,
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -706,7 +860,9 @@
   {
     "id": "mta-signs:potent-soul",
     "name": "Potent Soul",
-    "ratings": [3],
+    "ratings": [
+      3
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -721,7 +877,9 @@
   {
     "id": "mta-2ed:potent-resonance",
     "name": "Potent Resonance",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -736,7 +894,9 @@
   {
     "id": "mta-signs:profligate-dedication",
     "name": "Profligate Dedication",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -751,7 +911,9 @@
   {
     "id": "core-dark-eras:sea-s-hunger",
     "name": "Sea's Hunger",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "core-dark-eras",
     "source": "Dark Eras",
@@ -766,7 +928,9 @@
   {
     "id": "mta-signs:second-person-high-speech",
     "name": "Second-Person High Speech",
-    "ratings": [3],
+    "ratings": [
+      3
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -781,7 +945,11 @@
   {
     "id": "mta-2ed:shadow-name",
     "name": "Shadow Name",
-    "ratings": [1, 2, 3],
+    "ratings": [
+      1,
+      2,
+      3
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -796,7 +964,9 @@
   {
     "id": "mta-signs:shadow-self",
     "name": "Shadow Self",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -811,7 +981,9 @@
   {
     "id": "core-dark-eras:sky-s-whispers",
     "name": "Sky's Whispers",
-    "ratings": [1],
+    "ratings": [
+      1
+    ],
     "line": "MtA",
     "sourceId": "core-dark-eras",
     "source": "Dark Eras",
@@ -826,7 +998,13 @@
   {
     "id": "mta-signs:soul-dealer",
     "name": "Soul Dealer",
-    "ratings": [1, 2, 3, 4, 5],
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -841,7 +1019,10 @@
   {
     "id": "mta-signs:soul-stone",
     "name": "Soul Stone",
-    "ratings": [1, 2],
+    "ratings": [
+      1,
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -857,7 +1038,9 @@
   {
     "id": "core-dark-eras:spirit-warden",
     "name": "Spirit Warden",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "core-dark-eras",
     "source": "Dark Eras",
@@ -872,7 +1055,10 @@
   {
     "id": "mta-signs:stalwart-soul",
     "name": "Stalwart Soul",
-    "ratings": [1, 2],
+    "ratings": [
+      1,
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -887,7 +1073,9 @@
   {
     "id": "mta-signs:supernal-taxonomy",
     "name": "Supernal Taxonomy",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -902,7 +1090,10 @@
   {
     "id": "mta-signs:supernal-watcher",
     "name": "Supernal Watcher",
-    "ratings": [2, 4],
+    "ratings": [
+      2,
+      4
+    ],
     "line": "MtA",
     "sourceId": "mta-signs",
     "source": "Signs of Sorcery",
@@ -917,7 +1108,9 @@
   {
     "id": "mta-2ed:techn",
     "name": "Techné",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -933,7 +1126,9 @@
   {
     "id": "core-dark-eras:trail-walker",
     "name": "Trail Walker",
-    "ratings": [2],
+    "ratings": [
+      2
+    ],
     "line": "MtA",
     "sourceId": "core-dark-eras",
     "source": "Dark Eras",
@@ -948,7 +1143,9 @@
   {
     "id": "mta-2ed:demesne",
     "name": "Demesne",
-    "ratings": [3],
+    "ratings": [
+      3
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -964,7 +1161,13 @@
   {
     "id": "mta-2ed:hallow",
     "name": "Hallow",
-    "ratings": [1, 2, 3, 4, 5],
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
@@ -980,7 +1183,13 @@
   {
     "id": "mta-2ed:sanctum",
     "name": "Sanctum",
-    "ratings": [1, 2, 3, 4, 5],
+    "ratings": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "line": "MtA",
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",

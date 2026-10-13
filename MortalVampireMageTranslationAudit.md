@@ -33,7 +33,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | V06 — Conditions | 73, incluindo 19 Homebrew, das quais duas erratas | 73/73 com PT completa e verificadas; quatro Conditions de anciões incluídas por autorização em 2026-10-09; lacunas de Hidden Devotions permanecem |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Rótulos e apresentação dos cultos traduzidos, incluindo benefícios e Especializações predefinidas. Children of the Thorns mantém as exclusões de escopo existentes |
 | G01 — Spells | 360/360 traduzidas | Nomes descritivos, resumos, descrições e metadados localizados; integração separada do parser |
-| G02 — Méritos | 71 (61 principais, dez suplementares), 31 níveis | Nome, requisitos, descrição e níveis |
+| G02 — Méritos | 71 (61 principais, dez suplementares), 31 níveis | 5/71 com nome, requisitos e descrição PT; restam 66 Merits e os níveis aplicáveis |
 | G03 — Organizações | 17 Orders, 44 Factions, 12 Ministries | 11 Orders sem descrição PT; Factions/Tool Yantras e Ministries/Patron Exarchs |
 | G04 — Legacies | 16, 43 Attainments | Nomes, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções |
 | G05 — Conditions | 25 | Sem Alma traduzida e conferida; restam 24. Nome, descrição, resolução e Ato; nomes de Húbris já vinculados ao catálogo por ID |
@@ -73,6 +73,8 @@ Space completo: 29 Spells de Espaço • a ••••• em MtA 2e pp. 172–1
 Spirit completo: 36 Spells de Espírito • a ••••• em MtA 2e pp. 180–185 e Signs of Sorcery pp. 66/86–87 localizadas em `presentationPt`, distinguindo Proibição de Fraqueza e apresentando a resistência pela Barreira quando aplicável. Ephemeral Shield foi alinhado ao livro: a opção de Alcance para ataques físicos de espíritos permanece, sem opções extras de Morte/Mente não impressas. Spiritual Tool mantém os bônus normais de equipamento. Craft Fetish apresenta a alternativa sem espírito como parte da regra básica, não como opção de Alcance. Os títulos e efeitos compartilhados de Haunted Grimoire e Scribe Daimonomikon seguem suas apresentações já verificadas nas outras Arcana, sem alterar as identidades das entradas.
 
 Time completo: 25 Spells de Tempo • a ••••• em MtA 2e pp. 186–191 e Signs of Sorcery p. 71 localizadas em `presentationPt`, incluindo os dois usos de Alcance de Postcognition, os limites de Feitiço Suspenso, a Duração da imbução de Time Limit e a opção de Adicionar Espaço ••• de Temporal Stutter. As 13 citações de página das Spells de Tempo ••• a ••••• do livro básico foram corrigidas para as páginas impressas, sem alterar IDs ou regras. Todas as 360 Spells têm apresentação PT; os catálogos canônicos em inglês continuam sendo a entrada de parsers e compras. Dados em `public/game-lines/mage/data/spells/`.
+
+Méritos Mage em execução: Adamant Hand, Artifact, Astral Adept, Between the Ticks e Cabal Theme em MtA 2e pp. 99–100 têm apresentação PT separada dos requisitos e descrições canônicos; IDs, classificações, efeitos de elegibilidade e compras permanecem estáveis. Os demais 66 Méritos e níveis internos ainda precisam de tradução.
 
 Apresentar **Práticas, Fator Primário, Resistência, Alcance e Adicionar Arcana** quando aplicáveis. `spell-presentation.ts` extrai `Reach:`/`Add Arcanum` do texto inglês canônico; `presentationPt.reach` localiza a apresentação sem mudar essa entrada. Títulos de Práxis publicadas acompanham Spells; nomes autorais permanecem intactos.
 
