@@ -122,6 +122,10 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
     assert.match(mageSpellPresentation(spirit.find(spell => spell.name === "Banishment"), "pt-BR").reach, /Adicionar Morte •••• ou Mente ••••/);
     assert.match(mageSpellPresentation(spirit.find(spell => spell.name === "Spirit Manse"), "pt-BR").reach, /Força da Barreira/);
     assert.equal(mageSpellPresentation(spirit.find(spell => spell.name === "Haunted Grimoire"), "pt-BR").name, "Grimório Assombrado");
+    const time = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/time.json", import.meta.url), "utf8"));
+    assert.equal(time.filter(spell => spell.presentationPt).length, 11);
+    assert.match(mageSpellPresentation(time.find(spell => spell.name === "Postcognition"), "pt-BR").reach, /\+1 Alcance: Continua ciente do entorno/);
+    assert.match(mageSpellPresentation(time.find(spell => spell.name === "Veil of Moments"), "pt-BR").reach, /recuperar Mana/);
     assert.match(mageSpellPresentation(spells[1], "pt-BR").reach, /\+1 Alcance/);
     assert.match(spells[1].description, /\+1 Reach:/);
     const homebrew = { id: "homebrew:spell:author", name: "Minha magia", originalName: "Minha magia", summary: "Texto autoral", description: "Texto autoral" };
