@@ -304,8 +304,17 @@
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 166,
-    "summary": "Empower a Yantra so spellcasting rolls using it gain 9-Again for the Duration.",
-    "summaryReviewed": true
+    "summary": "Empower one specific Yantra per Potency, granting 9-again to spellcasting rolls that incorporate it for the Duration.",
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Como Acima, Assim Abaixo",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Consagra uma Yantra específica por ponto de Potência. Qualquer feitiço que incorpore uma dessas Yantras recebe 9-novamente na jogada de conjuração pela Duração.",
+      "description": "Consagra uma Yantra específica por ponto de Potência. Qualquer feitiço que incorpore uma dessas Yantras recebe 9-novamente na jogada de conjuração pela Duração. +1 Alcance: Cada Yantra consagrada concede 8-novamente em vez de 9-novamente.",
+      "reach": "+1 Alcance: Cada Yantra consagrada concede 8-novamente em vez de 9-novamente."
+    }
   },
   {
     "id": "mta-2ed:prime-2-cloak-nimbus",
@@ -327,7 +336,16 @@
     "source": "Mage the Awakening",
     "page": 167,
     "summary": "Veil the subject’s Nimbus and emotional aura, suppressing involuntary Immediate Nimbus flares and forcing a Clash of Wills to read a Signature Nimbus. Deliberately flaring or imprinting the Nimbus ends the spell.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Ocultar Nimbus",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Encobre o Nimbus e a aura emocional do alvo. Sua Magia não provoca manifestações involuntárias do Nimbus Imediato, e ler seu Nimbus de Assinatura ou atravessar o véu exige um Choque de Vontades. Manifestar ou imprimir deliberadamente o Nimbus encerra o feitiço.",
+      "description": "Encobre o Nimbus e a aura emocional do alvo. Sua Magia não provoca manifestações involuntárias do Nimbus Imediato, e ler seu Nimbus de Assinatura ou atravessar o véu exige um Choque de Vontades. Manifestar ou imprimir deliberadamente o Nimbus encerra o feitiço. +1 Alcance por característica: Projeta um valor falso menor para Gnose, Mana ou um Arcano conhecido; não consegue simular poderes que não possui.",
+      "reach": "+1 Alcance por característica: Projeta um valor falso menor para Gnose, Mana ou um Arcano conhecido; não consegue simular poderes que não possui."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-2-fracture-grimoire",
@@ -371,7 +389,16 @@
     "source": "Mage the Awakening",
     "page": 167,
     "summary": "Write a High Speech message visible only through Mage Sight. Magical attempts to alter, erase, or overwrite the runes provoke a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Runas Invisíveis",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Inscreve uma mensagem em Alta Fala no alvo, visível apenas por Visão Mágica. Alterar ou sobrescrever as inscrições por magia provoca um Choque de Vontades.",
+      "description": "Inscreve uma mensagem em Alta Fala no alvo, visível apenas por Visão Mágica. Alterar ou sobrescrever as inscrições por magia provoca um Choque de Vontades.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-2-light-under-a-bushel",
@@ -459,7 +486,16 @@
     "source": "Mage the Awakening",
     "page": 168,
     "summary": "Hide a supernatural phenomenon, including an active spell, from Peripheral Mage Sight and other passive detection. Active supernatural examination provokes a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Véu Superno",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Oculta um alvo, que pode ser feitiço, objeto, maga, criatura ou outro fenômeno sobrenatural, da detecção mágica passiva, inclusive da Visão Mágica Periférica. Exames ativos provocam um Choque de Vontades.",
+      "description": "Oculta um alvo, que pode ser feitiço, objeto, maga, criatura ou outro fenômeno sobrenatural, da detecção mágica passiva, inclusive da Visão Mágica Periférica. Exames ativos provocam um Choque de Vontades.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-2-sustain-nimbus",
@@ -504,7 +540,16 @@
     "source": "Mage the Awakening",
     "page": 168,
     "summary": "Give the subject a Withstand rating equal to Potency against spells that directly target it. Area effects occurring nearby without targeting the subject bypass this protection.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Proteções e Sinais",
+      "practice": "Proteção",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Concede ao alvo Resistência contra feitiços que o afetem diretamente igual à Potência. Efeitos lançados na área que não o escolhem como alvo ignoram esta proteção; outros alvos do mesmo feitiço são afetados normalmente.",
+      "description": "Concede ao alvo Resistência contra feitiços que o afetem diretamente igual à Potência. Efeitos lançados na área que não o escolhem como alvo ignoram esta proteção; outros alvos do mesmo feitiço são afetados normalmente.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:prime-2-words-of-truth",
@@ -526,7 +571,16 @@
     "source": "Mage the Awakening",
     "page": 168,
     "summary": "Let all selected subjects hear and understand the caster despite distance, noise, or language, and feel the weight of statements she knows to be true. Spend Potency to remove Doors or improve impression levels in Social maneuvering.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Palavras de Verdade",
+      "practice": "Regência",
+      "primaryFactor": "Potência",
+      "withstand": "Compostura",
+      "summary": "Todos os alvos ouvem e entendem claramente a maga apesar de distância, barulho ou idioma, e sentem a verdade de afirmações que ela sabe serem objetivamente verdadeiras. Em Manobra Social, pode remover uma Porta ou melhorar a impressão em um nível por ponto de Potência; isso não obriga ninguém a agir.",
+      "description": "Todos os alvos ouvem e entendem claramente a maga apesar de distância, barulho ou idioma, e sentem a verdade de afirmações que ela sabe serem objetivamente verdadeiras. Em Manobra Social, pode remover uma Porta ou melhorar a impressão em um nível por ponto de Potência; isso não obriga ninguém a agir. +1 Alcance: Quem acolhe as palavras recebe a Condição Inspirado; quem as ignora recebe a Condição Culpado.",
+      "reach": "+1 Alcance: Quem acolhe as palavras recebe a Condição Inspirado; quem as ignora recebe a Condição Culpado."
+    }
   },
   {
     "id": "mta-2ed:prime-3-aetheric-winds",

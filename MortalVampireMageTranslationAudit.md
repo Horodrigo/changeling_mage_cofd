@@ -32,7 +32,7 @@ As contagens incluem suplementos, Homebrew e errata, sem pressupor elegibilidade
 | V05 — Poderes | 553 poderes, 140 níveis internos; 1 Tilt da linha | 23/23 Disciplinas, seus 110 níveis, 5/5 Disciplinas Rituais, 2/2 Açoites, 5/5 fórmulas de Kimiya, 7/7 Sacrilégios de Therion, 10/10 Invocações de Gaiola Dourada, 5/5 Detournements, 6/6 Espirais com 30 níveis e 19/19 Escamas e 76/76 ritos de Crúac e 32/32 milagres Tebanos e 356/356 Devoções com PT; Aura de Sedução Sinuosa aprovada em 2026-10-09 |
 | V06 — Conditions | 73, incluindo 19 Homebrew, das quais duas erratas | 73/73 com PT completa e verificadas; quatro Conditions de anciões incluídas por autorização em 2026-10-09; lacunas de Hidden Devotions permanecem |
 | V06 — Textos predefinidos | 42 Breaking Points; seis Shadow Cults | Rótulos e apresentação dos cultos traduzidos, incluindo benefícios e Especializações predefinidas. Children of the Thorns mantém as exclusões de escopo existentes |
-| G01 — Spells | 131 restantes (229/360 traduzidas) | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
+| G01 — Spells | 125 restantes (235/360 traduzidas) | Nomes descritivos, resumos, descrições e metadados; integração separada do parser |
 | G02 — Méritos | 71 (61 principais, dez suplementares), 31 níveis | Nome, requisitos, descrição e níveis |
 | G03 — Organizações | 17 Orders, 44 Factions, 12 Ministries | 11 Orders sem descrição PT; Factions/Tool Yantras e Ministries/Patron Exarchs |
 | G04 — Legacies | 16, 43 Attainments | Nomes, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções |
@@ -66,9 +66,9 @@ Mind completo: 45 Spells de Mind • a ••••• em MtA 2e pp. 159–165 e
 
 **Haunted Grimoire — disponibilidade a conferir:** Signs of Sorcery p. 86 imprime Espírito •••• + Primórdio •, com substituição por Morte •••••. O índice atual também contém entradas históricas Death •••• e Mind ••••; a apresentação PT foi localizada, mas a elegibilidade dessas variantes deve ser corrigida sem apagar IDs nem escolhas já salvas.
 
-Prime em execução: nove Spells de Primórdio • em MtA 2e pp. 165–166 e Signs of Sorcery pp. 28/93–94 localizadas em `presentationPt`. Os resumos canônicos de Nimbus Tuning (Virtude ou Vício por escolha) e Scribe Grimoire (uma Rota por conjuração) foram alinhados ao livro sem alterar IDs.
+Prime em execução: 15 Spells de Primórdio •/•• em MtA 2e pp. 165–168 e Signs of Sorcery pp. 28/93–94 localizadas em `presentationPt`. Os resumos canônicos de Nimbus Tuning (Virtude ou Vício por escolha), Scribe Grimoire (uma Rota por conjuração) e As Above, So Below (uma Yantra específica por Potência) foram alinhados ao livro sem alterar IDs.
 
-Spells pendentes: Prime 41; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
+Spells pendentes: Prime 35; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
 
 Apresentar **Práticas, Fator Primário, Resistência, Alcance e Adicionar Arcana** quando aplicáveis. `spell-presentation.ts` extrai `Reach:`/`Add Arcanum` do texto inglês canônico; `presentationPt.reach` localiza a apresentação sem mudar essa entrada. Títulos de Práxis publicadas acompanham Spells; nomes autorais permanecem intactos.
 
