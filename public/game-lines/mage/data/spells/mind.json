@@ -538,7 +538,16 @@
     "source": "Mage the Awakening",
     "page": 161,
     "summary": "Increase one Mental or Social Attribute by Potency up to the subject’s normal maximum. Derived traits change with the enhanced Attribute.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Ampliar a Mente",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Aumenta um Atributo Mental ou Social do alvo em um ponto por ponto de Potência, sem superar seu máximo normal. Vantagens e outras características derivadas acompanham o aumento.",
+      "description": "Aumenta um Atributo Mental ou Social do alvo em um ponto por ponto de Potência, sem superar seu máximo normal. Vantagens e outras características derivadas acompanham o aumento. +1 Alcance: Inclui outro Atributo e divide a Potência entre eles; cada Alcance adicional pode incluir mais um. +2 Alcance e 1 Mana: Pode elevar os Atributos acima do máximo normal.",
+      "reach": "+1 Alcance: Inclui outro Atributo e divide a Potência entre eles; cada Alcance adicional pode incluir mais um. +2 Alcance e 1 Mana: Pode elevar os Atributos acima do máximo normal."
+    }
   },
   {
     "id": "mta-2ed:mind-3-befuddle",
@@ -560,7 +569,16 @@
     "source": "Mage the Awakening",
     "page": 163,
     "summary": "Reduce one Mental or Social Attribute by Potency, to a minimum of one, resisted by Composure or Resolve as appropriate. Derived traits change with the reduced Attribute.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Confundir",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "Compostura ou Perseverança",
+      "summary": "Reduz um Atributo Mental ou Social do alvo em um ponto por ponto de Potência, até o mínimo de 1, com a resistência apropriada de Compostura ou Perseverança. Vantagens derivadas diminuem conforme o Atributo afetado.",
+      "description": "Reduz um Atributo Mental ou Social do alvo em um ponto por ponto de Potência, até o mínimo de 1, com a resistência apropriada de Compostura ou Perseverança. Vantagens derivadas diminuem conforme o Atributo afetado. +1 Alcance: Afeta um Atributo adicional e divide a Potência entre eles; pode repetir para outros Atributos.",
+      "reach": "+1 Alcance: Afeta um Atributo adicional e divide a Potência entre eles; pode repetir para outros Atributos."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:mind-3-broken-relinquishment",
@@ -604,7 +622,16 @@
     "source": "Mage the Awakening",
     "page": 161,
     "summary": "Suppress one Mental Condition or Tilt per Potency for the Duration. Paradox Conditions are immune, and supernatural effects that created the affliction provoke a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Pensamentos Claros",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Suprime uma Condição ou Tilt Mental por ponto de Potência durante a Duração. Condições criadas por Paradoxo não são afetadas; efeitos sobrenaturais que impuseram a aflição provocam um Choque de Vontades.",
+      "description": "Suprime uma Condição ou Tilt Mental por ponto de Potência durante a Duração. Condições criadas por Paradoxo não são afetadas; efeitos sobrenaturais que impuseram a aflição provocam um Choque de Vontades. +1 Alcance: O alvo recupera um ponto de Força de Vontade. +2 Alcance: O efeito torna-se duradouro e resolve as Condições afetadas sem conceder Atos.",
+      "reach": "+1 Alcance: O alvo recupera um ponto de Força de Vontade. +2 Alcance: O efeito torna-se duradouro e resolve as Condições afetadas sem conceder Atos."
+    }
   },
   {
     "id": "mta-2ed:mind-3-enhance-skill",
@@ -626,7 +653,16 @@
     "source": "Mage the Awakening",
     "page": 161,
     "summary": "Increase one Skill in which the subject already has at least one dot by Potency, without exceeding the normal maximum. The spell enhances existing training rather than granting a new Skill.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Aperfeiçoar Perícia",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Aumenta uma Perícia em que o alvo já possui pelo menos um ponto, em um ponto por ponto de Potência, sem superar o máximo normal. O feitiço aperfeiçoa uma capacidade existente, sem ensinar uma Perícia nova.",
+      "description": "Aumenta uma Perícia em que o alvo já possui pelo menos um ponto, em um ponto por ponto de Potência, sem superar o máximo normal. O feitiço aperfeiçoa uma capacidade existente, sem ensinar uma Perícia nova. +1 Alcance: Inclui outra Perícia e divide a Potência entre elas; pode repetir para mais Perícias. +2 Alcance e 1 Mana: Pode elevar as Perícias acima do máximo normal.",
+      "reach": "+1 Alcance: Inclui outra Perícia e divide a Potência entre elas; pode repetir para mais Perícias. +2 Alcance e 1 Mana: Pode elevar as Perícias acima do máximo normal."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:mind-3-give-me-that",
@@ -670,7 +706,16 @@
     "source": "Mage the Awakening",
     "page": 162,
     "summary": "Summon the nearest Goetia, a personally known Goetia, or one matching a specified Resonance, resisted by Rank. The basic spell calls it without Materializing it or compelling obedience.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Invocação Goética",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "Posto",
+      "summary": "Chama a Goetia mais próxima, uma conhecida pessoalmente ou uma que corresponda à Ressonância especificada, resistida por seu Posto. O efeito básico não a materializa nem obriga obediência.",
+      "description": "Chama a Goetia mais próxima, uma conhecida pessoalmente ou uma que corresponda à Ressonância especificada, resistida por seu Posto. O efeito básico não a materializa nem obriga obediência. Adicionar Espírito •• ou Morte ••: A Goetia recebe a Condição Materializado pela Duração. +1 Alcance: Também cria a Condição Aberto na área. +1 Alcance: Pode impor uma ordem de uma palavra. +1 Alcance: Em local adequado para meditar rumo ao Astral, pode invocar Goetia do próprio Oneiros ou do Oneiros de outro alvo, pagando a Mana necessária à entrada. +2 Alcance: Pode invocar do Temenos. +3 Alcance: Pode invocar de Anima Mundi. +2 Alcance: Pode impor uma tarefa complexa, mas única, descrita em uma ou duas frases.",
+      "reach": "Adicionar Espírito •• ou Morte ••: A Goetia recebe a Condição Materializado pela Duração. +1 Alcance: Também cria a Condição Aberto na área. +1 Alcance: Pode impor uma ordem de uma palavra. +1 Alcance: Em local adequado para meditar rumo ao Astral, pode invocar Goetia do próprio Oneiros ou do Oneiros de outro alvo, pagando a Mana necessária à entrada. +2 Alcance: Pode invocar do Temenos. +3 Alcance: Pode invocar de Anima Mundi. +2 Alcance: Pode impor uma tarefa complexa, mas única, descrita em uma ou duas frases."
+    }
   },
   {
     "id": "mta-2ed:mind-3-imposter",
@@ -691,8 +736,17 @@
     "sourceId": "mta-2ed",
     "source": "Mage the Awakening",
     "page": 162,
-    "summary": "Make observers perceive the subject as another person or assumed identity. Mimicking a specific individual requires recurring Manipulation + Subterfuge rolls, cannot reproduce Social Merits, and any opened Doors belong to the impersonated identity.",
-    "summaryReviewed": true
+    "summary": "Make the subject perceive the mage as another person or assumed identity. Mimicking a specific individual requires recurring Manipulation + Subterfuge rolls, cannot reproduce Social Merits, and any opened Doors belong to the impersonated identity.",
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Impostor",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Faz o alvo perceber a maga como outra pessoa ou identidade assumida. Para imitar alguém específico, a maga rola Manipulação + Subterfúgio no início da interação e a cada minuto; o feitiço não reproduz Méritos Sociais. Portas abertas e progresso de Manobra Social beneficiam a identidade imitada.",
+      "description": "Faz o alvo perceber a maga como outra pessoa ou identidade assumida. Para imitar alguém específico, a maga rola Manipulação + Subterfúgio no início da interação e a cada minuto; o feitiço não reproduz Méritos Sociais. Portas abertas e progresso de Manobra Social beneficiam a identidade imitada.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:mind-3-psychic-assault",
@@ -714,7 +768,16 @@
     "source": "Mage the Awakening",
     "page": 162,
     "summary": "Overstimulate a living mind like a stroke, inflicting bashing damage equal to Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Assalto Psíquico",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Força o cérebro de um ser vivo a um estado de sobrecarga semelhante a um derrame, causando dano contundente igual à Potência.",
+      "description": "Força o cérebro de um ser vivo a um estado de sobrecarga semelhante a um derrame, causando dano contundente igual à Potência. +1 Alcance: Impõe −1 às jogadas Mentais do alvo durante a Duração; pode aplicar este Alcance até três vezes, para penalidade máxima de −3.",
+      "reach": "+1 Alcance: Impõe −1 às jogadas Mentais do alvo durante a Duração; pode aplicar este Alcance até três vezes, para penalidade máxima de −3."
+    }
   },
   {
     "id": "mta-2ed:mind-3-sleep-of-the-just",
@@ -736,7 +799,16 @@
     "source": "Mage the Awakening",
     "page": 162,
     "summary": "Control the subject’s sleep cycle and dreams, inducing or preventing sleep and shaping ordinary dreaming. Other supernatural attempts to enter or influence those dreams provoke a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Sono dos Justos",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "Compostura",
+      "summary": "Controla o ciclo de sono do alvo, permitindo que permaneça desperto sem efeitos prejudiciais ou durma sem despertar até terminar a Duração. Também orienta seus sonhos ou cria sonho lúcido; outras tentativas de entrar neles ou influenciá-los provocam um Choque de Vontades.",
+      "description": "Controla o ciclo de sono do alvo, permitindo que permaneça desperto sem efeitos prejudiciais ou durma sem despertar até terminar a Duração. Também orienta seus sonhos ou cria sonho lúcido; outras tentativas de entrar neles ou influenciá-los provocam um Choque de Vontades.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:mind-3-supernal-translation",
@@ -781,7 +853,16 @@
     "source": "Mage the Awakening",
     "page": 162,
     "summary": "Search the subject’s subconscious for one memory or idea per Potency, resisted by Resolve. The mage experiences the retrieved material from the subject’s perspective rather than merely learning a factual answer.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Ler as Profundezas",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Perseverança",
+      "summary": "Entra telepaticamente no subconsciente do alvo para ler lembranças e ideias profundas, em vez de apenas pensamentos superficiais. O alvo resiste com Perseverança.",
+      "description": "Entra telepaticamente no subconsciente do alvo para ler lembranças e ideias profundas, em vez de apenas pensamentos superficiais. O alvo resiste com Perseverança. +1 Alcance: Pode acrescentar, remover ou alterar uma das memórias lidas; a mudança persiste pela Duração.",
+      "reach": "+1 Alcance: Pode acrescentar, remover ou alterar uma das memórias lidas; a mudança persiste pela Duração."
+    }
   },
   {
     "id": "mta-2ed:mind-3-universal-language",
@@ -803,7 +884,16 @@
     "source": "Mage the Awakening",
     "page": 162,
     "summary": "Understand and translate any perceived language or symbolic communication, including speech, writing, codes, gestures, body language, and transmitted thoughts. It does not let a non-Awakened subject understand High Speech.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Língua Universal",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Permite ao alvo compreender e traduzir qualquer linguagem que possa perceber, incluindo fala, escrita, símbolos, sinais codificados, gestos, linguagem corporal e pensamentos transmitidos. Não permite que alguém não Desperto compreenda o Alto Idioma.",
+      "description": "Permite ao alvo compreender e traduzir qualquer linguagem que possa perceber, incluindo fala, escrita, símbolos, sinais codificados, gestos, linguagem corporal e pensamentos transmitidos. Não permite que alguém não Desperto compreenda o Alto Idioma.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:mind-4-haunted-grimoire",
