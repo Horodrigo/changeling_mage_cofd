@@ -52,9 +52,9 @@ Referências de Conditions ainda necessárias: Materialized → Materializado. P
 
 ### Mage — detalhes de execução
 
-Primeiros lotes: 14 Spells de Death •/•• (MtA 2e pp. 128–130), com revisão visual e apresentação PT separada dos campos ingleses. Integração em criação, XP/histórico e ficha Desktop/Mobile; 18/18 testes direcionados de integração no primeiro lote e 17/17 testes de catálogo/persistência no segundo lote; tipos e builds aprovados. Comparação confirmou os campos canônicos das 46 entradas de Death intactos; o segundo lote acrescentou oito traduções em `presentationPt` para as entradas da p. 129. Smoke de navegador não executado.
+Lotes iniciais: 21 Spells de Death •/••/••• (MtA 2e pp. 128–130), com revisão visual e apresentação PT separada dos campos ingleses. Integração em criação, XP/histórico e ficha Desktop/Mobile; 18/18 testes direcionados de integração no primeiro lote; 17/17 de catálogo/persistência nos lotes seguintes; tipos e builds aprovados. Comparação confirmou os campos canônicos das 46 entradas de Death intactos; os lotes seguintes acrescentaram oito traduções da p. 129 e sete da p. 130 apenas em `presentationPt`. Smoke de navegador não executado.
 
-Spells pendentes: Death 32; Fate 30; Forces 38; Life 29; Matter 32; Mind 45; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
+Spells pendentes: Death 25; Fate 30; Forces 38; Life 29; Matter 32; Mind 45; Prime 50; Space 29; Spirit 36; Time 25. Dados em `public/game-lines/mage/data/spells/`.
 
 Apresentar **Práticas, Fator Primário, Resistência, Alcance e Adicionar Arcana** quando aplicáveis. `spell-presentation.ts` extrai `Reach:`/`Add Arcanum` do texto inglês canônico; `presentationPt.reach` localiza a apresentação sem mudar essa entrada. Títulos de Práxis publicadas acompanham Spells; nomes autorais permanecem intactos.
 

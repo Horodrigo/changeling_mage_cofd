@@ -475,7 +475,16 @@
     "source": "Mage the Awakening",
     "page": 130,
     "summaryReviewed": true,
-    "summary": "Suppress all signs of life so the subject appears physically and magically dead, including an apparently absent soul."
+    "summary": "Suppress all signs of life so the subject appears physically and magically dead, including an apparently absent soul.",
+    "presentationPt": {
+      "name": "Suprimir Vida",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Suprime todos os sinais de vida do alvo, fazendo-o parecer fisicamente morto e até sem alma aos sentidos mágicos.",
+      "description": "Suprime todos os sinais de vida do alvo, fazendo-o parecer fisicamente morto e até sem alma aos sentidos mágicos. +2 Alcance e 1 Mana: Conjura reflexivamente em resposta a algo que poderia razoavelmente causar a morte do alvo.",
+      "reach": "+2 Alcance e 1 Mana: Conjura reflexivamente em resposta a algo que poderia razoavelmente causar a morte do alvo."
+    }
   },
   {
     "id": "mta-2ed:death-2-touch-of-the-grave",
@@ -497,7 +506,16 @@
     "source": "Mage the Awakening",
     "page": 130,
     "summaryReviewed": true,
-    "summary": "Physically interact with ghosts and Death-attuned Twilight. Pull Twilight objects into visibility and solidity with Durability 1 and their normal equipment bonuses; they return to ephemera if broken or when the spell ends."
+    "summary": "Physically interact with ghosts and Death-attuned Twilight. Pull Twilight objects into visibility and solidity with Durability 1 and their normal equipment bonuses; they return to ephemera if broken or when the spell ends.",
+    "presentationPt": {
+      "name": "Toque do Túmulo",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Permite interagir fisicamente com fantasmas e com o Crepúsculo sintonizado com Morte. Objetos puxados do Crepúsculo tornam-se visíveis e sólidos, com Durabilidade 1 e seus bônus normais de equipamento; voltam a ser efêmera se forem quebrados ou quando o feitiço termina.",
+      "description": "Permite interagir fisicamente com fantasmas e com o Crepúsculo sintonizado com Morte. Objetos puxados do Crepúsculo tornam-se visíveis e sólidos, com Durabilidade 1 e seus bônus normais de equipamento; voltam a ser efêmera se forem quebrados ou quando o feitiço termina.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:death-2-without-a-trace",
@@ -519,7 +537,16 @@
     "source": "Mage the Awakening",
     "page": 130,
     "summaryReviewed": true,
-    "summary": "Prevent the subject from leaving fingerprints, footprints, blood, skin, hair, or other forensic evidence for the Duration. Searching for such traces with Death Mage Sight triggers a Clash of Wills."
+    "summary": "Prevent the subject from leaving fingerprints, footprints, blood, skin, hair, or other forensic evidence for the Duration. Searching for such traces with Death Mage Sight triggers a Clash of Wills.",
+    "presentationPt": {
+      "name": "Sem Deixar Rastros",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Impede o alvo de deixar impressões digitais, pegadas, sangue, pele, cabelo ou outras provas forenses pela Duração. Procurar esses vestígios com a Visão de Mago de Morte provoca um Choque de Vontades.",
+      "description": "Impede o alvo de deixar impressões digitais, pegadas, sangue, pele, cabelo ou outras provas forenses pela Duração. Procurar esses vestígios com a Visão de Mago de Morte provoca um Choque de Vontades.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:death-3-cold-snap",
@@ -541,7 +568,16 @@
     "source": "Mage the Awakening",
     "page": 130,
     "summaryReviewed": true,
-    "summary": "Drain heat from the area and apply the Ice Tilt to all surfaces for the Duration."
+    "summary": "Drain heat from the area and apply the Ice Tilt to all surfaces for the Duration.",
+    "presentationPt": {
+      "name": "Onda de Frio",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Dissipa o calor da área e aplica a Complicação Gelo a todas as superfícies pela Duração.",
+      "description": "Dissipa o calor da área e aplica a Complicação Gelo a todas as superfícies pela Duração. +1 Alcance: Também aplica a Complicação Frio Extremo.",
+      "reach": "+1 Alcance: Também aplica a Complicação Frio Extremo."
+    }
   },
   {
     "id": "mta-2ed:death-3-damage-ghost",
@@ -563,7 +599,16 @@
     "source": "Mage the Awakening",
     "page": 130,
     "summaryReviewed": true,
-    "summary": "Deal one bashing damage to a ghost's Corpus per Potency."
+    "summary": "Deal one bashing damage to a ghost's Corpus per Potency.",
+    "presentationPt": {
+      "name": "Ferir Fantasma",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Causa um ponto de dano contundente ao Corpus de um fantasma por ponto de Potência.",
+      "description": "Causa um ponto de dano contundente ao Corpus de um fantasma por ponto de Potência.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:death-3-death-touched-item",
@@ -607,7 +652,16 @@
     "source": "Mage the Awakening",
     "page": 130,
     "summaryReviewed": true,
-    "summary": "Drain one Willpower per Potency from an injured subject, or Scour one Mana per Potency while inflicting one lethal damage per Mana; choose one resource and obey the daily Scouring limit."
+    "summary": "Drain one Willpower per Potency from an injured subject, or Scour one Mana per Potency while inflicting one lethal damage per Mana; choose one resource and obey the daily Scouring limit.",
+    "presentationPt": {
+      "name": "Devorar os Moribundos",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "Perseverança",
+      "summary": "Drena um ponto de Força de Vontade por ponto de Potência de um alvo ferido; alternativamente, flagela um ponto de Mana por ponto de Potência e causa um ponto de dano letal por Mana. Escolhe um dos dois recursos e respeita o limite diário de flagelação.",
+      "description": "Drena um ponto de Força de Vontade por ponto de Potência de um alvo ferido; alternativamente, flagela um ponto de Mana por ponto de Potência e causa um ponto de dano letal por Mana. Escolhe um dos dois recursos e respeita o limite diário de flagelação. +1 Alcance: Afeta um alvo saudável. +1 Alcance: Ignora o limite diário de flagelação. +1 Alcance: Afeta o Corpus de um fantasma, retirando apenas Força de Vontade ou apenas Mana.",
+      "reach": "+1 Alcance: Afeta um alvo saudável. +1 Alcance: Ignora o limite diário de flagelação. +1 Alcance: Afeta o Corpus de um fantasma, retirando apenas Força de Vontade ou apenas Mana."
+    }
   },
   {
     "id": "mta-2ed:death-3-ghost-gate",
@@ -629,7 +683,16 @@
     "source": "Mage the Awakening",
     "page": 130,
     "summaryReviewed": true,
-    "summary": "Create a two-dimensional gate that converts anything passing through it into Death-attuned Twilight; carried objects lose their material forms but can later be retrieved with Touch of the Grave."
+    "summary": "Create a two-dimensional gate that converts anything passing through it into Death-attuned Twilight; carried objects lose their material forms but can later be retrieved with Touch of the Grave.",
+    "presentationPt": {
+      "name": "Portal Fantasmagórico",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Cria um portal bidimensional que transforma quem ou o que o atravessa em Crepúsculo sintonizado com Morte. Objetos carregados perdem a forma material, mas podem ser recuperados depois com Toque do Túmulo.",
+      "description": "Cria um portal bidimensional que transforma quem ou o que o atravessa em Crepúsculo sintonizado com Morte. Objetos carregados perdem a forma material, mas podem ser recuperados depois com Toque do Túmulo. +1 Alcance: Transforma diretamente o alvo e seus pertences pessoais sem usar um portal.",
+      "reach": "+1 Alcance: Transforma diretamente o alvo e seus pertences pessoais sem usar um portal."
+    }
   },
   {
     "id": "mta-2ed:death-3-ghost-summons",

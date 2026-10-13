@@ -25,7 +25,7 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
       assert.equal(saved.id, spell.id);
     }
     assert.deepEqual(spells, original);
-    assert.equal(spells.filter(spell => spell.presentationPt).length, 14);
+    assert.equal(spells.filter(spell => spell.presentationPt).length, 21);
     assert.match(mageSpellPresentation(spells[1], "pt-BR").reach, /\+1 Alcance/);
     assert.match(spells[1].description, /\+1 Reach:/);
     const homebrew = { id: "homebrew:spell:author", name: "Minha magia", originalName: "Minha magia", summary: "Texto autoral", description: "Texto autoral" };
