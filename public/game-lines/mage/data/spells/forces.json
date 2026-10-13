@@ -515,7 +515,16 @@
     "source": "Mage the Awakening",
     "page": 143,
     "summary": "Focus the force of the subject’s unarmed attacks, including grapples and attacks through close-fitting gloves or shoes. They gain a weapon bonus equal to Potency, maximum +5, and inflict lethal damage.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Golpe Cinético",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Concentra a força de ataques desarmados do alvo, inclusive agarrões e golpes por luvas ou calçados justos. Eles recebem bônus de arma igual à Potência, até +5, e causam dano letal.",
+      "description": "Concentra a força de ataques desarmados do alvo, inclusive agarrões e golpes por luvas ou calçados justos. Eles recebem bônus de arma igual à Potência, até +5, e causam dano letal. +1 Alcance: Aplica Derrubado. +1 Alcance: Aplica Atordoado. +1 Alcance: Afeta armas empunhadas. +2 Alcance: Afeta armas arremessadas ou concede a projéteis Perfuração de Armadura igual à Potência.",
+      "reach": "+1 Alcance: Aplica Derrubado. +1 Alcance: Aplica Atordoado. +1 Alcance: Afeta armas empunhadas. +2 Alcance: Afeta armas arremessadas ou concede a projéteis Perfuração de Armadura igual à Potência."
+    }
   },
   {
     "id": "mta-2ed:forces-2-transmission",
@@ -537,7 +546,16 @@
     "source": "Mage the Awakening",
     "page": 144,
     "summary": "Hijack an existing signal to alter its data, length, frequency, or destination, such as converting a wireless broadcast into television. The spell cannot create a signal, and imitating specific content requires the relevant data or a Skill roll.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Transmissão",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Sequestra um sinal existente para alterar dados, duração, frequência ou destino da transmissão, como converter uma emissão sem fio em sinal de televisão. Não cria um sinal; imitar conteúdo específico exige os dados correspondentes ou uma jogada de Perícia.",
+      "description": "Sequestra um sinal existente para alterar dados, duração, frequência ou destino da transmissão, como converter uma emissão sem fio em sinal de televisão. Não cria um sinal; imitar conteúdo específico exige os dados correspondentes ou uma jogada de Perícia. +1 Alcance: Codifica o sinal para que apenas as ações ou frequências específicas recebam a transmissão corretamente.",
+      "reach": "+1 Alcance: Codifica o sinal para que apenas as ações ou frequências específicas recebam a transmissão corretamente."
+    }
   },
   {
     "id": "mta-2ed:forces-2-zoom-in",
@@ -559,7 +577,16 @@
     "source": "Mage the Awakening",
     "page": 144,
     "summary": "Magnify visible light for the subject, doubling clear viewing distance per Potency and adding Potency to rolls for small details. Atmospheric conditions still interfere, and interpreting tiny phenomena may require Intelligence + Science.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Aproximar",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Amplia a luz visível para o alvo, dobrando a distância de visão clara por ponto de Potência e somando a Potência às jogadas para perceber pequenos detalhes. A atmosfera ainda interfere; interpretar fenômenos minúsculos pode exigir Inteligência + Ciências.",
+      "description": "Amplia a luz visível para o alvo, dobrando a distância de visão clara por ponto de Potência e somando a Potência às jogadas para perceber pequenos detalhes. A atmosfera ainda interfere; interpretar fenômenos minúsculos pode exigir Inteligência + Ciências. +1 Alcance: Enxerga nitidamente até uma milha por ponto de Forças. +1 Alcance: Distingue partículas do tamanho de poeira. +1 Alcance: Ignora penalidades atmosféricas. +2 Alcance: Distingue partículas microscópicas e até ligações moleculares.",
+      "reach": "+1 Alcance: Enxerga nitidamente até uma milha por ponto de Forças. +1 Alcance: Distingue partículas do tamanho de poeira. +1 Alcance: Ignora penalidades atmosféricas. +2 Alcance: Distingue partículas microscópicas e até ligações moleculares."
+    }
   },
   {
     "id": "mta-2ed:forces-3-call-lightning",
@@ -581,7 +608,16 @@
     "source": "Mage the Awakening",
     "page": 144,
     "summary": "Call lightning from an existing storm to strike exposed subjects the bolt can physically reach, applying the electricity damage rules. Multiple subjects are struck simultaneously; the spell cannot create the required storm.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Invocar Relâmpago",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Conduz um relâmpago de uma tempestade existente contra alvos expostos que o raio possa atingir fisicamente, usando as regras de dano elétrico. Vários alvos são atingidos ao mesmo tempo; o feitiço não cria a tempestade necessária.",
+      "description": "Conduz um relâmpago de uma tempestade existente contra alvos expostos que o raio possa atingir fisicamente, usando as regras de dano elétrico. Vários alvos são atingidos ao mesmo tempo; o feitiço não cria a tempestade necessária.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:forces-3-data-hog",
@@ -648,7 +684,16 @@
     "source": "Mage the Awakening",
     "page": 144,
     "summary": "Increase gravity to reduce Speed by three per Potency, shorten jumps, penalize creatures whose Strength is lower than Potency, and force flyers to resist falling. Alternatively, nullify gravity to add Potency to Speed and jumping distance and choose the direction objects fall.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Supremacia Gravitacional",
+      "practice": "Desfiamento ou Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Aumenta a gravidade para reduzir o Deslocamento em 3 por ponto de Potência, encurtar saltos, penalizar criaturas com Força abaixo da Potência e obrigar voadores a resistir à queda. Alternativamente, anula a gravidade para aumentar o Deslocamento e a distância dos saltos pela Potência e escolher a direção da queda de objetos.",
+      "description": "Aumenta a gravidade para reduzir o Deslocamento em 3 por ponto de Potência, encurtar saltos, penalizar criaturas com Força abaixo da Potência e obrigar voadores a resistir à queda. Alternativamente, anula a gravidade para aumentar o Deslocamento e a distância dos saltos pela Potência e escolher a direção da queda de objetos.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:forces-3-perpetual-motion",
@@ -715,7 +760,16 @@
     "source": "Mage the Awakening",
     "page": 144,
     "summary": "Create a remote force with Potency assigned to Strength, Dexterity, or Speed while the other two traits default to one. Directing it requires an instant action each turn; without concentration it stops and holds carried objects until controlled again.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Telecinese",
+      "practice": "Tecelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Cria uma força remota com a Potência atribuída à Força, Destreza ou Deslocamento; os outros dois valores começam em 1. Direcioná-la exige uma ação instantânea por turno. Sem concentração, a força para e sustenta os objetos carregados até ser controlada novamente.",
+      "description": "Cria uma força remota com a Potência atribuída à Força, Destreza ou Deslocamento; os outros dois valores começam em 1. Direcioná-la exige uma ação instantânea por turno. Sem concentração, a força para e sustenta os objetos carregados até ser controlada novamente. +1 Alcance: Divide a Potência entre dois desses três valores. +1 Alcance adicional: Divide-a entre os três.",
+      "reach": "+1 Alcance: Divide a Potência entre dois desses três valores. +1 Alcance adicional: Divide-a entre os três."
+    }
   },
   {
     "id": "mta-2ed:forces-3-telekinetic-strike",
@@ -737,7 +791,16 @@
     "source": "Mage the Awakening",
     "page": 145,
     "summary": "Crush a subject or strike with concentrated air and kinetic force, inflicting bashing damage equal to Potency.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Golpe Telecinético",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Esmaga um alvo ou o atinge com ar e força cinética concentrados, causando dano contundente igual à Potência.",
+      "description": "Esmaga um alvo ou o atinge com ar e força cinética concentrados, causando dano contundente igual à Potência. +1 Alcance: Aplica Derrubado ou Atordoado.",
+      "reach": "+1 Alcance: Aplica Derrubado ou Atordoado."
+    }
   },
   {
     "id": "mta-2ed:forces-3-turn-momentum",
@@ -759,7 +822,16 @@
     "source": "Mage the Awakening",
     "page": 145,
     "summary": "Redirect up to Potency moving objects as an instant action when the mage could apply Defense, or in place of a prolonged spell’s Dodge benefit. Each valid object keeps its speed but veers in an uncontrolled direction and cannot normally reverse course.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Redirecionar Impulso",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Redireciona até um número de objetos em movimento igual à Potência quando a maga poderia aplicar Defesa, ou em vez do benefício de Esquiva durante uma conjuração prolongada. Cada objeto mantém a velocidade, mas desvia em direção não controlada e normalmente não pode inverter o curso.",
+      "description": "Redireciona até um número de objetos em movimento igual à Potência quando a maga poderia aplicar Defesa, ou em vez do benefício de Esquiva durante uma conjuração prolongada. Cada objeto mantém a velocidade, mas desvia em direção não controlada e normalmente não pode inverter o curso. +1 Alcance: Usa o efeito como ação reflexiva. +1 Alcance: Escolhe uma nova direção até 90 graus da trajetória original. +2 Alcance: Inverte completamente o impulso, fazendo projéteis atingirem quem os disparou. Adicionar Tempo • e 1 Alcance: Afeta objetos rápidos demais para permitir Defesa.",
+      "reach": "+1 Alcance: Usa o efeito como ação reflexiva. +1 Alcance: Escolhe uma nova direção até 90 graus da trajetória original. +2 Alcance: Inverte completamente o impulso, fazendo projéteis atingirem quem os disparou. Adicionar Tempo • e 1 Alcance: Afeta objetos rápidos demais para permitir Defesa."
+    }
   },
   {
     "id": "mta-2ed:forces-3-velocity-control",
@@ -781,7 +853,16 @@
     "source": "Mage the Awakening",
     "page": 145,
     "summary": "Double or halve an entire object’s speed once per Potency without reducing it to zero. The change affects collision damage and adds or removes one damage from projectile attacks, potentially reducing projectile damage to zero.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Controlar Velocidade",
+      "practice": "Desfiamento ou Aperfeiçoamento",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Dobra ou reduz à metade a velocidade de um objeto inteiro uma vez por ponto de Potência, sem reduzi-la a zero. A mudança altera dano por colisão e acrescenta ou retira um ponto de dano de ataques com projéteis, podendo reduzir esse dano a zero.",
+      "description": "Dobra ou reduz à metade a velocidade de um objeto inteiro uma vez por ponto de Potência, sem reduzi-la a zero. A mudança altera dano por colisão e acrescenta ou retira um ponto de dano de ataques com projéteis, podendo reduzir esse dano a zero.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:forces-4-electromagnetic-pulse",
