@@ -174,7 +174,16 @@
     "source": "Mage the Awakening",
     "page": 155,
     "summary": "Choose one material and protect the subject from its direct harmful properties: it cannot inflict bashing damage and its lethal damage is reduced by Potency. The protection does not stop an object made from that material from harming through shape or force, such as a sword or bullet.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Toque do Alquimista",
+      "practice": "Proteção",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Escolhe uma forma de matéria e protege o alvo contra suas propriedades nocivas: ela não lhe causa dano contundente, e qualquer dano letal intrínseco é reduzido pela Potência. A força de impacto de uma espada ou bala desse material não é coberta.",
+      "description": "Escolhe uma forma de matéria e protege o alvo contra suas propriedades nocivas: ela não lhe causa dano contundente, e qualquer dano letal intrínseco é reduzido pela Potência. A força de impacto de uma espada ou bala desse material não é coberta. +1 Alcance: Protege contra outra forma de matéria. +2 Alcance: Torna o alvo imune aos danos contundente e letal intrínsecos ao material e reduz o dano agravado pela Potência. Adicionar Forças ••: Também protege contra temperaturas extremas causadas pelo estado da substância.",
+      "reach": "+1 Alcance: Protege contra outra forma de matéria. +2 Alcance: Torna o alvo imune aos danos contundente e letal intrínsecos ao material e reduz o dano agravado pela Potência. Adicionar Forças ••: Também protege contra temperaturas extremas causadas pelo estado da substância."
+    }
   },
   {
     "id": "mta-2ed:matter-2-find-the-balance",
@@ -196,7 +205,16 @@
     "source": "Mage the Awakening",
     "page": 155,
     "summary": "Perfect a tool’s balance, weight, and handling so rolls using it gain 9-Again for the Duration.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Encontrar o Equilíbrio",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Aperfeiçoa o equilíbrio, o peso e o manuseio de uma ferramenta, concedendo 9-novamente às jogadas feitas com ela durante a Duração.",
+      "description": "Aperfeiçoa o equilíbrio, o peso e o manuseio de uma ferramenta, concedendo 9-novamente às jogadas feitas com ela durante a Duração. +1 Alcance: Concede 8-novamente em vez de 9-novamente.",
+      "reach": "+1 Alcance: Concede 8-novamente em vez de 9-novamente."
+    }
   },
   {
     "id": "mta-2ed:matter-2-hidden-hoard",
@@ -218,7 +236,16 @@
     "source": "Mage the Awakening",
     "page": 156,
     "summary": "Veil selected matter from detection: mundane attempts to locate it fail automatically, while supernatural searches provoke a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Tesouro Oculto",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Oculta uma quantidade de matéria da detecção ao velar sua ligação com as verdades Supernas. Tentativas mundanas de encontrá-la falham automaticamente; feitiços e poderes de detecção disputam um Choque de Vontades.",
+      "description": "Oculta uma quantidade de matéria da detecção ao velar sua ligação com as verdades Supernas. Tentativas mundanas de encontrá-la falham automaticamente; feitiços e poderes de detecção disputam um Choque de Vontades.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:matter-2-machine-invisibility",
@@ -240,7 +267,16 @@
     "source": "Mage the Awakening",
     "page": 156,
     "summary": "Make the subject undetectable to mechanical sensors, cameras, and similar devices. Supernatural sensing devices may overcome the veil through a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Invisibilidade às Máquinas",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Impede que câmeras, microfones e outros sensores mecânicos percebam o alvo. Dispositivos sobrenaturais que tentem detectá-lo provocam um Choque de Vontades.",
+      "description": "Impede que câmeras, microfones e outros sensores mecânicos percebam o alvo. Dispositivos sobrenaturais que tentem detectá-lo provocam um Choque de Vontades. +1 Alcance: Também oculta o alvo de construtos não vivos animados por magia, como zumbis e golens; tais seres provocam um Choque de Vontades.",
+      "reach": "+1 Alcance: Também oculta o alvo de construtos não vivos animados por magia, como zumbis e golens; tais seres provocam um Choque de Vontades."
+    }
   },
   {
     "id": "mta-2ed:matter-2-shaping",
@@ -262,7 +298,16 @@
     "source": "Mage the Awakening",
     "page": 156,
     "summary": "Freely shape liquid or gaseous matter within Scale and hold it in forms that defy gravity. The spell changes form and position without transmuting the substance.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Moldar",
+      "practice": "Regência",
+      "primaryFactor": "Potência",
+      "withstand": "Durabilidade",
+      "summary": "Dá a líquidos, gases e sólidos amorfos qualquer forma dentro da Escala e a sustenta até contra a gravidade. A substância conserva seu estado físico; criar formas complexas pode exigir Raciocínio + Ofícios.",
+      "description": "Dá a líquidos, gases e sólidos amorfos qualquer forma dentro da Escala e a sustenta até contra a gravidade. A substância conserva seu estado físico; criar formas complexas pode exigir Raciocínio + Ofícios. +1 Alcance: Também molda sólidos; ao deformar uma ferramenta ou arma, reduz em 1 por ponto de Potência seu bônus de equipamento ou dano, até torná-la inútil em zero. +1 Alcance: Ao criar ou consertar um objeto em ação prolongada, reduz os sucessos exigidos em 1 por ponto de Potência, até o mínimo de um. +2 Alcance: Pode causar um Tilt ambiental apropriado, como Terremoto, Inundado ou Ventos Fortes.",
+      "reach": "+1 Alcance: Também molda sólidos; ao deformar uma ferramenta ou arma, reduz em 1 por ponto de Potência seu bônus de equipamento ou dano, até torná-la inútil em zero. +1 Alcance: Ao criar ou consertar um objeto em ação prolongada, reduz os sucessos exigidos em 1 por ponto de Potência, até o mínimo de um. +2 Alcance: Pode causar um Tilt ambiental apropriado, como Terremoto, Inundado ou Ventos Fortes."
+    }
   },
   {
     "id": "mta-2ed:matter-3-aegis",
