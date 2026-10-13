@@ -45,6 +45,27 @@ test("Soulless retains verified neutral rules while Mage owns its Wisdom excepti
   assert.deepEqual(awakened.nameQualifier, { "en-US": "Awakened", "pt-BR": "Desperto" });
 });
 
+test("Mage core-book Conditions use localized presentation without changing canonical IDs", async () => {
+  const ids = ["addicted", "strained", "soul-shocked", "thrall", "charmed", "defeated", "humbled"];
+  const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false } });
+  try {
+    const { mageConditionPresentation } = await vite.ssrLoadModule("/game-lines/mage/condition-presentation.ts");
+    const before = JSON.stringify(mage);
+    for (const id of ids) {
+      const canonical = mage.find(item => item.id === id);
+      assert.ok(canonical, id);
+      const pt = mageConditionPresentation(canonical, "pt-BR");
+      assert.equal(mageConditionPresentation(canonical, "en-US"), canonical);
+      assert.equal(pt.id, canonical.id);
+      assert.equal(pt.name, canonical.presentationPt.name);
+      assert.notEqual(pt.name, canonical.name);
+      for (const field of ["category", "description", "resolution", ...(canonical.beat ? ["beat"] : [])])
+        assert.ok(pt[field]?.trim(), `${id}.${field}`);
+    }
+    assert.equal(JSON.stringify(mage), before);
+  } finally { await vite.close(); }
+});
+
 test("Core snapshot and selected Condition details render every resolution/Beat in EN/PT without mutating saved selections", async () => {
   const selected = core.map(item => ({ id: item.id, persistent: Boolean(item.persistent), instanceId: `owned:${item.id}`, animalName: "Authored name" }));
   const before = JSON.stringify({ core, presentation, selected });
