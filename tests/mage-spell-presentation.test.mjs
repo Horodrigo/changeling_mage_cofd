@@ -32,7 +32,7 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
     assert.match(mageSpellPresentation(spells.find(spell => spell.name === "Exorcism"), "pt-BR").reach, /Adicionar Mente ou Espírito/);
     assert.match(mageSpellPresentation(spells.find(spell => spell.name === "Revenant"), "pt-BR").reach, /^Adicionar Mente ou Espírito/);
     const fate = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/fate.json", import.meta.url), "utf8"));
-    assert.equal(fate.filter(spell => spell.presentationPt).length, 11);
+    assert.equal(fate.filter(spell => spell.presentationPt).length, 16);
     for (const spell of fate.filter(spell => spell.presentationPt)) {
       assert.equal(mageSpellPresentation(spell, "en-US").name, spell.name);
       assert.equal(mageSpellPresentation(spell, "pt-BR").name, spell.presentationPt.name);

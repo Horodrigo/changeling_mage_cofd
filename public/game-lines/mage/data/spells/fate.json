@@ -383,7 +383,16 @@
     "source": "Mage the Awakening",
     "page": 137,
     "summary": "For up to Potency attacks during the Duration, the next attack that deals at least one damage to the subject inflicts additional damage equal to Potency. The added damage keeps the original damage type.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Desgraça Terrível",
+      "practice": "Desfiamento",
+      "primaryFactor": "Potência",
+      "withstand": "Compostura",
+      "summary": "Atrai infortúnio para o alvo ou agrava uma situação perigosa. Quando ele sofrer ao menos um ponto de dano de um ataque, recebe dano adicional igual à Potência, do mesmo tipo. Isso pode afetar até um número de ataques igual à Potência durante a Duração.",
+      "description": "Atrai infortúnio para o alvo ou agrava uma situação perigosa. Quando ele sofrer ao menos um ponto de dano de um ataque, recebe dano adicional igual à Potência, do mesmo tipo. Isso pode afetar até um número de ataques igual à Potência durante a Duração.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-2ed:fate-3-monkey-s-paw",
@@ -405,7 +414,16 @@
     "source": "Mage the Awakening",
     "page": 137,
     "summary": "Bless or curse an inanimate object, increasing or decreasing its equipment bonus by Potency. The result may become a dice penalty below zero, but cannot exceed a five-die bonus or penalty without further Reach.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Pata de Macaco",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Abençoa ou amaldiçoa um objeto inanimado, aumentando ou reduzindo seu bônus de equipamento pela Potência. O bônus pode tornar-se uma penalidade de dados abaixo de zero, mas não ultrapassa cinco dados de bônus ou penalidade sem Alcance adicional.",
+      "description": "Abençoa ou amaldiçoa um objeto inanimado, aumentando ou reduzindo seu bônus de equipamento pela Potência. O bônus pode tornar-se uma penalidade de dados abaixo de zero, mas não ultrapassa cinco dados de bônus ou penalidade sem Alcance adicional. +1 Alcance: Quem carregar, tocar ou usar o objeto também recebe uma bênção ou azaração correspondente. +1 Alcance e 1 Mana: O bônus ou a penalidade pode ultrapassar cinco dados.",
+      "reach": "+1 Alcance: Quem carregar, tocar ou usar o objeto também recebe uma bênção ou azaração correspondente. +1 Alcance e 1 Mana: O bônus ou a penalidade pode ultrapassar cinco dados."
+    }
   },
   {
     "id": "mta-2ed:fate-3-shared-fate",
@@ -427,7 +445,16 @@
     "source": "Mage the Awakening",
     "page": 137,
     "summary": "Bind the fates of multiple subjects so that damage, Tilts, and unwanted Conditions suffered by one affect all others. Unless Scale is increased, the caster is one of the linked subjects.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Destino Compartilhado",
+      "practice": "Tecelagem",
+      "primaryFactor": "Potência",
+      "withstand": "Compostura",
+      "summary": "Vincula o destino de vários alvos: dano, Complicações e Conditions indesejadas sofridas por um afetam todos os demais. A conjuradora integra o vínculo, a menos que aumente a Escala.",
+      "description": "Vincula o destino de vários alvos: dano, Complicações e Conditions indesejadas sofridas por um afetam todos os demais. A conjuradora integra o vínculo, a menos que aumente a Escala. +1 Alcance: O vínculo funciona em apenas um sentido para um dos alvos. +2 Alcance: Um alvo recebe dano, Complicações e Conditions indesejadas que infligir a outros, sem ficar vinculado a um alvo específico.",
+      "reach": "+1 Alcance: O vínculo funciona em apenas um sentido para um dos alvos. +2 Alcance: Um alvo recebe dano, Complicações e Conditions indesejadas que infligir a outros, sem ficar vinculado a um alvo específico."
+    }
   },
   {
     "id": "mta-2ed:fate-3-superlative-luck",
@@ -449,7 +476,16 @@
     "source": "Mage the Awakening",
     "page": 137,
     "summary": "For one Mana, grant the rote quality to a number of mundane rolls equal to Potency. The subject chooses each affected roll before rolling.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Sorte Suprema",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Por 1 Mana, concede a qualidade de Rotina a um número de jogadas mundanas igual à Potência. O jogador escolhe cada jogada afetada antes de rolá-la.",
+      "description": "Por 1 Mana, concede a qualidade de Rotina a um número de jogadas mundanas igual à Potência. O jogador escolhe cada jogada afetada antes de rolá-la. +2 Alcance: A qualidade também pode beneficiar conjurações rituais, dobrando o tempo de conjuração derivado da Gnose.",
+      "reach": "+2 Alcance: A qualidade também pode beneficiar conjurações rituais, dobrando o tempo de conjuração derivado da Gnose."
+    }
   },
   {
     "id": "mta-2ed:fate-3-sworn-oaths",
@@ -471,7 +507,16 @@
     "source": "Mage the Awakening",
     "page": 137,
     "summary": "Enforce a voluntary vow and its stated consequence. The subject receives a boon while faithful; breaking the oath imposes the agreed hex once, and the mage may Clash against powers that would force a violation.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Juramentos Solenes",
+      "practice": "Aperfeiçoamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Impõe sobrenaturalmente uma promessa voluntária e a consequência acordada. Enquanto cumpre o juramento, o alvo recebe uma bênção; se o quebrar, sofre a azaração combinada uma vez. A conjuradora pode disputar com poderes que tentem forçá-lo a quebrar o voto.",
+      "description": "Impõe sobrenaturalmente uma promessa voluntária e a consequência acordada. Enquanto cumpre o juramento, o alvo recebe uma bênção; se o quebrar, sofre a azaração combinada uma vez. A conjuradora pode disputar com poderes que tentem forçá-lo a quebrar o voto. +1 Alcance: Enquanto mantiver o controle do feitiço, a conjuradora percebe quando o juramento passa de bênção a azaração.",
+      "reach": "+1 Alcance: Enquanto mantiver o controle do feitiço, a conjuradora percebe quando o juramento passa de bênção a azaração."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:fate-3-the-right-tool",
