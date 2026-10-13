@@ -21,13 +21,13 @@ const base={...mageMerits.MAGE_STATUS_REQUIREMENTS,gameLine:"MtA",archetypes:["a
 
 test("Mage Merit presentation switches EN/PT/EN without changing canonical requirements",async()=>{
  const {meritPresentation}=await vite.ssrLoadModule("/lib/merit-presentation.ts");
- for(const name of ["Adamant Hand","Artifact","Astral Adept","Astral Intruder","Awakened Status","Between the Ticks","Broad Dedication","Cabal Theme","Cognoscente","Daimonomikon","Destiny","Dominant Soul","Dream","Echo Chamber","Enhanced Item","Enriched Item","Epiphany Stone","Familiar","Fast Spells","Fluent High Speech","Grimoire","Hallow","Hidden High Speech","High Speech","Imbued Ally","Imbued Item","Imposing Nimbus","Infamous Mentor","Inheritance"]){
+ for(const name of ["Adamant Hand","Artifact","Astral Adept","Astral Intruder","Awakened Status","Between the Ticks","Broad Dedication","Cabal Theme","Cognoscente","Daimonomikon","Destiny","Dominant Soul","Dream","Echo Chamber","Enhanced Item","Enriched Item","Epiphany Stone","Familiar","Fast Spells","Fluent High Speech","Grimoire","Hallow","Hidden High Speech","High Speech","Imbued Ally","Imbued Item","Imposing Nimbus","Infamous Mentor","Inheritance","Lex Magica","Mana Sensitivity","Occultation","Potent Nimbus"]){
   const entry=merit(name);
   const canonical={id:entry.id,name:entry.name,prerequisites:entry.prerequisites,descriptionEn:entry.descriptionEn};
-  assert.equal(meritPresentation(entry,"en-US",mageCatalog).name,name);
-  assert.equal(meritPresentation(entry,"pt-BR",mageCatalog).name,entry.presentationPt.name);
+  assert.equal(meritPresentation(entry,"en-US",mageCatalog).name,entry.nameQualifier?.["en-US"]?`${name}(${entry.nameQualifier["en-US"]})`:name);
+  assert.equal(meritPresentation(entry,"pt-BR",mageCatalog).name,entry.nameQualifier?.["pt-BR"]?`${entry.presentationPt.name}(${entry.nameQualifier["pt-BR"]})`:entry.presentationPt.name);
   assert.equal(meritPresentation(entry,"pt-BR",mageCatalog).prerequisites,entry.presentationPt.prerequisites);
-  assert.equal(meritPresentation(entry,"en-US",mageCatalog).name,name);
+  assert.equal(meritPresentation(entry,"en-US",mageCatalog).name,entry.nameQualifier?.["en-US"]?`${name}(${entry.nameQualifier["en-US"]})`:name);
   assert.deepEqual({id:entry.id,name:entry.name,prerequisites:entry.prerequisites,descriptionEn:entry.descriptionEn},canonical);
  }
  assert.match(meritPresentation(merit("Adamant Hand"),"pt-BR",mageCatalog).prerequisites,/Armas Brancas/);

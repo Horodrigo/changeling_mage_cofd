@@ -666,7 +666,12 @@
     "page": 102,
     "priority": 2,
     "translatedName": "Lex Magica",
-    "descriptionEn": "When acting in an official capacity, add the relevant Silver Ladder or Consilium Status to Doors. Others cannot spend Willpower to boost Social actions or magic influencing your behavior. Use half the higher Status, rounded up, as a Yantra directly enforcing the Lex Magica."
+    "descriptionEn": "When acting in an official capacity, add the relevant Silver Ladder or Consilium Status to Doors. Others cannot spend Willpower to boost Social actions or magic influencing your behavior. Use half the higher Status, rounded up, as a Yantra directly enforcing the Lex Magica.",
+    "presentationPt": {
+      "name": "Lex Magica",
+      "prerequisites": "Desperto; Status na Escada de Prata •",
+      "description": "Ao agir em caráter oficial, adicione o Status pertinente na Escada de Prata ou no Consilium às Portas. Outras pessoas não podem gastar Força de Vontade para melhorar ações Sociais ou magia que influencie seu comportamento. Ao aplicar diretamente a Lex Magica, use como Yantra metade do maior desses Status, arredondada para cima."
+    }
   },
   {
     "id": "mta-signs:mana-battery",
@@ -697,8 +702,13 @@
     "description": "Sense Hallows and tass with Peripheral Mage Sight.",
     "page": 102,
     "priority": 2,
-    "translatedName": "Mana Sensitivity",
-    "descriptionEn": "Sense Hallows and tass with Peripheral Mage Sight."
+    "translatedName": "Sensibilidade à Mana",
+    "descriptionEn": "Sense Hallows and tass with Peripheral Mage Sight.",
+    "presentationPt": {
+      "name": "Sensibilidade à Mana",
+      "prerequisites": "Desperto; Raciocínio •••, Primórdio •",
+      "description": "Perceba Nascentes de Mana e tass com a Visão Mágica Periférica."
+    }
   },
   {
     "id": "mta-2ed:mystery-cult-influence",
@@ -761,8 +771,13 @@
       "Fame"
     ],
     "priority": 2,
-    "translatedName": "Occultation",
-    "descriptionEn": "Penalize magical aura-reading, identification and tracking of your Signature Nimbus by Merit dots. Sympathy's Withstand against targeting you has a minimum equal to these dots. Incompatible with Fame; public notoriety may cause its loss."
+    "translatedName": "Ocultação",
+    "descriptionEn": "Penalize magical aura-reading, identification and tracking of your Signature Nimbus by Merit dots. Sympathy's Withstand against targeting you has a minimum equal to these dots. Incompatible with Fame; public notoriety may cause its loss.",
+    "presentationPt": {
+      "name": "Ocultação",
+      "prerequisites": "Desperto; não pode possuir Fama",
+      "description": "Aplique uma penalidade igual aos pontos deste Mérito à leitura mágica de sua aura e às tentativas de identificar ou rastrear seu Nimbus de Assinatura. A Resistência da Simpatia contra magia dirigida a você tem mínimo igual a esses pontos. É incompatível com Fama; notoriedade pública pode fazê-lo perder o Mérito."
+    }
   },
   {
     "id": "mta-signs:order-archive",
@@ -852,8 +867,13 @@
     "description": "At one dot, add two to effective Gnosis for your Nimbus Tilt; at two dots, add four. Add Merit dots to rolls to flare the Nimbus.",
     "page": 103,
     "priority": 2,
-    "translatedName": "Potent Nimbus",
-    "descriptionEn": "At one dot, add two to effective Gnosis for your Nimbus Tilt; at two dots, add four. Add Merit dots to rolls to flare the Nimbus."
+    "translatedName": "Nimbus Potente",
+    "descriptionEn": "At one dot, add two to effective Gnosis for your Nimbus Tilt; at two dots, add four. Add Merit dots to rolls to flare the Nimbus.",
+    "presentationPt": {
+      "name": "Nimbus Potente",
+      "prerequisites": "Desperto",
+      "description": "Com um ponto, some dois à Gnose efetiva para o Tilt do seu Nimbus; com dois pontos, some quatro. Adicione os pontos deste Mérito aos testes para manifestar o Nimbus."
+    }
   },
   {
     "id": "mta-signs:potent-soul",
