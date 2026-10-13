@@ -84,10 +84,11 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
     assert.match(mageSpellPresentation(mind.find(spell => spell.name === "Haunted Grimoire"), "pt-BR").reach, /Substituir Morte •••••/);
     assert.equal(mind.find(spell => spell.name === "Possession").page, 164);
     const prime = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/prime.json", import.meta.url), "utf8"));
-    assert.equal(prime.filter(spell => spell.presentationPt).length, 15);
+    assert.equal(prime.filter(spell => spell.presentationPt).length, 20);
     assert.match(mageSpellPresentation(prime.find(spell => spell.name === "Sacred Geometry"), "pt-BR").reach, /Adicionar Morte • ou Espírito •/);
     assert.match(mageSpellPresentation(prime.find(spell => spell.name === "Shared Sight"), "pt-BR").reach, /Adicionar qualquer outro Arcano •/);
     assert.match(mageSpellPresentation(prime.find(spell => spell.name === "Words of Truth"), "pt-BR").reach, /Condição Inspirado/);
+    assert.match(mageSpellPresentation(prime.find(spell => spell.name === "Path to Jerusalem"), "pt-BR").reach, /\+1 Alcance por informação falsa/);
     assert.match(mageSpellPresentation(spells[1], "pt-BR").reach, /\+1 Alcance/);
     assert.match(spells[1].description, /\+1 Reach:/);
     const homebrew = { id: "homebrew:spell:author", name: "Minha magia", originalName: "Minha magia", summary: "Texto autoral", description: "Texto autoral" };

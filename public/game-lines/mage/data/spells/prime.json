@@ -367,7 +367,16 @@
     "source": "Signs of Sorcery",
     "page": 84,
     "summary": "For one Mana, copy an entire Grimoire into a number of separate fragments up to Potency. No fragment is meaningful alone; a reader must assemble every part to use its rotes.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Fragmentar Grimório",
+      "practice": "Regência",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Por 1 Mana, copia um Grimório inteiro em pelo menos duas partes sem significado isolado. É preciso reunir todas elas para conjurar ou aprender suas Rotas; normalmente, o número de partes é igual à Potência. A maga pode usar o Aperfeiçoamento Duração Condicional para definir o ritual que reunirá as partes.",
+      "description": "Por 1 Mana, copia um Grimório inteiro em pelo menos duas partes sem significado isolado. É preciso reunir todas elas para conjurar ou aprender suas Rotas; normalmente, o número de partes é igual à Potência. A maga pode usar o Aperfeiçoamento Duração Condicional para definir o ritual que reunirá as partes. +1 Alcance: Pode dividir o Grimório em qualquer quantidade de partes.",
+      "reach": "+1 Alcance: Pode dividir o Grimório em qualquer quantidade de partes."
+    }
   },
   {
     "id": "mta-2ed:prime-2-invisible-runes",
@@ -420,7 +429,16 @@
     "source": "Signs of Sorcery",
     "page": 28,
     "summary": "Increase by Potency the number of relevant rolls that may occur before the mage’s Nimbus contaminates a Mystery under investigation.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Luz Sob o Alqueire",
+      "practice": "Proteção",
+      "primaryFactor": "Potência",
+      "withstand": "",
+      "summary": "Ao investigar um Mistério, adia a contaminação pelo próprio Nimbus: acrescenta a Potência ao número de jogadas de escrutínio permitidas antes que o Nimbus da maga deixe sua marca. Se a Duração acabar enquanto ela ainda escrutina, as penalidades acumuladas são aplicadas imediatamente.",
+      "description": "Ao investigar um Mistério, adia a contaminação pelo próprio Nimbus: acrescenta a Potência ao número de jogadas de escrutínio permitidas antes que o Nimbus da maga deixe sua marca. Se a Duração acabar enquanto ela ainda escrutina, as penalidades acumuladas são aplicadas imediatamente.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-2-nimbus-forgery",
@@ -442,7 +460,16 @@
     "source": "Signs of Sorcery",
     "page": 94,
     "summary": "Disguise the caster’s Immediate or Signature Nimbus as one previously scrutinized with Focused Mage Sight. It reproduces the copied Immediate Tilt or leaves the copied Signature on spells, while attempts to expose the forgery provoke a Clash of Wills.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Falsificar Nimbus",
+      "practice": "Velamento",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Disfarça o Nimbus Imediato ou de Assinatura da maga como um Nimbus daquele tipo que ela já examinou com Visão Mágica Focada. O Imediato reproduz o Tilt copiado; o de Assinatura é deixado em suas magias até a Duração terminar. Descobrir a falsificação exige um Choque de Vontades.",
+      "description": "Disfarça o Nimbus Imediato ou de Assinatura da maga como um Nimbus daquele tipo que ela já examinou com Visão Mágica Focada. O Imediato reproduz o Tilt copiado; o de Assinatura é deixado em suas magias até a Duração terminar. Descobrir a falsificação exige um Choque de Vontades. +1 Alcance: Falsifica os três tipos de Nimbus de uma vez, mesmo que tenha escrutinado apenas um deles.",
+      "reach": "+1 Alcance: Falsifica os três tipos de Nimbus de uma vez, mesmo que tenha escrutinado apenas um deles."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:prime-2-path-to-jerusalem",
@@ -464,7 +491,16 @@
     "source": "Signs of Sorcery",
     "page": 28,
     "summary": "Increase a Mystery’s Opacity by Potency, resisted by its existing Opacity, making Focused Mage Sight harder to complete.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Caminho para Jerusalém",
+      "practice": "Velamento",
+      "primaryFactor": "Potência",
+      "withstand": "Opacidade",
+      "summary": "Aumenta a Opacidade de um Mistério pela Potência, dificultando sua investigação com Visão Mágica Focada. A Opacidade atual do Mistério resiste à conjuração.",
+      "description": "Aumenta a Opacidade de um Mistério pela Potência, dificultando sua investigação com Visão Mágica Focada. A Opacidade atual do Mistério resiste à conjuração. +1 Alcance por informação falsa: Insere uma falsidade Superficial ou Profunda no Mistério, ocultando uma informação verdadeira ou criando outra; reconhecê-la exige um Choque de Vontades.",
+      "reach": "+1 Alcance por informação falsa: Insere uma falsidade Superficial ou Profunda no Mistério, ocultando uma informação verdadeira ou criando outra; reconhecê-la exige um Choque de Vontades."
+    }
   },
   {
     "id": "mta-2ed:prime-2-supernal-veil",
@@ -518,7 +554,16 @@
     "source": "Signs of Sorcery",
     "page": 93,
     "summary": "Preserve a studied Signature Nimbus at its current strength for the spell’s Duration. Once the spell ends, the Nimbus resumes fading at its normal rate.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Sustentar Nimbus",
+      "practice": "Regência",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Conserva na intensidade atual um Nimbus de Assinatura já estudado com Visão Mágica Focada. Ele permanece pela Duração e, depois, volta a desaparecer no ritmo normal.",
+      "description": "Conserva na intensidade atual um Nimbus de Assinatura já estudado com Visão Mágica Focada. Ele permanece pela Duração e, depois, volta a desaparecer no ritmo normal. +2 Alcance: A Duração torna-se duradoura.",
+      "reach": "+2 Alcance: A Duração torna-se duradoura."
+    }
   },
   {
     "id": "mta-2ed:prime-2-wards-and-signs",
