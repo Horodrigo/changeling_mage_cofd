@@ -671,7 +671,16 @@
     "source": "Signs of Sorcery",
     "page": 66,
     "summary": "Enchant a container holding at least one small expendable item so its contents never run out during the spell. Each generated unit may have a value up to Resources equal to Potency, covering ammunition, cash, fuel, and similar supplies.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Provisão Inesgotável",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Encanta um recipiente que já contém pelo menos uma unidade de um item pequeno e consumível; seu conteúdo não acaba durante a Duração. Cada unidade pode valer até os Recursos equivalentes à Potência, como munição no carregador, dinheiro na carteira ou combustível no tanque.",
+      "description": "Encanta um recipiente que já contém pelo menos uma unidade de um item pequeno e consumível; seu conteúdo não acaba durante a Duração. Cada unidade pode valer até os Recursos equivalentes à Potência, como munição no carregador, dinheiro na carteira ou combustível no tanque.",
+      "reach": ""
+    }
   },
   {
     "id": "mta-signs-of-sorcery:matter-4-forge-dumanium",
@@ -693,7 +702,16 @@
     "source": "Signs of Sorcery",
     "page": 62,
     "summary": "For one Mana, alloy Perfected kassiterum and siderite into dumanium with base Durability 1 and Mana capacity 1. Allocate Potency among Durability, Mana capacity, equipment bonus up to +5, or 1/1 armor; a weapon may spend stored Mana to deal aggravated damage for one attack.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Forjar Dumanium",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Por 1 Mana, funde kassiterum e siderite Aperfeiçoados em dumanium, com Durabilidade 1 e capacidade de 1 Mana. Distribui a Potência entre Durabilidade, capacidade de Mana, bônus de equipamento até +5 ou Armadura 1/1 até 5/5; para Armadura, a peça precisa ter Tamanho 3 ou mais. Uma arma de dumanium pode gastar 1 Mana armazenada como ação reflexiva para causar dano agravado em um ataque.",
+      "description": "Por 1 Mana, funde kassiterum e siderite Aperfeiçoados em dumanium, com Durabilidade 1 e capacidade de 1 Mana. Distribui a Potência entre Durabilidade, capacidade de Mana, bônus de equipamento até +5 ou Armadura 1/1 até 5/5; para Armadura, a peça precisa ter Tamanho 3 ou mais. Uma arma de dumanium pode gastar 1 Mana armazenada como ação reflexiva para causar dano agravado em um ataque. +2 Alcance: O efeito torna-se duradouro enquanto os metais componentes permanecerem Aperfeiçoados; se algum voltar à forma mundana, a liga se desfaz.",
+      "reach": "+2 Alcance: O efeito torna-se duradouro enquanto os metais componentes permanecerem Aperfeiçoados; se algum voltar à forma mundana, a liga se desfaz."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:matter-4-forge-sophis",
@@ -714,8 +732,17 @@
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
     "page": 62,
-    "summary": "For one Mana, alloy Perfected apeiron, bronzium, and hermium into sophis with base Durability 1 and Mana capacity 1, allocating Potency between them. Once per scene, it captures one Mana when its holder spends Mana, without reducing that expenditure.",
-    "summaryReviewed": true
+    "summary": "For one Mana, alloy Perfected apeiron, brontium, and hermium into sophis with base Durability 1 and Mana capacity 1, allocating Potency between them. Once per scene, it captures one Mana when its holder spends Mana, without reducing that expenditure.",
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Forjar Sophis",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Por 1 Mana, funde apeiron, brontium e hermium Aperfeiçoados em sophis, com Durabilidade 1 e capacidade de 1 Mana. Distribui a Potência entre Durabilidade e capacidade. Uma vez por cena, quando quem segura o objeto gasta Mana, ele absorve um ponto da Mana gasta sem reduzir o custo pago.",
+      "description": "Por 1 Mana, funde apeiron, brontium e hermium Aperfeiçoados em sophis, com Durabilidade 1 e capacidade de 1 Mana. Distribui a Potência entre Durabilidade e capacidade. Uma vez por cena, quando quem segura o objeto gasta Mana, ele absorve um ponto da Mana gasta sem reduzir o custo pago. +2 Alcance: O efeito torna-se duradouro enquanto os metais componentes permanecerem Aperfeiçoados; se algum voltar à forma mundana, a liga se desfaz.",
+      "reach": "+2 Alcance: O efeito torna-se duradouro enquanto os metais componentes permanecerem Aperfeiçoados; se algum voltar à forma mundana, a liga se desfaz."
+    }
   },
   {
     "id": "mta-signs-of-sorcery:matter-4-forge-thaumium",
@@ -732,12 +759,21 @@
       "Occult",
       "Survival"
     ],
-    "description": "*Costs 1 Mana* Combine perfected metals to create Thaumium, The object is Durability 1 and holds 1 point of Mana which it spends to shield against Magic. +2 Reach: The Spell is Lasting however this relies on all the Metals to remain perfect, should a perfected metal become mundane the alloy will collapse Other Arcanum ●●: Thaumium can protect against other types of Magic provided they fall under the Arcanum",
+    "description": "*Costs 1 Mana* Combine perfected metals to create Thaumium, The object is Durability 1 and holds 1 point of Mana which it spends to shield against Magic. +2 Reach: The Spell is Lasting however this relies on all the Metals to remain perfect, should a perfected metal become mundane the alloy will collapse Add Any Other Arcanum ●●●: Thaumium can protect against other types of Magic provided they fall under the Arcanum",
     "sourceId": "mta-signs-of-sorcery",
     "source": "Signs of Sorcery",
     "page": 62,
     "summary": "For one Mana, alloy Perfected orichalcum, lunargent, and hermium into thaumium with base Durability 1 and Mana capacity 1, allocating Potency between them. While charged, it spends one Mana to Clash against unwanted Supernal magic using its creator’s casting-time Gnosis + Matter.",
-    "summaryReviewed": true
+    "summaryReviewed": true,
+    "presentationPt": {
+      "name": "Forjar Thaumium",
+      "practice": "Modelagem",
+      "primaryFactor": "Duração",
+      "withstand": "",
+      "summary": "Por 1 Mana, funde orichalcum, lunargent e hermium Aperfeiçoados em thaumium, com Durabilidade 1 e capacidade de 1 Mana. Distribui a Potência entre Durabilidade e capacidade. Enquanto possui Mana, protege o portador contra magia Superna indesejada por Choque de Vontades com Gnose + Matéria da criadora na conjuração, gastando 1 Mana armazenada a cada disputa.",
+      "description": "Por 1 Mana, funde orichalcum, lunargent e hermium Aperfeiçoados em thaumium, com Durabilidade 1 e capacidade de 1 Mana. Distribui a Potência entre Durabilidade e capacidade. Enquanto possui Mana, protege o portador contra magia Superna indesejada por Choque de Vontades com Gnose + Matéria da criadora na conjuração, gastando 1 Mana armazenada a cada disputa. +2 Alcance: O efeito torna-se duradouro enquanto os metais componentes permanecerem Aperfeiçoados; se algum voltar à forma mundana, a liga se desfaz. Adicionar qualquer outro Arcano •••: Também protege contra magia da alçada desse Arcano.",
+      "reach": "+2 Alcance: O efeito torna-se duradouro enquanto os metais componentes permanecerem Aperfeiçoados; se algum voltar à forma mundana, a liga se desfaz. Adicionar qualquer outro Arcano •••: Também protege contra magia da alçada desse Arcano."
+    }
   },
   {
     "id": "mta-2ed:matter-4-ghostwall",

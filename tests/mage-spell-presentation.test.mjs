@@ -60,9 +60,12 @@ test("Mage Spell presentation switches EN/PT/EN without translating parser input
       assert.equal(mageSpellSelection(spell).description, spell.description);
     }
     const matter = JSON.parse(await readFile(new URL("../public/game-lines/mage/data/spells/matter.json", import.meta.url), "utf8"));
-    assert.equal(matter.filter(spell => spell.presentationPt).length, 21);
+    assert.equal(matter.filter(spell => spell.presentationPt).length, 25);
     assert.match(mageSpellPresentation(matter.find(spell => spell.name === "Detect Substance"), "pt-BR").reach, /Adicionar Tempo •/);
     assert.match(mageSpellPresentation(matter.find(spell => spell.name === "State Change"), "pt-BR").reach, /Adicionar Forças •••/);
+    const thaumium = matter.find(spell => spell.name === "Forge Thaumium");
+    assert.match(mageSpellPresentation(thaumium, "en-US").reach, /Add Any Other Arcanum ●●●/);
+    assert.match(mageSpellPresentation(thaumium, "pt-BR").reach, /Adicionar qualquer outro Arcano •••/);
     assert.match(mageSpellPresentation(spells[1], "pt-BR").reach, /\+1 Alcance/);
     assert.match(spells[1].description, /\+1 Reach:/);
     const homebrew = { id: "homebrew:spell:author", name: "Minha magia", originalName: "Minha magia", summary: "Texto autoral", description: "Texto autoral" };
