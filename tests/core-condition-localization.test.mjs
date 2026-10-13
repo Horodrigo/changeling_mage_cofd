@@ -45,8 +45,8 @@ test("Soulless retains verified neutral rules while Mage owns its Wisdom excepti
   assert.deepEqual(awakened.nameQualifier, { "en-US": "Awakened", "pt-BR": "Desperto" });
 });
 
-test("Mage core-book Conditions use localized presentation without changing canonical IDs", async () => {
-  const ids = ["addicted", "strained", "soul-shocked", "thrall", "charmed", "defeated", "humbled", "megalomaniacal", "mystery-commands", "rampant", "triumphant", "abyssal-backlash", "abyssal-imago", "abyssal-nimbus"];
+test("Mage Conditions use localized presentation without changing canonical IDs", async () => {
+  const ids = ["addicted", "strained", "soul-shocked", "thrall", "charmed", "defeated", "humbled", "megalomaniacal", "mystery-commands", "rampant", "triumphant", "abyssal-backlash", "abyssal-imago", "abyssal-nimbus", "abyssal-debilitation", "degenerate-mana", "dissonant-tuning", "mage-hunter", "supernal-harrowing", "tainted-aspiration"];
   assert.match(mage.find(item => item.id === "rampant").description, /Willpower does not add dice/);
   assert.match(mage.find(item => item.id === "triumphant").resolution, /The first time/);
   const vite = await createServer({ appType: "custom", configFile: false, root, resolve: { alias: { "@": root } }, server: { middlewareMode: true, hmr: false, ws: false } });
