@@ -657,11 +657,16 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened; Prime •••, Gnosis •••",
-    "description": "Your character's connection to a Legacy is so forceful that when scribing a Daimonomikon part of him remains with it. When characters initiate themselves into the Legacy by your Daimonomika, gain one arcane beat as if you tutored the character yourself.",
+    "description": "When you scribe a Daimonomikon, part of your connection to your Legacy remains in it. When another character uses one you crafted to initiate into your Legacy and learn its first Attainment, you gain an Arcane Beat as though you had tutored them. Drawback: the Daimonomikon is a Connected sympathetic link to you.",
     "page": 87,
     "priority": 2,
-    "translatedName": "Legacy Pedagogue",
-    "descriptionEn": "Your character's connection to a Legacy is so forceful that when scribing a Daimonomikon part of him remains with it. When characters initiate themselves into the Legacy by your Daimonomika, gain one arcane beat as if you tutored the character yourself."
+    "translatedName": "Preceptor de Legado",
+    "descriptionEn": "When you scribe a Daimonomikon, part of your connection to your Legacy remains in it. When another character uses one you crafted to initiate into your Legacy and learn its first Attainment, you gain an Arcane Beat as though you had tutored them. Drawback: the Daimonomikon is a Connected sympathetic link to you.",
+    "presentationPt": {
+      "name": "Preceptor de Legado",
+      "prerequisites": "Desperto; Primórdio •••, Gnose ••• ou mais",
+      "description": "Ao inscrever um Daimonomikon, parte de sua conexão com o Legado permanece nele. Quando outra personagem usa um Daimonomikon criado por você para se iniciar no seu Legado e aprender o primeiro Aperfeiçoamento, você recebe um Ato Arcano como se a tivesse instruído. Desvantagem: o Daimonomikon funciona como vínculo de Simpatia Conectada com você."
+    }
   },
   {
     "id": "mta-2ed:lex-magica",
@@ -692,13 +697,18 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened",
-    "description": "An item storing two Mana per Merit dot. Draw from it into your Pattern or replenish it using Channel Mana. May combine with Enhanced Item or Enriched Item.",
+    "description": "An item holds two Mana per Merit dot. You may draw its Mana into your own Pattern at any time or replenish it with the Prime 3 spell Channel Mana. This Merit may be combined with Enhanced Item or Enriched Item.",
     "page": 77,
     "unbounded": true,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Mana Battery",
-    "descriptionEn": "An item storing two Mana per Merit dot. Draw from it into your Pattern or replenish it using Channel Mana. May combine with Enhanced Item or Enriched Item."
+    "translatedName": "Bateria de Mana",
+    "descriptionEn": "An item holds two Mana per Merit dot. You may draw its Mana into your own Pattern at any time or replenish it with the Prime 3 spell Channel Mana. This Merit may be combined with Enhanced Item or Enriched Item.",
+    "presentationPt": {
+      "name": "Bateria de Mana",
+      "prerequisites": "Desperto",
+      "description": "Um item armazena dois pontos de Mana por ponto deste Mérito. Você pode transferir sua Mana para o próprio Padrão a qualquer momento ou reabastecê-lo com o feitiço Canalizar Mana (Primórdio •••). Este Mérito pode ser combinado com Item Aprimorado ou Item Enriquecido."
+    }
   },
   {
     "id": "mta-2ed:mana-sensitivity",
@@ -825,12 +835,17 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened",
-    "description": "Your Character owns an item made from a Perfected Metal, Amalgam or Alloy with perminant duration",
+    "description": "You own an item crafted from a Perfected Metal, Amalgam, or Alloy with permanent Duration. This Merit may be combined with Enhanced Item, Enriched Item, Mana Battery, or Imbued Item.",
     "page": 77,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Perfected Item",
-    "descriptionEn": "Your Character owns an item made from a Perfected Metal, Amalgam or Alloy with perminant duration"
+    "translatedName": "Item Aperfeiçoado",
+    "descriptionEn": "You own an item crafted from a Perfected Metal, Amalgam, or Alloy with permanent Duration. This Merit may be combined with Enhanced Item, Enriched Item, Mana Battery, or Imbued Item.",
+    "presentationPt": {
+      "name": "Item Aperfeiçoado",
+      "prerequisites": "Desperto",
+      "description": "Você possui um item feito de Metal, Amálgama ou Liga Aperfeiçoada com Duração permanente. Este Mérito pode ser combinado com Item Aprimorado, Item Enriquecido, Bateria de Mana ou Item Imbuído."
+    }
   },
   {
     "id": "mta-signs:persistent-nimbus",
