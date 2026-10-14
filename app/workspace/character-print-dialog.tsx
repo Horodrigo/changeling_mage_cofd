@@ -33,6 +33,7 @@ export function CharacterPrintDialog({
   const catalogs = useCatalogSnapshot();
   const previewRef = useRef<HTMLDivElement>(null);
   const previewContentRef = useRef<HTMLDivElement>(null);
+  const printSurfaceRef = useRef<HTMLDivElement>(null);
   const [PrintSheet, setPrintSheet] = useState<ComponentType<GameLinePrintSheetProps> | null>(null);
   const [ready, setReady] = useState(false);
   const [removePaperTexture, setRemovePaperTexture] = useState(false);
@@ -55,10 +56,25 @@ export function CharacterPrintDialog({
 
   useLayoutEffect(() => {
     if (!open) return;
+    const surface = document.createElement("div");
+    surface.className = "character-print-surface";
+    document.body.appendChild(surface);
+    document.body.classList.add("character-printing");
+    printSurfaceRef.current = surface;
+    return () => {
+      printSurfaceRef.current = null;
+      surface.remove();
+      document.body.classList.remove("character-printing");
+    };
+  }, [open]);
+
+  useLayoutEffect(() => {
+    if (!open) return;
     const preview = previewRef.current;
     const printable = previewContentRef.current?.querySelector<HTMLElement>(".game-print-document");
     if (!preview || !printable) return;
     printable.classList.toggle("print-without-paper-texture", removePaperTexture);
+    printSurfaceRef.current?.replaceChildren(printable.cloneNode(true));
     const resize = () => {
       const width = printable.scrollWidth;
       const height = printable.scrollHeight;
@@ -70,25 +86,16 @@ export function CharacterPrintDialog({
     observer.observe(printable);
     resize();
     return () => observer.disconnect();
-  }, [open, PrintSheet, ready, options, removePaperTexture]);
+  }, [open, PrintSheet, ready, options, removePaperTexture, character]);
 
   function print() {
-    const preview = previewRef.current;
-    const printable = preview?.querySelector<HTMLElement>(".game-print-document");
-    if (!preview || !printable) return;
+    if (!printSurfaceRef.current?.querySelector(".game-print-document")) return;
 
     const previousTitle = document.title;
     const safeName = character.character.name.trim() || t("ui.character");
-    const printSurface = document.createElement("div");
-    printSurface.className = "character-print-surface";
-    printSurface.appendChild(printable.cloneNode(true));
-    document.body.appendChild(printSurface);
     document.title = `${safeName} - ${getGameLineRegistration(character.game_line).label}`;
-    document.body.classList.add("character-printing");
     const cleanup = () => {
       window.clearTimeout(cleanupTimer);
-      printSurface.remove();
-      document.body.classList.remove("character-printing");
       document.title = previousTitle;
       window.removeEventListener("afterprint", cleanup);
     };
@@ -137,7 +144,7 @@ export function CharacterPrintDialog({
       </div>
       <DialogFooter className="character-print-footer">
         <DialogClose asChild><Button type="button" size="sm" variant="outline">{t("ui.cancel")}</Button></DialogClose>
-        <Button type="button" size="sm" disabled={!PrintSheet} onClick={print}><Printer />{t("ui.printSavePDF")}</Button>
+        <Button type="button" size="sm" disabled={!ready} onClick={print}><Printer />{t("ui.printSavePDF")}</Button>
       </DialogFooter>
     </DialogContent>
   </Dialog>;

@@ -1560,6 +1560,7 @@ body:has(.line-theme-vtr) {
   gap: 18px;
   color: #3f171b;
   font: 9pt/1.2 Georgia, "Times New Roman", serif;
+  color-scheme: only light;
 }
 
 .vtr-print-page {
@@ -1572,11 +1573,13 @@ body:has(.line-theme-vtr) {
   padding: 9mm 15mm 8mm;
   border: .4mm solid rgba(77, 23, 28, .45);
   background-color: #eee5db;
-  background-image: linear-gradient(90deg, rgba(120, 54, 58, .08), transparent 7%, transparent 93%, rgba(120, 54, 58, .08)), var(--print-paper-texture, repeating-linear-gradient(0deg, rgba(77, 23, 28, .018) 0, rgba(77, 23, 28, .018) .25mm, transparent .25mm, transparent 1.3mm));
+  background-image: linear-gradient(90deg, rgba(120, 54, 58, .08), transparent 7%, transparent 93%, rgba(120, 54, 58, .08)), var(--print-paper-texture, url("/game-lines/vampire/images/paper-texture.webp"));
+  background-size: auto, cover;
   box-shadow: 0 4px 22px #39131740;
   print-color-adjust: exact;
   -webkit-print-color-adjust: exact;
 }
+.vtr-print-document.print-without-paper-texture .vtr-print-page { background-image: none; }
 
 .vtr-print-page::after { position:absolute; inset:0; z-index:0; background:url("/game-lines/vampire/images/background-vampire.webp") center/50% auto no-repeat; content:""; opacity:.2; pointer-events:none; }
 .vtr-print-page > * { position: relative; z-index: 1; }
