@@ -431,11 +431,16 @@
     "source": "Dark Eras",
     "category": "Mage",
     "prerequisites": "Awakened; Obrimos",
-    "description": "Environmental causes can't fully snuff flames in your presence unless you will it. Historical Merit from Dark Eras, available here to modern Obrimos characters by chronicle ruling.",
+    "description": "Unless you will otherwise, natural causes such as wind or rain cannot fully extinguish torches or other flames within your sight; at least embers remain. Historical Merit from Dark Eras; availability to modern Obrimos depends on the chronicle.",
     "page": 50,
     "priority": 2,
-    "translatedName": "Fire Keeper",
-    "descriptionEn": "Environmental causes can't fully snuff flames in your presence unless you will it. Historical Merit from Dark Eras, available here to modern Obrimos characters by chronicle ruling."
+    "translatedName": "Guardião do Fogo",
+    "descriptionEn": "Unless you will otherwise, natural causes such as wind or rain cannot fully extinguish torches or other flames within your sight; at least embers remain. Historical Merit from Dark Eras; availability to modern Obrimos depends on the chronicle.",
+    "presentationPt": {
+      "name": "Guardião do Fogo",
+      "prerequisites": "Desperto; Obrimos",
+      "description": "A menos que você queira, causas naturais como vento ou chuva não conseguem extinguir por completo tochas ou outras chamas ao seu alcance visual; elas permanecem ao menos como brasas. Mérito histórico de Dark Eras; sua disponibilidade para Obrimos modernos depende da crônica."
+    }
   },
   {
     "id": "mta-signs:fluent-high-speech",
@@ -961,11 +966,16 @@
     "source": "Dark Eras",
     "category": "Mage",
     "prerequisites": "Awakened; Moros",
-    "description": "Heal twice as quickly each day you destroy an object with magic. Historical Merit from Dark Eras, available here to modern Moros characters by chronicle ruling.",
+    "description": "When you destroy an inanimate object with magic, your natural healing rate doubles for that day. Historical Merit from Dark Eras; availability to modern Moros depends on the chronicle.",
     "page": 49,
     "priority": 2,
-    "translatedName": "Sea's Hunger",
-    "descriptionEn": "Heal twice as quickly each day you destroy an object with magic. Historical Merit from Dark Eras, available here to modern Moros characters by chronicle ruling."
+    "translatedName": "Fome do Mar",
+    "descriptionEn": "When you destroy an inanimate object with magic, your natural healing rate doubles for that day. Historical Merit from Dark Eras; availability to modern Moros depends on the chronicle.",
+    "presentationPt": {
+      "name": "Fome do Mar",
+      "prerequisites": "Desperto; Moros",
+      "description": "Quando você destrói um objeto inanimado com magia, sua taxa natural de cura dobra pelo restante do dia. Mérito histórico de Dark Eras; sua disponibilidade para Moros modernos depende da crônica."
+    }
   },
   {
     "id": "mta-signs:second-person-high-speech",
@@ -1031,11 +1041,16 @@
     "source": "Dark Eras",
     "category": "Mage",
     "prerequisites": "Awakened; Acanthus",
-    "description": "Read the open sky as an instant action to predict the day's weather and take +3 to endure it. Historical Merit from Dark Eras, available here to modern Acanthus characters by chronicle ruling.",
+    "description": "Spend one turn observing your surroundings under the open sky to predict the weather for up to the next 24 hours. Gain +3 on Survival and Wits-based rolls to survive or resist weather effects. Historical Merit from Dark Eras; availability to modern Acanthus depends on the chronicle.",
     "page": 48,
     "priority": 2,
-    "translatedName": "Sky's Whispers",
-    "descriptionEn": "Read the open sky as an instant action to predict the day's weather and take +3 to endure it. Historical Merit from Dark Eras, available here to modern Acanthus characters by chronicle ruling."
+    "translatedName": "Sussurros do Céu",
+    "descriptionEn": "Spend one turn observing your surroundings under the open sky to predict the weather for up to the next 24 hours. Gain +3 on Survival and Wits-based rolls to survive or resist weather effects. Historical Merit from Dark Eras; availability to modern Acanthus depends on the chronicle.",
+    "presentationPt": {
+      "name": "Sussurros do Céu",
+      "prerequisites": "Desperto; Acanthus",
+      "description": "Passe um turno observando os arredores sob o céu aberto para prever precisamente o tempo nas próximas 24 horas. Receba +3 dados nas jogadas de Sobrevivência e nas baseadas em Raciocínio para sobreviver ou resistir aos efeitos do clima. Mérito histórico de Dark Eras; sua disponibilidade para Acanthus modernos depende da crônica."
+    }
   },
   {
     "id": "mta-signs:soul-dealer",
@@ -1087,11 +1102,16 @@
     "source": "Dark Eras",
     "category": "Mage",
     "prerequisites": "Awakened; Thyrsus",
-    "description": "Spirits must spend Willpower to attack you for a scene. Historical Merit from Dark Eras, available here to modern Thyrsus characters by chronicle ruling.",
+    "description": "Each spirit must spend one Willpower point the first time it wishes to attack you in a scene. Historical Merit from Dark Eras; availability to modern Thyrsus depends on the chronicle.",
     "page": 50,
     "priority": 2,
-    "translatedName": "Spirit Warden",
-    "descriptionEn": "Spirits must spend Willpower to attack you for a scene. Historical Merit from Dark Eras, available here to modern Thyrsus characters by chronicle ruling."
+    "translatedName": "Guardião dos Espíritos",
+    "descriptionEn": "Each spirit must spend one Willpower point the first time it wishes to attack you in a scene. Historical Merit from Dark Eras; availability to modern Thyrsus depends on the chronicle.",
+    "presentationPt": {
+      "name": "Guardião dos Espíritos",
+      "prerequisites": "Desperto; Thyrsus",
+      "description": "Cada espírito precisa gastar um ponto de Força de Vontade na primeira vez que quiser atacar você em uma cena. Mérito histórico de Dark Eras; sua disponibilidade para Thyrsus modernos depende da crônica."
+    }
   },
   {
     "id": "mta-signs:stalwart-soul",
@@ -1178,11 +1198,16 @@
     "source": "Dark Eras",
     "category": "Mage",
     "prerequisites": "Awakened; Mastigos",
-    "description": "Double your rate of travel across forests. Historical Merit from Dark Eras, available here to modern Mastigos characters by chronicle ruling.",
+    "description": "During extended travel through forest regions, you and anyone traveling with you move at twice your normal speed. Historical Merit from Dark Eras; availability to modern Mastigos depends on the chronicle.",
     "page": 49,
     "priority": 2,
-    "translatedName": "Trail Walker",
-    "descriptionEn": "Double your rate of travel across forests. Historical Merit from Dark Eras, available here to modern Mastigos characters by chronicle ruling."
+    "translatedName": "Caminhante das Trilhas",
+    "descriptionEn": "During extended travel through forest regions, you and anyone traveling with you move at twice your normal speed. Historical Merit from Dark Eras; availability to modern Mastigos depends on the chronicle.",
+    "presentationPt": {
+      "name": "Caminhante das Trilhas",
+      "prerequisites": "Desperto; Mastigos",
+      "description": "Durante viagens prolongadas por regiões florestais, você e todos que viajam com você se deslocam ao dobro da velocidade normal. Mérito histórico de Dark Eras; sua disponibilidade para Mastigos modernos depende da crônica."
+    }
   },
   {
     "id": "mta-2ed:demesne",
