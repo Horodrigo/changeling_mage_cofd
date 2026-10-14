@@ -1573,13 +1573,13 @@ body:has(.line-theme-vtr) {
   padding: 9mm 15mm 8mm;
   border: .4mm solid rgba(77, 23, 28, .45);
   background-color: #eee5db;
-  background-image: linear-gradient(90deg, rgba(120, 54, 58, .08), transparent 7%, transparent 93%, rgba(120, 54, 58, .08)), var(--print-paper-texture, url("/game-lines/vampire/images/paper-texture.webp"));
-  background-size: auto, cover;
+  background-image: linear-gradient(90deg, rgba(120, 54, 58, .08), transparent 7%, transparent 93%, rgba(120, 54, 58, .08)), url("/game-lines/vampire/images/paper-texture.webp"), linear-gradient(#eee5db, #eee5db);
+  background-size: auto, cover, auto;
   box-shadow: 0 4px 22px #39131740;
   print-color-adjust: exact;
   -webkit-print-color-adjust: exact;
 }
-.vtr-print-document.print-without-paper-texture .vtr-print-page { background-image: none; }
+.vtr-print-document.print-without-paper-texture .vtr-print-page { background-color: #fff; background-image: linear-gradient(#fff, #fff); }
 body.character-printing-active .vtr-print-document { gap: 0; }
 body.character-printing-active .vtr-print-page { break-after: page; box-shadow: none; }
 body.character-printing-active .vtr-print-page:last-child { break-after: auto; }

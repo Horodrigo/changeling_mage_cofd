@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState, type ComponentType, type CSSProperties } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ComponentType, type CSSProperties } from "react";
 import { Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -34,6 +34,8 @@ export function CharacterPrintDialog({
   const previewRef = useRef<HTMLDivElement>(null);
   const previewContentRef = useRef<HTMLDivElement>(null);
   const printSurfaceRef = useRef<HTMLDivElement>(null);
+  const previousTitleRef = useRef<string | null>(null);
+  const printCleanupRef = useRef<number | null>(null);
   const [PrintSheet, setPrintSheet] = useState<ComponentType<GameLinePrintSheetProps> | null>(null);
   const [ready, setReady] = useState(false);
   const [removePaperTexture, setRemovePaperTexture] = useState(false);
@@ -42,6 +44,13 @@ export function CharacterPrintDialog({
     expandedMeritDetails: false,
     powerDetails: false,
   });
+  const cleanupPrint = useCallback(() => {
+    if (printCleanupRef.current !== null) window.clearTimeout(printCleanupRef.current);
+    printCleanupRef.current = null;
+    if (previousTitleRef.current !== null) document.title = previousTitleRef.current;
+    previousTitleRef.current = null;
+    document.body.classList.remove("character-printing-active");
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -61,13 +70,26 @@ export function CharacterPrintDialog({
     document.body.appendChild(surface);
     document.body.classList.add("character-printing");
     printSurfaceRef.current = surface;
+    const preparePrint = () => {
+      document.body.classList.add("character-printing-active");
+      void surface.offsetHeight;
+    };
+    const afterPrint = () => {
+      if (printCleanupRef.current !== null) window.clearTimeout(printCleanupRef.current);
+      // Samsung Internet may capture the page after firing afterprint.
+      printCleanupRef.current = window.setTimeout(cleanupPrint, /Android/i.test(navigator.userAgent) ? 5000 : 0);
+    };
+    window.addEventListener("beforeprint", preparePrint);
+    window.addEventListener("afterprint", afterPrint);
     return () => {
+      cleanupPrint();
+      window.removeEventListener("beforeprint", preparePrint);
+      window.removeEventListener("afterprint", afterPrint);
       printSurfaceRef.current = null;
       surface.remove();
       document.body.classList.remove("character-printing");
-      document.body.classList.remove("character-printing-active");
     };
-  }, [open]);
+  }, [open, cleanupPrint]);
 
   useLayoutEffect(() => {
     if (!open) return;
@@ -92,22 +114,16 @@ export function CharacterPrintDialog({
   function print() {
     if (!printSurfaceRef.current?.querySelector(".game-print-document")) return;
 
-    const previousTitle = document.title;
+    previousTitleRef.current ??= document.title;
     const safeName = character.character.name.trim() || t("ui.character");
     document.title = `${safeName} - ${getGameLineRegistration(character.game_line).label}`;
     document.body.classList.add("character-printing-active");
     // Some Android browsers capture screen styles rather than applying @media print.
     void printSurfaceRef.current.offsetHeight;
-    const cleanup = () => {
-      window.clearTimeout(cleanupTimer);
-      document.title = previousTitle;
-      document.body.classList.remove("character-printing-active");
-      window.removeEventListener("afterprint", cleanup);
-    };
-    const cleanupTimer = window.setTimeout(cleanup, 60000);
-    window.addEventListener("afterprint", cleanup, { once: true });
+    if (printCleanupRef.current !== null) window.clearTimeout(printCleanupRef.current);
+    printCleanupRef.current = window.setTimeout(cleanupPrint, 60000);
     try { window.print(); }
-    catch (error) { cleanup(); throw error; }
+    catch (error) { cleanupPrint(); throw error; }
   }
 
   return <Dialog open={open} onOpenChange={onOpenChange}>
