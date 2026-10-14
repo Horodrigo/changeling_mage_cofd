@@ -22,6 +22,7 @@ import { Choice, CommonIdentityStep, DotRow, TraitsStep } from "@/app/builder/co
 import { VampireMeritConfigurationEditor } from "./merit-configuration-editor";
 import { MeritPicker } from "@/app/builder/merit-picker";
 import { Button } from "@/components/ui/button";
+import { BufferedInput } from "@/components/ui/buffered-text";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -169,9 +170,10 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     ...catalogs.get<readonly MeritDefinition[]>("core-merits"),
     ...catalogs.get<readonly MeritDefinition[]>("vampire-merits"),
   ], customMerits, homebrewPreferences, initial?.merits).sort((left, right) => left.translatedName.localeCompare(right.translatedName, "pt-BR")), [catalogs, customMerits, homebrewPreferences, initial?.merits]);
+  const purchasedSpecialties = useMemo(() => experienceSpecialties(initial), [initial]);
   const common = useCommonBuilderState(initial, player, {
     experienceHistoryKey: "vampire_experience_history",
-    purchasedSpecialties: experienceSpecialties(initial),
+    purchasedSpecialties,
     grantedMeritSources: ["Vampire Template", "Vampire Shadow Cult", BLOOD_TETHER_PACK_GRANT],
     adjustAttributes: (values) => vampireEditableCreationAttributes(values, initial?.line_data ?? {}, initialClan),
   });
@@ -267,8 +269,8 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
     return { finalDisciplines, finalBloodPotency, finalAttributes, favoredAttributes, finalSkills };
   };
   const previewTraits = composedTraits(initial);
-  const previewGrants = { merits: structuredClone(mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved)), specializations: [...common.specializations, ...experienceSpecialties(initial)], line_data: {} };
-  const skillBonuses = synchronizeCommonMeritGrants(previewGrants, source => source === SHADOW_CULT_SOURCE);
+  const previewGrants = useMemo(() => ({ merits: structuredClone(mergeCreationMerits(initial?.merits, common.merits, common.meritWasRemoved)), specializations: [...common.specializations, ...purchasedSpecialties], line_data: {} }), [initial?.merits, common.merits, common.meritWasRemoved, common.specializations, purchasedSpecialties]);
+  const skillBonuses = useMemo(() => synchronizeCommonMeritGrants(previewGrants, source => source === SHADOW_CULT_SOURCE), [previewGrants]);
   const effectiveSkills = { ...previewTraits.finalSkills };
   for (const [name, dots] of Object.entries(skillBonuses)) effectiveSkills[name] = Number(effectiveSkills[name] ?? 0) + dots;
   const meritContext: VampireMeritContext = {
@@ -446,14 +448,14 @@ function VampireCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraf
         </div>
 
         <div className={`vampire-kindred-status-grant${missing("kindredStatus") ? " missing-field" : ""}`}>
-          {shadowCult ? <><div><strong>{t("ui.shadowCultInitiationGrant", { cult: selectedCovenant ? displayName(selectedCovenant, locale) : "" })}</strong><small>{t("ui.shadowCultGrantDescription")}</small></div><span>{t("ui.covenantAffiliationLimit")}</span></> : <><div><strong>{t("ui.kindredStatus")} •</strong><small>{t("ui.kindredStatusTemplateDot")}</small></div><Choice label={t("ui.statusType")} value={statusScope} setValue={(value) => setStatusScope(value as KindredStatusScope)} options={statusScopeOptions} optionLabels={{ covenant: t("sheet.covenant"), clan: t("ui.clan"), city: t("ui.city") }} />{statusScope === "city" && <label>{t("ui.city")}<Input value={statusCity} onChange={(event) => setStatusCity(event.target.value)} placeholder={t("ui.cityName")} /></label>}{statusGroup && <span>{t("ui.grants")}: <strong>{t("ui.kindredStatus")} ({statusGroupLabel}) •</strong></span>}</>}
+          {shadowCult ? <><div><strong>{t("ui.shadowCultInitiationGrant", { cult: selectedCovenant ? displayName(selectedCovenant, locale) : "" })}</strong><small>{t("ui.shadowCultGrantDescription")}</small></div><span>{t("ui.covenantAffiliationLimit")}</span></> : <><div><strong>{t("ui.kindredStatus")} •</strong><small>{t("ui.kindredStatusTemplateDot")}</small></div><Choice label={t("ui.statusType")} value={statusScope} setValue={(value) => setStatusScope(value as KindredStatusScope)} options={statusScopeOptions} optionLabels={{ covenant: t("sheet.covenant"), clan: t("ui.clan"), city: t("ui.city") }} />{statusScope === "city" && <label>{t("ui.city")}<BufferedInput value={statusCity} onValueCommit={setStatusCity} placeholder={t("ui.cityName")} /></label>}{statusGroup && <span>{t("ui.grants")}: <strong>{t("ui.kindredStatus")} ({statusGroupLabel}) •</strong></span>}</>}
         </div>
 
         <div className="vampire-anchor-grid">
           <AnchorChoice label={t("sheet.mask")} value={maskId} setValue={setMaskId} anchors={reference.anchors} locale={locale} invalid={missing("mask")} />
           <AnchorChoice label={t("sheet.dirge")} value={dirgeId} setValue={setDirgeId} anchors={reference.anchors.filter((item) => item.id !== maskId)} locale={locale} invalid={missing("dirge")} />
         </div>
-        <label className="vampire-touchstone-field">{t("ui.touchstone")}<Input value={touchstone} onChange={(event) => setTouchstone(event.target.value)} /></label>
+        <label className="vampire-touchstone-field">{t("ui.touchstone")}<BufferedInput value={touchstone} onValueCommit={setTouchstone} /></label>
         <h3 className="vampire-disciplines-heading">{t("ui.disciplines3Dots")}</h3>
         <div className={`vampire-discipline-grid${missing("disciplines") ? " missing-field" : ""}`}>
           {powers.disciplines.filter((discipline) => !discipline.bloodlineId && vampireDisciplineAvailable(discipline.name, "", clanId, covenantIds) && (!discipline.clanIds?.length || discipline.clanIds.includes(clanId)) && (!discipline.covenantIds?.length || discipline.covenantIds.some((id) => covenantIds.includes(id))) && vampireHomebrewContentActive(homebrewPreferences, discipline)).map((discipline) => {

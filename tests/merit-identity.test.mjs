@@ -116,6 +116,14 @@ test("shared creation picker resolves persisted selections by ID, not a stale na
   assert.equal(selection.name, "Old Name", "presentation must not rewrite the selection");
 });
 
+test("closed creation Merit catalog skips candidate eligibility checks", () => {
+  renderToStaticMarkup(createElement(LanguageProvider, null, createElement(MeritPicker, {
+    merits: [], setMerits: () => {}, catalog: [namesake, resources], context: { gameLine: "CofD", merits: [] },
+    spent: 0, budget: 7, renderConfiguration: () => null, isInlineConfiguration: () => false,
+    isEligible: () => assert.fail("closed catalog evaluated Merit eligibility"),
+  })));
+});
+
 test("ID-keyed Merit refunds target the exact instance after reordering or renaming", () => {
   const sheet = blankPrintCharacter("CofD");
   sheet.merits = [
@@ -239,7 +247,7 @@ const powers = {
   kimiyaFormulae: [power("formula")], therionSacrileges: [power("sacrilege")], gildedInvocations: [power("invocation")],
   coils: [power("coil")], scales: [power("scale")], detournements: [power("detournement")],
 };
-const spell = { id: "spell", name: "Feitiço", originalName: "Spell", requirements: {}, roteSkills: [] };
+const spell = { id: "spell", name: "Spell", presentationPt: { name: "Feitiço" }, requirements: {}, roteSkills: [] };
 
 test("Vampire history resolves every purchase through canonical undo and current-locale presentation", () => {
   const sheet = blankPrintCharacter("VtR");

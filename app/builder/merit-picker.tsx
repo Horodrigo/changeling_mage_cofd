@@ -76,15 +76,15 @@ export function MeritPicker({
   const [showAllMerits, setShowAllMerits] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
   const categoryKeys = (merit: MeritDefinition) => homebrewCategoryKeys(categoryFor(merit), merit.sourceId);
-  const categories = [...new Set(catalog.flatMap(categoryKeys))].sort((left, right) => compareOptionLabels(categoryName(left), categoryName(right), locale));
+  const categories = catalogOpen ? [...new Set(catalog.flatMap(categoryKeys))].sort((left, right) => compareOptionLabels(categoryName(left), categoryName(right), locale)) : [];
   const normalizedSearch = search.trim().toLocaleLowerCase(locale);
   const experienceMerits = (context.merits ?? []).filter((merit) => experienceMeritDots(merit) > 0);
-  const visibleCatalog = alphabetical(catalog, meritName, locale).filter((item) =>
+  const visibleCatalog = catalogOpen ? alphabetical(catalog, meritName, locale).filter((item) =>
     (showAllMerits || isEligible(item, context)) &&
     (isRepeatableDefinition(item) || !context.merits?.some((owned) => meritMatchesDefinition(owned, item, catalog)) || merits.some((owned) => meritMatchesDefinition(owned, item, catalog))) &&
     (category === "all" || categoryKeys(item).includes(category)) &&
     (!normalizedSearch || `${meritName(item)} ${item.name} ${item.source} ${meritPresentation(item, locale, catalog).prerequisites ?? ""} ${categoryKeys(item).join(" ")}`.toLocaleLowerCase(locale).includes(normalizedSearch))
-  );
+  ) : [];
   const addMerit = (definition: MeritDefinition) => {
     if (!isEligible(definition, context) || (!isRepeatableDefinition(definition) && context.merits?.some((item) => meritMatchesDefinition(item, definition, catalog)))) return;
     if (!isRepeatableDefinition(definition) && merits.some((merit) => meritMatchesDefinition(merit, definition, catalog))) return;

@@ -80,7 +80,6 @@ test("Bloodcrafting Builder, XP and Desktop/Mobile render EN/PT/EN; separate pur
       const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
       const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
       const { vampireMeritContextForSheet, vampireMeritEligible } = await vite.ssrLoadModule("/game-lines/vampire/merit-eligibility.ts");
-      const { MeritPicker } = await vite.ssrLoadModule("/app/builder/merit-picker.tsx");
       const { ExperienceMeritPicker } = await vite.ssrLoadModule("/app/workspace/experience-shared.tsx");
       const { VampireExpandedMeritList } = await vite.ssrLoadModule("/game-lines/vampire/sheet-view.tsx");
       const panel = await vite.ssrLoadModule("/game-lines/vampire/experience-panel.tsx");
@@ -96,8 +95,6 @@ test("Bloodcrafting Builder, XP and Desktop/Mobile render EN/PT/EN; separate pur
       const render = (Component, props) => renderToStaticMarkup(createElement(LanguageProvider, null, createElement(Component, props)));
       const context = vampireMeritContextForSheet(sheet, catalog, ["vampire", "acteius"]);
       const refuseMutation = () => { throw new Error("Render changed the character"); };
-      const creation = render(MeritPicker, { merits: [], setMerits: refuseMutation, catalog, context, spent: 0, budget: 10, renderConfiguration: () => null, isInlineConfiguration: () => false, isEligible: (definition, context) => vampireMeritEligible(definition, context, 0) });
-      assert.ok(creation.includes("2+"));
       const picker = render(ExperienceMeritPicker, { line: "VtR", context, meritCatalog: catalog, character: sheet, selectedId: canonical.id, targetDots: 2, onSelect: refuseMutation, isEligible: (definition, context) => vampireMeritEligible(definition, context, 0) });
       assert.match(picker, /option value="2"/);
       assert.equal(JSON.stringify(sheet), original);
