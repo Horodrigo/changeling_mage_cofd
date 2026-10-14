@@ -976,11 +976,16 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened",
-    "description": "Your character may have up to three Dedicated Magical tools but can only use up to 2 at a time. You have no penalty for using only one (or none) of your Dedicated tools when casting",
+    "description": "You may dedicate up to three magical tools, but only two can benefit a given spell. You take no penalty for casting with only one or none of your Dedicated Tools.",
     "page": 57,
     "priority": 2,
-    "translatedName": "Profligate Dedication",
-    "descriptionEn": "Your character may have up to three Dedicated Magical tools but can only use up to 2 at a time. You have no penalty for using only one (or none) of your Dedicated tools when casting"
+    "translatedName": "Dedicação Pródiga",
+    "descriptionEn": "You may dedicate up to three magical tools, but only two can benefit a given spell. You take no penalty for casting with only one or none of your Dedicated Tools.",
+    "presentationPt": {
+      "name": "Dedicação Pródiga",
+      "prerequisites": "Desperto",
+      "description": "Você pode dedicar até três ferramentas mágicas, mas só recebe o benefício de duas delas em um mesmo feitiço. Não sofre penalidade ao conjurar usando apenas uma Ferramenta Dedicada ou nenhuma."
+    }
   },
   {
     "id": "core-dark-eras:sea-s-hunger",
@@ -1192,11 +1197,16 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened",
-    "description": "You have gained the attention of a supernal entity at rank 1 for 2 dots and rank 2 for 4 dots. When summoning your watcher you only need 5 successes, they appear when using Active mage sight and you may use it as a Path tool Yantra",
+    "description": "A Supernal entity watches you: Rank 1 at two dots or Rank 2 at four. Summoning it requires five base successes instead of ten. While using Active Mage Sight, you may spend one Mana to make it appear; without a full summoning you cannot communicate with it. Its presence counts as a Path Tool Yantra for spells using its main Arcanum.",
     "page": 43,
     "priority": 2,
-    "translatedName": "Supernal Watcher",
-    "descriptionEn": "You have gained the attention of a supernal entity at rank 1 for 2 dots and rank 2 for 4 dots. When summoning your watcher you only need 5 successes, they appear when using Active mage sight and you may use it as a Path tool Yantra"
+    "translatedName": "Vigia Superno",
+    "descriptionEn": "A Supernal entity watches you: Rank 1 at two dots or Rank 2 at four. Summoning it requires five base successes instead of ten. While using Active Mage Sight, you may spend one Mana to make it appear; without a full summoning you cannot communicate with it. Its presence counts as a Path Tool Yantra for spells using its main Arcanum.",
+    "presentationPt": {
+      "name": "Vigia Superno",
+      "prerequisites": "Desperto",
+      "description": "Uma entidade Superna observa você: Posto 1 com dois pontos ou Posto 2 com quatro. Sua invocação exige cinco sucessos básicos em vez de dez. Enquanto usa Visão Mágica Ativa, você pode gastar 1 Mana para fazê-la aparecer; sem uma invocação completa, não consegue se comunicar com ela. Sua presença conta como Yantra de ferramenta do Caminho para feitiços que usem o Arcano principal da entidade."
+    }
   },
   {
     "id": "mta-2ed:techn",
