@@ -20,7 +20,19 @@
       { "rating": 5, "name": "Mysteriorum Focus", "description": "While in an Order Sanctum, the character has a Medium sympathetic connection to every member of the Order." }
     ],
     "priority": 2,
-    "translatedName": "Egregore"
+    "translatedName": "Egrégora",
+    "presentationPt": {
+      "name": "Egrégora",
+      "prerequisites": "Status do Mysterium •",
+      "description": "A iniciação na egrégora coletiva do Mysterium concede o benefício ritual ou da Ordem correspondente a cada ponto do Mérito.",
+      "levels": [
+        { "rating": 1, "name": "Mysteriorum Arche", "description": "Em uma conjuração em equipe, você contribui sem a penalidade usual de −3 por não possuir o Arcano necessário e acrescenta um sucesso automático quando participa plenamente. Todos os integrantes da equipe ritual devem possuir este Mérito." },
+        { "rating": 2, "name": "Mysteriorum Anima", "description": "Sua pontuação integral de Status no Mysterium se aplica a todos os Caucuses do Mysterium, não apenas ao seu Caucus local." },
+        { "rating": 3, "name": "Mysteriorum Barathrum", "description": "Você pode usar as Bibliotecas de sua cabala ou de um Caucus do Mysterium sem acesso físico. Uma vez por sessão, recebe a Condição Informado sobre os membros, Especialidades, Méritos, Obsessões e Arcana do Mysterium local." },
+        { "rating": 4, "name": "Mysteriorum Calamitas", "description": "A primeira ferramenta mágica usada em um feitiço conta como Ferramenta Mágica Dedicada." },
+        { "rating": 5, "name": "Mysteriorum Focus", "description": "Dentro de um Santuário da Ordem, você mantém uma conexão de Simpatia Média com todos os membros da Ordem." }
+      ]
+    }
   },
   {
     "id": "mta-2ed:masque-style",

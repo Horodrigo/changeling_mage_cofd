@@ -175,7 +175,7 @@ export const mageMessages = {
         "initiationAndPrecedingAttainments": "Iniciação e Aperfeiçoamentos anteriores",
         "onlySelectedAttainment": "Apenas o Aperfeiçoamento selecionado",
         "sanctum": "Santuário",
-        "demesneName": "Nome do Demesne",
+        "demesneName": "Nome do Domínio",
         "locationAndSoulStone": "Localização e Pedra da Alma",
         "doom": "Sina",
         "spellsAndEnhancements": "Feitiços e aprimoramentos alocados",

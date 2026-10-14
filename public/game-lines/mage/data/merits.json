@@ -1125,7 +1125,7 @@
     "presentationPt": {
       "name": "Pedra da Alma",
       "prerequisites": "Desperto",
-      "description": "Você possui a Pedra da Alma de outro mago: com um ponto, a Gnose do criador não supera a sua; com dois, ela é maior. Registre o criador e seu Legado. A Pedra serve como Yantra de ferramenta de +2 ou +3 dados, respectivamente, e mantém um vínculo de Simpatia Conectada com o criador. Pela tradição das Ordens, você pode exigir três serviços antes de devolvê-la; também pode usá-la para criar um Demesne ou aprender o Legado do criador."
+      "description": "Você possui a Pedra da Alma de outro mago: com um ponto, a Gnose do criador não supera a sua; com dois, ela é maior. Registre o criador e seu Legado. A Pedra serve como Yantra de ferramenta de +2 ou +3 dados, respectivamente, e mantém um vínculo de Simpatia Conectada com o criador. Pela tradição das Ordens, você pode exigir três serviços antes de devolvê-la; também pode usá-la para criar um Domínio ou aprender o Legado do criador."
     }
   },
   {
@@ -1258,12 +1258,17 @@
     "source": "Mage the Awakening",
     "category": "Mage Locations",
     "prerequisites": "Awakened; Sanctum",
-    "description": "A linked Sanctum has been prepared around a soul stone as a Demesne. Appropriate spells gain a +2 Yantra bonus, and spells cast within do not risk Paradox unless exposed to Sleepers.",
+    "description": "A linked Sanctum has been prepared around a soul stone as a Demesne. It provides a +2 Yantra for spells using its Ruling Arcana and +2 dice to summon Supernal entities tied to its realm. Spells cast within do not risk Paradox unless a Sleeper is present during their Duration; Sleepers still suffer Quiescence. The soul stone need not belong to the caster, and the Demesne does not spontaneously manifest Supernal phenomena.",
     "page": 104,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Demesne",
-    "descriptionEn": "A linked Sanctum has been prepared around a soul stone as a Demesne. Appropriate spells gain a +2 Yantra bonus, and spells cast within do not risk Paradox unless exposed to Sleepers."
+    "translatedName": "Domínio",
+    "descriptionEn": "A linked Sanctum has been prepared around a soul stone as a Demesne. It provides a +2 Yantra for spells using its Ruling Arcana and +2 dice to summon Supernal entities tied to its realm. Spells cast within do not risk Paradox unless a Sleeper is present during their Duration; Sleepers still suffer Quiescence. The soul stone need not belong to the caster, and the Demesne does not spontaneously manifest Supernal phenomena.",
+    "presentationPt": {
+      "name": "Domínio",
+      "prerequisites": "Desperto; Santuário",
+      "description": "Um Santuário vinculado foi preparado ao redor de uma Pedra da Alma como Domínio. Ele oferece um Yantra de +2 dados para feitiços que usem seus Arcana Regentes e +2 dados para invocar entidades Supernas ligadas ao seu Reino. Feitiços conjurados no Domínio não arriscam Paradoxo, a menos que um Adormecido esteja presente durante sua Duração; Adormecidos ainda sofrem Quiescência. A Pedra da Alma não precisa pertencer ao conjurador, e o Domínio não manifesta fenômenos Supernos espontaneamente."
+    }
   },
   {
     "id": "mta-2ed:hallow",
@@ -1295,11 +1300,16 @@
     "source": "Mage the Awakening",
     "category": "Mage Locations",
     "prerequisites": "Awakened; Safe Place (equal or higher rating)",
-    "description": "A linked Safe Place is insulated for sorcery. Add Sanctum dots to spell control while casting there; spells maintained through this extra control remain supported after leaving.",
+    "description": "A linked Safe Place is insulated for sorcery. Add Sanctum dots to effective Gnosis when determining spell control inside it. Spells maintained through this extra control remain supported after leaving, but adding another controlled spell beyond normal Gnosis forfeits the bonus; Reach must then account for the extra spells. Three additional dots may prepare it as a Demesne.",
     "page": 104,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Sanctum",
-    "descriptionEn": "A linked Safe Place is insulated for sorcery. Add Sanctum dots to spell control while casting there; spells maintained through this extra control remain supported after leaving."
+    "translatedName": "Santuário",
+    "descriptionEn": "A linked Safe Place is insulated for sorcery. Add Sanctum dots to effective Gnosis when determining spell control inside it. Spells maintained through this extra control remain supported after leaving, but adding another controlled spell beyond normal Gnosis forfeits the bonus; Reach must then account for the extra spells. Three additional dots may prepare it as a Demesne.",
+    "presentationPt": {
+      "name": "Santuário",
+      "prerequisites": "Desperto; Local Seguro de pontuação igual ou maior",
+      "description": "Um Local Seguro vinculado é isolado para a magia. Dentro dele, some os pontos de Santuário à Gnose efetiva para determinar quantos feitiços pode controlar. Os feitiços sustentados por esse controle extra continuam ativos depois da saída; se você acrescentar outro feitiço controlado além do limite da Gnose normal, o bônus se perde e será preciso considerar os feitiços excedentes ao calcular o Alcance. Três pontos adicionais podem preparar o local como Domínio."
+    }
   }
 ]
