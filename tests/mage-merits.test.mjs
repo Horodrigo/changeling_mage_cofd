@@ -21,7 +21,7 @@ const base={...mageMerits.MAGE_STATUS_REQUIREMENTS,gameLine:"MtA",archetypes:["a
 
 test("Mage Merit presentation switches EN/PT/EN without changing canonical requirements",async()=>{
  const {meritPresentation}=await vite.ssrLoadModule("/lib/merit-presentation.ts");
- for(const name of ["Adamant Hand","Artifact","Astral Adept","Astral Intruder","Awakened Status","Between the Ticks","Broad Dedication","Cabal Theme","Cognoscente","Daimonomikon","Destiny","Dominant Soul","Dream","Echo Chamber","Enhanced Item","Enriched Item","Epiphany Stone","Familiar","Fast Spells","Fluent High Speech","Grimoire","Hallow","Hidden High Speech","High Speech","Imbued Ally","Imbued Item","Imposing Nimbus","Infamous Mentor","Inheritance","Lex Magica","Mana Sensitivity","Occultation","Potent Nimbus"]){
+ for(const name of ["Adamant Hand","Artifact","Astral Adept","Astral Intruder","Awakened Status","Between the Ticks","Broad Dedication","Cabal Theme","Cognoscente","Daimonomikon","Destiny","Dominant Soul","Dream","Echo Chamber","Enhanced Item","Enriched Item","Epiphany Stone","Familiar","Fast Spells","Fluent High Speech","Grimoire","Hallow","Hidden High Speech","High Speech","Imbued Ally","Imbued Item","Imposing Nimbus","Infamous Mentor","Inheritance","Lex Magica","Mana Sensitivity","Mystery Cult Influence","Occultation","Potent Nimbus","Potent Resonance","Shadow Name","Techné"]){
   const entry=merit(name);
   const canonical={id:entry.id,name:entry.name,prerequisites:entry.prerequisites,descriptionEn:entry.descriptionEn};
   assert.equal(meritPresentation(entry,"en-US",mageCatalog).name,entry.nameQualifier?.["en-US"]?`${name}(${entry.nameQualifier["en-US"]})`:name);
@@ -49,6 +49,11 @@ test("Mage Merit presentation switches EN/PT/EN without changing canonical requi
  assert.match(meritPresentation(merit("Imposing Nimbus"),"pt-BR",mageCatalog).description,/Nimbus Imediato.*Condição Persistente.*teste disputado/);
  assert.match(meritPresentation(merit("Infamous Mentor"),"pt-BR",mageCatalog).description,/Status.*dobro dos pontos.*não são concessões permanentes/);
  assert.match(meritPresentation(merit("Inheritance"),"pt-BR",mageCatalog).description,/\+1 dado.*\+2 dados/);
+ assert.equal(meritPresentation(merit("Mystery Cult Influence"),"pt-BR",mageCatalog).levels[4].name,"Topo da Pirâmide");
+ assert.match(meritPresentation(merit("Mystery Cult Influence"),"pt-BR",mageCatalog).description,/Iniciação em Culto dos Mistérios/);
+ assert.match(meritPresentation(merit("Potent Resonance"),"pt-BR",mageCatalog).description,/Nimbus Imediato.*Tilt/);
+ assert.match(meritPresentation(merit("Shadow Name"),"pt-BR",mageCatalog).description,/Alcance Simpático.*Simpatia Temporal/);
+ assert.match(meritPresentation(merit("Techné"),"pt-BR",mageCatalog).description,/8 de novo.*áreas diferentes/);
 });
 
 test("Mage configuration validation dispatches canonical IDs, not display names or Homebrew homonyms",()=>{

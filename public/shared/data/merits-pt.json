@@ -705,7 +705,7 @@
   },
   "core-2ed:mystery-cult-influence": {
     "name": "Influência em Culto de Mistério",
-    "description": "Dirige ou exerce influência decisiva sobre um culto de mistério. Recebe os benefícios correspondentes de Iniciação em Culto de Mistério sem as responsabilidades de um membro comum.",
+    "description": "Dirige ou exerce influência decisiva sobre um culto de mistério. Recebe os benefícios correspondentes de Iniciação em Culto dos Mistérios sem as responsabilidades de um membro comum.",
     "levels": [
       {
         "rating": 1,

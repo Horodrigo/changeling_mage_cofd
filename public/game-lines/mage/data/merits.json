@@ -749,8 +749,20 @@
       }
     ],
     "priority": 2,
-    "translatedName": "Mystery Cult Influence",
-    "descriptionEn": "Lead, worshipfully inspire, or decisively influence a mystery cult. Receive Mystery Cult Initiation benefits at the same rating without ordinary membership responsibilities, retaining deniability and the freedom to leave. This Mage-specific definition takes precedence over the shared Core record."
+    "translatedName": "Influência em Culto de Mistério",
+    "descriptionEn": "Lead, worshipfully inspire, or decisively influence a mystery cult. Receive Mystery Cult Initiation benefits at the same rating without ordinary membership responsibilities, retaining deniability and the freedom to leave. This Mage-specific definition takes precedence over the shared Core record.",
+    "presentationPt": {
+      "name": "Influência em Culto de Mistério",
+      "prerequisites": "Desperto",
+      "description": "Exerça influência sobre um culto de mistério sem ser membro subordinado: você pode liderá-lo, inspirar sua devoção ou agir nos bastidores. Receba os benefícios de Iniciação em Culto dos Mistérios no mesmo nível, com menos responsabilidades e a liberdade de se afastar. Esta definição de Mage prevalece sobre o Mérito Core de mesmo nome.",
+      "levels": [
+        { "rating": 1, "name": "Recruta", "description": "Uma Especialização ou um Mérito de um ponto." },
+        { "rating": 2, "name": "Devoto", "description": "Um Mérito de um ponto." },
+        { "rating": 3, "name": "Organizador", "description": "Um ponto de Perícia ou um Mérito de dois pontos." },
+        { "rating": 4, "name": "Líder", "description": "Um Mérito de três pontos." },
+        { "rating": 5, "name": "Topo da Pirâmide", "description": "Um Mérito de três pontos ou uma vantagem significativa equivalente." }
+      ]
+    }
   },
   {
     "id": "mta-2ed:occultation",
@@ -902,8 +914,13 @@
     "description": "Characters scrutinizing your Nimbus are subject to your Nimbus Tilt.",
     "page": 103,
     "priority": 2,
-    "translatedName": "Potent Resonance",
-    "descriptionEn": "Characters scrutinizing your Nimbus are subject to your Nimbus Tilt."
+    "translatedName": "Ressonância Potente",
+    "descriptionEn": "Characters scrutinizing your Nimbus are subject to your Nimbus Tilt.",
+    "presentationPt": {
+      "name": "Ressonância Potente",
+      "prerequisites": "Desperto; Gnose •••",
+      "description": "Seu Nimbus de Assinatura é particularmente intenso. Sempre que um mago o examina com a Visão Mágica, sofre os efeitos de seu Nimbus Imediato e do Tilt correspondente."
+    }
   },
   {
     "id": "mta-signs:profligate-dedication",
@@ -962,8 +979,13 @@
     "description": "Record the symbolism of your existing Shadow Name. Use those symbols as a persona Yantra worth Merit dots. Apply dots as Withstand against identification and sympathetic or temporal targeting of your mundane persona, and as a penalty to mundane attempts to connect your identities.",
     "page": 104,
     "priority": 2,
-    "translatedName": "Shadow Name",
-    "descriptionEn": "Record the symbolism of your existing Shadow Name. Use those symbols as a persona Yantra worth Merit dots. Apply dots as Withstand against identification and sympathetic or temporal targeting of your mundane persona, and as a penalty to mundane attempts to connect your identities."
+    "translatedName": "Nome das Sombras",
+    "descriptionEn": "Record the symbolism of your existing Shadow Name. Use those symbols as a persona Yantra worth Merit dots. Apply dots as Withstand against identification and sympathetic or temporal targeting of your mundane persona, and as a penalty to mundane attempts to connect your identities.",
+    "presentationPt": {
+      "name": "Nome das Sombras",
+      "prerequisites": "Desperto",
+      "description": "Defina o simbolismo do seu Nome das Sombras e use esses símbolos como Yantra de persona, com bônus igual aos pontos deste Mérito. Some os pontos à Resistência de feitiços que tentem identificá-lo ou afetá-lo por Alcance Simpático enquanto estiver em sua identidade mundana, e dos que usem Simpatia Temporal para atingi-lo numa época em que usava essa identidade. Aplique os mesmos pontos como penalidade a testes mundanos para ligar suas duas identidades."
+    }
   },
   {
     "id": "mta-signs:shadow-self",
@@ -1100,7 +1122,12 @@
     "repeatable": true,
     "priority": 2,
     "translatedName": "Techné",
-    "descriptionEn": "Choose a cultural, scientific, or artistic focus. Treat its use as a Free Council Order tool, and Sleepers engaged in it as a separate tool for non-obvious magic. A ritual team sharing the same focus gains 8-again for its leader. Repeatable for different fields."
+    "descriptionEn": "Choose a cultural, scientific, or artistic focus. Treat its use as a Free Council Order tool, and Sleepers engaged in it as a separate tool for non-obvious magic. A ritual team sharing the same focus gains 8-again for its leader. Repeatable for different fields.",
+    "presentationPt": {
+      "name": "Techné",
+      "prerequisites": "Desperto; Status no Conselho Livre •",
+      "description": "Escolha uma área cultural, científica ou artística. Seu uso conta como ferramenta de Ordem do Conselho Livre; Adormecidos envolvidos nessa área contam como outra ferramenta de Ordem, desde que a magia não seja óbvia. Numa conjuração em equipe em que todos tenham este Mérito com a mesma área, a jogada do líder recebe 8 de novo. Pode ser comprado novamente para áreas diferentes."
+    }
   },
   {
     "id": "core-dark-eras:trail-walker",
