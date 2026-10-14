@@ -1580,6 +1580,9 @@ body:has(.line-theme-vtr) {
   -webkit-print-color-adjust: exact;
 }
 .vtr-print-document.print-without-paper-texture .vtr-print-page { background-image: none; }
+body.character-printing-active .vtr-print-document { gap: 0; }
+body.character-printing-active .vtr-print-page { break-after: page; box-shadow: none; }
+body.character-printing-active .vtr-print-page:last-child { break-after: auto; }
 
 .vtr-print-page::after { position:absolute; inset:0; z-index:0; background:url("/game-lines/vampire/images/background-vampire.webp") center/50% auto no-repeat; content:""; opacity:.2; pointer-events:none; }
 .vtr-print-page > * { position: relative; z-index: 1; }

@@ -39,6 +39,7 @@ const SHELL = [
   "/game-lines/vampire/images/attributes-divider.webp",
   "/game-lines/vampire/images/attributes-divider-thorns.webp",
   "/game-lines/vampire/images/background-vampire.webp",
+  "/game-lines/vampire/images/paper-texture.webp",
   "/game-lines/vampire/images/divider-terminal.webp",
   "/game-lines/vampire/images/frame-blood-center-bottom.webp",
   "/game-lines/vampire/images/frame-blood-center-top.webp",

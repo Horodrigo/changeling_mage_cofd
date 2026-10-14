@@ -14,6 +14,9 @@
 .character-print-preview-content > .game-print-document { position: absolute; top: 0; left: 0; transform: scale(var(--print-preview-scale, 1)); transform-origin: top left; }
 .character-print-footer { flex: none; }
 .character-print-surface { position: fixed; top: 0; left: -100000px; width: 210mm; min-width: 210mm; visibility: hidden; pointer-events: none; }
+body.character-printing-active > *:not(.character-print-surface) { display: none !important; }
+body.character-printing-active > .character-print-surface { position: static !important; display: block !important; width: 210mm !important; min-width: 210mm !important; visibility: visible !important; }
+body.character-printing-active .character-print-surface .game-print-document { width: 210mm !important; transform: none !important; }
 
 @media (max-width: 767px) {
   .character-print-dialog { width: calc(100vw - 12px) !important; max-width: calc(100vw - 12px) !important; height: calc(100dvh - 12px); max-height: calc(100dvh - 12px); padding: 12px; }

@@ -65,6 +65,7 @@ export function CharacterPrintDialog({
       printSurfaceRef.current = null;
       surface.remove();
       document.body.classList.remove("character-printing");
+      document.body.classList.remove("character-printing-active");
     };
   }, [open]);
 
@@ -94,9 +95,13 @@ export function CharacterPrintDialog({
     const previousTitle = document.title;
     const safeName = character.character.name.trim() || t("ui.character");
     document.title = `${safeName} - ${getGameLineRegistration(character.game_line).label}`;
+    document.body.classList.add("character-printing-active");
+    // Some Android browsers capture screen styles rather than applying @media print.
+    void printSurfaceRef.current.offsetHeight;
     const cleanup = () => {
       window.clearTimeout(cleanupTimer);
       document.title = previousTitle;
+      document.body.classList.remove("character-printing-active");
       window.removeEventListener("afterprint", cleanup);
     };
     const cleanupTimer = window.setTimeout(cleanup, 60000);
