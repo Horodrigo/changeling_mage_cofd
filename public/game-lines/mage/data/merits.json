@@ -856,11 +856,16 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened",
-    "description": "Your characters Nimbus effects linger for longer than most. Her Long-Term Nimbus continues to affect an area for one day per dot of Gnosis. When flaring her Immediate nimbus without casting, it lasts turns equal to Gnosis. Signature nimbus persists on subjects of her Magic one week per dot of gnosis as well.",
+    "description": "Your Long-Term Nimbus affects an area for one day per Gnosis dot after you leave. Flaring your Immediate Nimbus without casting lasts one turn per Gnosis dot. Your Signature Nimbus remains on subjects of your magic for one week per Gnosis dot.",
     "page": 95,
     "priority": 2,
-    "translatedName": "Persistent Nimbus",
-    "descriptionEn": "Your characters Nimbus effects linger for longer than most. Her Long-Term Nimbus continues to affect an area for one day per dot of Gnosis. When flaring her Immediate nimbus without casting, it lasts turns equal to Gnosis. Signature nimbus persists on subjects of her Magic one week per dot of gnosis as well."
+    "translatedName": "Nimbus Persistente",
+    "descriptionEn": "Your Long-Term Nimbus affects an area for one day per Gnosis dot after you leave. Flaring your Immediate Nimbus without casting lasts one turn per Gnosis dot. Your Signature Nimbus remains on subjects of your magic for one week per Gnosis dot.",
+    "presentationPt": {
+      "name": "Nimbus Persistente",
+      "prerequisites": "Desperto",
+      "description": "Seu Nimbus de Longo Prazo continua afetando uma área por um dia por ponto de Gnose depois que você sai. Ao manifestar o Nimbus Imediato sem conjurar, ele dura um turno por ponto de Gnose. O Nimbus de Assinatura permanece nos alvos de sua magia por uma semana por ponto de Gnose."
+    }
   },
   {
     "id": "mta-signs:piercing-glance",
@@ -1041,11 +1046,16 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened; Shadow Name •••; Mind •",
-    "description": "Those affected by your Nimbus Tilt take −2 on contested rolls against you for the scene when aligned with your Shadow identity. In Astral travel or mental projection, one chosen Social Attribute increases by one, within its normal maximum. If your identity reflects a known mythic/divine Goetia, gain +2 to summon or interact with it while behaving accordingly. Prerequisite corrected to Shadow Name 3 and Mind 1 as instructed.",
+    "description": "Those affected by your Nimbus Tilt take −2 on contested rolls against you for the rest of the scene while the contested action aligns with your Shadow identity. During Astral travel or mental projection, increase one Social Attribute by one, within its normal maximum. If your Shadow Name reflects a known mythic or divine Goetia, gain +2 to summon or interact with it while your behavior matches that identity; other Astral travelers and Goetia in the Temenos may mistake you for it.",
     "page": 95,
     "priority": 2,
-    "translatedName": "Shadow Self",
-    "descriptionEn": "Those affected by your Nimbus Tilt take −2 on contested rolls against you for the scene when aligned with your Shadow identity. In Astral travel or mental projection, one chosen Social Attribute increases by one, within its normal maximum. If your identity reflects a known mythic/divine Goetia, gain +2 to summon or interact with it while behaving accordingly. Prerequisite corrected to Shadow Name 3 and Mind 1 as instructed."
+    "translatedName": "Eu das Sombras",
+    "descriptionEn": "Those affected by your Nimbus Tilt take −2 on contested rolls against you for the rest of the scene while the contested action aligns with your Shadow identity. During Astral travel or mental projection, increase one Social Attribute by one, within its normal maximum. If your Shadow Name reflects a known mythic or divine Goetia, gain +2 to summon or interact with it while your behavior matches that identity; other Astral travelers and Goetia in the Temenos may mistake you for it.",
+    "presentationPt": {
+      "name": "Eu das Sombras",
+      "prerequisites": "Desperto; Nome das Sombras •••; Mente •",
+      "description": "Quem sofre o Tilt do seu Nimbus recebe −2 dados nas jogadas disputadas contra você pelo restante da cena, enquanto a ação disputada estiver alinhada à sua identidade sombria. Durante viagem astral ou projeção mental, aumente em um ponto um Atributo Social à sua escolha, sem ultrapassar o máximo normal. Se seu Nome das Sombras refletir uma Goetia mítica ou divina conhecida, receba +2 dados para invocá-la ou interagir com ela enquanto agir de acordo com essa identidade; outros viajantes astrais e Goetia no Temenos podem confundir você com ela."
+    }
   },
   {
     "id": "core-dark-eras:sky-s-whispers",
