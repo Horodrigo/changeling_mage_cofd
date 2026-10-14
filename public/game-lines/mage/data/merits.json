@@ -635,8 +635,13 @@
     "description": "Your Peripheral Mage Sight is unusually perceptive. When sensing an effect via Peripheral Mage Sight you can also sense the Arcanum under which the effect falls",
     "page": 26,
     "priority": 2,
-    "translatedName": "Keen Periphery",
-    "descriptionEn": "Your Peripheral Mage Sight is unusually perceptive. When sensing an effect via Peripheral Mage Sight you can also sense the Arcanum under which the effect falls"
+    "translatedName": "Percepção Periférica Aguçada",
+    "descriptionEn": "Your Peripheral Mage Sight is unusually perceptive. When sensing an effect via Peripheral Mage Sight you can also sense the Arcanum under which the effect falls",
+    "presentationPt": {
+      "name": "Percepção Periférica Aguçada",
+      "prerequisites": "Desperto; Raciocínio •••",
+      "description": "Ao perceber um efeito com a Visão Mágica Periférica, você também identifica o Arcano sob cuja esfera o efeito se encontra."
+    }
   },
   {
     "id": "mta-signs:legacy-pedagogue",
@@ -849,8 +854,13 @@
     "description": "You may undertake a Clash of Wills to sense a concealed effect with Peripheral Mage Sight. For •• you suffer a -2 penalty to the roll, for •••• you suffer no penalty to the roll",
     "page": 26,
     "priority": 2,
-    "translatedName": "Piercing Glance",
-    "descriptionEn": "You may undertake a Clash of Wills to sense a concealed effect with Peripheral Mage Sight. For •• you suffer a -2 penalty to the roll, for •••• you suffer no penalty to the roll"
+    "translatedName": "Olhar Penetrante",
+    "descriptionEn": "You may undertake a Clash of Wills to sense a concealed effect with Peripheral Mage Sight. For •• you suffer a -2 penalty to the roll, for •••• you suffer no penalty to the roll",
+    "presentationPt": {
+      "name": "Olhar Penetrante",
+      "prerequisites": "Desperto; Gnose ••",
+      "description": "Você pode disputar um Choque de Vontades para perceber um efeito oculto com a Visão Mágica Periférica. Com dois pontos neste Mérito, sua jogada sofre −2; com quatro pontos, não sofre penalidade."
+    }
   },
   {
     "id": "core-dark-eras-2:plunder-mana",
@@ -964,8 +974,13 @@
     "description": "Provide your own High Speech as a Yantra for others. If you meet the required Arcanum for the cast spell give +2 dice as a bonus, If you have at least one dot in the Primary Arcanum but not all dots give a +1. You can also use High Speech to gain a Dice Bonus on Imbued Items and Artifacts. This does not stack if the Caster is using High Speech as a Yantra",
     "page": 26,
     "priority": 2,
-    "translatedName": "Second-Person High Speech",
-    "descriptionEn": "Provide your own High Speech as a Yantra for others. If you meet the required Arcanum for the cast spell give +2 dice as a bonus, If you have at least one dot in the Primary Arcanum but not all dots give a +1. You can also use High Speech to gain a Dice Bonus on Imbued Items and Artifacts. This does not stack if the Caster is using High Speech as a Yantra"
+    "translatedName": "Alta Fala em Segunda Pessoa",
+    "descriptionEn": "Provide your own High Speech as a Yantra for others. If you meet the required Arcanum for the cast spell give +2 dice as a bonus, If you have at least one dot in the Primary Arcanum but not all dots give a +1. You can also use High Speech to gain a Dice Bonus on Imbued Items and Artifacts. This does not stack if the Caster is using High Speech as a Yantra",
+    "presentationPt": {
+      "name": "Alta Fala em Segunda Pessoa",
+      "prerequisites": "Desperto; Presença •••, Expressão •••, Alta Fala",
+      "description": "Ao entoar a Alta Fala durante a preparação ou a conjuração de outro mago, você oferece a ele um Yantra de +2 dados, desde que possua os pontos de Arcana exigidos pelo feitiço. Se possuir ao menos um ponto no Arcano Primário, mas não todos os pontos necessários, o Yantra concede +1 dado. Você também pode oferecer esse bônus ao ativar Itens Imbuídos e Artefatos. O bônus não se acumula com a Alta Fala usada pelo próprio conjurador como Yantra."
+    }
   },
   {
     "id": "mta-2ed:shadow-name",
@@ -1090,8 +1105,13 @@
     "description": "You possess a deep understanding of Active Mage Sight. When observing phenomena in either similar effect or origin to one already scrutinized she can recognize the similarity",
     "page": 27,
     "priority": 2,
-    "translatedName": "Supernal Taxonomy",
-    "descriptionEn": "You possess a deep understanding of Active Mage Sight. When observing phenomena in either similar effect or origin to one already scrutinized she can recognize the similarity"
+    "translatedName": "Taxonomia Superna",
+    "descriptionEn": "You possess a deep understanding of Active Mage Sight. When observing phenomena in either similar effect or origin to one already scrutinized she can recognize the similarity",
+    "presentationPt": {
+      "name": "Taxonomia Superna",
+      "prerequisites": "Desperto; Inteligência ••, Ocultismo •••",
+      "description": "Ao observar pela Visão Mágica Ativa um fenômeno semelhante, em efeito ou origem, a outro que você já examinou minuciosamente, reconheça a semelhança sem precisar examiná-lo de novo."
+    }
   },
   {
     "id": "mta-signs:supernal-watcher",
