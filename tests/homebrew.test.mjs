@@ -109,7 +109,7 @@ test("player-created Mage Legacies preserve the complete fixed Attainment progre
   const { normalizeLegacyHomebrew } = await vite.ssrLoadModule("/game-lines/mage/legacy-homebrews.ts");
   const item = normalizeLegacyHomebrew({
     id: "homebrew:legacy:test", name: "Test Legacy", founderCharacterId: "mage-1", rulingArcanum: "Prime",
-    parentage: { paths: ["Obrimos"], orders: ["Mysterium"] }, additionalPrerequisites: "Occult 2",
+    parentage: { paths: ["Obrimos"], orders: ["Seta Adamantina"] }, additionalPrerequisites: "Occult 2",
     initiation: "Decode a Supernal theorem.", organization: "A loose academy.", theory: "Truth is a living symbol.",
     yantras: ["Annotated theorem"], oblations: ["Solve a paradox"],
     attainments: Array.from({ length: 5 }, (_, index) => ({ rank: index + 1, name: `Theorem ${index + 1}`, description: `Effect ${index + 1}` })),
@@ -117,6 +117,8 @@ test("player-created Mage Legacies preserve the complete fixed Attainment progre
   assert.equal(item.sourceId, "homebrew:mage-legacies");
   assert.equal(item.homebrew, true);
   assert.equal(item.attainments.length, 5);
+  assert.deepEqual(item.parentage.orders, ["Adamantine Arrow"]);
+  assert.equal(item.name, "Test Legacy");
   assert.deepEqual(item.attainments.map((entry) => [entry.rulingArcanum, entry.orthodoxGnosis, entry.novelGnosis]), [[1, 2, 3], [2, 2, 3], [3, 4, 5], [4, 6, 7], [5, 8, 9]]);
   assert.equal(normalizeLegacyHomebrew({ id: "homebrew:legacy:bad", name: "Bad" }), null);
 });

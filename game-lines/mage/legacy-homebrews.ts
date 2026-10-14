@@ -2,6 +2,7 @@ import { getDeviceValue, setDeviceValue, stageDeviceValue } from "@/lib/device-s
 import { HOMEBREW_EVENT } from "@/lib/homebrew";
 import { createRandomId } from "@/lib/random-id";
 import { ARCANA } from "./creation-rules";
+import { MAGE_ORDERS } from "./orders";
 import type { LegacyAttainment, LegacyDefinition } from "./legacies";
 
 export const LEGACY_HOMEBREW_SOURCE_ID = "homebrew:mage-legacies";
@@ -21,7 +22,7 @@ const textList = (value: unknown) => (Array.isArray(value) ? value : []).map(tex
 
 export function normalizeLegacyHomebrew(value: unknown): LegacyDefinition | null {
   const item = record(value), id = text(item.id), name = text(item.name), rulingArcanum = text(item.rulingArcanum);
-  const parentage = record(item.parentage), paths = textList(parentage.paths), orders = textList(parentage.orders);
+  const parentage = record(item.parentage), paths = textList(parentage.paths), orders = textList(parentage.orders).map(order => MAGE_ORDERS.find(item => item.translatedName === order)?.name ?? order);
   const initiation = text(item.initiation), organization = text(item.organization), theory = text(item.theory), yantras = textList(item.yantras), oblations = textList(item.oblations);
   const rawAttainments = Array.isArray(item.attainments) ? item.attainments : [];
   const attainments = LEGACY_ATTAINMENT_MINIMUMS.map(({ rank, orthodoxGnosis, novelGnosis }) => {
