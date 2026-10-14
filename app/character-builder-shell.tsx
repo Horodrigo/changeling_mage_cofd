@@ -230,7 +230,7 @@ export function CharacterBuilderShell({
   issues: BuilderValidationIssue[];
   identity: ReactNode;
   traits: ReactNode;
-  lineTemplate: ReactNode;
+  lineTemplate: ReactNode | (() => ReactNode);
   lineSteps?: readonly { label: string; content: ReactNode }[];
   prepareAdvancement?: (previous?: CharacterSheet) => CharacterSheet;
   renderAdvancement?: (sheet: CharacterSheet, updateSheet: (sheet: CharacterSheet) => void) => ReactNode;
@@ -296,7 +296,7 @@ export function CharacterBuilderShell({
       <span>{issues.slice(0, 6).map((issue) => issue.label).join(" · ")}{issues.length > 6 ? ` · +${issues.length - 6}` : ""}</span>
     </div>}
     {state.error && <div className="builder-error">{state.error}</div>}
-    <div className="builder-body">{state.step === 1 ? identity : state.step === 2 ? traits : state.step === 3 ? lineTemplate : state.step < advancementStep ? lineSteps[state.step - 4]?.content : advancement && renderAdvancement ? renderAdvancement(advancement, setAdvancement) : null}</div>
+    <div className="builder-body">{state.step === 1 ? identity : state.step === 2 ? traits : state.step === 3 ? typeof lineTemplate === "function" ? lineTemplate() : lineTemplate : state.step < advancementStep ? lineSteps[state.step - 4]?.content : advancement && renderAdvancement ? renderAdvancement(advancement, setAdvancement) : null}</div>
     <div className="builder-actions">
       {state.step > 1 && <Button variant="outline" onClick={() => state.setStep(state.step - 1)}><ArrowLeft /> {t("ui.previous")}</Button>}
       <span />
