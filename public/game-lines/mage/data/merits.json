@@ -909,8 +909,13 @@
     "description": "When holding another Mage's Soul Stone any Social rolls against its owner gain 9-agains, Any social maneuvering automatically opens one Extra Door on every success",
     "page": 91,
     "priority": 2,
-    "translatedName": "Potent Soul",
-    "descriptionEn": "When holding another Mage's Soul Stone any Social rolls against its owner gain 9-agains, Any social maneuvering automatically opens one Extra Door on every success"
+    "translatedName": "Alma Potente",
+    "descriptionEn": "When holding another Mage's Soul Stone any Social rolls against its owner gain 9-agains, Any social maneuvering automatically opens one Extra Door on every success",
+    "presentationPt": {
+      "name": "Alma Potente",
+      "prerequisites": "Desperto; Presença •••",
+      "description": "Enquanto tiver a Pedra da Alma de outro mago, suas jogadas Sociais contra o criador recebem 9 de novo. Em Manobras Sociais contra ele, cada sucesso abre uma Porta adicional."
+    }
   },
   {
     "id": "mta-2ed:potent-resonance",
@@ -1041,11 +1046,16 @@
     "source": "Signs of Sorcery",
     "category": "Mage",
     "prerequisites": "Awakened; Streetwise •••",
-    "description": "You character has contacts in the Black Market soul trade or is a soul trader himself. Once per story your character can obtain a soul stone as though you were a member of any order status one for one to dots in this merit",
+    "description": "Once per story, requisition a soul stone as if you had Consilium or Order Status equal to this Merit's dots. The requisition roll takes −1, and the stone's Availability cannot exceed the Merit rating. Complete souls cannot be obtained. A dramatic failure with an illicit stone gives Notoriety for the Order you tried to deceive.",
     "page": 91,
     "priority": 2,
-    "translatedName": "Soul Dealer",
-    "descriptionEn": "You character has contacts in the Black Market soul trade or is a soul trader himself. Once per story your character can obtain a soul stone as though you were a member of any order status one for one to dots in this merit"
+    "translatedName": "Negociante de Almas",
+    "descriptionEn": "Once per story, requisition a soul stone as if you had Consilium or Order Status equal to this Merit's dots. The requisition roll takes −1, and the stone's Availability cannot exceed the Merit rating. Complete souls cannot be obtained. A dramatic failure with an illicit stone gives Notoriety for the Order you tried to deceive.",
+    "presentationPt": {
+      "name": "Negociante de Almas",
+      "prerequisites": "Desperto; Manha •••",
+      "description": "Uma vez por história, você pode requisitar uma Pedra da Alma como se possuísse Status no Consilium ou numa Ordem igual aos pontos deste Mérito. A jogada de requisição sofre −1, e a Disponibilidade da Pedra não pode superar a classificação do Mérito. Almas completas não podem ser obtidas assim. Em falha dramática ao usar uma Pedra obtida ilegalmente, receba a Condição Notoriedade referente à Ordem que tentou enganar."
+    }
   },
   {
     "id": "mta-signs:soul-stone",
@@ -1060,8 +1070,13 @@
     "page": 92,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Soul Stone",
-    "descriptionEn": "Own another mage's soul stone. One dot: creator's Gnosis is no higher than yours; two: it is higher. Record creator and Legacy. The stone grants a +2/+3 tool Yantra respectively and Connected sympathy. Order tradition entitles you to three services before returning it; it may also support a Demesne or learning the creator's Legacy."
+    "translatedName": "Pedra da Alma",
+    "descriptionEn": "Own another mage's soul stone. One dot: creator's Gnosis is no higher than yours; two: it is higher. Record creator and Legacy. The stone grants a +2/+3 tool Yantra respectively and Connected sympathy. Order tradition entitles you to three services before returning it; it may also support a Demesne or learning the creator's Legacy.",
+    "presentationPt": {
+      "name": "Pedra da Alma",
+      "prerequisites": "Desperto",
+      "description": "Você possui a Pedra da Alma de outro mago: com um ponto, a Gnose do criador não supera a sua; com dois, ela é maior. Registre o criador e seu Legado. A Pedra serve como Yantra de ferramenta de +2 ou +3 dados, respectivamente, e mantém um vínculo de Simpatia Conectada com o criador. Pela tradição das Ordens, você pode exigir três serviços antes de devolvê-la; também pode usá-la para criar um Demesne ou aprender o Legado do criador."
+    }
   },
   {
     "id": "core-dark-eras:spirit-warden",
@@ -1090,8 +1105,13 @@
     "description": "A soul stone created by you gains Durability equal to twice your dots in this merit and gains the same bonus to withstand against spells that would harm or destroy it",
     "page": 92,
     "priority": 2,
-    "translatedName": "Stalwart Soul",
-    "descriptionEn": "A soul stone created by you gains Durability equal to twice your dots in this merit and gains the same bonus to withstand against spells that would harm or destroy it"
+    "translatedName": "Alma Inabalável",
+    "descriptionEn": "A soul stone created by you gains Durability equal to twice your dots in this merit and gains the same bonus to withstand against spells that would harm or destroy it",
+    "presentationPt": {
+      "name": "Alma Inabalável",
+      "prerequisites": "Desperto; Compostura •••",
+      "description": "Toda Pedra da Alma que você criar recebe bônus de Durabilidade igual ao dobro dos pontos deste Mérito. Ela recebe o mesmo bônus na Resistência contra feitiços que possam feri-la ou destruí-la diretamente."
+    }
   },
   {
     "id": "mta-signs:supernal-taxonomy",

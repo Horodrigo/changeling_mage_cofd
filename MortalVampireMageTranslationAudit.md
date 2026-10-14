@@ -15,5 +15,5 @@
 
 ## Mage
 
-- **G02 — Merits:** localizar nome, requisitos, descrição e níveis dos **30/71 Merits** restantes em `public/game-lines/mage/data/merits*.json`, sem alterar requisitos canônicos, IDs ou compras.
+- **G02 — Merits:** localizar nome, requisitos, descrição e níveis dos **26/71 Merits** restantes em `public/game-lines/mage/data/merits*.json`, sem alterar requisitos canônicos, IDs ou compras.
 - **G04 — Legacies:** localizar as **16 Legacies** e **43 Attainments** em `game-lines/mage/catalog-data/legacies*.json`: títulos descritivos, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções. Preservar nomes próprios.

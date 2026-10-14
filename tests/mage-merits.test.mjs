@@ -21,7 +21,7 @@ const base={...mageMerits.MAGE_STATUS_REQUIREMENTS,gameLine:"MtA",archetypes:["a
 
 test("Mage Merit presentation switches EN/PT/EN without changing canonical requirements",async()=>{
  const {meritPresentation}=await vite.ssrLoadModule("/lib/merit-presentation.ts");
- for(const name of ["Adamant Hand","Artifact","Astral Adept","Astral Intruder","Awakened Status","Between the Ticks","Broad Dedication","Cabal Theme","Cognoscente","Daimonomikon","Destiny","Dominant Soul","Dream","Echo Chamber","Enhanced Item","Enriched Item","Epiphany Stone","Familiar","Fast Spells","Fluent High Speech","Grimoire","Hallow","Hidden High Speech","High Speech","Imbued Ally","Imbued Item","Imposing Nimbus","Infamous Mentor","Inheritance","Keen Periphery","Lex Magica","Mana Sensitivity","Mystery Cult Influence","Occultation","Piercing Glance","Potent Nimbus","Potent Resonance","Second-Person High Speech","Shadow Name","Supernal Taxonomy","Techné"]){
+ for(const name of ["Adamant Hand","Artifact","Astral Adept","Astral Intruder","Awakened Status","Between the Ticks","Broad Dedication","Cabal Theme","Cognoscente","Daimonomikon","Destiny","Dominant Soul","Dream","Echo Chamber","Enhanced Item","Enriched Item","Epiphany Stone","Familiar","Fast Spells","Fluent High Speech","Grimoire","Hallow","Hidden High Speech","High Speech","Imbued Ally","Imbued Item","Imposing Nimbus","Infamous Mentor","Inheritance","Keen Periphery","Lex Magica","Mana Sensitivity","Mystery Cult Influence","Occultation","Piercing Glance","Potent Nimbus","Potent Resonance","Potent Soul","Second-Person High Speech","Shadow Name","Soul Dealer","Soul Stone","Stalwart Soul","Supernal Taxonomy","Techné"]){
   const entry=merit(name);
   const canonical={id:entry.id,name:entry.name,prerequisites:entry.prerequisites,descriptionEn:entry.descriptionEn};
   assert.equal(meritPresentation(entry,"en-US",mageCatalog).name,entry.nameQualifier?.["en-US"]?`${name}(${entry.nameQualifier["en-US"]})`:name);
@@ -58,6 +58,11 @@ test("Mage Merit presentation switches EN/PT/EN without changing canonical requi
  assert.match(meritPresentation(merit("Piercing Glance"),"pt-BR",mageCatalog).description,/Choque de Vontades.*−2.*não sofre penalidade/);
  assert.match(meritPresentation(merit("Second-Person High Speech"),"pt-BR",mageCatalog).description,/\+2 dados.*\+1 dado.*não se acumula/);
  assert.match(meritPresentation(merit("Supernal Taxonomy"),"pt-BR",mageCatalog).description,/Visão Mágica Ativa.*sem precisar examiná-lo de novo/);
+ assert.match(meritPresentation(merit("Potent Soul"),"pt-BR",mageCatalog).description,/9 de novo.*Porta adicional/);
+ assert.match(meritPresentation(merit("Soul Dealer"),"pt-BR",mageCatalog).description,/Uma vez por história.*−1.*Disponibilidade.*Notoriedade/);
+ assert.match(meritPresentation(merit("Soul Dealer"),"en-US",mageCatalog).description,/Once per story.*−1.*Availability.*Notoriety/);
+ assert.match(meritPresentation(merit("Soul Stone"),"pt-BR",mageCatalog).description,/\+2 ou \+3 dados.*três serviços.*Demesne/);
+ assert.match(meritPresentation(merit("Stalwart Soul"),"pt-BR",mageCatalog).description,/dobro dos pontos.*Resistência/);
 });
 
 test("Mage configuration validation dispatches canonical IDs, not display names or Homebrew homonyms",()=>{
