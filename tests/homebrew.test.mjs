@@ -45,6 +45,21 @@ test("player-created Merits preserve exact ratings and enforce only structured p
   assert.equal(activeMeritCatalog([base, errata], [], { disabledIds: [], enabledIds: [errata.id] }).find((entry) => entry.id === "official").description, "Revised.");
 });
 
+test("imported Merit Homebrew requirements keep authored text but canonicalize known trait aliases", async () => {
+  const { normalizeMeritHomebrews } = await vite.ssrLoadModule("/lib/merit-homebrews.ts");
+  const { meritPrerequisitesMet } = await vite.ssrLoadModule("/lib/merits.ts");
+  const imported = [{ id: "homebrew:merit:pt-traits", name: "Golpe próprio", line: "Core", category: "Mental", ratings: [1], description: "Descrição autoral.", narrativePrerequisites: "Treino em português.", requirements: { all: [{ trait: "Força", minimum: 2 }, { trait: "Armas Brancas", minimum: 3 }] } }];
+  const before = structuredClone(imported);
+  const [merit] = normalizeMeritHomebrews(imported);
+  assert.deepEqual(merit.requirements, { all: [{ trait: "Strength", minimum: 2 }, { trait: "Weaponry", minimum: 3 }] });
+  assert.equal(meritPrerequisitesMet(merit, { gameLine: "CofD", attributes: { Strength: 2 }, skills: { Weaponry: 3 } }), true);
+  assert.equal(merit.name, imported[0].name);
+  assert.equal(merit.description, imported[0].description);
+  assert.equal(merit.narrativePrerequisites, imported[0].narrativePrerequisites);
+  assert.deepEqual(normalizeMeritHomebrews(JSON.parse(JSON.stringify([merit]))), [merit]);
+  assert.deepEqual(imported, before);
+});
+
 test("player-created Changeling Contracts are normalized at storage boundary", async () => {
   const { mergeContractHomebrews, normalizeContractHomebrew } = await vite.ssrLoadModule("/game-lines/changeling/contract-homebrews.ts");
   const item = normalizeContractHomebrew({
@@ -80,12 +95,13 @@ test("player-created Vampire Bloodlines are normalized at storage boundary", asy
   const { normalizeBloodlineHomebrew } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-homebrews.ts");
   const item = normalizeBloodlineHomebrew({
     id: "homebrew:bloodline:test", name: "Test Line", parentClan: "Mekhet", nicknames: ["Owls"],
-    favoredAttributes: ["Intelligence", "Wits"], disciplines: ["Auspex", "Celerity", "Obfuscate", "Test Gift"], exclusiveDiscipline: "Test Gift",
+    favoredAttributes: ["Inteligência", "Raciocínio"], disciplines: ["Auspex", "Celerity", "Obfuscate", "Test Gift"], exclusiveDiscipline: "Test Gift",
     summary: "A hidden lineage.", baneName: "Moonblind", baneSummary: "The moon reveals their shadow.",
   });
   assert.equal(item.sourceId, "homebrew:vampire-bloodlines");
   assert.equal(item.homebrew, true);
   assert.equal(item.exclusiveDiscipline, "Test Gift");
+  assert.deepEqual(item.favoredAttributes, ["Intelligence", "Wits"]);
   assert.equal(normalizeBloodlineHomebrew({ id: "homebrew:bloodline:bad", name: "Bad" }), null);
 });
 
@@ -107,18 +123,20 @@ test("player-created Mage Legacies preserve the complete fixed Attainment progre
 
 test("player-created Mage Spells are normalized and filtered by activation", async () => {
   const { activeSpellCatalog, normalizeSpellHomebrew } = await vite.ssrLoadModule("/game-lines/mage/spell-homebrews.ts");
-  const item = normalizeSpellHomebrew({ id: "homebrew:spell:test", name: "Borrowed Name", requirements: { Prime: 2 }, practice: "Ruling", primaryFactor: "Potency", withstand: "Resolve", roteSkills: ["Occult", "Persuasion"], summary: "Rewrite a symbolic name." });
+  const item = normalizeSpellHomebrew({ id: "homebrew:spell:test", name: "Borrowed Name", requirements: { Prime: 2 }, practice: "Ruling", primaryFactor: "Potency", withstand: "Resolve", roteSkills: ["Ocultismo", "Persuasão", "My Skill"], summary: "Rewrite a symbolic name." });
   assert.equal(item.homebrew, true);
   assert.deepEqual(item.requirements, { Prime: 2 });
+  assert.deepEqual(item.roteSkills, ["Occult", "Persuasion", "My Skill"]);
   assert.equal(activeSpellCatalog([], [item], { disabledIds: [item.id] }).length, 0);
   assert.equal(normalizeSpellHomebrew({ id: "homebrew:spell:bad", name: "Bad" }), null);
 });
 
 test("player-created Vampire catalog entries merge into their owning catalogs", async () => {
   const { mergeVampirePowers, mergeVampireReference, normalizeVampireCatalogHomebrew } = await vite.ssrLoadModule("/game-lines/vampire/catalog-homebrews.ts");
-  const clan = normalizeVampireCatalogHomebrew({ entryType: "clan", id: "homebrew:vampire:clan:test", name: "Nocturne", favoredAttributes: ["Intelligence", "Composure"], disciplines: ["Auspex", "Obfuscate", "Vigor"], baneName: "Silent Blood", baneSummary: "Speech costs Vitae." });
+  const clan = normalizeVampireCatalogHomebrew({ entryType: "clan", id: "homebrew:vampire:clan:test", name: "Nocturne", favoredAttributes: ["Inteligência", "Compostura"], disciplines: ["Auspex", "Obfuscate", "Vigor"], baneName: "Silent Blood", baneSummary: "Speech costs Vitae." });
   const devotion = normalizeVampireCatalogHomebrew({ entryType: "power", id: "homebrew:vampire:power:test", kind: "devotion", name: "Night Bridge", summary: "Cross one shadow.", rating: 2, experienceCost: 2 });
   assert.equal(mergeVampireReference({ clans: [], covenants: [], anchors: [], bloodPotency: [], torpor: [], bloodlines: [] }, [clan]).clans[0].name, "Nocturne");
+  assert.deepEqual(clan.favoredAttributes, ["Intelligence", "Composure"]);
   assert.equal(mergeVampirePowers({ disciplines: [], ritualDisciplines: [], devotions: [], lashes: [], cruacRites: [], thebanMiracles: [], kimiyaFormulae: [], therionSacrileges: [], gildedInvocations: [], coils: [], scales: [], detournements: [] }, [devotion]).devotions[0].name, "Night Bridge");
   assert.equal(normalizeVampireCatalogHomebrew({ entryType: "clan", id: "bad", name: "Bad" }), null);
 });
@@ -126,13 +144,14 @@ test("player-created Vampire catalog entries merge into their owning catalogs", 
 test("player-created Changeling catalog content accepts one authored language and distinct Mantle fields", async () => {
   const { mergeChangelingReference, mergeChangelingSeemings, normalizeChangelingCatalogHomebrew } = await vite.ssrLoadModule("/game-lines/changeling/catalog-homebrews.ts");
   const seeming = normalizeChangelingCatalogHomebrew({ entryType: "seeming", id: "homebrew:changeling:seeming:test", name: "Moonborn", translatedName: "Nascido da Lua", favored: "Finesse", regalia: "Mirror", blessing: "Bênção.", blessingEn: "Blessing.", curse: "Maldição.", curseEn: "Curse." });
-  const kith = normalizeChangelingCatalogHomebrew({ entryType: "kith", id: "homebrew:changeling:kith:test", name: "Lanternheart", skill: "Occult", description: "Carries a living light.", blessing: "The light reveals paths." });
+  const kith = normalizeChangelingCatalogHomebrew({ entryType: "kith", id: "homebrew:changeling:kith:test", name: "Lanternheart", skill: "Ocultismo", description: "Carries a living light.", blessing: "The light reveals paths." });
   const court = normalizeChangelingCatalogHomebrew({ entryType: "court", id: "homebrew:changeling:court:test", name: "Moon Court", emotion: "Wonder", emotionPt: "Assombro", mantleBenefits: ["1", "2", "3", "4", "5"], mantleBenefitsPt: ["1", "2", "3", "4", "5"] });
   const regalia = normalizeChangelingCatalogHomebrew({ entryType: "regalia", id: "homebrew:changeling:regalia:test", name: "Lantern", translatedName: "Lanterna" });
   const singleLanguageCourt = normalizeChangelingCatalogHomebrew({ entryType: "court", id: "homebrew:changeling:court:one-language", name: "Moon Court", emotion: "Wonder", mantleBenefits: ["Same", "Same", "Three", "Four", "Five"] });
   const reference = { courts: [], kiths: [] };
   const merged = mergeChangelingReference(reference, [kith, court]);
   assert.equal(merged.kiths[0].name, "Lanternheart");
+  assert.equal(kith.skill, "Occult");
   assert.equal(merged.courts[0].name, "Moon Court");
   assert.equal(mergeChangelingSeemings([seeming]).Moonborn.regalia, "Mirror");
   assert.equal(regalia.translatedName, "Lanterna");

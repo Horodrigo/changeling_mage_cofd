@@ -1,6 +1,7 @@
 import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import { homebrewContentActive, type HomebrewPreferences } from "@/lib/homebrew";
 import { createRandomId } from "@/lib/random-id";
+import { canonicalTraitId } from "@/lib/core/character/trait-identities";
 import { homebrewRecord, homebrewStrings, homebrewText, hydratePlayerHomebrews, readPlayerHomebrews, savePlayerHomebrews } from "@/lib/player-homebrew-storage";
 import { ARCANA } from "./creation-rules";
 
@@ -14,7 +15,7 @@ export function normalizeSpellHomebrew(value: unknown): SpellHomebrew | null {
   const requirements = Object.fromEntries(Object.entries(homebrewRecord(item.requirements))
     .filter(([arcanum, rating]) => ARCANA.includes(arcanum) && Number.isInteger(Number(rating)) && Number(rating) >= 1 && Number(rating) <= 5)
     .map(([arcanum, rating]) => [arcanum, Number(rating)]));
-  const roteSkills = homebrewStrings(item.roteSkills);
+  const roteSkills = homebrewStrings(item.roteSkills).map(skill => canonicalTraitId("skills", skill));
   const practice = homebrewText(item.practice), primaryFactor = homebrewText(item.primaryFactor), withstand = homebrewText(item.withstand), summary = homebrewText(item.summary);
   if (!id.startsWith("homebrew:spell:") || !name || !Object.keys(requirements).length || !roteSkills.length || !practice || !primaryFactor || !summary) return null;
   return { id, name, originalName: name, requirements, practice, primaryFactor, withstand: withstand || "None", roteSkills, summary, description: homebrewText(item.description) || summary, sourceId: SPELL_HOMEBREW_SOURCE_ID, source: SPELL_HOMEBREW_SOURCE, page: 0, homebrew: true };

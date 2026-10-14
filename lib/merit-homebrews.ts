@@ -5,6 +5,7 @@ import type { GameLine, MeritDefinition, MeritLevel } from "./merits";
 import { createRandomId } from "./random-id";
 import type { MeritSelection } from "./core/character/character-types";
 import { resolveMeritDefinition } from "./merit-identity";
+import { canonicalTraitId } from "./core/character/trait-identities";
 
 export type MeritHomebrewLine = "Core" | GameLine;
 
@@ -27,7 +28,7 @@ function normalizeRequirement(value: unknown): Requirement | undefined {
   if (Array.isArray(item.all)) { const all = item.all.map(normalizeRequirement).filter((entry): entry is Requirement => Boolean(entry)); return all.length ? { all } : undefined; }
   if (Array.isArray(item.any)) { const any = item.any.map(normalizeRequirement).filter((entry): entry is Requirement => Boolean(entry)); return any.length ? { any } : undefined; }
   const trait = text(item.trait), merit = text(item.merit), minimum = Math.max(1, Math.min(10, Number(item.minimum) || 1));
-  if (trait) return { trait, minimum };
+  if (trait) return { trait: canonicalTraitId("skills", canonicalTraitId("attributes", trait)), minimum };
   if (merit) return { merit, minimum, ...(text(item.name) ? { name: text(item.name) } : {}) };
   return undefined;
 }

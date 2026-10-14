@@ -1,6 +1,7 @@
 import { getDeviceValue, setDeviceValue, stageDeviceValue } from "@/lib/device-storage";
 import { HOMEBREW_EVENT } from "@/lib/homebrew";
 import { createRandomId } from "@/lib/random-id";
+import { canonicalTraitId } from "@/lib/core/character/trait-identities";
 import type { VampireBloodlineDefinition } from "./catalog-types";
 
 export const BLOODLINE_HOMEBREW_SOURCE_ID = "homebrew:vampire-bloodlines";
@@ -13,7 +14,7 @@ const textList = (value: unknown) => (Array.isArray(value) ? value : []).map(tex
 
 export function normalizeBloodlineHomebrew(value: unknown): VampireBloodlineDefinition | null {
   const item = record(value), id = text(item.id), name = text(item.name), parentClan = text(item.parentClan);
-  const favoredAttributes = textList(item.favoredAttributes), disciplines = textList(item.disciplines);
+  const favoredAttributes = textList(item.favoredAttributes).map(attribute => canonicalTraitId("attributes", attribute)), disciplines = textList(item.disciplines);
   const summary = text(item.summary), baneName = text(item.baneName), baneSummary = text(item.baneSummary);
   if (!id.startsWith("homebrew:bloodline:") || !name || !parentClan || favoredAttributes.length !== 2 || new Set(favoredAttributes).size !== 2 || disciplines.length !== 4 || new Set(disciplines).size !== 4 || !summary || !baneName || !baneSummary) return null;
   const exclusiveDiscipline = text(item.exclusiveDiscipline);

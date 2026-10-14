@@ -2,6 +2,7 @@ import type { CourtDefinition } from "@/lib/changeling-courts";
 import type { KithDefinition } from "@/lib/changeling-kiths";
 import { homebrewRecord, homebrewText, hydratePlayerHomebrews, readPlayerHomebrews, savePlayerHomebrews } from "@/lib/player-homebrew-storage";
 import { createRandomId } from "@/lib/random-id";
+import { canonicalTraitId } from "@/lib/core/character/trait-identities";
 import { systemTerm } from "@/lib/system-terms";
 import { CTL_SEEMINGS } from "./creation-rules";
 
@@ -30,7 +31,7 @@ export function normalizeChangelingCatalogHomebrew(value: unknown): ChangelingCa
     return favored && regalia && blessing && curse ? { ...meta, entryType, translated: translatedName, favored, regalia, blessing, curse, blessingEn: blessingEn || blessing, curseEn: curseEn || curse } as SeemingHomebrew : null;
   }
   if (entryType === "kith") {
-    const skill = homebrewText(item.skill), description = homebrewText(item.description), blessing = homebrewText(item.blessing);
+    const skill = canonicalTraitId("skills", homebrewText(item.skill)), description = homebrewText(item.description), blessing = homebrewText(item.blessing);
     return skill && description && blessing ? { ...meta, entryType, translatedName, skill, description, blessing } : null;
   }
   if (entryType === "court") {

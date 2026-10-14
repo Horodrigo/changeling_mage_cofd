@@ -1,5 +1,6 @@
 import { homebrewRecord, homebrewStrings, homebrewText, hydratePlayerHomebrews, readPlayerHomebrews, savePlayerHomebrews } from "@/lib/player-homebrew-storage";
 import { createRandomId } from "@/lib/random-id";
+import { canonicalTraitId } from "@/lib/core/character/trait-identities";
 import type { VampireClanDefinition, VampireCovenantDefinition, VampireDisciplineDefinition, VampireMechanics, VampirePowerLevel, VampirePowers, VampirePurchasablePower, VampireReference } from "./catalog-types";
 
 export const VAMPIRE_CATALOG_HOMEBREW_KEY = "arquivo-das-trevas:vampire-catalog:v1";
@@ -25,7 +26,7 @@ export function normalizeVampireCatalogHomebrew(value: unknown): VampireCatalogH
   if (!id.startsWith("homebrew:vampire:") || !name || !["clan", "covenant", "discipline", "power"].includes(entryType)) return null;
   const meta = { sourceId: VAMPIRE_CATALOG_HOMEBREW_SOURCE_ID, homebrew: true as const, source: VAMPIRE_CATALOG_HOMEBREW_SOURCE, page: 0 };
   if (entryType === "clan") {
-    const favored = homebrewStrings(item.favoredAttributes).slice(0, 2), disciplines = homebrewStrings(item.disciplines).slice(0, 3), baneName = homebrewText(item.baneName), baneSummary = homebrewText(item.baneSummary);
+    const favored = homebrewStrings(item.favoredAttributes).slice(0, 2).map(attribute => canonicalTraitId("attributes", attribute)), disciplines = homebrewStrings(item.disciplines).slice(0, 3), baneName = homebrewText(item.baneName), baneSummary = homebrewText(item.baneSummary);
     if (favored.length !== 2 || disciplines.length !== 3 || !baneName || !baneSummary) return null;
     return { ...meta, entryType: "clan", id, name, translatedName, favoredAttributes: favored as [string, string], disciplines: disciplines as [string, string, string], baneName, baneSummary, group: ["core", "historical", "uncommon"].includes(homebrewText(item.group)) ? homebrewText(item.group) as VampireClanDefinition["group"] : "uncommon" };
   }
