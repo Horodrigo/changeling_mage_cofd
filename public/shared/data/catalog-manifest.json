@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 360,
+  "catalogVersion": 371,
   "catalogs": {
     "werewolf-totem-powers": {
       "version": 3,
@@ -38,9 +38,9 @@
       "hash": "8747ec4a96b40cf3f81ff8c6593c315f275ed15308e468f4dcfcc2ae303d9187"
     },
     "werewolf-fetishes-core-pt": {
-      "version": 2,
+      "version": 3,
       "url": "/game-lines/werewolf/data/fetishes/wtf-core-pt.json",
-      "hash": "3c9695124333bd8ba8a463d54b670aac7fe06d1fdc555887ac65106f2daacbd9"
+      "hash": "ff172ad99a22d2ff8bdf6119ec0e19ec91d3e4f8baee9653eec830821c7592b1"
     },
     "merits-werewolf": {
       "version": 2,
@@ -208,9 +208,9 @@
       "hash": "605637fc49c770f566a4e591568587938a66f38e0fd4e000628b58cd3c6b521c"
     },
     "changeling-contracts-ctl-oak-ash-thorn-pt": {
-      "version": 3,
+      "version": 4,
       "url": "/game-lines/changeling/data/contracts/ctl-oak-ash-thorn-pt.json",
-      "hash": "e59514bad3f36c4a6b857c7ee09c084f0ea09b8c4ed66e7386498d933dedeaa1"
+      "hash": "b4dc73740a10094f8a65254133a60cdef0921a71f42d27f7f3df79b7bb995a96"
     },
     "changeling-contracts-ctl-the-hedge-pt": {
       "version": 3,
@@ -218,19 +218,19 @@
       "hash": "5ea2a150297c982a9d64ee981f0e9a2854cd93d964e235f6d4e94983e9ab667a"
     },
     "changeling-contracts-ctl-dark-eras-pt": {
-      "version": 3,
+      "version": 4,
       "url": "/game-lines/changeling/data/contracts/ctl-dark-eras-pt.json",
-      "hash": "01c63cd5452d68334f3952e350fdf8ce38825dc1eaac3038f10a92f55e36a148"
+      "hash": "046f8ece98da3cfa72d84471751f4c6dd3512bf05404b07424e2b0a77260eaf2"
     },
     "changeling-contracts-ctl-kith-and-kin-pt": {
-      "version": 4,
+      "version": 5,
       "url": "/game-lines/changeling/data/contracts/ctl-kith-and-kin-pt.json",
-      "hash": "42a861d182d016c5e257311bde7390e218ac904e875c3aee51f64fb45de4370d"
+      "hash": "2849bfed47211ebf9c1ab36c2d20755e882f2f11f0957709c997df3a8f189519"
     },
     "changeling-contracts-ctl-core-pt": {
-      "version": 4,
+      "version": 5,
       "url": "/game-lines/changeling/data/contracts/ctl-core-pt.json",
-      "hash": "7e9fe457350f7ddd0e0d374373d234301a562137888db8f7c04d4ac0b5a71396"
+      "hash": "f91ed6ad4fd4e2e33ab6137a595ec6c67cd330b95ea8c724c262c2c269cea278"
     },
     "changeling-tokens": {
       "version": 3,
@@ -238,9 +238,9 @@
       "hash": "0bba745d6002df1e1b259c31759bf8d0227e0569249c58032a8d00a96e8a8617"
     },
     "changeling-tokens-pt": {
-      "version": 3,
+      "version": 4,
       "url": "/game-lines/changeling/data/tokens-pt.json",
-      "hash": "83f3c0795481399ec9c822ec1dee35c1cddd17b09e31132122754228cddf374f"
+      "hash": "9ec46e33990263b0f5eeed6d22b30184a1c463319031fd2a37ea5f0ef368a7d1"
     },
     "merits-index": {
       "version": 7,
@@ -253,9 +253,9 @@
       "hash": "530f030c72dfd9353b9f23dc214311c441b3b9fdddae5cc8736ba114ee6658a6"
     },
     "merits-core-pt": {
-      "version": 21,
+      "version": 22,
       "url": "/shared/data/merits-pt.json",
-      "hash": "341c9b6eb458773f90f3ad9742578571d46206601f9fb89b3b64da4a748fcc31"
+      "hash": "dfc43cb7170e5c75602b0f3e95b2c6fa11eb0bbda70b683a4c603f8930e3caa5"
     },
     "merits-changeling": {
       "version": 7,
@@ -283,9 +283,9 @@
       "hash": "57b1a68bb0069c8cb8906d634a0a93a3b4de82cc81899a0f757042734bd7524b"
     },
     "core-conditions-pt": {
-      "version": 5,
+      "version": 6,
       "url": "/shared/data/conditions-pt.json",
-      "hash": "19a118517e487fdc54a219c594fc03b83f165360255d41eb66f5b555408847d7"
+      "hash": "218821b452481c641494d0d44e0b46e34c26abd7de938fbea67d50bde42dd0dd"
     },
     "changeling-conditions": {
       "version": 3,
@@ -318,9 +318,9 @@
       "hash": "6b113519e55f608aa37fdbebf321d63c7ee4102bd92e2267aa95b759c132ae46"
     },
     "changeling-kiths-pt": {
-      "version": 3,
+      "version": 4,
       "url": "/game-lines/changeling/data/kiths-pt.json",
-      "hash": "118245dbb48bb0a85ac19968439d2d3da3050f6c8ee689678fbc7755d85b7c54"
+      "hash": "46df7a6ee1997c8141d1e9b80d74aafcab31f826f617a5cfc20292b3cb633055"
     },
     "mage-conditions": {
       "version": 8,
@@ -368,14 +368,14 @@
       "hash": "05187279028d2f2afd9f8fff8e919bab21e4a3d7c008b99be41129baaecef554"
     },
     "vampire-powers": {
-      "version": 184,
+      "version": 185,
       "url": "/game-lines/vampire/data/powers.json",
-      "hash": "bb67765d28ed54ddee920bacd871b755acdd46a6f397ce17c750c47e6077fd15"
+      "hash": "ff6299592a221be6d2539b4f2d5dfcecb6240d70de0a1d683a6d2e5cb56d7e0a"
     },
     "vampire-conditions": {
-      "version": 29,
+      "version": 30,
       "url": "/game-lines/vampire/data/conditions.json",
-      "hash": "6004aa55743a2ebd1ae8274d775b28cddbb0eb7cd35596db07ceda8440d483f1"
+      "hash": "025dd278e4fe30bfa7bdfacbf34b1803c6cd4a75e6e7c3aaa275eb48ed468191"
     }
   }
 }

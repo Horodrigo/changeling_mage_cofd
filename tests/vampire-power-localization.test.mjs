@@ -27,7 +27,7 @@ const fields = ["summary", "cost", "requirement", "condition", "dicePool", "acti
 test("Vampire official and Homebrew power presentations cover existing fields and preserve numeric limits", () => {
   const aura = devotions.find(item => item.id === "devotion-aura-cursive-seduction");
   assert.equal(aura.translatedName, "Aura de Sedução Sinuosa");
-  assert.match(aura.presentationPt.effect, /vampiro a Condição.*agressor recebe Cativado Persistente e Quelled.*Presença \+ Potência de Sangue/);
+  assert.match(aura.presentationPt.effect, /vampiro a Condição.*agressor recebe Cativado Persistente e Aplacado.*Presença \+ Potência de Sangue/);
   const presentations = Object.values(powers).filter(Array.isArray).flatMap(items => items.flatMap(item => [item.presentationPt, ...(item.levels ?? []).map(level => level.presentationPt)]));
   assert.doesNotMatch(JSON.stringify(presentations), /\b(?:Esportes|Autocontrole)\b/);
   const call = devotions.find(item => item.id === "devotion-call-me-maybe");
@@ -49,7 +49,7 @@ test("Vampire official and Homebrew power presentations cover existing fields an
   assert.equal(skins[1].requiredDevotionIds, undefined, "The greater version remains an independent Devotion");
   assert.match(skins[0].presentationPt.effect, /Méritos Físicos.*dois pontos.*\+2.*\+5/);
   const coercion = devotions.find(item => item.id === "devotion-violent-coercion");
-  assert.match(coercion.presentationPt.effect, /uma hora.*Coagido\(Membro\).*uma instância.*não podem contradizer/);
+  assert.match(coercion.presentationPt.effect, /uma hora.*Coagido.*uma instância.*não podem contradizer/);
   assert.match(devotions.find(item => item.id === "devotion-psycho-mantle").presentationPt.effect, /Bestial e Assustado/);
   const knight = devotions.find(item => item.id === "devotion-knight-commander");
   assert.equal(knight.presentationPt.dicePool, "Presença + Briga ou Armas Brancas + Majestade");

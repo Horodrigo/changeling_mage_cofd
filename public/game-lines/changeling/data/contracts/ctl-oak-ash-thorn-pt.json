@@ -1,14 +1,14 @@
 {
   "ctl-oak-ash-thorn:donning-the-grand-mantle": {
     "name": "Vestir o Grande Manto",
-    "description": "O changeling canaliza o poder do patrono de seu Manto, abandona a Mascarilha e proclama sua afiliação. Usar o Contrato mais de uma vez por história impõe Coagido em relação ao patrono até que o changeling conceda o favor ou a história termine.",
+    "description": "O changeling canaliza o poder do patrono de seu Manto, abandona a Mascarilha e proclama sua afiliação. Usar o Contrato mais de uma vez por história impõe Pressionado em relação ao patrono até que o changeling conceda o favor ou a história termine.",
     "dicePool": "Presença + Expressão + Manto",
     "action": "Instantânea",
     "duration": "Uma cena",
     "success": "O changeling recebe imediatamente Manto 5 pela duração. Para cada ponto de Manto que já possuía, recupera 1 Glamour gasto e recebe +1 em testes estreitamente alinhados aos temas do Manto, incluindo testes para invocar seus Contratos de Corte.",
     "exceptionalSuccess": "Este uso não conta para o limite seguro de uma vez por história.",
     "failure": "O Contrato falha.",
-    "dramaticFailure": "O changeling recebe Coagido conforme descrito, sem obter os benefícios do Contrato.",
+    "dramaticFailure": "O changeling recebe Pressionado conforme descrito, sem obter os benefícios do Contrato.",
     "loophole": "Nenhuma."
   },
   "ctl-oak-ash-thorn:hidden-protocol": {
@@ -57,7 +57,7 @@
     "success": "O alvo recebe uma Condição temporária Quebrador de Juramento que não exige o perdão adicional do Fado para ser resolvida; enquanto durar, o Semblante Feérico do alvo reflete visivelmente a transgressão.",
     "exceptionalSuccess": "O alvo também não pode dizer nada que não acredite ser verdade até o fim do capítulo.",
     "failure": "O Contrato falha.",
-    "dramaticFailure": "O alvo descobre o último ato grave de desobediência, traição ou desonestidade do changeling e pode impor-lhe Coagido.",
+    "dramaticFailure": "O alvo descobre o último ato grave de desobediência, traição ou desonestidade do changeling e pode impor-lhe Pressionado.",
     "loophole": "Nenhuma."
   },
   "ctl-oak-ash-thorn:ancestors-wisdom": {

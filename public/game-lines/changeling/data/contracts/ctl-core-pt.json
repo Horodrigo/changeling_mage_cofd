@@ -105,7 +105,7 @@
     "supplementalSeemingBenefits": {
       "h-seemings": {
         "Beast": "Também leia ou imponha Frenético, Imprudente e Abalado.",
-        "Darkling": "Também leia ou imponha Informado, Coagido e Notoriedade.",
+        "Darkling": "Também leia ou imponha Informado, Pressionado e Notoriedade.",
         "Elemental": "Também leia ou imponha Competitivo, Confuso e Distraído.",
         "Wizened": "Também leia ou imponha Fatigado, Letárgico ou Volátil; Volátil afeta um item empunhado."
       }
@@ -608,7 +608,7 @@
     "loophole": "Depois de sofrer pelo menos 1 ponto de dano letal nesta cena, deixe sangue cair sobre a superfície.",
     "seemingBenefits": {
       "Darkling": "O Trevoso pode usar tino para detectar fenômenos sobrenaturais no acontecimento refletido.",
-      "Fairest": "O Belíssimo inflige Coagido a um personagem visto na visão."
+      "Fairest": "O Belíssimo inflige Pressionado a um personagem visto na visão."
     },
     "supplementalSeemingBenefits": {
       "h-seemings": {

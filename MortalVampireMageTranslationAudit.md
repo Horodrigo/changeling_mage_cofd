@@ -2,7 +2,6 @@
 
 ## Prioridade 1 — concluir as traduções
 
-- **Vampire — Conditions:** obter os textos completos de Hidden Devotions para **Coerced, Quelled, Manic e Melancholic**. Cadastrar a apresentação e o conteúdo de cada Condition sem confundir Coerced com Leveraged/Coagido Core (Coerced → Coagido; Leveraged → Pressionado).
 - Conferir a apresentação EN/PT das traduções concluídas em criação, Experience e fichas Desktop/Mobile antes de passar às mudanças de regras.
 
 ## Prioridade 2 — escolhas e regras faltantes
@@ -13,7 +12,6 @@
 - **Order Archive:** adequar a seleção de pontuação ao tipo de arquivo em *Signs of Sorcery* p. 97 (página conferida visualmente): arquivos de Ordens sem Nome, cultos e Legados têm máximo de três pontos; repositórios antigos de ruínas ou coleções recuperadas não têm máximo e não oferecem *Caucus Assets*. O catálogo atual oferece 1–5 para todos e a configuração não registra o tipo de arquivo. (Pesquise na web a respeito e me informe melhor)
 - **Hidden Devotions:** conferir na fonte original Rapidity e Slow and Steady, especialmente preço e adequação de alvos com procedimentos ou falas complexas.
 - **BFFs, Violent Coercion e Manic Depression:** conferir na fonte original a resistência de alvos sobrenaturais de outras linhas; o índice local e o catálogo divergem entre Composure + Tolerance e Composure + Blood Potency.
-- **Conditions de Vampire:** após localizar os textos, conferir efeitos, resolução, Ato e identidades próprios de Coerced, Quelled, Manic e Melancholic, inclusive as referências a Addiction e Swooning.
 
 ## Verificação final
 

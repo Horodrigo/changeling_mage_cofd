@@ -1324,6 +1324,77 @@
     }
   },
   {
+    "id": "coerced",
+    "name": "Coerced",
+    "originalName": "Coerced",
+    "category": "Supernatural",
+    "description": "Violent Coercion compels the subject to perform one specific task within an hour under threat of injury. A subject can carry only one Coerced instance from a given vampire at a time, though different vampires may each impose one; the commands cannot contradict each other.",
+    "resolution": "Complete or refuse the commanded task. Refusing it or ignoring it for an hour causes lethal damage equal to the vampire's Vigor dots.",
+    "source": "David A. Hill Jr. Pastebin",
+    "sourceCode": "HD",
+    "page": 0,
+    "presentationPt": {
+      "name": "Coagido",
+      "category": "Sobrenatural",
+      "description": "Coerção Violenta obriga o alvo a executar uma tarefa específica em até uma hora sob ameaça de ferimento. O alvo pode ter apenas uma instância de Coagido por vampiro ao mesmo tempo, embora vampiros diferentes possam impor uma cada; as ordens não podem se contradizer.",
+      "resolution": "Concluir ou recusar a tarefa ordenada. Recusá-la ou ignorá-la por uma hora causa dano letal igual aos pontos de Ímpeto do vampiro."
+    }
+  },
+  {
+    "id": "quelled",
+    "name": "Quelled",
+    "originalName": "Quelled",
+    "category": "Supernatural",
+    "description": "The Beast is tamed, perhaps absent. The vampire can still frenzy and gains +5 dice to resist frenzy, but cannot Ride the Wave or add Blood Potency to dice pools resisting Disciplines or other supernatural powers.",
+    "persistent": true,
+    "resolution": "Resolve the Enthralled Condition.",
+    "beat": "Suffer a significant loss or setback from a Discipline against which Blood Potency would normally provide protection.",
+    "source": "David A. Hill Jr. Pastebin",
+    "sourceCode": "HD",
+    "page": 0,
+    "presentationPt": {
+      "name": "Aplacado",
+      "category": "Sobrenatural",
+      "description": "A Fera está domada, talvez ausente. O vampiro ainda pode entrar em frenesi e recebe +5 dados para resistir a ele, mas não pode Cavalgar a Onda nem somar Potência de Sangue às paradas para resistir a Disciplinas ou outros poderes sobrenaturais.",
+      "resolution": "Resolver a Condição Cativado.",
+      "beat": "Sofrer uma perda ou um revés significativo causado por uma Disciplina contra a qual a Potência de Sangue normalmente ofereceria proteção."
+    }
+  },
+  {
+    "id": "manic",
+    "name": "Manic",
+    "originalName": "Manic",
+    "category": "Mental",
+    "description": "Obsessive energy grants +1 die when repeating the same action on consecutive turns, but changing actions between turns imposes −1 die; neither modifier accumulates. When caused by Manic Depression, this Condition lasts one week per activation success and alternates with Melancholic when resolved until that duration ends.",
+    "resolution": "Fail any action and become exhausted: for the rest of the scene, all actions suffer −5 dice. Spending Willpower cancels that penalty but does not grant the usual +3 dice.",
+    "source": "David A. Hill Jr. Pastebin",
+    "sourceCode": "HD",
+    "page": 0,
+    "presentationPt": {
+      "name": "Maníaco",
+      "category": "Mental",
+      "description": "A energia obsessiva concede +1 dado ao repetir a mesma ação em turnos consecutivos, mas mudar de ação entre turnos impõe −1 dado; nenhum dos modificadores se acumula. Quando causada por Depressão Maníaca, esta Condição dura uma semana por sucesso na ativação e alterna com Melancólico ao ser resolvida até o fim da duração.",
+      "resolution": "Falhar em qualquer ação e sucumbir à exaustão: até o fim da cena, todas as ações sofrem −5 dados. Gastar Força de Vontade cancela essa penalidade, mas não concede os +3 dados habituais."
+    }
+  },
+  {
+    "id": "melancholic",
+    "name": "Melancholic",
+    "originalName": "Melancholic",
+    "category": "Mental",
+    "description": "Lethargy imposes −2 dice on actions taken without spending Willpower. Spending it cancels that penalty and grants only +1 die rather than the usual +3. The subject cannot regain Willpower and suffers −2 to Speed, Initiative, and Defense. When caused by Manic Depression, this Condition lasts one week per activation success and alternates with Manic when resolved until that duration ends.",
+    "resolution": "Spend the last point of Willpower.",
+    "source": "David A. Hill Jr. Pastebin",
+    "sourceCode": "HD",
+    "page": 0,
+    "presentationPt": {
+      "name": "Melancólico",
+      "category": "Mental",
+      "description": "A letargia impõe −2 dados às ações realizadas sem gastar Força de Vontade. Gastá-la cancela essa penalidade e concede apenas +1 dado, em vez dos +3 habituais. O alvo não pode recuperar Força de Vontade e sofre −2 em Velocidade, Iniciativa e Defesa. Quando causada por Depressão Maníaca, esta Condição dura uma semana por sucesso na ativação e alterna com Maníaco ao ser resolvida até o fim da duração.",
+      "resolution": "Gastar o último ponto de Força de Vontade."
+    }
+  },
+  {
     "id": "elder-children-of-the-blood",
     "name": "Children of the Blood",
     "originalName": "Children of the Blood",
@@ -1371,7 +1442,7 @@
     "resolution": "The ghoul dies.",
     "beat": "You seriously inconvenience yourself to accommodate your ghoul for fear he will reveal your secrets. No explicit threat or demand is necessary; you both know what he knows.",
     "presentationPt": {
-      "name": "Coagido",
+      "name": "Pressionado",
       "description": "Seu carniçal protege você durante o dia, atende às suas necessidades à noite e conhece você bem demais. Ele percebe seu humor como se vocês compartilhassem um vínculo de Simpatia de Sangue com três graus de separação e conhece todos os seus segredos enterrados.",
       "resolution": "O carniçal morre.",
       "beat": "Você se prejudica seriamente para atender ao carniçal, temendo que ele revele seus segredos. Não é necessária uma ameaça ou exigência explícita; ambos sabem o que ele sabe."

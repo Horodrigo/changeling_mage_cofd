@@ -25,6 +25,7 @@ test("all Core Conditions have complete Portuguese presentation without overridi
   }
   assert.doesNotMatch(JSON.stringify(presentation), /\b(?:Conditions?|Beats?|Breaking Point|Clarity|Trato com Animais|Resolve|Composure|Stamina)\b/);
   assert.match(presentation.bonded.penalty, /Empatia com Animais/);
+  assert.equal(presentation.leveraged.name, "Pressionado");
   assert.match(presentation["reluctant-aggressor"].resolution, /não concede um Ato/);
   const manifest = read("public/shared/data/catalog-manifest.json");
   assert.ok(manifest.catalogs["core-conditions"].version >= 3);

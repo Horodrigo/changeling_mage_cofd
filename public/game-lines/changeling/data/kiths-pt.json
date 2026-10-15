@@ -170,7 +170,7 @@
   "flowering": {
     "name": "Florescente",
     "description": "Perdidos que viveram entre a flora de Arcádia e assimilaram seu fascínio passivo.",
-    "blessing": "3 sucessos contam como excepcionais em Socialização para convencer alguém de que precisa de você. Com 1 Glamour e Presença + Empatia, emite um perfume pela cena; presentes e recém-chegados resistem com Compostura + Fado. Quem falhar fica Coagido. Mais 1 Glamour impõe Amedrontado, Imprudente ou Enamorado a um alvo Coagido; não pode encerrar o perfume antes do fim.",
+    "blessing": "3 sucessos contam como excepcionais em Socialização para convencer alguém de que precisa de você. Com 1 Glamour e Presença + Empatia, emite um perfume pela cena; presentes e recém-chegados resistem com Compostura + Fado. Quem falhar fica Pressionado. Mais 1 Glamour impõe Amedrontado, Imprudente ou Enamorado a um alvo Pressionado; não pode encerrar o perfume antes do fim.",
     "skill": "Socialização"
   },
   "flickerflash": {

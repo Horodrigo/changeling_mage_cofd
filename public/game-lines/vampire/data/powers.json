@@ -4487,7 +4487,7 @@
         "cost": "1 Vitae",
         "dicePool": "Presença + Subterfúgio + Majestade",
         "action": "Reflexiva",
-        "effect": "Quando outro personagem Incita a Fera, o vampiro pode disputar com esta parada em vez de responder Incitando a própria Fera. Um sucesso impõe ao vampiro a Condição que o agressor normalmente causaria, enquanto o agressor recebe Cativado Persistente e Quelled. O vampiro também pode usar esta Devoção ao iniciar uma Incitação da Fera Sedutora, usando a parada normal de Presença + Potência de Sangue."
+        "effect": "Quando outro personagem Incita a Fera, o vampiro pode disputar com esta parada em vez de responder Incitando a própria Fera. Um sucesso impõe ao vampiro a Condição que o agressor normalmente causaria, enquanto o agressor recebe Cativado Persistente e Aplacado. O vampiro também pode usar esta Devoção ao iniciar uma Incitação da Fera Sedutora, usando a parada normal de Presença + Potência de Sangue."
       }
     },
     {
@@ -5183,7 +5183,7 @@
         "cost": "1 Vitae",
         "dicePool": "Presença + Intimidação + Majestade contra Compostura + Potência de Sangue",
         "action": "Disputada; a resistência é reflexiva",
-        "effect": "Dê uma tarefa clara que o alvo possa cumprir em uma hora sem risco realista de morte ou torpor. O sucesso impõe Coagido(Membro). Cumprir ou recusar a tarefa resolve a Condição; recusar ou deixar a hora passar causa dano letal igual ao Ímpeto. Um alvo só pode ter uma instância de Coagido(Membro) de cada vampiro, e múltiplas instâncias não podem contradizer umas às outras."
+        "effect": "Dê uma tarefa clara que o alvo possa cumprir em uma hora sem risco realista de morte ou torpor. O sucesso impõe Coagido. Cumprir ou recusar a tarefa resolve a Condição; recusar ou deixar a hora passar causa dano letal igual ao Ímpeto. Um alvo só pode ter uma instância de Coagido de cada vampiro, e múltiplas instâncias não podem contradizer umas às outras."
       }
     },
     {
@@ -9534,7 +9534,7 @@
           "success": "A vampira inspira na vítima o desejo de realizar uma meta específica de curto prazo. A vítima não é obrigada a seguir esse impulso, mas fazê-lo parece certo: substitua temporariamente sua Aspiração de longo prazo por essa tarefa. Personagens do Narrador efetivamente recebem uma Aspiração e podem cumpri-la para recuperar um ponto de Força de Vontade. Por outro lado, perseguir outras metas e interesses parece errado. Todas as ações que não contribuem para a nova Aspiração sofrem um modificador de –1. Isso não se aplica a ações reflexivas, jogadas para lidar com necessidades cotidianas ou ações de autopreservação, como defender-se de violência. O impulso dura até a vítima cumprir a meta ou a duração terminar, o que ocorrer primeiro.",
           "exceptionalSuccess": "A vítima sente um impulso urgente de seguir o conselho da vampira e recebe a Condição Incumbido pelo restante da noite.",
           "failure": "Os filhos nunca escutam.",
-          "dramaticFailure": "A Qedeshah sente imensa culpa por tentar forçar sua filha a fazer algo que não queria e decide compensá-la no futuro. Recebe a Condição Coagido (Chronicles of Darkness, p. 289)."
+          "dramaticFailure": "A Qedeshah sente imensa culpa por tentar forçar sua filha a fazer algo que não queria e decide compensá-la no futuro. Recebe a Condição Pressionado (Chronicles of Darkness, p. 289)."
         }
       }
     },
@@ -17226,7 +17226,7 @@
           "effect": "By spending one Vitae while interacting with a denizen, immediately learn their Vice and Conditions reflecting shameful secrets, such as Guilty, Leveraged, or Notoriety. Once per scene, observing a denizen regain Willpower from Vice also restores one Willpower to the Dragon. Major events provoking widespread emotion may trigger blood sympathy at the Storyteller's discretion.",
           "presentationPt": {
             "summary": "Ler os Vícios e Condições dos habitantes e receber visões de simpatia de sangue em todo o domínio.",
-            "effect": "Ao gastar um ponto de Vitae enquanto interage com um habitante, descubra imediatamente seu Vício e as Condições que refletem segredos vergonhosos, como Culpado, Coagido ou Notoriedade. Uma vez por cena, observar um habitante recuperar Força de Vontade pelo Vício também restaura um ponto de Força de Vontade do Dragão. Grandes acontecimentos que provoquem emoções generalizadas podem desencadear simpatia de sangue a critério do Narrador."
+            "effect": "Ao gastar um ponto de Vitae enquanto interage com um habitante, descubra imediatamente seu Vício e as Condições que refletem segredos vergonhosos, como Culpado, Pressionado ou Notoriedade. Uma vez por cena, observar um habitante recuperar Força de Vontade pelo Vício também restaura um ponto de Força de Vontade do Dragão. Grandes acontecimentos que provoquem emoções generalizadas podem desencadear simpatia de sangue a critério do Narrador."
           }
         }
       ],
