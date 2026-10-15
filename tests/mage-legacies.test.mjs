@@ -373,6 +373,17 @@ test("Chronologue presents its two Attainments in PT without changing eligibilit
   assert.deepEqual(CHRONOLOGUE,original);
 });
 
+test("Engineers of the System presents all three Attainments in PT without changing canonical data", () => {
+  const original = structuredClone(ENGINEERS_OF_THE_SYSTEM);
+  const pt = legacyPresentation(ENGINEERS_OF_THE_SYSTEM, "pt-BR");
+  assert.equal(pt.name, "Engenheiros do Sistema");
+  assert.deepEqual(pt.attainments.map((item) => item.name), ["Ver os Ossos e Engrenagens", "Reconstruir a Máquina Viva", "Tornar-se o Ecossistema"]);
+  assert.match(pt.attainments[1].description, /Tomar Emprestados os Fios/);
+  assert.ok(pt.attainments.every((item, index) => item.description !== ENGINEERS_OF_THE_SYSTEM.attainments[index].description));
+  assert.strictEqual(legacyPresentation(ENGINEERS_OF_THE_SYSTEM, "en-US"), ENGINEERS_OF_THE_SYSTEM);
+  assert.deepEqual(ENGINEERS_OF_THE_SYSTEM, original);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });

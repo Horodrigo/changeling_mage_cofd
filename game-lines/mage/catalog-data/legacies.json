@@ -330,7 +330,13 @@
           }
         },
         "description": "Duplicates Correspondence with Potency equal to Space. Reach may reveal additional connections or their owners.",
-        "optional": "Life 1: for one Mana, also duplicate Web of Life with Potency equal to Life and Reach assigned to Scale."
+        "optional": "Life 1: for one Mana, also duplicate Web of Life with Potency equal to Life and Reach assigned to Scale.",
+        "presentationPt": {
+          "name": "Ver os Ossos e Engrenagens",
+          "prerequisites": "Iniciação (Espaço 2, Investigação 2, Intimidação ou Sobrevivência 2)",
+          "description": "Reproduz Correspondência com Potência igual aos pontos de Espaço do mago. O Alcance pode ser aplicado às opções descritas na magia.",
+          "optional": "Vida 1: por um ponto de Mana, também reproduz Teia da Vida com Potência igual aos pontos de Vida; o Alcance se aplica à Escala."
+        }
       },
       {
         "rank": 2,
@@ -349,7 +355,13 @@
           }
         },
         "description": "For one Mana, duplicates Borrow Threads with Potency equal to Space and Reach assigned to Scale.",
-        "optional": "Life 2: add +1 Potency to Life spells cast on a target with which the mage has a sympathetic connection."
+        "optional": "Life 2: add +1 Potency to Life spells cast on a target with which the mage has a sympathetic connection.",
+        "presentationPt": {
+          "name": "Reconstruir a Máquina Viva",
+          "prerequisites": "Espaço 2, Investigação 3",
+          "description": "Por um ponto de Mana, reproduz Tomar Emprestados os Fios com Potência igual aos pontos de Espaço do mago; o Alcance se aplica à Escala.",
+          "optional": "Vida 2: acrescenta +1 à Potência das magias de Vida lançadas sobre um alvo com o qual o mago tenha uma conexão simpática."
+        }
       },
       {
         "rank": 3,
@@ -368,8 +380,29 @@
           }
         },
         "description": "For one Mana, duplicates Co-Location with Potency equal to Space and Reach assigned to Scale.",
-        "optional": "Life 3: one inhabited location may also receive Mutable Mask with +2 Reach and Potency equal to the lower of Life or Space, allowing impersonation at a distance."
+        "optional": "Life 3: one inhabited location may also receive Mutable Mask with +2 Reach and Potency equal to the lower of Life or Space, allowing impersonation at a distance.",
+        "presentationPt": {
+          "name": "Tornar-se o Ecossistema",
+          "prerequisites": "Espaço 3, Investigação 4",
+          "description": "Por um ponto de Mana, reproduz Colocalização com Potência igual aos pontos de Espaço do mago; o Alcance se aplica à Escala.",
+          "optional": "Vida 3: uma das localizações ocupadas também pode receber Máscara Mutável com +2 de Alcance e Potência igual ao menor valor entre Vida e Espaço, permitindo que o mago personifique alguém à distância."
+        }
       }
-    ]
+    ],
+    "presentationPt": {
+      "name": "Engenheiros do Sistema",
+      "prerequisites": "Espaço 2, Investigação 2 e Intimidação ou Sobrevivência 2.",
+      "initiation": "O iniciado aprende a perceber a sociedade e o movimento dos seres vivos como peças interligadas de um único Sistema.",
+      "organization": "O Legado é raro e costuma ser transmitido por mentores Videntes isolados.",
+      "theory": "A realidade física e social forma uma máquina cujas articulações podem ser percebidas e manipuladas.",
+      "yantras": [
+        "Desenhar durante uma hora um esquema abstrato que relacione fatores físicos e sociais (+2).",
+        "Seguir um rastro ou observar um padrão visual deixado pelo movimento de um ser vivo (+1)."
+      ],
+      "oblations": [
+        "Rabiscar esquemas sociais e políticos no próprio corpo.",
+        "Consumir a carne de uma presa obtida por meio de engano ou intimidação."
+      ]
+    }
   }
 ]
