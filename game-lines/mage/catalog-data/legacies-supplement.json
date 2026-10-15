@@ -118,16 +118,25 @@
     "entryPraxis": "Exorcist's Eye",
     "prerequisites": "Spirit 2 and Science 2.",
     "entryRequirements": { "arcana": { "Spirit": 2 }, "skills": { "Science": 2 } },
-    "initiation": "The initiate learns to perceive the invisible forces and spirits interwoven with the material world.",
-    "organization": "Shapers are researchers and experimenters without a required Order affiliation.",
-    "theory": "Invisible physical forces and Twilight phenomena are adjacent expressions of one hidden reality.",
-    "yantras": ["Scientific instruments relevant to the invisible phenomenon (+1).", "Accurately recording an unseen force (+1).", "A controlled experiment that reveals the unseen (+2)."],
-    "oblations": ["Observe and document an invisible natural force.", "Conduct an experiment with unseen phenomena.", "Commune with a spirit associated with a physical force."],
+    "initiation": "The initiate learns to perceive invisible spirits and harmonize intangible forces with the physical world.",
+    "organization": "The Queen developed this Legacy while trying to create the Crown of the Rose; no Order affiliation is required.",
+    "theory": "Harmonizing intangible forces with the physical world may make an enlightened spirit possible.",
+    "yantras": ["Performing a ritual to appease a spirit (+1).", "Successfully rolling Science to study an occult phenomenon, or Occult to study a mundane one, related to the spell (+2).", "Symbols of a secret society (+1)."],
+    "oblations": ["Teach someone about the spirit world.", "Recruit new blood for a cult or mystical organization.", "Inspire someone to better themselves or seek enlightenment."],
     "attainments": [
-      { "rank": 1, "name": "Seeing the Invisible", "prerequisites": "Initiation (Spirit 2, Science 2)", "rulingArcanum": 1, "orthodoxGnosis": 2, "novelGnosis": 3, "praxisName": "Exorcist's Eye", "requirements": { "arcana": { "Spirit": 2 }, "skills": { "Science": 2 } }, "description": "Duplicate Exorcist's Eye with instant use.", "optional": "Forces 1: also gain Nightvision and perceive normally invisible mundane forces such as heat, ultraviolet light, and vibration." },
-      { "rank": 2, "name": "Grasping the Invisible", "prerequisites": "Spirit 2, Science 3", "rulingArcanum": 2, "orthodoxGnosis": 2, "novelGnosis": 3, "requirements": { "arcana": { "Spirit": 2 }, "skills": { "Science": 3 } }, "description": "Duplicate Gossamer Touch with instant use.", "optional": "Forces 2: shift one mundane force in a small room into Twilight so it can affect spirits." },
-      { "rank": 3, "name": "Harmonizing the Invisible", "prerequisites": "Spirit 3, Science 3, Occult 2", "rulingArcanum": 3, "orthodoxGnosis": 4, "novelGnosis": 5, "requirements": { "arcana": { "Spirit": 3 }, "skills": { "Science": 3, "Occult": 2 } }, "description": "After a scene-long ceremony, duplicate Reaching with advanced Duration.", "optional": "Forces 3: shift a mundane force across the Gauntlet." }
-    ]
+      { "rank": 1, "name": "Seeing the Invisible", "prerequisites": "Initiation (Spirit 2, Science 2)", "rulingArcanum": 1, "orthodoxGnosis": 2, "novelGnosis": 3, "praxisName": "Exorcist's Eye", "requirements": { "arcana": { "Spirit": 2 }, "skills": { "Science": 2 } }, "description": "Duplicate Exorcist's Eye with Reach for instant use.", "optional": "Forces 1: also duplicate Nightvision to perceive normally invisible mundane forces such as heat, ultraviolet light, and vibration.", "presentationPt": { "name": "Ver o Invisível", "prerequisites": "Iniciação (Espírito 2, Ciência 2)", "description": "Reproduz Olho do Exorcista com Alcance para uso instantâneo.", "optional": "Forças 1: também reproduz Visão Noturna para perceber forças mundanas normalmente invisíveis, como calor, luz ultravioleta e vibrações." } },
+      { "rank": 2, "name": "Grasping the Invisible", "prerequisites": "Science 3", "rulingArcanum": 2, "orthodoxGnosis": 2, "novelGnosis": 3, "requirements": { "skills": { "Science": 3 } }, "description": "Duplicate Gossamer Touch with Reach for instant use.", "optional": "Forces 2: for the Duration, shift one mundane force within an area the size of a small room into Twilight, affecting spirits instead of material beings.", "presentationPt": { "name": "Agarrar o Invisível", "prerequisites": "Ciência 3", "description": "Reproduz Toque Etéreo com Alcance para uso instantâneo.", "optional": "Forças 2: durante a Duração, transfere uma força mundana em uma área do tamanho de uma sala pequena para o Crepúsculo; ela passa a afetar espíritos, em vez de seres materiais." } },
+      { "rank": 3, "name": "Harmonizing the Invisible", "prerequisites": "Spirit 3, Occult 2", "rulingArcanum": 3, "orthodoxGnosis": 4, "novelGnosis": 5, "requirements": { "arcana": { "Spirit": 3 }, "skills": { "Occult": 2 } }, "description": "After a scene-long ceremony, duplicate Reaching with Reach for advanced Duration.", "optional": "Forces 3: for the Duration, shift one mundane force from one side of the Gauntlet to the other, as the previous Attainment shifted it into Twilight.", "presentationPt": { "name": "Harmonizar o Invisível", "prerequisites": "Espírito 3, Ocultismo 2", "description": "Após um ritual cerimonial de uma cena, reproduz Alcançar com Alcance para Duração Avançada.", "optional": "Forças 3: durante a Duração, transfere uma força mundana de um lado da Barreira para o outro, assim como o Aperfeiçoamento anterior a transferia para o Crepúsculo." } }
+    ],
+    "presentationPt": {
+      "name": "Modeladores do Invisível",
+      "prerequisites": "Espírito 2 e Ciência 2.",
+      "initiation": "O iniciado aprende a perceber espíritos invisíveis e a harmonizar forças intangíveis com o mundo físico.",
+      "organization": "The Queen desenvolveu este Legado enquanto tentava criar a Crown of the Rose; não exige filiação a uma Ordem.",
+      "theory": "Harmonizar forças intangíveis com o mundo físico pode permitir a criação de um espírito iluminado.",
+      "yantras": ["Realizar um ritual para apaziguar um espírito (+1).", "Obter sucesso em uma jogada de Ciência para estudar um fenômeno oculto, ou de Ocultismo para estudar um fenômeno mundano, relacionado à magia (+2).", "Símbolos de uma sociedade secreta (+1)."],
+      "oblations": ["Ensinar alguém sobre o mundo espiritual.", "Recrutar integrantes para um culto ou organização mística.", "Inspirar alguém a se aprimorar ou buscar a iluminação."]
+    }
   },
   {
     "id": "logophages",

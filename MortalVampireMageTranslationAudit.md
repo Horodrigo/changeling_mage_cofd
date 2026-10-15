@@ -2,7 +2,7 @@
 
 ## Prioridade 1 — concluir as traduções
 
-- **Mage G04 — Legacies:** localizar as **8 Legacies** e **25 Attainments** restantes em `game-lines/mage/catalog-data/legacies*.json`: títulos descritivos, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções. Preservar nomes próprios e identidades canônicas.
+- **Mage G04 — Legacies:** localizar as **7 Legacies** e **22 Attainments** restantes em `game-lines/mage/catalog-data/legacies*.json`: títulos descritivos, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções. Preservar nomes próprios e identidades canônicas.
 - **House of Ariadne:** antes de localizar, alinhar `legacies-supplement.json` a *Tome of the Pentacle* pp. 153–154. O texto atual resume indevidamente iniciação e efeitos; o segundo Attainment exige apenas Tempo 2 no livro, o terceiro exige dois Contacts ligados à cidade e o quinto exige três Contacts e Status 2 em organização Adormecida da cidade. Conferir também Alcance, Potência e limitações urbanas de cada efeito ao traduzir.
 - **Vampire — Conditions:** obter os textos completos de Hidden Devotions para **Coerced, Quelled, Manic e Melancholic** e localizar **Materialized e Power Surge**. Cadastrar a apresentação e o conteúdo de cada Condition sem confundir Coerced com Leveraged/Coagido Core. (Ficará assim: Coerced → Coagido e Leveraged → Pressionado)
 - Conferir a apresentação EN/PT das traduções concluídas em criação, Experience e fichas Desktop/Mobile antes de passar às mudanças de regras.

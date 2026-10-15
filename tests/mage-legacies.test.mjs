@@ -438,6 +438,18 @@ test("Tyrian Archons presents all three Attainments in PT with the printed secon
   assert.deepEqual(definition, original);
 });
 
+test("Shapers of the Invisible presents three Attainments and follows printed prerequisites", () => {
+  const definition = LEGACIES.find((item) => item.id === "shapers-of-the-invisible");
+  const original = structuredClone(definition);
+  const pt = legacyPresentation(definition, "pt-BR");
+  assert.equal(pt.name, "Modeladores do Invisível");
+  assert.deepEqual(pt.attainments.map((item) => item.name), ["Ver o Invisível", "Agarrar o Invisível", "Harmonizar o Invisível"]);
+  assert.deepEqual(definition.attainments[1].requirements, { skills: { Science: 3 } });
+  assert.deepEqual(definition.attainments[2].requirements, { arcana: { Spirit: 3 }, skills: { Occult: 2 } });
+  assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
+  assert.deepEqual(definition, original);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
