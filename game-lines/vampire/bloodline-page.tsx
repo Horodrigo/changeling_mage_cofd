@@ -54,7 +54,10 @@ export function removeVampireBloodline(character: CharacterSheet, definition?: V
   const refund = refunded.reduce((sum, entry) => sum + Math.max(0, Number(entry.cost ?? 0)), 0);
   const disciplines = next.line_data.disciplines && typeof next.line_data.disciplines === "object" ? { ...next.line_data.disciplines as Record<string, unknown> } : {};
   for (const name of exclusive) disciplines[name] = 0;
-  next.line_data = { ...next.line_data, bloodline_id: "", bloodline_favored_attribute: "", xiao_faction: "", disciplines, lash_ids: [], blood_tether_pack_active: false };
+  const sorcery = next.line_data.blood_sorcery && typeof next.line_data.blood_sorcery === "object" && !Array.isArray(next.line_data.blood_sorcery)
+    ? next.line_data.blood_sorcery as Record<string, unknown> : {};
+  next.line_data = { ...next.line_data, bloodline_id: "", bloodline_favored_attribute: "", xiao_faction: "", disciplines, lash_ids: [], blood_tether_pack_active: false,
+    ...(character.line_data.bloodline_id === "csalad" ? { blood_sorcery: { ...sorcery, lithopedia_rite_ids: [] } } : {}) };
   next.current_state = { ...next.current_state, experience_available: Math.max(0, Number(next.current_state.experience_available ?? 0)) + refund, experience_spent: Math.max(0, Number(next.current_state.experience_spent ?? 0) - refund), vampire_experience_history: history.filter((entry) => !refunded.includes(entry)) };
   return powers ? synchronizeAutomaticBloodlineDevotions(next, powers, meritCatalog) : next;
 }

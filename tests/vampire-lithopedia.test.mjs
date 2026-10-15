@@ -33,3 +33,19 @@ test("Lithopedia refund removes only recorded free rites and rejects a later rat
   assert.equal(sheet.line_data.disciplines.Lithopedia, 1);
   assert.deepEqual(sheet.line_data.blood_sorcery.lithopedia_rite_ids, ["other"]);
 });
+
+test("leaving Család removes Lithopedia rites and refunds its purchases without touching Crúac", async () => {
+  const { blankPrintCharacter } = await vite.ssrLoadModule("/app/workspace/blank-print-character.ts");
+  const { removeVampireBloodline } = await vite.ssrLoadModule("/game-lines/vampire/bloodline-page.tsx");
+  const bloodlines = JSON.parse(readFileSync(new URL("../public/game-lines/vampire/data/bloodlines.json", import.meta.url), "utf8"));
+  const rite = lithopedia.lithopediaRites(powers.devotions)[0];
+  const sheet = blankPrintCharacter("VtR");
+  sheet.line_data = { ...sheet.line_data, bloodline_id: "csalad", disciplines: { Lithopedia: 1 }, blood_sorcery: { lithopedia_rite_ids: [rite.id], cruac_rite_ids: ["other"] } };
+  sheet.current_state = { ...sheet.current_state, experience_available: 2, experience_spent: 3, vampire_experience_history: [{ id: "lithopedia", cost: 3, undo: { kind: "discipline", name: "Lithopedia", amount: 1, lithopedia: { ids: [rite.id], rating: 1 } } }] };
+  const removed = removeVampireBloodline(sheet, bloodlines.find(item => item.id === "csalad"), powers);
+  assert.equal(removed.line_data.disciplines.Lithopedia, 0);
+  assert.deepEqual(removed.line_data.blood_sorcery.lithopedia_rite_ids, []);
+  assert.deepEqual(removed.line_data.blood_sorcery.cruac_rite_ids, ["other"]);
+  assert.equal(removed.current_state.experience_available, 5);
+  assert.deepEqual(removed.current_state.vampire_experience_history, []);
+});
