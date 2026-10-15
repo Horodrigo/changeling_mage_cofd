@@ -195,7 +195,12 @@
     "descriptionEn": "A Shona medium who cannot suffer the Claimed Condition and may purchase Social Merits representing relationships with ephemeral entities. Choose wamasikati or wedzinza, each with distinct sensing, communication, and Manifestation benefits.",
     "page": 123,
     "priority": 2,
-    "translatedName": "Svikiro"
+    "translatedName": "Svikiro",
+    "presentationPt": {
+      "name": "Svikiro",
+      "prerequisites": "Perseverança •••, Compostura •••; Desperto ou Sonâmbulo",
+      "description": "Você é um médium shona, não pode sofrer a Condição Reivindicado e pode comprar Méritos Sociais para representar vínculos com entidades efêmeras. Escolha wamasikati ou wedzinza. Wamasikati possui a Condição Ressonante ou Âncora ao interagir com qualquer entidade efêmera, percebe essas entidades a até cinco jardas e pode gastar um ponto de Força de Vontade para adquirir a Condição Aberto em relação a uma delas nesse alcance; o efeito dura até gastar outro ponto para encerrá-lo. Wedzinza possui a Condição Aberto ao interagir com o fantasma de qualquer pessoa de seu mutupo; pode gastar um ponto de Força de Vontade para reduzi-la a Âncora ou Ressonante até gastar outro ponto para encerrar o efeito. Também percebe seus ancestrais e outros fantasmas do mutupo a até cinco jardas e pode gastar um ponto de Força de Vontade para falar com eles mesmo quando estão em Crepúsculo."
+    }
   },
   {
     "id": "core-dark-eras-companion:svikiro-channel",
@@ -214,7 +219,16 @@
       { "rating": 3, "name": "Compel", "description": "Spend Willpower and win Resolve + Composure contested by Rank + Resistance to compel a Numen or Influence. The entity cannot be forced to violate its Ban or approach its Bane." }
     ],
     "priority": 2,
-    "translatedName": "Svikiro Channel"
+    "translatedName": "Svikiro Canalizador",
+    "presentationPt": {
+      "name": "Svikiro Canalizador",
+      "prerequisites": "Mérito Svikiro",
+      "description": "Enquanto estiver Agrilhoado, você pode se comunicar com a entidade vinculada e permitir que ela use seus Numina e Influências contra um alvo escolhido a até cinco jardas de você; isso não a obriga a agir.",
+      "levels": [
+        { "rating": 1, "name": "Canalizar", "description": "Comunique-se com a entidade Agrilhoada e permita, sem obrigá-la, que use seus Numina e Influências contra um alvo escolhido a até cinco jardas de você." },
+        { "rating": 3, "name": "Compelir", "description": "Gaste um ponto de Força de Vontade e vença uma jogada de Perseverança + Compostura disputada pelo Grau + Resistência da entidade para obrigá-la a usar um Numen ou uma Influência como se fossem seus. Você não pode obrigá-la a violar sua Proibição nem a se aproximar de sua Fraqueza." }
+      ]
+    }
   },
   {
     "id": "core-dark-eras-companion:svikiro-ridden",
@@ -233,7 +247,16 @@
       { "rating": 3, "name": "Control", "description": "Spend Willpower and win Resolve + Composure contested by Rank + Resistance to control the possessor for the scene. Control ends if Possession succeeds again or the medium contacts the entity's Bane; the entity cannot be forced to violate its nature, Ban, or Bane." }
     ],
     "priority": 2,
-    "translatedName": "Svikiro Ridden"
+    "translatedName": "Svikiro Possuído",
+    "presentationPt": {
+      "name": "Svikiro Possuído",
+      "prerequisites": "Mérito Svikiro",
+      "description": "Você permanece consciente enquanto está Possuído e pode falar telepaticamente com a entidade. Se cooperar, ela não sofre as penalidades habituais por agir por meio de seu corpo.",
+      "levels": [
+        { "rating": 1, "name": "Consciente", "description": "Permaneça consciente durante a Possessão e comunique-se com a entidade. Se cooperar com ela, não se aplicam as penalidades habituais às ações que realiza usando seu corpo." },
+        { "rating": 3, "name": "Controle", "description": "Gaste um ponto de Força de Vontade e vença Perseverança + Compostura disputados por Grau + Resistência para controlar a entidade pelo restante da cena, como se os papéis estivessem invertidos. O controle acaba se ela usar Possessão com sucesso novamente ou se você tocar sua Fraqueza. Você não pode obrigá-la a contrariar sua natureza, violar sua Proibição nem se aproximar de sua Fraqueza." }
+      ]
+    }
   },
   {
     "id": "core-dark-eras-companion:svikiro-nganga",
@@ -248,6 +271,11 @@
     "descriptionEn": "The medium receives the benefits of both the wamasikati and wedzinza forms of Svikiro.",
     "page": 124,
     "priority": 2,
-    "translatedName": "Svikiro Nganga"
+    "translatedName": "Svikiro Nganga",
+    "presentationPt": {
+      "name": "Svikiro Nganga",
+      "prerequisites": "Mérito Svikiro",
+      "description": "Você recebe os benefícios das duas formas de Svikiro: wamasikati e wedzinza."
+    }
   }
 ]
