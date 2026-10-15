@@ -522,6 +522,18 @@ test("Keepers of the Covenant presents both Attainments in PT without changing i
   assert.deepEqual(definition, original);
 });
 
+test("Kitchen Alchemists presents all Attainments in PT and follows the book's second prerequisite", () => {
+  const definition = LEGACIES.find((item) => item.id === "kitchen-alchemists");
+  const original = structuredClone(definition);
+  const pt = legacyPresentation(definition, "pt-BR");
+  assert.equal(pt.name, "Alquimistas da Cozinha");
+  assert.deepEqual(pt.attainments.map((item) => item.name), ["Comida Reconfortante", "Comida Caseira da Abuela", "Mesa da Confraternização"]);
+  assert.deepEqual(definition.attainments[1].requirements, { arcana: { Matter: 1 }, skills: { Crafts: 3 } });
+  assert.match(pt.attainments[2].description, /até dez pessoas em até uma hora/);
+  assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
+  assert.deepEqual(definition, original);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
