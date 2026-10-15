@@ -462,6 +462,17 @@ test("Logophages presents both Attainments in PT and keeps the printed second pr
   assert.deepEqual(definition, original);
 });
 
+test("Stone Scribes presents both Attainments in PT and uses the printed second prerequisite", () => {
+  const definition = LEGACIES.find((item) => item.id === "stone-scribes");
+  const original = structuredClone(definition);
+  const pt = legacyPresentation(definition, "pt-BR");
+  assert.equal(pt.name, "Escribas de Pedra");
+  assert.deepEqual(pt.attainments.map((item) => item.name), ["In Memoriam", "Tomar Emprestada a História"]);
+  assert.deepEqual(definition.attainments[1].requirements, { skills: { Academics: 2, Occult: 2 } });
+  assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
+  assert.deepEqual(definition, original);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
