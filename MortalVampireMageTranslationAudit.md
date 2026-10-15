@@ -16,4 +16,4 @@
 ## Mage
 
 - **Order Archive:** adequar a seleção de pontuação ao tipo de arquivo em *Signs of Sorcery* p. 97: arquivos de Ordens sem Nome, cultos e Legados têm máximo de três pontos; repositórios antigos de ruínas ou coleções recuperadas não têm máximo. O catálogo atual oferece 1–5 para todos. Preservar compras existentes e não liberar pontuação ilimitada sem distinguir esses tipos.
-- **G04 — Legacies:** localizar as **15 Legacies** e **38 Attainments** restantes em `game-lines/mage/catalog-data/legacies*.json`: títulos descritivos, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções. Preservar nomes próprios.
+- **G04 — Legacies:** localizar as **14 Legacies** e **36 Attainments** restantes em `game-lines/mage/catalog-data/legacies*.json`: títulos descritivos, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções. Preservar nomes próprios.

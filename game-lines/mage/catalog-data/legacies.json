@@ -203,7 +203,12 @@
             "Computer": 2
           }
         },
-        "description": "Emulates Green Light/Red Light on someone other than the mage. Choose one action the subject might take; performing it can reverse the Attainment from beneficial to detrimental effects, or vice versa. Includes Reach for instant use."
+        "description": "Emulates Green Light/Red Light on someone other than the mage. Choose one action the subject might take; performing it can reverse the Attainment from beneficial to detrimental effects, or vice versa. Includes Reach for instant use.",
+        "presentationPt": {
+          "name": "Se-Então-Senão",
+          "prerequisites": "Iniciação (Tempo 2, Destino 1, Computação 2)",
+          "description": "Imite Sinal Verde/Sinal Vermelho em outra pessoa; você não pode ser o alvo. Escolha uma ação específica que o alvo possa realizar durante o efeito. Se ele a realizar, você pode inverter o efeito de benéfico para prejudicial ou vice-versa. O Aperfeiçoamento inclui Alcance para uso instantâneo."
+        }
       },
       {
         "rank": 2,
@@ -221,7 +226,12 @@
             "Computer": 3
           }
         },
-        "description": "After a scene coding a digital Imago, emulate Divination at sensory range with detailed answers. Recheck the subject's shifting future every five minutes for up to a scene, even after the subject leaves sensory range. The mage cannot target herself."
+        "description": "After a scene coding a digital Imago, emulate Divination at sensory range with detailed answers. Recheck the subject's shifting future every five minutes for up to a scene, even after the subject leaves sensory range. The mage cannot target herself.",
+        "presentationPt": {
+          "name": "Matriz de Possibilidades",
+          "prerequisites": "Tempo 2, Computação 3",
+          "description": "Depois de uma cena codificando ritualmente uma Imago digital, imite Adivinhação sobre um alvo ao alcance sensorial e receba respostas detalhadas. Você pode acompanhar as mudanças em seu futuro a cada cinco minutos durante até uma cena, mesmo depois que ele deixar seu alcance sensorial. Você não pode ser o alvo."
+        }
       }
     ],
     "entryRequirements": {
@@ -232,6 +242,24 @@
       "skills": {
         "Computer": 2
       }
+    },
+    "presentationPt": {
+      "name": "Cronólogo",
+      "prerequisites": "Tempo 2, Destino 1 e Computação 2. Também é preciso satisfazer os requisitos gerais de Gnose e linhagem do Legado, ou a exceção da Práxis do primeiro Aperfeiçoamento.",
+      "initiation": "O iniciado se compromete a rejeitar o livre-arbítrio em favor de previsões e predestinações cada vez mais precisas.",
+      "organization": "Cronólogos surgem entre os Acanthus e os Videntes do Trono, sobretudo entre magos que usam cronogramas, simulações e sistemas preditivos para impor um futuro inevitável.",
+      "theory": "O livre-arbítrio é um erro de um modelo insuficiente. Tempo e computação preditiva podem refinar a sociedade até transformá-la em uma máquina que funciona exatamente como previsto.",
+      "yantras": [
+        "Relógios, calendários e cronogramas (+1).",
+        "Conjurar em um horário predeterminado e combinado com outra pessoa até o segundo exato (+1, ou +2 se houver oposição ou pressão).",
+        "Cumprir uma profecia estabelecida anteriormente ou um destino funesto previsto (+1)."
+      ],
+      "oblations": [
+        "Garantir que um acontecimento ocorra exatamente como previsto.",
+        "Completar pelo menos 12 horas consecutivas de trabalho produtivo sem descanso.",
+        "Repetir a mesma atividade por pelo menos uma hora.",
+        "Seguir rigorosamente um cronograma criado pelo próprio mago."
+      ]
     }
   },
   {

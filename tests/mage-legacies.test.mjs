@@ -361,6 +361,18 @@ test("The Eleventh Question presents every field in PT without changing canonica
   assert.strictEqual(legacyPresentation(authored,"pt-BR"),authored);
 });
 
+test("Chronologue presents its two Attainments in PT without changing eligibility", () => {
+  const original=structuredClone(CHRONOLOGUE);
+  const pt=legacyPresentation(CHRONOLOGUE,"pt-BR");
+  assert.equal(pt.name,"Cronólogo");
+  assert.equal(pt.prerequisites.includes("Computação 2"),true);
+  assert.deepEqual(pt.attainments.map(item=>item.name),["Se-Então-Senão","Matriz de Possibilidades"]);
+  assert.match(pt.attainments[0].description,/Sinal Verde\/Sinal Vermelho.*uso instantâneo/);
+  assert.match(pt.attainments[1].description,/cinco minutos.*alcance sensorial/);
+  assert.strictEqual(legacyPresentation(CHRONOLOGUE,"en-US"),CHRONOLOGUE);
+  assert.deepEqual(CHRONOLOGUE,original);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
