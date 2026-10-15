@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useLayoutEffect, type ReactNode } from "react";
 import { isBlankPrintCharacter } from "@/app/workspace/blank-print-character";
+import { PrintCompanionSheets } from "@/app/workspace/print-companion-sheets";
 import { PrintBoxes, PrintDots, PrintExperience, PrintField, PrintLines, PrintRatedLines, PrintSingleMarkDots } from "@/app/workspace/print-sheet-primitives";
 import { TraitBlock, stringList } from "@/app/workspace/sheet-primitives";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
@@ -33,7 +34,7 @@ function Page({ number, total, children }: { number: number; total: number; chil
 function Heading({ children }: { children: ReactNode }) { return <h2 className="wtf-print-heading">{children}</h2>; }
 const chunks = <T,>(items: readonly T[], size: number) => Array.from({ length: Math.max(1, Math.ceil(items.length / size)) }, (_, index) => items.slice(index * size, (index + 1) * size));
 
-export function WerewolfPrintSheet({ character, catalogs, onReadyChange }: GameLinePrintSheetProps) {
+export function WerewolfPrintSheet({ character, catalogs, options, onReadyChange }: GameLinePrintSheetProps) {
   if (!catalogs) throw new Error("Werewolf print sheet requires its catalog snapshot.");
   const { locale, t } = useLanguage();
   useLayoutEffect(() => { onReadyChange?.(true); return () => onReadyChange?.(false); }, [onReadyChange]);
@@ -102,5 +103,6 @@ export function WerewolfPrintSheet({ character, catalogs, onReadyChange }: GameL
       <Heading>{t("ui.combat")}</Heading><div className="wtf-print-combat"><section><Heading>{t("combat.weapons")}</Heading><PrintLines values={weapons.map(item => item.name)} minimum={8}/></section><section><Heading>{t("ui.equipment")}</Heading><PrintLines values={equipment.map(item => item.name)} minimum={8}/></section></div>
       <Heading>{t("ui.notes")}</Heading><div className="wtf-print-notes"><PrintLines values={notes} minimum={20}/>{character.character.portrait && <Image src={character.character.portrait.dataUrl} alt={character.character.name} width={180} height={240} unoptimized loading="eager"/>}</div>
     </Page>
+    {options.companionSheets && <PrintCompanionSheets character={character} renderPage={(content, index, count) => <Page number={total + index + 1} total={total + count}>{content}</Page>}/>}
   </div>;
 }

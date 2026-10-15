@@ -3,10 +3,13 @@
 import { useLayoutEffect } from "react";
 import { PrintBoxes, PrintDots, PrintExperience, PrintField, PrintLines, PrintRatedLines, PrintSingleMarkDots } from "@/app/workspace/print-sheet-primitives";
 import { isBlankPrintCharacter } from "@/app/workspace/blank-print-character";
+import { PrintCompanionSheets, type PrintableCompanion } from "@/app/workspace/print-companion-sheets";
 import { TraitBlock, stringList } from "@/app/workspace/sheet-primitives";
 import type { SpellDefinition } from "@/lib/catalog/catalog-types";
 import { EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
 import { normalizeMeritConfiguration } from "@/lib/core/character/merit-configuration";
+import { ANIMALS, animalPresentation } from "@/lib/companions";
+import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import type { GameLinePrintSheetProps } from "@/lib/game-line-contracts/game-line-ui";
@@ -26,13 +29,13 @@ import { useLegacyHomebrews } from "./use-legacy-homebrews";
 const objectList = (value: unknown) => Array.isArray(value) ? value as Array<Record<string, unknown>> : [];
 const spellName = (item: Record<string, unknown>, locale: string) => String(locale === "en-US" ? item.originalName ?? item.name : item.name ?? item.originalName ?? "");
 
-function MagePrintPage({ page, children }: { page: number; children: React.ReactNode }) {
+function MagePrintPage({ page, total = 2, children }: { page: number; total?: number; children: React.ReactNode }) {
   const { t } = useLanguage();
   return <section className={`mta-print-page mta-print-page-${page}`}>
     <div className="mta-print-frame" aria-hidden="true"><i/><i/><i/><i/><span/><span/></div>
     <header><div><span>{t("ui.mage")}</span><strong>{t("ui.theAWAKENING")}</strong></div><p>{t("ui.chroniclesOFDARKNESS")}</p></header>
     {children}
-    <footer>{page} / 2</footer>
+    <footer>{page} / {total}</footer>
   </section>;
 }
 
@@ -44,7 +47,7 @@ function Track({ label, maximum, value = maximum }: { label: string; maximum: nu
   return <section className="mta-print-track"><strong>{label}</strong><PrintDots value={value} maximum={Math.max(10, maximum)}/><PrintBoxes maximum={Math.max(10, maximum)}/></section>;
 }
 
-export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLinePrintSheetProps) {
+export function MagePrintSheet({ character, catalogs, options, onReadyChange }: GameLinePrintSheetProps) {
   if (!catalogs) throw new Error("Mage print sheet requires its catalog snapshot.");
   const { locale, t } = useLanguage();
   useLayoutEffect(() => { onReadyChange?.(true); return () => onReadyChange?.(false); }, [onReadyChange]);
@@ -104,6 +107,29 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
     `${t("ui.baneda2072")}: ${String(familiarConfig.bane ?? "")}`,
     `${t("ui.numina")}: ${stringList(familiarConfig.numina).join(", ")}`,
   ] : [];
+  const familiarCompanions: PrintableCompanion[] = character.merits.flatMap((merit) => {
+    if (merit.grantedBy || resolveMeritDefinition(merit, meritCatalog)?.id !== "mta-2ed:familiar") return [];
+    const config = normalizeMeritConfiguration(merit.configuration);
+    const form = String(config.form ?? "animal");
+    const animal = form === "animal" ? ANIMALS.find((item) => item.id === String(config.animalId ?? ANIMALS[0]?.id ?? "")) : undefined;
+    const rank = merit.dots >= 4 ? 2 : 1;
+    return [{
+      name: String(config.name ?? "").trim() || t("ui.familiars"),
+      kind: t("ui.familiarRankEphemeralEntity", { p1: rank }),
+      animal: animal ? animalPresentation(animal, locale) : undefined,
+      details: [
+        { label: t("ui.form"), value: form === "animal" ? t("ui.animal") : String(config.object ?? t("ui.object")) },
+        { label: t("ui.entityType"), value: String(config.entity ?? "Spirit") },
+        { label: t("ui.power"), value: String(config.power ?? rank + 2) },
+        { label: t("ui.finesse"), value: String(config.finesse ?? rank + 2) },
+        { label: t("ui.resistance"), value: String(config.resistance ?? rank + 2) },
+        { label: t("ui.influence"), value: String(config.influence ?? "") },
+        { label: t("ui.ban"), value: String(config.ban ?? "") },
+        { label: t("ui.baneda2072"), value: String(config.bane ?? "") },
+        { label: t("ui.numina"), value: stringList(config.numina).join(", ") },
+      ],
+    }];
+  });
   const weapons = stringList(data.combat_weapons).map((id) => WEAPONS.find((item) => item.id === id)).filter((item): item is NonNullable<typeof item> => Boolean(item)).map((item) => combatItemPresentation(item, locale));
   const equipment = stringList(data.combat_equipment).map((id) => EQUIPMENT.find((item) => item.id === id)).filter((item): item is NonNullable<typeof item> => Boolean(item)).map((item) => combatItemPresentation(item, locale));
   return <div className="game-print-document mta-print-document">
@@ -123,5 +149,6 @@ export function MagePrintSheet({ character, catalogs, onReadyChange }: GameLineP
         <section><Heading>{t("ui.rotes")}</Heading><div className="mta-print-rotes">{rotes.slice(0, 10).map((item, index) => { const saved = (spellCatalog.find((spell) => spell.id === item.id) ?? item) as unknown as Record<string, unknown>; return <div key={String(item.id ?? index)}><span>{spellName(saved, locale)}</span><span>{Object.entries((saved.requirements ?? {}) as Record<string, number>).map(([name, dots]) => `${systemTerm(name, locale)} ${dots}`).join(" + ")}</span><span>{systemTerm(String(saved.roteSkill ?? ""), locale)}</span></div>; })}</div><Heading>{t("ui.nimbusTilt")}</Heading><PrintLines values={stringList(data.nimbus_tilt)} minimum={3}/><Heading>{t("ui.enchantedItems")}</Heading><PrintLines values={enchantedItems} minimum={5}/><Heading>{t("ui.combat")}</Heading><div className="mta-print-combat"><header><i/><span>{t("combat.weapons")}</span><span>{t("ui.damage")}</span><span>{t("ui.range")}</span><span>{t("ui.initiative")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const weapon = weapons[index]; return <div key={weapon?.id ?? index}><i/><span>{weapon?.name}</span><span>{weapon?.damage}</span><span>{weapon?.ranges}</span><span>{weapon?.initiative}</span><span>{weapon?.size}</span></div>; })}</div><Heading>{t("ui.equipment")}</Heading><div className="mta-print-equipment"><header><i/><span>{t("ui.name")}</span><span>{t("ui.durability")}</span><span>{t("ui.structure")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const item = equipment[index]; return <div key={item?.id ?? index}><i/><span>{item?.name}</span><span>{item?.durability}</span><span>{item?.structure}</span><span>{item?.size}</span></div>; })}</div><Heading>{t("ui.familiars")}</Heading><PrintLines values={familiarRows} minimum={7}/></section>
       </div>
     </MagePrintPage>
+    {options.companionSheets && <PrintCompanionSheets character={character} extras={familiarCompanions} renderPage={(content, index, count) => <MagePrintPage page={index + 3} total={count + 2}>{content}</MagePrintPage>}/>}
   </div>;
 }

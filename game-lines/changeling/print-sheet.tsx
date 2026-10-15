@@ -10,6 +10,7 @@ import themes from "virtual:changeling-sheet-themes";
 import { CHANGELING_THEME_STORAGE_KEY } from "./sheet-theme";
 import { pairPrintColumns, paginatePrintItems, type PrintFlowColumn, type PrintFlowItem } from "@/app/workspace/print-pagination";
 import { PrintIntegrityTrack } from "@/app/workspace/print-sheet-primitives";
+import { PrintCompanionSheets, type PrintableCompanion } from "@/app/workspace/print-companion-sheets";
 import { isBlankPrintCharacter } from "@/app/workspace/blank-print-character";
 import { CompactValues, DotValue, SheetHeading, TraitBlock, signed, stringList } from "@/app/workspace/sheet-primitives";
 import type { ContractDefinition } from "./contract-types";
@@ -337,24 +338,45 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
       const activeBlessings = entitlementState.allocations.filter((item) => item.target === "blessing").map((item) => entitlement.blessings.find((blessing) => blessing.id === item.blessingId)).filter((item): item is NonNullable<typeof item> => Boolean(item));
       add("entitlement", "Entitlement", "entitlement", <PrintCard title={entitlement.name} meta={`${entitlement.meritName} · ${entitlement.sourceCode} · p. ${entitlement.page}`}><p><b>{t("ui.entitlementTouchstone")}:</b> {entitlementState.touchstone.name}</p><p><b>{t("ui.privileges")}:</b> {entitlement.privileges}</p>{activeBlessings.map((blessing) => <p key={blessing.id}><b>{blessing.name}:</b> {blessing.description}</p>)}<p><b>{t("ui.curse")}:</b> {entitlement.curse}</p></PrintCard>);
     }
-    character.merits.filter((merit) => !merit.grantedBy && ["Fae Mount", "Fae Pet"].includes(merit.name)).forEach((merit, index) => {
-      const configuration = normalizeMeritConfiguration(merit.configuration);
-      const animal = merit.name === "Fae Pet" ? ANIMALS.find((item) => item.id === String(configuration.animalId ?? "")) : undefined;
-      const presented = animal ? animalPresentation(animal, locale) : undefined;
-      const name = String(configuration.name ?? "").trim() || (merit.name === "Fae Mount" ? t("ui.faeMount") : t("ui.faePet"));
-      add("companions", t("ui.companions"), `fae-companion-${index}`, <PrintCard title={name} meta={`${merit.name} · ${"•".repeat(merit.dots)}`}>{presented ? <><p><b>{t("ui.attributes")}:</b> {presented.attributes}</p><p><b>{t("ui.skills")}:</b> {presented.skills}</p><p><b>{t("ui.otherTraits")}:</b> {t("ui.willpower")} {presented.willpower}, {t("ui.initiative")} {presented.initiative}, {t("ui.defense")} {presented.defense}, {t("ui.speed")} {presented.speed}, {t("ui.size")} {presented.size}, {t("ui.health")} {presented.health}</p></> : <><p><b>{t("ui.abilities")}:</b> {stringList(configuration.abilities).join(", ")}</p><p><b>{t("ui.armor")}:</b> {String(configuration.armor_general ?? 0)}/{String(configuration.armor_ballistic ?? 0)}</p></>}</PrintCard>);
-    });
-    objectList(character.current_state?.conditions).filter((item) => String(item.id) === "bonded").forEach((bonded, index) => {
-      const animal = ANIMALS.find((item) => item.id === String(bonded.animalId ?? ""));
-      if (!animal) return;
-      const presented = animalPresentation(animal, locale);
-      add("companions", t("ui.companions"), `bonded-${index}`, <PrintCard title={String(bonded.animalName ?? "").trim() || presented.name} meta={`Bonded · ${presented.name}`}><p><b>{t("ui.attributes")}:</b> {presented.attributes}</p><p><b>{t("ui.skills")}:</b> {presented.skills}</p><p><b>{t("ui.otherTraits")}:</b> {t("ui.willpower")} {presented.willpower}, {t("ui.initiative")} {presented.initiative}, {t("ui.defense")} {presented.defense}, {t("ui.speed")} {presented.speed}, {t("ui.size")} {presented.size}, {t("ui.health")} {presented.health}</p></PrintCard>);
-    });
     const notes = String(character.current_state?.notes ?? "").trim();
     const portrait = character.character.portrait;
     if (notes || portrait) add("notes", t("ui.notes"), "notes", <PrintCard title={t("ui.notes")}><div className="ctl-print-notes-content">{notes && <p className="ctl-print-preserve-lines">{notes}</p>}{portrait && <Image src={portrait.dataUrl} alt={character.character.name} width={144} height={192} unoptimized loading="eager" />}</div></PrintCard>);
     return blocks;
   }, [armor, character, contracts, data, equipment, expanded, locale, meritCatalog, options.expandedMeritDetails, options.powerDetails, powerRating, reference, selectedConditions, t, tokenCatalog, vehicles, weapons]);
+
+  const faeCompanions: PrintableCompanion[] = character.merits.flatMap((merit) => {
+    if (merit.grantedBy) return [];
+    const id = resolveMeritDefinition(merit, meritCatalog)?.id;
+    if (id !== "ctl-2ed:fae-mount" && id !== "h-seemings:fae-pet") return [];
+    const config = normalizeMeritConfiguration(merit.configuration);
+    const name = String(config.name ?? "").trim() || t(id === "ctl-2ed:fae-mount" ? "ui.faeMount" : "ui.faePet");
+    if (id === "h-seemings:fae-pet") {
+      const animal = ANIMALS.find((item) => item.id === String(config.animalId ?? ANIMALS[0]?.id ?? ""));
+      return [{ name, kind: t("ui.faePet"), animal: animal ? animalPresentation(animal, locale) : undefined, details: [
+        { label: t("ui.dreadPower"), value: String(config.dread_power ?? "") },
+      ] }];
+    }
+    const abilities = stringList(config.abilities).slice(0, merit.dots);
+    const burden = abilities.includes("burdenback");
+    const many = abilities.includes("manyleague");
+    const thorn = abilities.includes("thornbeast");
+    const armorShell = abilities.includes("armorshell");
+    const attributes = { Intelligence: 1, Wits: 3, Resolve: 3, Strength: 5, Dexterity: 3, Stamina: 5 + (burden ? 2 : 0), Presence: 3, Manipulation: 1, Composure: 2 };
+    return [{ name, kind: `${t("ui.faeMount")} · ${"•".repeat(merit.dots)}`, details: [
+      { label: t("ui.attributes"), value: Object.entries(attributes).map(([trait, dots]) => `${systemTerm(trait, locale)} ${dots}`).join(", ") },
+      { label: t("ui.skills"), value: `${t("ui.athletics4Brawl1KickingSurvival2")}${abilities.includes("dreamspun") ? `, ${t("ui.stealth")} ${merit.dots}` : ""}` },
+      { label: t("ui.willpower"), value: "5" },
+      { label: t("ui.initiative"), value: String(5 + (many ? merit.dots : 0)) },
+      { label: t("ui.defense"), value: "7" },
+      { label: t("ui.speed"), value: String(many ? 38 : 19) },
+      { label: t("ui.size"), value: "7" },
+      { label: t("ui.health"), value: String(12 + (burden ? 2 : 0)) },
+      { label: t("ui.armor"), value: `${Math.max(Number(config.armor_general ?? 0), armorShell ? 3 : 0)}/${Math.max(Number(config.armor_ballistic ?? 0), armorShell ? 2 : 0)}` },
+      { label: t("ui.attacks"), value: `${t("ui.bite")} ${thorn ? "+2L" : "+0L"} (${5 + (thorn ? 2 : 0)} ${t("ui.dice")}); ${t("ui.kickOrClaw")} ${thorn ? "+4L" : "+2L"} (${6 + (thorn ? 2 : 0)} ${t("ui.dice")})` },
+      { label: t("ui.special"), value: [t("ui.canLiftFourTimesAsMuchAsA"), burden ? t("ui.canCarryRiders", { p1: 1 + merit.dots }) : t("ui.canCarryOneRider"), ...abilities.map((ability) => t(`ui.mountAbilities.${ability as "manyleague"}.description`))].join(" ") },
+      { label: t("ui.damage"), value: stringList(config.health_damage).join(", ") },
+    ] }];
+  });
 
   const [flowPageCount, setFlowPageCount] = useState(0);
   const total = 2 + flowPageCount;
@@ -422,6 +444,7 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
         </section>
       </div>
     </PrintPage>
-    <FlowPages blocks={flowBlocks} characterName={character.character.name} startPage={3} onReadyChange={onReadyChange} onPageCountChange={setFlowPageCount}/>
+    <FlowPages key={theme?.id ?? "default"} blocks={flowBlocks} characterName={character.character.name} startPage={3} onReadyChange={onReadyChange} onPageCountChange={setFlowPageCount}/>
+    {options.companionSheets && <PrintCompanionSheets character={character} extras={faeCompanions} renderPage={(content, index, count) => <PrintPage page={total + index + 1} total={total + count} title={t("ui.companions")}>{content}</PrintPage>}/>}
   </div>;
 }

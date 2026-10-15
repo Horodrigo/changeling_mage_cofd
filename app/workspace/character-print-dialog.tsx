@@ -43,6 +43,7 @@ export function CharacterPrintDialog({
   const [options, setOptions] = useState<GameLinePrintOptions>({
     expandedMeritDetails: false,
     powerDetails: false,
+    companionSheets: false,
   });
   const cleanupPrint = useCallback(() => {
     if (printCleanupRef.current !== null) window.clearTimeout(printCleanupRef.current);
@@ -136,6 +137,9 @@ export function CharacterPrintDialog({
         <div className="character-print-options"><label>
           <Checkbox checked={removePaperTexture} onCheckedChange={(checked) => setRemovePaperTexture(checked === true)}/>
           <span>{t("ui.printRemovePaperTexture")}</span>
+        </label><label>
+          <Checkbox checked={options.companionSheets} onCheckedChange={(checked) => setOptions((current) => ({ ...current, companionSheets: checked === true }))}/>
+          <span>{t("ui.printCompanionSheets")}</span>
         </label></div>
         {character.game_line === "CtL" && <div className="character-print-options">
           <label>

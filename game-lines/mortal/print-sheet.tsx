@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useLayoutEffect } from "react";
 import { derivedWithPermanentMerits } from "@/app/workspace/experience-shared";
 import { isBlankPrintCharacter } from "@/app/workspace/blank-print-character";
+import { PrintCompanionSheets } from "@/app/workspace/print-companion-sheets";
 import { PrintBoxes, PrintDots, PrintExperience, PrintField, PrintIntegrityTrack, PrintLines, PrintRatedLines } from "@/app/workspace/print-sheet-primitives";
 import { TraitBlock, stringList } from "@/app/workspace/sheet-primitives";
 import { useMeritHomebrews } from "@/app/use-merit-homebrews";
@@ -24,13 +25,13 @@ type CoreReference = {
   presentation: Record<string, { name?: string }>;
 };
 
-function MortalPrintPage({ page, children }: { page: number; children: React.ReactNode }) {
+function MortalPrintPage({ page, total = 2, children }: { page: number; total?: number; children: React.ReactNode }) {
   const { t } = useLanguage();
   return <section className={`cofd-print-page cofd-print-page-${page}`}>
     <div className="cofd-print-frame" aria-hidden="true"><i/><i/><i/><i/><span/><span/></div>
     <header><div><b>{t("ui.chroniclesTitle")}</b><em>{t("ui.ofTitle")}</em><strong>{t("ui.darknessTitle")}</strong></div><p>{t("ui.mortalTemplate")}</p></header>
     {children}
-    <footer>{page} / 2</footer>
+    <footer>{page} / {total}</footer>
   </section>;
 }
 
@@ -40,7 +41,7 @@ function Heading({ children }: { children: React.ReactNode }) {
 
 const objectList = (value: unknown) => Array.isArray(value) ? value as Array<Record<string, unknown>> : [];
 
-export function MortalPrintSheet({ character, catalogs, onReadyChange }: GameLinePrintSheetProps) {
+export function MortalPrintSheet({ character, catalogs, options, onReadyChange }: GameLinePrintSheetProps) {
   if (!catalogs) throw new Error("Mortal print sheet requires its catalog snapshot.");
   const { locale, t } = useLanguage();
   useLayoutEffect(() => { onReadyChange?.(true); return () => onReadyChange?.(false); }, [onReadyChange]);
@@ -93,5 +94,6 @@ export function MortalPrintSheet({ character, catalogs, onReadyChange }: GameLin
         ? <div className="cofd-print-notes-with-portrait"><section><Heading>{t("ui.notes")}</Heading><PrintLines values={notes} minimum={12}/></section><Image src={character.character.portrait.dataUrl} alt={character.character.name} width={160} height={208} unoptimized loading="eager"/></div>
         : <><Heading>{t("ui.notes")}</Heading><PrintLines values={notes} minimum={12}/></>}
     </MortalPrintPage>
+    {options.companionSheets && <PrintCompanionSheets character={character} renderPage={(content, index, count) => <MortalPrintPage page={index + 3} total={count + 2}>{content}</MortalPrintPage>}/>}
   </div>;
 }

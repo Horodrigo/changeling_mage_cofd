@@ -3,8 +3,10 @@
 import { useLayoutEffect } from "react";
 import { PrintBoxes, PrintDots, PrintExperience, PrintField, PrintIntegrityTrack, PrintLines, PrintRatedLines } from "@/app/workspace/print-sheet-primitives";
 import { isBlankPrintCharacter } from "@/app/workspace/blank-print-character";
+import { PrintCompanionSheets, type PrintableCompanion } from "@/app/workspace/print-companion-sheets";
 import { TraitBlock, stringList } from "@/app/workspace/sheet-primitives";
 import { EQUIPMENT, WEAPONS, combatItemPresentation, derivedTraitsWithArmor } from "@/lib/combat-equipment";
+import { ANIMALS, animalPresentation } from "@/lib/companions";
 import { ATTRIBUTES, SKILLS } from "@/lib/core/character/creation-rules";
 import { meritConfigurationTitle } from "@/lib/core/character/merit-configuration";
 import { effectiveMeritDots } from "@/lib/shared-merit-dots";
@@ -20,13 +22,13 @@ import { activeVampireItems, activeVampirePowers } from "./homebrew-catalog";
 import { mergeVampirePowers, mergeVampireReference } from "./catalog-homebrews";
 import { useVampireCatalogHomebrews } from "./use-catalog-homebrews";
 
-function VampirePrintPage({ page, children }: { page: number; children: React.ReactNode }) {
+function VampirePrintPage({ page, total = 2, children }: { page: number; total?: number; children: React.ReactNode }) {
   const { t } = useLanguage();
   return <section className={`vtr-print-page vtr-print-page-${page}`}>
     <div className="vtr-decorative-frame vtr-print-frame" aria-hidden="true"><span className="vtr-frame-edge vtr-frame-edge-top"/><span className="vtr-frame-edge vtr-frame-edge-bottom"/><span className="vtr-frame-edge vtr-frame-edge-left"/><span className="vtr-frame-edge vtr-frame-edge-right"/><span className="vtr-frame-center vtr-frame-center-top"/><span className="vtr-frame-center vtr-frame-center-bottom"/><span className="vtr-frame-side vtr-frame-side-top-left"/><span className="vtr-frame-side vtr-frame-side-top-right"/><span className="vtr-frame-side vtr-frame-side-bottom-left"/><span className="vtr-frame-side vtr-frame-side-bottom-right"/><span className="vtr-frame-corner vtr-frame-corner-top-left"/><span className="vtr-frame-corner vtr-frame-corner-top-right"/><span className="vtr-frame-corner vtr-frame-corner-bottom-left"/><span className="vtr-frame-corner vtr-frame-corner-bottom-right"/></div>
     <header><div><span>{t("ui.vampireTitle")}</span><strong>{t("ui.vampireSubtitle")}</strong></div><p>{t("ui.chroniclesOFDARKNESS")}</p></header>
     {children}
-    <footer>{page} / 2</footer>
+    <footer>{page} / {total}</footer>
   </section>;
 }
 
@@ -38,7 +40,7 @@ function localized(item: { name: string; translatedName: string } | undefined, l
   return item ? locale === "pt-BR" ? item.translatedName : item.name : "";
 }
 
-export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLinePrintSheetProps) {
+export function VampirePrintSheet({ character, catalogs, options, onReadyChange }: GameLinePrintSheetProps) {
   if (!catalogs) throw new Error("Vampire print sheet requires its catalog snapshot.");
   const { locale, t } = useLanguage();
   useLayoutEffect(() => { onReadyChange?.(true); return () => onReadyChange?.(false); }, [onReadyChange]);
@@ -85,6 +87,22 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
   const lashes = vampireBloodTetherLashes(powers).filter((item) => lashIds.has(item.id)).map((item) => localized(item, locale));
   const bloodBonds = objectArray(character.current_state.blood_bonds).map((item) => [String(item.subject ?? "").trim(), Number(item.stage) > 0 ? `${t("ui.stage")} ${Number(item.stage)}` : "", String(item.notes ?? "").trim()].filter(Boolean).join(" · "));
   const bloodPotency = Math.max(1, Math.min(10, Number(data.blood_potency ?? 1)));
+  const undeadCompanions: PrintableCompanion[] = (Array.isArray(data.undead_companions) ? data.undead_companions : []).flatMap((value) => {
+    if (!value || typeof value !== "object") return [];
+    const saved = value as Record<string, unknown>;
+    const base = ANIMALS.find((animal) => animal.id === saved.animal_id);
+    if (!base) return [];
+    const animal = animalPresentation(base, locale);
+    const undying = Array.isArray(data.devotion_ids) && data.devotion_ids.includes("devotion-undying-familiar") && Boolean(saved.undying);
+    const stamina = Math.max(1, Number(base.attributes.match(/Vigor\s+(\d+)/i)?.[1] ?? 1));
+    return [{ name: String(saved.name ?? "").trim() || animal.name, kind: t("ui.undeadFamiliars"), animal: {
+      ...animal,
+      attributes: animal.attributes.replace(locale === "pt-BR" ? /Inteligência\s+\d+/i : /Intelligence\s+\d+/i, locale === "pt-BR" ? "Inteligência 1" : "Intelligence 1"),
+    }, details: [
+      { label: t("ui.lifespan"), value: `${bloodPotency * stamina} ${t(undying ? "ui.weeksPerVitae" : "ui.nightsPerVitae")}` },
+      { label: t("ui.health"), value: (Array.isArray(saved.health_damage) ? saved.health_damage : []).join(", ") },
+    ] }];
+  });
   const derived = vampireDerived(character.attributes, character.skills, disciplines, bloodPotency, reference);
   const printDerived = isBlankPrintCharacter(character) ? undefined : derivedTraitsWithArmor(derived, data.combat_armor, data.combat_shield, data.combat_helmet);
   const health = Math.max(1, Number(derived.Health ?? 5));
@@ -122,5 +140,6 @@ export function VampirePrintSheet({ character, catalogs, onReadyChange }: GameLi
         <section><Heading>{t("ui.devotions")}</Heading><PrintLines values={devotions.slice(0, 10)} minimum={lashes.length ? 4 : 10}/>{lashes.length > 0 && <><Heading>{t("ui.lashesOfBloodTether")}</Heading><PrintLines values={lashes.slice(0, 6)} minimum={6}/></>}<Heading>{t("ui.bloodBonds")}</Heading><PrintLines values={bloodBonds.slice(0, 5)} minimum={5}/><Heading>{t("ui.combat")}</Heading><div className="vtr-print-combat"><header><span>{t("combat.weapons")}</span><span>{t("ui.damage")}</span><span>{t("ui.range")}</span><span>{t("ui.initiative")}</span><span>{t("ui.strength")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 5 }, (_, index) => { const weapon = weapons[index]; return <div key={weapon?.id ?? index}><i/><span>{weapon?.name}</span><span>{weapon?.damage}</span><span>{weapon?.ranges}</span><span>{weapon?.initiative}</span><span>{weapon?.strength}</span><span>{weapon?.size}</span></div>; })}</div><Heading>{t("ui.equipment")}</Heading><div className="vtr-print-equipment"><header><span>{t("ui.name")}</span><span>{t("ui.durability")}</span><span>{t("ui.structure")}</span><span>{t("ui.size")}</span></header>{Array.from({ length: 10 }, (_, index) => { const item = equipment[index]; return <div key={item?.id ?? index}><i/><span>{item?.name}</span><span>{item?.durability}</span><span>{item?.structure}</span><span>{item?.size}</span></div>; })}</div></section>
       </div>
     </VampirePrintPage>
+    {options.companionSheets && <PrintCompanionSheets character={character} extras={undeadCompanions} renderPage={(content, index, count) => <VampirePrintPage page={index + 3} total={count + 2}>{content}</VampirePrintPage>}/>}
   </div>;
 }

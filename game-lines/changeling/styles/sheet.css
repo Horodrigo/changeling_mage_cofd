@@ -2717,10 +2717,98 @@ body:has(.line-theme-ctl)
 .ctl-print-document[data-changeling-print-theme] .ctl-print-card > header small {
   color: color-mix(in srgb, var(--print-theme-ink) 68%, transparent);
 }
-.ctl-print-document[data-changeling-print-theme="elemental"] .ctl-print-title-mark {
+.ctl-print-document[data-changeling-print-theme] .ctl-print-title-mark {
+  width: 112mm;
+  margin-inline: auto;
   background-position: center;
-  background-size: 200% auto;
+  background-size: contain;
 }
+.ctl-print-document[data-changeling-print-theme="beast"] { --ctl-print-flow-height: 218mm; }
+.ctl-print-document[data-changeling-print-theme="beast"] .ctl-print-title-mark { width: 105mm; aspect-ratio: 1983 / 793; }
+.ctl-print-document[data-changeling-print-theme="darkling"] { --ctl-print-flow-height: 240mm; }
+.ctl-print-document[data-changeling-print-theme="darkling"] .ctl-print-title-mark { width: 125mm; aspect-ratio: 1768 / 296; }
+.ctl-print-document[data-changeling-print-theme="elemental"] { --ctl-print-flow-height: 236mm; }
+.ctl-print-document[data-changeling-print-theme="elemental"] .ctl-print-title-mark { width: 145mm; aspect-ratio: 1768 / 296; }
+.ctl-print-document[data-changeling-print-theme="fairest"] { --ctl-print-flow-height: 236mm; }
+.ctl-print-document[data-changeling-print-theme="fairest"] .ctl-print-title-mark { width: 128mm; }
+.ctl-print-document[data-changeling-print-theme="grimm"] { --ctl-print-flow-height: 218mm; }
+.ctl-print-document[data-changeling-print-theme="grimm"] .ctl-print-title-mark { width: 105mm; aspect-ratio: 1994 / 789; }
+.ctl-print-document[data-changeling-print-theme="ogre"] { --ctl-print-flow-height: 218mm; }
+.ctl-print-document[data-changeling-print-theme="ogre"] .ctl-print-title-mark { width: 84mm; aspect-ratio: 1788 / 880; }
+.ctl-print-document[data-changeling-print-theme="wizened"] { --ctl-print-flow-height: 240mm; }
+.ctl-print-document[data-changeling-print-theme="wizened"] .ctl-print-title-mark { width: 130mm; aspect-ratio: 2045 / 338; }
+.ctl-print-document[data-changeling-print-theme] .ctl-print-brand > div { width: 100%; }
+.ctl-print-document[data-changeling-print-theme] .ctl-print-brand strong { opacity: 0; }
+.ctl-print-document[data-changeling-print-theme] .ctl-print-brand p {
+  position: absolute;
+  right: 1mm;
+  bottom: 2.4mm;
+  margin: 0;
+}
+.ctl-print-document[data-changeling-print-theme="beast"] .ctl-print-brand p { translate: 0 2mm; }
+.ctl-print-document[data-changeling-print-theme="darkling"] .ctl-print-brand p { translate: -17mm 0; }
+.ctl-print-document[data-changeling-print-theme="grimm"] .ctl-print-brand p { translate: -13mm 2mm; }
+.ctl-print-document[data-changeling-print-theme="wizened"] .ctl-print-brand p { translate: -9mm 2mm; }
+.ctl-print-page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ctl-image-background-changeling, url("/game-lines/changeling/images/background-changeling.webp")) center / 50% auto no-repeat;
+  opacity: 0.15;
+  pointer-events: none;
+}
+.ctl-print-document[data-changeling-print-theme] .ctl-print-page::after { opacity: 0.2; }
+.ctl-print-document[data-changeling-print-theme="elemental"] .ctl-print-page::after { opacity: 0.3; }
+.ctl-print-document[data-changeling-print-theme="fairest"] .ctl-print-page::after { opacity: 0.15; }
+.ctl-print-document[data-changeling-print-theme="elemental"] .ctl-print-frame {
+  --ctl-frame-top-center-shift: 0mm -2.6mm;
+  --ctl-frame-top-left-line-shift: 0mm -2.6mm;
+  --ctl-frame-top-right-line-shift: 0mm -2.6mm;
+  --ctl-frame-bottom-center-shift: 0mm 2.6mm;
+  --ctl-frame-bottom-left-line-shift: 0mm 2.6mm;
+  --ctl-frame-bottom-right-line-shift: 0mm 2.6mm;
+  --ctl-frame-star-side-offset: 9mm;
+  --ctl-frame-star-side-width: 9.5mm;
+  --ctl-frame-star-side-height: 8mm;
+  --ctl-frame-star-side-half-height: 4mm;
+}
+.ctl-print-document[data-changeling-print-theme="ogre"] .ctl-print-frame {
+  --ctl-frame-star-side-offset: 6.6mm;
+  --ctl-frame-star-side-width: 11.6mm;
+  --ctl-frame-star-side-height: 11.6mm;
+  --ctl-frame-star-side-half-height: 5.8mm;
+}
+.ctl-print-document[data-changeling-print-theme="beast"] .ctl-print-frame {
+  --ctl-frame-star-side-offset: 7.4mm;
+  --ctl-frame-star-side-width: 6.9mm;
+  --ctl-frame-star-side-height: 14.8mm;
+  --ctl-frame-star-side-half-height: 3.4mm;
+}
+.ctl-print-document[data-changeling-print-theme="fairest"] .ctl-print-frame { --ctl-frame-star-side-offset: 8.5mm; --ctl-frame-star-side-width: 5.8mm; }
+.ctl-print-document[data-changeling-print-theme="darkling"] .ctl-print-frame .ctl-frame-star-side-top-left,
+.ctl-print-document[data-changeling-print-theme="darkling"] .ctl-print-frame .ctl-frame-star-side-top-right { translate: 0 0.3mm; }
+.ctl-print-document[data-changeling-print-theme="darkling"] .ctl-print-frame .ctl-frame-star-side-bottom-left,
+.ctl-print-document[data-changeling-print-theme="darkling"] .ctl-print-frame .ctl-frame-star-side-bottom-right { translate: 0 -0.5mm; }
+.ctl-print-document[data-changeling-print-theme="grimm"] .ctl-print-frame,
+.ctl-print-document[data-changeling-print-theme="wizened"] .ctl-print-frame {
+  --ctl-frame-star-side-offset: 7.4mm;
+  --ctl-frame-star-side-width: 6.9mm;
+  --ctl-frame-star-side-height: 6.9mm;
+  --ctl-frame-star-side-half-height: 3.4mm;
+}
+.ctl-print-document[data-changeling-print-theme="wizened"] .ctl-print-frame {
+  --ctl-frame-top-center-shift: 0mm 1mm;
+  --ctl-frame-top-left-line-shift: -1.3mm 1mm;
+  --ctl-frame-top-right-line-shift: 0mm 1mm;
+  --ctl-frame-bottom-center-shift: 0mm -0.8mm;
+  --ctl-frame-bottom-left-line-shift: -1.3mm -0.8mm;
+  --ctl-frame-bottom-right-line-shift: 0mm -0.8mm;
+}
+.ctl-print-document[data-changeling-print-theme="wizened"] .ctl-print-frame .ctl-frame-star-side { scale: 1.2; }
+.ctl-print-document[data-changeling-print-theme="wizened"] .ctl-print-frame .ctl-frame-star-side-top-left,
+.ctl-print-document[data-changeling-print-theme="wizened"] .ctl-print-frame .ctl-frame-star-side-top-right { translate: 0 1.3mm; }
+.ctl-print-document[data-changeling-print-theme="wizened"] .ctl-print-frame .ctl-frame-star-side-bottom-left,
+.ctl-print-document[data-changeling-print-theme="wizened"] .ctl-print-frame .ctl-frame-star-side-bottom-right { translate: 0 -1.3mm; }
 .ctl-print-page > * {
   position: relative;
   z-index: 1;
@@ -3001,13 +3089,20 @@ body:has(.line-theme-ctl)
 .ctl-print-page .skill-highlight-kith .official-trait-name::before {
   content: "";
   position: absolute;
-  left: -13mm;
+  left: -16.5mm;
   top: 50%;
-  width: 17mm;
-  height: 15mm;
-  transform: translateY(-50%);
+  width: 26.5mm;
+  height: 9.5mm;
+  transform: translateY(-55%);
   background: var(--ctl-image-skill-highlight, url("/game-lines/changeling/images/skill-highlight.webp")) center / contain no-repeat;
 }
+.ctl-print-document[data-changeling-print-theme="beast"] .skill-highlight-kith .official-trait-name::before { left: -14mm; height: 12mm; }
+.ctl-print-document[data-changeling-print-theme="darkling"] .skill-highlight-kith .official-trait-name::before { left: -15mm; height: 14mm; transform: translateY(-52%); }
+.ctl-print-document[data-changeling-print-theme="elemental"] .skill-highlight-kith .official-trait-name::before { left: -13.2mm; height: 16mm; transform: translateY(-48%); }
+.ctl-print-document[data-changeling-print-theme="fairest"] .skill-highlight-kith .official-trait-name::before {   width: 26.5mm; height: 10mm; transform: translateY(-50%); }
+.ctl-print-document[data-changeling-print-theme="grimm"] .skill-highlight-kith .official-trait-name::before { left: -14.6mm; height: 10mm; transform: translateY(-51%); }
+.ctl-print-document[data-changeling-print-theme="ogre"] .skill-highlight-kith .official-trait-name::before { left: -15.9mm; height: 10mm; transform: translateY(-49%); }
+.ctl-print-document[data-changeling-print-theme="wizened"] .skill-highlight-kith .official-trait-name::before { left: -14.5mm; height: 15mm; transform: translateY(-48%); }
 .ctl-print-merits {
   display: grid;
 }
@@ -3376,13 +3471,13 @@ body:has(.line-theme-ctl)
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 6mm;
-  height: 244mm;
+  height: var(--ctl-print-flow-height, 244mm);
   padding-top: 3mm;
   align-items: start;
 }
 .ctl-print-flow-column {
   min-width: 0;
-  height: 244mm;
+  height: var(--ctl-print-flow-height, 244mm);
   overflow: hidden;
 }
 .ctl-print-flow-group + .ctl-print-flow-group {
@@ -3576,7 +3671,7 @@ body:has(.line-theme-ctl)
 .ctl-print-measure-capacity {
   position: absolute;
   width: 1px;
-  height: 244mm;
+  height: var(--ctl-print-flow-height, 244mm);
 }
 .ctl-print-measure .ctl-print-flow-heading,
 .ctl-print-measure .ctl-print-flow-item {

@@ -3,13 +3,13 @@
 ## Prioridade 1 — concluir as traduções
 
 - **Mage G04 — Legacies:** localizar as **14 Legacies** e **36 Attainments** restantes em `game-lines/mage/catalog-data/legacies*.json`: títulos descritivos, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções. Preservar nomes próprios e identidades canônicas.
-- **Vampire — Conditions:** obter os textos completos de Hidden Devotions para **Coerced, Quelled, Manic e Melancholic** e localizar **Materialized e Power Surge**. Cadastrar a apresentação e o conteúdo de cada Condition sem confundir Coerced com Leveraged/Coagido Core.
+- **Vampire — Conditions:** obter os textos completos de Hidden Devotions para **Coerced, Quelled, Manic e Melancholic** e localizar **Materialized e Power Surge**. Cadastrar a apresentação e o conteúdo de cada Condition sem confundir Coerced com Leveraged/Coagido Core. (Ficará assim: Coerced → Coagido e Leveraged → Pressionado)
 - Conferir a apresentação EN/PT das traduções concluídas em criação, Experience e fichas Desktop/Mobile antes de passar às mudanças de regras.
 
 ## Prioridade 2 — escolhas e regras faltantes
 
 - **Lithopedia:** implementar a escolha do rito gratuito no primeiro ponto e dos ritos posteriores condicionados a Status na Bloodline (*Strange Shades* p. 28), em criação, Experience, ficha e estorno. Avisar o usuário antes de acrescentar esse subsistema; não inferir concessões em compras antigas.
-- **Order Archive:** adequar a seleção de pontuação ao tipo de arquivo em *Signs of Sorcery* p. 97 (página conferida visualmente): arquivos de Ordens sem Nome, cultos e Legados têm máximo de três pontos; repositórios antigos de ruínas ou coleções recuperadas não têm máximo e não oferecem *Caucus Assets*. O catálogo atual oferece 1–5 para todos e a configuração não registra o tipo de arquivo.
+- **Order Archive:** adequar a seleção de pontuação ao tipo de arquivo em *Signs of Sorcery* p. 97 (página conferida visualmente): arquivos de Ordens sem Nome, cultos e Legados têm máximo de três pontos; repositórios antigos de ruínas ou coleções recuperadas não têm máximo e não oferecem *Caucus Assets*. O catálogo atual oferece 1–5 para todos e a configuração não registra o tipo de arquivo. (Pesquise na web a respeito e me informe melhor)
 - **Hidden Devotions:** conferir na fonte original Rapidity e Slow and Steady, especialmente preço e adequação de alvos com procedimentos ou falas complexas.
 - **BFFs, Violent Coercion e Manic Depression:** conferir na fonte original a resistência de alvos sobrenaturais de outras linhas; o índice local e o catálogo divergem entre Composure + Tolerance e Composure + Blood Potency.
 - **Conditions de Vampire:** após localizar os textos, conferir efeitos, resolução, Ato e identidades próprios de Coerced, Quelled, Manic, Melancholic, Materialized e Power Surge, inclusive as referências a Addiction e Swooning.

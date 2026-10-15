@@ -33,3 +33,12 @@ body.character-printing-active .character-print-surface .game-print-document { w
   body.character-printing .character-print-surface .game-print-document { position: static !important; display: block !important; width: 210mm !important; min-width: 210mm !important; transform: none !important; }
 }
 .game-print-document.print-without-paper-texture { --print-paper-texture: none; }
+.cod-print-companion-content { padding: 6mm 4mm; color: inherit; font: inherit; }
+.cod-print-companion-content > header { border-bottom: 0.4mm solid currentColor; padding-bottom: 5mm; margin-bottom: 8mm; }
+.cod-print-companion-content > header small { display: block; font: 8pt Arial, sans-serif; text-transform: uppercase; }
+.cod-print-companion-content h1 { margin: 2mm 0; font-size: 24pt; }
+.cod-print-companion-content > header strong { font-weight: 400; }
+.cod-print-companion-fields { margin-bottom: 7mm; }
+.cod-print-companion-fields > div { display: grid; grid-template-columns: 38mm minmax(0, 1fr); gap: 3mm; border-bottom: 0.2mm solid currentColor; padding: 2mm 0; break-inside: avoid; }
+.cod-print-companion-fields b { font-weight: 700; }
+.cod-print-companion-fields span { overflow-wrap: anywhere; white-space: pre-wrap; }

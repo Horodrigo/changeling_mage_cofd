@@ -26,6 +26,7 @@ export type GameLineSheetProps = {
 export type GameLinePrintOptions = {
   expandedMeritDetails: boolean;
   powerDetails: boolean;
+  companionSheets: boolean;
 };
 
 export type GameLinePrintSheetProps = {
