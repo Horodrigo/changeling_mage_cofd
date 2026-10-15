@@ -91,13 +91,22 @@
     "initiation": "The initiate embraces an Exarchal model of sacred rulership and claims symbols of royal authority.",
     "organization": "Archons cultivate hierarchies of followers who explicitly acknowledge their rule.",
     "theory": "Authority is divine and truth follows the commands of those chosen to rule.",
-    "yantras": ["Classical monarchical symbols (+1).", "Giving a command that is obeyed (+1, or +2 if rolled).", "Using Retainer, Status, or Mystery Cult Influence to act through others (+1, or +2 if rolled)."],
-    "oblations": ["Assert authority or execute an Exarchal command for a scene.", "Flaunt power beyond practical need.", "Punish insubordination or treachery."],
+    "yantras": ["Classical monarchical symbols (+1).", "Giving a command that is obeyed (+1, or +2 if rolled).", "Using Retainer, Status, or Mystery Cult Influence to act through others on the mage's behalf (+1, or +2 if rolled)."],
+    "oblations": ["Spend a scene or hour asserting authority or carrying out Exarchal Mystery Commands.", "Flaunt power beyond practical need.", "Punish insubordination or treachery."],
     "attainments": [
-      { "rank": 1, "name": "Archon's Ear", "prerequisites": "Initiation", "rulingArcanum": 1, "orthodoxGnosis": 2, "novelGnosis": 3, "praxisName": "Pierce Deception", "description": "Duplicate Pierce Deception instantly, gaining symbolic truth against anyone who acknowledges the Archon's authority." },
-      { "rank": 2, "name": "My Word Is Law", "prerequisites": "Prime 2, Expression 2, Politics 2", "rulingArcanum": 2, "orthodoxGnosis": 2, "novelGnosis": 3, "requirements": { "arcana": { "Prime": 2 }, "skills": { "Expression": 2, "Politics": 2 } }, "description": "Duplicate Words of Truth instantly and call acknowledged subordinates to action." },
-      { "rank": 3, "name": "Look Upon My Works", "prerequisites": "Prime 3, Expression 3, Politics 3", "rulingArcanum": 3, "orthodoxGnosis": 4, "novelGnosis": 5, "requirements": { "arcana": { "Prime": 3 }, "skills": { "Expression": 3, "Politics": 3 } }, "description": "Duplicate Display of Power with instant use." }
-    ]
+      { "rank": 1, "name": "Archon's Ear", "prerequisites": "Initiation (Prime 2, Expression or Politics 2, Profane Tool (Scepters), any Status or Mystery Cult Influence 3)", "rulingArcanum": 1, "orthodoxGnosis": 2, "novelGnosis": 3, "praxisName": "Pierce Deception", "description": "Duplicate Pierce Deception with Reach for instant use and its symbolic sense of truth against anyone who acknowledges the Archon's authority.", "presentationPt": { "name": "Ouvido do Arconte", "prerequisites": "Iniciação (Primórdio 2, Expressão ou Política 2, Ferramenta Profana [Cetros], qualquer Status ou Influência em Culto de Mistério 3)", "description": "Reproduz Perfurar Enganos com Alcance para uso instantâneo e sua percepção simbólica da verdade contra quem reconhece a autoridade do Arconte." } },
+      { "rank": 2, "name": "My Word Is Law", "prerequisites": "Expression and Politics 2", "rulingArcanum": 2, "orthodoxGnosis": 2, "novelGnosis": 3, "requirements": { "skills": { "Expression": 2, "Politics": 2 } }, "description": "Duplicate Words of Truth with Reach for instant use and for calling subjects to action, limited to those who acknowledge the Archon's authority.", "presentationPt": { "name": "Minha Palavra É Lei", "prerequisites": "Expressão e Política 2", "description": "Reproduz Palavras de Verdade com Alcance para uso instantâneo e para convocar os alvos à ação, somente contra quem reconhece a autoridade do Arconte." } },
+      { "rank": 3, "name": "Look Upon My Works", "prerequisites": "Prime 3, Expression and Politics 3", "rulingArcanum": 3, "orthodoxGnosis": 4, "novelGnosis": 5, "requirements": { "arcana": { "Prime": 3 }, "skills": { "Expression": 3, "Politics": 3 } }, "description": "Duplicate Display of Power with Reach for instant use.", "presentationPt": { "name": "Contemplai Minhas Obras", "prerequisites": "Primórdio 3, Expressão e Política 3", "description": "Reproduz Exibição de Poder com Alcance para uso instantâneo." } }
+    ],
+    "presentationPt": {
+      "name": "Arcontes Tírios",
+      "prerequisites": "Primórdio 2, Expressão ou Política 2, Ferramenta Profana (Cetros) e qualquer Status ou Influência em Culto de Mistério 3.",
+      "initiation": "O iniciado abraça um modelo Exarcal de realeza sagrada e reivindica símbolos de autoridade régia.",
+      "organization": "Os Arcontes cultivam hierarquias de seguidores que reconhecem explicitamente seu domínio.",
+      "theory": "A autoridade é divina, e a verdade obedece às ordens daqueles escolhidos para governar.",
+      "yantras": ["Cetros, peles de leão, mantos púrpura e outros símbolos monárquicos clássicos (+1).", "Dar uma ordem que seja obedecida (+1, ou +2 se houver jogada).", "Usar Lacaio, Status ou Influência em Culto de Mistério para que outros façam algo em nome do mago relacionado à magia (+1, ou +2 se houver jogada)."],
+      "oblations": ["Passar uma cena ou hora impondo sua autoridade ou cumprindo Ordens Misteriosas Exarcais.", "Exibir poder diante dos outros além do necessário para atingir um objetivo.", "Punir insubordinação ou traição."]
+    }
   },
   {
     "id": "shapers-of-the-invisible",

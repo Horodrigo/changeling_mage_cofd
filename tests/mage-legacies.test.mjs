@@ -426,6 +426,18 @@ test("Nighthawks presents both Attainments in PT and checks the printed second p
   assert.deepEqual(definition, original);
 });
 
+test("Tyrian Archons presents all three Attainments in PT with the printed second prerequisite", () => {
+  const definition = LEGACIES.find((item) => item.id === "tyrian-archons");
+  const original = structuredClone(definition);
+  const pt = legacyPresentation(definition, "pt-BR");
+  assert.equal(pt.name, "Arcontes Tírios");
+  assert.deepEqual(pt.attainments.map((item) => item.name), ["Ouvido do Arconte", "Minha Palavra É Lei", "Contemplai Minhas Obras"]);
+  assert.equal(pt.attainments[1].prerequisites, "Expressão e Política 2");
+  assert.deepEqual(definition.attainments[1].requirements, { skills: { Expression: 2, Politics: 2 } });
+  assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
+  assert.deepEqual(definition, original);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
