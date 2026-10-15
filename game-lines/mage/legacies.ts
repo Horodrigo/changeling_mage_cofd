@@ -11,7 +11,7 @@ import type { MeritSelection } from "@/lib/core/character/character-types";
 
 type LegacyCharacter = {id?:string;line_data:Record<string,unknown>;skills:Record<string,number>;merits?:MeritSelection[];specializations?:Array<{skill?:string;name?:string}>};
 
-type LegacyRequirements={arcana?:Record<string,number>;skills?:Record<string,number>;anySkills?:{names:string[];rating:number;count?:number};specializations?:Array<{skill:string;includes?:string}>;merits?:Array<{definitionId:string;name:string;dots:number;domain?:string}>;anyMerits?:Array<{definitionIds:string[];names:string[];dots:number}>};
+type LegacyRequirements={arcana?:Record<string,number>;skills?:Record<string,number>;anySkills?:{names:string[];rating:number;count?:number;specializations?:Record<string,string>};specializations?:Array<{skill:string;includes?:string}>;merits?:Array<{definitionId:string;name:string;dots:number;domain?:string}>;anyMerits?:Array<{definitionIds:string[];names:string[];dots:number}>};
 
 export type LegacyAttainment = {
   rank: 1|2|3|4|5;
@@ -78,13 +78,17 @@ export function legacyArcanumRating(arcana:Record<string,number>,name:string){
   return Number(arcana[name]??0);
 }
 
+function hasLegacySpecialization(character:LegacyCharacter,skill:string,includes:string){
+  return (character.specializations??[]).some(item=>legacySkillRating({[String(item.skill??"")]:1},skill)>0&&new RegExp(includes,"i").test(String(item.name??"")));
+}
+
 function legacyRequirementsMet(character:LegacyCharacter,requirements:LegacyRequirements|undefined,catalog:readonly DefinitionIdentity[]){
   if(!requirements)return true;
   const arcana=(character.line_data.arcana??{}) as Record<string,number>;
   if(Object.entries(requirements.arcana??{}).some(([name,rating])=>legacyArcanumRating(arcana,name)<rating))return false;
   if(Object.entries(requirements.skills??{}).some(([name,rating])=>legacySkillRating(character.skills,name)<rating))return false;
-  if(requirements.anySkills){const {names,rating,count=1}=requirements.anySkills;if(names.filter(name=>legacySkillRating(character.skills,name)>=rating).length<count)return false;}
-  if(requirements.specializations?.some(required=>!(character.specializations??[]).some(item=>legacySkillRating({[String(item.skill??"")]:1},required.skill)>0&&new RegExp(required.includes??".","i").test(String(item.name??"")))))return false;
+  if(requirements.anySkills){const {names,rating,count=1,specializations={}}=requirements.anySkills;if(names.filter(name=>legacySkillRating(character.skills,name)>=rating&&(!specializations[name]||hasLegacySpecialization(character,name,specializations[name]))).length<count)return false;}
+  if(requirements.specializations?.some(required=>!hasLegacySpecialization(character,required.skill,required.includes??".")))return false;
   const hasMerit=(ids:readonly string[],dots:number,domain?:string)=>(character.merits??[]).some(item=>
     ids.includes(resolveMeritDefinition(item,catalog)?.id??"")&&item.dots>=dots&&
     (domain===undefined||item.configuration?.domain===domain)
@@ -98,7 +102,8 @@ function requirementItems(character:LegacyCharacter,requirements:LegacyRequireme
   if(!requirements)return [];
   const arcana=(character.line_data.arcana??{}) as Record<string,number>;
   const items=[...Object.entries(requirements.arcana??{}).map(([name,rating])=>({label:`${systemTerm(name,locale)} ${rating}`,met:legacyArcanumRating(arcana,name)>=rating})),...Object.entries(requirements.skills??{}).map(([name,rating])=>({label:`${systemTerm(name,locale)} ${rating}`,met:legacySkillRating(character.skills,name)>=rating}))];
-  if(requirements.anySkills){const {names,rating,count=1}=requirements.anySkills;items.push({label:`${count>1?mageMessages[locale].ui.legacyAnySkillsPrefix.replace("{count}",String(count)):""}${names.map(name=>systemTerm(name,locale)).join(" /  ")} ${rating}`,met:names.filter(name=>legacySkillRating(character.skills,name)>=rating).length>=count});}
+  if(requirements.anySkills){const {names,rating,count=1,specializations={}}=requirements.anySkills;items.push({label:`${count>1?mageMessages[locale].ui.legacyAnySkillsPrefix.replace("{count}",String(count)):""}${names.map(name=>`${systemTerm(name,locale)}${specializations[name]?` (${systemTerm(specializations[name].split("|")[0],locale)})`:""}`).join(" /  ")} ${rating}`,met:names.filter(name=>legacySkillRating(character.skills,name)>=rating&&(!specializations[name]||hasLegacySpecialization(character,name,specializations[name]))).length>=count});}
+  if(requirements.specializations)items.push(...requirements.specializations.map(required=>({label:`${systemTerm(required.skill,locale)} (${systemTerm((required.includes??"").split("|")[0],locale)})`,met:hasLegacySpecialization(character,required.skill,required.includes??".")})));
   return items;
 }
 

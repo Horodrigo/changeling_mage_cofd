@@ -484,6 +484,22 @@ test("Intendants of the Building presents its three Attainments in PT without ch
   assert.deepEqual(definition, original);
 });
 
+test("Intendants requires Geomancy Specialty with Occult 3 or accepts Larceny 3 for its third Attainment", () => {
+  const definition = LEGACIES.find(item => item.id === "intendants-of-the-building");
+  const character = { ...mage({ gnosis: 4, arcana: { Prime: 3 } }), skills: { Occult: 3, Larceny: 2 }, specializations: [] };
+  assert.equal(legacyAttainmentPrerequisites(character, definition, 3), false);
+  for (const name of ["Geomancy", "Geomancia"]) {
+    character.specializations = [{ skill: "Occult", name }];
+    assert.equal(legacyAttainmentPrerequisites(character, definition, 2), true);
+    assert.equal(legacyAttainmentPrerequisites(character, definition, 3), true);
+  }
+  character.specializations = [{ skill: "Academics", name: "Geomancy" }];
+  assert.equal(legacyAttainmentPrerequisites(character, definition, 3), false);
+  character.specializations = [];
+  character.skills.Larceny = 3;
+  assert.equal(legacyAttainmentPrerequisites(character, definition, 3), true);
+});
+
 test("House of Ariadne presents five Attainments in PT and its second requires only Time 2", () => {
   const definition = LEGACIES.find((item) => item.id === "house-of-ariadne");
   const original = structuredClone(definition);

@@ -16,6 +16,7 @@ const ENGLISH_TERMS: Record<string,string> = {
   "Morte":"Death", "Destino":"Fate", "Forças":"Forces", "Vida":"Life",
   "Matéria":"Matter", "Mente":"Mind", "Primórdio":"Prime", "Espaço":"Space",
   "Espírito":"Spirit", "Tempo":"Time",
+  "Geomancia":"Geomancy",
   "Fera":"Beast", "Trevoso":"Darkling", "Elemental":"Elemental",
   "Belíssimo":"Fairest", "Ogro":"Ogre", "Mirrado":"Wizened",
   "Coroa":"Crown", "Joias":"Jewels", "Espelho":"Mirror", "Escudo":"Shield",
@@ -114,7 +115,7 @@ const ENGLISH_TERMS: Record<string,string> = {
   };
 
 const PORTUGUESE_TERMS: Record<string,string> = {
-  Death:"Morte", Fate:"Destino", Forces:"Forças", Life:"Vida", Matter:"Matéria", Mind:"Mente", Prime:"Primórdio", Space:"Espaço", Spirit:"Espírito", Time:"Tempo",
+  Death:"Morte", Fate:"Destino", Forces:"Forças", Life:"Vida", Matter:"Matéria", Mind:"Mente", Prime:"Primórdio", Space:"Espaço", Spirit:"Espírito", Time:"Tempo", Geomancy:"Geomancia",
   Beast:"Fera", Darkling:"Trevoso", Elemental:"Elemental", Fairest:"Belíssimo", Ogre:"Ogro", Wizened:"Mirrado",
   Mental:"Mental", Physical:"Físico", Social:"Social",
   Intelligence:"Inteligência", Wits:"Raciocínio", Resolve:"Perseverança", Strength:"Força", Dexterity:"Destreza", Stamina:"Vigor", Presence:"Presença", Manipulation:"Manipulação", Composure:"Compostura",
