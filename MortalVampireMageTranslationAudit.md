@@ -2,7 +2,7 @@
 
 ## Prioridade 1 — concluir as traduções
 
-- **Mage G04 — Legacies:** localizar as **2 Legacies** e **5 Attainments** restantes em `game-lines/mage/catalog-data/legacies*.json`: títulos descritivos, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções. Preservar nomes próprios e identidades canônicas.
+- **Mage G04 — Legacies:** localizar a **1 Legacy** e os **3 Attainments** restantes em `game-lines/mage/catalog-data/legacies*.json`: títulos descritivos, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções. Preservar nomes próprios e identidades canônicas.
 - **Vampire — Conditions:** obter os textos completos de Hidden Devotions para **Coerced, Quelled, Manic e Melancholic** e localizar **Materialized e Power Surge**. Cadastrar a apresentação e o conteúdo de cada Condition sem confundir Coerced com Leveraged/Coagido Core. (Ficará assim: Coerced → Coagido e Leveraged → Pressionado)
 - Conferir a apresentação EN/PT das traduções concluídas em criação, Experience e fichas Desktop/Mobile antes de passar às mudanças de regras.
 

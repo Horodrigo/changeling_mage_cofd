@@ -510,6 +510,18 @@ test("Nagaraja preserves its proper name and presents all five Attainments in PT
   assert.deepEqual(definition, original);
 });
 
+test("Keepers of the Covenant presents both Attainments in PT without changing identities", () => {
+  const definition = LEGACIES.find((item) => item.id === "keepers-of-the-covenant");
+  const original = structuredClone(definition);
+  const pt = legacyPresentation(definition, "pt-BR");
+  assert.equal(pt.name, "Guardiões do Pacto");
+  assert.deepEqual(pt.attainments.map((item) => item.name), ["Juramento de Síntese", "Convite Sagrado"]);
+  assert.match(pt.attainments[0].description, /cinco pontos/);
+  assert.match(pt.attainments[1].description, /uma cena de preparação/);
+  assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
+  assert.deepEqual(definition, original);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
