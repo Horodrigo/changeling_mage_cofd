@@ -1401,6 +1401,7 @@ export function VampireCharacterPaper({
     ritualDisciplines: <RitualDisciplines
         powers={powers}
         bloodSorcery={bloodSorcery}
+        lithopediaRating={Number(disciplines.Lithopedia ?? 0)}
         locale={locale}/>,
     purchasedPowers: <PurchasedPowers character={character} powers={powers} locale={locale} meritCatalog={merits}/>,
     tricks: <TricksOfTheDamned
@@ -2106,17 +2107,22 @@ function PowerMechanics({
 function RitualDisciplines({
   powers,
   bloodSorcery,
+  lithopediaRating,
   locale,
 }: {
   powers: VampirePowers;
   bloodSorcery: Record<string, unknown>;
+  lithopediaRating: number;
   locale: string;
 }) {
   const { t } = useLanguage();
   const selected = (powers.ritualDisciplines ?? []).filter(
     (item) => Number(bloodSorcery[ritualFields[item.id][0]] ?? 0) > 0,
   );
-  if (!selected.length) return null;
+  const lithopedia = powers.disciplines.find(item => item.id === "lithopedia");
+  const lithopediaIds = new Set(stringList(bloodSorcery.lithopedia_rite_ids));
+  const lithopediaKnown = powers.devotions.filter(item => item.category === "Lithopedia Rites" && lithopediaIds.has(item.id));
+  if (!selected.length && (!lithopediaRating || !lithopedia)) return null;
   return (
     <>
       <SheetHeading>{t("ui.bloodSorceryDisciplines")}</SheetHeading>
@@ -2164,6 +2170,19 @@ function RitualDisciplines({
             </details>
           );
         })}
+        {lithopediaRating > 0 && lithopedia && (
+          <details className="rule-power-card vampire-discipline-card">
+            <summary className="rule-power-summary"><strong>{localized(lithopedia, locale)}</strong><DotValue value={lithopediaRating} /></summary>
+            <div className="rule-power-details has-levels">
+              {lithopediaKnown.map(rite => vampirePowerPresentation(rite, locale)).map(rite => (
+                <details key={rite.id} className="rule-power-card vampire-discipline-level">
+                  <summary className="rule-power-summary"><strong>{"•".repeat(Number(rite.rating ?? 0))} {localized(rite, locale)}</strong><small>{rite.summary}</small></summary>
+                  <div className="rule-power-details"><PowerMechanics mechanics={rite} compact /></div>
+                </details>
+              ))}
+            </div>
+          </details>
+        )}
       </div>
     </>
   );

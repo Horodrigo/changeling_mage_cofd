@@ -12,7 +12,7 @@ export type VampireAdvancementUndo =
   | { kind: "trait"; group: "attributes" | "skills"; name: string; amount?: number }
   | { kind: "specialty"; skill: string; name: string }
   | { kind: "merit"; definitionId?: string; name: string; dots: number; instanceId?: string; index?: number }
-  | { kind: "discipline"; name: string; amount?: number; recipes?: { disciplineId: "ortam"; ids: string[]; rating: number; cost: number } }
+  | { kind: "discipline"; name: string; amount?: number; recipes?: { disciplineId: "ortam"; ids: string[]; rating: number; cost: number }; lithopedia?: { ids: string[]; rating: number } }
   | { kind: "bloodPotency" | "humanity" | "humanityLoss" | "willpower"; amount?: number }
   | { kind: "devotion"; id: string; target?: DevotionTarget; cost?: number }
   | { kind: "discipline-option"; id: string; cost: number }
@@ -32,6 +32,14 @@ const withoutMany = (value: unknown, ids: readonly string[]) =>
 
 /** Undo only one purchase delta so later Vampire purchases remain intact. */
 export function refundVampireAdvancement(sheet: CharacterSheet, undo: VampireAdvancementUndo, powers?: Pick<VampirePowers, "disciplines" | "devotions"> & Partial<Pick<VampirePowers, "disciplineOptions">>, meritCatalog: readonly DefinitionIdentity[] = []) {
+  if (undo.kind === "discipline" && undo.lithopedia) {
+    const { ids, rating } = undo.lithopedia;
+    const owned = sheet.line_data.blood_sorcery && typeof sheet.line_data.blood_sorcery === "object" ? (sheet.line_data.blood_sorcery as Record<string, unknown>).lithopedia_rite_ids : [];
+    const current = (sheet.line_data.disciplines as Record<string, number> | undefined)?.Lithopedia;
+    if (undo.name !== "Lithopedia" || current !== rating || !Array.isArray(ids) || new Set(ids).size !== ids.length
+      || ids.some(id => !powers?.devotions.some(item => item.id === id && item.category === "Lithopedia Rites" && item.bloodlineId === "csalad"))
+      || ids.some(id => !Array.isArray(owned) || owned.filter(item => item === id).length !== 1)) return false;
+  }
   if (undo.kind === "discipline" && undo.recipes) {
     const { disciplineId, ids, rating, cost } = undo.recipes;
     const amount = undo.amount ?? 1;
@@ -82,6 +90,7 @@ function applyVampireAdvancementUndo(sheet: CharacterSheet, undo: VampireAdvance
     disciplines[undo.name] = subtractDots(disciplines[undo.name], undo.amount ?? 1);
     sheet.line_data.disciplines = disciplines;
     if (undo.recipes) sheet.line_data.devotion_ids = withoutMany(sheet.line_data.devotion_ids, undo.recipes.ids);
+    if (undo.lithopedia) sheet.line_data.blood_sorcery = { ...(sheet.line_data.blood_sorcery as Record<string, unknown> ?? {}), lithopedia_rite_ids: withoutMany((sheet.line_data.blood_sorcery as Record<string, unknown> | undefined)?.lithopedia_rite_ids, undo.lithopedia.ids) };
   } else if (undo.kind === "bloodPotency") sheet.line_data.blood_potency = subtractDots(sheet.line_data.blood_potency, undo.amount ?? 1, 1);
   else if (undo.kind === "humanity") sheet.line_data.humanity = subtractDots(sheet.line_data.humanity, undo.amount ?? 1);
   else if (undo.kind === "humanityLoss") {

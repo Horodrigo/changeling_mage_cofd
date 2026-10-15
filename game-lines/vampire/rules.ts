@@ -97,6 +97,7 @@ function normalizeVampire(character: CharacterSheet): CharacterSheet {
         ...bloodSorcery,
         cruac_rating: boundedRating(bloodSorcery.cruac_rating, 0, 5, 0),
         cruac_rite_ids: stringArray(bloodSorcery.cruac_rite_ids),
+        lithopedia_rite_ids: stringArray(bloodSorcery.lithopedia_rite_ids),
         theban_rating: boundedRating(bloodSorcery.theban_rating, 0, 5, 0),
         theban_miracle_ids: stringArray(bloodSorcery.theban_miracle_ids),
         kimiya_rating: boundedRating(bloodSorcery.kimiya_rating, 0, 5, 0),

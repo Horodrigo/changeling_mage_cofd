@@ -37,6 +37,7 @@ import { vampirePowerPresentation } from "./power-presentation";
 import { ORTAM_RECIPE_IDS, ortamRecipeSelections } from "./ortam-recipes";
 
 import { devotionTargetName, linkedDevotionQuote, linkedDevotionTargets, type DevotionTarget } from "./linked-devotions";
+import { freeLithopediaRatings, freeLithopediaSelections, hasCsaladStatus, lithopediaRites } from "./lithopedia";
 
 type PurchaseType = "attribute" | "skill" | "specialty" | "merit" | "discipline" | "discipline-option" | "blood-potency" | "humanity" | "willpower" | "devotion" | "lash" | "cruac" | "theban" | "kimiya" | "therion" | "gilded" | "rite" | "miracle" | "formula" | "sacrilege" | "invocation" | "detournement" | "coil" | "scale";
 type HistoryEntry = VampireExperienceEntry;
@@ -121,6 +122,8 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const bloodTetherRating = Number(disciplines["Blood Tether"] ?? 0);
   const bloodTetherLashes = vampireBloodTetherLashes(powers);
   const bloodSorcery = character.line_data.blood_sorcery && typeof character.line_data.blood_sorcery === "object" ? character.line_data.blood_sorcery as Record<string, unknown> : {};
+  const lithopediaCatalog = lithopediaRites(powers.devotions);
+  const knownLithopedia = new Set(Array.isArray(bloodSorcery.lithopedia_rite_ids) ? bloodSorcery.lithopedia_rite_ids.map(String) : []);
   const ordo = character.line_data.ordo_dracul && typeof character.line_data.ordo_dracul === "object" ? character.line_data.ordo_dracul as Record<string, unknown> : {};
   const coilRatings = ordo.coil_ratings && typeof ordo.coil_ratings === "object" ? ordo.coil_ratings as Record<string, number> : {};
   const zirnitraRating = Number(coilRatings["coil-zirnitra"] ?? 0);
@@ -232,6 +235,9 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
   const intendedRating = ratedCurrent < ratedMaximum ? Math.max(ratedCurrent + 1, Math.min(ratedMaximum, targetRating || ratedCurrent + 1)) : ratedCurrent;
   const ratingAmount = Math.max(0, intendedRating - ratedCurrent);
   const ritualPurchase = purchase === "discipline" && Boolean(selectedRitualDiscipline);
+  const lithopediaPurchase = purchase === "discipline" && chosenOption === "Lithopedia" && bloodlineId === "csalad";
+  const lithopediaRatings = lithopediaPurchase ? freeLithopediaRatings(ratedCurrent, intendedRating, hasCsaladStatus(character.merits)) : [];
+  const lithopediaSelections = freeLithopediaSelections(lithopediaCatalog, knownLithopedia, freePowerIds, lithopediaRatings);
   const freePowerCatalog = selectedRitualDiscipline?.id === "cruac" ? powers.cruacRites.filter((item) => activePower(item) && (!item.bloodlineId || item.bloodlineId === bloodlineId) && (!item.covenantIds || item.covenantIds.some((id) => covenantIds.includes(id)))) : selectedRitualDiscipline?.id === "theban" ? powers.thebanMiracles.filter((item) => activePower(item) && (!item.bloodlineId || item.bloodlineId === bloodlineId)) : selectedRitualDiscipline?.id === "kimiya" ? powers.kimiyaFormulae : selectedRitualDiscipline?.id === "therion" ? powers.therionSacrileges : selectedRitualDiscipline?.id === "gilded-cage" ? powers.gildedInvocations.filter(activePower) : [];
   const freePowerHumanityLimit = selectedRitualDiscipline?.id === "theban" ? Number(character.line_data.humanity ?? 7) : 10;
   const freePowerSelections = ritualPurchase ? freeBloodSorcerySelections(freePowerCatalog, knownRites, freePowerIds, ratedCurrent, intendedRating, freePowerHumanityLimit) : [];
@@ -350,7 +356,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     || purchase === "invocation" && (!gildedCageAvailable || !hasStatus("architects-of-the-monolith") || gildedRating < 1)
     || purchase === "detournement" && !hasStatus("moulding-room")
     || purchase === "scale" && (!hasStatus("ordo-dracul") || Math.max(0, ...Object.values(coilRatings)) < 1);
-  const unavailable = (ortamPurchase && (!ortamSelections || ortamSelections.some(id => !id))) || !chosen || !Number.isInteger(cost) || cost < 1 || (purchase === "discipline-option" && (knownDisciplineOptions.has(chosen) || !vampireDisciplineOptionPrerequisitesMet(selectedPower, character, powers, meritCatalog))) || meritUnavailable || lacksPowerAccess || (purchase === "devotion" && (!vampireDevotionAvailable(selectedPower, character) || !vampireDevotionPrerequisitesMet(selectedPower, character, powers, meritCatalog, selectedLinkedTarget) || Boolean(selectedPower?.linkedPower && !selectedLinkedTarget))) || (ritualPurchase && freePowerSelections.some((id) => !id)) || (purchase === "attribute" && ratedCurrent >= limit) || (purchase === "skill" && ratedCurrent >= limit) || (purchase === "discipline" && ratedCurrent >= ratedMaximum) || (purchase === "blood-potency" && ratedCurrent >= 10) || (purchase === "humanity" && ratedCurrent >= humanityMaximum) || (purchase === "willpower" && Number(state.willpower_lost_dots ?? 0) <= packWillpowerInvestment) || (purchase === "specialty" && !specialtyName.trim());
+  const unavailable = (ortamPurchase && (!ortamSelections || ortamSelections.some(id => !id))) || (lithopediaPurchase && lithopediaSelections.some(id => !id)) || !chosen || !Number.isInteger(cost) || cost < 1 || (purchase === "discipline-option" && (knownDisciplineOptions.has(chosen) || !vampireDisciplineOptionPrerequisitesMet(selectedPower, character, powers, meritCatalog))) || meritUnavailable || lacksPowerAccess || (purchase === "devotion" && (!vampireDevotionAvailable(selectedPower, character) || !vampireDevotionPrerequisitesMet(selectedPower, character, powers, meritCatalog, selectedLinkedTarget) || Boolean(selectedPower?.linkedPower && !selectedLinkedTarget))) || (ritualPurchase && freePowerSelections.some((id) => !id)) || (purchase === "attribute" && ratedCurrent >= limit) || (purchase === "skill" && ratedCurrent >= limit) || (purchase === "discipline" && ratedCurrent >= ratedMaximum) || (purchase === "blood-potency" && ratedCurrent >= 10) || (purchase === "humanity" && ratedCurrent >= humanityMaximum) || (purchase === "willpower" && Number(state.willpower_lost_dots ?? 0) <= packWillpowerInvestment) || (purchase === "specialty" && !specialtyName.trim());
   const saveState = (patch: Record<string, unknown>) => { const next = structuredClone(character); next.current_state = { ...next.current_state, ...patch }; updateSheet(next); };
   const buy = () => {
     if (unavailable || (!builderMode && available < cost)) return setFeedback(t("ui.purchaseUnavailableOrInsufficientExperience"));
@@ -387,6 +393,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
     else if (purchase === "discipline") {
       next.line_data.disciplines = { ...disciplines, [chosen]: intendedRating };
       if (ortamPurchase) next.line_data.devotion_ids = [...(Array.isArray(character.line_data.devotion_ids) ? character.line_data.devotion_ids : []), ...ortamSelections!];
+      if (lithopediaPurchase) next.line_data.blood_sorcery = { ...bloodSorcery, lithopedia_rite_ids: [...knownLithopedia, ...lithopediaSelections] };
     }
     else if (purchase === "blood-potency") next.line_data.blood_potency = intendedRating;
     else if (purchase === "humanity") next.line_data.humanity = intendedRating;
@@ -422,7 +429,7 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
       : purchase === "discipline" && selectedRitualDiscipline?.id === "theban" ? { kind: "theban", ids: freePowerSelections, amount: ratingAmount }
       : purchase === "discipline" && selectedRitualDiscipline && ["kimiya", "therion", "gilded-cage"].includes(selectedRitualDiscipline.id) ? { kind: "bloodSorcery", ratingKey: selectedRitualDiscipline.id === "kimiya" ? "kimiya_rating" : selectedRitualDiscipline.id === "therion" ? "therion_rating" : "gilded_cage_rating", idsKey: selectedRitualDiscipline.id === "kimiya" ? "kimiya_formula_ids" : selectedRitualDiscipline.id === "therion" ? "therion_sacrilege_ids" : "gilded_invocation_ids", ids: freePowerSelections, amount: ratingAmount }
       : purchase === "discipline" && selectedCoil ? { kind: "coil", id: selectedCoil.id, amount: ratingAmount }
-      : purchase === "discipline" ? { kind: "discipline", name: chosen, amount: ratingAmount, ...(ortamPurchase ? { recipes: { disciplineId: "ortam", ids: ortamSelections!, rating: intendedRating, cost } } : {}) }
+      : purchase === "discipline" ? { kind: "discipline", name: chosen, amount: ratingAmount, ...(ortamPurchase ? { recipes: { disciplineId: "ortam", ids: ortamSelections!, rating: intendedRating, cost } } : {}), ...(lithopediaPurchase ? { lithopedia: { ids: lithopediaSelections, rating: intendedRating } } : {}) }
       : purchase === "blood-potency" ? { kind: "bloodPotency", amount: ratingAmount }
       : purchase === "humanity" ? { kind: "humanity", amount: ratingAmount }
       : purchase === "willpower" ? { kind: "willpower", amount: ratingAmount }
@@ -544,6 +551,12 @@ export function VampireExperiencePanel({ character, updateSheet, catalogs, build
               const mandatory = ratedCurrent === 0 && index === 0 && !knownDevotions.has(ORTAM_RECIPE_IDS[0]);
               const recipeOptions = powers.devotions.filter(item => ORTAM_RECIPE_IDS.some(id => id === item.id) && !knownDevotions.has(item.id) && (mandatory ? item.id === ORTAM_RECIPE_IDS[0] : !ortamSelections!.some((id, other) => other !== index && id === item.id))).map(item => ({ value: item.id, label: powerName(item, locale) }));
               return <label key={`ortam-${index}`}>{t("ui.freeOrtamRecipe")} {index + 1}<RuleSelect value={selectedId || "__choose"} onChange={id => setFreePowerIds(() => { const next = [...ortamSelections!]; next[index] = id; return next; })} options={mandatory ? recipeOptions : [{ value: "__choose", label: t("ui.select"), localized: true }, ...recipeOptions]} /></label>;
+            })}
+            {lithopediaPurchase && lithopediaSelections.map((selectedId, index) => {
+              const rating = lithopediaRatings[index];
+              const selectedElsewhere = lithopediaSelections.filter((_, other) => other !== index);
+              const choices = lithopediaCatalog.filter(item => Number(item.rating ?? 0) === rating && !knownLithopedia.has(item.id) && !selectedElsewhere.includes(item.id));
+              return <label key={`lithopedia-${rating}`}>{t("ui.freeRite")} · {t("ui.level")} {rating}<RuleSelect value={selectedId} onChange={id => setFreePowerIds(() => { const next = [...lithopediaSelections]; next[index] = id; return next; })} options={choices.map(item => ({ value: item.id, label: powerName(item, locale) }))} /></label>;
             })}
             {ritualPurchase && freePowerSelections.map((selectedId, index) => {
               const maximumRating = ratedCurrent + index + 1;
