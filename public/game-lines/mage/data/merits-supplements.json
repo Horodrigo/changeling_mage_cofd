@@ -119,7 +119,7 @@
     "presentationPt": {
       "name": "Prelazia",
       "prerequisites": "Status nos Videntes do Trono •••",
-      "description": "Um Exarca patrono ocupa parte de sua alma. Seus comandos devem ser cumpridos sem demora; em uma sessão na qual receber um Ato Arcano por Comandos do Mistério, você não pode obter Atos Arcanos de outras Obsessões. A identidade do Exarca determina o Aperfeiçoamento da Coroa no terceiro ponto.",
+      "description": "Um Exarca patrono ocupa parte de sua alma. Seus comandos devem ser cumpridos sem demora. Você só recebe Atos Arcanos de outras Obsessões na sessão depois de já receber um por seguir a Obsessão concedida por Comandos do Mistério. A identidade do Exarca determina o Aperfeiçoamento da Coroa no terceiro ponto.",
       "levels": [
         { "rating": 1, "name": "Receptáculo Escolhido", "description": "Você recebe a Condição Persistente Comandos do Mistério." },
         { "rating": 2, "name": "Espada", "description": "Você pode usar o simbolismo do Exarca patrono como Yantra em suas conjurações. O bônus em dados é metade dos pontos de Prelazia, arredondada para cima." },
