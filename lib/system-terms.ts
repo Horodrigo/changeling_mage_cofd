@@ -76,7 +76,7 @@ const ENGLISH_TERMS: Record<string,string> = {
   "Práxis":"Praxes",
   "Attainments":"Attainments",
   "Ferramentas Mágicas":"Magical Tools",
-  "Inclinação da Nimbus":"Nimbus Tilt",
+  "Complicação da Nimbus":"Nimbus Tilt",
   "Itens Encantados":"Enchanted Items",
   "Condições do Paradoxo":"Paradox Conditions",
   "Vitalidade":"Health",

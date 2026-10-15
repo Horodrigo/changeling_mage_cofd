@@ -93,6 +93,8 @@ function PrintPage({ page, total, title, children, main = false }: { page: numbe
     <header className="ctl-print-brand">
       <div><span className="ctl-print-title-mark">{t("ui.changelingTitle")}</span><strong>{t("ui.theLOST")}</strong></div>
       <p>{t("ui.chroniclesOFDARKNESS")}</p>
+      <span className="ctl-print-title-side ctl-print-title-side-left" aria-hidden="true"/>
+      <span className="ctl-print-title-side ctl-print-title-side-right" aria-hidden="true"/>
     </header>
     {!main && <div className="ctl-print-page-heading"><strong>{title}</strong><span>{page} / {total}</span></div>}
     <div className="ctl-print-page-content">{children}</div>

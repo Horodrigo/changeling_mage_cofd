@@ -430,6 +430,29 @@
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   gap: 26px;
 }
+.combat-page > section { min-width: 0; }
+.combat-shield-select[data-slot="select-trigger"] {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.combat-shield-select[data-slot="select-trigger"] [data-slot="select-value"] {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.combat-shield-select[data-slot="select-content"] {
+  max-width: min(34rem, calc(100vw - 24px));
+}
+.combat-shield-select[data-slot="select-content"] [data-slot="select-item"] {
+  min-width: 0;
+  white-space: normal;
+}
+.combat-shield-select[data-slot="select-content"] [data-slot="select-item"] > span:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .combat-page > .combat-source {
   grid-column: 1/-1;
   color: #756d72;

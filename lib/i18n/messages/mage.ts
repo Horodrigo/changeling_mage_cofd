@@ -249,7 +249,7 @@ export const mageMessages = {
       "arcanum": "Arcano",
       "attribute": "Atributo",
       "magicalTools": "Ferramentas Mágicas",
-      "nimbusTilt": "Inclinação da Nimbus",
+      "nimbusTilt": "Complicação da Nimbus",
       "paradoxConditions": "Condições do Paradoxo",
       "mana": "Mana",
       "hubris": "Húbris",

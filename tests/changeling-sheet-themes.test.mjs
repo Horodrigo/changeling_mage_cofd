@@ -43,8 +43,9 @@ test("theme module resolves at build time, and all existing Fairest assets map t
   const fairest = themes.find(theme => theme.id === "fairest");
   assert.ok(fairest);
   const { sheetThemeCss } = await vite.ssrLoadModule("/game-lines/changeling/sheet-theme.ts");
-  const css = await readFile(new URL("../game-lines/changeling/styles/sheet.css", import.meta.url), "utf8");
-  const [screen, print] = css.split(".ctl-print-document {");
+  const screen = await readFile(new URL("../game-lines/changeling/styles/sheet.css", import.meta.url), "utf8");
+  const print = await readFile(new URL("../game-lines/changeling/styles/print-sheet.css", import.meta.url), "utf8");
+  const printThemes = await readFile(new URL("../game-lines/changeling/styles/print-theme-sheet.css", import.meta.url), "utf8");
   for (const [name, url] of Object.entries(fairest.assets)) {
     assert.ok(screen.includes(`var(--ctl-image-${name}, url("/game-lines/changeling/images/${name}.webp"))`), name);
     assert.ok(sheetThemeCss(fairest).includes(url));
@@ -52,8 +53,15 @@ test("theme module resolves at build time, and all existing Fairest assets map t
   assert.match(sheetThemeCss(fairest), /^@media screen \{ \.cod-sheet\.ctl-sheet/);
   assert.equal(sheetThemeCss(), "");
   assert.match(print, /--ctl-image-section-divider/);
-  assert.match(print, /data-changeling-print-theme/);
-  assert.doesNotMatch(print, /theme-fairest/);
+  assert.doesNotMatch(screen, /\.ctl-print-document|@media print/);
+  assert.doesNotMatch(print, /data-changeling-print-theme/);
+  assert.match(printThemes, /data-changeling-print-theme="fairest"/);
+  assert.doesNotMatch(printThemes, /\.ctl-print-document\s*\{/);
+  assert.match(printThemes, /\[data-changeling-print-theme\] \.ctl-print-brand p \{ opacity: 0; \}/);
+  const sections = ["Beast", "Darkling", "Elemental", "Fairest", "Grimm", "Ogre", "Wizened"];
+  assert.deepEqual([...printThemes.matchAll(/\/\* (Beast|Darkling|Elemental|Fairest|Grimm|Ogre|Wizened): CSS de impressão/g)].map((match) => match[1]), sections);
+  const layout = await readFile(new URL("../app/layout.tsx", import.meta.url), "utf8");
+  assert.match(layout, /changeling\/styles\/sheet\.css";\s*import "\.\.\/game-lines\/changeling\/styles\/print-sheet\.css";\s*import "\.\.\/game-lines\/changeling\/styles\/print-theme-sheet\.css"/);
 });
 
 test("only Changeling registers the independent lazy toolbar, beside language with compact Mobile sizing", async () => {

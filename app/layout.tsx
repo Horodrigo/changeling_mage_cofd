@@ -3,6 +3,8 @@ import Image from "next/image";
 import "./css/globals.css";
 import "../game-lines/mortal/styles/sheet.css";
 import "../game-lines/changeling/styles/sheet.css";
+import "../game-lines/changeling/styles/print-sheet.css";
+import "../game-lines/changeling/styles/print-theme-sheet.css";
 import "../game-lines/mage/styles/sheet.css";
 import "../game-lines/vampire/styles/sheet.css";
 import "../game-lines/vampire/styles/interactions.css";

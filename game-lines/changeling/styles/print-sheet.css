@@ -1,0 +1,1096 @@
+@media print {
+  .ctl-sheet {
+    box-shadow: none;
+    background-image: var(--ctl-image-paper-texture, url("/game-lines/changeling/images/paper-texture.webp"));
+  }
+
+  .ctl-sheet .cod-sheet-title span,
+  .ctl-sheet .ctl-sheet-tab-list button[data-state="active"] {
+    color: var(--ctl-ink);
+    background-image: none;
+    -webkit-text-fill-color: var(--ctl-ink);
+  }
+}
+
+.ctl-print-document {
+  display: grid;
+  justify-content: center;
+  gap: 18px;
+  color: #263a2c;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.ctl-print-page {
+  --sheet-accent: #315f43;
+  --sheet-ink: #263a2c;
+  --ctl-ink: #173823;
+  --ctl-ink-soft: rgba(23, 56, 35, 0.48);
+  --ctl-rule: rgba(23, 56, 35, 0.34);
+  position: relative;
+  width: 210mm;
+  min-width: 210mm;
+  height: 297mm;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 9mm 11mm 8mm;
+  background-color: #fffef9;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(202, 219, 190, 0.42) 0,
+      rgba(255, 254, 249, 0) 7%,
+      rgba(255, 254, 249, 0) 93%,
+      rgba(202, 219, 190, 0.42) 100%
+    ),
+    var(--print-paper-texture, var(--ctl-image-paper-texture, url("/game-lines/changeling/images/paper-texture.webp")));
+  background-repeat: no-repeat, repeat;
+  background-size:
+    auto,
+    1024px 1024px;
+  box-shadow: 0 4px 22px #1d27214d;
+  color: var(--sheet-ink);
+  font-family: "Changeling Sheet", Georgia, "Times New Roman", serif;
+  font-size: 8.8pt;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.ctl-print-page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ctl-image-background-changeling, url("/game-lines/changeling/images/background-changeling.webp")) center / 50% auto no-repeat;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.ctl-print-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ctl-print-frame {
+  --ctl-frame-rail-x: 36mm;
+  --ctl-frame-rail-y: 6mm;
+  --ctl-frame-side-x: 6mm;
+  --ctl-frame-corner-depth: 36mm;
+  --ctl-frame-center-gap: 11mm;
+  --ctl-frame-star-width: 12mm;
+  --ctl-frame-star-height: 16mm;
+  --ctl-frame-star-half-height: 8mm;
+  --ctl-frame-star-side-offset: 9mm;
+  --ctl-frame-star-side-width: 5.5mm;
+  --ctl-frame-star-side-height: 6mm;
+  --ctl-frame-star-side-half-height: 2.7mm;
+}
+
+.ctl-print-frame .ctl-frame-corner {
+  width: 40mm;
+  height: 37.5mm;
+}
+
+.ctl-print-brand {
+  position: relative;
+  display: flex;
+  min-height: 18mm;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8mm;
+  padding: 0 1mm 4mm;
+  text-transform: uppercase;
+}
+
+.ctl-print-brand::before,
+.ctl-print-brand::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  height: 4.5mm;
+  background-image:
+    var(--ctl-print-title-divider-icon, var(--ctl-image-section-divider, url("/game-lines/changeling/images/section-divider.webp"))),
+    linear-gradient(
+      transparent 43%,
+      var(--ctl-ink-soft) 43%,
+      var(--ctl-ink-soft) 48%,
+      transparent 48%,
+      transparent 57%,
+      var(--ctl-rule) 57%,
+      var(--ctl-rule) 62%,
+      transparent 62%
+    );
+  background-position:
+    left center,
+    right center;
+  background-repeat: no-repeat, no-repeat;
+  background-size:
+    auto 4.5mm,
+    calc(100% - 5.5mm) 100%;
+}
+
+.ctl-print-brand::before {
+  left: 0;
+}
+
+.ctl-print-brand::after {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+.ctl-print-title-side {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  width: 11mm;
+  height: 8.5mm;
+  background: var(--ctl-image-frame-side) center / contain no-repeat;
+  pointer-events: none;
+}
+
+.ctl-print-title-side-left { left: 0; }
+
+.ctl-print-title-side-right { right: 0; transform: scaleX(-1); }
+
+.ctl-print-brand > div {
+  position: relative;
+  width: 112mm;
+  min-height: 14mm;
+}
+
+.ctl-print-title-mark {
+  display: block;
+  width: 84mm;
+  max-width: 100%;
+  aspect-ratio: 998/190;
+  overflow: hidden;
+  color: transparent;
+  background: var(--ctl-image-title, url("/game-lines/changeling/images/title.webp")) left center/contain no-repeat;
+  font-size: 0;
+  line-height: 0;
+}
+
+.ctl-print-brand strong {
+  position: absolute;
+  top: 9.2mm;
+  left: 77mm;
+  white-space: nowrap;
+  font-family:
+    "Changeling Sheet Small Caps", "Changeling Sheet", Georgia, serif;
+  font-size: 11pt;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+}
+
+.ctl-print-brand p {
+  margin: 0 0 2.4mm;
+  font-family:
+    "Changeling Sheet Small Caps", "Changeling Sheet", Georgia, serif;
+  font-size: 6.5pt;
+  letter-spacing: 0.22em;
+}
+
+.ctl-print-page-heading {
+  display: flex;
+  min-height: 8mm;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.25mm solid #6d8274;
+  color: var(--sheet-accent);
+  font-size: 9pt;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ctl-print-page-content {
+  min-height: 0;
+}
+
+.ctl-print-page > footer {
+  position: absolute;
+  right: 11mm;
+  bottom: 3.5mm;
+  left: 11mm;
+  display: flex;
+  justify-content: space-between;
+  border-top: 0.2mm solid #809084;
+  padding-top: 1mm;
+  color: #5b685f;
+  font:
+    6.5pt Inter,
+    Arial,
+    sans-serif;
+  text-transform: uppercase;
+}
+
+.ctl-print-main-page > footer span:first-child {
+  visibility: hidden;
+}
+
+.ctl-print-identity {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2mm 5mm;
+  padding: 4mm 1mm 1mm;
+}
+
+.ctl-print-field {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: end;
+  gap: 2mm;
+  min-width: 0;
+}
+
+.ctl-print-field span {
+  font-size: 6.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.ctl-print-field strong {
+  min-height: 5mm;
+  overflow: hidden;
+  border-bottom: 0.2mm solid var(--sheet-ink);
+  font:
+    italic 9pt/5mm Georgia,
+    serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ctl-print-page .official-heading {
+  margin: 3.1mm 0 1.6mm;
+  font-size: 12pt;
+}
+
+.ctl-print-page .official-heading::before,
+.ctl-print-page .official-heading::after {
+  height: 4.2mm;
+  background-color: transparent;
+  background-image:
+    var(--ctl-image-section-divider, url("/game-lines/changeling/images/section-divider.webp")),
+    linear-gradient(var(--ctl-rule), var(--ctl-rule));
+  background-position:
+    left center,
+    right center;
+  background-repeat: no-repeat, no-repeat;
+  background-size:
+    auto 4.2mm,
+    calc(100% - 4.5mm) 0.25mm;
+  opacity: 0.9;
+}
+
+.ctl-print-page .official-heading::after {
+  transform: scaleX(-1);
+}
+
+.ctl-print-page .official-heading.ctl-print-attributes-heading {
+  position: relative;
+  isolation: isolate;
+  justify-content: center;
+  min-height: 10mm;
+  margin-top: 1.2mm;
+}
+
+.ctl-print-page .official-heading.ctl-print-attributes-heading::before,
+.ctl-print-page .official-heading.ctl-print-attributes-heading::after {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  width: calc(50% - 18mm);
+  height: 10mm;
+  min-width: 0;
+
+  background-image:
+    var(--ctl-image-attributes-divider-leaf, url("/game-lines/changeling/images/attributes-divider-leaf.webp")),
+    var(--ctl-image-attributes-divider, url("/game-lines/changeling/images/attributes-divider.webp"));
+
+  background-position:
+    100% center,
+    left center;
+
+  background-repeat: no-repeat, no-repeat;
+
+  background-size:
+    auto 4.8mm,
+    calc(100% - 14mm) auto;
+
+  opacity: 1;
+}
+
+.ctl-print-page .official-heading.ctl-print-attributes-heading::before {
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.ctl-print-page .official-heading.ctl-print-attributes-heading::after {
+  right: 0;
+  transform: translateY(-50%) scaleX(-1);
+}
+
+.ctl-print-page .official-heading.ctl-print-attributes-heading span {
+  z-index: 1;
+}
+
+.ctl-print-attributes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5mm;
+}
+
+.ctl-print-main-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.96fr 0.96fr;
+  gap: 5mm;
+  align-items: start;
+}
+
+.ctl-print-main-grid > section + section {
+  background-image: var(--ctl-image-column-divider, url("/game-lines/changeling/images/column-divider.webp"));
+  background-position: left top;
+  background-repeat: repeat-y;
+  background-size: 1.2mm auto;
+  padding-left: 2.5mm;
+}
+
+.ctl-print-main-grid .official-trait-block {
+  margin-bottom: 2mm;
+}
+
+.ctl-print-page .official-trait-block h4 {
+  margin-bottom: 0.6mm;
+  font-size: 7.7pt;
+}
+
+.ctl-print-page .official-trait-line {
+  min-height: 5mm;
+  font-size: 8.8pt;
+}
+
+.ctl-print-page .official-trait-line small {
+  font-size: 5.8pt;
+}
+
+.ctl-print-page .official-dots {
+  gap: 0.55mm;
+}
+
+.ctl-print-page .official-dot-row {
+  gap: 0.55mm;
+}
+
+.ctl-print-page .official-dots i {
+  width: 2.1mm;
+  height: 2.1mm;
+  box-sizing: border-box;
+}
+
+.ctl-print-page .skill-highlight-kith .official-trait-name {
+  position: relative;
+}
+
+.ctl-print-page .skill-highlight-kith,
+.ctl-print-page .skill-highlight-kith > .official-trait-label {
+  overflow: visible;
+}
+
+.ctl-print-page .skill-highlight-kith .official-trait-name::before {
+  content: "";
+  position: absolute;
+  left: -16.5mm;
+  top: 50%;
+  width: 26.5mm;
+  height: 9.5mm;
+  transform: translateY(-55%);
+  background: var(--ctl-image-skill-highlight, url("/game-lines/changeling/images/skill-highlight.webp")) center / contain no-repeat;
+}
+
+.ctl-print-merits {
+  display: grid;
+}
+
+.ctl-print-merits > div {
+  display: flex;
+  min-height: 4.6mm;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2mm;
+  border-bottom: 0.2mm solid #aaa8a170;
+}
+
+.ctl-print-merits > div > span {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 8.2pt;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ctl-print-merits > div.blank {
+  min-height: 4.6mm;
+}
+
+.ctl-print-court {
+  display: grid;
+  gap: 0.5mm;
+  border-bottom: 0.2mm solid #aaa8a170;
+  padding: 1mm 0;
+}
+
+.ctl-print-court strong {
+  color: var(--sheet-accent);
+  font-size: 8.5pt;
+}
+
+.ctl-print-court span {
+  font-size: 6.8pt;
+  font-style: italic;
+}
+
+.ctl-print-lines {
+  display: grid;
+}
+
+.ctl-print-lines > div {
+  min-height: 4.4mm;
+  border-bottom: 0.2mm solid #aaa8a170;
+  font:
+    italic 7.5pt/4.2mm Georgia,
+    serif;
+}
+
+.ctl-print-track {
+  display: grid;
+  gap: 1.1mm;
+  margin-bottom: 2.2mm;
+}
+
+.ctl-print-track > strong,
+.ctl-print-track-title {
+  color: var(--sheet-accent);
+  font-size: 7pt;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ctl-print-track-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ctl-print-track-title span {
+  color: #8c2f2f;
+}
+
+.ctl-print-circles,
+.ctl-print-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1mm;
+}
+
+.ctl-print-circles i,
+.ctl-print-boxes i {
+  position: relative;
+  width: 4mm;
+  height: 4mm;
+  box-sizing: border-box;
+  border: 0.35mm solid var(--sheet-ink);
+  background: #fff;
+}
+
+.ctl-print-circles i {
+  border-radius: 50%;
+}
+
+.ctl-print-circles i.filled {
+  background: var(--sheet-ink);
+  box-shadow: inset 0 0 0 0.45mm #fff;
+}
+
+.ctl-print-physical-track {
+  display: grid;
+  gap: 1.2mm;
+  margin-bottom: 2.2mm;
+}
+
+.ctl-print-boxes i span {
+  position: absolute;
+  inset: 0.45mm;
+}
+
+.ctl-print-boxes i.bashing span,
+.ctl-print-boxes i.mild span {
+  background: linear-gradient(
+    55deg,
+    transparent 43%,
+    var(--sheet-ink) 44% 56%,
+    transparent 57%
+  );
+}
+
+.ctl-print-boxes i.lethal span,
+.ctl-print-boxes i.severe span {
+  background:
+    linear-gradient(
+      45deg,
+      transparent 43%,
+      var(--sheet-ink) 44% 56%,
+      transparent 57%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 43%,
+      var(--sheet-ink) 44% 56%,
+      transparent 57%
+    );
+}
+
+.ctl-print-boxes i.aggravated span {
+  background:
+    linear-gradient(
+      90deg,
+      transparent 43%,
+      var(--sheet-ink) 44% 56%,
+      transparent 57%
+    ),
+    linear-gradient(
+      30deg,
+      transparent 43%,
+      var(--sheet-ink) 44% 56%,
+      transparent 57%
+    ),
+    linear-gradient(
+      -30deg,
+      transparent 43%,
+      var(--sheet-ink) 44% 56%,
+      transparent 57%
+    );
+}
+
+.ctl-print-clarity-numbers {
+  display: flex;
+  gap: 1.1mm;
+  margin-top: -0.6mm;
+}
+
+.ctl-print-clarity-numbers span {
+  width: 4mm;
+  flex: none;
+  text-align: center;
+  font:
+    5.2pt/1.1 Inter,
+    Arial,
+    sans-serif;
+}
+
+.ctl-print-clarity-numbers span:first-child {
+  font-size: 4.5pt;
+  text-transform: uppercase;
+}
+
+.ctl-print-power {
+  border: 0.2mm solid #9baa9f;
+  padding: 2mm;
+}
+
+.ctl-print-power > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2mm;
+  border-bottom: 0.2mm solid #9baa9f;
+  padding-bottom: 1.5mm;
+  margin-bottom: 1.5mm;
+  color: var(--sheet-accent);
+  text-transform: uppercase;
+}
+
+.ctl-print-writable-resource {
+  display: grid;
+  gap: 1mm;
+  color: var(--sheet-accent);
+  font-size: 7pt;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ctl-print-writable-resource .ctl-print-boxes {
+  display: grid;
+  grid-template-columns: repeat(10, 4mm);
+}
+
+.ctl-print-page .compact-values {
+  grid-template-columns: 1fr 1fr;
+  gap: 0 2mm;
+}
+
+.ctl-print-page .compact-values > div {
+  min-height: 4.5mm;
+  font-size: 6.8pt;
+}
+
+.ctl-print-page .compact-values strong {
+  font-size: 8.5pt;
+}
+
+.ctl-print-bottom-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5mm;
+}
+
+.ctl-print-bottom-stack {
+  display: grid;
+  gap: 1.2mm;
+}
+
+.ctl-print-experience {
+  display: grid;
+  gap: 0;
+}
+
+.ctl-print-experience > div {
+  display: flex;
+  min-height: 6.5mm;
+  align-items: end;
+  justify-content: space-between;
+  gap: 3mm;
+  border-bottom: 0.2mm solid #aaa8a170;
+  padding-bottom: 0.7mm;
+}
+
+.ctl-print-experience span {
+  font-size: 7pt;
+  text-transform: uppercase;
+}
+
+.ctl-print-experience-beats {
+  align-items: center !important;
+}
+
+.ctl-print-contract-table {
+  display: grid;
+  margin-bottom: 2mm;
+  font:
+    6pt/1.15 Inter,
+    Arial,
+    sans-serif;
+}
+
+.ctl-print-contract-table > header,
+.ctl-print-contract-table > div {
+  display: grid;
+  grid-template-columns: 1.25fr 0.45fr 0.85fr 0.9fr 1fr 1.15fr;
+  min-height: 6mm;
+  align-items: end;
+}
+
+.ctl-print-contract-table > header {
+  min-height: 5mm;
+  color: var(--sheet-accent);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ctl-print-contract-table span {
+  min-width: 0;
+  max-height: 6mm;
+  overflow: hidden;
+  border-bottom: 0.2mm solid #8e9b91;
+  padding: 0.6mm 1mm;
+}
+
+.ctl-print-contract-table span + span {
+  border-left: 0.2mm solid #c5cec7;
+}
+
+.ctl-print-second-grid {
+  display: grid;
+  grid-template-columns: 0.72fr 1.55fr;
+  gap: 5mm;
+  align-items: start;
+}
+
+.ctl-print-second-grid > section + section {
+  background-image: var(--ctl-image-column-divider, url("/game-lines/changeling/images/column-divider.webp"));
+  background-position: left top;
+  background-repeat: repeat-y;
+  background-size: 1.2mm auto;
+  padding-left: 3mm;
+}
+
+.ctl-print-second-grid h3 {
+  margin: 2mm 0 0.7mm;
+  color: var(--sheet-accent);
+  font:
+    400 9pt "Changeling Sheet Small Caps",
+    "Changeling Sheet",
+    Georgia,
+    serif;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ctl-print-lore-text {
+  height: 23mm;
+  margin: 0;
+  overflow: hidden;
+  border-bottom: 0.2mm solid #aeb9b0;
+  font:
+    6.6pt/1.3 Inter,
+    Arial,
+    sans-serif;
+}
+
+.ctl-print-page .cod-print-integrity > div {
+  border-color: #8e9b91;
+}
+
+.ctl-print-page .cod-print-integrity i.filled {
+  box-shadow: inset 0 0 0 0.45mm #f5f0df;
+}
+
+.ctl-print-expanded-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2mm 5mm;
+}
+
+.ctl-print-expanded-grid article {
+  min-width: 0;
+}
+
+.ctl-print-expanded-grid article > strong {
+  display: block;
+  overflow: hidden;
+  color: var(--sheet-accent);
+  font-size: 8pt;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ctl-print-combat-table,
+.ctl-print-equipment-table {
+  display: grid;
+  font:
+    6.4pt/1.2 Inter,
+    Arial,
+    sans-serif;
+}
+
+.ctl-print-combat-table > header,
+.ctl-print-combat-table > div,
+.ctl-print-equipment-table > header,
+.ctl-print-equipment-table > div {
+  display: grid;
+  min-height: 5.5mm;
+  align-items: end;
+  gap: 0.6mm;
+}
+
+.ctl-print-combat-table > header {
+  grid-template-columns: 1.6fr 0.7fr 0.55fr 0.65fr 0.65fr 0.45fr;
+}
+
+.ctl-print-combat-table > div {
+  grid-template-columns: 3mm 1.6fr 0.7fr 0.55fr 0.65fr 0.65fr 0.45fr;
+}
+
+.ctl-print-equipment-table > header {
+  grid-template-columns: 2fr repeat(3, 1fr);
+}
+
+.ctl-print-equipment-table > div {
+  grid-template-columns: 3mm 2fr repeat(3, 1fr);
+}
+
+.ctl-print-combat-table > header,
+.ctl-print-equipment-table > header {
+  color: var(--sheet-accent);
+  font-weight: 800;
+}
+
+.ctl-print-combat-table span,
+.ctl-print-equipment-table span {
+  min-width: 0;
+  overflow: hidden;
+  border-bottom: 0.2mm solid #8e9b91;
+  padding: 0.5mm 0.8mm;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ctl-print-combat-table i,
+.ctl-print-equipment-table i {
+  width: 2.5mm;
+  height: 2.5mm;
+  border: 0.25mm solid var(--sheet-ink);
+  margin-bottom: 0.6mm;
+}
+
+.ctl-print-flow-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6mm;
+  height: var(--ctl-print-flow-height, 244mm);
+  padding-top: 3mm;
+  align-items: start;
+}
+
+.ctl-print-flow-column {
+  min-width: 0;
+  height: var(--ctl-print-flow-height, 244mm);
+  overflow: hidden;
+}
+
+.ctl-print-flow-group + .ctl-print-flow-group {
+  margin-top: 0;
+}
+
+.ctl-print-flow-heading {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+  margin: 0 0 2mm;
+  padding: 0 0 1.2mm;
+  color: var(--sheet-accent);
+  font:
+    400 10pt "Changeling Sheet Small Caps",
+    "Changeling Sheet",
+    Georgia,
+    serif;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ctl-print-flow-heading::before,
+.ctl-print-flow-heading::after {
+  content: "";
+  flex: 1 1 0;
+  height: 4.2mm;
+  background-image:
+    var(--ctl-image-section-divider, url("/game-lines/changeling/images/section-divider.webp")),
+    linear-gradient(var(--ctl-rule), var(--ctl-rule));
+  background-position:
+    left center,
+    right center;
+  background-repeat: no-repeat, no-repeat;
+  background-size:
+    auto 4.2mm,
+    calc(100% - 4.5mm) 0.25mm;
+}
+
+.ctl-print-flow-heading::after {
+  transform: scaleX(-1);
+}
+
+.ctl-print-flow-item {
+  box-sizing: border-box;
+  padding-bottom: 2.4mm;
+  break-inside: avoid;
+}
+
+.ctl-print-card {
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+}
+
+.ctl-print-card > header {
+  display: grid;
+  gap: 0.6mm;
+  border-bottom: 0.25mm solid var(--ctl-rule);
+  padding: 0 0 1.2mm;
+  background: transparent;
+}
+
+.ctl-print-card > header strong {
+  color: var(--sheet-ink);
+  font-size: 9pt;
+}
+
+.ctl-print-card > header small {
+  color: #687269;
+  font:
+    6.3pt/1.3 Inter,
+    Arial,
+    sans-serif;
+}
+
+.ctl-print-card > p,
+.ctl-print-card > div,
+.ctl-print-card > dl {
+  margin: 0;
+  padding: 1.5mm 0;
+  font:
+    7.1pt/1.35 Inter,
+    Arial,
+    sans-serif;
+}
+
+.ctl-print-card p {
+  margin: 0 0 1.3mm;
+}
+
+.ctl-print-card p:last-child {
+  margin-bottom: 0;
+}
+
+.ctl-print-card dl > div {
+  display: grid;
+  grid-template-columns: 25mm minmax(0, 1fr);
+  gap: 2mm;
+  border-top: 0.2mm dotted #c4ccc6;
+  padding: 1.2mm 0;
+}
+
+.ctl-print-card dl > div:first-child {
+  border-top: 0;
+}
+
+.ctl-print-card dt {
+  color: var(--sheet-accent);
+  font-weight: 800;
+}
+
+.ctl-print-card dd {
+  min-width: 0;
+  margin: 0;
+}
+
+.ctl-print-card ul {
+  margin: 0;
+  padding-left: 4mm;
+}
+
+.ctl-print-contract-tag {
+  display: inline-block;
+  margin-left: 1.5mm;
+  border: 0.2mm solid var(--sheet-accent);
+  border-radius: 3mm;
+  padding: 0.3mm 1.7mm;
+  color: var(--sheet-accent);
+  font:
+    600 5.8pt/1.2 Inter,
+    Arial,
+    sans-serif;
+  vertical-align: middle;
+}
+
+.ctl-print-contract-continuation {
+  margin-left: 1.5mm;
+  color: #687269;
+  font:
+    italic 6pt/1.2 Inter,
+    Arial,
+    sans-serif;
+}
+
+.ctl-print-contract-facts {
+  display: grid;
+  gap: 0;
+}
+
+.ctl-print-card .ctl-print-contract-facts > div {
+  display: flex;
+  grid-template-columns: none;
+  gap: 1mm;
+  border-top: 0;
+  padding: 0.55mm 0;
+}
+
+.ctl-print-card .ctl-print-contract-facts dt {
+  flex: none;
+}
+
+.ctl-print-detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 6.4pt;
+}
+
+.ctl-print-detail-table th,
+.ctl-print-detail-table td {
+  border: 0.2mm solid #bdc8bf;
+  padding: 0.8mm;
+  text-align: left;
+  vertical-align: top;
+}
+
+.ctl-print-detail-table th {
+  color: var(--sheet-accent);
+  background: #f2f6f0;
+}
+
+.ctl-print-configured + .ctl-print-merit-details {
+  border-top: 0.2mm solid #c8d0ca;
+}
+
+.ctl-print-preserve-lines {
+  white-space: pre-wrap;
+}
+
+.ctl-print-notes-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 2mm;
+}
+
+.ctl-print-notes-content > p {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.ctl-print-notes-content > img {
+  width: 36mm;
+  height: 48mm;
+  flex: none;
+  object-fit: contain;
+  object-position: top center;
+}
+
+.ctl-print-measure {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: -10000px;
+  width: 87mm;
+  visibility: hidden;
+  pointer-events: none;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 8.2pt;
+}
+
+.ctl-print-measure-capacity {
+  position: absolute;
+  width: 1px;
+  height: var(--ctl-print-flow-height, 244mm);
+}
+
+.ctl-print-measure .ctl-print-flow-heading,
+.ctl-print-measure .ctl-print-flow-item {
+  width: 87mm;
+}
+
+@media print {
+  body.character-printing .character-print-surface .ctl-print-page {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    height: 297mm !important;
+    margin: 0 !important;
+    transform: none !important;
+    box-shadow: none !important;
+    break-after: page;
+    page-break-after: always;
+  }
+  body.character-printing .character-print-surface .ctl-print-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+  body.character-printing .character-print-surface .ctl-print-measure {
+    display: none !important;
+  }
+}

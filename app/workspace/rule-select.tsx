@@ -21,7 +21,7 @@ function inferredTraitGroup(value: string) {
   return TRAIT_GROUPS.find(([, values]) => values.includes(value))?.[0];
 }
 
-export function RuleSelect({value,onChange,options}:{value:string;onChange:(value:string)=>void;options:RuleSelectOption[]}){
+export function RuleSelect({value,onChange,options,className}:{value:string;onChange:(value:string)=>void;options:RuleSelectOption[];className?:string}){
   const {locale}=useLanguage();
   const normalizedOptions=options.map((item)=>item.group?item:{...item,group:inferredTraitGroup(item.value)});
   const safe=normalizedOptions.length?value||normalizedOptions[0].value:"__none";
@@ -30,8 +30,8 @@ export function RuleSelect({value,onChange,options}:{value:string;onChange:(valu
   const groups=[...new Set(sortedOptions.map(item=>item.group).filter(Boolean))];
   const ungrouped=sortedOptions.filter((item)=>!item.group);
   return <Select value={safe} onValueChange={onChange} disabled={!sortedOptions.length}>
-    <SelectTrigger><SelectValue>{ruleSelectOptionLabel(sortedOptions.find(item=>item.value===safe)??{value:"",label:"Nenhuma opção disponível"},locale)}</SelectValue></SelectTrigger>
-    <SelectContent>{sortedOptions.length?(groups.length?<>
+    <SelectTrigger className={className}><SelectValue>{ruleSelectOptionLabel(sortedOptions.find(item=>item.value===safe)??{value:"",label:"Nenhuma opção disponível"},locale)}</SelectValue></SelectTrigger>
+    <SelectContent className={className}>{sortedOptions.length?(groups.length?<>
       {ungrouped.map(item=><SelectItem key={item.value} value={item.value}>{ruleSelectOptionLabel(item,locale)}</SelectItem>)}
       {groups.map((group,index)=><SelectGroup key={group}>{(index>0||ungrouped.length>0)&&<SelectSeparator/>}<SelectLabel>{systemTerm(group!,locale)}</SelectLabel>{sortedOptions.filter(item=>item.group===group).map(item=><SelectItem key={item.value} value={item.value}>{ruleSelectOptionLabel(item,locale)}</SelectItem>)}</SelectGroup>)}
     </>:sortedOptions.map(item=><SelectItem key={item.value} value={item.value}>{ruleSelectOptionLabel(item,locale)}</SelectItem>)):<SelectItem value="__none" disabled>{systemTerm("Nenhuma opção disponível",locale)}</SelectItem>}</SelectContent>
