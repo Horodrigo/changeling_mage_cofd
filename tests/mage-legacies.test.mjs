@@ -414,6 +414,18 @@ test("Reality Stalkers presents its Attainment in PT without changing its identi
   assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
 });
 
+test("Nighthawks presents both Attainments in PT and checks the printed second prerequisite", () => {
+  const definition = LEGACIES.find((item) => item.id === "nighthawks");
+  const original = structuredClone(definition);
+  const pt = legacyPresentation(definition, "pt-BR");
+  assert.equal(pt.name, "Gaviões Noturnos");
+  assert.deepEqual(pt.attainments.map((item) => item.name), ["Tesouro Desenterrado", "Sob o Manto da Noite"]);
+  assert.equal(pt.attainments[1].prerequisites, "Furto 3");
+  assert.deepEqual(definition.attainments[1].requirements, { skills: { Larceny: 3 } });
+  assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
+  assert.deepEqual(definition, original);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
