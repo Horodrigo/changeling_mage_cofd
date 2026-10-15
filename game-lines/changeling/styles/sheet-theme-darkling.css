@@ -24,6 +24,54 @@
     --ctl-frame-bottom-right-line-shift: 0px 0px;
   }
 
+  /* AQUI MEXE NOS LATERAIS DE FRAME CENTER */
+
+  /* X Y: positivo move para direita/baixo. Ângulo positivo gira no sentido horário. */
+  .app-shell:has([data-changeling-sheet-theme="darkling"]) .ctl-frame-star-side-top-left,
+  .app-shell:has([data-changeling-sheet-theme="darkling"]) .ctl-frame-star-side-top-right {
+    translate: 0px 1px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="darkling"]) .ctl-frame-star-side-bottom-left,
+  .app-shell:has([data-changeling-sheet-theme="darkling"]) .ctl-frame-star-side-bottom-right {
+    translate: 0px -2px;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="darkling"])
+  .ctl-sheet.mobile-character-sheet .ctl-frame-star-side-top-left,
+.app-shell:has([data-changeling-sheet-theme="darkling"])
+  .ctl-sheet.mobile-character-sheet .ctl-frame-star-side-top-right {
+  translate: 0px 2px;
+  rotate: 0deg;
+}
+
+.app-shell:has([data-changeling-sheet-theme="darkling"])
+  .ctl-sheet.mobile-character-sheet .ctl-frame-star-side-bottom-left,
+.app-shell:has([data-changeling-sheet-theme="darkling"])
+  .ctl-sheet.mobile-character-sheet .ctl-frame-star-side-bottom-right {
+  translate: 0px -3px;
+  rotate: 0deg;
+}
+  
+
+  /* AQUI MEXE NOS LATERAIS DE TITLE */
+
+  .app-shell:has([data-changeling-sheet-theme="darkling"]) .ctl-sheet .cod-sheet-title .ctl-title-side-left {
+    translate: 10px 0px;
+    rotate: 0deg;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="darkling"]) .ctl-sheet .cod-sheet-title .ctl-title-side-right {
+    translate: -10px 0px;
+    rotate: 0deg;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="darkling"]) .ctl-sheet .official-heading:not(.ctl-attributes-heading)::before,
+  .app-shell:has([data-changeling-sheet-theme="darkling"]) .ctl-sheet .official-heading:not(.ctl-attributes-heading)::after {
+    height: 30px;
+    background-size: auto 19.2px, calc(100% - 18px) 1px, calc(100% - 18px) 1px;
+  }
+
 
   /* Paleta da ficha e dos controles que herdam as cores da linha. */
   body:has([data-changeling-sheet-theme="darkling"]),
@@ -226,7 +274,7 @@
   }
 
   .app-shell:has([data-changeling-sheet-theme="darkling"]) .ctl-sheet .cod-sheet-title p {
-    translate: -30px 10px;
+    translate: -65px 13px;
   }
 
   body:has(.line-theme-ctl):has([data-changeling-sheet-theme="darkling"])
@@ -260,7 +308,7 @@
     translate: 0 -10px;
   }
 
-  .app-shell:has([data-changeling-sheet-theme="darkling"]) .ctl-sheet:not(.mobile-character-sheet) .cod-sheet-title strong {
+  .app-shell:has([data-changeling-sheet-theme="darkling"]) .ctl-sheet .cod-sheet-title strong {
     opacity: 0;
   }
 

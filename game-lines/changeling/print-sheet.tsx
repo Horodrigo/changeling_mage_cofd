@@ -381,13 +381,13 @@ export function ChangelingPrintSheet({ character, options, catalogs, onReadyChan
           <SheetHeading>{t("ui.frailties")}</SheetHeading><PrintTextList values={frailties.map((value) => value ? systemTerm(value, locale) : "")} minimum={frailties.length}/>
           <SheetHeading>{t("ui.aspirations")}</SheetHeading><PrintTextList values={cleanList(data.aspirations)} minimum={3}/>
           <SheetHeading>{t("ui.conditions")}</SheetHeading><PrintTextList values={selectedConditions.map((condition) => condition.name)} minimum={4}/>
+          <SheetHeading>{t("ui.touchstones")}</SheetHeading><PrintTextList values={touchstones} minimum={Math.max(6, touchstoneSlots)}/>
         </section>
         <section>
           <SheetHeading>{t("ui.health")}</SheetHeading><PrintPhysicalTrack current={health} slots={health}/>
           <SheetHeading>{t("ui.willpower")}</SheetHeading><PrintPhysicalTrack current={currentWillpower}/>
           <SheetHeading>{t("ui.lineTraits")}</SheetHeading><div className="ctl-print-power"><div><strong>{t("ui.wyrd")}</strong><DotValue value={1} max={10} singleRow/></div><PrintWritableBoxes label={t("ui.glamour")}/></div>
           <SheetHeading>{t("ui.clarity")}</SheetHeading><PrintPhysicalTrack current={clarity} slots={clarity} damage={clarityDamage} clarityScale/>
-          <SheetHeading>{t("ui.touchstones")}</SheetHeading><PrintTextList values={touchstones} minimum={Math.max(6, touchstoneSlots)}/>
           <SheetHeading>{t("ui.derivedStats")}</SheetHeading><CompactValues values={otherTraits}/>
           <SheetHeading>{t("ui.experience")}</SheetHeading><div className="ctl-print-experience">
             <div className="ctl-print-experience-beats"><span>{t("ui.beats")}</span><div className="ctl-print-circles">{Array.from({ length: 5 }, (_, index) => <i className={index < experienceBeats ? "filled" : ""} key={index}/>)}</div></div>

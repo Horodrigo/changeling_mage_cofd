@@ -64,6 +64,25 @@
     opacity: 0.2;
   }
 
+  /* AQUI MEXE NOS LATERAIS DE TITLE */
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .cod-sheet-title .ctl-title-side-left {
+    translate: 30px 0px;
+    rotate: 0deg;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .cod-sheet-title .ctl-title-side-right {
+    translate: -30px 0px;
+    rotate: 0deg;
+  }
+
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .official-heading:not(.ctl-attributes-heading)::before,
+  .app-shell:has([data-changeling-sheet-theme="ogre"]) .ctl-sheet .official-heading:not(.ctl-attributes-heading)::after {
+    height: 19px;
+    background-size: auto 79.2px, calc(100% - 18px) 1px, calc(100% - 18px) 1px;
+  }
+
+
   .app-shell:has([data-changeling-sheet-theme="ogre"])
     .ctl-sheet:not(.mobile-character-sheet) {
     --ctl-frame-star-side-offset: 25px;

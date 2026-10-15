@@ -266,6 +266,10 @@
     translate: 0px 10px;
   }
 
+  .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet .cod-sheet-title p {
+    translate: 0 30px;
+}
+
   .app-shell:has([data-changeling-sheet-theme="beast"]) .ctl-sheet.mobile-character-sheet .cod-sheet-title .ctl-title-mark {
     width: min(350px, 86vw);
     max-width: 100%;
