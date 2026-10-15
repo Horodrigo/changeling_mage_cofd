@@ -450,6 +450,18 @@ test("Shapers of the Invisible presents three Attainments and follows printed pr
   assert.deepEqual(definition, original);
 });
 
+test("Logophages presents both Attainments in PT and keeps the printed second prerequisite", () => {
+  const definition = LEGACIES.find((item) => item.id === "logophages");
+  const original = structuredClone(definition);
+  const pt = legacyPresentation(definition, "pt-BR");
+  assert.equal(pt.name, "Logófagos");
+  assert.deepEqual(pt.attainments.map((item) => item.name), ["Apreender o Arcano", "Proteção do Perdido"]);
+  assert.match(pt.attainments[0].description, /Não se aplica a Escrutínio/);
+  assert.deepEqual(definition.attainments[1].requirements, { arcana: { Mind: 2 }, skills: { Subterfuge: 3 } });
+  assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
+  assert.deepEqual(definition, original);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
