@@ -901,11 +901,16 @@
     "source": "Dark Eras 2",
     "category": "Mage",
     "prerequisites": "Awakened; Prime •, Resolve ••",
-    "description": "Take 10 minutes ti perform an Oblation at a Hallow. Regain one Mana if you successfully Counter a spell with any Mana cost.",
+    "description": "Take only 10 minutes, rather than the usual hour, to perform an Oblation at a Hallow. Regain one Mana if you successfully Counter a spell with any Mana cost.",
     "page": 300,
     "priority": 2,
-    "translatedName": "Plunder Mana",
-    "descriptionEn": "Take 10 minutes ti perform an Oblation at a Hallow. Regain one Mana if you successfully Counter a spell with any Mana cost."
+    "translatedName": "Pilhagem de Mana",
+    "descriptionEn": "Take only 10 minutes, rather than the usual hour, to perform an Oblation at a Hallow. Regain one Mana if you successfully Counter a spell with any Mana cost.",
+    "presentationPt": {
+      "name": "Pilhagem de Mana",
+      "prerequisites": "Desperto; Primórdio •, Perseverança ••",
+      "description": "Você leva apenas 10 minutos, em vez da hora habitual, para realizar uma Oblação em uma Nascente de Mana. Se neutralizar um feitiço que tenha qualquer custo em Mana, recupera um ponto de Mana."
+    }
   },
   {
     "id": "mta-2ed:potent-nimbus",

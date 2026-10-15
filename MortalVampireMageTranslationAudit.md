@@ -15,6 +15,6 @@
 
 ## Mage
 
-- **G02 — Merits:** localizar nome, requisitos, descrição e níveis dos **5/71 Merits** restantes em `public/game-lines/mage/data/merits*.json`, sem alterar requisitos canônicos, IDs ou compras.
+- **G02 — Merits:** localizar nome, requisitos, descrição e níveis dos **4/71 Merits** restantes em `public/game-lines/mage/data/merits*.json`, sem alterar requisitos canônicos, IDs ou compras.
 - **Order Archive:** adequar a seleção de pontuação ao tipo de arquivo em *Signs of Sorcery* p. 97: arquivos de Ordens sem Nome, cultos e Legados têm máximo de três pontos; repositórios antigos de ruínas ou coleções recuperadas não têm máximo. O catálogo atual oferece 1–5 para todos. Preservar compras existentes e não liberar pontuação ilimitada sem distinguir esses tipos.
 - **G04 — Legacies:** localizar as **16 Legacies** e **43 Attainments** em `game-lines/mage/catalog-data/legacies*.json`: títulos descritivos, requisitos, iniciação, organização, teoria, Yantras, Oblations, efeitos e opções. Preservar nomes próprios.
