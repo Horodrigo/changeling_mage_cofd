@@ -104,10 +104,11 @@ test("Legacy Status alternatives resolve IDs without pooling independent instanc
   assert.equal(check([{ name: "Not Really Status", dots: 5 }]), false);
 });
 
-test("House of Ariadne Contacts and Sleeper Status requirements keep identities after JSON round-trip", () => {
+test("House of Ariadne validates canonical Contacts and Status dots without judging their organizations", () => {
   const definition = LEGACIES.find(item => item.id === "house-of-ariadne");
   const character = { ...mage({ gnosis: 8, arcana: { Time: 5 } }), skills: { Streetwise: 4 }, merits: [{ definitionId: "core-2ed:contacts", instanceId: "contacts", name: "Contatos autorais", dots: 3 }, { definitionId: "core-2ed:status", instanceId: "status", name: "Organização local", dots: 2 }] };
   assert.equal(legacyAttainmentPrerequisites(JSON.parse(JSON.stringify(character)), definition, 5, meritCatalog), true);
+  assert.equal(legacyAttainmentPrerequisites({ ...character, merits: [character.merits[0], { ...character.merits[1], configuration: { name: "Supernatural Organization" } }] }, definition, 5, meritCatalog), true);
   for (const definitionId of ["mta-2ed:awakened-status", "homebrew:merit:status", "unavailable:status"]) {
     assert.equal(legacyAttainmentPrerequisites({ ...character, merits: [character.merits[0], { ...character.merits[1], definitionId, name: "Status" }] }, definition, 5, meritCatalog), false);
   }
