@@ -105,7 +105,7 @@ test("Dark Eras and Companion Conditions omitted by the old catalog are present"
     "The Sibyl's Tongue":["DE",78],
     "Monster":["DE",81],
     "Unclean":["DE",81],
-    "Unintended Medium":["DEC",273],
+    "Unintended Mediums":["DEC",273],
   };
   for(const [name,[sourceCode,page]] of Object.entries(expected)){
     const condition=MAGE_CONDITIONS.find((item)=>item.originalName===name);
