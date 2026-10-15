@@ -29,10 +29,7 @@ const SHELL = [
   "/game-lines/changeling/images/attributes-divider-leaf.webp",
   "/game-lines/changeling/images/section-divider.webp",
   "/game-lines/changeling/images/column-divider.webp",
-  "/game-lines/changeling/images/skill-highlight-left.webp",
-  "/game-lines/changeling/images/skill-highlight-middle-1.webp",
-  "/game-lines/changeling/images/skill-highlight-middle-2.webp",
-  "/game-lines/changeling/images/skill-highlight-right.webp",
+  "/game-lines/changeling/images/skill-highlight.webp",
   "/game-lines/changeling/images/experience-purchase-icon.webp",
   "/game-lines/changeling/images/background-changeling.webp",
 

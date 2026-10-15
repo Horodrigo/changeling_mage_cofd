@@ -25,6 +25,9 @@ export default defineConfig(async () => {
   const { cloudflare } = await import("@cloudflare/vite-plugin");
 
   return {
+    build: {
+      cssMinify: "esbuild" as const,
+    },
     // Vinext serves RSC and browser modules through separate development
     // environments.  Dedupe the hook runtime so a hot-reloaded client module
     // never calls hooks through a second React dispatcher.

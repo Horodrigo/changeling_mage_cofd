@@ -55,7 +55,19 @@
       { "rating": 5, "name": "Immersion", "description": "Choose up to five dots of Merits that logically belong to the identity. They are available while the Masque is active and cannot include further Masques." }
     ],
     "priority": 2,
-    "translatedName": "Masque (Style)"
+    "translatedName": "Máscara (Estilo)",
+    "presentationPt": {
+      "name": "Máscara (Estilo)",
+      "prerequisites": "Status nos Guardiões do Véu •",
+      "description": "Sua identidade principal como Guardião. Assumir a Máscara custa um ponto de Força de Vontade, que não pode ser recuperado enquanto a identidade for mantida; abandoná-la exige um minuto inteiro. Cada ponto concede as capacidades da identidade correspondentes ao nível.",
+      "levels": [
+        { "rating": 1, "name": "Identidade", "description": "Escolha uma Virtude e um Vício diferentes dos seus. Enquanto usa a Máscara, você se beneficia desses traços em lugar dos seus." },
+        { "rating": 2, "name": "Competência", "description": "Escolha um número de Especializações de Perícia igual à pontuação da Máscara principal. Enquanto usa a Máscara, você usa essas Especializações em lugar das suas." },
+        { "rating": 3, "name": "Difusão", "description": "Escolha um novo Nimbus de Assinatura. Enquanto usa a Máscara, você usa esse Nimbus em lugar do seu." },
+        { "rating": 4, "name": "O Código", "description": "Escolha dois Atos de Húbris aos quais você normalmente estaria sujeito. Enquanto usa a Máscara, eles não arriscam sua Sabedoria." },
+        { "rating": 5, "name": "Imersão", "description": "Escolha até cinco pontos de Méritos que pertençam logicamente a essa identidade, a critério do Narrador. Eles ficam disponíveis ao usar a Máscara e não podem incluir outras Máscaras." }
+      ]
+    }
   },
   {
     "id": "mta-2ed:masque",
@@ -71,7 +83,12 @@
     "page": 102,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Masque"
+    "translatedName": "Máscara",
+    "presentationPt": {
+      "name": "Máscara",
+      "prerequisites": "Desperto; Máscara (Estilo)",
+      "description": "Cada compra deste Mérito de dois pontos cria uma Máscara adicional, com a mesma pontuação do Estilo principal. Registre separadamente as escolhas de Virtude, Vício, Especializações, Nimbus, Atos de Húbris e Méritos dessa nova identidade."
+    }
   },
   {
     "id": "mta-2ed:prelacy",
@@ -98,7 +115,18 @@
       { "sourceId": "mta-tome", "source": "Tome of the Pentacle", "page": 142 }
     ],
     "priority": 2,
-    "translatedName": "Prelacy"
+    "translatedName": "Prelazia",
+    "presentationPt": {
+      "name": "Prelazia",
+      "prerequisites": "Status nos Videntes do Trono •••",
+      "description": "Um Exarca patrono ocupa parte de sua alma. Seus comandos devem ser cumpridos sem demora; em uma sessão na qual receber um Ato Arcano por Comandos do Mistério, você não pode obter Atos Arcanos de outras Obsessões. A identidade do Exarca determina o Aperfeiçoamento da Coroa no terceiro ponto.",
+      "levels": [
+        { "rating": 1, "name": "Receptáculo Escolhido", "description": "Você recebe a Condição Persistente Comandos do Mistério." },
+        { "rating": 2, "name": "Espada", "description": "Você pode usar o simbolismo do Exarca patrono como Yantra em suas conjurações. O bônus em dados é metade dos pontos de Prelazia, arredondada para cima." },
+        { "rating": 3, "name": "Coroa", "description": "Você recebe o Aperfeiçoamento da Coroa associado ao Exarca patrono." },
+        { "rating": 4, "name": "Templo", "description": "Se uma de suas Pedras da Alma for incorporada a um Domínio, ele se torna uma Orla Superna vinculada ao seu Exarca e habitada por entidades Supernas leais ao Trono. Pedras da Alma de Videntes ligados a Exarcas diferentes fazem o Templo desmoronar e destroem todas as Pedras envolvidas." }
+      ]
+    }
   },
   {
     "id": "mta-signs:profane-tool",

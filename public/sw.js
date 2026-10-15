@@ -1,4 +1,4 @@
-const VERSION = "2026.10.12-56eb646";
+const VERSION = "2026.10.15-8898112";
 const CACHE = `characters-of-the-darkness-${VERSION}`;
 
 const SHELL = [
@@ -29,16 +29,14 @@ const SHELL = [
   "/game-lines/changeling/images/attributes-divider-leaf.webp",
   "/game-lines/changeling/images/section-divider.webp",
   "/game-lines/changeling/images/column-divider.webp",
-  "/game-lines/changeling/images/skill-highlight-left.webp",
-  "/game-lines/changeling/images/skill-highlight-middle-1.webp",
-  "/game-lines/changeling/images/skill-highlight-middle-2.webp",
-  "/game-lines/changeling/images/skill-highlight-right.webp",
+  "/game-lines/changeling/images/skill-highlight.webp",
   "/game-lines/changeling/images/experience-purchase-icon.webp",
   "/game-lines/changeling/images/background-changeling.webp",
 
   "/game-lines/vampire/images/attributes-divider.webp",
   "/game-lines/vampire/images/attributes-divider-thorns.webp",
   "/game-lines/vampire/images/background-vampire.webp",
+  "/game-lines/vampire/images/paper-texture.webp",
   "/game-lines/vampire/images/divider-terminal.webp",
   "/game-lines/vampire/images/frame-blood-center-bottom.webp",
   "/game-lines/vampire/images/frame-blood-center-top.webp",

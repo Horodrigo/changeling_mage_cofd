@@ -119,10 +119,7 @@ def build_kith_skill_assets() -> None:
     """Preserve the four matching pieces used by the measured Kith Skill frame."""
 
     for source_name, output_name in (
-        ("skill-kith-left.webp", "skill-highlight-left.webp"),
-        ("skill-kith-middle-1.webp", "skill-highlight-middle-1.webp"),
-        ("skill-kith-middle-2.webp", "skill-highlight-middle-2.webp"),
-        ("skill-kith-right.webp", "skill-highlight-right.webp"),
+        ("skill-kith.webp", "skill-highlight.webp"),
     ):
         save_webp(Image.open(SOURCE / source_name).convert("RGBA"), output_name)
 
