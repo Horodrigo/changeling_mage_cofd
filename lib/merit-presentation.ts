@@ -29,7 +29,7 @@ export function meritPresentation(item: MeritDefinition, locale: AppLocale, cata
     name: qualifyCatalogName(portuguese?.name || (locale === "pt-BR" ? item.translatedName : item.name) || item.name, item, locale),
     description: portuguese?.description || (locale === "en-US" ? item.descriptionEn : item.description) || item.description,
     prerequisites: item.descriptivePrerequisites && item.requirements
-      ? [requirementPresentation(item.requirements, locale, catalog), item.narrativePrerequisites].filter(Boolean).join("; ")
+      ? portuguese?.prerequisites ?? ([requirementPresentation(item.requirements, locale, catalog), item.narrativePrerequisites].filter(Boolean).join("; ") || item.prerequisites)
       : portuguese?.prerequisites ?? item.prerequisites,
     alternativePrerequisites: portuguese?.alternativePrerequisites ?? item.alternativePrerequisites,
     levels: portuguese?.levels ?? item.levels,

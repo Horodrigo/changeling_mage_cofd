@@ -21,7 +21,7 @@ const base={...mageMerits.MAGE_STATUS_REQUIREMENTS,gameLine:"MtA",archetypes:["a
 
 test("Mage Merit presentation switches EN/PT/EN without changing canonical requirements",async()=>{
  const {meritPresentation}=await vite.ssrLoadModule("/lib/merit-presentation.ts");
- for(const name of ["Adamant Hand","Artifact","Astral Adept","Astral Intruder","Awakened Status","Between the Ticks","Broad Dedication","Cabal Theme","Cognoscente","Daimonomikon","Demesne","Destiny","Dominant Soul","Dream","Echo Chamber","Egregore","Enhanced Item","Enriched Item","Epiphany Stone","Familiar","Fast Spells","Fire Keeper","Fluent High Speech","Grimoire","Hallow","Hidden High Speech","High Speech","Imbued Ally","Imbued Item","Imposing Nimbus","Infamous Mentor","Inheritance","Keen Periphery","Legacy Pedagogue","Lex Magica","Mana Battery","Mana Sensitivity","Masque (Style)","Masque","Mystery Cult Influence","Occultation","Order Archive","Perfected Item","Persistent Nimbus","Piercing Glance","Potent Nimbus","Potent Resonance","Potent Soul","Prelacy","Profligate Dedication","Sanctum","Sea's Hunger","Second-Person High Speech","Shadow Name","Shadow Self","Sky's Whispers","Soul Dealer","Soul Stone","Spirit Warden","Stalwart Soul","Supernal Taxonomy","Supernal Watcher","Techné","Trail Walker"]){
+ for(const name of ["Adamant Hand","Artifact","Astral Adept","Astral Intruder","Awakened Status","Between the Ticks","Broad Dedication","Cabal Theme","Cognoscente","Daimonomikon","Demesne","Destiny","Dominant Soul","Dream","Echo Chamber","Egregore","Enhanced Item","Enriched Item","Epiphany Stone","Faction Member","Familiar","Fast Spells","Fire Keeper","Fluent High Speech","Grimoire","Hallow","Hidden High Speech","High Speech","Imbued Ally","Imbued Item","Imposing Nimbus","Infamous Mentor","Inheritance","Keen Periphery","Legacy Pedagogue","Lex Magica","Mana Battery","Mana Sensitivity","Masque (Style)","Masque","Mystery Cult Influence","Occultation","Order Archive","Perfected Item","Persistent Nimbus","Piercing Glance","Potent Nimbus","Potent Resonance","Potent Soul","Prelacy","Profane Tool","Profligate Dedication","Sanctum","Sea's Hunger","Second-Person High Speech","Shadow Name","Shadow Self","Sky's Whispers","Soul Dealer","Soul Stone","Spirit Warden","Stalwart Soul","Supernal Taxonomy","Supernal Watcher","Techné","Trail Walker"]){
   const entry=merit(name);
   const canonical={id:entry.id,name:entry.name,prerequisites:entry.prerequisites,descriptionEn:entry.descriptionEn};
   assert.equal(meritPresentation(entry,"en-US",mageCatalog).name,entry.nameQualifier?.["en-US"]?`${name}(${entry.nameQualifier["en-US"]})`:name);
@@ -68,6 +68,10 @@ test("Mage Merit presentation switches EN/PT/EN without changing canonical requi
  assert.match(meritPresentation(merit("Sanctum"),"pt-BR",mageCatalog).description,/Gnose efetiva.*feitiços excedentes.*Domínio/);
  assert.equal(meritPresentation(merit("Egregore"),"pt-BR",mageCatalog).levels[0].name,"Mysteriorum Arche");
  assert.match(meritPresentation(merit("Egregore"),"pt-BR",mageCatalog).levels[2].description,/Uma vez por sessão.*Informado/);
+ assert.match(meritPresentation(merit("Faction Member"),"pt-BR",mageCatalog).description,/\+2.*−2.*cinco/);
+ assert.equal(meritPresentation(merit("Faction Member"),"en-US",mageCatalog).prerequisites,"Order Status ••");
+ assert.equal(meritPresentation(merit("Faction Member"),"pt-BR",mageCatalog).levels[2].name,"Perícia de Rotina da Facção");
+ assert.match(meritPresentation(merit("Profane Tool"),"pt-BR",mageCatalog).description,/Cetros.*Anéis.*várias vezes/);
  assert.match(meritPresentation(merit("Stalwart Soul"),"pt-BR",mageCatalog).description,/dobro dos pontos.*Resistência/);
  assert.match(meritPresentation(merit("Sky's Whispers"),"pt-BR",mageCatalog).description,/24 horas.*\+3 dados.*Raciocínio/);
  assert.match(meritPresentation(merit("Trail Walker"),"pt-BR",mageCatalog).description,/todos que viajam com você.*dobro da velocidade/);

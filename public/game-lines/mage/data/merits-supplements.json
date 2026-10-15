@@ -142,7 +142,12 @@
     "page": 125,
     "repeatable": true,
     "priority": 2,
-    "translatedName": "Profane Tool"
+    "translatedName": "Ferramenta Profana",
+    "presentationPt": {
+      "name": "Ferramenta Profana",
+      "prerequisites": "Prelazia ••",
+      "description": "Escolha uma Forma Profana: Cetros, Vestes, Coroas, Tronos ou Anéis. Você pode usar e dedicar objetos dessa forma como se fossem ferramentas do seu Caminho. Este Mérito pode ser comprado várias vezes, uma para cada forma escolhida."
+    }
   },
   {
     "id": "mta-tome:faction-member",
@@ -165,7 +170,17 @@
       { "rating": 3, "name": "Faction Rote Skill", "description": "Gain the faction's fourth Rote Skill." }
     ],
     "priority": 2,
-    "translatedName": "Faction Member"
+    "translatedName": "Membro de Facção",
+    "presentationPt": {
+      "name": "Membro de Facção",
+      "prerequisites": "Status na Ordem ••",
+      "description": "Você pertence a uma facção do Pentáculo. Em uma facção herética, seu bônus de Status entre membros da facção no Caucus local é +2, mas seu Status sofre −2 ao lidar com outros integrantes da Ordem que não pertencem à facção; o Status efetivo pode ultrapassar cinco.",
+      "levels": [
+        { "rating": 1, "name": "Status na Facção", "description": "Receba +1 de bônus no Status ao lidar com integrantes da facção em seu Caucus. Fora dele, seus pontos neste Mérito contam como pontos de Status com integrantes da facção, mesmo que pertençam a outra Ordem em uma facção entre Ordens." },
+        { "rating": 2, "name": "Ferramenta da Facção", "description": "Receba o Yantra adicional de ferramenta da Ordem específico da facção." },
+        { "rating": 3, "name": "Perícia de Rotina da Facção", "description": "Receba a quarta Perícia de Rotina específica da facção." }
+      ]
+    }
   },
   {
     "id": "core-dark-eras-companion:svikiro",
