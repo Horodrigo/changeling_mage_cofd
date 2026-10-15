@@ -497,6 +497,19 @@ test("House of Ariadne presents five Attainments in PT and its second requires o
   assert.deepEqual(definition, original);
 });
 
+test("Nagaraja preserves its proper name and presents all five Attainments in PT", () => {
+  const definition = LEGACIES.find((item) => item.id === "nagaraja");
+  const original = structuredClone(definition);
+  const pt = legacyPresentation(definition, "pt-BR");
+  assert.equal(pt.name, "Nagaraja");
+  assert.deepEqual(definition.parentage.orders, ["Mantra Sadhaki"]);
+  assert.deepEqual(pt.attainments.map((item) => item.name), ["Avaliar a Travessia Errante", "Expandir o Eu", "Subjugar a Alma Adormecida", "Libertar a Alma", "Desapego"]);
+  assert.match(pt.attainments[3].description, /Perseverança \+ Compostura duas vezes/);
+  assert.match(pt.attainments[3].description, /Subjugado/);
+  assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
+  assert.deepEqual(definition, original);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
