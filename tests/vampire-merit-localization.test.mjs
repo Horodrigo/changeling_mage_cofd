@@ -153,6 +153,8 @@ test("Vampire Merit snapshots and Builder/XP/Sheet/Homebrew render EN/PT/EN with
       const experience = render(ExperienceMeritPicker, { line: "VtR", context, meritCatalog: selected, character: { ...character, merits: [] }, selectedId: selected[0].id, targetDots: 1, onSelect: noMutation });
       const summary = render(MeritList, { character, catalog, locale });
       const expanded = render(VampireExpandedMeritList, { character, updateSheet: noMutation, merits: character.merits, catalog, locale });
+      const expandedBodies = [...expanded.matchAll(/<div class="expanded-merit-body">([\s\S]*?)<\/div>/g)].map(match => match[1]);
+      assert.equal(expandedBodies.length, selected.length);
       const emptyPowers = Object.fromEntries(["disciplines", "ritualDisciplines", "devotions", "lashes", "cruacRites", "thebanMiracles", "gildedInvocations", "detournements"].map(key => [key, []]));
       const reference = { clans: [], covenants: [], bloodlines: [], anchors: [], bloodPotency: [], torpor: [] };
       const catalogs = { get: id => ({ "core-merits": [], "vampire-merits": selected, "vampire-reference": reference, "vampire-powers": emptyPowers, "vampire-conditions": [] })[id] };
@@ -168,7 +170,7 @@ test("Vampire Merit snapshots and Builder/XP/Sheet/Homebrew render EN/PT/EN with
         if (definition.homebrew) assert.ok(homebrew.includes(escape(presented.description)), `${locale}: ${definition.id} Homebrew`);
         for (const level of presented.levels ?? []) {
           for (const html of [creation, experience]) assert.ok(html.includes(escape(level.description)), `${locale}: ${definition.id} level ${level.rating}`);
-          assert.equal(expanded.includes(escape(level.description)), level.rating <= owned.dots);
+          assert.equal(expandedBodies[selected.indexOf(definition)].includes(escape(level.description)), level.rating <= owned.dots, `${locale}: ${definition.id} level ${level.rating}`);
         }
         const entry = { id: `receipt-${owned.instanceId}`, cost: 1, createdAt: "2026-10-04", rating: owned.dots, label: "Original receipt label", undo: { kind: "merit", definitionId: owned.definitionId, instanceId: owned.instanceId, name: definition.name, dots: 1 } };
         const entryBefore = JSON.stringify(entry);

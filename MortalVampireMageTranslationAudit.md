@@ -1,10 +1,6 @@
 # Auditoria de tradução — pendências
 
-## Prioridade 1 — concluir as traduções
-
-- Conferir a apresentação EN/PT das traduções concluídas em criação, Experience e fichas Desktop/Mobile antes de passar às mudanças de regras.
-
-## Prioridade 2 — escolhas e regras faltantes
+## Escolhas e regras faltantes
 
 - **Intendants of the Building:** no terceiro Attainment, *Tome of the Pentacle* p. 163 exige Primórdio 3 e **Ocultismo 3 com Especialização em Geomancia OU Furto 3**. O texto do catálogo agora informa a alternativa, mas a validação estruturada ainda aceita Ocultismo 3 sem a Especialização. Corrigir no avaliador de Legacy sem alterar IDs ou compras.
 - **House of Ariadne:** a validação dos Attainments 3 e 5 conta os pontos canônicos de Contacts/Status, mas ainda não confere se os grupos de Contacts e a organização de Status pertencem à cidade sintonizada nem se esta é uma organização de Adormecidos (*Tome of the Pentacle* p. 154). Completar a elegibilidade ao tratar as regras, sem depender do nome de exibição dos Merits.
