@@ -143,9 +143,18 @@
     "initiation": "The initiate finds and traverses a hidden route through mundane or supernatural boundaries.",
     "organization": "Reality Stalkers exchange discoveries among spies, thieves, and explorers of liminal Mysteries.",
     "theory": "Truth hides in the cracks between places, systems, and realities.",
-    "yantras": ["Cracking a code or hacking a network (+2).", "Learning a secret (+1 to +3).", "Telling someone a consequential secret (+1, or +2 for dire consequences).", "A doorway, secret passage, or liminal space (+1)."],
+    "yantras": ["Cracking a code or hacking a network (+2).", "Learning a secret (+1 to +3).", "Telling someone a secret they did not already know (+1, or +2 with dire consequences).", "A doorway, secret passage, or liminal space (+1)."],
     "oblations": ["Break and enter.", "Explore a hidden passage.", "Get lost and find the way back.", "Broker a trade of secrets."],
-    "attainments": [{ "rank": 1, "name": "Gazing Through the Cracks", "prerequisites": "Initiation (Space 2, Larceny or Stealth 2)", "rulingArcanum": 1, "orthodoxGnosis": 2, "novelGnosis": 3, "praxisName": "The Outward and Inward Eye", "requirements": { "arcana": { "Space": 2 }, "anySkills": { "names": ["Larceny", "Stealth"], "rating": 2 } }, "description": "Duplicate The Outward and Inward Eye instantly and see through spatial warps and corridors. Doing so alerts the far side; a dramatic failure on a chance die opens the way.", "optional": "Death or Spirit 1: see through Avernian Gates or Loci, respectively." }]
+    "attainments": [{ "rank": 1, "name": "Gazing Through the Cracks", "prerequisites": "Initiation (Space 2, Larceny or Stealth 2)", "rulingArcanum": 1, "orthodoxGnosis": 2, "novelGnosis": 3, "praxisName": "The Outward and Inward Eye", "requirements": { "arcana": { "Space": 2 }, "anySkills": { "names": ["Larceny", "Stealth"], "rating": 2 } }, "description": "Duplicate The Outward and Inward Eye with Reach for instant use and seeing through existing spatial warps and corridors. This attracts attention from the far side: the Storyteller rolls a chance die, and on a dramatic failure the passage opens to those watching. Otherwise, they still know they are observed.", "optional": "Death or Spirit 1: also see through Avernian Gates or Loci, respectively.", "presentationPt": { "name": "Espreitar pelas Fendas", "prerequisites": "Iniciação (Espaço 2, Furto ou Furtividade 2)", "description": "Reproduz O Olho Exterior e Interior com Alcance para uso instantâneo e para enxergar através de distorções e corredores espaciais existentes. Isso chama a atenção do outro lado: o Narrador joga um dado de sorte; em falha dramática, a passagem se abre para quem observa o mago. Mesmo sem isso, eles percebem que estão sendo observados.", "optional": "Morte ou Espírito 1: também permite enxergar através de Portões Avernianos ou Loci, respectivamente." } }],
+    "presentationPt": {
+      "name": "Espreitadores da Realidade",
+      "prerequisites": "Espaço 2 e Furto ou Furtividade 2.",
+      "initiation": "O iniciado encontra e percorre uma rota oculta através de limites mundanos ou sobrenaturais.",
+      "organization": "Os Espreitadores compartilham descobertas entre espiões, ladrões e exploradores de Mistérios liminares.",
+      "theory": "A verdade se esconde nas fendas entre lugares, sistemas e realidades.",
+      "yantras": ["Decifrar um código ou invadir uma rede (+2).", "Descobrir um segredo (+1 a +3, conforme a dificuldade).", "Contar a alguém um segredo que desconhecia (+1, ou +2 se as consequências forem terríveis).", "Uma porta, passagem secreta ou espaço liminar (+1)."],
+      "oblations": ["Invadir um local.", "Encontrar e explorar uma passagem secreta.", "Perder-se e reencontrar o caminho de volta.", "Intermediar a troca de segredos entre duas ou mais partes."]
+    }
   },
   {
     "id": "stone-scribes",

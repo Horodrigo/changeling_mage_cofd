@@ -405,6 +405,15 @@ test("Illumined Path follows the book's Yantras and presents its Attainment in P
   assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
 });
 
+test("Reality Stalkers presents its Attainment in PT without changing its identity", () => {
+  const definition = LEGACIES.find((item) => item.id === "reality-stalkers");
+  const pt = legacyPresentation(definition, "pt-BR");
+  assert.equal(pt.name, "Espreitadores da Realidade");
+  assert.equal(pt.attainments[0].name, "Espreitar pelas Fendas");
+  assert.match(pt.attainments[0].description, /falha dramática/);
+  assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
