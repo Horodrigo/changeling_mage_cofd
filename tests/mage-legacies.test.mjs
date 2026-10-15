@@ -473,6 +473,17 @@ test("Stone Scribes presents both Attainments in PT and uses the printed second 
   assert.deepEqual(definition, original);
 });
 
+test("Intendants of the Building presents its three Attainments in PT without changing identities", () => {
+  const definition = LEGACIES.find((item) => item.id === "intendants-of-the-building");
+  const original = structuredClone(definition);
+  const pt = legacyPresentation(definition, "pt-BR");
+  assert.equal(pt.name, "Intendentes de The Building");
+  assert.deepEqual(pt.attainments.map((item) => item.name), ["Penumbra pelas Fendas", "Ossos da Cidadela", "Revolver Sangue na Argamassa"]);
+  assert.match(pt.attainments[2].optional, /Escala igual aos pontos de Mente/);
+  assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
+  assert.deepEqual(definition, original);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
