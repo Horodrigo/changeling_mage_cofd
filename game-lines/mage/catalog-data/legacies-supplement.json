@@ -179,9 +179,18 @@
     "initiation": "The initiate accepts responsibility for guiding another toward the Supernal without forcing the journey.",
     "organization": "Guides teach and mentor through the Silver Ladder, often working closely with Sleepwalkers and promising Sleepers.",
     "theory": "Enlightenment must be offered as a visible path, not imposed as a command.",
-    "yantras": ["Light from a source carried by the mage (+1).", "A lesson or explanation accepted by another (+1).", "Guiding someone through a genuine revelation (+2)."],
-    "oblations": ["Guided meditation, teaching, or tutoring.", "Help another overcome an obstacle without solving it for them.", "Maintain or illuminate a path for travelers."],
-    "attainments": [{ "rank": 1, "name": "Mark the Trail", "prerequisites": "Initiation (Prime 2, Empathy 2)", "rulingArcanum": 1, "orthodoxGnosis": 2, "novelGnosis": 3, "praxisName": "Supernal Vision", "requirements": { "arcana": { "Prime": 2 }, "skills": { "Empathy": 2 } }, "description": "After mutual meditation for a scene, bestow Supernal Vision with advanced Duration. Sleepers and Sleepwalkers may receive it without causing Quiescence or Dissonance.", "optional": "Forces 2: studied subjects visibly glow to the Guide." }]
+    "yantras": ["Light from a source carried by the mage (+1).", "Reciting from philosophical or religious texts (+1).", "Deliberately releasing Paradox (+2)."],
+    "oblations": ["Guided meditation, teaching, or tutoring.", "Philosophical discourse.", "Volunteering for a helpful charity.", "Studying Paradox."],
+    "attainments": [{ "rank": 1, "name": "Mark the Trail", "prerequisites": "Initiation (Prime 2, Empathy 2)", "rulingArcanum": 1, "orthodoxGnosis": 2, "novelGnosis": 3, "praxisName": "Supernal Vision", "requirements": { "arcana": { "Prime": 2 }, "skills": { "Empathy": 2 } }, "description": "Bestow Supernal Vision on a subject after a scene of meditation together, with fixed Reach for advanced Duration. This Attainment alone does not cause Quiescence or breaking points in Sleeper subjects.", "optional": "Forces 2: anything the subject studies with this vision glows softly, drawing nearby light, visible to anyone; the effect fails in total darkness.", "presentationPt": { "name": "Marcar a Trilha", "prerequisites": "Iniciação (Primórdio 2, Empatia 2)", "description": "Concede Visão Superna a um alvo depois de uma cena de meditação conjunta, com Alcance fixo para Duração Avançada. Este Aperfeiçoamento, por si só, não causa Quiescência nem Pontos de Ruptura em Adormecidos.", "optional": "Forças 2: tudo o que o alvo examina com essa visão brilha suavemente, atraindo a luz próxima. Qualquer pessoa pode ver o brilho; o efeito não funciona na escuridão total." } }],
+    "presentationPt": {
+      "name": "Caminho Iluminado",
+      "prerequisites": "Primórdio 2 e Empatia 2.",
+      "initiation": "O iniciado assume a responsabilidade de orientar outras pessoas rumo ao Superno sem forçar sua jornada.",
+      "organization": "Os guias ensinam e orientam por meio da Escada de Prata, muitas vezes junto a sonâmbulos e Adormecidos promissores.",
+      "theory": "O Despertar é um espectro, não uma divisão entre sono e vigília. O Paradoxo deve ser dominado em vez de temido, e o caminho ao Superno deve ser mostrado, nunca imposto.",
+      "yantras": ["Luz de uma fonte carregada pelo mago (+1).", "Recitar textos filosóficos ou religiosos (+1).", "Liberar Paradoxo deliberadamente (+2)."],
+      "oblations": ["Meditação guiada, ensino ou tutoria.", "Discurso filosófico.", "Trabalho voluntário em uma instituição beneficente.", "Estudo do Paradoxo."]
+    }
   },
   {
     "id": "intendants-of-the-building",

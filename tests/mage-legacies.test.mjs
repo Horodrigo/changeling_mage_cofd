@@ -395,6 +395,16 @@ test("Perfected Adepts presents its Attainment in PT and retains canonical ident
   assert.deepEqual(definition, original);
 });
 
+test("Illumined Path follows the book's Yantras and presents its Attainment in PT", () => {
+  const definition = LEGACIES.find((item) => item.id === "illumined-path");
+  const pt = legacyPresentation(definition, "pt-BR");
+  assert.equal(pt.name, "Caminho Iluminado");
+  assert.equal(pt.attainments[0].name, "Marcar a Trilha");
+  assert.match(pt.attainments[0].optional, /escuridão total/);
+  assert.equal(definition.yantras[2], "Deliberately releasing Paradox (+2).");
+  assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
