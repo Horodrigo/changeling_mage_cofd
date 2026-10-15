@@ -384,6 +384,17 @@ test("Engineers of the System presents all three Attainments in PT without chang
   assert.deepEqual(ENGINEERS_OF_THE_SYSTEM, original);
 });
 
+test("Perfected Adepts presents its Attainment in PT and retains canonical identities", () => {
+  const definition = LEGACIES.find((item) => item.id === "perfected-adepts");
+  const original = structuredClone(definition);
+  const pt = legacyPresentation(definition, "pt-BR");
+  assert.equal(pt.name, "Adeptos Aperfeiçoados");
+  assert.equal(pt.attainments[0].name, "Força Vital");
+  assert.match(pt.attainments[0].description, /Visão Mágica Focada/);
+  assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
+  assert.deepEqual(definition, original);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });

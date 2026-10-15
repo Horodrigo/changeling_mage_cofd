@@ -38,7 +38,16 @@
     "theory": "Perfection comes from harmonizing body, mind, and soul into an ever more complete self.",
     "yantras": ["A place of physical training (+1).", "An oath of service or genuine act of humility (+1).", "Fasting for at least a day (+2).", "Discarding something valuable or vain (+1 to +3)."],
     "oblations": ["Combat drills or training.", "A feat of endurance.", "Successfully meditate for at least an hour."],
-    "attainments": [{ "rank": 1, "name": "Vital Force", "prerequisites": "Initiation (Life 2, Prime 1, Athletics 2)", "rulingArcanum": 1, "orthodoxGnosis": 2, "novelGnosis": 3, "praxisName": "Analyze Life", "requirements": { "arcana": { "Life": 2, "Prime": 1 }, "skills": { "Athletics": 2 } }, "description": "Combine Analyze Life and Supernal Vision, limited to living beings. After 30 minutes of successful meditation, gain +3 on a number of Focused Mage Sight rolls using Life equal to Potency before the scene ends." }]
+    "attainments": [{ "rank": 1, "name": "Vital Force", "prerequisites": "Initiation (Life 2, Prime 1, Athletics 2)", "rulingArcanum": 1, "orthodoxGnosis": 2, "novelGnosis": 3, "praxisName": "Analyze Life", "requirements": { "arcana": { "Life": 2, "Prime": 1 }, "skills": { "Athletics": 2 } }, "description": "Combine Analyze Life and Supernal Vision, limited to living beings. After 30 minutes of successful meditation, gain +3 on a number of Focused Mage Sight rolls using Life equal to Potency before the scene ends.", "presentationPt": { "name": "Força Vital", "prerequisites": "Iniciação (Vida 2, Primórdio 1, Atletismo 2)", "description": "Combina Analisar a Vida e Visão Superna, somente para estudar seres vivos. Se meditar com sucesso por pelo menos 30 minutos imediatamente antes de usar o Aperfeiçoamento, recebe +3 em um número de jogadas de Visão Mágica Focada com Vida igual à Potência do Aperfeiçoamento, até o fim da cena." }}],
+    "presentationPt": {
+      "name": "Adeptos Aperfeiçoados",
+      "prerequisites": "Vida 2, Primórdio 1 e Atletismo 2.",
+      "initiation": "O iniciado passa por treinamento físico disciplinado e práticas ascéticas.",
+      "organization": "O Legado é uma tradição consolidada entre os magos da Seta Adamantina.",
+      "theory": "A perfeição surge da harmonia entre corpo, mente e alma em um ser cada vez mais completo.",
+      "yantras": ["Conjurar em um local de treinamento físico, como academia, dojô ou pista de corrida (+1).", "Fazer um juramento de serviço ou demonstrar humildade genuína (+1).", "Jejuar por pelo menos um dia (+2).", "Descartar algo valioso ou uma vaidade (+1 a +3, conforme sua importância)."],
+      "oblations": ["Praticar técnicas de combate ou treinamento físico.", "Realizar uma prova de resistência, como uma maratona ou longa exposição aos elementos.", "Meditar com sucesso por pelo menos uma hora."]
+    }
   },
   {
     "id": "nighthawks",
