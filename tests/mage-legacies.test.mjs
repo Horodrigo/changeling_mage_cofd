@@ -484,6 +484,19 @@ test("Intendants of the Building presents its three Attainments in PT without ch
   assert.deepEqual(definition, original);
 });
 
+test("House of Ariadne presents five Attainments in PT and its second requires only Time 2", () => {
+  const definition = LEGACIES.find((item) => item.id === "house-of-ariadne");
+  const original = structuredClone(definition);
+  const pt = legacyPresentation(definition, "pt-BR");
+  assert.equal(pt.name, "Casa de Ariadne");
+  assert.deepEqual(pt.attainments.map((item) => item.name), ["Sintonizar", "Seguir o Fio", "Percorrer a Teia", "Peregrinação Geomântica", "Bênção de Ariadne"]);
+  assert.deepEqual(definition.attainments[1].requirements, { arcana: { Time: 2 } });
+  assert.match(pt.attainments[0].description, /Simpatia Temporal/);
+  assert.match(pt.attainments[4].optional, /uma oportunidade diária/);
+  assert.strictEqual(legacyPresentation(definition, "en-US"), definition);
+  assert.deepEqual(definition, original);
+});
+
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {
   const initiation = legacyReceipt(); delete initiation.undo.definitionId;
   const attainment = legacyReceipt("legacyAttainment", { before: { line_data: { legacy_state: { ...legacySelection, joined: true, attainmentRanks: [1] } } } });
