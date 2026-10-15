@@ -1307,6 +1307,23 @@
     }
   },
   {
+    "id": "materialized",
+    "name": "Materialized",
+    "originalName": "Materialized",
+    "category": "Supernatural",
+    "description": "The entity has shifted from ephemeral to material substance and manifests in physical form. All rules for ephemeral entities still apply except those tied to Twilight. Materialized protects the entity from Essence Bleed. It lasts one hour per success on the activation roll. Physical contact with the entity's Bane or removal of a prerequisite Condition can end it early.",
+    "resolution": "The duration ends, the entity touches its Bane, or a prerequisite Condition is removed.",
+    "source": "Chronicles of Darkness",
+    "sourceCode": "CofD",
+    "page": 134,
+    "presentationPt": {
+      "name": "Materializado",
+      "category": "Sobrenatural",
+      "description": "A entidade passou de substância efêmera a material e se manifesta em forma física. Todas as regras das entidades efêmeras ainda se aplicam, exceto as ligadas ao Crepúsculo. Materializado protege a entidade da Perda de Essência. Dura uma hora por sucesso na jogada de ativação. O contato físico com sua Fraqueza ou a remoção de uma Condição prévia pode encerrá-la antes.",
+      "resolution": "A duração termina, a entidade toca sua Fraqueza ou uma Condição prévia é removida."
+    }
+  },
+  {
     "id": "elder-children-of-the-blood",
     "name": "Children of the Blood",
     "originalName": "Children of the Blood",

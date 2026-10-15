@@ -1408,16 +1408,18 @@ test("Vampire creation, XP, Desktop/Mobile cards and Homebrew render EN/PT/EN wi
         const hidden = activeVampirePowers(catalog, { disabledIds: [option.id] });
         assert.equal(hidden.disciplineOptions.some(item => item.id === option.id), !vampireHomebrewSourceId(option), "Only Homebrew content can be disabled");
       }
-      const swarmCharacter = blankPrintCharacter("VtR");
-      swarmCharacter.line_data.combat_tilts = [catalog.tilts[0].id];
-      const swarmBefore = JSON.stringify(swarmCharacter);
-      const swarm = tiltPresentation(catalog.tilts[0], locale);
-      const combat = render(CombatPage, { character: swarmCharacter, derived: {}, updateSheet: noMutation, tiltCatalog: [...TILTS, ...catalog.tilts] });
-      for (const field of ["description", "effect", "causing", "ending"]) assert.ok(combat.includes(escape(swarm[field])));
-      const coreCombat = render(CombatPage, { character: swarmCharacter, derived: {}, updateSheet: noMutation });
-      assert.equal(coreCombat.includes(escape(swarm.description)), false);
-      assert.ok(homebrew.includes(escape(swarm.description)));
-      assert.equal(JSON.stringify(swarmCharacter), swarmBefore);
+      const tiltCharacter = blankPrintCharacter("VtR");
+      tiltCharacter.line_data.combat_tilts = catalog.tilts.map(item => item.id);
+      const tiltBefore = JSON.stringify(tiltCharacter);
+      const combat = render(CombatPage, { character: tiltCharacter, derived: {}, updateSheet: noMutation, tiltCatalog: [...TILTS, ...catalog.tilts] });
+      const coreCombat = render(CombatPage, { character: tiltCharacter, derived: {}, updateSheet: noMutation });
+      for (const item of catalog.tilts) {
+        const tilt = tiltPresentation(item, locale);
+        for (const field of ["description", "effect", "causing", "ending"]) assert.ok(combat.includes(escape(tilt[field])));
+        assert.equal(coreCombat.includes(escape(tilt.description)), false);
+        assert.ok(homebrew.includes(escape(tilt.description)));
+      }
+      assert.equal(JSON.stringify(tiltCharacter), tiltBefore);
       const authoredFormula = normalizeVampireCatalogHomebrew({ entryType: "power", kind: "kimiya-formula", id: "homebrew:vampire:authored-formula", name: "Ebony Horse", summary: "Authored formula stays.", effect: "Authored formula effect stays." });
       assert.equal(vampirePowerPresentation(authoredFormula, locale), authoredFormula);
       const custom = normalizeVampireCatalogHomebrew({ entryType: "discipline", id: "homebrew:vampire:authored", name: "Animalism", summary: "Authored English stays.", levels: [{ rating: 1, name: "Feral Whispers", summary: "Authored level stays.", effect: "Authored effect stays." }] });

@@ -18202,6 +18202,25 @@
         "causing": "Convocar a Caçada pode causar esta Complicação, assim como poderes semelhantes de Membros e outras fontes. Ela também pode ocorrer naturalmente quando alguém perturba uma colmeia de abelhas.",
         "ending": "O enxame não pode ser atacado com punhos, clavas, espadas ou armas de fogo. Apenas ataques que afetam uma área, como uma tocha, o afetam. Cada ponto de dano causado por uma chama ou outro ataque aplicável reduz o tamanho do enxame pela metade. Quando seu raio fica abaixo de 1 jarda, todos os animais estão mortos ou os poucos restantes se dispersam."
       }
+    },
+    {
+      "id": "vtr-strange-shades:power-surge",
+      "name": "Power Surge",
+      "translatedName": "Sobrecarga Elétrica",
+      "category": "Environmental",
+      "source": "Strange Shades: Mekhet",
+      "sourceCode": "SS",
+      "page": 24,
+      "description": "Electrical arcs leap from wall sockets, lights and devices explode at random, and alarms sound.",
+      "effect": "While the Tilt persists, all Composure-related dice pools, including Initiative and Defense, suffer −3. At the start of each turn, characters without cover suffer 2 lethal damage from broken glass and electricity. A reflexive Dexterity + Athletics roll downgrades that damage to bashing; an exceptional success cancels it entirely.",
+      "causing": "The Interface Discipline, the Forces Arcanum, firestorms, and Unchained Exploits can cause Power Surge or similar effects.",
+      "ending": "The Tilt lasts until the conditions that summoned it are no longer present or all electrical power in the location is cut.",
+      "presentationPt": {
+        "description": "Arcos elétricos saltam das tomadas, luzes e aparelhos explodem ao acaso e alarmes disparam.",
+        "effect": "Enquanto a Complicação persiste, todas as paradas relacionadas à Compostura, inclusive Iniciativa e Defesa, sofrem −3. No início de cada turno, personagens sem cobertura sofrem 2 pontos de dano letal por estilhaços de vidro e eletricidade. Uma jogada reflexiva de Destreza + Atletismo reduz esse dano a contundente; um sucesso excepcional o cancela por completo.",
+        "causing": "A Disciplina Interface, o Arcano Forças, tempestades de fogo e Exploits dos Unchained podem causar Sobrecarga Elétrica ou efeitos semelhantes.",
+        "ending": "A Complicação dura até que desapareçam as condições que a causaram ou que toda a energia elétrica do local seja desligada."
+      }
     }
   ]
 }

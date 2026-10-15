@@ -123,7 +123,7 @@ test('Swarm uses the supplied rules in both locales with source activation and u
   const { activeVampirePowers } = await vite.ssrLoadModule('/game-lines/vampire/homebrew-catalog.ts');
   assert.equal(TILTS.length, 35);
   assert.ok(!TILTS.some(item => item.id === 'vtr-agony-ecstasy:swarm'));
-  assert.equal(powers.tilts.length, 1);
+  assert.equal(powers.tilts.length, 2);
   const swarm = powers.tilts[0];
   assert.equal(swarm.id, 'vtr-agony-ecstasy:swarm');
   assert.equal(swarm.category, 'Environmental');
@@ -145,9 +145,15 @@ test('Swarm uses the supplied rules in both locales with source activation and u
       assert.match(presented.ending, /não pode ser atacado.*Cada ponto de dano.*pela metade.*abaixo de 1 jarda/);
     }
   }
-  assert.equal(activeVampirePowers(powers, { disabledIds: [] }).tilts.length, 1);
-  assert.equal(activeVampirePowers(powers, { disabledIds: ['h-vtr-agony-ecstasy'] }).tilts.length, 0);
-  assert.equal(activeVampirePowers(powers, { disabledIds: [swarm.id] }).tilts.length, 0);
+  const powerSurge = powers.tilts.find(item => item.id === 'vtr-strange-shades:power-surge');
+  assert.equal(powerSurge.category, 'Environmental');
+  assert.match(powerSurge.effect, /−3.*2 lethal.*Dexterity \+ Athletics.*exceptional success/);
+  assert.match(tiltPresentation(powerSurge, 'pt-BR').effect, /Complicação.*−3.*2 pontos.*Destreza \+ Atletismo.*sucesso excepcional/);
+  assert.match(powerSurge.ending, /all electrical power.*cut/);
+  assert.equal(activeVampirePowers(powers, { disabledIds: [] }).tilts.length, 2);
+  assert.deepEqual(activeVampirePowers(powers, { disabledIds: ['h-vtr-agony-ecstasy'] }).tilts.map(item => item.id), [powerSurge.id]);
+  assert.deepEqual(activeVampirePowers(powers, { disabledIds: ['h-vtr-strange-shades'] }).tilts.map(item => item.id), [swarm.id]);
+  assert.deepEqual(activeVampirePowers(powers, { disabledIds: [swarm.id] }).tilts.map(item => item.id), [powerSurge.id]);
   const dance = powers.devotions.find(item => item.id === 'h-vtr-agony-ecstasy:devotion:dance-of-the-swarm');
   assert.equal(JSON.stringify(dance).includes('p. XX'), false);
 });
