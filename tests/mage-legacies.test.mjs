@@ -22,6 +22,7 @@ const {
   eleventhQuestionPrerequisites,
   legacyEntryPrerequisites,
   legacyAttainmentPrerequisites,
+  legacyPresentation,
   normalizeLegacyState,
 } = await vite.ssrLoadModule("/game-lines/mage/legacies.ts");
 
@@ -327,12 +328,12 @@ const purchasedLegacy = (ranks = [1]) => ({
 
 test("Legacy receipts display their definition ID and Attainment rank in both locales, never the selected namesake", () => {
   const sheet = purchasedLegacy();
-  const namesake = { ...ELEVENTH_QUESTION, id: "other:legacy", name: ELEVENTH_QUESTION.name, attainments: [{ rank: 2, name: "Authored Attainment" }] };
+  const namesake = { ...ELEVENTH_QUESTION, id: "homebrew:legacy:namesake", name: ELEVENTH_QUESTION.name, homebrew: true, attainments: [{ rank: 2, name: "Authored Attainment" }] };
   const catalog = [ELEVENTH_QUESTION, namesake];
   for (const [locale, initiation] of [["en-US", "Initiation"], ["pt-BR", "Iniciação"]]) {
     const entry = legacyReceipt();
     const before = structuredClone(entry);
-    assert.equal(mageExperienceLabel(entry, sheet, [], [], locale, catalog), `${ELEVENTH_QUESTION.name} · ${initiation}`);
+    assert.equal(mageExperienceLabel(entry, sheet, [], [], locale, catalog), `${legacyPresentation(ELEVENTH_QUESTION,locale).name} · ${initiation}`);
     assert.deepEqual(entry, before);
     const attainment = legacyReceipt("legacyAttainment"); attainment.undo.definitionId = namesake.id;
     assert.equal(mageExperienceLabel(attainment, sheet, [], [], locale, catalog), `${namesake.name} · 2. Authored Attainment`);
@@ -341,6 +342,23 @@ test("Legacy receipts display their definition ID and Attainment rank in both lo
     const opaque = { description: "Texto autoral preservado", regular: 1, arcane: 0, undo: { kind: "legacyAttainment", rank: 2 } };
     assert.equal(mageExperienceLabel(opaque, sheet, [], [], locale, catalog), opaque.description);
   }
+});
+
+test("The Eleventh Question presents every field in PT without changing canonical Legacy data", () => {
+  const original = structuredClone(ELEVENTH_QUESTION);
+  const pt = legacyPresentation(ELEVENTH_QUESTION,"pt-BR");
+  assert.equal(pt.name,"A Décima Primeira Pergunta");
+  assert.equal(pt.id,ELEVENTH_QUESTION.id);
+  assert.equal(pt.rulingArcanum,"Time");
+  for(const field of ["prerequisites","initiation","organization","theory"]) assert.notEqual(pt[field],ELEVENTH_QUESTION[field]);
+  assert.equal(pt.yantras.length,4);
+  assert.equal(pt.oblations.length,4);
+  assert.deepEqual(pt.attainments.map(item=>item.name),["A Cena Intocada","A Resposta Inesperada","A Resposta Fortuita","A Resposta Oportuna","A Penúltima Resposta"]);
+  assert.ok(pt.attainments.every(item=>item.description!==ELEVENTH_QUESTION.attainments[item.rank-1].description && item.prerequisites!==ELEVENTH_QUESTION.attainments[item.rank-1].prerequisites));
+  assert.strictEqual(legacyPresentation(ELEVENTH_QUESTION,"en-US"),ELEVENTH_QUESTION);
+  assert.deepEqual(ELEVENTH_QUESTION,original);
+  const authored={...ELEVENTH_QUESTION,id:"homebrew:legacy:authored",homebrew:true};
+  assert.strictEqual(legacyPresentation(authored,"pt-BR"),authored);
 });
 
 test("schema-2 Legacy receipts recover identity only from verified pre-purchase selection, without rewriting them", () => {

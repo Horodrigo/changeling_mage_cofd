@@ -40,7 +40,13 @@
         "novelGnosis": 3,
         "praxisName": "Perfect Timing",
         "description": "Emulates Perfect Timing: add Time dots to rolls made to gather information from a location.",
-        "optional": "Matter 1: engage Active Mage Sight (Matter) on arrival; pierce supernatural concealment with automatic successes equal to Matter."
+        "optional": "Matter 1: engage Active Mage Sight (Matter) on arrival; pierce supernatural concealment with automatic successes equal to Matter.",
+        "presentationPt": {
+          "name": "A Cena Intocada",
+          "prerequisites": "Iniciação",
+          "description": "Imita Momento Perfeito: some seus pontos em Tempo às jogadas para obter informações de um local.",
+          "optional": "Matéria 1: ative a Visão Mágica Ativa de Matéria ao chegar. Para atravessar ocultação sobrenatural, obtenha sucessos automáticos iguais aos seus pontos em Matéria."
+        }
       },
       {
         "rank": 2,
@@ -51,7 +57,13 @@
         "novelGnosis": 3,
         "praxisName": "Postcognition",
         "description": "Study a subject for a turn and duplicate Postcognition, with Potency equal to Time dots and Reach for instant use and sensory range.",
-        "optional": "Matter 2: restore diluted or dispersed liquid or particulate matter to a former shape when residue remains, duplicating Shaping by touch."
+        "optional": "Matter 2: restore diluted or dispersed liquid or particulate matter to a former shape when residue remains, duplicating Shaping by touch.",
+        "presentationPt": {
+          "name": "A Resposta Inesperada",
+          "prerequisites": "Tempo 2, Investigação 3",
+          "description": "Examine uma pessoa, lugar ou coisa por um turno para imitar Pós-cognição. A Potência é igual aos seus pontos em Tempo; o efeito inclui Alcance para uso instantâneo e alcance sensorial.",
+          "optional": "Matéria 2: pelo toque, restaure líquidos ou partículas diluídos ou dispersos a uma forma anterior, desde que ainda haja resíduos, imitando Moldar."
+        }
       },
       {
         "rank": 3,
@@ -62,7 +74,13 @@
         "novelGnosis": 5,
         "praxisName": "Divination",
         "description": "Duplicate Divination with Reach for instant use, sensory range, and specific questions, limited to answers the Querent believes her future self will personally discover.",
-        "optional": "Matter 3: reshape matching raw material without tools into an object relevant to the Querent's personal future."
+        "optional": "Matter 3: reshape matching raw material without tools into an object relevant to the Querent's personal future.",
+        "presentationPt": {
+          "name": "A Resposta Fortuita",
+          "prerequisites": "Tempo 3, Investigação 3 e a outra Perícia usada para ingressar no Legado em 3, ou uma segunda Perícia da lista em 2",
+          "description": "Imite Adivinhação com Alcance para uso instantâneo, alcance sensorial e perguntas específicas. Você só pode perguntar o que acredita que descobrirá pessoalmente no futuro; caso contrário, a resposta será irrelevante.",
+          "optional": "Matéria 3: sem ferramentas, transforme matérias-primas apropriadas em um objeto relevante para seu futuro pessoal."
+        }
       },
       {
         "rank": 4,
@@ -73,7 +91,13 @@
         "novelGnosis": 7,
         "praxisName": "Prophecy",
         "description": "After building a profile for a scene, duplicate Prophecy with Reach for sensory range. A Representational sympathetic Yantra permits use without the subject present.",
-        "optional": "Matter 4: create a representational sympathetic Yantra for the target from impressions of the past or emanations of the future."
+        "optional": "Matter 4: create a representational sympathetic Yantra for the target from impressions of the past or emanations of the future.",
+        "presentationPt": {
+          "name": "A Resposta Oportuna",
+          "prerequisites": "Tempo 4, Investigação 4 e os demais requisitos de Perícia do Aperfeiçoamento anterior",
+          "description": "Depois de uma cena construindo um perfil do alvo, imite Profecia com Alcance para alcance sensorial. Se tiver um Yantra de Simpatia Representacional do alvo, não precisa da presença dele.",
+          "optional": "Matéria 4: crie um Yantra de Simpatia Representacional do alvo a partir de impressões do passado ou emanações do futuro."
+        }
       },
       {
         "rank": 5,
@@ -83,10 +107,35 @@
         "orthodoxGnosis": 8,
         "novelGnosis": 9,
         "description": "After a scene of meditation, project consciousness into the mage's own body up to one year in the future for a scene lasting no more than one hour; later visits overwrite earlier ones.",
-        "optional": "Matter 5: when that future arrives, create or delete nonmagical material objects using combined factors limited by the lower of Time or Matter."
+        "optional": "Matter 5: when that future arrives, create or delete nonmagical material objects using combined factors limited by the lower of Time or Matter.",
+        "presentationPt": {
+          "name": "A Penúltima Resposta",
+          "prerequisites": "Tempo 5, Investigação 4 e mais um dos seguintes: a Perícia adicional anterior em 4, uma segunda Perícia da lista em 3 ou uma terceira em 2",
+          "description": "Depois de uma cena de meditação, projete a consciência em seu próprio corpo até um ano no futuro por uma cena de no máximo uma hora. Seu corpo no presente fica inconsciente e não pode ser despertado até a cena terminar; no futuro, seus traços continuam iguais aos atuais. Morrer no futuro encerra o efeito sem feri-lo no presente. O futuro visto é provável, não fixo. Você pode repetir a visita, mas cada nova visita substitui as anteriores; ao reencontrar uma cena já vista, pode repetir suas ações e resultados sob seu controle ou agir de outro modo.",
+          "optional": "Matéria 5: quando esse futuro chegar, crie ou apague objetos materiais não mágicos em sua pessoa ou ao alcance sensorial. Os fatores combinados são limitados pelo menor valor entre seus pontos em Tempo e Matéria."
+        }
       }
     ],
     "entryPraxis": "Perfect Timing",
+    "presentationPt": {
+      "name": "A Décima Primeira Pergunta",
+      "prerequisites": "Tempo 2, Investigação 2 e Erudição, Furto, Medicina, Ocultismo ou Ciência 2. Também é preciso satisfazer os requisitos gerais de Gnose e linhagem do Legado, ou a exceção da Práxis do primeiro Aperfeiçoamento.",
+      "initiation": "O futuro Inquiridor deve resolver o Mistério proposto por seu tutor.",
+      "organization": "Os Inquiridores não têm hierarquia formal e costumam trabalhar em duplas. Reuniões maiores respondem a emergências de todo o Legado ou a Mistérios extraordinariamente estranhos.",
+      "theory": "Todas as evidências apontam para uma verdade integral e definitiva. Segredos bloqueiam o esclarecimento e devem ser revelados, embora nem todos mereçam conhecer o que se descobre.",
+      "yantras": [
+        "Ter sucesso em uma jogada de Investigação relevante para o feitiço (+2).",
+        "Explicar verbalmente um fenômeno misterioso a alguém de confiança (+1).",
+        "Coletar amostras ou registrar informações relevantes para o feitiço; o ato de coletar é o Yantra, não a mera posse do material (+2).",
+        "Usar estimulantes para manter o foco (+1, ou +2 se isso causar uma Condição adversa)."
+      ],
+      "oblations": [
+        "Resolver um enigma ou quebra-cabeça.",
+        "Estudar teorias mágicas esotéricas.",
+        "Praticar um hábito obsessivo ou antissocial.",
+        "Dar uma palestra extensa sobre um tema intelectualmente desafiador."
+      ]
+    },
     "entryRequirements": {
       "arcana": {
         "Time": 2

@@ -24,6 +24,7 @@ export type LegacyAttainment = {
   optional?: string;
   praxisName?: string;
   requirements?: LegacyRequirements;
+  presentationPt?: Partial<Pick<LegacyAttainment,"name"|"prerequisites"|"description"|"optional">>;
 };
 
 export type LegacyDefinition = {
@@ -47,6 +48,7 @@ export type LegacyDefinition = {
   attainments: LegacyAttainment[];
   entryPraxis?: string;
   entryRequirements?: LegacyRequirements;
+  presentationPt?: Partial<Pick<LegacyDefinition,"name"|"prerequisites"|"initiation"|"organization"|"theory"|"yantras"|"oblations">>;
 };
 
 export type LegacyState = {
@@ -61,6 +63,12 @@ export const ELEVENTH_QUESTION=LEGACIES.find((item)=>item.id==="the-eleventh-que
 export const CHRONOLOGUE=LEGACIES.find((item)=>item.id==="chronologue")!;
 export const ENGINEERS_OF_THE_SYSTEM=LEGACIES.find((item)=>item.id==="engineers-of-the-system")!;
 export const findLegacy=(id:unknown,custom:readonly LegacyDefinition[]=[])=>custom.find(item=>item.id===String(id))??LEGACIES.find(item=>item.id===String(id));
+
+/** Render-only translation; Legacy IDs, requirements, and purchases remain canonical. */
+export function legacyPresentation<T extends LegacyDefinition>(definition:T,locale:Locale):T {
+  if(locale!=="pt-BR"||definition.homebrew||!definition.presentationPt)return definition;
+  return {...definition,...definition.presentationPt,attainments:definition.attainments.map(item=>({...item,...item.presentationPt}))};
+}
 
 export function legacySkillRating(skills:Record<string,number>,name:string){
   return Number(skills[name]??0);

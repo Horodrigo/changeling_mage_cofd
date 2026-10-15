@@ -5,6 +5,7 @@ import type { SpellDefinition } from "@/lib/catalog/spell-catalog";
 import type { MageAdvancementUndo } from "./experience-refunds";
 import { legacyUndoForEntry } from "./experience-refunds";
 import type { LegacyDefinition } from "./legacies";
+import { legacyPresentation } from "./legacies";
 import { translate, type Locale, type MessageKey } from "@/lib/i18n";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { meritPresentation } from "@/lib/merit-presentation";
@@ -45,7 +46,8 @@ export function mageExperienceLabel(entry: MageExperienceEntry, character: Chara
   if (undo.kind === "legacyInitiation" || undo.kind === "legacyAttainment") {
     const identified = legacyUndoForEntry(entry);
     if (!identified) return fallback;
-    const legacy = legacies.find(item => item.id === identified.definitionId);
+    const found = legacies.find(item => item.id === identified.definitionId);
+    const legacy = found && legacyPresentation(found, locale);
     const name = legacy?.name ?? identified.definitionId;
     return identified.kind === "legacyInitiation"
       ? `${name} · ${translate(locale, "ui.initiation")}`
