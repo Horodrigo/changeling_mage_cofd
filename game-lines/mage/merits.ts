@@ -85,7 +85,14 @@ export function mageMeritSelectionProblems(
   if (merit.id === "mta-2ed:sanctum") linked("safePlaceId", ["core-2ed:safe-place"], effectiveMeritDots({ definitionId: merit.id, dots: selection.dots, configuration }));
   if (merit.id === "mta-2ed:demesne") linked("sanctumId", ["mta-2ed:sanctum"]);
   if (merit.id === "mta-signs:imbued-ally") linked("allyId", ["core-2ed:retainer", "mta-2ed:familiar"]);
-  if (merit.id === "mta-signs:order-archive") linked("statusId", ["mta-2ed:awakened-status"]);
+  if (merit.id === "mta-signs:order-archive") {
+    linked("statusId", ["mta-2ed:awakened-status"]);
+    const dots = effectiveMeritDots({ definitionId: merit.id, dots: selection.dots, configuration });
+    const arcana = Array.isArray(configuration.arcana) ? configuration.arcana : [];
+    const assets = Array.isArray(configuration.assets) ? configuration.assets : [];
+    if (arcana.slice(0, dots).length !== dots || new Set(arcana.slice(0, dots)).size !== dots || arcana.slice(0, dots).some(value => !ARCANA.includes(value))) problems.push({ key: "ui.meritSelectProtectedArcana" });
+    if (assets.slice(0, dots).length !== dots || assets.slice(0, dots).some(value => !value.trim())) problems.push({ key: "ui.meritSelectCaucusAssets" });
+  }
   if (merit.id === "mta-2ed:awakened-status") {
     const domain = String(configuration.domain ?? "");
     if (!domain) problems.push({key:"ui.meritSelectStatusDomain"});

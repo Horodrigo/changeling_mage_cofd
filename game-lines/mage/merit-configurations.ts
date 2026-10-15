@@ -3,6 +3,7 @@ import type { MeritSelection } from "@/lib/core/character/character-types";
 import type { MeritDefinition } from "@/lib/merits";
 import { resolveMeritDefinition } from "@/lib/merit-identity";
 import { PUBLISHED_MAGE_ORDERS } from "./orders";
+import { ARCANA } from "./creation-rules";
 const optionLabels: Record<string, string> = {"Adamantine Arrow":"ui.meritConfig.adamantineArrow","Guardians of the Veil":"ui.meritConfig.guardiansOfTheVeil","Silver Ladder":"ui.meritConfig.silverLadder","Free Council":"ui.meritConfig.freeCouncil","Seers of the Throne":"ui.meritConfig.seersOfTheThrone","Ghost":"ui.meritConfig.ghost","Goetia":"ui.meritConfig.goetia","Eye":"ui.meritConfig.exarchEye","Father":"ui.meritConfig.exarchFather","General":"ui.meritConfig.exarchGeneral","Unity":"ui.meritConfig.exarchUnity","Chancellor":"ui.meritConfig.exarchChancellor","Raptor":"ui.meritConfig.exarchRaptor","Prophet":"ui.meritConfig.exarchProphet","Nemesis":"ui.meritConfig.exarchNemesis","Ruin":"ui.meritConfig.exarchRuin","Robe":"ui.meritConfig.robe","Throne":"ui.meritConfig.throne","Ring":"ui.meritConfig.ring"};
 const field=(key:string,label:string,kind:"text"|"textarea"="text"):MeritConfigField=>({key,label,kind});
 const itemFields=[field("name","ui.meritConfig.itemName"),field("description","ui.meritConfig.appearanceAndProperties","textarea")];
@@ -31,7 +32,7 @@ const MAGE_CONFIGURATIONS:Array<Omit<MeritConfigDefinition,"line">>=[
   {id:"mta-signs:mana-battery", name:"Mana Battery",fields:itemFields},
   {id:"mta-2ed:masque", name:"Masque",fields:masqueFields},
   {id:"mta-2ed:masque-style", name:"Masque (Style)",fields:masqueFields},
-  {id:"mta-signs:order-archive", name:"Order Archive",fields:[{key:"statusId",label:"ui.meritConfig.consiliumOrOrderStatus",kind:"merit",meritIds:["mta-2ed:awakened-status"]},field("name","ui.meritConfig.archiveName"),{key:"arcana",label:"ui.meritConfig.protectedArcana",kind:"list"},{key:"assets",label:"ui.meritConfig.caucusAssets",kind:"list"}]},
+  {id:"mta-signs:order-archive", name:"Order Archive",fields:[{key:"statusId",label:"ui.meritConfig.consiliumOrOrderStatus",kind:"merit",meritIds:["mta-2ed:awakened-status"]},field("name","ui.meritConfig.archiveName"),{key:"arcana",label:"ui.meritConfig.protectedArcana",kind:"list",options:ARCANA.map(value=>({value,label:value}))},{key:"assets",label:"ui.meritConfig.caucusAssets",kind:"list"}]},
   {id:"mta-signs:perfected-item", name:"Perfected Item",fields:[...itemFields,field("material","ui.meritConfig.perfectedMaterial")]},
   {id:"mta-signs:profligate-dedication", name:"Profligate Dedication",fields:[{key:"additionalTools",label:"ui.meritConfig.additionalDedicatedTools",kind:"list",fixedRows:2}]},
   {id:"mta-2ed:prelacy", name:"Prelacy",fields:[{key:"exarch",label:"ui.meritConfig.patronExarch",kind:"select",options:["Eye","Father","General","Unity","Chancellor","Raptor","Prophet","Nemesis","Ruin"].map(value=>({value,label:optionLabels[value] ?? value}))}]},

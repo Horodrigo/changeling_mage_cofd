@@ -120,6 +120,28 @@ test("Mage links use exact definition/instance IDs and fail closed on ambiguous 
  assert.equal(mageMerits.mageMeritPrerequisitesMet(merit("Infamous Mentor"),{...base,selectedDots:3,configuration:{mentorId:"missing"},merits:[mentor]}),false);
 });
 
+test("Mage 2e Order Archive uses linked Status and one distinct Arcana and Asset per effective dot",()=>{
+ const archive=merit("Order Archive"),status=merit("Awakened Status");
+ const context={...base,merits:[{instanceId:"status-a",definitionId:status.id,name:status.name,dots:1,configuration:{domain:"Consilium"}}]};
+ const selection={dots:1,configuration:{statusId:"status-a",sharedDots:"1",arcana:["Death","Fate"],assets:["Maps","Records"]}};
+ const problems=value=>mageMerits.mageMeritSelectionProblems(archive,value,context,[]).map(item=>item.key);
+ assert.deepEqual(problems(selection),[]);
+ assert.ok(problems({...selection,configuration:{...selection.configuration,statusId:"missing"}}).includes("ui.meritSelectLinked"));
+ assert.ok(problems({...selection,configuration:{...selection.configuration,arcana:["Death","Death"]}}).includes("ui.meritSelectProtectedArcana"));
+ assert.ok(problems({...selection,configuration:{...selection.configuration,assets:["Maps",""]}}).includes("ui.meritSelectCaucusAssets"));
+});
+
+test("Mage Order Archive shows effective-dot choices in Expanded Merits in EN/PT",async()=>{
+ const {expandedConfigurationLines}=await vite.ssrLoadModule("/game-lines/mage/sheet-merit-configurations.ts");
+ const config={sharedDots:"1",arcana:["Death","Fate"],assets:["Maps","Records"]};
+ const en=expandedConfigurationLines("mta-signs:order-archive",1,config,"en-US");
+ const pt=expandedConfigurationLines("mta-signs:order-archive",1,config,"pt-BR");
+ assert.ok(en.some(line=>line.includes("Death, Fate")));
+ assert.ok(en.some(line=>line.includes("Maps, Records")));
+ assert.ok(pt.some(line=>line.includes("Maps, Records")));
+ assert.notDeepEqual(pt,en);
+});
+
 test("Mage linked Merit pickers filter by ID/rating and localized validation resolves those same IDs",async()=>{
  const {createElement}=await import("react");
  const {renderToStaticMarkup}=await import("react-dom/server");

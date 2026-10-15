@@ -14,8 +14,8 @@ const { meritSelectionProblems } = await vite.ssrLoadModule("/lib/merits.ts");
 const { requirementMet } = await vite.ssrLoadModule("/lib/merit-requirements.ts");
 const { werewolfMeritPrerequisitesMet } = await vite.ssrLoadModule("/game-lines/werewolf/merit-rules.ts");
 
-test("shared dots apply only to the eight named place Merits and never change purchased dots", () => {
-  assert.equal(SHARED_DOT_MERIT_IDS.size, 8);
+test("shared dots apply only to the nine named place Merits and never change purchased dots", () => {
+  assert.equal(SHARED_DOT_MERIT_IDS.size, 9);
   for (const id of SHARED_DOT_MERIT_IDS) {
     const owned = { definitionId: id, name: id, dots: 2, configuration: { sharedDots: "3" } };
     assert.equal(sharedMeritDots(owned), 3);

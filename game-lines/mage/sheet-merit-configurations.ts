@@ -5,6 +5,8 @@ import { translate, type Locale } from "@/lib/i18n";
 import { MAGE_MERIT_CONFIGURATIONS } from "./merit-configurations";
 import { synchronizeMageBuilderMeritGrants } from "./builder-merit-grants";
 import type { MeritDefinition } from "@/lib/merits";
+import { systemTerm } from "@/lib/system-terms";
+import { effectiveMeritDots } from "@/lib/shared-merit-dots";
 
 export const MAGE_SHEET_MERIT_CONFIGURATIONS = [
   ...COMMON_MERIT_CONFIGURATIONS,
@@ -23,7 +25,14 @@ export const isInlineMeritConfiguration = (id: string) =>
 export function expandedConfigurationLines(definitionId: string | undefined, dots: number, value: unknown, locale: Locale = "en-US", catalog: readonly MeritDefinition[] = []) {
   const mageDefinition = MAGE_MERIT_CONFIGURATIONS.find((item) => item.id === definitionId);
   if (mageDefinition) {
-    const lines = configuredDefinitionLines(mageDefinition, dots, value, locale);
+    const effectiveDots = definitionId === "mta-signs:order-archive" ? effectiveMeritDots({ definitionId, dots, configuration: normalizeMeritConfiguration(value) }) : dots;
+    const lines = configuredDefinitionLines(mageDefinition, effectiveDots, value, locale);
+    if (definitionId === "mta-signs:order-archive") {
+      const arcana = normalizeMeritConfiguration(value).arcana;
+      const label = translate(locale, "ui.meritConfig.protectedArcana");
+      const index = lines.findIndex(line => line.startsWith(`${label}:`));
+      if (index >= 0 && Array.isArray(arcana)) lines[index] = `${label}: ${arcana.slice(0, effectiveDots).map(item => systemTerm(item, locale)).join(", ")}`;
+    }
     if (definitionId === "mta-2ed:artifact" || definitionId === "mta-signs:mana-battery") lines.push(translate(locale, "ui.meritConfig.manaCapacitySummary", { capacity: dots * 2 }));
     if (definitionId === "mta-2ed:artifact") lines.push(translate(locale, "ui.meritConfig.effectiveGnosisSummary", { gnosis: Math.ceil(dots / 2) }));
     if (definitionId === "mta-2ed:familiar" || definitionId === "mta-signs:supernal-watcher") lines.push(translate(locale, "ui.meritConfig.rankSummary", { rank: dots / 2 }));

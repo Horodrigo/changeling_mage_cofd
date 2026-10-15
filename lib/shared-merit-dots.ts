@@ -4,7 +4,7 @@ import type { MeritSelection } from "./core/character/character-types";
 export const SHARED_DOT_MERIT_IDS = new Set([
   "core-2ed:safe-place", "mta-2ed:sanctum", "ctl-2ed:hollow",
   "vtr-haven", "wtf-2ed:residential-area", "wtf-2ed:dedicated-locus",
-  "ctl-hedge:shared-bastion", "ctl-2ed:stable-trod",
+  "ctl-hedge:shared-bastion", "ctl-2ed:stable-trod", "mta-signs:order-archive",
 ]);
 
 export function sharedMeritDots(merit: Pick<MeritSelection, "definitionId" | "configuration">): number {
