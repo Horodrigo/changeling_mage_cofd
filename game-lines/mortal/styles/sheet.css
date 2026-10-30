@@ -102,7 +102,8 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
 .cofd-sheet .official-heading::before,
 .cofd-sheet .official-heading::after {
   height:14px;
-  background:transparent url("/game-lines/mortal/images/section-divider.webp") center/100% 14px no-repeat;
+  /* Keep the terminal proportional; crop the rule instead of squeezing the artwork. */
+  background:transparent url("/game-lines/mortal/images/section-divider.webp") right center/auto 14px no-repeat;
   opacity:.82;
 }
 .cofd-sheet .official-heading::after { transform:scaleX(-1); }
@@ -216,7 +217,7 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
   .cofd-sheet .mobile-sheet-tabs > .ctl-sheet-tab-list button { min-width:max-content; min-height:44px; padding-inline:14px; }
   .cofd-sheet .mobile-sheet-page { padding:10px 2px 20px; }
   .cofd-sheet .official-heading::before,
-  .cofd-sheet .official-heading::after { height:10px; background-size:100% 10px; }
+  .cofd-sheet .official-heading::after { height:10px; background-size:auto 10px; }
   .cofd-sheet .official-heading.cofd-attributes-heading { min-height:36px; }
   .cofd-sheet .official-heading.cofd-attributes-heading::before,
   .cofd-sheet .official-heading.cofd-attributes-heading::after {

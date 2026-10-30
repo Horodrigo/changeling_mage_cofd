@@ -304,10 +304,13 @@ body:has(.line-theme-wtf) .wtf-catalog-dialog { overflow-y: auto; }
   .wtf-sheet .official-heading::after {
     height: 13px;
     background:
-      url("/game-lines/werewolf/images/section-divider.webp") center / 100% 100% no-repeat,
+      url("/game-lines/werewolf/images/section-divider.webp") right center / auto 13px no-repeat,
       linear-gradient(transparent 38%, var(--wtf-rule) 38% 46%, transparent 46% 62%, var(--wtf-rule) 62% 70%, transparent 70%);
 
     opacity: .85;
+  }
+  .wtf-sheet .official-heading::after {
+    background-position: left center, center;
   }
   .wtf-sheet :is(input, textarea, [data-slot="select-trigger"], button[data-variant]) {
     border-radius: 2px;
