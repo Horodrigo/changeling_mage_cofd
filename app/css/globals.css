@@ -820,6 +820,7 @@
 }
 .data-transfer-content {
   display: grid;
+  min-width: 0;
   gap: 18px;
   padding-top: 8px;
 }
@@ -852,7 +853,7 @@
 }
 .data-transfer-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 .data-transfer-action {
@@ -880,11 +881,21 @@
 }
 .data-transfer-action-controls {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
   gap: 8px;
 }
 .data-transfer-action-controls > [data-slot="select-trigger"],
 .data-transfer-action-controls > [data-slot="button"] {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.data-transfer-action-controls [data-slot="select-value"] {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .data-transfer-empty {
   margin: 0;
@@ -3558,10 +3569,11 @@ button {
 }
 .dot-groups {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
   gap: 12px;
 }
 .dot-groups section {
+  min-width: 0;
   padding: 15px;
   border: 1px solid #e0d8cf;
   border-radius: 10px;
@@ -3593,6 +3605,8 @@ button {
 }
 .dot-row > span {
   display: flex;
+  min-width: 0;
+  overflow-wrap: anywhere;
   align-items: center;
   gap: 5px;
 }
@@ -3603,6 +3617,7 @@ button {
 }
 .dot-row > div {
   display: flex;
+  flex: none;
   align-items: center;
 }
 .dots {

@@ -271,7 +271,7 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
 }
 
 /* Core uses the restrained urban two-page form instead of a supernatural-line print skin. */
-.cofd-print-document { display:grid; justify-content:center; gap:18px; color:#203947; font:9pt/1.2 Georgia,"Times New Roman",serif; }
+.cofd-print-document { --sheet-ink:#203947; display:grid; justify-content:center; gap:18px; color:#203947; font:9pt/1.2 Georgia,"Times New Roman",serif; }
 .cofd-print-page {
   position:relative;
   width:210mm;

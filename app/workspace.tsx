@@ -4,6 +4,7 @@ import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "re
 import Image from "next/image";
 import {
   ArrowDownUp,
+  AlertTriangle,
   ChevronRight,
   FileJson,
   FlaskConical,
@@ -299,7 +300,7 @@ export function Workspace({
     <main className={`app-shell${lineThemeClass ? ` ${lineThemeClass}` : ""}`}>
       <section className="content">
         <header className="topbar">
-          <button className="top-brand" onClick={() => navigate("inicio")}>
+          <button className="top-brand" aria-label={`${t("workspace.charactersOfTheDarkness")} — ${t("workspace.home")}`} onClick={() => navigate("inicio")}>
             <Image src="/shared/images/cod-emblem-256.webp" alt="" aria-hidden="true" width={52} height={52} unoptimized />
           <div>
             <strong>{t("workspace.charactersOfTheDarkness")}</strong>
@@ -362,12 +363,12 @@ export function Workspace({
           <h1>{title}</h1>
         </div>}
         {effectiveNotice && (
-          <div className="notice" role="status">
-            <ShieldCheck />
-            <span>{notice}</span>
-            <button onClick={() => setNotice("")} aria-label={t("workspace.closeNotice")}>
+          <div className="notice" role={readFailed || saveFailed ? "alert" : "status"}>
+            {readFailed || saveFailed ? <AlertTriangle aria-hidden="true" /> : <ShieldCheck aria-hidden="true" />}
+            <span>{effectiveNotice}</span>
+            {!readFailed && !saveFailed && <button onClick={() => setNotice("")} aria-label={t("workspace.closeNotice")}>
               <X />
-            </button>
+            </button>}
           </div>
         )}
         {selected ? (

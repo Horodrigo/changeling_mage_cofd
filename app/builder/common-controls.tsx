@@ -1,7 +1,7 @@
 "use client";
 
 import { Minus, Plus } from "lucide-react";
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { BufferedInput } from "@/components/ui/buffered-text";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -131,10 +131,11 @@ function DotGroups({ groups, values, setValues, base, maximum, budgets }: {
 
 export function DotRow({ name, value, setValue, min, max, tag, canIncrease = true }: { name: ReactNode; value: number; setValue: Setter<number>; min: number; max: number; tag?: string; canIncrease?: boolean }) {
   const { t } = useLanguage();
-  return <div className="dot-row"><span>{name}{tag && <small>{tag}</small>}</span><div>
-    <Button type="button" size="icon" variant="ghost" disabled={value <= min} onClick={() => setValue(value - 1)}><Minus /></Button>
-    <span className="dots" aria-label={t("ui.dots638f6d", { p1: value })}>{Array.from({ length: max }, (_, index) => <i className={index < value ? "filled" : ""} key={index} />)}</span>
-    <Button type="button" size="icon" variant="ghost" disabled={value >= max || !canIncrease} onClick={() => setValue(value + 1)}><Plus /></Button>
+  const id = useId();
+  return <div className="dot-row"><span id={`${id}-name`}>{name}{tag && <small>{tag}</small>}</span><div>
+    <Button type="button" size="icon" variant="ghost" aria-labelledby={`${id}-decrease ${id}-name`} aria-describedby={`${id}-value`} disabled={value <= min} onClick={() => setValue(value - 1)}><span id={`${id}-decrease`} className="sr-only">{t("ui.decreaseRating")}</span><Minus aria-hidden="true" /></Button>
+    <span id={`${id}-value`} className="dots" aria-label={t("ui.dots638f6d", { p1: value })}>{Array.from({ length: max }, (_, index) => <i className={index < value ? "filled" : ""} key={index} />)}</span>
+    <Button type="button" size="icon" variant="ghost" aria-labelledby={`${id}-increase ${id}-name`} aria-describedby={`${id}-value`} disabled={value >= max || !canIncrease} onClick={() => setValue(value + 1)}><span id={`${id}-increase`} className="sr-only">{t("ui.increaseRating")}</span><Plus aria-hidden="true" /></Button>
   </div></div>;
 }
 

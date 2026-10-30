@@ -46,6 +46,31 @@ test("all locales expose exactly the same message keys", async () => {
   assert.deepEqual(keys(messages["pt-BR"]), keys(messages["en-US"]));
 });
 
+test("creation rating buttons name their action and trait, including interactive trait labels", async () => {
+  const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
+  const { DotRow } = await vite.ssrLoadModule("/app/builder/common-controls.tsx");
+  const render = (name, props = {}) => renderToStaticMarkup(createElement(LanguageProvider, null,
+    createElement(DotRow, { name, value: 2, min: 1, max: 5, setValue: () => {}, ...props }),
+  ));
+  for (const name of ["Intelligence", createElement("button", { type: "button" }, "Discipline")]) {
+    const markup = render(name);
+    const controls = [...markup.matchAll(/aria-labelledby="([^"]+)" aria-describedby="([^"]+)"/g)];
+    assert.equal(controls.length, 2);
+    for (const [, labelledBy, describedBy] of controls) {
+      for (const id of [...labelledBy.split(" "), describedBy]) assert.ok(markup.includes(`id="${id}"`));
+    }
+    assert.match(markup, />Decrease rating<\/span>/);
+    assert.match(markup, />Increase rating<\/span>/);
+    assert.match(markup, /aria-label="2 dots"/);
+    assert.match(markup, /Intelligence|Discipline/);
+  }
+  assert.equal((render("Trait", { value: 1 }).match(/disabled=""/g) ?? []).length, 1);
+  assert.equal((render("Trait", { value: 5 }).match(/disabled=""/g) ?? []).length, 1);
+  assert.equal((render("Trait", { canIncrease: false }).match(/disabled=""/g) ?? []).length, 1);
+  assert.equal(translate("pt-BR", "ui.decreaseRating"), "Diminuir pontuação");
+  assert.equal(translate("pt-BR", "ui.increaseRating"), "Aumentar pontuação");
+});
+
 test("Health exposes localized manual Heal and retains overflow when editing boxes", async () => {
   const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
   const { HealthTrack } = await vite.ssrLoadModule("/app/workspace/sheet-primitives.tsx");
