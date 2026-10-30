@@ -13,7 +13,7 @@ const vite = await createServer({ appType: "custom", configFile: false, root,
 after(() => vite.close());
 const { ATTRIBUTES, SKILLS, ATTRIBUTE_BUDGETS, SKILL_BUDGETS, creationAllocationFits: fits } = await vite.ssrLoadModule("/lib/core/character/creation-rules.ts");
 const { commonCreationIssues, useCommonBuilderState, CharacterBuilderShell } = await vite.ssrLoadModule("/app/character-builder-shell.tsx");
-const { TraitsStep } = await vite.ssrLoadModule("/app/builder/common-controls.tsx");
+const { TraitsStep, CommonIdentityStep, Choice } = await vite.ssrLoadModule("/app/builder/common-controls.tsx");
 const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
 const render = element => renderToStaticMarkup(createElement(LanguageProvider, null, element));
 const labels = locale => ({ attributeAllocation: translate(locale, "ui.attributeAllocation"), skillAllocation: translate(locale, "ui.skillAllocation") });
@@ -83,11 +83,15 @@ test("shared Traits UI has no priority dropdowns and recalculates available incr
   // Each Attribute category contains three increment buttons.
   assert.deepEqual(increments([4,4,3], [11,7,4]).slice(3,6), [false,true,true], "the per-Trait cap still applies");
   const incomplete = render(createElement(TraitsStep, props([3,3,3], [4,4,4])));
-  assert.equal((incomplete.match(/role="alert"/g) ?? []).length, 2);
+  assert.equal((incomplete.match(/data-builder-invalid="true"/g) ?? []).length, 2);
+  assert.doesNotMatch(incomplete, /role="alert"/, "allocation help is described by each group; announcements belong to the submitted summary");
   assert.match(incomplete, /Incomplete or invalid allocation/);
 });
 
 test("Continue cannot advance from incomplete Traits, and advances after exact allocation", () => {
+  const originalFrame = globalThis.requestAnimationFrame;
+  globalThis.requestAnimationFrame = callback => { callback(); return 0; };
+  try {
   for (const values of [{ attributes: {}, skills: {} }, { ...complete(), skills: {} }, complete()]) {
     let shell, nextStep, error;
     function Probe() {
@@ -103,6 +107,37 @@ test("Continue cannot advance from incomplete Traits, and advances after exact a
     if (commonCreationIssues(values, labels("en-US")).length) { assert.equal(nextStep, undefined); assert.match(error, /Still required/); }
     else { assert.equal(nextStep, 3); assert.equal(error, ""); }
   }
+  } finally { globalThis.requestAnimationFrame = originalFrame; }
+});
+
+test("builder errors describe only the submitted step, clear when corrected and expose the current step", () => {
+  const issues = [{ step: 1, key: "name", label: "Name" }, { step: 3, key: "template", label: "Future requirement" }];
+  const show = (error, remaining = issues) => render(createElement(CharacterBuilderShell, {
+    line: "CofD", templateLabel: "Template", state: { step: 1, allowAdvancement: false, error },
+    issues: remaining, identity: null, traits: null, lineTemplate: null, draft: true, onCancel() {}, onFinish() {},
+  }));
+  const summary = markup => markup.match(/role="alert"[^>]*>([\s\S]*?)<\/div>/)?.[1];
+  assert.equal(summary(show("")), "");
+  assert.match(summary(show("old message")), /Still required:[\s\S]*<li>Name<\/li>/);
+  assert.doesNotMatch(summary(show("old message")), /Future requirement|old message/);
+  assert.equal(summary(show("old message", issues.slice(1))), "");
+  assert.match(show(""), /aria-label="Identity" aria-current="step"/);
+});
+
+test("identity and shared choices associate invalid controls with their own error descriptions", () => {
+  const props = { name: "", setName() {}, nameLabel: "Name", concept: "", setConcept() {}, player: "", setPlayer() {}, chronicle: "", setChronicle() {}, setPortrait() {} };
+  for (const element of [
+    createElement(CommonIdentityStep, { ...props, missing: key => key === "name" }),
+    createElement(Choice, { label: "Path", value: "", setValue() {}, options: ["Test"], invalid: true }),
+  ]) {
+    const markup = render(element);
+    assert.match(markup, /aria-invalid="true"/);
+    const errorId = markup.match(/aria-describedby="([^"]+)"/)?.[1];
+    assert.ok(errorId && markup.includes(`id="${errorId}"`));
+    assert.match(markup, /Still required: (?:Name|Path)\./);
+  }
+  const valid = render(createElement(CommonIdentityStep, { ...props, name: "Test", missing: () => false }));
+  assert.doesNotMatch(valid, /\saria-(?:invalid|describedby)=/);
 });
 
 test("all five registered Builders use automatic allocation when resuming drafts, without changing stored traits", async () => {
@@ -120,7 +155,7 @@ test("all five registered Builders use automatic allocation when resuming drafts
       const before = structuredClone(initial);
       const markup = render(createElement(Component, { initial, catalogs, player: "Test", onCancel() {}, onSave() {}, onSaveDraft() {} }));
       assert.match(markup, /class="allocation-block"/, registration.id);
-      assert.doesNotMatch(markup, /priority-row|Attribute priorities|Skill priorities|role="alert"/, registration.id);
+      assert.doesNotMatch(markup, /priority-row|Attribute priorities|Skill priorities|data-builder-invalid="true"/, registration.id);
       assert.deepEqual(initial, before);
 
       const advanced = structuredClone(initial);
@@ -140,12 +175,12 @@ test("all five registered Builders use automatic allocation when resuming drafts
       if (registration.id === "WtF") { advanced.line_data.auspice_skill_grant = { skill: "Brawl", dots: 1 }; advanced.skills.Brawl += 1; }
       const advancedBefore = structuredClone(advanced);
       const edited = render(createElement(Component, { initial: advanced, catalogs, player: "Test", onCancel() {}, onSave() {}, onSaveDraft() {} }));
-      assert.doesNotMatch(edited, /role="alert"/, `${registration.id} excludes XP and free grants`);
+      assert.doesNotMatch(edited, /data-builder-invalid="true"/, `${registration.id} excludes XP and free grants`);
       assert.deepEqual(advanced, advancedBefore);
 
       const partial = { ...initial, attributes: {}, skills: {} };
       const incomplete = render(createElement(Component, { initial: partial, catalogs, player: "Test", onCancel() {}, onSave() {}, onSaveDraft() {} }));
-      assert.equal((incomplete.match(/role="alert"/g) ?? []).length, 2, `${registration.id} flags both incomplete groups`);
+      assert.equal((incomplete.match(/data-builder-invalid="true"/g) ?? []).length, 2, `${registration.id} flags both incomplete groups`);
     }
   } finally { globalThis.fetch = originalFetch; }
 });

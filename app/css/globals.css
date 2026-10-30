@@ -3413,6 +3413,24 @@ button {
   color: #813b42;
   font-size: 14px;
 }
+.builder-error:focus,
+.allocation-block:focus {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.builder-error ul {
+  margin: 6px 0 0;
+  padding-inline-start: 20px;
+}
+.builder-field-error {
+  display: none;
+  color: #813b42;
+  font-size: 13px;
+  font-weight: 400;
+}
+.builder-error + .builder-body .builder-field-error {
+  display: block;
+}
 .builder-pending {
   max-width: 1000px;
   margin: 0 auto 12px;

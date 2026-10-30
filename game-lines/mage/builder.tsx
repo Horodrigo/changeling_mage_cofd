@@ -203,10 +203,11 @@ function MageCharacterBuilder({ player, initial, onCancel, onSave, onSaveDraft, 
     const add = (key: string, label: string) => result.push({ step: 3, key, label });
     result.push(...meritIssues);
     if (meritSpent > meritBudget) add("merits", t("ui.meritsExceedTheLimit"));
+    if (!shadowName.trim()) result.push({ step: 1, key: "shadowName", label: t("ui.shadowName") });
     for (const [key, value, label] of [
-      ["path", path, "Caminho"], ["order", order, "Ordem"], ["virtue", virtue, "Virtude"],
-      ["vice", vice, "Vício"], ["shadowName", shadowName, "Nome das Sombras"],
-      ["resistanceBonus", resistanceBonus, "Atributo de Resistência"],
+      ["path", path, t("ui.path")], ["order", order, t("ui.order")], ["virtue", virtue, t("ui.virtue")],
+      ["vice", vice, t("ui.vice")],
+      ["resistanceBonus", resistanceBonus, t("ui.resistanceAttribute1")],
     ]) if (!value) add(key, label);
     if (order === "Nameless" && !customOrder?.name.trim()) add("order", t("ui.chooseANameForTheNamelessOrder"));
     if (order === "Nameless" && namelessInitiationDots >= 2 && (namelessRoteSkills.length !== 3 || new Set(namelessRoteSkills).size !== 3))

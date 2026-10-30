@@ -42,13 +42,16 @@ export function CommonIdentityStep({
   missing: MissingCheck;
 }) {
   const { t } = useLanguage();
+  const id = useId();
+  const nameInvalid = missing("name") || missing("shadowName");
   return <div className="builder-section">
     <span className="kicker">{t("ui.step1")}</span>
     <h2>{t("ui.identity")}</h2>
     <CharacterImageControls value={portrait} onChange={setPortrait} />
     <div className="identity-grid">
-      <label className={missing("name") || missing("shadowName") ? "missing-field" : ""}>
-        {nameLabel}<BufferedInput value={name} onValueCommit={setName} />
+      <label className={nameInvalid ? "missing-field" : ""}>
+        <span id={`${id}-name-label`}>{nameLabel}</span><BufferedInput value={name} onValueCommit={setName} aria-labelledby={`${id}-name-label`} aria-invalid={nameInvalid || undefined} aria-describedby={nameInvalid ? `${id}-name-error` : undefined} />
+        {nameInvalid && <span id={`${id}-name-error`} className="builder-field-error">{t("ui.stillRequired")}: {nameLabel}.</span>}
       </label>
       <label>{t("ui.player")}<BufferedInput value={player} onValueCommit={setPlayer} /></label>
       <label>{t("ui.concept")}<BufferedInput value={concept} onValueCommit={setConcept} /></label>
@@ -75,17 +78,18 @@ export function TraitsStep({
   missing: MissingCheck;
 }) {
   const { t } = useLanguage();
+  const id = useId();
   return <div className="builder-section">
     <span className="kicker">{t("ui.step2")}</span>
     <h2>{t("ui.traits")}</h2>
-    <div className="allocation-block">
-      <h3>{t("ui.attributes")}</h3>
-      <p className={missing("attribute-allocation") ? "allocation-status invalid" : "allocation-status"} role={missing("attribute-allocation") ? "alert" : undefined}>{missing("attribute-allocation") && <strong>{t("ui.incompleteAllocation")} </strong>}{t("ui.attributeAllocation")}</p>
+    <div className="allocation-block" role="group" tabIndex={-1} aria-labelledby={`${id}-attributes-label`} aria-describedby={`${id}-attributes-help`} data-builder-invalid={missing("attribute-allocation") || undefined}>
+      <h3 id={`${id}-attributes-label`}>{t("ui.attributes")}</h3>
+      <p id={`${id}-attributes-help`} className={missing("attribute-allocation") ? "allocation-status invalid" : "allocation-status"}>{missing("attribute-allocation") && <strong>{t("ui.incompleteAllocation")} </strong>}{t("ui.attributeAllocation")}</p>
       <DotGroups groups={ATTRIBUTES} values={attributes} setValues={setAttributes} base={1} maximum={5} budgets={ATTRIBUTE_BUDGETS} />
     </div>
-    <div className="allocation-block">
-      <h3>{t("ui.skills")}</h3>
-      <p className={missing("skill-allocation") ? "allocation-status invalid" : "allocation-status"} role={missing("skill-allocation") ? "alert" : undefined}>{missing("skill-allocation") && <strong>{t("ui.incompleteAllocation")} </strong>}{t("ui.skillAllocation")}</p>
+    <div className="allocation-block" role="group" tabIndex={-1} aria-labelledby={`${id}-skills-label`} aria-describedby={`${id}-skills-help`} data-builder-invalid={missing("skill-allocation") || undefined}>
+      <h3 id={`${id}-skills-label`}>{t("ui.skills")}</h3>
+      <p id={`${id}-skills-help`} className={missing("skill-allocation") ? "allocation-status invalid" : "allocation-status"}>{missing("skill-allocation") && <strong>{t("ui.incompleteAllocation")} </strong>}{t("ui.skillAllocation")}</p>
       <DotGroups groups={SKILLS} values={skills} setValues={setSkills} base={0} maximum={5} budgets={SKILL_BUDGETS} />
     </div>
     <div className="specialties-block">
@@ -141,7 +145,8 @@ export function DotRow({ name, value, setValue, min, max, tag, canIncrease = tru
 
 export function Choice({ label = "", value, setValue, options, optionLabels = {}, invalid = false }: { label?: string; value: string; setValue: Setter<string>; options: readonly string[]; optionLabels?: Record<string, string>; invalid?: boolean }) {
   const { t } = useLanguage();
-  return <label className={invalid ? "choice-label missing-field" : "choice-label"}>{label}<Select value={value || undefined} onValueChange={setValue}><SelectTrigger><SelectValue placeholder={t("ui.select")} /></SelectTrigger><SelectContent>{options.map((option) => <SelectItem key={option} value={option}>{optionLabels[option] ?? option}</SelectItem>)}</SelectContent></Select></label>;
+  const id = useId();
+  return <label className={invalid ? "choice-label missing-field" : "choice-label"}>{label}<Select value={value || undefined} onValueChange={setValue}><SelectTrigger aria-label={label || undefined} aria-invalid={invalid || undefined} aria-describedby={invalid ? `${id}-error` : undefined}><SelectValue placeholder={t("ui.select")} /></SelectTrigger><SelectContent>{options.map((option) => <SelectItem key={option} value={option}>{optionLabels[option] ?? option}</SelectItem>)}</SelectContent></Select>{invalid && <span id={`${id}-error`} className="builder-field-error">{t("ui.stillRequired")}: {label}.</span>}</label>;
 }
 
 function SkillSpecialtyChoice({ label, value, setValue }: { label: string; value: string; setValue: Setter<string> }) {

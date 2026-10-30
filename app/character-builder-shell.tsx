@@ -243,15 +243,43 @@ export function CharacterBuilderShell({
   const hasAdvancement = Boolean(prepareAdvancement && renderAdvancement);
   const advancementStep = 4 + lineSteps.length;
   const [exitOpen, setExitOpen] = useState(false);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const errorRef = useRef<HTMLDivElement>(null);
+  const focusFrame = useRef<number | null>(null);
   const [advancement, setAdvancement] = useState<CharacterSheet | undefined>(() => state.step === advancementStep && prepareAdvancement ? prepareAdvancement() : undefined);
   const requestExit = useCallback(() => setExitOpen(true), []);
   const leave = useBuilderExitGuard(true, requestExit);
-  const saveAndExit = (asDraft: boolean) => { setExitOpen(false); leave(() => onFinish(asDraft, advancement)); };
+  const focusError = () => {
+    if (focusFrame.current !== null) cancelAnimationFrame(focusFrame.current);
+    focusFrame.current = requestAnimationFrame(() => {
+      const controls = 'input:not([disabled]):not([type="hidden"]), textarea:not([disabled]), select:not([disabled]), button:not([disabled]), [tabindex]';
+      const invalid = Array.from(bodyRef.current?.querySelectorAll<HTMLElement>('[aria-invalid="true"], [data-builder-invalid="true"], .missing-field') ?? []);
+      for (const field of invalid) {
+        const targets = field.matches(controls) ? [field] : Array.from(field.querySelectorAll<HTMLElement>(controls));
+        const target = targets.find(element => !element.hasAttribute("disabled") && element.getAttribute("aria-disabled") !== "true" && element.getClientRects().length > 0 && !element.closest('[hidden], [inert], [aria-hidden="true"]'));
+        if (target) {
+          target.focus({ preventScroll: true });
+          target.scrollIntoView({ block: "center", inline: "nearest" });
+          return;
+        }
+      }
+      errorRef.current?.focus();
+    });
+  };
+  useEffect(() => () => {
+    if (focusFrame.current !== null) cancelAnimationFrame(focusFrame.current);
+  }, []);
+  const saveAndExit = (asDraft: boolean) => {
+    setExitOpen(false);
+    if (leave(() => onFinish(asDraft, advancement)) === false) focusError();
+  };
   const missingAtStep = (step: number) => issues.filter((issue) => issue.step === step);
+  const currentIssues = missingAtStep(state.step);
   const advance = () => {
     const current = missingAtStep(state.step);
     if (current.length) {
       state.setError(`${t("ui.stillRequired")}: ${current.map((issue) => issue.label).join(", ")}.`);
+      focusError();
       return;
     }
     state.setError("");
@@ -284,10 +312,10 @@ export function CharacterBuilderShell({
       <span><strong>{t("ui.allowCreationAdvancement")}</strong><small>{t("ui.allowCreationAdvancementDescription")}</small></span>
       <Switch checked={state.allowAdvancement} onCheckedChange={(checked) => { state.setAllowAdvancement(checked); if (!checked) { setAdvancement(undefined); if (state.step === advancementStep) state.setStep(advancementStep - 1); } }} />
     </label>}
-    <div className="stepper">
+    <div className="stepper" role="list" aria-label={t("ui.guidedCreationSharedRulesV1")}>
       {steps.map((label, index) =>
-        <div key={label} className={state.step === index + 1 ? "step active" : state.step > index + 1 ? "step done" : "step"}>
-          <span>{state.step > index + 1 ? <Check /> : index + 1}</span><strong>{label}</strong>
+        <div key={label} role="listitem" aria-label={label} aria-current={state.step === index + 1 ? "step" : undefined} className={state.step === index + 1 ? "step active" : state.step > index + 1 ? "step done" : "step"}>
+          <span aria-hidden="true">{state.step > index + 1 ? <Check /> : index + 1}</span><strong>{label}</strong>
         </div>,
       )}
     </div>
@@ -295,10 +323,10 @@ export function CharacterBuilderShell({
       <strong>{issues.length} {issues.length === 1 ? t("ui.pendingItem") : t("ui.pendingItems")}</strong>
       <span>{issues.slice(0, 6).map((issue) => issue.label).join(" · ")}{issues.length > 6 ? ` · +${issues.length - 6}` : ""}</span>
     </div>}
-    {state.error && <div className="builder-error">{state.error}</div>}
-    <div className="builder-body">{state.step === 1 ? identity : state.step === 2 ? traits : state.step === 3 ? typeof lineTemplate === "function" ? lineTemplate() : lineTemplate : state.step < advancementStep ? lineSteps[state.step - 4]?.content : advancement && renderAdvancement ? renderAdvancement(advancement, setAdvancement) : null}</div>
+    <div ref={errorRef} className={state.error && currentIssues.length ? "builder-error" : "sr-only"} role="alert" aria-atomic="true" tabIndex={-1}>{state.error && currentIssues.length ? <><strong>{t("ui.stillRequired")}:</strong><ul>{currentIssues.map((issue, index) => <li key={`${issue.key}-${index}`}>{issue.label}</li>)}</ul></> : null}</div>
+    <div ref={bodyRef} className="builder-body">{state.step === 1 ? identity : state.step === 2 ? traits : state.step === 3 ? typeof lineTemplate === "function" ? lineTemplate() : lineTemplate : state.step < advancementStep ? lineSteps[state.step - 4]?.content : advancement && renderAdvancement ? renderAdvancement(advancement, setAdvancement) : null}</div>
     <div className="builder-actions">
-      {state.step > 1 && <Button variant="outline" onClick={() => state.setStep(state.step - 1)}><ArrowLeft /> {t("ui.previous")}</Button>}
+      {state.step > 1 && <Button variant="outline" onClick={() => { state.setError(""); state.setStep(state.step - 1); }}><ArrowLeft /> {t("ui.previous")}</Button>}
       <span />
       {state.step < steps.length
         ? <Button onClick={advance}>{t("ui.continue")} <ArrowRight /></Button>
