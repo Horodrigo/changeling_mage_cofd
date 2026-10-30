@@ -57,8 +57,8 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
   background-color: #e8edf0;
   background-image:
     linear-gradient(
-      rgba(232, 237, 240, 0.65),
-      rgba(232, 237, 240, 0.65)
+      rgba(232, 237, 240, 0.82),
+      rgba(232, 237, 240, 0.82)
     ),
     url("/game-lines/mortal/images/paper-texture.webp");
 
@@ -69,7 +69,7 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
   background-image:url("/game-lines/mortal/images/background-mortal.webp");
   background-position:center 46%;
   background-size:min(54%,600px) auto;
-  opacity:.10;
+  opacity:.06;
 }
 .cofd-urban-frame {
   position:absolute !important;
@@ -207,8 +207,9 @@ body:has(.line-theme-cofd) :is([data-slot="dialog-content"], [data-slot="alert-d
   .cofd-frame-center { width:28px; height:52px; }
   .cofd-frame-center-top { top:-5px; }
   .cofd-frame-center-bottom { bottom:-5px; }
-  .cofd-sheet .cod-sheet-title { min-height:54px; padding:4px 26px 12px; }
-  .cofd-sheet .cod-sheet-title .cofd-title-mark { gap:4px; width:100%; }
+  .cofd-sheet .cod-sheet-title { min-height:82px; padding:32px 26px 12px; }
+  .cofd-sheet .cod-sheet-title .cofd-title-mark { grid-template-columns:minmax(0,1.1fr) auto minmax(0,1fr); gap:4px; width:100%; }
+  .cofd-sheet .cofd-title-mark :is(span,small,strong) { transform:none; text-align:center; align-self:center; }
   .cofd-sheet .cofd-title-mark span,
   .cofd-sheet .cofd-title-mark strong { font-size:clamp(16px,6.2vw,24px); letter-spacing:.06em; }
   .cofd-sheet .cofd-title-mark small { font-size:11px; }

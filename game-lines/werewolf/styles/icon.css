@@ -1,2 +1,10 @@
 /* Keep the original skull's alpha and proportions; only its displayed color changes. */
 img[src="/game-lines/werewolf/images/icon.webp"] { filter: brightness(0); }
+
+/* Workspace identity must be available before the Werewolf sheet is loaded. */
+.line-summary .wtf-summary { border-left:4px solid #713c31; }
+.character-card.wtf-card { border-color:#c4aa96; background:linear-gradient(135deg,#faf7f0,#f3ece2); }
+.character-card.wtf-card:hover { border-color:#986551; }
+.wtf-card .character-line-icon { background:#e9ddd2; }
+.line-choice button.werewolf-line-choice { border-color:#c4aa96; background:linear-gradient(145deg,#faf7f0,#f3ece2); }
+.line-choice button.werewolf-line-choice:hover { border-color:#986551; }

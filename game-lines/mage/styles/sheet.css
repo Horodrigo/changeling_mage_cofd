@@ -1600,7 +1600,17 @@ body:has(.line-theme-mta) [data-slot="select-content"] {
     height:68px;
   }
 
-  .mta-sheet .experience-panel::before { inset:-52px -22px -54px; }
+  .mta-sheet .experience-panel::before {
+    inset:-14px -8px;
+    background:none;
+    /* Preserve the corner artwork while the rails follow the panel height. */
+    border-style:solid;
+    border-color:transparent;
+    border-width:38px 28px;
+    border-image-source:url("/game-lines/mage/images/box-closed.webp");
+    border-image-slice:220 160;
+    border-image-repeat:stretch;
+  }
 }
 
 @media print {
