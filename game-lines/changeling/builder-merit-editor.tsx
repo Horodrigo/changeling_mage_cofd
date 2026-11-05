@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Choice } from "@/app/builder/common-controls";
-import type { StructuredMeritEditorProps } from "@/app/builder/merit-configuration-editor";
+import type { CustomMeritFieldProps, StructuredMeritEditorProps } from "@/app/builder/merit-configuration-editor";
+import type { CourtDefinition } from "@/lib/changeling-courts";
 import type { MeritSelection } from "@/lib/core/character/character-types";
 import type { MeritConfiguration } from "@/lib/core/character/merit-configuration";
 import type { EntitlementDefinition } from "@/game-lines/changeling/entitlements";
@@ -21,6 +22,17 @@ import { configuredTokenPresentation, tokenPresentation, type TokenConfiguration
 import meritOptions from "./catalog-data/merit-options.json";
 
 type HedgespunBenefit = "extraordinary" | "alacrity" | "durability";
+
+export function MeritCourtChoice({ value, onChange, courtCatalog, currentCourt }: CustomMeritFieldProps & { courtCatalog: readonly CourtDefinition[]; currentCourt: unknown }) {
+  const { locale, t } = useLanguage();
+  const resolve = (value: unknown) => {
+    const normalized = String(value ?? "").trim().toLocaleLowerCase();
+    return courtCatalog.find(item => [item.id, item.name, item.translatedName, item.name.replace(/ Court$/, "")].some(alias => alias.toLocaleLowerCase() === normalized))?.id;
+  };
+  return <Choice label={t("ui.benefitedCourt")} value={resolve(value) ?? value} setValue={onChange}
+    options={courtCatalog.filter(item => item.id !== resolve(currentCourt)).map(item => item.id)}
+    optionLabels={Object.fromEntries(courtCatalog.map(item => [item.id, locale === "en-US" ? item.name : item.translatedName]))} />;
+}
 function encodeConfiguredRows<T>(items: T[]) { return items.map((item) => JSON.stringify(item)); }
 function decodeConfiguredRows<T>(value: unknown): T[] {
   if (!Array.isArray(value)) return [];
@@ -249,10 +261,11 @@ function StableTrodEditor({configuration,onChange,compact}:{configuration:MeritC
 
 function WorkshopEditor({merit,configuration,onChange,compact}:{merit:MeritSelection;configuration:MeritConfiguration;onChange:(value:MeritConfiguration)=>void;compact:boolean}) {
   const { t }=useLanguage();
+  const totalDots=effectiveMeritDots(merit);
   const specialties=Array.isArray(configuration.specialties)?configuration.specialties:[];
   return <details className={`merit-configuration structured${compact?" compact":""}`} open={!compact}>
     <summary>{t("ui.configureWorkshop")}</summary><div><fieldset><legend>{t("ui.craftSpecialties")}</legend>
-      <div className="merit-config-list">{Array.from({length:merit.dots},(_,index)=><Input key={index} value={specialties[index]??""} placeholder={`${t("ui.specialty")} ${index+1}`} onChange={(event)=>{const next=Array.from({length:merit.dots},(_,item)=>specialties[item]??"");next[index]=event.target.value;onChange({...configuration,specialties:next});}}/>)}</div>
+      <div className="merit-config-list">{Array.from({length:totalDots},(_,index)=><Input key={index} value={specialties[index]??""} placeholder={`${t("ui.specialty")} ${index+1}`} onChange={(event)=>{const next=Array.from({length:totalDots},(_,item)=>specialties[item]??"");next[index]=event.target.value;onChange({...configuration,specialties:next});}}/>)}</div>
     </fieldset></div>
   </details>;
 }

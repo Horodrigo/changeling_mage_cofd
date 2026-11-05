@@ -18,7 +18,7 @@ const vampire = await vite.ssrLoadModule("/game-lines/vampire/merit-configuratio
 const { LanguageProvider, translate } = await vite.ssrLoadModule("/lib/i18n.tsx");
 const { MeritConfigurationEditor } = await vite.ssrLoadModule("/app/builder/merit-configuration-editor.tsx");
 const { renderMageStructuredMeritEditor } = await vite.ssrLoadModule("/game-lines/mage/merit-configuration-editor.tsx");
-const { renderChangelingStructuredMeritEditor } = await vite.ssrLoadModule("/game-lines/changeling/builder-merit-editor.tsx");
+const { MeritCourtChoice, renderChangelingStructuredMeritEditor } = await vite.ssrLoadModule("/game-lines/changeling/builder-merit-editor.tsx");
 const allConfigurations = [...common.COMMON_MERIT_CONFIGURATIONS, ...changeling.CHANGELING_MERIT_CONFIGURATIONS, ...mage.MAGE_MERIT_CONFIGURATIONS, ...vampire.VAMPIRE_MERIT_CONFIGURATIONS.filter(item => item.line === "VtR")];
 const render = (merit, options = {}) => renderToStaticMarkup(createElement(LanguageProvider, null, createElement(MeritConfigurationEditor, { merit, catalog, definitions: allConfigurations, onChange: () => {}, ...options })));
 
@@ -112,4 +112,40 @@ test("Professional Training selects two Asset Skills at one dot and keeps the th
     }
   }
   assert.equal(JSON.stringify(selection), before);
+});
+
+
+test("CtL Workshop configurations use purchased plus shared dots without changing the selection", () => {
+  const selection = { definitionId: "ctl-2ed:workshop", name: "Workshop", dots: 2, configuration: { sharedDots: "2", specialties: ["Wood", "Metal", "Glass", "Tokens"] } };
+  const before = JSON.stringify(selection);
+  const html = render(selection, { renderStructured: props => renderChangelingStructuredMeritEditor(props, [], []) });
+  assert.equal((html.match(/data-slot="input"/g) ?? []).length, 4);
+  assert.match(html, /Shared dots/);
+  for (const specialty of selection.configuration.specialties) assert.ok(html.includes(specialty));
+  assert.equal(JSON.stringify(selection), before);
+});
+
+test("CtL Court Goodwill shares a catalog-backed Court selector between creation and the sheet", () => {
+  const courts = read("game-lines/changeling/data/courts.json");
+  const custom = { ...courts[0], id: "homebrew:custom-court", name: "Authored Court", translatedName: "Authored Court" };
+  const courtCatalog = [...courts, custom];
+  const ownCourt = courts.find(item => item.id === "spring");
+  const target = courts.find(item => item.id === "winter");
+  let choice, selected;
+  function Probe() {
+    choice = MeritCourtChoice({ keyName: "court", value: target.translatedName, onChange: value => { selected = value; }, courtCatalog, currentCourt: ownCourt.translatedName });
+    return choice;
+  }
+  const html = render({ definitionId: "ctl-2ed:court-goodwill", name: "Court Goodwill", dots: 2 }, { renderCustomField: kind => kind === "court" ? createElement(Probe) : null });
+  assert.match(html, /Benefited Court/);
+  assert.equal(choice.props.value, target.id);
+  assert.ok(!choice.props.options.includes(ownCourt.id));
+  assert.ok(choice.props.options.includes(target.id));
+  assert.ok(choice.props.options.includes(custom.id));
+  choice.props.setValue(custom.id);
+  assert.equal(selected, custom.id);
+  for (const surface of ["builder-view", "sheet-view"]) {
+    const source = readFileSync(new URL(`../game-lines/changeling/${surface}.tsx`, import.meta.url), "utf8");
+    assert.match(source, /renderCustomField=.*?<MeritCourtChoice/);
+  }
 });

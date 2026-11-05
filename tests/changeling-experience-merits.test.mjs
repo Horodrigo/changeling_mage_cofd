@@ -322,3 +322,19 @@ test("Court grant marker becomes English without losing an exact paid Mantle ins
   assert.deepEqual(removed.configuration, mantle.configuration);
   assert.deepEqual(current, before);
 });
+
+
+test("CtL Workshop shared dots stay free and cap Experience advancement at its effective maximum", () => {
+  const current = sheet();
+  current.merits = [
+    { definitionId: "ctl-2ed:hollow", name: "Hollow", dots: 1 },
+    { definitionId: "ctl-2ed:workshop", instanceId: "workshop", name: "Workshop", dots: 2, creationDots: 2, experienceDots: 0, configuration: { sharedDots: "2", specialties: ["Wood", "Metal", "Glass", "Tokens"] } },
+  ];
+  const before = structuredClone(current);
+  const quote = xp.quoteChangelingMeritPurchase(current, "ctl-2ed:workshop", 3, 1, active);
+  assert.equal(quote?.cost, 1);
+  assert.equal(quote?.selection.dots, 3);
+  assert.deepEqual(quote?.selection.configuration, current.merits[1].configuration);
+  assert.equal(xp.quoteChangelingMeritPurchase(current, "ctl-2ed:workshop", 4, 1, active), undefined);
+  assert.deepEqual(current, before);
+});

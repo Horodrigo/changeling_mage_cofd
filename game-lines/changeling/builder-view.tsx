@@ -13,7 +13,7 @@ import { changelingMeritPrerequisitesMet, type ChangelingMeritContext } from "./
 import { MeritConfigurationEditor } from "@/app/builder/merit-configuration-editor";
 import { COMMON_MERIT_CONFIGURATIONS, isCommonInlineMeritConfiguration } from "@/app/builder/common-merit-configurations";
 import { CHANGELING_MERIT_CONFIGURATIONS, isChangelingInlineMeritConfiguration } from "./builder-merit-configurations";
-import { renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
+import { MeritCourtChoice, renderChangelingStructuredMeritEditor } from "./builder-merit-editor";
 import {
   CTL_NEEDLE_DEFINITIONS, CTL_THREAD_DEFINITIONS, CORE_REGALIA, REGALIA,
   changelingAnchorDisplayName, changelingAnchorRecovery, seemingDisplayName,
@@ -220,7 +220,7 @@ export function ChangelingBuilderView(props: ChangelingBuilderViewProps) {
               catalog={props.meritCatalog}
               definitions={CHANGELING_BUILDER_MERIT_CONFIGURATIONS}
               renderStructured={(editorProps) => renderChangelingStructuredMeritEditor(editorProps, props.entitlementCatalog, props.tokenCatalog)}
-              renderCustomField={(kind, field) => kind === "court" ? <Choice label={t("ui.benefitedCourt")} value={field.value} setValue={field.onChange} options={props.courtCatalog.filter((item) => courtId(props.courtCatalog, item.id ?? item.name) !== courtId(props.courtCatalog, props.court)).map((item) => item.id ?? item.name)} optionLabels={Object.fromEntries(props.courtCatalog.map((item) => [item.id ?? item.name, courtName(item, locale)]))} /> : null}
+              renderCustomField={(kind, field) => kind === "court" ? <MeritCourtChoice {...field} courtCatalog={props.courtCatalog} currentCourt={props.court} /> : null}
             />
           )}
         />
